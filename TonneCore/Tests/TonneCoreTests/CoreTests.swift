@@ -148,7 +148,7 @@ final class CoreTests: XCTestCase {
     }
 
     func testCatalogSearch() {
-        XCTAssertGreaterThan(ProviderCatalog.count, 185)
+        XCTAssertGreaterThan(ProviderCatalog.count, 300)
         XCTAssertEqual(ProviderCatalog.search("Köln").first?.kind, .awbKoeln)
         XCTAssertTrue(ProviderCatalog.search("Hannover").contains { $0.kind == .ahaHannover })
         XCTAssertTrue(ProviderCatalog.search("Bremen").contains { $0.kind == .cTrace })
@@ -156,6 +156,22 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(ProviderCatalog.search("Stendal").first?.kind, .abfallAppNet)
         XCTAssertTrue(ProviderCatalog.search("darmstadt").contains { $0.kind == .jumomind })
         XCTAssertTrue(ProviderCatalog.search("tubingen").contains { $0.serviceKey == "tuebingen" })
+        // Stichproben aus Norddeutschland: Ort → Landkreis → Entsorger
+        XCTAssertTrue(ProviderCatalog.search("Boizenburg").contains { $0.kind == .gemosWasteBox }, "Boizenburg")
+        XCTAssertTrue(ProviderCatalog.search("Nostorf").contains { $0.kind == .gemosWasteBox }, "Nostorf")
+        XCTAssertTrue(ProviderCatalog.search("Lauenburg").contains { $0.kind == .awsh }, "Lauenburg")
+        XCTAssertTrue(ProviderCatalog.search("Lüneburg").contains { $0.kind == .abfallPlusApp }, "Lüneburg")
+        XCTAssertTrue(ProviderCatalog.search("Adendorf").contains { $0.serviceKey == "de.abfallplus.gfaabfallinfo" }, "Adendorf")
+        XCTAssertEqual(ProviderCatalog.search("Berlin").first?.kind, .bsr, "Berlin")
+        XCTAssertTrue(ProviderCatalog.search("Pankow").contains { $0.kind == .bsr }, "Pankow")
+        XCTAssertTrue(ProviderCatalog.search("Einbeck").contains { $0.kind == .nerdbridge }, "Einbeck")
+        XCTAssertTrue(ProviderCatalog.search("Iserlohn").contains { $0.kind == .lobbe }, "Iserlohn")
+        XCTAssertTrue(ProviderCatalog.search("Eppstein").contains { $0.kind == .icsURL }, "Eppstein")
+        XCTAssertEqual(ProviderCatalog.municipalities(matching: "Nostorf").first?.district, "Landkreis Ludwigslust-Parchim")
+        XCTAssertNotNil(ProviderCatalog.municipalityHint(for: "Boizenburg"))
+        XCTAssertTrue(AbfallPlusAppProvider.isPlaceholder("Leni (39)"))
+        XCTAssertFalse(AbfallPlusAppProvider.isPlaceholder("Graue Tonne"))
+        XCTAssertFalse(AbfallPlusAppProvider.isPlaceholder("Restmüll (240 l)"))
         XCTAssertTrue(ProviderCatalog.search("Kreis Unna").contains { $0.kind == .abfallnavi })
     }
 

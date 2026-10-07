@@ -28,7 +28,8 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 
 **Einfach**
 - Einrichtung in drei Schritten: Standort erlauben oder Ort suchen → Straße wählen → Tonnen ankreuzen
-- Katalog mit **189 Entsorgern** über die Plattformen AWIDO, AbfallPlus (neue und alte Schnittstelle), Jumomind/MyMüll, Abfallnavi, abfall-app.net, C-Trace und Müllmax sowie die Städte Köln, Leipzig und Region Hannover; dazu beliebige ICS-Links und ICS-Dateien
+- Katalog mit **315 Entsorgern**, alle im Live-Gesamttest geprüft: AWIDO, AbfallPlus (Widget und App, z. B. ALBA, Kreis Lüneburg), Jumomind/MyMüll, Abfallnavi, abfall-app.net, C-Trace, Müllmax, Gemos WasteBox (Ludwigslust-Parchim), AWSH (Herzogtum Lauenburg, Stormarn), Lobbe, Nerdbridge (Northeim), BSR Berlin inkl. Wertstofftonne, Köln, Leipzig, Region Hannover und Mein-Abfallkalender; dazu beliebige ICS-Links und ICS-Dateien
+- Ortssuche über alle rund 10.900 Gemeinden: „Boizenburg“ oder „Lauenburg“ findet den zuständigen Entsorger des Landkreises
 - Mehrere Standorte (z. B. Zuhause und Ferienhaus) mit Filter in Übersicht und Kalender
 - iCloud-Sync über CloudKit – kein Konto, kein Login
 - Streak-Anzeige: Abholungen dieses Jahr und davon bestätigt
@@ -85,6 +86,7 @@ Der Kern lässt sich ohne Xcode testen (auch unter Linux):
 cd TonneCore
 swift test                    # Unit-Tests (Terminlogik, ICS, Planer, Katalog …)
 TONNE_LIVE=1 swift test       # zusätzlich Live-Tests gegen die echten Portale
+TONNE_SWEEP=1 swift test --filter CatalogSweepTests   # prüft jeden Katalogeintrag live
 ```
 
 ## Neue Entsorger hinzufügen

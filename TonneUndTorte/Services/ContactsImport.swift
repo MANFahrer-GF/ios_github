@@ -19,10 +19,25 @@ enum ContactsImport {
         var errorDescription: String? { "Kontaktzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben." }
     }
 
+    enum Access { case full, limited, denied, notDetermined }
+
+    /// Aktueller Freigabestatus. Seit iOS 18 kann man auch nur ausgewählte Kontakte freigeben.
+    static var access: Access {
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        if #available(iOS 18.0, *), status == .limited { return .limited }
+        switch status {
+        case .authorized: return .full
+        case .notDetermined: return .notDetermined
+        default: return .denied
+        }
+    }
+
     static func candidates() async throws -> [Candidate] {
         let store = CNContactStore()
-        let granted = try await store.requestAccess(for: .contacts)
-        guard granted else { throw ImportError.denied }
+        if access == .notDetermined {
+            _ = try await store.requestAccess(for: .contacts)
+        }
+        guard access == .full || access == .limited else { throw ImportError.denied }
         let keys: [CNKeyDescriptor] = [CNContactGivenNameKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactNicknameKey as CNKeyDescriptor, CNContactBirthdayKey as CNKeyDescriptor, CNContactPhoneNumbersKey as CNKeyDescriptor]
         let request = CNContactFetchRequest(keysToFetch: keys)
         request.sortOrder = .givenName

@@ -91,7 +91,7 @@ struct SourceWizardView: View {
                 }
                 if let message = region.errorMessage { Text(message).font(.caption).foregroundStyle(.secondary) }
             }
-            Section(query.isEmpty ? (region.suggestions.isEmpty ? "Alle Entsorger (\(ProviderCatalog.count))" : "Vorschläge") : "Treffer") {
+            Section {
                 ForEach(query.isEmpty && region.suggestions.isEmpty ? ProviderCatalog.entries : results) { item in
                     Button { choose(item) } label: {
                         VStack(alignment: .leading, spacing: 2) {
@@ -100,6 +100,16 @@ struct SourceWizardView: View {
                                 .font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                }
+                if !query.isEmpty && results.isEmpty {
+                    Text("Kein Entsorger gefunden. Versuche den Landkreis oder nutze unten einen ICS-Link.")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+            } header: {
+                Text(resultsHeader)
+            } footer: {
+                if !query.isEmpty, let hint = ProviderCatalog.municipalityHint(for: query) {
+                    Text(hint)
                 }
             }
             Section {
@@ -114,6 +124,11 @@ struct SourceWizardView: View {
             }
         }
         .searchable(text: $query, prompt: "Landkreis, Stadt oder Entsorger")
+    }
+
+    private var resultsHeader: String {
+        if query.isEmpty { return region.suggestions.isEmpty ? "Alle Entsorger (\(ProviderCatalog.count))" : "Vorschläge" }
+        return "Treffer (\(results.count))"
     }
 
     private func catalogSubtitle(_ item: CatalogEntry) -> String {

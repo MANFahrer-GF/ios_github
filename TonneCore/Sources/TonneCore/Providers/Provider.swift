@@ -97,6 +97,12 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case awbKoeln
     case leipzig
     case ahaHannover
+    case abfallPlusApp
+    case gemosWasteBox
+    case awsh
+    case lobbe
+    case nerdbridge
+    case bsr
 
     public var displayName: String {
         switch self {
@@ -111,6 +117,12 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .awbKoeln: return "AWB Köln"
         case .leipzig: return "Stadtreinigung Leipzig"
         case .ahaHannover: return "aha Region Hannover"
+        case .abfallPlusApp: return "AbfallPlus-App"
+        case .gemosWasteBox: return "Gemos WasteBox"
+        case .awsh: return "AWSH"
+        case .lobbe: return "Lobbe App"
+        case .nerdbridge: return "Nerdbridge"
+        case .bsr: return "BSR Berlin"
         }
     }
 }
@@ -177,6 +189,12 @@ public enum ProviderFactory {
         case .awbKoeln: return AWBKoelnProvider(client: client)
         case .leipzig: return LeipzigProvider(client: client)
         case .ahaHannover: return AhaHannoverProvider(client: client)
+        case .abfallPlusApp: return AbfallPlusAppProvider(appID: serviceKey)
+        case .gemosWasteBox: return GemosWasteBoxProvider(customer: serviceKey, client: client)
+        case .awsh: return AWSHProvider(client: client)
+        case .lobbe: return LobbeProvider(client: client)
+        case .nerdbridge: return NerdbridgeProvider(client: client)
+        case .bsr: return BSRProvider(client: client)
         }
     }
 

@@ -88,19 +88,71 @@ extension LiveProviderTests {
     func testMuellmaxMuenster() async throws { try await checkTyped(MuellmaxProvider(service: "Awm"), typed: ["Achatiusweg"], prefer: ["Achatiusweg"]) }
 }
 
+
 extension LiveProviderTests {
-    func testAlbaBerlin() async throws {
-        try XCTSkipUnless(live, "TONNE_LIVE nicht gesetzt")
-        let provider = ProviderFactory.make(kind: .abfallIOLegacy, serviceKey: "9583a2fa1df97ed95363382c73b41b1b")
-        var selections: [SelectionOption] = []
-        while let step = try await provider.nextStep(after: selections) {
-            print("ALBA Schritt: \(step.title) input=\(step.input) optionen=\(step.options.count) erste=\(step.options.prefix(5).map(\.title))")
-            if step.input == .text { selections.append(SelectionOption(id: "Alexanderstr.", title: "Alexanderstr.")); continue }
-            guard let pick = step.options.first(where: { $0.title.lowercased().contains("alexanderstr") }) ?? step.options.first else { break }
-            selections.append(pick)
+    func testAbfallPlusAppAlbaBraunschweig() async throws {
+        try await checkTyped(AbfallPlusAppProvider(appID: "de.albagroup.app"), typed: ["Hauptstr"], prefer: ["Braunschweig", "Hauptstraße", "7A"], minCount: 3)
+    }
+
+    func testAbfallPlusAppLueneburg() async throws {
+        try await checkTyped(AbfallPlusAppProvider(appID: "de.abfallplus.gfaabfallinfo"), typed: ["Am Sande"], prefer: ["Lüneburg", "Am Sande", "1"], minCount: 5)
+    }
+
+    func testBSRBerlinMitte() async throws {
+        try await checkTyped(BSRProvider(), typed: ["Alexanderstr", "5"], prefer: ["Alexanderstr.", "Alexanderstr. 5"], minCount: 10)
+    }
+
+    func testGemosNostorf() async throws {
+        try await check(GemosWasteBoxProvider(customer: "lwl"), prefer: ["Nostorf (19258)"], minCount: 5)
+    }
+
+    func testAWSHLauenburg() async throws {
+        try await check(AWSHProvider(), prefer: ["Lauenburg/Elbe", ""], minCount: 5)
+    }
+
+    func testLobbeIserlohn() async throws {
+        try await check(LobbeProvider(), prefer: ["Nordrhein-Westfalen", "Iserlohn", ""], minCount: 5)
+    }
+
+    func testNerdbridgeEinbeck() async throws {
+        try await check(NerdbridgeProvider(), prefer: ["Einbeck (Bezirk 2)"], minCount: 5)
+    }
+}
+
+/// Prüft für jeden Katalogeintrag, ob der erste Auswahlschritt Daten liefert.
+/// Läuft nur mit `TONNE_SWEEP=1`, weil es einige Minuten dauert.
+final class CatalogSweepTests: XCTestCase {
+    func testEveryCatalogEntryAnswers() async throws {
+        try XCTSkipUnless(ProcessInfo.processInfo.environment["TONNE_SWEEP"] != nil, "TONNE_SWEEP nicht gesetzt")
+        let filter = ProcessInfo.processInfo.environment["TONNE_SWEEP_KINDS"].map { Set($0.split(separator: ",").map(String.init)) }
+        let entries = ProviderCatalog.entries.filter { filter == nil || filter!.contains($0.kind.rawValue) }
+        var failures: [String] = []
+        try await withThrowingTaskGroup(of: String?.self) { group in
+            var iterator = entries.makeIterator()
+            func addNext() {
+                guard let entry = iterator.next() else { return }
+                group.addTask {
+                    let provider = ProviderFactory.make(kind: entry.kind, serviceKey: entry.serviceKey)
+                    do {
+                        guard let step = try await provider.nextStep(after: []) else {
+                            return entry.kind == .icsURL ? nil : "\(entry.kind.rawValue) | \(entry.title) | kein erster Schritt"
+                        }
+                        if step.input == .list && step.options.isEmpty { return "\(entry.kind.rawValue) | \(entry.title) | leere Liste" }
+                        return nil
+                    } catch {
+                        return "\(entry.kind.rawValue) | \(entry.title) | \(error.localizedDescription)"
+                    }
+                }
+            }
+            let parallel = Int(ProcessInfo.processInfo.environment["TONNE_SWEEP_PARALLEL"] ?? "") ?? 12
+            for _ in 0..<parallel { addNext() }
+            while let result = try await group.next() {
+                if let result { failures.append(result) }
+                addNext()
+            }
         }
-        let pickups = try await provider.pickups(for: selections)
-        print("ALBA Berlin: \(provider.label(for: selections)) → \(pickups.count) Termine, \(Set(pickups.map(\.name)).sorted())")
-        XCTAssertGreaterThanOrEqual(pickups.count, 5)
+        print("SWEEP: \(entries.count) Einträge, \(failures.count) Fehler")
+        for failure in failures.sorted() { print("SWEEP-FEHLER: \(failure)") }
+        XCTAssertTrue(failures.isEmpty)
     }
 }

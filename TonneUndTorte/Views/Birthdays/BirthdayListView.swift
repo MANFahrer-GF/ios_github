@@ -1,4 +1,5 @@
 import SwiftUI
+import ContactsUI
 import SwiftData
 import UniformTypeIdentifiers
 import TonneCore
@@ -230,55 +231,151 @@ struct ContactsImportView: View {
     @State private var selected: Set<String> = []
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var access: ContactsImport.Access = ContactsImport.access
+    @State private var showAccessPicker = false
+    @State private var search = ""
 
-    private var existingIDs: Set<String> { Set(people.compactMap(\.contactIdentifier)) }
+    private var existing: [String: Person] {
+        Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
+    }
+
+    private var visible: [ContactsImport.Candidate] {
+        let needle = search.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !needle.isEmpty else { return candidates }
+        return candidates.filter { $0.name.lowercased().contains(needle) }
+    }
+
+    private var newCount: Int { selected.filter { existing[$0] == nil }.count }
+    private var updateCount: Int { selected.count - newCount }
 
     var body: some View {
         NavigationStack {
             List {
+                accessSection
                 if isLoading { ProgressView("Kontakte werden gelesen …") }
                 if let errorMessage { Text(errorMessage).foregroundStyle(.secondary) }
-                ForEach(candidates) { candidate in
-                    let already = existingIDs.contains(candidate.identifier)
-                    Button {
-                        if selected.contains(candidate.identifier) { selected.remove(candidate.identifier) } else { selected.insert(candidate.identifier) }
-                    } label: {
-                        HStack {
-                            Image(systemName: already ? "checkmark.circle" : selected.contains(candidate.identifier) ? "checkmark.circle.fill" : "circle").foregroundStyle(already ? .secondary : Color.accentColor)
-                            VStack(alignment: .leading) {
-                                Text(candidate.name).foregroundStyle(.primary)
-                                Text("\(candidate.day).\(candidate.month).\(candidate.year.map { "\($0)" } ?? "")").font(.caption).foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            if already { Text("schon drin").font(.caption).foregroundStyle(.secondary) }
-                        }
+                if !isLoading && candidates.isEmpty && errorMessage == nil {
+                    Text("In den freigegebenen Kontakten ist kein Geburtstag eingetragen.").foregroundStyle(.secondary)
+                }
+                Section {
+                    ForEach(visible) { candidate in row(candidate) }
+                } footer: {
+                    if !existing.isEmpty {
+                        Text("Bereits importierte Personen kannst du erneut auswählen, dann werden Name, Datum und Telefon aus den Kontakten aktualisiert. Geschenkideen und Notizen bleiben erhalten.")
                     }
-                    .disabled(already)
                 }
             }
+            .searchable(text: $search, prompt: "Kontakt suchen")
             .navigationTitle("Aus Kontakten").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
-                ToolbarItem(placement: .topBarLeading) { Button("Alle") { selected = Set(candidates.map(\.identifier)).subtracting(existingIDs) } }
-                ToolbarItem(placement: .confirmationAction) { Button("Importieren (\(selected.count))") { importSelected() }.disabled(selected.isEmpty) }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(updateCount > 0 && newCount == 0 ? "Aktualisieren (\(updateCount))" : "Importieren (\(selected.count))") { importSelected() }
+                        .disabled(selected.isEmpty)
+                }
+                ToolbarItem(placement: .bottomBar) {
+                    HStack {
+                        Button("Alle neuen") { selected = Set(candidates.map(\.identifier)).filter { existing[$0] == nil } }
+                        Spacer()
+                        Button("Keine") { selected = [] }
+                    }
+                }
             }
-            .task {
-                do { candidates = try await ContactsImport.candidates(); selected = Set(candidates.map(\.identifier)).subtracting(existingIDs) }
-                catch { errorMessage = error.localizedDescription }
-                isLoading = false
+            .modifier(ContactAccessPickerModifier(isPresented: $showAccessPicker) { Task { await load() } })
+            .task { await load() }
+        }
+    }
+
+    @ViewBuilder
+    private var accessSection: some View {
+        if access == .limited {
+            Section {
+                Label("Du hast der App nur ausgewählte Kontakte freigegeben.", systemImage: "person.crop.circle.badge.exclamationmark")
+                Button { showAccessPicker = true } label: { Label("Weitere Kontakte freigeben", systemImage: "person.crop.circle.badge.plus") }
+                Button { openSettings() } label: { Label("Alle Kontakte freigeben (Einstellungen)", systemImage: "gearshape") }
+            }
+        } else if access == .denied {
+            Section {
+                Label("Kontaktzugriff ist ausgeschaltet.", systemImage: "person.crop.circle.badge.xmark")
+                Button { openSettings() } label: { Label("In den Einstellungen erlauben", systemImage: "gearshape") }
             }
         }
     }
 
+    private func row(_ candidate: ContactsImport.Candidate) -> some View {
+        let already = existing[candidate.identifier] != nil
+        let isSelected = selected.contains(candidate.identifier)
+        return Button {
+            if isSelected { selected.remove(candidate.identifier) } else { selected.insert(candidate.identifier) }
+        } label: {
+            HStack {
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(isSelected ? Color.accentColor : .secondary)
+                VStack(alignment: .leading) {
+                    Text(candidate.name).foregroundStyle(.primary)
+                    Text("\(candidate.day).\(candidate.month).\(candidate.year.map { "\($0)" } ?? "")").font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                if already {
+                    Text(isSelected ? "wird aktualisiert" : "schon drin").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
+    private func load() async {
+        isLoading = true
+        errorMessage = nil
+        do {
+            candidates = try await ContactsImport.candidates()
+            let known = Set(existing.keys)
+            // Neue Kontakte vorauswählen, bisherige Auswahl behalten
+            selected.formUnion(Set(candidates.map(\.identifier)).subtracting(known))
+            selected = selected.intersection(Set(candidates.map(\.identifier)))
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        access = ContactsImport.access
+        isLoading = false
+    }
+
+    private func openSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+    }
+
     private func importSelected() {
+        let current = existing
         for (index, candidate) in candidates.enumerated() where selected.contains(candidate.identifier) {
-            let person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
-            person.contactIdentifier = candidate.identifier
-            person.phone = candidate.phone
-            context.insert(person)
+            let person: Person
+            if let known = current[candidate.identifier] {
+                person = known
+                person.name = candidate.name
+                person.day = candidate.day
+                person.month = candidate.month
+                person.year = candidate.year
+            } else {
+                person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
+                person.contactIdentifier = candidate.identifier
+                context.insert(person)
+            }
+            if let phone = candidate.phone { person.phone = phone }
         }
         try? context.save()
         Task { await model.refreshAll() }
         dismiss()
+    }
+}
+
+/// iOS 18: Systemauswahl „Weitere Kontakte freigeben“. Auf älteren Systemen ohne Wirkung.
+private struct ContactAccessPickerModifier: ViewModifier {
+    @Binding var isPresented: Bool
+    var onChange: () -> Void
+
+    func body(content: Content) -> some View {
+        if #available(iOS 18.0, *) {
+            content.contactAccessPicker(isPresented: $isPresented) { _ in onChange() }
+        } else {
+            content
+        }
     }
 }
