@@ -75,18 +75,12 @@ enum CalendarExport {
 
     /// Hat der Nutzer vollen Kalenderzugriff gegeben?
     static var hasFullAccess: Bool {
-        if #available(iOS 17.0, *) {
-            return EKEventStore.authorizationStatus(for: .event) == .fullAccess
-        }
-        return EKEventStore.authorizationStatus(for: .event) == .authorized
+        EKEventStore.authorizationStatus(for: .event) == .fullAccess
     }
 
     static func requestAccess(_ store: EKEventStore = EKEventStore()) async throws -> Bool {
         if hasFullAccess { return true }
-        if #available(iOS 17.0, *) {
-            return try await store.requestFullAccessToEvents()
-        }
-        return try await store.requestAccess(to: .event)
+        return try await store.requestFullAccessToEvents()
     }
 
     /// Alle möglichen Ziele: eigener Kalender je Konto und alle beschreibbaren vorhandenen Kalender.
