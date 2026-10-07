@@ -11,7 +11,7 @@ enum ContactsPicker {
     /// Die gerade gezeigte Auswahl. Schwach gehalten: Ist sie zu, wird das automatisch `nil`.
     private static weak var activePicker: CNContactPickerViewController?
 
-    /// Liefert die übernehmbaren Personen und wie viele Ausgewählte keinen Geburtstag haben.
+    /// Liefert die übernehmbaren Personen und wie viele Ausgewählte ausgelassen wurden (kein Name oder kein vollständiges Datum).
     static func present(completion: @escaping (_ chosen: [ContactsImport.Candidate], _ skipped: Int) -> Void) {
         // Schon offen (z. B. Doppeltipp): nicht ein zweites Mal zeigen, sonst ginge die erste Auswahl verloren.
         guard activePicker == nil, let presenter = topViewController() else { return }

@@ -16,6 +16,15 @@ final class CoreTests: XCTestCase {
 
     func day(_ iso: String) -> Date { Days.parse(iso, calendar: calendar)! }
 
+    func testUpcomingBirthdays() {
+        let today = Days.today()
+        let item = { (offset: Int, name: String) in WidgetSnapshot.BirthdayItem(date: Days.add(offset, to: today), name: name, years: nil, colorHex: "#000000", initials: "X") }
+        let snapshot = WidgetSnapshot(birthdays: [item(3, "C"), item(0, "A"), item(0, "B"), item(1, "D")])
+        let tomorrow = snapshot.upcomingBirthdays(from: Days.add(1, to: today))
+        XCTAssertEqual(tomorrow.birthdays.map(\.name), ["D", "C"])
+        XCTAssertEqual(snapshot.upcomingBirthdays(from: today).birthdays.map(\.name).prefix(2).sorted(), ["A", "B"])
+    }
+
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), L10n.t("A, B und C", "A, B and C"))
@@ -52,6 +61,17 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(WasteGlyph.matches("tt.bin.bio", current: "leaf.fill", name: "Biotonne"))
         XCTAssertFalse(WasteGlyph.matches("leaf", current: "leaf.fill", name: "Biotonne"))
         XCTAssertNil(WasteGlyph.assetName(for: "leaf"))
+        XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Christbaumabholung"))
+        XCTAssertEqual(WasteGlyph.storedName(for: "tt.sack", name: "Gelber Sack"), "bag.fill")
+        XCTAssertEqual(WasteGlyph.storedName(for: "tt.bin.yellow", name: "Gelbe Tonne"), "bag.fill")
+        XCTAssertEqual(WasteGlyph.storedName(for: "tt.bin.yellow", name: "Gelber Sack"), "tt.bin.yellow")
+        XCTAssertEqual(WasteGlyph.storedName(for: "tt.green", name: "Weihnachtsbäume"), "tt.green")
+        XCTAssertEqual(WasteGlyph.storedName(for: "sofa.fill", name: "Sperrmüll"), "sofa.fill")
+        for choice in WasteGlyph.pickerSymbols {
+            for name in ["Gelber Sack", "Gelbe Tonne", "Laub", "Biotonne", ""] {
+                XCTAssertTrue(WasteGlyph.matches(choice, current: WasteGlyph.storedName(for: choice, name: name), name: name), "\(choice) \(name)")
+            }
+        }
         // Jedes Symbol der Auswahl ist genau einmal drin
         XCTAssertEqual(Set(WasteGlyph.pickerSymbols).count, WasteGlyph.pickerSymbols.count)
         for category in WasteCategory.allCases {

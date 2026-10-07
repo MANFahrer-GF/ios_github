@@ -63,7 +63,7 @@ struct SymbolBadge: View {
                     Image(systemName: symbolName).font(.system(size: size * 0.45, weight: .semibold))
                 }
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(HexLuma.glyphColor(on: colorHex))
         }
         .frame(width: size, height: size)
         .shadow(color: Color(hex: colorHex).opacity(0.35), radius: 6, x: 0, y: 3)
@@ -91,9 +91,15 @@ struct EventChip: View {
     var body: some View {
         HStack(spacing: 6) {
             if onLight {
-                WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold)
+                Group {
+                    if event.kind == .waste {
+                        WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold)
+                    } else {
+                        Image(systemName: event.symbolName).font(.system(size: iconSize, weight: .semibold))
+                    }
+                }
             } else {
-                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22)
+                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22, waste: event.kind == .waste)
             }
             Text(event.title).font(.caption.weight(.semibold))
             if showLocation, let location = event.locationName { Text("· \(location)").font(.caption).opacity(0.8) }
@@ -112,7 +118,7 @@ struct EventRow: View {
             if event.kind == .birthday {
                 InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 38)
             } else {
-                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 38, wasteName: event.title)
+                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 38, wasteName: event.kind == .waste ? event.title : nil)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(event.title).font(.body.weight(.semibold))
@@ -195,7 +201,7 @@ struct SymbolPicker: View {
                 .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(isSelected ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
                 .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? Color(hex: colorHex) : .clear, lineWidth: 2))
                 .foregroundStyle(isSelected ? Color(hex: colorHex) : .primary)
-                .onTapGesture { symbolName = symbol }
+                .onTapGesture { symbolName = wasteName.map { WasteGlyph.storedName(for: symbol, name: $0) } ?? symbol }
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }

@@ -269,6 +269,11 @@ enum HexLuma {
         let r = Double((number >> 16) & 0xFF) / 255, g = Double((number >> 8) & 0xFF) / 255, b = Double(number & 0xFF) / 255
         return 0.299 * r + 0.587 * g + 0.114 * b > 0.62
     }
+
+    /// Farbe für ein Symbol auf einem Kreis in `hex`: dunkel auf hellen Farben (Gelb), sonst weiß.
+    static func glyphColor(on hex: String) -> Color {
+        isLight(hex) ? Color(hex: "#2A2210") : .white
+    }
 }
 
 /// Dunkles Glas mit Farbnebel in den Farben der Tonnen. Bleibt in Hell und Dunkel gleich,
@@ -453,7 +458,7 @@ struct BinDot: View {
         ZStack {
             Circle().fill(Color(hex: colorHex))
             WasteIcon(symbolName: symbolName, name: name, size: size * 0.5)
-                .foregroundStyle(HexLuma.isLight(colorHex) ? Color(hex: "#2A2210") : .white)
+                .foregroundStyle(HexLuma.glyphColor(on: colorHex))
         }
         .frame(width: size, height: size)
     }

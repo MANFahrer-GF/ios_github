@@ -27,7 +27,9 @@ struct BirthdayTimelineProvider: TimelineProvider {
         let current = entry()
         var entries = [current]
         if let midnight = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, minute: 1), matchingPolicy: .nextTime) {
-            entries.append(BirthdayEntry(date: midnight, birthdays: current.birthdays))
+            // Ab Mitternacht zählen die heutigen Geburtstage nicht mehr als „nächste“.
+            let start = Calendar.current.startOfDay(for: midnight)
+            entries.append(BirthdayEntry(date: midnight, birthdays: current.birthdays.filter { $0.date >= start }))
         }
         completion(Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600))))
     }

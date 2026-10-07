@@ -7,6 +7,8 @@ struct BinBadge: View {
     let colorHex: String
     var name: String = ""
     var size: CGFloat = 28
+    /// Abfallart: eigene Piktogramme. Für Geburtstage und eigene Termine bleibt das SF Symbol.
+    var waste = true
     var ring = true
 
     var body: some View {
@@ -15,8 +17,14 @@ struct BinBadge: View {
             if ring {
                 Circle().strokeBorder(.white.opacity(0.9), lineWidth: max(1, size / 16))
             }
-            WasteIcon(symbolName: symbolName, name: name, size: size * 0.46)
-                .foregroundStyle(HexLuma.isLight(colorHex) ? Color(hex: "#2A2210") : .white)
+            Group {
+                if waste {
+                    WasteIcon(symbolName: symbolName, name: name, size: size * 0.46)
+                } else {
+                    Image(systemName: symbolName).font(.system(size: size * 0.46, weight: .bold))
+                }
+            }
+            .foregroundStyle(HexLuma.glyphColor(on: colorHex))
         }
         .frame(width: size, height: size)
         .shadow(color: .black.opacity(0.18), radius: size / 10, x: 0, y: size / 16)

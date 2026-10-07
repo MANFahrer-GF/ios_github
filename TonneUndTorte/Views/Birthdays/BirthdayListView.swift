@@ -204,8 +204,8 @@ struct BirthdayEditView: View {
         guard let person else { return }
         name = person.name; notes = person.notes; colorHex = person.colorHex; remindersEnabled = person.remindersEnabled
         remindDaysBefore = person.remindDaysBefore; giftIdeas = person.giftIdeas; phone = person.phone ?? ""
-        yearKnown = person.year != nil
-        date = Days.make(year: person.year ?? 2000, month: person.month, day: person.day) ?? Date()
+        yearKnown = person.knownYear != nil
+        date = Days.make(year: person.knownYear ?? 2000, month: person.month, day: person.day) ?? Date()
     }
 
     private func save() {
@@ -256,6 +256,16 @@ struct ContactsImportView: View {
             }
         }
         return result
+    }
+
+    /// Ändert sich bei jeder für den Abgleich wichtigen Änderung an Personen (Anzahl, Name, Datum, Verknüpfung).
+    private var peopleStamp: Int {
+        var hasher = Hasher()
+        for person in people {
+            hasher.combine(person.id); hasher.combine(person.contactIdentifier)
+            hasher.combine(person.name); hasher.combine(person.day); hasher.combine(person.month)
+        }
+        return hasher.finalize()
     }
 
     private static func matchKey(name: String, day: Int, month: Int) -> String {
@@ -311,7 +321,7 @@ struct ContactsImportView: View {
             }
             .task { await load() }
             // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
-            .onChange(of: people.count) { _, _ in existing = matchExisting() }
+            .onChange(of: peopleStamp) { _, _ in existing = matchExisting() }
             // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
@@ -364,8 +374,8 @@ struct ContactsImportView: View {
         ContactsPicker.present { chosen, skipped in
             if skipped > 0 {
                 pickNotice = skipped == 1
-                    ? L10n.t("Bei einer ausgewählten Person ist kein Geburtstag eingetragen.", "One selected person has no birthday.")
-                    : L10n.t("Bei \(skipped) ausgewählten Personen ist kein Geburtstag eingetragen.", "\(skipped) selected people have no birthday.")
+                    ? L10n.t("Ein ausgewählter Kontakt hat keinen Namen oder kein vollständiges Geburtsdatum und wurde ausgelassen.", "One selected contact has no name or no complete birthday and was skipped.")
+                    : L10n.t("\(skipped) ausgewählte Kontakte haben keinen Namen oder kein vollständiges Geburtsdatum und wurden ausgelassen.", "\(skipped) selected contacts have no name or no complete birthday and were skipped.")
             }
             guard !chosen.isEmpty else { return }
             picked = merge(picked, chosen)
@@ -437,7 +447,13 @@ struct ContactsImportView: View {
         let current = matchExisting()
         var updated = Set<UUID>()
         var created = Set<String>()
-        for (index, candidate) in candidates.enumerated() where selected.contains(candidate.identifier) {
+        // Der bereits verknüpfte Kontakt zuerst, damit er gewinnt, wenn eine Person doppelt im Adressbuch steht.
+        let ordered = candidates.enumerated().sorted { lhs, rhs in
+            let l = current[lhs.element.identifier]?.contactIdentifier == lhs.element.identifier
+            let r = current[rhs.element.identifier]?.contactIdentifier == rhs.element.identifier
+            return l && !r
+        }
+        for (index, candidate) in ordered where selected.contains(candidate.identifier) {
             let person: Person
             if let known = current[candidate.identifier] {
                 // Zwei Kontakte derselben Person: nur einmal aktualisieren, keine Dublette anlegen.

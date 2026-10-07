@@ -38,14 +38,14 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
         let calendar = Calendar.current
         if let midnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 1), matchingPolicy: .nextTime) { dates.append(midnight) }
         if let evening = calendar.nextDate(after: now, matching: DateComponents(hour: 17, minute: 0), matchingPolicy: .nextTime) { dates.append(evening) }
-        let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot, locationName: entry.locationName) }
+        let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot.upcomingBirthdays(from: $0), locationName: entry.locationName) }
         return Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600)))
     }
 
     private func entry(for configuration: PickupWidgetConfiguration) -> PickupEntry {
         let full = SnapshotStore.load() ?? WidgetSnapshot()
         let filtered = full.filtered(locationID: configuration.location?.id)
-        return PickupEntry(date: Date(), snapshot: filtered, locationName: configuration.location?.name)
+        return PickupEntry(date: Date(), snapshot: filtered.upcomingBirthdays(from: Date()), locationName: configuration.location?.name)
     }
 
     static let sample: WidgetSnapshot = {

@@ -29,7 +29,9 @@ final class Person {
         self.createdAt = Date()
     }
 
-    var annual: AnnualDate { AnnualDate(day: day, month: month, year: year) }
+    /// Geburtsjahr ohne Platzhalter: Manche Kontakte-Konten tragen 1604 für „ohne Jahr“ ein.
+    var knownYear: Int? { year.flatMap { $0 > 1604 ? $0 : nil } }
+    var annual: AnnualDate { AnnualDate(day: day, month: month, year: knownYear) }
     var initials: String { NameText.initials(name) }
     var nextBirthday: Date? { annual.next() }
     var ageAtNext: Int? { nextBirthday.flatMap { annual.years(on: $0) } }
