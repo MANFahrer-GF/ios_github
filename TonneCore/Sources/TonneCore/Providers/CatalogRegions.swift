@@ -800,6 +800,14 @@ Stadtkreis Ulm|Ulm
         "sitepark:ploen:Kreis Plön": ["Kreis Plön"],
         "sitepark:seenplatte:Landkreis Mecklenburgische Seenplatte": ["Landkreis Mecklenburgische Seenplatte"],
         "sitepark:wittmund:Landkreis Wittmund": ["Landkreis Wittmund"],
+        "wasteManagementServlet:alzeyworms:Abfallwirtschaft Alzey-Worms": ["Kreisfreie Stadt Worms", "Landkreis Alzey-Worms"],
+        "wasteManagementServlet:bielefeld:Umweltbetrieb Bielefeld": ["Kreisfreie Stadt Bielefeld"],
+        "wasteManagementServlet:hameln:KAW Hameln-Pyrmont": ["Kreisfreie Stadt Hagen", "Landkreis Hameln-Pyrmont"],
+        "wasteManagementServlet:pfaffenhofen:AWP Abfallwirtschaft Pfaffenhofen": ["Landkreis Pfaffenhofen a.d.Ilm"],
+        "wasteManagementServlet:pforzheim:Abfallwirtschaft Pforzheim": ["Stadtkreis Pforzheim"],
+        "wasteManagementServlet:suedwestsachsen:ZAS Südwestsachsen (Erzgebirgskreis)": ["Landkreis Erzgebirgskreis"],
+        "wasteManagementServlet:vogtland:Abfallwirtschaft Vogtlandkreis": ["Landkreis Vogtlandkreis"],
+        "wasteManagementServlet:zweibruecken:UBZ Zweibrücken": ["Kreisfreie Stadt Zweibrücken"],
     ]
 
     /// Landkreis → Bundesland.
