@@ -653,6 +653,7 @@
   }
   function pageSettings() {
     const b = state.boot; const s = b.settings;
+    const widgetUrl = b.feed_url.replace('feed.php', 'widget.php');
     const main = shell(`
       <div class="page-head"><h1>Einstellungen</h1></div>
       <div class="section-title"><span class="ico">🔔</span>Push-Mitteilungen</div>
@@ -674,6 +675,18 @@
           <button class="btn secondary" data-copy="${esc(b.feed_url)}">Link kopieren</button>
           <button class="btn ghost" data-feed-regen>Neuen Link erzeugen</button>
         </div>
+      </div>
+      <div class="section-title"><span class="ico">📱</span>Widget für den Home-Bildschirm (Scriptable)</div>
+      <div class="card">
+        <p class="small muted" style="margin-bottom:10px">Web-Apps dürfen auf iOS keine Widgets anlegen. Mit der kostenlosen App <b>Scriptable</b> geht es trotzdem: Skript einfügen, Widget hinzufügen, fertig.</p>
+        <ol class="small muted" style="margin:0 0 10px 18px;padding:0;line-height:1.6">
+          <li>Scriptable aus dem App Store laden.</li>
+          <li><a href="scriptable/TonneUndTorte.js" target="_blank" rel="noopener">Skript öffnen</a>, alles markieren und kopieren.</li>
+          <li>In Scriptable „+“ tippen, Skript einfügen, als <b>TonneUndTorte</b> speichern.</li>
+          <li>Home-Bildschirm lange drücken → „+“ → Scriptable → Größe wählen → Widget bearbeiten → Script „TonneUndTorte“, <b>Parameter</b>: die Widget-URL unten.</li>
+        </ol>
+        <code class="url">${esc(widgetUrl)}</code>
+        <div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn secondary" data-copy="${esc(widgetUrl)}">Widget-URL kopieren</button><a class="btn ghost" href="${esc(widgetUrl)}" target="_blank" rel="noopener">Daten ansehen</a></div>
       </div>
       <div class="section-title"><span class="ico">🗑️</span>Müll-Erinnerungen</div>
       <div class="card"><form data-settings>

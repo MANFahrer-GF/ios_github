@@ -15,6 +15,7 @@ Müll- und Geburtstagskalender für iPhone, iPad und Desktop – **ohne App Stor
 - Geburtstage mit Alter, Notizen, Vorab-Erinnerung
 - **Push-Mitteilungen** (Web Push, VAPID) am Vorabend und/oder morgens, Geburtstage am Tag und x Tage vorher
 - **Kalender-Abo** (ICS-Feed mit Alarmen) – funktioniert sofort, ganz ohne Installation
+- **Home-Screen-Widget** über die kostenlose App Scriptable (Skript liegt bei)
 - Passwortschutz, Dark Mode, offline-fähige Oberfläche
 
 ## Voraussetzungen
@@ -55,11 +56,18 @@ Einstellungen → Kalender-Abo → **„Im Kalender abonnieren“** (oder Link k
 
 Beides zusammen geht natürlich auch.
 
+**Widget auf dem Home-/Sperrbildschirm (Scriptable):**
+Web-Apps dürfen auf iOS keine Widgets anlegen. Mit der kostenlosen App [Scriptable](https://scriptable.app) geht es trotzdem:
+1. Scriptable installieren.
+2. In der Web-App unter Einstellungen → Widget das Skript öffnen, kopieren und in Scriptable als neues Skript `TonneUndTorte` einfügen (liegt auch unter `public/scriptable/TonneUndTorte.js`).
+3. Widget hinzufügen (Home-Bildschirm lange drücken → „+“ → Scriptable), beim Widget als **Parameter** die Widget-URL aus den Einstellungen eintragen.
+Das Widget gibt es in klein, mittel, groß und für den Sperrbildschirm; es zeigt „Morgen: Gelber Sack“ in der Farbe der Müllart, weitere Tage und (groß) die nächsten Geburtstage. Offline nutzt es den letzten Stand.
+
 ## Aufbau
 
 ```
 web/
-├── public/            Document-Root: index.php (PWA-Shell), api.php, feed.php, cron.php, sw.js, manifest, assets/
+├── public/            Document-Root: index.php (PWA-Shell), api.php, feed.php, widget.php, cron.php, sw.js, manifest, assets/, scriptable/
 ├── src/               PHP-Klassen (Api, Events, Importer, Awido, Ics, Feed, Reminders, Push, Db, Auth, Seed)
 ├── seed/              Gebündelte Abfuhrkalender (ICS) für den ersten Start
 ├── bin/cron.php       Cron per Kommandozeile
