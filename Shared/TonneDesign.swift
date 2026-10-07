@@ -544,16 +544,14 @@ struct KlarAvatarStack: View {
 
 extension Array where Element == WidgetSnapshot.BirthdayItem {
     /// Alle Geburtstage am Tag des ersten Eintrags (z. B. Zwillinge oder zwei Freunde am selben Tag).
+    /// Die Liste ist nach Datum sortiert; passend zu `dropFirst(firstDay.count)` zählen nur die Einträge vorne.
     var firstDay: [WidgetSnapshot.BirthdayItem] {
         guard let first = first else { return [] }
-        return filter { Calendar.current.isDate($0.date, inSameDayAs: first.date) }
+        return Array(prefix { Calendar.current.isDate($0.date, inSameDayAs: first.date) })
     }
 
-    /// Namen kurz zusammengefasst: „Oma Erika & Paul“ bzw. „Oma Erika, Paul +1“.
+    /// Namen kurz zusammengefasst: „Oma Erika und Paul“ bzw. „Oma Erika, Paul +1“.
     func names(max: Int = 2) -> String {
-        let all = map(\.name)
-        guard all.count > 1 else { return all.first ?? "" }
-        if all.count == 2 { return "\(all[0]) & \(all[1])" }
-        return all.prefix(max).joined(separator: ", ") + " +\(all.count - max)"
+        ReminderPlanner.shortNames(map(\.name), max: max)
     }
 }

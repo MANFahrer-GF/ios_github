@@ -114,9 +114,7 @@ struct PickupWidgetView: View {
     }
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
-        let all = day.items.map(\.name)
-        let shown = all.prefix(max).joined(separator: ", ")
-        return all.count > max ? shown + " +\(all.count - max)" : shown
+        ReminderPlanner.shortNames(day.items.map(\.name), max: max)
     }
 
     private var eyebrowColor: Color {
@@ -296,11 +294,8 @@ struct PickupWidgetView: View {
         }
     }
 
-    /// Platz im großen Widget: Bei drei Tonnen passen nur zwei Geburtstage, ohne Abholung drei.
-    private var largeBirthdayRows: Int {
-        guard let next else { return 3 }
-        return next.items.count >= 3 ? 2 : 3
-    }
+    /// Platz im großen Widget: Mit Abholung (Hinweis, Tonnen, „Danach“) passen zwei Geburtstage, ohne drei.
+    private var largeBirthdayRows: Int { next == nil ? 3 : 2 }
 
     private var largeBirthdays: some View {
         VStack(alignment: .leading, spacing: 0) {

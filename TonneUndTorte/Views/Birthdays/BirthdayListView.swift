@@ -234,6 +234,8 @@ struct ContactsImportView: View {
     @State private var access: ContactsImport.Access = ContactsImport.access
     @State private var picked: [ContactsImport.Candidate] = []
     @State private var pickNotice: String?
+    /// Schon einmal gezeigte Kontakte: Nur wirklich neue werden vorausgewählt, abgewählte bleiben abgewählt.
+    @State private var seen: Set<String> = []
     @State private var search = ""
     @Environment(\.scenePhase) private var scenePhase
 
@@ -254,10 +256,6 @@ struct ContactsImportView: View {
             }
         }
         return result
-    }
-
-    private var peopleSignature: [String] {
-        people.map { "\($0.id)|\($0.contactIdentifier ?? "")|\($0.name)|\($0.day).\($0.month)" }
     }
 
     private static func matchKey(name: String, day: Int, month: Int) -> String {
@@ -313,7 +311,7 @@ struct ContactsImportView: View {
             }
             .task { await load() }
             // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
-            .onChange(of: peopleSignature) { _, _ in existing = matchExisting() }
+            .onChange(of: people.count) { _, _ in existing = matchExisting() }
             // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
@@ -377,6 +375,7 @@ struct ContactsImportView: View {
             existing = matchExisting()
             let known = Set(existing.keys)
             selected.formUnion(chosen.map(\.identifier).filter { !known.contains($0) })
+            seen.formUnion(chosen.map(\.identifier))
         }
     }
 
@@ -413,8 +412,10 @@ struct ContactsImportView: View {
         do {
             candidates = merge(try await ContactsImport.candidates(), picked)
             existing = matchExisting()
-            // Neue Kontakte vorauswählen, bisherige Auswahl behalten
-            selected.formUnion(Set(candidates.map(\.identifier)).subtracting(existing.keys))
+            // Erstmals gezeigte, noch nicht angelegte Kontakte vorauswählen; Abwahlen des Nutzers bleiben bestehen.
+            let ids = Set(candidates.map(\.identifier))
+            selected.formUnion(ids.subtracting(seen).subtracting(existing.keys))
+            seen.formUnion(ids)
         } catch ContactsImport.ImportError.denied {
             // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
             candidates = picked
@@ -435,6 +436,7 @@ struct ContactsImportView: View {
     private func importSelected() {
         let current = matchExisting()
         var updated = Set<UUID>()
+        var created = Set<String>()
         for (index, candidate) in candidates.enumerated() where selected.contains(candidate.identifier) {
             let person: Person
             if let known = current[candidate.identifier] {
@@ -446,12 +448,14 @@ struct ContactsImportView: View {
                 person.month = candidate.month
                 if let year = candidate.year {
                     person.year = year
-                } else if let old = person.year, old <= 1900 {
-                    // Früher übernommenes Platzhalterjahr (1604/1900) entfernen; ein echtes eigenes Jahr bleibt.
+                } else if let old = person.year, old <= ContactsImport.placeholderYear {
+                    // Früher übernommenes Platzhalterjahr (1604) entfernen; ein echtes eigenes Jahr bleibt.
                     person.year = nil
                 }
                 if person.contactIdentifier == nil { person.contactIdentifier = candidate.identifier }
             } else {
+                // Dieselbe Person doppelt im Adressbuch (z. B. iCloud und Google): nur einmal anlegen.
+                guard created.insert(Self.matchKey(name: candidate.name, day: candidate.day, month: candidate.month)).inserted else { continue }
                 person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
                 person.contactIdentifier = candidate.identifier
                 context.insert(person)

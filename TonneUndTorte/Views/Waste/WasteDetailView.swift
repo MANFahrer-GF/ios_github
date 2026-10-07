@@ -32,7 +32,7 @@ struct WasteDetailView: View {
                 Toggle("Aktiv", isOn: $type.isActive)
                 Toggle("Erinnerungen", isOn: $type.remindersEnabled)
                 Picker("Art", selection: Binding(get: { type.category }, set: { type.category = $0 })) {
-                    ForEach(WasteCategory.allCases, id: \.self) { Label($0.name, systemImage: $0.symbolName).tag($0) }
+                    ForEach(WasteCategory.allCases, id: \.self) { category in Label { Text(category.name) } icon: { Image.waste(category.symbolName, name: category.name) }.tag(category) }
                 }
             }
             Section("Farbe & Symbol") {

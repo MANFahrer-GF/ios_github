@@ -19,6 +19,9 @@ enum ContactsImport {
         var errorDescription: String? { L10n.t("Kontaktzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben.", "Contacts access was not allowed. Please enable it in Settings.") }
     }
 
+    /// Jahr, das Kontakte-Konten für „ohne Jahr“ eintragen; alles bis dahin ist kein echtes Geburtsjahr.
+    static let placeholderYear = 1604
+
     enum Access { case full, limited, denied, notDetermined }
 
     /// Aktueller Freigabestatus. Seit iOS 18 kann man auch nur ausgewählte Kontakte freigeben.
@@ -66,8 +69,8 @@ enum ContactsImport {
         if name.isEmpty, contact.isKeyAvailable(CNContactNicknameKey) { name = contact.nickname }
         guard !name.isEmpty else { return nil }
         let phone = contact.isKeyAvailable(CNContactPhoneNumbersKey) ? contact.phoneNumbers.first?.value.stringValue : nil
-        // Manche Konten speichern „ohne Jahr“ als 1604 oder 1900 – das ist kein echtes Geburtsjahr.
-        let year = birthday.year.flatMap { $0 > 1900 ? $0 : nil }
+        // Manche Konten speichern „ohne Jahr“ als 1604 – das ist kein echtes Geburtsjahr.
+        let year = birthday.year.flatMap { $0 > ContactsImport.placeholderYear ? $0 : nil }
         return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: year, phone: phone)
     }
 }

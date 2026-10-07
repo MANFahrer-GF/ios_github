@@ -83,6 +83,13 @@ public enum ReminderPlanner {
         }
     }
 
+    /// Kurzform für Widgets: alle Namen, wenn sie passen („A und B“), sonst die ersten `max` und „+n“.
+    public static func shortNames(_ names: [String], max: Int) -> String {
+        let limit = Swift.max(1, max)
+        guard names.count > limit else { return joinNames(names) }
+        return names.prefix(limit).joined(separator: ", ") + " +\(names.count - limit)"
+    }
+
     public static func plan(
         pickups: [PlannedPickup],
         birthdays: [PlannedBirthday],

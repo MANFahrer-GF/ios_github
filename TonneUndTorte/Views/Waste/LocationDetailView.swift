@@ -240,7 +240,7 @@ private struct MappingRow: View {
                     Label { Text(type.name) } icon: { Image.waste(type.symbolName, name: type.name) }.tag(SyncService.Target.existing(type))
                 }
                 ForEach(WasteCategory.allCases, id: \.self) { category in
-                    Label(newTitle(for: category), systemImage: category.symbolName).tag(SyncService.Target.new(category))
+                    Label { Text(newTitle(for: category)) } icon: { Image.waste(category.symbolName, name: category.name) }.tag(SyncService.Target.new(category))
                 }
             }
             .labelsHidden()

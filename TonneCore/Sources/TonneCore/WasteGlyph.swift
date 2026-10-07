@@ -2,6 +2,9 @@ import Foundation
 
 /// Eigene Abfall-Piktogramme statt SF Symbols: Tonne mit Rädern, zugeknoteter Sack, Flasche, Zweig.
 /// Gespeichert bleibt der SF-Symbolname; erst beim Anzeigen wird auf das passende Bild aus dem Asset-Katalog umgeschaltet.
+/// Bewusst keine Umschreibung der gespeicherten Namen: Die Daten laufen über iCloud auch zu Geräten mit älterer
+/// App-Version, die nur SF Symbols kennen. Nur wer in der Auswahl ausdrücklich ein eigenes Piktogramm wählt,
+/// speichert einen `tt.*`-Namen.
 public enum WasteGlyph {
     /// Name des Bildes im Asset-Katalog oder `nil`, wenn das SF Symbol passt.
     /// - Parameter name: Name der Abfallart, z. B. „Gelbe Tonne“ statt „Gelber Sack“.

@@ -16,6 +16,14 @@ final class CoreTests: XCTestCase {
 
     func day(_ iso: String) -> Date { Days.parse(iso, calendar: calendar)! }
 
+    func testShortNames() {
+        XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), L10n.t("A, B und C", "A, B and C"))
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 4), L10n.t("A, B und C", "A, B and C"))
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C", "D"], max: 2), "A, B +2")
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B"], max: 0), "A +1")
+    }
+
     func testWasteGlyph() {
         XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Gelber Sack"), "tt.sack")
         XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Gelbe Tonne"), "tt.bin.yellow")
