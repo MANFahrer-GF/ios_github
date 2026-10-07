@@ -22,13 +22,27 @@ jobs:
         run: swift test
 
   app-build:
-    name: App, Widgets und Watch bauen
-    runs-on: macos-15
+    name: App, Widgets und Watch bauen (${{ matrix.xcode }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            xcode: "Xcode 26"
+            pattern: "Xcode_26"
+          - runner: macos-26
+            xcode: "Xcode 27"
+            pattern: "Xcode_27"
     steps:
       - uses: actions/checkout@v4
       - name: Xcode wählen
         run: |
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_*.app | grep -vi beta | sort -V | tail -1)"
+          echo "Installiert:"; ls -d /Applications/Xcode*.app
+          XCODE="$(ls -d /Applications/${{ matrix.pattern }}*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -z "$XCODE" ]; then echo "::error::${{ matrix.xcode }} ist auf ${{ matrix.runner }} nicht installiert"; exit 1; fi
+          sudo xcode-select -s "$XCODE"
           xcodebuild -version
       - name: Bauen (Simulator, ohne Signatur)
         run: |
@@ -41,6 +55,12 @@ jobs:
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             2>&1 | tee build.log | grep -E "error:|warning: .*(deprecated|unused)|BUILD (SUCCEEDED|FAILED)" || true
           grep -q "BUILD SUCCEEDED" build.log
+      - name: Warnungen zusammenfassen
+        if: always()
+        run: |
+          echo "## Warnungen (${{ matrix.xcode }})" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "warning:" build.log | grep -v "/DerivedData/" | sed -E 's#^.*/ios_github/##' | sort -u | head -80 | sed 's/^/    /' >> "$GITHUB_STEP_SUMMARY" || true
+          grep -E "warning:" build.log | grep -v "/DerivedData/" | sed -E 's#^.*/ios_github/##' | sort -u | head -80 || true
       - name: Fehler zusammenfassen
         if: failure()
         run: |
@@ -51,5 +71,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: build-log
+          name: build-log-${{ matrix.runner }}
           path: build.log
