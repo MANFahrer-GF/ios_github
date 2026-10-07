@@ -191,6 +191,22 @@ struct PickupWidgetView: View {
         }
     }
 
+    /// Alle Geburtstage des nächsten Tages in einer Zeile: Avatare übereinander, Namen zusammengefasst.
+    @ViewBuilder
+    private func birthdayDayLine(_ day: [WidgetSnapshot.BirthdayItem]) -> some View {
+        if day.count <= 1, let only = day.first {
+            birthdayLine(only)
+        } else if let first = day.first {
+            HStack(spacing: 8) {
+                KlarAvatarStack(people: day.map { ($0.initials, KlarStyle.birthday) }, size: 24)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(day.names()).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                    Text(DateText.countdown(first.date)).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
+                }
+            }
+        }
+    }
+
     private func birthdayDetail(_ birthday: WidgetSnapshot.BirthdayItem) -> String {
         let when = DateText.countdown(birthday.date)
         if let years = birthday.years { return "\(years) · \(when)" }
@@ -233,8 +249,8 @@ struct PickupWidgetView: View {
                     Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme))
                 }
                 Spacer(minLength: 0)
-                if let birthday = entry.snapshot.birthdays.first {
-                    birthdayLine(birthday)
+                if !entry.snapshot.birthdays.isEmpty {
+                    birthdayDayLine(entry.snapshot.birthdays.firstDay)
                 } else if later.count > 2 {
                     laterLine(later[2], maxNames: 2)
                 }
@@ -284,7 +300,7 @@ struct PickupWidgetView: View {
         VStack(alignment: .leading, spacing: 0) {
                 caption(L10n.t("GEBURTSTAGE", "BIRTHDAYS")).padding(.bottom, 8)
                 VStack(alignment: .leading, spacing: 7) {
-                    ForEach(Array(entry.snapshot.birthdays.prefix(2).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
+                    ForEach(Array(entry.snapshot.birthdays.prefix(3).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
                     if entry.snapshot.birthdays.isEmpty {
                         Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
                     }

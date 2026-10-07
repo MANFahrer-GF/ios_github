@@ -525,3 +525,35 @@ struct KlarAvatar: View {
         .frame(width: size, height: size)
     }
 }
+
+/// Mehrere Geburtstagskinder am selben Tag: Avatare leicht überlappend.
+struct KlarAvatarStack: View {
+    let people: [(initials: String, colorHex: String)]
+    var size: CGFloat = 36
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        HStack(spacing: -size * 0.32) {
+            ForEach(Array(people.prefix(3).enumerated()), id: \.offset) { _, person in
+                KlarAvatar(initials: person.initials, colorHex: person.colorHex, size: size)
+                    .overlay(Circle().strokeBorder(KlarStyle.base(scheme), lineWidth: max(1.5, size * 0.06)))
+            }
+        }
+    }
+}
+
+extension Array where Element == WidgetSnapshot.BirthdayItem {
+    /// Alle Geburtstage am Tag des ersten Eintrags (z. B. Zwillinge oder zwei Freunde am selben Tag).
+    var firstDay: [WidgetSnapshot.BirthdayItem] {
+        guard let first = first else { return [] }
+        return filter { Calendar.current.isDate($0.date, inSameDayAs: first.date) }
+    }
+
+    /// Namen kurz zusammengefasst: „Oma Erika & Paul“ bzw. „Oma Erika, Paul +1“.
+    func names(max: Int = 2) -> String {
+        let all = map(\.name)
+        guard all.count > 1 else { return all.first ?? "" }
+        if all.count == 2 { return "\(all[0]) & \(all[1])" }
+        return all.prefix(max).joined(separator: ", ") + " +\(all.count - max)"
+    }
+}
