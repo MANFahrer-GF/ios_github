@@ -79,6 +79,9 @@ final class AppModel: ObservableObject {
         }
         // Apple Watch: Snapshot hinschicken, „Erledigt“ entgegennehmen
         WatchSync.shared.activate()
+        WatchSync.shared.onUndoReceived = { [weak self] dayKey in
+            Task { await self?.markUndone(dayKey: dayKey) }
+        }
         WatchSync.shared.onDoneReceived = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
         }
@@ -117,6 +120,7 @@ final class AppModel: ObservableObject {
         } else {
             await LiveActivityManager.endAll()
         }
+        await CalendarExport.autoSyncIfEnabled(items: calendarExportItems())
     }
 
     // MARK: - Daten
@@ -210,10 +214,23 @@ final class AppModel: ObservableObject {
         await refreshAll()
     }
 
-    /// „Erledigt“-Markierungen aus Widget/Live-Aktivität in die Datenbank übernehmen.
+    /// „Erledigt“ zurücknehmen, wenn man versehentlich getippt hat. Die Erinnerungen werden neu geplant.
+    func markUndone(dayKey: String) async {
+        guard let day = Days.parse(dayKey) else { return }
+        for type in allWasteTypes() where type.isDone(on: day) {
+            type.unmarkDone(on: day)
+        }
+        try? context.save()
+        SnapshotStore.clearUndo(dayKey: dayKey)
+        SnapshotStore.clearDone(dayKey: dayKey)
+        await refreshAll()
+    }
+
+    /// „Erledigt“-Markierungen (und Rücknahmen) aus Widget/Live-Aktivität/Watch in die Datenbank übernehmen.
     func applyPendingDoneMarkers() async {
+        let undo = SnapshotStore.undoDays()
+        for key in undo { await markUndone(dayKey: key) }
         let pending = SnapshotStore.doneDays()
-        guard !pending.isEmpty else { return }
         for key in pending { await markDone(dayKey: key) }
     }
 
@@ -267,7 +284,7 @@ final class AppModel: ObservableObject {
             guard !items.isEmpty else { return nil }
             return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName) }, done: items.allSatisfy(\.done))
         }
-        let birthdays = days.flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
+        let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
             WidgetSnapshot.BirthdayItem(date: $0.date, name: $0.title, years: $0.years, colorHex: $0.colorHex, initials: NameText.initials($0.title))
         }
         let stats = statistics()

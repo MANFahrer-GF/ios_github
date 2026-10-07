@@ -31,6 +31,29 @@ struct MarkPickupDoneIntent: DoneIntentBase {
     }
 }
 
+/// „Erledigt“ zurücknehmen, falls man versehentlich getippt hat.
+struct UndoPickupDoneIntent: DoneIntentBase {
+    static var title: LocalizedStringResource = "Erledigt zurücknehmen"
+    static var description = IntentDescription("Nimmt die Markierung „steht draußen“ für einen Abholtag zurück.")
+    static var openAppWhenRun = false
+
+    @Parameter(title: "Tag")
+    var dayKey: String?
+
+    init() { dayKey = nil }
+    init(dayKey: String) { self.dayKey = dayKey }
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "")
+        guard !key.isEmpty else { return .result(dialog: "Es steht keine Abholung an.") }
+        SnapshotStore.markUndone(dayKey: key)
+        #if os(watchOS)
+        WatchSync.sendUndo(dayKey: key)
+        #endif
+        return .result(dialog: "Okay, die Tonne gilt wieder als offen.")
+    }
+}
+
 /// Siri / Kurzbefehle: „Wann kommt die nächste Müllabfuhr?“
 struct NextPickupIntent: AppIntent {
     static var title: LocalizedStringResource = "Nächste Abholung"

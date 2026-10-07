@@ -17,7 +17,7 @@ struct PickupLiveActivity: Widget {
                     if !context.state.done {
                         Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "checkmark.circle.fill").font(.title2) }.buttonStyle(.plain).tint(.green)
                     } else {
-                        Image(systemName: "checkmark.circle.fill").font(.title2).foregroundStyle(.green)
+                        Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "arrow.uturn.backward.circle.fill").font(.title2) }.buttonStyle(.plain).tint(.secondary)
                     }
                 }
                 DynamicIslandExpandedRegion(.center) {
@@ -55,6 +55,13 @@ struct PickupLiveActivity: Widget {
                     Label("Erledigt", systemImage: "checkmark.circle.fill").font(.subheadline.weight(.semibold))
                         .padding(.horizontal, 12).padding(.vertical, 8)
                         .background(color.opacity(0.25), in: Capsule())
+                }
+                .buttonStyle(.plain)
+            } else {
+                Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) {
+                    Label("Zurück", systemImage: "arrow.uturn.backward").font(.caption.weight(.semibold))
+                        .padding(.horizontal, 10).padding(.vertical, 6)
+                        .background(.secondary.opacity(0.2), in: Capsule())
                 }
                 .buttonStyle(.plain)
             }

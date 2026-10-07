@@ -5,6 +5,7 @@ import SwiftUI
 struct TonneWidgetBundle: WidgetBundle {
     var body: some Widget {
         PickupWidget()
+        BirthdayWidget()
         PickupLiveActivity()
     }
 }

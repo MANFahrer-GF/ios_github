@@ -8,6 +8,8 @@ struct MoreView: View {
     @State private var exportMessage: String?
     @State private var isExporting = false
 
+    @AppStorage(CalendarExport.autoSyncKey) private var calendarAutoSync = false
+
     var body: some View {
         NavigationStack {
             List {
@@ -26,10 +28,28 @@ struct MoreView: View {
                     } label: {
                         HStack { Label("In Apple-Kalender eintragen", systemImage: "calendar.badge.plus"); Spacer(); if isExporting { ProgressView() } }
                     }
+                    Toggle(isOn: $calendarAutoSync) {
+                        Label("Kalender automatisch aktuell halten", systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    .onChange(of: calendarAutoSync) { _, enabled in
+                        guard enabled else { return }
+                        Task {
+                            isExporting = true
+                            do {
+                                let n = try await CalendarExport.export(items: model.calendarExportItems())
+                                CalendarExport.resetFingerprint()
+                                exportMessage = "\(n) Termine eingetragen. Der Kalender „Tonne & Torte“ wird ab jetzt nach jedem Abgleich von selbst aktualisiert."
+                            } catch {
+                                calendarAutoSync = false
+                                exportMessage = error.localizedDescription
+                            }
+                            isExporting = false
+                        }
+                    }
                     ShareLink(item: FeedFile(text: feedText()), preview: SharePreview("Tonne & Torte.ics")) {
                         Label("Als ICS-Datei teilen", systemImage: "square.and.arrow.up")
                     }
-                } header: { Text("Export") } footer: { Text("Der Kalender-Export legt einen eigenen Kalender an und enthält die gleichen Alarme wie die App.") }
+                } header: { Text("Apple-Kalender") } footer: { Text("Die App legt einen eigenen Kalender „Tonne & Torte“ mit denselben Alarmen an. Mit „automatisch aktuell halten“ werden verschobene oder neue Termine nach jedem Abgleich von selbst nachgetragen, ohne ICS-Datei. Über iCloud erscheint der Kalender auch auf iPad und Mac.") }
                 Section {
                     NavigationLink { SettingsView() } label: { Label("Einstellungen", systemImage: "gearshape.fill") }
                 }

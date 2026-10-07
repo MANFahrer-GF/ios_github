@@ -13,6 +13,8 @@ final class WatchSync: NSObject, WCSessionDelegate {
 
     /// Wird auf dem iPhone gesetzt, um „Erledigt“ von der Watch zu verarbeiten.
     var onDoneReceived: ((String) -> Void)?
+    var onUndoReceived: ((String) -> Void)?
+    static let undoKey = "undoDayKey"
 
     private override init() { super.init() }
 
@@ -45,6 +47,18 @@ final class WatchSync: NSObject, WCSessionDelegate {
             session.sendMessage([doneKey: dayKey], replyHandler: nil, errorHandler: { _ in session.transferUserInfo([doneKey: dayKey]) })
         } else {
             session.transferUserInfo([doneKey: dayKey])
+        }
+    }
+
+    /// Watch: „Erledigt“ zurücknehmen.
+    static func sendUndo(dayKey: String) {
+        guard WCSession.isSupported() else { return }
+        let session = WCSession.default
+        guard session.activationState == .activated else { return }
+        if session.isReachable {
+            session.sendMessage([undoKey: dayKey], replyHandler: nil, errorHandler: { _ in session.transferUserInfo([undoKey: dayKey]) })
+        } else {
+            session.transferUserInfo([undoKey: dayKey])
         }
     }
 
@@ -88,6 +102,9 @@ final class WatchSync: NSObject, WCSessionDelegate {
     private func handle(_ message: [String: Any]) {
         if let dayKey = message[WatchSync.doneKey] as? String {
             DispatchQueue.main.async { self.onDoneReceived?(dayKey) }
+        }
+        if let dayKey = message[WatchSync.undoKey] as? String {
+            DispatchQueue.main.async { self.onUndoReceived?(dayKey) }
         }
         #if os(iOS)
         if message["refresh"] != nil {

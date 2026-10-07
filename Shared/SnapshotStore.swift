@@ -66,4 +66,37 @@ enum SnapshotStore {
         days.remove(dayKey)
         defaults.set(Array(days).sorted(), forKey: doneKey)
     }
+
+    // MARK: - „Erledigt“ zurücknehmen (versehentlich getippt)
+
+    static let undoKey = "pickup.undoDays"
+
+    static func undoDays() -> Set<String> {
+        Set(defaults.stringArray(forKey: undoKey) ?? [])
+    }
+
+    /// Nimmt die Markierung im Snapshot sofort zurück und merkt den Tag für die App vor.
+    static func markUndone(dayKey: String) {
+        var done = doneDays()
+        done.remove(dayKey)
+        defaults.set(Array(done).sorted(), forKey: doneKey)
+        var undo = undoDays()
+        undo.insert(dayKey)
+        defaults.set(Array(undo).sorted(), forKey: undoKey)
+        if var snapshot = load() {
+            snapshot.pickupDays = snapshot.pickupDays.map { day in
+                var copy = day
+                if Days.iso(day.date) == dayKey { copy.done = false }
+                return copy
+            }
+            save(snapshot)
+        }
+        DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
+    }
+
+    static func clearUndo(dayKey: String) {
+        var days = undoDays()
+        days.remove(dayKey)
+        defaults.set(Array(days).sorted(), forKey: undoKey)
+    }
 }

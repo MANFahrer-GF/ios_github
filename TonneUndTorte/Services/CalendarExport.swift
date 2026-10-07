@@ -22,11 +22,43 @@ enum CalendarExport {
         var alarmMinutesFromMidnight: [Int]
     }
 
+    static let autoSyncKey = "calendar.autoSync"
+    private static let fingerprintKey = "calendar.autoSync.fingerprint"
+
+    /// Hat der Nutzer vollen Kalenderzugriff gegeben?
+    static var hasFullAccess: Bool {
+        if #available(iOS 17.0, *) {
+            return EKEventStore.authorizationStatus(for: .event) == .fullAccess
+        }
+        return EKEventStore.authorizationStatus(for: .event) == .authorized
+    }
+
+    /// Hält den Kalender „Tonne & Torte“ von selbst aktuell: läuft nach jedem Abgleich, fragt nie nach
+    /// Rechten und schreibt nur, wenn sich die Termine seit dem letzten Mal geändert haben.
+    static func autoSyncIfEnabled(items: [Item]) async {
+        guard UserDefaults.standard.bool(forKey: autoSyncKey), hasFullAccess else { return }
+        let fingerprint = items.map { "\(Days.iso($0.date))|\($0.title)|\($0.alarmMinutesFromMidnight)" }.joined(separator: ";").hashValue
+        guard UserDefaults.standard.integer(forKey: fingerprintKey) != fingerprint else { return }
+        do {
+            try await export(items: items, askForAccess: false)
+            UserDefaults.standard.set(fingerprint, forKey: fingerprintKey)
+        } catch {
+            // Beim nächsten Abgleich erneut versuchen.
+        }
+    }
+
+    /// Fingerabdruck verwerfen, damit der nächste automatische Abgleich sicher schreibt.
+    static func resetFingerprint() {
+        UserDefaults.standard.removeObject(forKey: fingerprintKey)
+    }
+
     @discardableResult
-    static func export(items: [Item]) async throws -> Int {
+    static func export(items: [Item], askForAccess: Bool = true) async throws -> Int {
         let store = EKEventStore()
         let granted: Bool
-        if #available(iOS 17.0, *) {
+        if !askForAccess {
+            granted = hasFullAccess
+        } else if #available(iOS 17.0, *) {
             granted = try await store.requestFullAccessToEvents()
         } else {
             granted = try await store.requestAccess(to: .event)
@@ -34,12 +66,13 @@ enum CalendarExport {
         guard granted else { throw ExportError.denied }
 
         let calendar = try findOrCreateCalendar(in: store)
-        // Bisherige Einträge im Zielzeitraum entfernen, damit nichts doppelt landet
-        if let from = items.map(\.date).min(), let to = items.map(\.date).max() {
-            let predicate = store.predicateForEvents(withStart: from, end: Days.add(1, to: to), calendars: [calendar])
-            for event in store.events(matching: predicate) {
-                try? store.remove(event, span: .thisEvent, commit: false)
-            }
+        // Alle bisherigen Einträge ab heute entfernen, damit nichts doppelt bleibt und
+        // verschobene oder gelöschte Termine aus dem Kalender verschwinden.
+        let from = Days.today()
+        let to = max(items.map(\.date).max() ?? from, Days.add(400, to: from))
+        let predicate = store.predicateForEvents(withStart: from, end: Days.add(1, to: to), calendars: [calendar])
+        for event in store.events(matching: predicate) {
+            try? store.remove(event, span: .thisEvent, commit: false)
         }
         var count = 0
         for item in items {

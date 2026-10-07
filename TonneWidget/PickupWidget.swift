@@ -76,11 +76,15 @@ struct PickupWidget: Widget {
 
 struct PickupWidgetView: View {
     @Environment(\.widgetFamily) private var family
+    @Environment(\.colorScheme) private var scheme
     let entry: PickupEntry
 
     private var next: WidgetSnapshot.PickupDay? { entry.snapshot.nextPickupDay(from: entry.date) }
     private var days: Int? { next.map { Days.until($0.date) } }
-    private var bins: [BinRef] { (next?.items ?? []).map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) } }
+    private var tiles: [BinTileItem] { (next?.items ?? []).map { BinTileItem(name: $0.name, symbolName: $0.symbolName, colorHex: $0.colorHex) } }
+    private var later: [WidgetSnapshot.PickupDay] { entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) } }
+    /// Knopf nur, wenn heute oder morgen abgeholt wird.
+    private var showsButton: Bool { next != nil && (days ?? 99) <= 1 }
 
     var body: some View {
         switch family {
@@ -95,203 +99,161 @@ struct PickupWidgetView: View {
 
     // MARK: Texte
 
-    private var eyebrow: String {
-        guard let days else { return "ALLES RUHIG" }
-        return days == 0 ? "HEUTE" : days == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG"
-    }
-
-    private var headline: String {
-        guard let next, let days else { return "Keine Abholung" }
-        if next.done { return "Steht draußen 👍" }
-        return days == 0 ? "Heute wird abgeholt" : days == 1 ? "Heute Abend rausstellen!" : "In \(days) Tagen"
+    private var eyebrow: String { PickupWords.eyebrow(date: next?.date, location: family == .systemSmall ? nil : entry.locationName) }
+    private var headline: String { PickupWords.headline(days: days, done: next?.done ?? false) }
+    private var subline: String {
+        if next == nil, let first = entry.snapshot.pickupDays.first {
+            return L10n.t("nächste \(DateText.countdown(first.date))", "next \(DateText.countdown(first.date))")
+        }
+        return PickupWords.subline(days: days, done: next?.done ?? false)
     }
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
         let all = day.items.map(\.name)
-        let shown = all.prefix(max).joined(separator: " + ")
+        let shown = all.prefix(max).joined(separator: ", ")
         return all.count > max ? shown + " +\(all.count - max)" : shown
     }
 
-    private func bins(_ day: WidgetSnapshot.PickupDay) -> [BinRef] {
-        day.items.map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }
+    // MARK: Bausteine
+
+    private var textColor: Color { DesignColor.text(scheme) }
+    private var mutedColor: Color { DesignColor.muted(scheme) }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(eyebrow).font(.system(size: 10, weight: .heavy)).tracking(1.2).foregroundStyle(DesignColor.accent(scheme)).lineLimit(1)
+            Text(headline).font(.system(size: 24, weight: .black)).tracking(-0.6).foregroundStyle(textColor).lineLimit(1).minimumScaleFactor(0.65).padding(.top, 3)
+            Text(subline).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1).padding(.top, 3)
+        }
     }
 
-    /// Kopfsymbol: eine Tonne groß, mehrere als Stapel, nichts anstehend ein Haken.
-    private func headerSymbol(size: CGFloat) -> some View {
+    /// Kachelreihe plus Knopf: feste Plätze, nichts überlappt.
+    private func tileRow(slots: Int, width: CGFloat = 38, height: CGFloat = 44) -> some View {
+        HStack(alignment: .bottom, spacing: 6) {
+            BinTileRow(items: tiles, slots: showsButton ? min(slots, 2) : slots, width: width, height: height, spacing: 5)
+            Spacer(minLength: 4)
+            if let next, showsButton { actionButton(next) }
+        }
+    }
+
+    private func actionButton(_ day: WidgetSnapshot.PickupDay) -> some View {
         Group {
-            if bins.isEmpty {
-                Image(systemName: "checkmark.circle.fill").font(.system(size: size * 0.8))
-            } else {
-                BinStack(bins: bins, size: size)
-            }
-        }
-    }
-
-    /// Reihe aus Tonnen mit Namen darunter, für das kleine Widget.
-    private func tileRow(_ day: WidgetSnapshot.PickupDay, size: CGFloat) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            ForEach(Array(day.items.prefix(3).enumerated()), id: \.offset) { _, item in
-                BinTile(name: item.name, bin: BinRef(symbolName: item.symbolName, colorHex: item.colorHex), size: size)
-            }
-            if day.items.count > 3 {
-                Text("+\(day.items.count - 3)").font(.caption2.weight(.bold)).padding(.top, size / 3)
-            }
-        }
-    }
-
-    /// Kleine farbige Punkte vor dem Text, für die Liste der nächsten Tage.
-    private func dotRow(_ day: WidgetSnapshot.PickupDay, max: Int) -> some View {
-        HStack(spacing: 4) {
-            HStack(spacing: -4) {
-                ForEach(Array(day.items.prefix(max).enumerated()), id: \.offset) { _, item in
-                    BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 14)
+            if day.done {
+                Button(intent: UndoPickupDoneIntent(dayKey: Days.iso(day.date))) {
+                    ZStack {
+                        Circle().fill(DesignColor.button(scheme))
+                        Image(systemName: "arrow.uturn.backward").font(.system(size: 12, weight: .heavy)).foregroundStyle(.white)
+                    }
+                    .frame(width: 32, height: 32)
                 }
+                .buttonStyle(.plain)
+            } else {
+                Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) {
+                    CheckCircleLabel(size: 32)
+                }
+                .buttonStyle(.plain)
             }
-            Text(names(day, max: max)).font(.caption2).opacity(0.9).lineLimit(1)
         }
     }
+
+    private func laterRow(_ day: WidgetSnapshot.PickupDay, maxNames: Int) -> some View {
+        HStack(spacing: 7) {
+            Text(DateText.short(day.date)).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).frame(width: 46, alignment: .leading).lineLimit(1)
+            BinDots(hexes: day.items.map(\.colorHex))
+            Text(names(day, max: maxNames)).font(.system(size: 11, weight: .bold)).foregroundStyle(textColor).lineLimit(1)
+        }
+    }
+
+    private func birthdayRow(_ birthday: WidgetSnapshot.BirthdayItem) -> some View {
+        HStack(spacing: 8) {
+            InitialsAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(birthday.name).font(.system(size: 11, weight: .bold)).foregroundStyle(textColor).lineLimit(1)
+                Text(birthdayDetail(birthday)).font(.system(size: 10, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1)
+            }
+        }
+    }
+
+    private func birthdayDetail(_ birthday: WidgetSnapshot.BirthdayItem) -> String {
+        let when = DateText.countdown(birthday.date)
+        if let years = birthday.years { return "\(years) · \(when)" }
+        return when
+    }
+
+    private var caption: (String) -> Text {
+        { Text($0).font(.system(size: 9, weight: .heavy)).tracking(1.2).foregroundStyle(mutedColor) }
+    }
+
+    private func surface() -> some View { DesignSurface(glowHex: tiles.first?.colorHex) }
 
     // MARK: Home-Screen
 
     private var small: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
-                    Text(headline).font(.subheadline.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
-                }
-                Spacer(minLength: 4)
-                if bins.count <= 1 { headerSymbol(size: 26) }
-            }
-            if let next {
-                Spacer(minLength: 0)
-                tileRow(next, size: bins.count > 2 ? 26 : 30)
-                Spacer(minLength: 0)
-                HStack {
-                    Text(DateText.short(next.date)).font(.caption2).opacity(0.85)
-                    Spacer()
-                    if !next.done, let days, days <= 1 { doneButton(next) }
-                }
-            } else {
-                Spacer(minLength: 0)
-            }
+        VStack(alignment: .leading, spacing: 0) {
+            header
+            Spacer(minLength: 6)
+            if next != nil { tileRow(slots: 3) }
         }
-        .foregroundStyle(.white)
-        .containerBackground(for: .widget) { gradient }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) { surface() }
     }
 
     private var medium: some View {
-        HStack(alignment: .top, spacing: 14) {
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
-                        Text(headline).font(.title3.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
-                    }
-                    Spacer(minLength: 4)
-                    headerSymbol(size: 30)
-                }
-                if let next {
-                    chips(next.items)
-                    Text(DateText.long(next.date)).font(.caption).opacity(0.85)
-                }
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                header
+                Spacer(minLength: 6)
+                if next != nil { tileRow(slots: 3) }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Rectangle().fill(DesignColor.hairline(scheme)).frame(width: 1).padding(.horizontal, 12)
+            VStack(alignment: .leading, spacing: 8) {
+                caption(L10n.t("DANACH", "UP NEXT"))
+                ForEach(Array(later.prefix(2).enumerated()), id: \.offset) { _, day in laterRow(day, maxNames: 2) }
+                if later.isEmpty { Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
                 Spacer(minLength: 0)
-                if let next, !next.done, let days, days <= 1 { doneButton(next) }
-            }
-            Spacer(minLength: 0)
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) }.prefix(3), id: \.date) { day in
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(DateText.countdown(day.date)).font(.caption.weight(.semibold))
-                        dotRow(day, max: 2)
-                    }
+                if let birthday = entry.snapshot.birthdays.first {
+                    birthdayRow(birthday)
+                } else if later.count > 2 {
+                    laterRow(later[2], maxNames: 2)
                 }
             }
-            .frame(width: 118, alignment: .leading)
-            .padding(8)
-            .background(.black.opacity(0.18), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .frame(width: 136, alignment: .leading)
         }
-        .foregroundStyle(.white)
-        .containerBackground(for: .widget) { gradient }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) { surface() }
     }
 
     private var large: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
-                    Text(headline).font(.title2.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
-                }
-                Spacer()
-                headerSymbol(size: 40)
+                header
+                Spacer(minLength: 8)
+                if let next, showsButton { actionButton(next) }
             }
-            if let next {
-                chips(next.items)
-                HStack {
-                    Text(DateText.long(next.date)).font(.caption).opacity(0.85)
-                    Spacer()
-                    if !next.done, let days, days <= 1 { doneButton(next) }
-                }
-            }
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) }.prefix(5), id: \.date) { day in
+            if !tiles.isEmpty { BinTileRow(items: tiles, slots: 5, width: 44, height: 50, spacing: 7) }
+            Rectangle().fill(DesignColor.hairline(scheme)).frame(height: 1)
+            VStack(alignment: .leading, spacing: 7) {
+                caption(L10n.t("DANACH", "UP NEXT"))
+                ForEach(Array(later.prefix(4).enumerated()), id: \.offset) { _, day in
                     HStack {
-                        Text(DateText.countdown(day.date)).font(.caption.weight(.semibold)).frame(width: 80, alignment: .leading)
-                        dotRow(day, max: 3)
-                        Spacer()
-                        Text(DateText.short(day.date)).font(.caption2).opacity(0.7)
+                        laterRow(day, maxNames: 3)
+                        Spacer(minLength: 4)
+                        Text(DateText.countdown(day.date)).font(.system(size: 10, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1)
                     }
                 }
+                if later.isEmpty { Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
             }
-            .padding(10)
-            .background(.black.opacity(0.18), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-            if !entry.snapshot.birthdays.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("🎂 GEBURTSTAGE").font(.caption2.weight(.bold)).opacity(0.85)
-                    ForEach(entry.snapshot.birthdays.prefix(3), id: \.name) { birthday in
-                        HStack {
-                            Text(birthday.name + (birthday.years.map { " (\($0))" } ?? "")).font(.caption.weight(.semibold)).lineLimit(1)
-                            Spacer()
-                            Text(DateText.countdown(birthday.date)).font(.caption2).opacity(0.85)
-                        }
-                    }
-                }
+            Rectangle().fill(DesignColor.hairline(scheme)).frame(height: 1)
+            VStack(alignment: .leading, spacing: 7) {
+                caption(L10n.t("GEBURTSTAGE", "BIRTHDAYS"))
+                ForEach(Array(entry.snapshot.birthdays.prefix(2).enumerated()), id: \.offset) { _, birthday in birthdayRow(birthday) }
+                if entry.snapshot.birthdays.isEmpty { Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
             }
             Spacer(minLength: 0)
         }
-        .foregroundStyle(.white)
-        .containerBackground(for: .widget) { gradient }
-    }
-
-    private var gradient: some View {
-        HeroPalette.gradient(for: bins.map(\.colorHex))
-    }
-
-    /// Jede Tonne als eigener Chip in ihrer Farbe.
-    private func chips(_ items: [WidgetSnapshot.PickupItem]) -> some View {
-        HStack(spacing: 6) {
-            ForEach(Array(items.prefix(3).enumerated()), id: \.offset) { _, item in
-                HStack(spacing: 5) {
-                    BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 18)
-                    Text(item.name).font(.caption2.weight(.semibold))
-                }
-                .padding(.leading, 3).padding(.trailing, 8).padding(.vertical, 3)
-                .background(.white.opacity(0.16), in: Capsule())
-                .lineLimit(1)
-            }
-            if items.count > 3 {
-                Text("+\(items.count - 3)").font(.caption2.weight(.bold))
-            }
-        }
-    }
-
-    private func doneButton(_ day: WidgetSnapshot.PickupDay) -> some View {
-        Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) {
-            Label("Erledigt", systemImage: "checkmark.circle.fill").font(.caption.weight(.semibold))
-                .padding(.horizontal, 10).padding(.vertical, 6)
-                .background(.white.opacity(0.25), in: Capsule())
-        }
-        .buttonStyle(.plain)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) { surface() }
     }
 
     // MARK: Sperrbildschirm

@@ -65,6 +65,16 @@ struct WatchContentView: View {
                         }
                         .tint(.green)
                         .padding(.top, 4)
+                    } else if next.done {
+                        Button {
+                            let key = Days.iso(next.date)
+                            SnapshotStore.markUndone(dayKey: key)
+                            WatchSync.sendUndo(dayKey: key)
+                            snapshot = SnapshotStore.load()
+                        } label: {
+                            Label("Zurücknehmen", systemImage: "arrow.uturn.backward")
+                        }
+                        .padding(.top, 4)
                     }
                 } else if snapshot == nil {
                     Text("Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.").font(.footnote).foregroundStyle(.secondary)

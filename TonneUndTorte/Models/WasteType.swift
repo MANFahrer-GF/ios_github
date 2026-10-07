@@ -86,6 +86,11 @@ final class WasteType {
         if !isDone(on: day) { doneDates.append(day) }
     }
 
+    func unmarkDone(on date: Date) {
+        let day = Days.start(of: date)
+        doneDates.removeAll { Days.start(of: $0) == day }
+    }
+
     /// Entfernt Einzeltermine und Markierungen, die älter als ein Jahr sind.
     func prune() {
         let cutoff = Days.add(-400, to: Days.today())

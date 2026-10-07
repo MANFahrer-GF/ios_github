@@ -87,3 +87,20 @@ extension LiveProviderTests {
     func testHannover() async throws { try await checkTyped(AhaHannoverProvider(), typed: ["Voltastr", "25"], prefer: ["Hannover", "Voltastr. / Vahrenwald"]) }
     func testMuellmaxMuenster() async throws { try await checkTyped(MuellmaxProvider(service: "Awm"), typed: ["Achatiusweg"], prefer: ["Achatiusweg"]) }
 }
+
+extension LiveProviderTests {
+    func testAlbaBerlin() async throws {
+        try XCTSkipUnless(live, "TONNE_LIVE nicht gesetzt")
+        let provider = ProviderFactory.make(kind: .abfallIOLegacy, serviceKey: "9583a2fa1df97ed95363382c73b41b1b")
+        var selections: [SelectionOption] = []
+        while let step = try await provider.nextStep(after: selections) {
+            print("ALBA Schritt: \(step.title) input=\(step.input) optionen=\(step.options.count) erste=\(step.options.prefix(5).map(\.title))")
+            if step.input == .text { selections.append(SelectionOption(id: "Alexanderstr.", title: "Alexanderstr.")); continue }
+            guard let pick = step.options.first(where: { $0.title.lowercased().contains("alexanderstr") }) ?? step.options.first else { break }
+            selections.append(pick)
+        }
+        let pickups = try await provider.pickups(for: selections)
+        print("ALBA Berlin: \(provider.label(for: selections)) → \(pickups.count) Termine, \(Set(pickups.map(\.name)).sorted())")
+        XCTAssertGreaterThanOrEqual(pickups.count, 5)
+    }
+}

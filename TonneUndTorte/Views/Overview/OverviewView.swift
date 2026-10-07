@@ -11,6 +11,7 @@ struct OverviewView: View {
     @Query(sort: \Person.name) private var people: [Person]
     @ObservedObject private var notifications = NotificationManager.shared
     @AppStorage(SettingsKeys.locationFilter) private var filterID: String = ""
+    @Environment(\.colorScheme) private var scheme
     @State private var refreshToken = 0
 
     private var days: [(day: Date, events: [CalendarEvent])] {
@@ -92,53 +93,84 @@ struct OverviewView: View {
 
     private var heroCard: some View {
         let next = wasteDays.first
-        let hexes = next?.events.map(\.colorHex) ?? []
-        let shadow = HeroPalette.glow(for: hexes)
         let n = next.map { Days.until($0.day) }
         let allDone = next?.events.allSatisfy(\.done) ?? false
+        let tiles = next?.events.map { BinTileItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex) } ?? []
+        let nextAfter = wasteDays.dropFirst().first
+        let subline: String = {
+            if next == nil, let first = wasteDays.first { return "nächste \(DateText.countdown(first.day))" }
+            return PickupWords.subline(days: n, done: allDone)
+        }()
+        let eyebrow: String = {
+            guard let next else { return PickupWords.eyebrow(date: nil) }
+            let single = Set(next.events.compactMap(\.locationName))
+            return PickupWords.eyebrow(date: next.day, location: locations.count > 1 && single.count == 1 ? single.first : nil)
+        }()
 
-        return VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(next == nil ? "ALLES RUHIG" : n == 0 ? "HEUTE" : n == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG")
-                        .font(.caption.weight(.bold)).opacity(0.85)
-                    Text(next == nil ? "Keine Abholung geplant" : allDone ? "Alles steht draußen 👍" : n == 0 ? "Heute wird abgeholt" : n == 1 ? "Heute Abend rausstellen!" : "In \(n ?? 0) Tagen")
-                        .font(.title.weight(.bold))
-                }
-                Spacer()
-                if let next {
-                    BinStack(bins: next.events.map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }, size: 46)
-                } else {
-                    Image(systemName: "checkmark.circle.fill").font(.system(size: 44, weight: .semibold)).opacity(0.9)
-                }
-            }
+        return VStack(alignment: .leading, spacing: 0) {
+            Text(eyebrow).font(.system(size: 11, weight: .heavy)).tracking(1.4).foregroundStyle(DesignColor.accent(scheme)).lineLimit(1)
+            Text(PickupWords.headline(days: n, done: allDone))
+                .font(.system(size: 36, weight: .black)).tracking(-1).foregroundStyle(DesignColor.text(scheme))
+                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 4)
+            Text(subline).font(.subheadline.weight(.semibold)).foregroundStyle(DesignColor.muted(scheme)).padding(.top, 2)
             if let next {
-                FlowLayout(spacing: 8) { ForEach(next.events) { EventChip(event: $0, showLocation: locations.count > 1) } }
-                Text(DateText.long(next.day)).font(.subheadline).opacity(0.9)
-                if !allDone, let n, n <= 1 {
-                    Button {
-                        Haptics.success()
-                        Task { await model.markDone(dayKey: Days.iso(next.day)); refreshToken += 1 }
-                    } label: {
-                        Label("Erledigt – steht draußen", systemImage: "checkmark.circle.fill")
-                            .font(.subheadline.weight(.semibold))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .background(.white.opacity(0.22), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                HStack(alignment: .bottom, spacing: 10) {
+                    FlowLayout(spacing: 8) {
+                        ForEach(Array(tiles.enumerated()), id: \.offset) { _, tile in
+                            BinTileView(name: tile.name, symbolName: tile.symbolName, colorHex: tile.colorHex, width: 52, height: 58)
+                        }
                     }
-                    .buttonStyle(.plain)
+                    Spacer(minLength: 0)
+                    if let n, n <= 1 {
+                        if allDone {
+                            Button {
+                                Haptics.tap()
+                                Task { await model.markUndone(dayKey: Days.iso(next.day)); refreshToken += 1 }
+                            } label: {
+                                Label("Zurück", systemImage: "arrow.uturn.backward")
+                                    .font(.subheadline.weight(.bold))
+                                    .foregroundStyle(DesignColor.text(scheme))
+                                    .padding(.horizontal, 14).padding(.vertical, 10)
+                                    .background(DesignColor.tileMore(scheme), in: Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            Button {
+                                Haptics.success()
+                                Task { await model.markDone(dayKey: Days.iso(next.day)); refreshToken += 1 }
+                            } label: {
+                                Label("Erledigt", systemImage: "checkmark")
+                                    .font(.subheadline.weight(.bold))
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 14).padding(.vertical, 10)
+                                    .background(DesignColor.button(scheme), in: Capsule())
+                                    .overlay(Capsule().strokeBorder(.white.opacity(scheme == .dark ? 0.16 : 0), lineWidth: 1))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .padding(.top, 18)
+                if let nextAfter {
+                    HStack(spacing: 8) {
+                        Text("Danach").font(.caption.weight(.heavy)).foregroundStyle(DesignColor.muted(scheme))
+                        BinDots(hexes: nextAfter.events.map(\.colorHex), size: 10)
+                        Text("\(DateText.countdown(nextAfter.day)) · \(nextAfter.events.map(\.title).joined(separator: ", "))")
+                            .font(.caption.weight(.semibold)).foregroundStyle(DesignColor.muted(scheme)).lineLimit(1)
+                    }
+                    .padding(.top, 14)
                 }
             } else {
-                Text("Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.").font(.subheadline).opacity(0.9)
+                Text("Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.")
+                    .font(.subheadline).foregroundStyle(DesignColor.muted(scheme)).padding(.top, 12)
             }
         }
-        .foregroundStyle(.white)
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            HeroPalette.background(for: hexes)
+            DesignSurface(glowHex: tiles.first?.colorHex)
                 .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
-                .shadow(color: shadow.opacity(0.35), radius: 16, x: 0, y: 8)
+                .shadow(color: .black.opacity(scheme == .dark ? 0.35 : 0.12), radius: 16, x: 0, y: 8)
         )
     }
 
