@@ -88,6 +88,7 @@
 		A1B2C3D4E5F600000000003F /* TonneUndTorte-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneUndTorte-Info.plist"; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000040 /* TonneWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWidget-Info.plist"; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000084 /* TonneWatchWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatchWidget-Info.plist"; sourceTree = "<group>"; };
+		A1B2C3D4E5F60000000000A0 /* TonneWatch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatch-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -177,6 +178,7 @@
 				A1B2C3D4E5F600000000003F /* TonneUndTorte-Info.plist */,
 				A1B2C3D4E5F6000000000040 /* TonneWidget-Info.plist */,
 				A1B2C3D4E5F6000000000084 /* TonneWatchWidget-Info.plist */,
+				A1B2C3D4E5F60000000000A0 /* TonneWatch-Info.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -625,6 +627,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/TonneWatch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKApplication = YES;
@@ -656,6 +659,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/TonneWatch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKApplication = YES;
