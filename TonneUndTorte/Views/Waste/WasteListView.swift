@@ -1,23 +1,21 @@
 import SwiftUI
 import SwiftData
-import UniformTypeIdentifiers
+import TonneCore
 
-/// Verwaltung der Standorte und Müllarten.
 struct WasteListView: View {
+    @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Query(sort: \Location.sortOrder) private var locations: [Location]
     @Query(sort: \WasteType.sortOrder) private var wasteTypes: [WasteType]
 
     @State private var path = NavigationPath()
+    @State private var showWizard = false
+    @State private var showManualLocation = false
     @State private var newTypeLocation: Location?
-    @State private var showNewType = false
-    @State private var showNewLocation = false
-    @State private var syncingLocationID: UUID?
-    @State private var syncError: String?
+    @State private var syncingID: UUID?
+    @State private var message: String?
 
-    private var orphanTypes: [WasteType] {
-        wasteTypes.filter { $0.location == nil }
-    }
+    private var orphanTypes: [WasteType] { wasteTypes.filter { $0.location == nil } }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -26,132 +24,58 @@ struct WasteListView: View {
                     Section {
                         locationRow(location)
                         ForEach(location.sortedWasteTypes) { type in
-                            NavigationLink(value: type) {
-                                WasteTypeRow(type: type)
-                            }
+                            NavigationLink(value: type) { WasteTypeRow(type: type) }
                         }
-                        .onDelete { offsets in
-                            delete(offsets.map { location.sortedWasteTypes[$0] })
-                        }
-                        Button {
-                            newTypeLocation = location
-                            showNewType = true
-                        } label: {
-                            Label("Müllart hinzufügen", systemImage: "plus.circle.fill")
-                        }
+                        .onDelete { offsets in delete(offsets.map { location.sortedWasteTypes[$0] }) }
+                        Button { newTypeLocation = location } label: { Label("Müllart hinzufügen", systemImage: "plus.circle.fill") }
                     }
                 }
-
                 if !orphanTypes.isEmpty {
                     Section("Ohne Standort") {
-                        ForEach(orphanTypes) { type in
-                            NavigationLink(value: type) {
-                                WasteTypeRow(type: type)
-                            }
-                        }
-                        .onDelete { offsets in
-                            delete(offsets.map { orphanTypes[$0] })
-                        }
+                        ForEach(orphanTypes) { NavigationLink(value: $0) { WasteTypeRow(type: $0) } }
+                            .onDelete { offsets in delete(offsets.map { orphanTypes[$0] }) }
                     }
                 }
-
-                if locations.isEmpty && orphanTypes.isEmpty {
-                    ContentUnavailableView(
-                        "Noch keine Standorte",
-                        systemImage: "house",
-                        description: Text("Lege einen Standort an und hole dir die Abfuhrtermine online oder per ICS-Datei.")
-                    )
+                if locations.isEmpty {
+                    ContentUnavailableView("Noch kein Standort", systemImage: "house", description: Text("Finde deinen Entsorger – die Termine kommen automatisch."))
                 }
             }
             .navigationTitle("Müll")
-            .navigationDestination(for: WasteType.self) { type in
-                WasteDetailView(type: type)
-            }
-            .navigationDestination(for: Location.self) { location in
-                LocationDetailView(location: location)
-            }
+            .navigationDestination(for: WasteType.self) { WasteDetailView(type: $0) }
+            .navigationDestination(for: Location.self) { LocationDetailView(location: $0) }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Button {
-                            showNewLocation = true
-                        } label: {
-                            Label("Standort hinzufügen", systemImage: "mappin.circle")
-                        }
-                        if !locations.isEmpty {
-                            Menu {
-                                ForEach(locations) { location in
-                                    Button(location.name) {
-                                        newTypeLocation = location
-                                        showNewType = true
-                                    }
-                                }
-                            } label: {
-                                Label("Müllart hinzufügen", systemImage: "plus.circle")
-                            }
-                        }
-                        Button {
-                            Task { await syncAll() }
-                        } label: {
-                            Label("Alle Standorte aktualisieren", systemImage: "arrow.triangle.2.circlepath")
-                        }
-                        .disabled(!locations.contains { $0.canSync })
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                        Button { showWizard = true } label: { Label("Standort mit Entsorger anlegen", systemImage: "antenna.radiowaves.left.and.right") }
+                        Button { showManualLocation = true } label: { Label("Standort manuell anlegen", systemImage: "pencil") }
+                        Button { Task { await syncAll() } } label: { Label("Alle aktualisieren", systemImage: "arrow.triangle.2.circlepath") }
+                            .disabled(!locations.contains(where: \.canSync))
+                        NavigationLink { WasteABCView() } label: { Label("Abfall-ABC", systemImage: "book.fill") }
+                    } label: { Image(systemName: "plus") }
                 }
             }
-            .sheet(isPresented: $showNewType) {
-                NewWasteTypeSheet(location: newTypeLocation)
-            }
-            .sheet(isPresented: $showNewLocation) {
-                NewLocationSheet { location in
-                    path.append(location)
-                }
-            }
-            .alert("Aktualisierung fehlgeschlagen", isPresented: Binding(
-                get: { syncError != nil },
-                set: { if !$0 { syncError = nil } }
-            )) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text(syncError ?? "")
-            }
+            .sheet(isPresented: $showWizard) { SourceWizardView(location: nil).environmentObject(model) }
+            .sheet(isPresented: $showManualLocation) { NewLocationSheet { path.append($0) } }
+            .sheet(item: $newTypeLocation) { NewWasteTypeSheet(location: $0) }
+            .alert("Hinweis", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) { Button("OK", role: .cancel) {} } message: { Text(message ?? "") }
         }
     }
-
-    // MARK: - Standortzeile
 
     private func locationRow(_ location: Location) -> some View {
         NavigationLink(value: location) {
             HStack(spacing: 12) {
                 SymbolBadge(symbolName: location.symbolName, colorHex: location.colorHex, size: 44)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(location.name)
-                        .font(.headline)
-                    if !location.address.isEmpty {
-                        Text(location.address)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+                    Text(location.name).font(.headline)
+                    Text(location.sourceDescription).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                     if let last = location.lastSyncAt {
-                        Text("Aktualisiert \(last.formatted(.relative(presentation: .named)))")
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                        Text("Aktualisiert \(last.formatted(.relative(presentation: .named)))").font(.caption2).foregroundStyle(.tertiary)
                     }
                 }
                 Spacer()
                 if location.canSync {
-                    if syncingLocationID == location.id {
-                        ProgressView()
-                    } else {
-                        Button {
-                            Task { await sync(location) }
-                        } label: {
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                                .font(.body.weight(.semibold))
-                        }
-                        .buttonStyle(.borderless)
+                    if syncingID == location.id { ProgressView() } else {
+                        Button { Task { await sync(location) } } label: { Image(systemName: "arrow.triangle.2.circlepath").font(.body.weight(.semibold)) }.buttonStyle(.borderless)
                     }
                 }
             }
@@ -159,189 +83,132 @@ struct WasteListView: View {
         }
     }
 
-    // MARK: - Aktionen
-
     private func delete(_ types: [WasteType]) {
-        for type in types {
-            context.delete(type)
-        }
+        types.forEach { context.delete($0) }
         try? context.save()
-        Task { await NotificationManager.shared.reschedule(using: context) }
+        Task { await model.refreshAll() }
     }
 
     private func sync(_ location: Location) async {
-        syncingLocationID = location.id
-        defer { syncingLocationID = nil }
-        do {
-            _ = try await CalendarImporter.sync(location: location, context: context)
-            await NotificationManager.shared.reschedule(using: context)
-        } catch {
-            location.lastSyncMessage = "Fehler: \(error.localizedDescription)"
-            syncError = error.localizedDescription
-        }
+        syncingID = location.id
+        defer { syncingID = nil }
+        do { let r = try await model.sync(location: location); message = "\(r.importedCount) Termine übernommen" + (r.changes.isEmpty ? "" : "\n" + r.changes.joined(separator: "\n")) }
+        catch { message = error.localizedDescription }
     }
 
     private func syncAll() async {
-        for location in locations where location.canSync {
-            await sync(location)
-        }
+        let messages = await model.syncAll(force: true)
+        message = messages.joined(separator: "\n")
     }
 }
 
-/// Zeile einer Müllart mit nächstem Termin.
 struct WasteTypeRow: View {
     let type: WasteType
-
     var body: some View {
         HStack(spacing: 12) {
-            SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 40)
-                .opacity(type.isActive ? 1 : 0.4)
+            SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 40).opacity(type.isActive ? 1 : 0.4)
             VStack(alignment: .leading, spacing: 2) {
-                Text(type.name)
-                    .font(.body.weight(.semibold))
-                    .foregroundStyle(type.isActive ? .primary : .secondary)
-                Text(subtitle)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                Text(type.name).font(.body.weight(.semibold)).foregroundStyle(type.isActive ? .primary : .secondary)
+                Text(subtitle).font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            if !type.remindersEnabled {
-                Image(systemName: "bell.slash")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
+            if !type.remindersEnabled { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.tertiary) }
         }
     }
-
     private var subtitle: String {
         guard type.isActive else { return "Deaktiviert" }
-        guard let next = EventEngine.nextPickup(for: type) else {
-            return type.hasSchedule ? "Keine weiteren Termine" : "Noch keine Termine"
-        }
+        guard let next = type.nextPickup else { return type.hasSchedule ? "Keine weiteren Termine" : "Noch keine Termine" }
         return "\(DateText.countdown(next)) · \(DateText.short(next))"
     }
 }
 
-/// Neue Müllart anlegen – mit Vorlagen für die gängigen Tonnen.
 struct NewWasteTypeSheet: View {
     let location: Location?
+    @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @Query(sort: \WasteType.sortOrder) private var allTypes: [WasteType]
-
-    @State private var preset: WastePreset = .restmuell
-    @State private var name: String = WastePreset.restmuell.name
-    @State private var colorHex: String = WastePreset.restmuell.colorHex
-    @State private var symbolName: String = WastePreset.restmuell.symbolName
+    @State private var category: WasteCategory = .residual
+    @State private var name = WasteCategory.residual.name
+    @State private var colorHex = WasteCategory.residual.colorHex
+    @State private var symbolName = WasteCategory.residual.symbolName
+    @State private var intervalWeeks = 2
+    @State private var anchorDate = Days.today()
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("Vorlage") {
-                    Picker("Vorlage", selection: $preset) {
-                        ForEach(WastePreset.allCases) { preset in
-                            Label(preset.name, systemImage: preset.symbolName).tag(preset)
-                        }
+                Section("Art") {
+                    Picker("Art", selection: $category) {
+                        ForEach(WasteCategory.allCases, id: \.self) { Label($0.name, systemImage: $0.symbolName).tag($0) }
                     }
-                    .pickerStyle(.inline)
-                    .labelsHidden()
-                    .onChange(of: preset) { _, newValue in
-                        name = newValue == .sonstiges ? "" : newValue.name
-                        colorHex = newValue.colorHex
-                        symbolName = newValue.symbolName
-                    }
+                    .onChange(of: category) { _, new in name = new == .other ? "" : new.name; colorHex = new.colorHex; symbolName = new.symbolName }
+                    TextField("Name", text: $name)
                 }
                 Section("Darstellung") {
-                    TextField("Name", text: $name)
                     PaletteColorPicker(colorHex: $colorHex)
                     SymbolPicker(symbolName: $symbolName, colorHex: colorHex)
                 }
-                if let location {
-                    Section {
-                        Label(location.name, systemImage: location.symbolName)
-                            .foregroundStyle(.secondary)
-                    } header: {
-                        Text("Standort")
+                Section("Rhythmus") {
+                    Picker("Abstand", selection: $intervalWeeks) {
+                        Text("Nur Einzeltermine").tag(0)
+                        ForEach([1, 2, 3, 4, 6, 8], id: \.self) { Text($0 == 1 ? "Jede Woche" : "Alle \($0) Wochen").tag($0) }
                     }
+                    if intervalWeeks > 0 { DatePicker("Ein Abholtag", selection: $anchorDate, displayedComponents: .date) }
                 }
             }
             .navigationTitle("Neue Müllart")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
-                }
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Anlegen") { save() }
-                        .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
+                    Button("Anlegen") {
+                        let type = WasteType(name: name.trimmingCharacters(in: .whitespaces), category: category, colorHex: colorHex, symbolName: symbolName, sortOrder: model.allWasteTypes().count)
+                        type.intervalWeeks = intervalWeeks
+                        type.anchorDate = intervalWeeks > 0 ? Days.start(of: anchorDate) : nil
+                        context.insert(type)
+                        type.location = location
+                        try? context.save()
+                        Task { await model.refreshAll() }
+                        dismiss()
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
         }
     }
-
-    private func save() {
-        let sortOrder = (allTypes.map(\.sortOrder).max() ?? -1) + 1
-        let type = WasteType(
-            name: name.trimmingCharacters(in: .whitespaces),
-            colorHex: colorHex,
-            symbolName: symbolName,
-            sortOrder: sortOrder
-        )
-        context.insert(type)
-        type.location = location
-        try? context.save()
-        dismiss()
-    }
 }
 
-/// Neuen Standort anlegen.
 struct NewLocationSheet: View {
     var onCreate: (Location) -> Void
+    @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @Query(sort: \Location.sortOrder) private var locations: [Location]
-
     @State private var name = ""
     @State private var address = ""
     @State private var colorHex = "#2E9E6B"
     @State private var symbolName = "house.fill"
 
-    private let symbols = ["house.fill", "house.and.flag.fill", "building.2.fill", "tent.fill", "tree.fill", "car.fill", "building.columns.fill", "leaf.fill"]
-
     var body: some View {
         NavigationStack {
             Form {
                 Section("Standort") {
-                    TextField("Name (z. B. Gifhorn)", text: $name)
+                    TextField("Name (z. B. Zuhause)", text: $name)
                     TextField("Adresse", text: $address)
                 }
                 Section("Darstellung") {
                     PaletteColorPicker(colorHex: $colorHex)
-                    SymbolPicker(symbolName: $symbolName, colorHex: colorHex, symbols: symbols)
-                }
-                Section {
-                    Text("Nach dem Anlegen kannst du die Abfuhrtermine aus dem AWIDO-Portal, per ICS-Link oder aus einer ICS-Datei laden.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                    SymbolPicker(symbolName: $symbolName, colorHex: colorHex, symbols: Palette.homeSymbols)
                 }
             }
-            .navigationTitle("Neuer Standort")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Neuer Standort").navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
-                }
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Anlegen") {
-                        let location = Location(
-                            name: name.trimmingCharacters(in: .whitespaces),
-                            address: address.trimmingCharacters(in: .whitespaces),
-                            symbolName: symbolName,
-                            colorHex: colorHex,
-                            sortOrder: (locations.map(\.sortOrder).max() ?? -1) + 1
-                        )
+                        let location = Location(name: name.trimmingCharacters(in: .whitespaces), address: address, symbolName: symbolName, colorHex: colorHex, sortOrder: model.allLocations().count)
                         context.insert(location)
                         try? context.save()
+                        model.onboardingDone = true
                         dismiss()
                         onCreate(location)
                     }

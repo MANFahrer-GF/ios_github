@@ -1,75 +1,91 @@
 # Tonne & Torte 🗑️🎂
 
-Müll- und Geburtstagskalender für iPhone und iPad mit Erinnerungen – damit der Gelbe Sack nie wieder stehen bleibt.
+**Nie wieder den Gelben Sack verpassen. Nie wieder einen Geburtstag vergessen.**
 
-Das Repo enthält zwei Varianten mit derselben Logik und denselben Datenquellen:
+Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrende Haushaltstermine – mit Erinnerungen, Widgets, Live-Aktivität, Siri und iCloud-Sync.
 
-| Ordner | Was | Für wen |
-|---|---|---|
-| [`web/`](web/) | **Web-App (PWA)** mit Push und Kalender-Abo, läuft auf jedem PHP-Webspace (IONOS) | ohne App Store, sofort nutzbar auf iPhone/iPad/Desktop |
-| [`TonneUndTorte/`](TonneUndTorte/) | **Native iOS-App** (SwiftUI, SwiftData) | später, wenn mehr native Funktionen gewünscht sind |
-
-Die Anleitung zur Web-App steht in [`web/README.md`](web/README.md). Der Rest dieser Seite beschreibt die iOS-App.
-
-![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue) ![SwiftUI](https://img.shields.io/badge/SwiftUI-SwiftData-orange) ![Xcode 16](https://img.shields.io/badge/Xcode-16%2B-lightgrey)
+| Ordner | Inhalt |
+|---|---|
+| [`TonneUndTorte/`](TonneUndTorte/) | iOS-App (SwiftUI, SwiftData + CloudKit) |
+| [`TonneWidget/`](TonneWidget/) | Widget-Erweiterung: Home-/Sperrbildschirm-Widgets und Live-Aktivität |
+| [`Shared/`](Shared/) | Code für App **und** Widget: Snapshot-Speicher, App Intents, Live-Activity-Attribute |
+| [`TonneCore/`](TonneCore/) | Swift-Package mit aller Logik und den Online-Anbietern – auf Linux getestet |
+| [`Config/`](Config/) | Entitlements und Info.plists |
+| [`web/`](web/) | Ältere Web-App (PWA mit Push) – weiterhin lauffähig, siehe `web/README.md` |
 
 ## Was die App kann
 
-- **Übersicht** – große Karte „Heute Abend rausstellen!“, die nächsten Abholungen und Geburtstage auf einen Blick.
-- **Kalender** – Monatsansicht mit farbigen Punkten je Müllart und 🎂 für Geburtstage, Wischen zwischen Monaten.
-- **Mehrere Standorte** – z. B. Gifhorn und Kuhlhausen, jeweils mit eigenen Müllarten; Filter in Übersicht und Kalender.
-- **Echte Abfuhrtermine**
-  - **Gifhorn, Steinstraße 1** – direkt aus dem AWIDO-Portal des Landkreises Gifhorn (JSON-Schnittstelle), wöchentlicher automatischer Abgleich.
-  - **Kuhlhausen, Havelberger Str. 18 (Havelberg)** – „Sync zu Kalender“-Link der Abfall-App Landkreis Stendal (ICS, Bezirk 1465), ebenfalls automatisch aktualisiert.
-  - Beide Kalender liegen zusätzlich als ICS im App-Bundle, damit die App auch ohne Netz sofort Termine hat.
-- **Weitere Quellen** – AWIDO-Assistent für ~50 Entsorger (Ort → Straße → Hausnummer), beliebige ICS-Links als Abo, ICS-Dateien importieren, oder Rhythmus von Hand („alle 2 Wochen ab …“).
-- **Feiertagsregelungen** – einzelne Termine verschieben oder ausfallen lassen.
-- **Erinnerungen** – am Vorabend (Standard 19:00 Uhr) und/oder am Abholtag morgens; mehrere Tonnen an einem Tag werden zu einer Mitteilung zusammengefasst. Geburtstage am Tag selbst plus wählbar 1–14 Tage vorher.
-- **Geburtstage** – mit oder ohne Geburtsjahr, Alter-Anzeige, Notizen für Geschenkideen.
+**Nichts verpassen**
+- Mitteilung am Vorabend mit Knöpfen **„Erledigt – steht draußen“** und **„In 1 Stunde nochmal“**; ohne „Erledigt“ kommt eine zweite, zeitkritische Erinnerung
+- Optional morgens am Abholtag
+- **Live-Aktivität** „Tonne rausstellen“ auf Sperrbildschirm und Dynamic Island (startet, wenn die App am Vorabend geöffnet wird)
+- **Widgets** klein/mittel/groß und Sperrbildschirm (rechteckig, rund, inline), Standort wählbar, „Erledigt“-Knopf direkt im Widget
+- **Siri & Kurzbefehle**: „Wann kommt der Müll in Tonne & Torte?“, „Tonne steht draußen“
+- Hinweis-Mitteilung, wenn der Entsorger Termine verschiebt (wird beim wöchentlichen Abgleich erkannt)
+- Export in den Apple-Kalender (eigener Kalender mit Alarmen) oder als ICS-Datei
 
-## Projekt öffnen
+**Einfach**
+- Einrichtung in drei Schritten: Standort erlauben oder Ort suchen → Straße wählen → Tonnen ankreuzen
+- Katalog mit **159 Entsorgern** über die Plattformen AWIDO, AbfallPlus (neue und alte Schnittstelle), Jumomind/MyMüll, Abfallnavi und abfall-app.net; dazu beliebige ICS-Links und ICS-Dateien
+- Mehrere Standorte (z. B. Zuhause und Ferienhaus) mit Filter in Übersicht und Kalender
+- iCloud-Sync über CloudKit – kein Konto, kein Login
+- Streak-Anzeige: Abholungen dieses Jahr und davon bestätigt
+
+**Mehr als Müll**
+- Geburtstage aus Kontakten importieren, runde Geburtstage hervorgehoben, Sternzeichen, Geschenkideen je Person, Glückwunsch per Nachricht
+- Eigene wiederkehrende Termine mit Vorlagen (Hochzeitstag, TÜV, Rauchmelder, Reifenwechsel …)
+- Abfall-ABC: „Pizzakarton“ eingeben, richtige Tonne sehen
+- Feiertagsregelungen: Termine verschieben oder ausfallen lassen
+- Dark Mode, Dynamic Type, Haptik
+
+## Projekt öffnen und auf das Gerät bringen
 
 1. `TonneUndTorte.xcodeproj` in Xcode 16 oder neuer öffnen.
-2. Unter *Signing & Capabilities* dein Team auswählen (Bundle-ID `de.manfahrer.TonneUndTorte` ggf. anpassen).
-3. Auf iPhone/iPad oder Simulator starten. Beim ersten Start fragt die App nach der Erlaubnis für Mitteilungen.
+2. Für **beide** Targets (TonneUndTorte und TonneWidget) unter *Signing & Capabilities* dein Team wählen. Xcode legt App-Gruppe, iCloud-Container und Push-Berechtigung automatisch an (siehe `Config/*.entitlements`). Bundle-IDs bei Bedarf anpassen (`de.manfahrer.TonneUndTorte` und `…TonneUndTorte.TonneWidget`), dann auch in `Config/TonneUndTorte-Info.plist` (BGTaskScheduler-ID) und `TonneCore/Sources/TonneCore/WidgetSnapshot.swift` (App-Gruppe) nachziehen.
+3. Auf iPhone/iPad starten. Für TestFlight: *Product → Archive* und über App Store Connect verteilen.
 
-Das Projekt nutzt Xcodes synchronisierte Ordner: Jede Datei im Ordner `TonneUndTorte/` wird automatisch Teil des Targets, es gibt keine Dateiliste zu pflegen.
+Beim ersten Start fragt die App nach dem Standort (optional) und schlägt Entsorger vor. Mitteilungen werden nach der Einrichtung angefragt.
 
-## Aufbau
+## Architektur
 
 ```
-TonneUndTorte/
-├── TonneUndTorteApp.swift      App-Einstieg, SwiftData-Container, Notification-Delegate
-├── ContentView.swift           Tabs + automatischer Abgleich beim Start
-├── Models/
-│   ├── Location.swift          Standort mit Datenquelle (AWIDO / ICS-Link / manuell)
-│   ├── WasteType.swift         Müllart: Rhythmus, Einzeltermine, Ausnahmen
-│   ├── Person.swift            Geburtstag
-│   └── CalendarEvent.swift     Berechneter Termin (nicht gespeichert)
-├── Services/
-│   ├── EventEngine.swift       Terminberechnung (Rhythmus, Schaltjahr, Zeiträume)
-│   ├── NotificationManager.swift  Planung der lokalen Mitteilungen (max. 60)
-│   ├── AwidoClient.swift       AWIDO-Portal (awido.cubefour.de)
-│   ├── ICSParser.swift         Minimaler iCalendar-Parser inkl. einfacher RRULE
-│   ├── CalendarImporter.swift  Zuordnung Titel → Müllart, Abgleich, Datei-Import
-│   ├── SeedData.swift          Standard-Standorte Gifhorn & Kuhlhausen
-│   ├── ReminderSettings.swift  Einstellungen (UserDefaults)
-│   └── WastePreset.swift       Vorlagen, Farben, Symbole
-├── Views/                      SwiftUI-Oberfläche (Übersicht, Kalender, Müll, Geburtstage, Einstellungen)
-└── Resources/                  Gebündelte Abfuhrkalender (ICS)
+TonneCore (Swift-Package, plattformunabhängig)
+├── Schedule / Birthday / Recurrence     Terminberechnung inkl. Sommerzeit, Schaltjahr
+├── ReminderPlanner                       Mitteilungsplan (rein funktional, getestet)
+├── ICS                                   Parser (DATE, DATE-TIME, TZID, RRULE) + Feed-Generator mit Alarmen
+├── WasteCategory / WasteABC / Palette    Zuordnung, Farben, Symbole, Abfall-ABC
+├── WidgetSnapshot                        Datenstand für Widget, Live-Aktivität, Siri
+└── Providers                             WasteProvider-Protokoll + AWIDO, AbfallPlus (GraphQL/Legacy),
+                                          Jumomind, Abfallnavi, AbfallAppNet, ICS-URL, Katalog
+
+App (SwiftData + CloudKit)                Location · WasteType · Person · CustomEvent
+├── AppModel                              Datenzugriff, Abgleich, Erinnerungen, Snapshot, Statistik
+├── NotificationManager                   Kategorien mit Aktionen, Delegate, Snooze
+├── SyncService                           Zuordnung Quelle → Müllart, Diff für Verschiebungen
+├── LiveActivityManager / CalendarExport / ContactsImport / RegionSuggest / BackgroundTasks
+└── Views                                 Onboarding, Übersicht, Kalender, Müll (Assistent), Geburtstage, Mehr
+
+Widget-Extension                          PickupWidget (konfigurierbar), PickupLiveActivity
+Shared                                    SnapshotStore (App-Gruppe), MarkPickupDoneIntent, NextPickupIntent, LocationEntity
 ```
 
-## Datenquellen
+## Tests
 
-| Standort | Quelle | Aktualisierung |
-|---|---|---|
-| Gifhorn, Steinstraße | AWIDO `getData` (Kunde `gifhorn`, Straßen-OID `968d9cf6-…`) | automatisch alle 7 Tage, manuell per Button |
-| Kuhlhausen | `https://landkreis-stendal.abfall-app.net/download?system=ical&period=2&district=1465…` | automatisch alle 7 Tage, manuell per Button |
+Der Kern lässt sich ohne Xcode testen (auch unter Linux):
 
-Hinweis: Die Portale sind Dienste der jeweiligen Landkreise; Termine ohne Gewähr.
+```bash
+cd TonneCore
+swift test                    # Unit-Tests (Terminlogik, ICS, Planer, Katalog …)
+TONNE_LIVE=1 swift test       # zusätzlich Live-Tests gegen die echten Portale
+```
 
-## Ideen für später
+## Neue Entsorger hinzufügen
 
-- Home-Screen-Widget (WidgetKit) mit der nächsten Abholung
-- iCloud-Sync der Daten über CloudKit
-- Kontakte-Import für Geburtstage
+Die Plattform-Kennungen stehen in `TonneCore/Sources/TonneCore/Providers/Catalog.swift` (generiert aus den Quellen des Projekts [hacs_waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule), MIT). Ein neuer Eintrag ist eine Zeile `CatalogEntry(kind:serviceKey:title:website:)`. Für eine neue Plattform wird `WasteProvider` implementiert (zwei Methoden: Auswahlschritte und Termine) und in `ProviderFactory` registriert.
+
+## Geplant
+
+- Apple-Watch-App mit Komplikation
+- Haushalt mit Familie teilen (CloudKit Sharing) und „Wer ist dran?“
+- Englische Oberfläche
+- Weitere Plattformen (Abfall+ Apps von k4systems, AWBKoeln, Müllmax …)

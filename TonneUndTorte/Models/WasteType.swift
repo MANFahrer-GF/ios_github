@@ -1,108 +1,96 @@
 import Foundation
 import SwiftData
+import TonneCore
 
-/// Eine Müllart (z. B. Restmüll, Biotonne, Gelber Sack) samt Abholrhythmus.
-///
-/// Termine ergeben sich aus zwei Quellen:
-/// 1. einem wiederkehrenden Rhythmus („alle N Wochen ab Ankerdatum“), und/oder
-/// 2. einer Liste expliziter Einzeltermine (manuell oder per ICS-Import).
-/// Einzelne Rhythmus-Termine können über `skippedDates` ausgesetzt werden
-/// (z. B. wenn die Abfuhr wegen eines Feiertags verschoben wird).
+/// Eine Müllart (Restmüll, Gelber Sack …) mit Rhythmus und/oder Einzelterminen.
 @Model
 final class WasteType {
     var id: UUID = UUID()
     var name: String = ""
-    var colorHex: String = "#6B7280"
+    var colorHex: String = "#5B6470"
     var symbolName: String = "trash.fill"
+    var categoryRaw: String = WasteCategory.other.rawValue
     var sortOrder: Int = 0
     var isActive: Bool = true
     var remindersEnabled: Bool = true
-
-    /// Abstand in Wochen zwischen zwei Abholungen. 0 = kein fester Rhythmus.
     var intervalWeeks: Int = 0
-    /// Ein beliebiger bekannter Abholtag, von dem aus der Rhythmus berechnet wird.
-    var anchorDate: Date = Date()
-
-    /// Zusätzliche Einzeltermine (werden auf Tagesanfang normalisiert gespeichert).
+    var anchorDate: Date?
     var explicitDates: [Date] = []
-    /// Termine, die trotz Rhythmus ausfallen.
     var skippedDates: [Date] = []
-
+    /// Tage, an denen „Erledigt“ bestätigt wurde.
+    var doneDates: [Date] = []
+    /// Schlüssel in der Online-Quelle (Titel der Fraktion), damit ein Abgleich die Termine ersetzt.
+    var sourceKey: String?
     var createdAt: Date = Date()
 
-    /// Der Standort (Haushalt), zu dem diese Müllart gehört.
     var location: Location?
-    /// Schlüssel der Datenquelle (z. B. ICS-SUMMARY oder AWIDO-Fraktion), damit ein
-    /// erneuter Import/Abgleich die Termine dieser Müllart ersetzen kann.
-    var sourceKey: String?
 
-    init(
-        name: String,
-        colorHex: String,
-        symbolName: String,
-        sortOrder: Int = 0,
-        intervalWeeks: Int = 0,
-        anchorDate: Date = Date(),
-        location: Location? = nil,
-        sourceKey: String? = nil
-    ) {
+    init(name: String, category: WasteCategory, colorHex: String? = nil, symbolName: String? = nil, sortOrder: Int = 0, sourceKey: String? = nil) {
         self.id = UUID()
         self.name = name
-        self.colorHex = colorHex
-        self.symbolName = symbolName
+        self.categoryRaw = category.rawValue
+        self.colorHex = colorHex ?? category.colorHex
+        self.symbolName = symbolName ?? category.symbolName
         self.sortOrder = sortOrder
-        self.intervalWeeks = intervalWeeks
-        self.anchorDate = anchorDate
-        self.createdAt = Date()
-        self.location = location
         self.sourceKey = sourceKey
+        self.createdAt = Date()
     }
 
-    /// Hat diese Müllart überhaupt irgendwelche Termine?
-    var hasSchedule: Bool {
-        intervalWeeks > 0 || !explicitDates.isEmpty
+    var category: WasteCategory {
+        get { WasteCategory(rawValue: categoryRaw) ?? .other }
+        set { categoryRaw = newValue.rawValue }
     }
+
+    var schedule: PickupSchedule {
+        PickupSchedule(intervalWeeks: intervalWeeks, anchorDate: anchorDate, explicitDates: explicitDates, skippedDates: skippedDates)
+    }
+
+    var hasSchedule: Bool { schedule.hasAnyDates }
+
+    func pickupDates(from: Date, to: Date) -> [Date] {
+        ScheduleEngine.pickupDates(schedule, from: from, to: to)
+    }
+
+    var nextPickup: Date? { ScheduleEngine.nextPickup(schedule) }
 
     // MARK: - Termine bearbeiten
 
-    func addExplicitDate(_ date: Date, calendar: Calendar = .current) {
-        let day = calendar.startOfDay(for: date)
-        if !explicitDates.contains(day) {
-            explicitDates.append(day)
-            explicitDates.sort()
-        }
-        skippedDates.removeAll { calendar.isDate($0, inSameDayAs: day) }
+    func addExplicitDate(_ date: Date) {
+        let day = Days.start(of: date)
+        if !explicitDates.contains(day) { explicitDates.append(day); explicitDates.sort() }
+        skippedDates.removeAll { Days.start(of: $0) == day }
     }
 
-    func removeExplicitDate(_ date: Date, calendar: Calendar = .current) {
-        explicitDates.removeAll { calendar.isDate($0, inSameDayAs: date) }
+    func skip(_ date: Date) {
+        let day = Days.start(of: date)
+        if !skippedDates.contains(day) { skippedDates.append(day); skippedDates.sort() }
     }
 
-    func skip(_ date: Date, calendar: Calendar = .current) {
-        let day = calendar.startOfDay(for: date)
-        // Ein expliziter Termin wird einfach entfernt, ein Rhythmus-Termin ausgesetzt.
-        if explicitDates.contains(where: { calendar.isDate($0, inSameDayAs: day) }) {
-            removeExplicitDate(day, calendar: calendar)
-        } else if !skippedDates.contains(day) {
-            skippedDates.append(day)
-            skippedDates.sort()
-        }
+    func unskip(_ date: Date) {
+        let day = Days.start(of: date)
+        skippedDates.removeAll { Days.start(of: $0) == day }
     }
 
-    func unskip(_ date: Date, calendar: Calendar = .current) {
-        skippedDates.removeAll { calendar.isDate($0, inSameDayAs: date) }
+    func move(_ date: Date, to newDate: Date) {
+        skip(date)
+        addExplicitDate(newDate)
     }
 
-    /// Verschiebt einen Termin (z. B. Feiertagsregelung): alter Tag fällt aus, neuer Tag kommt dazu.
-    func move(_ date: Date, to newDate: Date, calendar: Calendar = .current) {
-        skip(date, calendar: calendar)
-        addExplicitDate(newDate, calendar: calendar)
+    func isDone(on date: Date) -> Bool {
+        let day = Days.start(of: date)
+        return doneDates.contains { Days.start(of: $0) == day }
     }
 
-    /// Entfernt Einzeltermine, die länger als ein Jahr zurückliegen – hält die Liste schlank.
-    func pruneOldDates(calendar: Calendar = .current) {
-        guard let cutoff = calendar.date(byAdding: .year, value: -1, to: Date()) else { return }
+    func markDone(on date: Date) {
+        let day = Days.start(of: date)
+        if !isDone(on: day) { doneDates.append(day) }
+    }
+
+    /// Entfernt Einzeltermine und Markierungen, die älter als ein Jahr sind.
+    func prune() {
+        let cutoff = Days.add(-400, to: Days.today())
         explicitDates.removeAll { $0 < cutoff }
         skippedDates.removeAll { $0 < cutoff }
+        doneDates.removeAll { $0 < cutoff }
     }
 }

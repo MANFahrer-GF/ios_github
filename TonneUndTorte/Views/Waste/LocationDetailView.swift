@@ -1,30 +1,21 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
+import TonneCore
 
-/// Standort bearbeiten: Darstellung, Datenquelle, Abgleich, ICS-Import, Löschen.
 struct LocationDetailView: View {
     @Bindable var location: Location
+    @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showAwidoSetup = false
+    @State private var showWizard = false
     @State private var showFileImporter = false
-    @State private var importEvents: [ICSEvent] = []
+    @State private var importPickups: [Pickup] = []
     @State private var showImport = false
     @State private var isSyncing = false
     @State private var message: String?
     @State private var showDeleteConfirm = false
-
-    private let symbols = ["house.fill", "house.and.flag.fill", "building.2.fill", "tent.fill", "tree.fill", "car.fill", "building.columns.fill", "leaf.fill"]
-
-    private var sourceKindBinding: Binding<Location.SourceKind> {
-        Binding(get: { location.sourceKind }, set: { location.sourceKind = $0 })
-    }
-
-    private var icsURLBinding: Binding<String> {
-        Binding(get: { location.icsURLString ?? "" }, set: { location.icsURLString = $0.isEmpty ? nil : $0 })
-    }
 
     var body: some View {
         Form {
@@ -32,168 +23,115 @@ struct LocationDetailView: View {
                 TextField("Name", text: $location.name)
                 TextField("Adresse", text: $location.address)
             }
-
             Section("Darstellung") {
                 PaletteColorPicker(colorHex: $location.colorHex)
-                SymbolPicker(symbolName: $location.symbolName, colorHex: location.colorHex, symbols: symbols)
+                SymbolPicker(symbolName: $location.symbolName, colorHex: location.colorHex, symbols: Palette.homeSymbols)
             }
-
             Section {
-                Picker("Quelle", selection: sourceKindBinding) {
-                    Text("Manuell / Datei").tag(Location.SourceKind.manual)
-                    Text("AWIDO-Portal").tag(Location.SourceKind.awido)
-                    Text("ICS-Link (Abo)").tag(Location.SourceKind.icsURL)
-                }
-
-                switch location.sourceKind {
-                case .manual:
-                    Text("Termine werden von Hand gepflegt oder aus einer ICS-Datei importiert.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                case .awido:
-                    if let label = location.awidoLabel {
-                        LabeledContent("Adresse", value: label)
-                    }
-                    Button {
-                        showAwidoSetup = true
-                    } label: {
-                        Label(location.awidoOid == nil ? "Adresse im AWIDO-Portal wählen" : "Adresse ändern", systemImage: "mappin.and.ellipse")
-                    }
-                    Text("AWIDO wird u. a. vom Landkreis Gifhorn genutzt. Die Termine werden direkt vom Portal geladen und wöchentlich automatisch aktualisiert.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                case .icsURL:
-                    TextField("https://…/download?system=ical…", text: icsURLBinding)
-                        .keyboardType(.URL)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                    Text("Viele Abfall-Portale (z. B. landkreis-stendal.abfall-app.net) bieten einen Button „Sync zu Kalender“. Diesen Link hier einfügen – die App lädt die Termine dann wöchentlich neu.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-
+                LabeledContent("Quelle", value: location.sourceDescription)
+                if let last = location.lastSyncAt { LabeledContent("Letzter Abgleich", value: last.formatted(date: .abbreviated, time: .shortened)) }
+                if let status = location.lastSyncMessage { Text(status).font(.footnote).foregroundStyle(.secondary) }
+                Button { showWizard = true } label: { Label(location.canSync ? "Entsorger oder Adresse ändern" : "Entsorger verbinden", systemImage: "antenna.radiowaves.left.and.right") }
                 if location.canSync {
-                    Button {
-                        Task { await sync() }
-                    } label: {
-                        HStack {
-                            Label("Jetzt aktualisieren", systemImage: "arrow.triangle.2.circlepath")
-                            Spacer()
-                            if isSyncing { ProgressView() }
-                        }
-                    }
-                    .disabled(isSyncing)
+                    Button { Task { await sync() } } label: {
+                        HStack { Label("Jetzt aktualisieren", systemImage: "arrow.triangle.2.circlepath"); Spacer(); if isSyncing { ProgressView() } }
+                    }.disabled(isSyncing)
+                    Button(role: .destructive) { location.source = nil; try? context.save() } label: { Label("Verbindung trennen", systemImage: "link.badge.plus") }
                 }
-
-                if let status = location.lastSyncMessage {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(status)
-                            .font(.footnote)
-                        if let last = location.lastSyncAt {
-                            Text(last.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
-                        }
-                    }
-                    .foregroundStyle(.secondary)
-                }
-            } header: {
-                Text("Datenquelle")
+                Button { showFileImporter = true } label: { Label("ICS-Datei importieren", systemImage: "square.and.arrow.down") }
+            } header: { Text("Abfuhrtermine") } footer: {
+                Text("Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung.")
             }
-
-            Section {
-                Button {
-                    showFileImporter = true
-                } label: {
-                    Label("ICS-Datei importieren", systemImage: "square.and.arrow.down")
-                }
-                Text("Abfuhrkalender als .ics-Datei (z. B. aus der Abfall-App deines Landkreises) in diesen Standort übernehmen.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            } header: {
-                Text("Import")
-            }
-
             Section("Müllarten") {
-                if location.wasteTypes.isEmpty {
-                    Text("Noch keine Müllarten.")
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(location.sortedWasteTypes) { type in
-                        NavigationLink(value: type) {
-                            WasteTypeRow(type: type)
-                        }
-                    }
-                }
+                if location.sortedWasteTypes.isEmpty { Text("Noch keine Müllarten.").foregroundStyle(.secondary) }
+                ForEach(location.sortedWasteTypes) { NavigationLink(value: $0) { WasteTypeRow(type: $0) } }
             }
-
             Section {
-                Button(role: .destructive) {
-                    showDeleteConfirm = true
-                } label: {
-                    Label("Standort löschen", systemImage: "trash")
-                }
+                Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Standort löschen", systemImage: "trash") }
             }
         }
         .navigationTitle(location.name.isEmpty ? "Standort" : location.name)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showAwidoSetup) {
-            AwidoSetupView(location: location)
-        }
-        .sheet(isPresented: $showImport) {
-            ICSImportView(events: importEvents, location: location)
-        }
-        .fileImporter(
-            isPresented: $showFileImporter,
-            allowedContentTypes: [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .text, .data],
-            allowsMultipleSelection: false
-        ) { result in
+        .sheet(isPresented: $showWizard) { SourceWizardView(location: location).environmentObject(model) }
+        .sheet(isPresented: $showImport) { ICSImportView(pickups: importPickups, location: location) }
+        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .text, .data]) { result in
             switch result {
-            case .success(let urls):
-                guard let url = urls.first else { return }
+            case .success(let url):
                 do {
-                    importEvents = try CalendarImporter.readICSFile(at: url)
-                    if importEvents.isEmpty {
-                        message = "In der Datei wurden keine Termine gefunden."
-                    } else {
-                        showImport = true
-                    }
-                } catch {
-                    message = "Datei konnte nicht gelesen werden: \(error.localizedDescription)"
-                }
-            case .failure(let error):
-                message = error.localizedDescription
+                    importPickups = try SyncService.readICSFile(at: url)
+                    if importPickups.isEmpty { message = "In der Datei wurden keine Termine gefunden." } else { showImport = true }
+                } catch { message = "Datei konnte nicht gelesen werden: \(error.localizedDescription)" }
+            case .failure(let error): message = error.localizedDescription
             }
         }
-        .alert("Hinweis", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(message ?? "")
-        }
-        .confirmationDialog("Standort und alle zugehörigen Müllarten löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+        .alert("Hinweis", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) { Button("OK", role: .cancel) {} } message: { Text(message ?? "") }
+        .confirmationDialog("Standort und alle Müllarten löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("Löschen", role: .destructive) {
                 context.delete(location)
                 try? context.save()
-                Task { await NotificationManager.shared.reschedule(using: context) }
+                Task { await model.refreshAll() }
                 dismiss()
             }
         }
-        .onDisappear {
-            try? context.save()
-            Task { await NotificationManager.shared.reschedule(using: context) }
-        }
+        .onDisappear { try? context.save(); Task { await model.refreshAll() } }
     }
 
     private func sync() async {
         isSyncing = true
         defer { isSyncing = false }
-        do {
-            let count = try await CalendarImporter.sync(location: location, context: context)
-            message = "\(count) Termine übernommen."
-            await NotificationManager.shared.reschedule(using: context)
-        } catch {
-            location.lastSyncMessage = "Fehler: \(error.localizedDescription)"
-            message = error.localizedDescription
+        do { let r = try await model.sync(location: location); message = "\(r.importedCount) Termine übernommen." + (r.changes.isEmpty ? "" : "\n" + r.changes.joined(separator: "\n")) }
+        catch { message = error.localizedDescription }
+    }
+}
+
+struct ICSImportView: View {
+    let pickups: [Pickup]
+    let location: Location?
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    @State private var mappings: [SyncService.Mapping] = []
+    @State private var replace = true
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    LabeledContent("Termine", value: "\(pickups.count)")
+                    if let first = pickups.first?.date, let last = pickups.last?.date {
+                        LabeledContent("Zeitraum", value: "\(DateText.short(first)) – \(DateText.short(last))")
+                    }
+                }
+                Section("Zuordnung") {
+                    ForEach($mappings) { $mapping in
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack { Text(mapping.summary).font(.body.weight(.semibold)); Spacer(); Text("\(mapping.count)×").font(.caption).foregroundStyle(.secondary) }
+                            Picker("Ziel", selection: $mapping.target) {
+                                Text("Ignorieren").tag(SyncService.Target.ignore)
+                                if let location { ForEach(location.sortedWasteTypes) { Label($0.name, systemImage: $0.symbolName).tag(SyncService.Target.existing($0)) } }
+                                ForEach(WasteCategory.allCases, id: \.self) { Label("Neu: \(mapping.summary) (\($0.name))", systemImage: $0.symbolName).tag(SyncService.Target.new($0)) }
+                            }
+                            .labelsHidden()
+                        }
+                    }
+                }
+                Section { Toggle("Bisherige Einzeltermine ersetzen", isOn: $replace) }
+            }
+            .navigationTitle("ICS importieren").navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Importieren") {
+                        SyncService.apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: replace)
+                        location?.lastSyncMessage = "ICS-Datei importiert"
+                        try? context.save()
+                        Task { await model.refreshAll() }
+                        dismiss()
+                    }
+                    .disabled(mappings.allSatisfy { $0.target == .ignore })
+                }
+            }
+            .onAppear { if mappings.isEmpty { mappings = SyncService.suggestMappings(for: pickups, location: location) } }
         }
     }
 }
