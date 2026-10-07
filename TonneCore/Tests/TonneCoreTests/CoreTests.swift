@@ -159,6 +159,7 @@ final class CoreTests: XCTestCase {
         // Stichproben aus Norddeutschland: Ort → Landkreis → Entsorger
         XCTAssertTrue(ProviderCatalog.search("Boizenburg").contains { $0.kind == .gemosWasteBox }, "Boizenburg")
         XCTAssertTrue(ProviderCatalog.search("Nostorf").contains { $0.kind == .gemosWasteBox }, "Nostorf")
+        XCTAssertEqual(ProviderCatalog.search("Rensdorf").first?.kind, .gemosWasteBox, "Rensdorf")
         XCTAssertTrue(ProviderCatalog.search("Lauenburg").contains { $0.kind == .awsh }, "Lauenburg")
         XCTAssertTrue(ProviderCatalog.search("Lüneburg").contains { $0.kind == .abfallPlusApp }, "Lüneburg")
         XCTAssertTrue(ProviderCatalog.search("Adendorf").contains { $0.serviceKey == "de.abfallplus.gfaabfallinfo" }, "Adendorf")
