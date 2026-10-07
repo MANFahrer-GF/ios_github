@@ -12,7 +12,7 @@ public enum WasteGlyph {
         case "trash.fill", "trash":
             return "tt.bin"
         case "leaf.fill":
-            return mentions(name, ["laub"], except: ["urlaub", "erlaubt", "erlaubnis"], words: ["leaf", "leaves"]) ? nil : "tt.bin.bio"
+            return mentions(name, ["laub"], except: ["urlaub", "erlaube", "erlaubt", "erlaubnis"], words: ["leaf", "leaves"]) ? nil : "tt.bin.bio"
         case "newspaper.fill":
             return "tt.bin.paper"
         case "bag.fill":
