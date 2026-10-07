@@ -89,7 +89,7 @@ struct WasteDetailView: View {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }
         }
         .confirmationDialog("„\(type.name)“ wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
-            Button("Löschen", role: .destructive) { context.delete(type); save(); dismiss() }
+            Button("Löschen", role: .destructive) { dismiss(); model.deleteLater(type) }
         }
         .onChange(of: type.intervalWeeks) { _, _ in save() }
         .onChange(of: type.isActive) { _, _ in save() }

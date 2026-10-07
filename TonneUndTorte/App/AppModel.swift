@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 import BackgroundTasks
+import UserNotifications
 import TonneCore
 
 /// Einstellungs-Schlüssel (UserDefaults) – von Views per @AppStorage und vom Modell genutzt.
@@ -62,13 +63,17 @@ final class AppModel: ObservableObject {
     @Published var isSyncing = false
     @Published var recentChanges: [String] = []
     @Published var lastError: String?
-    @AppStorage(SettingsKeys.onboardingDone) var onboardingDone = false
+    @Published var onboardingDone: Bool = UserDefaults.standard.bool(forKey: SettingsKeys.onboardingDone) {
+        didSet { UserDefaults.standard.set(onboardingDone, forKey: SettingsKeys.onboardingDone) }
+    }
 
     private let notifications = NotificationManager.shared
     private var started = false
 
     init(container: ModelContainer) {
         self.container = container
+        // Muss vor dem Ende des App-Starts passieren, sonst wirft BGTaskScheduler eine Exception.
+        registerBackgroundTask()
         notifications.onPickupDone = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
         }
@@ -82,7 +87,6 @@ final class AppModel: ObservableObject {
     func start() async {
         guard !started else { return }
         started = true
-        registerBackgroundTask()
         await notifications.refreshStatus()
         await becameActive()
     }
@@ -316,11 +320,22 @@ final class AppModel: ObservableObject {
         try? BGTaskScheduler.shared.submit(request)
     }
 
+    /// Löscht ein Objekt erst, nachdem die Detailansicht geschlossen wurde (sonst greift SwiftUI auf ein
+    /// ungültiges Model zu).
+    func deleteLater(_ object: any PersistentModel) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(400))
+            self.context.delete(object)
+            try? self.context.save()
+            await self.refreshAll()
+        }
+    }
+
     func handle(url: URL) {
         // tonne://done?day=2026-10-08 (z. B. aus Kurzbefehlen)
         guard url.scheme == "tonne", url.host == "done" else { return }
         if let day = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "day" })?.value {
-            Task { await markDone(dayKey: day) }
+            Task { await self.markDone(dayKey: day) }
         }
     }
 }

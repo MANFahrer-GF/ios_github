@@ -17,10 +17,21 @@
 	</array>
 	<key>NSContactsUsageDescription</key>
 	<string>Tonne &amp; Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest.</string>
-	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Tonne &amp; Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>de.manfahrer.TonneUndTorte</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tonne</string>
+			</array>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

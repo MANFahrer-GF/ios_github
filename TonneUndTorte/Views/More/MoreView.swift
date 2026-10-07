@@ -142,7 +142,7 @@ struct CustomEventEditView: View {
                 }
                 Section("Notizen") { TextField("Notizen", text: $notes, axis: .vertical).lineLimit(2...5) }
                 if let event {
-                    Section { Button("Termin löschen", role: .destructive) { context.delete(event); try? context.save(); Task { await model.refreshAll() }; dismiss() } }
+                    Section { Button("Termin löschen", role: .destructive) { dismiss(); model.deleteLater(event) } }
                 }
             }
             .navigationTitle(event == nil ? "Neuer Termin" : "Termin bearbeiten").navigationBarTitleDisplayMode(.inline)

@@ -144,7 +144,7 @@ struct BirthdayEditView: View {
                 ToolbarItem(placement: .confirmationAction) { Button("Sichern") { save() }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty) }
             }
             .confirmationDialog("Geburtstag wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
-                Button("Löschen", role: .destructive) { if let person { context.delete(person); try? context.save(); Task { await model.refreshAll() } }; dismiss() }
+                Button("Löschen", role: .destructive) { dismiss(); if let person { model.deleteLater(person) } }
             }
             .onAppear(perform: load)
         }

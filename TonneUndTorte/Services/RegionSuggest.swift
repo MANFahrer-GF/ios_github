@@ -34,11 +34,11 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
-            if [.authorizedWhenInUse, .authorizedAlways].contains(manager.authorizationStatus), isWorking {
+            if [.authorizedWhenInUse, .authorizedAlways].contains(manager.authorizationStatus), self.isWorking {
                 manager.requestLocation()
             } else if [.denied, .restricted].contains(manager.authorizationStatus) {
-                isWorking = false
-                errorMessage = "Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben."
+                self.isWorking = false
+                self.errorMessage = "Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben."
             }
         }
     }
@@ -50,7 +50,7 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
                 let placemarks = try await CLGeocoder().reverseGeocodeLocation(location)
                 let place = placemarks.first
                 let terms = [place?.locality, place?.subAdministrativeArea, place?.administrativeArea].compactMap { $0 }
-                placeName = terms.first
+                self.placeName = terms.first
                 var found: [CatalogEntry] = []
                 for term in terms {
                     for entry in ProviderCatalog.search(term) where !found.contains(entry) { found.append(entry) }
@@ -58,19 +58,19 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
                     let short = term.replacingOccurrences(of: "Landkreis ", with: "").replacingOccurrences(of: "Kreis ", with: "")
                     for entry in ProviderCatalog.search(short) where !found.contains(entry) { found.append(entry) }
                 }
-                suggestions = found
-                if found.isEmpty { errorMessage = "Für \(placeName ?? "deine Region") ist noch kein Entsorger im Katalog – bitte unten suchen oder ICS-Link nutzen." }
+                self.suggestions = found
+                if found.isEmpty { self.errorMessage = "Für \(self.placeName ?? "deine Region") ist noch kein Entsorger im Katalog – bitte unten suchen oder ICS-Link nutzen." }
             } catch {
-                errorMessage = "Ort konnte nicht bestimmt werden."
+                self.errorMessage = "Ort konnte nicht bestimmt werden."
             }
-            isWorking = false
+            self.isWorking = false
         }
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Task { @MainActor in
-            isWorking = false
-            errorMessage = "Standort konnte nicht ermittelt werden."
+            self.isWorking = false
+            self.errorMessage = "Standort konnte nicht ermittelt werden."
         }
     }
 }

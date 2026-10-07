@@ -67,10 +67,8 @@ struct LocationDetailView: View {
         .alert("Hinweis", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) { Button("OK", role: .cancel) {} } message: { Text(message ?? "") }
         .confirmationDialog("Standort und alle Müllarten löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("Löschen", role: .destructive) {
-                context.delete(location)
-                try? context.save()
-                Task { await model.refreshAll() }
                 dismiss()
+                model.deleteLater(location)
             }
         }
         .onDisappear { try? context.save(); Task { await model.refreshAll() } }

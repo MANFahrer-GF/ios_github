@@ -9,13 +9,13 @@ struct MarkPickupDoneIntent: LiveActivityIntent {
     static var openAppWhenRun = false
 
     @Parameter(title: "Tag")
-    var dayKey: String
+    var dayKey: String?
 
-    init() { dayKey = "" }
+    init() { dayKey = nil }
     init(dayKey: String) { self.dayKey = dayKey }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let key = dayKey.isEmpty ? SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "" : dayKey
+        let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "")
         guard !key.isEmpty else { return .result(dialog: "Es steht keine Abholung an.") }
         SnapshotStore.markDone(dayKey: key)
         return .result(dialog: "Super, alles steht draußen. 👍")

@@ -27,7 +27,7 @@ enum CalendarExport {
         let store = EKEventStore()
         let granted: Bool
         if #available(iOS 17.0, *) {
-            granted = try await store.requestWriteOnlyAccessToEvents()
+            granted = try await store.requestFullAccessToEvents()
         } else {
             granted = try await store.requestAccess(to: .event)
         }
