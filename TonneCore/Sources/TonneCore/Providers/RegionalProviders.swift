@@ -56,9 +56,18 @@ public struct GemosWasteBoxProvider: WasteProvider {
             let types = HTMLText.firstMatch(#"id="selectedWasteTypes" name="selectedWasteTypes" value="([^"]*)""#, in: html, group: 1) ?? ""
             let categories = HTMLText.firstMatch(#"id="selectedWasteTypeCategories" name="selectedWasteTypeCategories" value="([^"]*)""#, in: html, group: 1) ?? ""
             guard !types.isEmpty else { continue }
-            let url = "\(host)/Raw/Name/\(target)/List/\(node)/\(types)/\(categories.isEmpty ? "0" : categories)/Print/ics/Default/Abfuhrtermine.ics"
-            guard let text = try? await client.string(url) else { continue }
-            for event in ICS.parse(text, calendar: calendar) {
+            // Ohne Kategorien das Segment weglassen (z. B. Anhalt-Bitterfeld, Schwerin liefern mit „/0“ nur einen Hinweis);
+            // ältere Mandanten erwarten „/0“ – darauf zurückfallen.
+            let base = "\(host)/Raw/Name/\(target)/List/\(node)/\(types)"
+            let urls = categories.isEmpty ? ["\(base)/Print/ics/Default/Abfuhrtermine.ics", "\(base)/0/Print/ics/Default/Abfuhrtermine.ics"]
+                                          : ["\(base)/\(categories)/Print/ics/Default/Abfuhrtermine.ics"]
+            var events: [ICSEvent] = []
+            for url in urls {
+                guard let text = try? await client.string(url) else { continue }
+                events = ICS.parse(text, calendar: calendar).filter { !Self.isNotice($0.summary) }
+                if !events.isEmpty { break }
+            }
+            for event in events {
                 let name = Self.clean(event.summary)
                 if name.lowercased().contains("gebühr") { continue }
                 result.append(Pickup(date: event.date, name: name))
@@ -70,6 +79,12 @@ public struct GemosWasteBoxProvider: WasteProvider {
 
     static func clean(_ name: String) -> String {
         NameCleaner.clean(name.replacingOccurrences(of: " Alle Tonnen", with: ""))
+    }
+
+    /// Hinweis statt Termin („Es sind neue Abfuhrtermine verfügbar …“).
+    static func isNotice(_ summary: String) -> Bool {
+        let lower = summary.lowercased()
+        return lower.contains("neue abfuhrtermine") || lower.contains("termine verfügbar")
     }
 }
 

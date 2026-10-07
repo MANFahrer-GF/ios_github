@@ -164,6 +164,7 @@ extension LiveProviderTests {
         try await check(GemosWasteBoxProvider(customer: "eaw"), prefer: [], minCount: 5)
         try await check(GemosWasteBoxProvider(customer: "apm"), prefer: [], minCount: 5)
         try await check(AbfallAppNetProvider(tenant: "brandenburg"), prefer: [], minCount: 5)
+        try await check(GemosWasteBoxProvider(customer: "abikw"), prefer: ["Köthen"], minCount: 5)
     }
 
     func testMagdeburg() async throws {
