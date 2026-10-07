@@ -2806,7 +2806,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dates come straight from the providers’ portals: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender plus BSR Berlin, Cologne, Leipzig and Hannover region. The catalog knows %lld providers. No guarantee – if in doubt, your provider’s calendar applies."
+            "value": "Dates come straight from the providers’ portals: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, district portals (Sitepark) plus BSR Berlin, Cologne, Leipzig and Hannover region. The catalog knows %lld providers. No guarantee – if in doubt, your provider’s calendar applies."
           }
         }
       }
