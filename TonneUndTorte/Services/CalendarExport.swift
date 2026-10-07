@@ -16,9 +16,9 @@ enum CalendarExport {
         case targetMissing
         var errorDescription: String? {
             switch self {
-            case .denied: return "Kalenderzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben."
-            case .noSource: return "Es wurde kein Kalenderkonto gefunden."
-            case .targetMissing: return "Der gewählte Kalender existiert nicht mehr. Bitte einen anderen wählen."
+            case .denied: return L10n.t("Kalenderzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben.", "Calendar access was not allowed. Please enable it in Settings.")
+            case .noSource: return L10n.t("Es wurde kein Kalenderkonto gefunden.", "No calendar account was found.")
+            case .targetMissing: return L10n.t("Der gewählte Kalender existiert nicht mehr. Bitte einen anderen wählen.", "The chosen calendar no longer exists. Please pick another one.")
             }
         }
     }
@@ -94,7 +94,7 @@ enum CalendarExport {
         let own = sources.map { source in
             Choice(target: .own(sourceID: source.sourceIdentifier),
                    title: sourceName(source),
-                   subtitle: "Eigener Kalender „\(calendarTitle)“",
+                   subtitle: L10n.t("Eigener Kalender „\(calendarTitle)“", "Own calendar “\(calendarTitle)”"),
                    colorHex: nil)
         }
         let existing = store.calendars(for: .event)
@@ -111,14 +111,14 @@ enum CalendarExport {
 
     /// Lesbarer Name des aktuellen Ziels, z. B. „Tonne & Torte (Google)“ oder „Privat (iCloud)“.
     static func targetDescription() -> String {
-        guard hasFullAccess else { return "Noch nicht gewählt" }
+        guard hasFullAccess else { return L10n.t("Noch nicht gewählt", "Not chosen yet") }
         let store = EKEventStore()
         switch target {
         case .own(let sourceID):
             let source = sourceID.flatMap { id in store.sources.first { $0.sourceIdentifier == id } } ?? preferredSource(in: store)
-            return "\(calendarTitle) (\(source.map(sourceName) ?? "automatisch"))"
+            return "\(calendarTitle) (\(source.map(sourceName) ?? L10n.t("automatisch", "automatic")))"
         case .existing(let id):
-            guard let calendar = store.calendar(withIdentifier: id) else { return "Kalender fehlt" }
+            guard let calendar = store.calendar(withIdentifier: id) else { return L10n.t("Kalender fehlt", "Calendar missing") }
             return "\(calendar.title) (\(sourceName(calendar.source)))"
         }
     }
@@ -128,7 +128,7 @@ enum CalendarExport {
         if title.lowercased().contains("icloud") { return "iCloud" }
         if title.lowercased().contains("gmail") || title.lowercased().contains("google") { return "Google (\(title))" }
         switch source.sourceType {
-        case .local: return "Auf dem iPhone"
+        case .local: return L10n.t("Auf dem iPhone", "On this iPhone")
         case .exchange: return "Exchange/Outlook (\(title))"
         default: return title
         }

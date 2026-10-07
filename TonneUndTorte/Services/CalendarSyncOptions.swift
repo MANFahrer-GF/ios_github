@@ -1,4 +1,5 @@
 import Foundation
+import TonneCore
 
 /// Was in den Kalender übertragen wird.
 struct CalendarSyncOptions {
@@ -7,9 +8,9 @@ struct CalendarSyncOptions {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .none: return "Keine"
-            case .manualOnly: return "Nur von Hand angelegte"
-            case .all: return "Alle"
+            case .none: return L10n.t("Keine", "None")
+            case .manualOnly: return L10n.t("Nur von Hand angelegte", "Only added by hand")
+            case .all: return L10n.t("Alle", "All")
             }
         }
     }

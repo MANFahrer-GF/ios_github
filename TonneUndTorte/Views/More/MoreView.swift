@@ -20,7 +20,7 @@ struct MoreView: View {
                         Label {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Kalender-Abgleich")
-                                Text(calendarAutoSync ? "Automatisch · \(CalendarExport.targetDescription())" : "Aus")
+                                Text(calendarAutoSync ? L10n.t("Automatisch · \(CalendarExport.targetDescription())", "Automatic · \(CalendarExport.targetDescription())") : L10n.t("Aus", "Off"))
                                     .font(.caption).foregroundStyle(.secondary).lineLimit(1)
                             }
                         } icon: {

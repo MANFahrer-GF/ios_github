@@ -127,8 +127,12 @@ struct SourceWizardView: View {
     }
 
     private var resultsHeader: String {
-        if query.isEmpty { return region.suggestions.isEmpty ? "Alle Entsorger (\(ProviderCatalog.count))" : "Vorschläge" }
-        return "Treffer (\(results.count))"
+        if query.isEmpty {
+            return region.suggestions.isEmpty
+                ? L10n.t("Alle Entsorger (\(ProviderCatalog.count))", "All providers (\(ProviderCatalog.count))")
+                : L10n.t("Vorschläge", "Suggestions")
+        }
+        return L10n.t("Treffer (\(results.count))", "Results (\(results.count))")
     }
 
     private func catalogSubtitle(_ item: CatalogEntry) -> String {

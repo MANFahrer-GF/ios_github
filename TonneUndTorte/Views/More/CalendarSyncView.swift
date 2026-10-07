@@ -91,7 +91,7 @@ struct CalendarSyncView: View {
             let count = try await CalendarExport.export(items: model.calendarExportItems())
             CalendarExport.resetFingerprint()
             targetText = CalendarExport.targetDescription()
-            if !silent { message = "\(count) Termine in „\(targetText)“ eingetragen." }
+            if !silent { message = L10n.t("\(count) Termine in „\(targetText)“ eingetragen.", "\(count) events added to “\(targetText)”.") }
         } catch {
             if autoSync && !CalendarExport.hasFullAccess { autoSync = false }
             message = error.localizedDescription
@@ -104,7 +104,7 @@ struct CalendarSyncView: View {
         do {
             let count = try await CalendarExport.move(to: target, items: model.calendarExportItems())
             targetText = CalendarExport.targetDescription()
-            message = "\(count) Termine in „\(targetText)“ eingetragen."
+            message = L10n.t("\(count) Termine in „\(targetText)“ eingetragen.", "\(count) events added to “\(targetText)”.")
         } catch {
             message = error.localizedDescription
         }

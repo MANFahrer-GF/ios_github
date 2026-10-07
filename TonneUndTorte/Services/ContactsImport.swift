@@ -16,7 +16,7 @@ enum ContactsImport {
 
     enum ImportError: LocalizedError {
         case denied
-        var errorDescription: String? { "Kontaktzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben." }
+        var errorDescription: String? { L10n.t("Kontaktzugriff wurde nicht erlaubt. Bitte in den Einstellungen freigeben.", "Contacts access was not allowed. Please enable it in Settings.") }
     }
 
     enum Access { case full, limited, denied, notDetermined }

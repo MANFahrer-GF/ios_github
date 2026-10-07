@@ -26,11 +26,12 @@ struct AboutView: View {
                         bullet("Widgets, Sperrbildschirm, Live-Aktivität, Apple Watch und Siri")
                         bullet("Geburtstage mit Alter, runden Jubiläen und Geschenkideen")
                         bullet("Eigene wiederkehrende Termine wie TÜV oder Rauchmelder")
-                        bullet("Apple-Kalender, ICS, CSV und PDF als Export")
+                        bullet("Kalender-App: iCloud, Google oder Outlook, automatisch aktuell")
+                        bullet("Export als ICS, CSV und PDF")
                     }
                 }
                 card(title: "Woher die Daten kommen", symbol: "antenna.radiowaves.left.and.right") {
-                    Text("Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax sowie Köln, Leipzig und Region Hannover. Der Katalog kennt \(ProviderCatalog.count) Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.")
+                    Text("Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt \(ProviderCatalog.count) Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.")
                 }
                 card(title: "Deine Daten", symbol: "lock.shield.fill") {
                     Text("Es gibt kein Konto und keinen eigenen Server. Standorte, Müllarten und Geburtstage bleiben auf deinem Gerät und werden nur über deine eigene iCloud zwischen iPhone, iPad und Watch abgeglichen. Die App verschickt nichts an Dritte.")
@@ -97,7 +98,7 @@ struct AboutView: View {
         .padding(.top, 8)
     }
 
-    private func card<Content: View>(title: String, symbol: String, @ViewBuilder content: () -> Content) -> some View {
+    private func card<Content: View>(title: LocalizedStringKey, symbol: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Label(title, systemImage: symbol).font(.headline)
             content().font(.subheadline).foregroundStyle(.primary)
@@ -106,7 +107,7 @@ struct AboutView: View {
         .card()
     }
 
-    private func bullet(_ text: String) -> some View {
+    private func bullet(_ text: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: "checkmark.circle.fill").foregroundStyle(.green).font(.subheadline)
             Text(text)
