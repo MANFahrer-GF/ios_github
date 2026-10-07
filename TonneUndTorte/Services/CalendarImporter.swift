@@ -79,11 +79,11 @@ enum CalendarImporter {
                     colorHex: preset.colorHex,
                     symbolName: preset.symbolName,
                     sortOrder: nextSortOrder,
-                    location: location,
                     sourceKey: mapping.summary
                 )
                 nextSortOrder += 1
                 context.insert(type)
+                type.location = location
                 target = type
             }
 

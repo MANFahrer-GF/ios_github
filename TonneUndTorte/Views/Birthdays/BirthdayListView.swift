@@ -12,7 +12,7 @@ struct BirthdayListView: View {
     private var sortedPeople: [(person: Person, next: Date, age: Int?)] {
         people.compactMap { person in
             guard let next = EventEngine.nextBirthday(for: person) else { return nil }
-            return (person, next, EventEngine.age(of: person, on: next))
+            return (person: person, next: next, age: EventEngine.age(of: person, on: next))
         }
         .sorted { $0.next < $1.next }
     }

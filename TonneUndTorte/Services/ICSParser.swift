@@ -97,7 +97,7 @@ enum ICSParser {
             .replacingOccurrences(of: "\\n", with: " ")
             .replacingOccurrences(of: "\\N", with: " ")
             .replacingOccurrences(of: "\\,", with: ",")
-            .replacingOccurrences(of: "\;", with: ";")
+            .replacingOccurrences(of: "\\;", with: ";")
             .replacingOccurrences(of: "\\\\", with: "\\")
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }

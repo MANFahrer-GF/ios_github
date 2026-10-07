@@ -285,10 +285,10 @@ struct NewWasteTypeSheet: View {
             name: name.trimmingCharacters(in: .whitespaces),
             colorHex: colorHex,
             symbolName: symbolName,
-            sortOrder: sortOrder,
-            location: location
+            sortOrder: sortOrder
         )
         context.insert(type)
+        type.location = location
         try? context.save()
         dismiss()
     }
