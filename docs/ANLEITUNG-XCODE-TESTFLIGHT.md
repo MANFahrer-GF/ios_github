@@ -58,6 +58,8 @@ Oben in der Leiste wählst du das **Schema** (links, „Tonne & Torte“) und da
 
 Baut Xcode nicht und zeigt rote Fehler: Reiter **Issue Navigator** (⚠️-Symbol links) öffnen, Fehler kopieren und mir schicken.
 
+> Zu umständlich? Es geht auch komplett ohne Xcode-Einstellungen: siehe `ANLEITUNG-XCODE-CLOUD.md` (Apple baut die App in der Cloud und schickt sie nach TestFlight).
+
 ## 6. iCloud-Schema für TestFlight freischalten
 
 TestFlight nutzt die Produktionsumgebung von CloudKit. Nach dem ersten Lauf auf dem Gerät:

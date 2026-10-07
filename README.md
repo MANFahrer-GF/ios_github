@@ -48,6 +48,8 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 2. Für **alle vier** Targets (Tonne & Torte, TonneWidget, TonneWatch, TonneWatchWidget) unter *Signing & Capabilities* dein Team wählen. Xcode legt App-Gruppe, iCloud-Container und Push-Berechtigung automatisch an (siehe `Config/*.entitlements`). Bundle-IDs bei Bedarf anpassen (`de.manfahrer.TonneUndTorte` und `…TonneUndTorte.TonneWidget`), dann auch in `Config/TonneUndTorte-Info.plist` (BGTaskScheduler-ID) und `TonneCore/Sources/TonneCore/WidgetSnapshot.swift` (App-Gruppe) nachziehen.
 3. Auf iPhone/iPad starten. Für TestFlight: *Product → Archive* und über App Store Connect verteilen.
 
+Schritt-für-Schritt-Anleitungen: `docs/ANLEITUNG-XCODE-TESTFLIGHT.md` (klassisch mit Xcode) und `docs/ANLEITUNG-XCODE-CLOUD.md` (ohne Xcode-Einstellungen, Apple baut in der Cloud und liefert nach TestFlight).
+
 Beim ersten Start fragt die App nach dem Standort (optional) und schlägt Entsorger vor. Mitteilungen werden nach der Einrichtung angefragt.
 
 ## Architektur
