@@ -58,6 +58,8 @@ enum CalendarExport {
     private static let targetKey = "calendar.target"
     private static let marker = "Eingetragen von Tonne & Torte"
     private static let markerURL = URL(string: "tonne://event")
+    /// Ein gemeinsamer Store für Anzeige und Auswahl (das Anlegen ist teuer).
+    private static let sharedStore = EKEventStore()
 
     // MARK: Ziel
 
@@ -85,13 +87,15 @@ enum CalendarExport {
 
     /// Alle möglichen Ziele: eigener Kalender je Konto und alle beschreibbaren vorhandenen Kalender.
     static func choices() async throws -> (own: [Choice], existing: [Choice]) {
-        let store = EKEventStore()
+        let store = sharedStore
         guard try await requestAccess(store) else { throw ExportError.denied }
-        let sources = store.sources.filter { source in
-            source.sourceType != .birthdays && source.sourceType != .subscribed
-                && (source.sourceType == .local || !source.calendars(for: .event).isEmpty || source.sourceType == .calDAV || source.sourceType == .exchange)
-        }
-        let own = sources.map { source in
+        store.refreshSourcesIfNecessary()
+        // Eigene Kalender lassen sich zuverlässig nur in iCloud anlegen. „Auf dem iPhone“ gibt es nur,
+        // solange iCloud-Kalender aus ist (sonst blendet iOS diese Quelle aus). Google und Outlook
+        // erlauben Apps kein Anlegen – dort wählt man einen vorhandenen Kalender.
+        let iCloudSources = store.sources.filter(isICloud)
+        let ownSources = iCloudSources.isEmpty ? store.sources.filter { $0.sourceType == .local } : iCloudSources
+        let own = ownSources.map { source in
             Choice(target: .own(sourceID: source.sourceIdentifier),
                    title: sourceName(source),
                    subtitle: L10n.t("Eigener Kalender „\(calendarTitle)“", "Own calendar “\(calendarTitle)”"),
@@ -109,10 +113,22 @@ enum CalendarExport {
         return (own, existing)
     }
 
+    private static func isICloud(_ source: EKSource) -> Bool {
+        source.sourceType == .calDAV && source.title.lowercased().contains("icloud")
+    }
+
+    /// Das tatsächlich verwendete Ziel – „automatisch“ wird auf das konkrete Konto aufgelöst.
+    static func resolvedTarget() -> Target {
+        if case .own(nil) = target, let source = preferredSource(in: sharedStore) {
+            return .own(sourceID: source.sourceIdentifier)
+        }
+        return target
+    }
+
     /// Lesbarer Name des aktuellen Ziels, z. B. „Tonne & Torte (Google)“ oder „Privat (iCloud)“.
     static func targetDescription() -> String {
         guard hasFullAccess else { return L10n.t("Noch nicht gewählt", "Not chosen yet") }
-        let store = EKEventStore()
+        let store = sharedStore
         switch target {
         case .own(let sourceID):
             let source = sourceID.flatMap { id in store.sources.first { $0.sourceIdentifier == id } } ?? preferredSource(in: store)
@@ -146,19 +162,17 @@ enum CalendarExport {
     /// schreibt nur, wenn sich die Termine seit dem letzten Mal geändert haben.
     static func autoSyncIfEnabled(items: [Item]) async {
         guard UserDefaults.standard.bool(forKey: autoSyncKey), hasFullAccess else { return }
-        let fingerprint = stableHash(items.map { "\(Days.iso($0.date))|\($0.title)|\($0.alarmMinutesFromMidnight)" }.joined(separator: ";") + "#\(String(describing: target))")
-        guard UserDefaults.standard.string(forKey: fingerprintKey) != fingerprint else { return }
-        do {
-            try await export(items: items, askForAccess: false)
-            UserDefaults.standard.set(fingerprint, forKey: fingerprintKey)
-        } catch {
-            // Beim nächsten Abgleich erneut versuchen.
-        }
+        guard UserDefaults.standard.string(forKey: fingerprintKey) != fingerprint(items) else { return }
+        _ = try? await export(items: items, askForAccess: false)
     }
 
     /// Fingerabdruck verwerfen, damit der nächste automatische Abgleich sicher schreibt.
     static func resetFingerprint() {
         UserDefaults.standard.removeObject(forKey: fingerprintKey)
+    }
+
+    private static func fingerprint(_ items: [Item]) -> String {
+        stableHash(items.map { "\(Days.iso($0.date))|\($0.title)|\($0.alarmMinutesFromMidnight)" }.joined(separator: ";") + "#\(String(describing: resolvedTarget()))")
     }
 
     /// Über Programmstarts hinweg gleich (anders als `hashValue`).
@@ -168,13 +182,50 @@ enum CalendarExport {
         return String(hash, radix: 16)
     }
 
+    /// Alle Schreibvorgänge laufen nacheinander. Zwei gleichzeitige Abgleiche würden sonst dieselben
+    /// alten Termine lesen und die neuen doppelt eintragen.
+    private static let queue = SerialQueue()
+
     @discardableResult
     static func export(items: [Item], askForAccess: Bool = true) async throws -> Int {
-        let store = EKEventStore()
-        let granted = askForAccess ? try await requestAccess(store) : hasFullAccess
-        guard granted else { throw ExportError.denied }
+        if askForAccess { guard try await requestAccess() else { throw ExportError.denied } }
+        guard hasFullAccess else { throw ExportError.denied }
+        return try await queue.run {
+            let store = EKEventStore()
+            let calendar = try resolveCalendar(in: store, target: target, create: true)
+            let count = try write(items, into: calendar, store: store)
+            UserDefaults.standard.set(fingerprint(items), forKey: fingerprintKey)
+            return count
+        }
+    }
 
-        let calendar = try resolveCalendar(in: store, create: true)
+    /// Zieht in einen anderen Kalender um. Erst wird ins neue Ziel geschrieben; nur wenn das klappt,
+    /// werden die Termine im alten Ziel entfernt. Schlägt das neue Ziel fehl, bleibt alles wie es war.
+    static func move(to newTarget: Target, items: [Item]) async throws -> Int {
+        guard try await requestAccess() else { throw ExportError.denied }
+        return try await queue.run {
+            let store = EKEventStore()
+            let oldTarget = resolvedTarget()
+            let newCalendar = try resolveCalendar(in: store, target: newTarget, create: true)
+            let oldCalendar = try? resolveCalendar(in: store, target: oldTarget, create: false)
+            let count = try write(items, into: newCalendar, store: store)
+            target = newTarget
+            if let oldCalendar, oldCalendar.calendarIdentifier != newCalendar.calendarIdentifier {
+                if case .own = oldTarget {
+                    // Der eigene Kalender enthält nur Termine dieser App – er wird ganz entfernt.
+                    try? store.removeCalendar(oldCalendar, commit: true)
+                } else {
+                    removeOwnEvents(from: oldCalendar, in: store)
+                    try? store.commit()
+                }
+            }
+            UserDefaults.standard.set(fingerprint(items), forKey: fingerprintKey)
+            return count
+        }
+    }
+
+    /// Ersetzt die Termine dieser App ab heute durch die neuen.
+    private static func write(_ items: [Item], into calendar: EKCalendar, store: EKEventStore) throws -> Int {
         removeOwnEvents(from: calendar, in: store)
         var count = 0
         for item in items {
@@ -196,25 +247,10 @@ enum CalendarExport {
         return count
     }
 
-    /// Zieht in einen anderen Kalender um: Termine im alten Ziel entfernen, im neuen anlegen.
-    static func move(to newTarget: Target, items: [Item]) async throws -> Int {
-        let store = EKEventStore()
-        guard try await requestAccess(store) else { throw ExportError.denied }
-        if let old = try? resolveCalendar(in: store, create: false) {
-            removeOwnEvents(from: old, in: store)
-            try? store.commit()
-            // Ein eigener, nun leerer Kalender wird entfernt.
-            if old.title == calendarTitle, store.events(matching: store.predicateForEvents(withStart: Days.add(-400, to: Days.today()), end: Days.add(800, to: Days.today()), calendars: [old])).isEmpty {
-                try? store.removeCalendar(old, commit: true)
-            }
-        }
-        target = newTarget
-        return try await export(items: items, askForAccess: false)
-    }
-
     /// Entfernt nur Termine, die diese App angelegt hat – eigene Termine im Kalender bleiben.
     private static func removeOwnEvents(from calendar: EKCalendar, in store: EKEventStore) {
-        let from = Days.add(-30, to: Days.today())
+        // Ab heute: vergangene Einträge bleiben als Verlauf stehen, der Export schreibt ebenfalls ab heute.
+        let from = Days.today()
         let to = Days.add(800, to: Days.today())
         let predicate = store.predicateForEvents(withStart: from, end: to, calendars: [calendar])
         for event in store.events(matching: predicate) {
@@ -224,13 +260,13 @@ enum CalendarExport {
     }
 
     private static func preferredSource(in store: EKEventStore) -> EKSource? {
-        store.sources.first { $0.sourceType == .calDAV && $0.title.lowercased().contains("icloud") }
+        store.sources.first(where: isICloud)
             ?? store.defaultCalendarForNewEvents?.source
             ?? store.sources.first(where: { $0.sourceType == .calDAV })
             ?? store.sources.first(where: { $0.sourceType == .local })
     }
 
-    private static func resolveCalendar(in store: EKEventStore, create: Bool) throws -> EKCalendar {
+    private static func resolveCalendar(in store: EKEventStore, target: Target, create: Bool) throws -> EKCalendar {
         switch target {
         case .existing(let id):
             guard let calendar = store.calendar(withIdentifier: id) else { throw ExportError.targetMissing }
@@ -249,5 +285,20 @@ enum CalendarExport {
             try store.saveCalendar(calendar, commit: true)
             return calendar
         }
+    }
+}
+
+/// Führt asynchrone Aufgaben streng nacheinander aus.
+actor SerialQueue {
+    private var tail: Task<Void, Never>?
+
+    func run<T: Sendable>(_ operation: @escaping @Sendable () async throws -> T) async throws -> T {
+        let previous = tail
+        let task = Task { () async throws -> T in
+            await previous?.value
+            return try await operation()
+        }
+        tail = Task { _ = try? await task.value }
+        return try await task.value
     }
 }

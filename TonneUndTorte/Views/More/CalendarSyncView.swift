@@ -11,6 +11,8 @@ struct CalendarSyncView: View {
     @State private var targetText = CalendarExport.targetDescription()
     @State private var isWorking = false
     @State private var message: String?
+    @State private var pendingExport: Task<Void, Never>?
+    @State private var feed: String?
 
     var body: some View {
         List {
@@ -58,8 +60,10 @@ struct CalendarSyncView: View {
                     }
                 }
                 .disabled(isWorking)
-                ShareLink(item: FeedFile(text: model.feedText()), preview: SharePreview("Tonne & Torte.ics")) {
-                    Label("Als ICS-Datei teilen", systemImage: "square.and.arrow.up")
+                if let feed {
+                    ShareLink(item: FeedFile(text: feed), preview: SharePreview("Tonne & Torte.ics")) {
+                        Label("Als ICS-Datei teilen", systemImage: "square.and.arrow.up")
+                    }
                 }
             } footer: {
                 Text("Google-Kalender erscheinen in der Auswahl, sobald dein Google-Konto in den iOS-Einstellungen unter Apps → Kalender → Kalender-Accounts eingerichtet ist.")
@@ -72,6 +76,7 @@ struct CalendarSyncView: View {
         .onChange(of: includeCustom) { _, _ in optionsChanged() }
         .onChange(of: birthdays) { _, _ in optionsChanged() }
         .onAppear { targetText = CalendarExport.targetDescription() }
+        .task { feed = model.feedText() }
         .alert("Kalender", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
@@ -79,9 +84,15 @@ struct CalendarSyncView: View {
         }
     }
 
+    /// Mehrere schnelle Änderungen werden gesammelt und einmal geschrieben.
     private func optionsChanged() {
-        CalendarExport.resetFingerprint()
-        if autoSync { Task { await exportNow(silent: true) } }
+        pendingExport?.cancel()
+        guard autoSync else { return }
+        pendingExport = Task {
+            try? await Task.sleep(nanoseconds: 800_000_000)
+            guard !Task.isCancelled else { return }
+            await exportNow(silent: true)
+        }
     }
 
     private func exportNow(silent: Bool = false) async {
@@ -89,7 +100,6 @@ struct CalendarSyncView: View {
         defer { isWorking = false }
         do {
             let count = try await CalendarExport.export(items: model.calendarExportItems())
-            CalendarExport.resetFingerprint()
             targetText = CalendarExport.targetDescription()
             if !silent { message = L10n.t("\(count) Termine in „\(targetText)“ eingetragen.", "\(count) events added to “\(targetText)”.") }
         } catch {
@@ -118,7 +128,7 @@ struct CalendarTargetPicker: View {
     @State private var own: [CalendarExport.Choice] = []
     @State private var existing: [CalendarExport.Choice] = []
     @State private var errorMessage: String?
-    @State private var current = CalendarExport.target
+    @State private var current = CalendarExport.resolvedTarget()
 
     var body: some View {
         List {
@@ -130,7 +140,7 @@ struct CalendarTargetPicker: View {
             } header: {
                 Text("Eigener Kalender „Tonne & Torte“ in")
             } footer: {
-                Text("Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst.")
+                Text("Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst. Für Google oder Outlook wähle unten einen vorhandenen Kalender.")
             }
             if !existing.isEmpty {
                 Section {
@@ -156,18 +166,16 @@ struct CalendarTargetPicker: View {
     }
 
     private func isCurrent(_ choice: CalendarExport.Choice) -> Bool {
-        if choice.target == current { return true }
-        if case .own(nil) = current, case .own(let id?) = choice.target {
-            return own.first?.target == .own(sourceID: id) && own.first(where: { $0.title == "iCloud" }) == nil
-        }
-        return false
+        choice.target == current
     }
 
     private func row(_ choice: CalendarExport.Choice, symbol: String?) -> some View {
         Button {
             Task {
-                current = choice.target
-                await onSelect(choice.target)
+                if choice.target != current {
+                    current = choice.target
+                    await onSelect(choice.target)
+                }
                 dismiss()
             }
         } label: {

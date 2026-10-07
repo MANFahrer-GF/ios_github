@@ -160,6 +160,10 @@ public protocol WasteProvider {
 
     /// Alle Abholtermine für die vollständige Auswahl.
     func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup]
+
+    /// Lesbare Bezeichnung der Adresse, z. B. „Gifhorn, Steinstraße 1“. Anbieter mit Zusatzschritten
+    /// (Tonnengröße, Suchtext) liefern hier nur den Adressteil.
+    func label(for selections: [SelectionOption]) -> String
 }
 
 public extension WasteProvider {

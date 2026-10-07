@@ -159,6 +159,11 @@ public struct AWSHProvider: WasteProvider {
         return events.map { Pickup(date: $0.date, name: Self.cleanName($0.summary)) }
     }
 
+    /// Nur Ort und Straße – die Tonnenauswahl gehört nicht in den Namen des Standorts.
+    public func label(for selections: [SelectionOption]) -> String {
+        selections.prefix(2).map(\.title).joined(separator: ", ")
+    }
+
     /// „Restabfall 40L-240L(2-wöchentlich)“ → „Restabfall 40L-240L“
     static func cleanName(_ name: String) -> String {
         NameCleaner.clean(name.replacingOccurrences(of: #"\s*\([^)]*wöchentlich\)|\s*\(monatlich\)"#, with: "", options: .regularExpression))

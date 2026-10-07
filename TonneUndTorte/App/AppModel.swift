@@ -50,6 +50,8 @@ struct CalendarEvent: Identifiable, Hashable {
     let locationName: String?
     let years: Int?
     let done: Bool
+    /// Die Person hinter einem Geburtstag.
+    var personID: UUID? = nil
     var color: Color { Color(hex: colorHex) }
     var isMilestone: Bool { years.map { AnnualDate.isMilestone($0) } ?? false }
 }
@@ -153,7 +155,7 @@ final class AppModel: ObservableObject {
         for person in allPeople() {
             for date in person.annual.occurrences(from: from, to: to) {
                 let years = person.annual.years(on: date)
-                result.append(CalendarEvent(id: "bday-\(person.id)-\(Days.iso(date))", date: date, kind: .birthday, title: person.name, subtitle: years.map { "wird \($0)" } ?? "Geburtstag", colorHex: person.colorHex, symbolName: "birthday.cake.fill", locationID: nil, locationName: nil, years: years, done: false))
+                result.append(CalendarEvent(id: "bday-\(person.id)-\(Days.iso(date))", date: date, kind: .birthday, title: person.name, subtitle: years.map { "wird \($0)" } ?? "Geburtstag", colorHex: person.colorHex, symbolName: "birthday.cake.fill", locationID: nil, locationName: nil, years: years, done: false, personID: person.id))
             }
         }
         for event in allCustomEvents() {
@@ -307,7 +309,8 @@ final class AppModel: ObservableObject {
 
     // MARK: - Export
 
-    func calendarExportItems() -> [CalendarExport.Item] {
+    /// Termine für die Kalender-App. `applyingSyncOptions: false` liefert alles (für die ICS-Datei).
+    func calendarExportItems(applyingSyncOptions: Bool = true) -> [CalendarExport.Item] {
         let settings = SettingsKeys.reminderSettings()
         let today = Days.today()
         var alarms: [Int] = []
@@ -315,8 +318,9 @@ final class AppModel: ObservableObject {
         if settings.morningEnabled { alarms.append(settings.morningMinutes) }
         let multi = allLocations().count > 1
         let options = CalendarSyncOptions.current
-        let contactPrefixes = Set(allPeople().filter { $0.contactIdentifier != nil }.map { "bday-\($0.id)-" })
+        let fromContacts = Set(allPeople().filter { $0.contactIdentifier != nil }.map(\.id))
         let wanted = events(from: today, to: Days.add(400, to: today)).filter { event in
+            guard applyingSyncOptions else { return true }
             switch event.kind {
             case .waste: return options.includeWaste
             case .custom: return options.includeCustom
@@ -324,7 +328,7 @@ final class AppModel: ObservableObject {
                 switch options.birthdays {
                 case .none: return false
                 case .all: return true
-                case .manualOnly: return !contactPrefixes.contains(String(event.id.dropLast(10)))
+                case .manualOnly: return !(event.personID.map(fromContacts.contains) ?? false)
                 }
             }
         }
@@ -342,7 +346,7 @@ final class AppModel: ObservableObject {
 
     /// Alle eingetragenen Termine als ICS-Datei (zum Teilen).
     func feedText() -> String {
-        let events = calendarExportItems().map { item in
+        let events = calendarExportItems(applyingSyncOptions: false).map { item in
             ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFFFF })@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight)
         }
         return ICS.build(name: "Tonne & Torte", events: events)

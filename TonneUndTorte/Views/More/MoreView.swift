@@ -8,6 +8,12 @@ struct MoreView: View {
 
     @AppStorage(CalendarExport.autoSyncKey) private var calendarAutoSync = false
 
+    private var syncSubtitle: String {
+        guard calendarAutoSync else { return L10n.t("Aus", "Off") }
+        let target = CalendarExport.targetDescription()
+        return L10n.t("Automatisch · \(target)", "Automatic · \(target)")
+    }
+
     var body: some View {
         NavigationStack {
             List {
@@ -20,7 +26,7 @@ struct MoreView: View {
                         Label {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Kalender-Abgleich")
-                                Text(calendarAutoSync ? L10n.t("Automatisch · \(CalendarExport.targetDescription())", "Automatic · \(CalendarExport.targetDescription())") : L10n.t("Aus", "Off"))
+                                Text(syncSubtitle)
                                     .font(.caption).foregroundStyle(.secondary).lineLimit(1)
                             }
                         } icon: {

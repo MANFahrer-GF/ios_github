@@ -374,6 +374,11 @@ public struct AbfallPlusAppProvider: WasteProvider {
         })
     }
 
+    /// Ohne die Suchtexte der Straßensuche.
+    public func label(for selections: [SelectionOption]) -> String {
+        selections.filter { $0.id.contains("k=") && !$0.title.lowercased().hasPrefix("alle ") }.map(\.title).joined(separator: ", ")
+    }
+
     // MARK: - Termine
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {

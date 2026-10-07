@@ -23,21 +23,25 @@ public enum Recurrence: Hashable, Codable {
         let toDay = calendar.startOfDay(for: to)
         guard fromDay <= toDay, startDay <= toDay else { return [] }
         var result: [Date] = []
-        var current = startDay
-        var guardCounter = 0
-        while current <= toDay && guardCounter < 5000 {
-            if current >= fromDay { result.append(current) }
-            guardCounter += 1
+        // Jedes Vorkommen wird vom Start aus berechnet (Start + k × Abstand). So rutscht ein Termin am 31.
+        // nach einem kurzen Monat nicht dauerhaft auf den 28., und der 29. Februar bleibt in Schaltjahren erhalten.
+        for k in 0..<5000 {
+            let current: Date
             switch self {
             case .once:
-                return result
+                current = startDay
             case .everyWeeks(let n):
-                current = Days.add(max(1, n) * 7, to: current, calendar: calendar)
+                current = Days.add(max(1, n) * 7 * k, to: startDay, calendar: calendar)
             case .everyMonths(let n):
-                current = calendar.date(byAdding: .month, value: max(1, n), to: current) ?? toDay.addingTimeInterval(1)
+                guard let date = calendar.date(byAdding: .month, value: max(1, n) * k, to: startDay) else { return result }
+                current = date
             case .yearly:
-                current = calendar.date(byAdding: .year, value: 1, to: current) ?? toDay.addingTimeInterval(1)
+                guard let date = calendar.date(byAdding: .year, value: k, to: startDay) else { return result }
+                current = date
             }
+            if current > toDay { break }
+            if current >= fromDay { result.append(current) }
+            if case .once = self { break }
         }
         return result
     }

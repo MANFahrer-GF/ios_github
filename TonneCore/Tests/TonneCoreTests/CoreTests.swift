@@ -147,6 +147,31 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(plan, plan.sorted { $0.fireDate < $1.fireDate })
     }
 
+    func testProviderLabels() {
+        let awsh = AWSHProvider()
+        let picks = [SelectionOption(id: "83", title: "Lauenburg"), SelectionOption(id: "1", title: "Hauptstraße"),
+                     SelectionOption(id: "type:R02", title: "Restabfall 40L-240L · 2-wöchentlich"), SelectionOption(id: "type:none:P", title: "Habe ich nicht")]
+        XCTAssertEqual(awsh.label(for: picks), "Lauenburg, Hauptstraße")
+        let existential: WasteProvider = awsh
+        XCTAssertEqual(existential.label(for: picks), "Lauenburg, Hauptstraße")
+        let bsr: WasteProvider = BSRProvider()
+        XCTAssertEqual(bsr.label(for: [SelectionOption(id: "Alex", title: "Alex"), SelectionOption(id: "Alexanderstr.", title: "Alexanderstr."), SelectionOption(id: "5", title: "5"), SelectionOption(id: "k", title: "Alexanderstr. 5, 10178 Berlin (Mitte)")]), "Alexanderstr. 5, 10178 Berlin (Mitte)")
+    }
+
+    func testRecurrenceKeepsEndOfMonth() {
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 31))!
+        let end = cal.date(from: DateComponents(year: 2026, month: 5, day: 31))!
+        let days = Recurrence.everyMonths(1).occurrences(start: start, from: start, to: end, calendar: cal).map { cal.component(.day, from: $0) }
+        XCTAssertEqual(days, [31, 28, 31, 30, 31])
+
+        let leap = cal.date(from: DateComponents(year: 2024, month: 2, day: 29))!
+        let until = cal.date(from: DateComponents(year: 2028, month: 3, day: 1))!
+        let leapDays = Recurrence.yearly.occurrences(start: leap, from: leap, to: until, calendar: cal).map { cal.component(.day, from: $0) }
+        XCTAssertEqual(leapDays, [29, 28, 28, 28, 29])
+    }
+
     func testCatalogSearch() {
         XCTAssertGreaterThan(ProviderCatalog.count, 300)
         XCTAssertEqual(ProviderCatalog.search("Köln").first?.kind, .awbKoeln)
