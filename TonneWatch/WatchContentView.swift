@@ -1,7 +1,7 @@
 import SwiftUI
 import TonneCore
 
-/// Watch-App: nächste Abholung mit „Erledigt“, weitere Tage, Geburtstage.
+/// Watch-App im Design „Klar“: nächste Abholung mit „Erledigt“/„Zurück“, weitere Tage, Geburtstage.
 struct WatchContentView: View {
     @State private var snapshot: WidgetSnapshot? = SnapshotStore.load()
     @Environment(\.scenePhase) private var scenePhase
@@ -10,133 +10,205 @@ struct WatchContentView: View {
 
     var body: some View {
         TabView {
-            heroPage
-            listPage
-            birthdayPage
+            PickupPage(snapshot: snapshot, next: next, reload: reload)
+            UpcomingPage(snapshot: snapshot, next: next)
+            BirthdayPage(snapshot: snapshot)
         }
         .tabViewStyle(.verticalPage)
-        .onReceive(NotificationCenter.default.publisher(for: WatchSync.updatedNotification).receive(on: DispatchQueue.main)) { _ in snapshot = SnapshotStore.load() }
-        .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName).receive(on: DispatchQueue.main)) { _ in snapshot = SnapshotStore.load() }
+        .environment(\.colorScheme, .dark)
+        .onReceive(NotificationCenter.default.publisher(for: WatchSync.updatedNotification).receive(on: DispatchQueue.main)) { _ in reload() }
+        .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName).receive(on: DispatchQueue.main)) { _ in reload() }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { snapshot = SnapshotStore.load(); WatchSync.requestRefresh() }
+            if phase == .active { reload(); WatchSync.requestRefresh() }
         }
     }
 
-    // MARK: Seite 1 – Nächste Abholung
+    private func reload() { snapshot = SnapshotStore.load() }
+}
 
-    private var heroPage: some View {
-        let color = HeroPalette.tint(for: next?.items.map(\.colorHex) ?? []) ?? Color(hex: HeroPalette.idle)
-        let bins = (next?.items ?? []).map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }
-        let days = next.map { Days.until($0.date) }
-        let eyebrow: String = next == nil ? "ALLES RUHIG" : (days == 0 ? "HEUTE" : (days == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG"))
-        let headline: String = {
-            guard let next, let days else { return "Keine Abholung geplant" }
-            if next.done { return "Steht draußen 👍" }
-            return days == 0 ? "Heute wird abgeholt" : (days == 1 ? "Heute Abend rausstellen!" : "In \(days) Tagen")
-        }()
-        return NavigationStack { ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(eyebrow).font(.caption2.weight(.bold)).foregroundStyle(color)
-                    Spacer()
-                    if bins.isEmpty {
-                        Image(systemName: "checkmark.circle.fill").foregroundStyle(color)
-                    } else {
-                        BinStack(bins: bins, size: 22)
-                    }
-                }
-                if let next, let days {
-                    Text(headline).font(.headline)
-                    ForEach(next.items, id: \.self) { item in
-                        HStack(spacing: 6) {
-                            BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 20)
-                            Text(item.name).font(.footnote)
+// MARK: - Seite 1: nächste Abholung
+
+private struct PickupPage: View {
+    let snapshot: WidgetSnapshot?
+    let next: WidgetSnapshot.PickupDay?
+    let reload: () -> Void
+
+    private var days: Int? { next.map { Days.until($0.date) } }
+    private var done: Bool { next?.done ?? false }
+    private var tintHex: String { done ? "#34C759" : (next?.items.first?.colorHex ?? HeroPalette.idle) }
+
+    private var eyebrow: String {
+        if done, days == 0 { return L10n.t("HEUTE", "TODAY") }
+        return PickupWords.eyebrow(date: next?.date)
+    }
+
+    private var eyebrowColor: Color {
+        if done { return KlarStyle.done }
+        guard let hex = next?.items.first?.colorHex else { return KlarStyle.muted(.dark) }
+        return KlarStyle.ink(hex, .dark)
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(eyebrow)
+                    .font(KlarStyle.font(12, .heavy)).tracking(0.6)
+                    .foregroundStyle(eyebrowColor)
+                    .lineLimit(1)
+                Text(PickupWords.headline(days: days, done: done))
+                    .font(KlarStyle.font(30, .black))
+                    .foregroundStyle(KlarStyle.text(.dark))
+                    .lineLimit(1).minimumScaleFactor(0.6)
+                Text(PickupWords.subline(days: days, done: done))
+                    .font(KlarStyle.font(13, .bold))
+                    .foregroundStyle(KlarStyle.muted(.dark))
+                    .lineLimit(1).minimumScaleFactor(0.8)
+
+                if let next {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(Array(next.items.enumerated()), id: \.offset) { _, item in
+                            BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: 26, fontSize: 16)
                         }
                     }
-                    Text(DateText.long(next.date)).font(.caption2).foregroundStyle(.secondary)
-                    if !next.done && days <= 1 {
-                        Button {
-                            let key = Days.iso(next.date)
-                            SnapshotStore.markDone(dayKey: key)
-                            WatchSync.sendDone(dayKey: key)
-                            snapshot = SnapshotStore.load()
-                        } label: {
-                            Label("Erledigt", systemImage: "checkmark.circle.fill")
-                        }
-                        .tint(.green)
-                        .padding(.top, 4)
-                    } else if next.done {
-                        Button {
-                            let key = Days.iso(next.date)
-                            SnapshotStore.markUndone(dayKey: key)
-                            WatchSync.sendUndo(dayKey: key)
-                            snapshot = SnapshotStore.load()
-                        } label: {
-                            Label("Zurücknehmen", systemImage: "arrow.uturn.backward")
-                        }
-                        .padding(.top, 4)
-                    }
+                    .opacity(done ? 0.55 : 1)
+                    .padding(.top, 12)
+
+                    if let days, days <= 1 { actionButton(next).padding(.top, 14) }
                 } else if snapshot == nil {
-                    Text("Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.").font(.footnote).foregroundStyle(.secondary)
-                } else {
-                    Text("Keine Abholung geplant").font(.headline)
+                    Text("Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.")
+                        .font(KlarStyle.font(13, .semibold))
+                        .foregroundStyle(KlarStyle.muted(.dark))
+                        .padding(.top, 10)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 6)
+        }
+        .containerBackground(
+            LinearGradient(colors: [Color(hex: tintHex).opacity(0.45), .black], startPoint: .top, endPoint: .center),
+            for: .tabView
+        )
+    }
+
+    @ViewBuilder
+    private func actionButton(_ day: WidgetSnapshot.PickupDay) -> some View {
+        let key = Days.iso(day.date)
+        if day.done {
+            Button {
+                SnapshotStore.markUndone(dayKey: key)
+                WatchSync.sendUndo(dayKey: key)
+                reload()
+            } label: {
+                Label(L10n.t("Zurück", "Undo"), systemImage: "arrow.uturn.backward")
+                    .font(KlarStyle.font(16, .heavy))
+                    .frame(maxWidth: .infinity)
+            }
+            .tint(KlarStyle.done)
+        } else {
+            Button {
+                SnapshotStore.markDone(dayKey: key)
+                WatchSync.sendDone(dayKey: key)
+                reload()
+            } label: {
+                Label(L10n.t("Erledigt", "Done"), systemImage: "checkmark")
+                    .font(KlarStyle.font(16, .heavy))
+                    .foregroundStyle(Color(hex: "#111114"))
+                    .frame(maxWidth: .infinity)
+            }
+            .tint(Color(hex: "#F5F5F7"))
+        }
+    }
+}
+
+// MARK: - Seite 2: weitere Abholungen
+
+private struct UpcomingPage: View {
+    let snapshot: WidgetSnapshot?
+    let next: WidgetSnapshot.PickupDay?
+
+    private var later: [WidgetSnapshot.PickupDay] {
+        (snapshot?.pickupDays ?? []).filter { $0.date > (next?.date ?? .distantPast) }
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(L10n.t("DANACH", "UP NEXT"))
+                    .font(KlarStyle.font(11, .heavy)).tracking(1)
+                    .foregroundStyle(KlarStyle.muted(.dark))
+                if later.isEmpty {
+                    Text(L10n.t("Keine weiteren Termine", "No further pickups"))
+                        .font(KlarStyle.font(14, .bold))
+                        .foregroundStyle(KlarStyle.muted(.dark))
+                }
+                ForEach(Array(later.prefix(10).enumerated()), id: \.offset) { _, day in
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            Text(DateText.countdown(day.date)).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(.dark))
+                            Spacer(minLength: 4)
+                            Text(DateText.short(day.date)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(.dark))
+                        }
+                        ForEach(Array(day.items.enumerated()), id: \.offset) { _, item in
+                            BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: 18, fontSize: 13)
+                        }
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(hex: "#1C1C20"), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                 }
             }
             .padding(.horizontal, 4)
         }
-        .navigationTitle("Tonne & Torte") }
+        .containerBackground(Color.black, for: .tabView)
+    }
+}
+
+// MARK: - Seite 3: Geburtstage
+
+private struct BirthdayPage: View {
+    let snapshot: WidgetSnapshot?
+
+    private var birthdays: [WidgetSnapshot.BirthdayItem] {
+        (snapshot?.birthdays ?? []).filter { $0.date >= Days.today() }
     }
 
-    // MARK: Seite 2 – Weitere Tage
-
-    private var listPage: some View {
-        NavigationStack { List {
-            if let snapshot, !snapshot.pickupDays.isEmpty {
-                ForEach(snapshot.pickupDays.prefix(10), id: \.date) { day in
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack {
-                            Text(DateText.countdown(day.date)).font(.footnote.weight(.semibold))
-                            Spacer()
-                            Text(DateText.short(day.date)).font(.caption2).foregroundStyle(.secondary)
-                        }
-                        ForEach(day.items, id: \.self) { item in
-                            HStack(spacing: 5) {
-                                Image(systemName: item.symbolName).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
-                                Text(item.name).font(.caption2)
-                                if day.done { Image(systemName: "checkmark.circle.fill").font(.caption2).foregroundStyle(.green) }
-                            }
-                        }
-                    }
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text(L10n.t("GEBURTSTAGE", "BIRTHDAYS"))
+                        .font(KlarStyle.font(11, .heavy)).tracking(1)
+                        .foregroundStyle(KlarStyle.birthdayInk(.dark))
+                    Spacer()
+                    Text("🎂")
                 }
-            } else {
-                Text("Keine Termine").foregroundStyle(.secondary)
-            }
-        }
-        .navigationTitle("Abholungen") }
-    }
-
-    // MARK: Seite 3 – Geburtstage
-
-    private var birthdayPage: some View {
-        NavigationStack { List {
-            if let snapshot, !snapshot.birthdays.isEmpty {
-                ForEach(snapshot.birthdays, id: \.self) { birthday in
-                    HStack(spacing: 8) {
-                        ZStack {
-                            Circle().fill(Color(hex: birthday.colorHex))
-                            Text(birthday.initials).font(.caption2.weight(.bold)).foregroundStyle(.white)
-                        }
-                        .frame(width: 28, height: 28)
+                if birthdays.isEmpty {
+                    Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet"))
+                        .font(KlarStyle.font(14, .bold))
+                        .foregroundStyle(KlarStyle.muted(.dark))
+                }
+                ForEach(Array(birthdays.prefix(10).enumerated()), id: \.offset) { _, birthday in
+                    HStack(spacing: 10) {
+                        KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 32)
                         VStack(alignment: .leading, spacing: 1) {
-                            Text(birthday.name).font(.footnote.weight(.semibold)).lineLimit(1)
-                            Text((birthday.years.map { "wird \($0) · " } ?? "") + DateText.countdown(birthday.date)).font(.caption2).foregroundStyle(.secondary)
+                            Text(birthday.name).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(.dark)).lineLimit(1)
+                            HStack(spacing: 4) {
+                                if let years = birthday.years {
+                                    Text(L10n.t("wird \(years) ·", "turns \(years) ·")).foregroundStyle(KlarStyle.muted(.dark))
+                                }
+                                Text(DateText.countdown(birthday.date)).foregroundStyle(KlarStyle.birthdayInk(.dark))
+                            }
+                            .font(KlarStyle.font(12, .heavy))
+                            .lineLimit(1).minimumScaleFactor(0.8)
                         }
                     }
                 }
-            } else {
-                Text("Keine Geburtstage in den nächsten Wochen").foregroundStyle(.secondary)
             }
+            .padding(.horizontal, 4)
         }
-        .navigationTitle("Geburtstage") }
+        .containerBackground(
+            LinearGradient(colors: [Color(hex: KlarStyle.birthday).opacity(0.35), .black], startPoint: .top, endPoint: .center),
+            for: .tabView
+        )
     }
 }
