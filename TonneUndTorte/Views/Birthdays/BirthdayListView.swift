@@ -239,24 +239,54 @@ struct ContactsImportView: View {
     @State private var search = ""
     @Environment(\.scenePhase) private var scenePhase
 
-    /// Bereits angelegte Personen je Kontakt-ID. Wird nur neu berechnet, wenn sich die Kandidaten ändern.
-    @State private var existing: [String: Person] = [:]
+    /// Ergebnis des Abgleichs mit den vorhandenen Personen. Neu berechnet beim Laden, nach der Systemauswahl,
+    /// wenn Personen dazukommen oder wegfallen – und immer frisch beim Importieren.
+    @State private var matching = Matching()
+    private var existing: [String: Person] { matching.existing }
 
-    /// Zuordnung über die Kontakt-ID oder – bei von Hand angelegten – über gleichen Namen und Geburtstag,
-    /// damit niemand doppelt in der Liste landet.
-    private func matchExisting() -> [String: Person] {
+    private struct Matching {
+        /// Kontakt-ID → Person, die beim Import aktualisiert wird. Jede Person höchstens einmal.
+        var existing: [String: Person] = [:]
+        /// Kontakte mit gleichem Namen und Geburtstag wie eine andere Person bzw. ein anderer Kontakt in der Liste
+        /// (doppelt im Adressbuch oder Namensvetter). Nicht vorausgewählt; wer sie anhakt, legt bewusst eine neue Person an.
+        var duplicates: Set<String> = []
+    }
+
+    private func computeMatching() -> Matching {
+        var result = Matching()
+        let candidateIDs = Set(candidates.map(\.identifier))
         let linked = Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
-        // Auch schon verknüpfte Personen: Steht jemand doppelt im Adressbuch (z. B. iCloud und Google),
-        // gilt der zweite Eintrag als „schon drin“ statt als neue Person.
-        let manual = Dictionary(people.map { (Self.matchKey(name: $0.name, day: $0.day, month: $0.month), $0) }, uniquingKeysWith: { first, _ in first })
-        var result: [String: Person] = [:]
+        // Über Name + Geburtstag nur Personen, deren eigener Kontakt nicht in der Liste steht
+        // (von Hand angelegt oder Kontakt nicht freigegeben).
+        var byKey: [String: Person] = [:]
+        for person in people where person.contactIdentifier.map({ !candidateIDs.contains($0) }) ?? true {
+            byKey[Self.matchKey(person)] = byKey[Self.matchKey(person)] ?? person
+        }
+        let personKeys = Set(people.map(Self.matchKey))
+        var used = Set<UUID>()
+        var seenKeys = Set<String>()
         for candidate in candidates {
-            if let person = linked[candidate.identifier] ?? manual[Self.matchKey(name: candidate.name, day: candidate.day, month: candidate.month)] {
-                result[candidate.identifier] = person
+            if let person = linked[candidate.identifier] {
+                result.existing[candidate.identifier] = person
+                used.insert(person.id)
+                seenKeys.insert(Self.matchKey(candidate))
             }
+        }
+        for candidate in candidates where result.existing[candidate.identifier] == nil {
+            let key = Self.matchKey(candidate)
+            if let person = byKey[key], !used.contains(person.id) {
+                result.existing[candidate.identifier] = person
+                used.insert(person.id)
+            } else if personKeys.contains(key) || seenKeys.contains(key) {
+                result.duplicates.insert(candidate.identifier)
+            }
+            seenKeys.insert(key)
         }
         return result
     }
+
+    private static func matchKey(_ person: Person) -> String { matchKey(name: person.name, day: person.day, month: person.month) }
+    private static func matchKey(_ candidate: ContactsImport.Candidate) -> String { matchKey(name: candidate.name, day: candidate.day, month: candidate.month) }
 
     private static func matchKey(name: String, day: Int, month: Int) -> String {
         "\(name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil).trimmingCharacters(in: .whitespaces))|\(day)|\(month)"
@@ -311,9 +341,8 @@ struct ContactsImportView: View {
             }
             .task { await load() }
             // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
-            // Neue oder gelöschte Personen (z. B. iCloud-Abgleich): Zuordnung neu berechnen. Der Vergleich prüft nur
-            // Objekt-Identitäten; Feldänderungen fängt importSelected ab, das die Zuordnung immer frisch berechnet.
-            .onChange(of: people) { _, _ in existing = matchExisting() }
+            // Neue oder gelöschte Personen (z. B. iCloud-Abgleich). Feldänderungen fängt importSelected ab.
+            .onChange(of: people) { _, _ in matching = computeMatching() }
             // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
@@ -374,9 +403,9 @@ struct ContactsImportView: View {
             candidates = merge(candidates, chosen)
             // Wie beim Laden: nur neue Personen vorauswählen. Bereits angelegte bleiben unverändert,
             // außer man hakt sie bewusst zum Aktualisieren an.
-            existing = matchExisting()
-            let known = Set(existing.keys)
-            selected.formUnion(chosen.map(\.identifier).filter { !known.contains($0) })
+            matching = computeMatching()
+            let skip = Set(existing.keys).union(matching.duplicates)
+            selected.formUnion(chosen.map(\.identifier).filter { !skip.contains($0) })
             seen.formUnion(chosen.map(\.identifier))
         }
     }
@@ -403,6 +432,8 @@ struct ContactsImportView: View {
                 Spacer()
                 if already {
                     Text(isSelected ? "wird aktualisiert" : "schon drin").font(.caption).foregroundStyle(.secondary)
+                } else if matching.duplicates.contains(candidate.identifier) {
+                    Text("doppelt?").font(.caption).foregroundStyle(.orange)
                 }
             }
         }
@@ -412,16 +443,17 @@ struct ContactsImportView: View {
         isLoading = true
         errorMessage = nil
         do {
-            candidates = merge(try await ContactsImport.candidates(), picked)
-            existing = matchExisting()
+            // Frisch gelesene Daten gewinnen gegenüber früher ausgewählten.
+            candidates = merge(picked, try await ContactsImport.candidates())
+            matching = computeMatching()
             // Erstmals gezeigte, noch nicht angelegte Kontakte vorauswählen; Abwahlen des Nutzers bleiben bestehen.
             let ids = Set(candidates.map(\.identifier))
-            selected.formUnion(ids.subtracting(seen).subtracting(existing.keys))
+            selected.formUnion(ids.subtracting(seen).subtracting(existing.keys).subtracting(matching.duplicates))
             seen.formUnion(ids)
         } catch ContactsImport.ImportError.denied {
             // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
             candidates = picked
-            existing = matchExisting()
+            matching = computeMatching()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -436,34 +468,22 @@ struct ContactsImportView: View {
     }
 
     private func importSelected() {
-        let current = matchExisting()
-        var updated = Set<UUID>()
-        var created = Set<String>()
-        // Der bereits verknüpfte Kontakt zuerst, damit er gewinnt, wenn eine Person doppelt im Adressbuch steht.
-        let ordered = candidates.enumerated().sorted { lhs, rhs in
-            let l = current[lhs.element.identifier]?.contactIdentifier == lhs.element.identifier
-            let r = current[rhs.element.identifier]?.contactIdentifier == rhs.element.identifier
-            return l && !r
-        }
-        for (index, candidate) in ordered where selected.contains(candidate.identifier) {
+        let current = computeMatching().existing
+        for (index, candidate) in candidates.enumerated() where selected.contains(candidate.identifier) {
             let person: Person
             if let known = current[candidate.identifier] {
-                // Zwei Kontakte derselben Person: nur einmal aktualisieren, keine Dublette anlegen.
-                guard updated.insert(known.id).inserted else { continue }
                 person = known
                 person.name = candidate.name
                 person.day = candidate.day
                 person.month = candidate.month
                 if let year = candidate.year {
                     person.year = year
-                } else if let old = person.year, old <= ContactsImport.placeholderYear {
-                    // Früher übernommenes Platzhalterjahr (1604) entfernen; ein echtes eigenes Jahr bleibt.
+                } else if person.year != nil, person.knownYear == nil {
+                    // Früher übernommenes Platzhalterjahr entfernen; ein echtes eigenes Jahr bleibt.
                     person.year = nil
                 }
-                if person.contactIdentifier == nil { person.contactIdentifier = candidate.identifier }
+                person.contactIdentifier = candidate.identifier
             } else {
-                // Dieselbe Person doppelt im Adressbuch (z. B. iCloud und Google): nur einmal anlegen.
-                guard created.insert(Self.matchKey(name: candidate.name, day: candidate.day, month: candidate.month)).inserted else { continue }
                 person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
                 person.contactIdentifier = candidate.identifier
                 context.insert(person)

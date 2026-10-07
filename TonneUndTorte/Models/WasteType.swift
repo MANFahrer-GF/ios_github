@@ -39,9 +39,14 @@ final class WasteType {
         self.createdAt = Date()
     }
 
-    /// Angezeigtes Symbol: das gewählte Piktogramm, sonst der SF-Name (aus dem beim Anzeigen abgeleitet wird).
+    /// Angezeigtes Symbol, einmal aufgelöst: das gewählte Piktogramm, sonst das aus SF-Name und Name abgeleitete,
+    /// sonst der SF-Name. Ein gewähltes Piktogramm gilt nur, solange `symbolName` noch dazu passt – ändert eine
+    /// ältere App-Version (iCloud) nur `symbolName`, gewinnt diese neuere Wahl.
     var displaySymbol: String {
-        get { glyphName ?? symbolName }
+        get {
+            if let glyphName, WasteGlyph.sfFallback(for: glyphName) == symbolName { return glyphName }
+            return WasteGlyph.assetName(for: symbolName, name: name) ?? symbolName
+        }
         set {
             if WasteGlyph.all.contains(newValue) {
                 glyphName = newValue

@@ -27,8 +27,8 @@ final class CoreTests: XCTestCase {
 
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
-        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), L10n.t("A, B und C", "A, B and C"))
-        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 4), L10n.t("A, B und C", "A, B and C"))
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), "A, B, C")
+        XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 4), "A, B, C")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C", "D"], max: 2), "A, B +2")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B"], max: 0), "A +1")
     }

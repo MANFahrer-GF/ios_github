@@ -136,11 +136,13 @@ struct BirthdayWidgetView: View {
                         .minimumScaleFactor(0.8)
                         .padding(.top, 1)
                     } else {
-                        ForEach(Array(nextDay.prefix(2).enumerated()), id: \.offset) { _, birthday in
+                        // Kleines Widget: bei mehr als zwei Personen eine Zeile plus „+n weitere“, damit alles passt.
+                        let shown = nextDay.count > 2 ? 1 : 2
+                        ForEach(Array(nextDay.prefix(shown).enumerated()), id: \.offset) { _, birthday in
                             nameLine(birthday, size: 13)
                         }
-                        if nextDay.count > 2 {
-                            Text(L10n.t("+\(nextDay.count - 2) weitere", "+\(nextDay.count - 2) more")).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                        if nextDay.count > shown {
+                            Text(L10n.t("+\(nextDay.count - shown) weitere", "+\(nextDay.count - shown) more")).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
                         }
                         Text(DateText.countdown(next.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(ink).padding(.top, 2)
                     }

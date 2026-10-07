@@ -83,11 +83,11 @@ public enum ReminderPlanner {
         }
     }
 
-    /// Kurzform für Widgets: alle Namen, wenn sie passen („A und B“), sonst die ersten `max` und „+n“.
+    /// Kurzform für Widgets (wenig Platz, darum Kommas statt „und“): „A, B“ bzw. „A, B +2“.
     public static func shortNames(_ names: [String], max: Int) -> String {
         let limit = Swift.max(1, max)
-        guard names.count > limit else { return joinNames(names) }
-        return names.prefix(limit).joined(separator: ", ") + " +\(names.count - limit)"
+        let shown = names.prefix(limit).joined(separator: ", ")
+        return names.count > limit ? shown + " +\(names.count - limit)" : shown
     }
 
     public static func plan(

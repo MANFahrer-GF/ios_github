@@ -149,6 +149,8 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive {
             if let locationID, type.location?.id != locationID { continue }
             for date in type.pickupDates(from: from, to: to) {
+                // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Widgets, Live-Aktivität und Watch-App
+                // stecken im selben App-Paket und kennen es immer; gespeichert (iCloud) bleibt symbolName ein SF-Name.
                 result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date)))
             }
         }

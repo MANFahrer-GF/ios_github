@@ -22,6 +22,9 @@ enum ContactsImport {
     /// Jahr, das Kontakte-Konten für „ohne Jahr“ eintragen; alles bis dahin ist kein echtes Geburtsjahr.
     static let placeholderYear = 1604
 
+    /// Geburtsjahr ohne Platzhalter.
+    static func realYear(_ year: Int?) -> Int? { year.flatMap { $0 > placeholderYear ? $0 : nil } }
+
     enum Access { case full, limited, denied, notDetermined }
 
     /// Aktueller Freigabestatus. Seit iOS 18 kann man auch nur ausgewählte Kontakte freigeben.
@@ -70,7 +73,7 @@ enum ContactsImport {
         guard !name.isEmpty else { return nil }
         let phone = contact.isKeyAvailable(CNContactPhoneNumbersKey) ? contact.phoneNumbers.first?.value.stringValue : nil
         // Manche Konten speichern „ohne Jahr“ als 1604 – das ist kein echtes Geburtsjahr.
-        let year = birthday.year.flatMap { $0 > ContactsImport.placeholderYear ? $0 : nil }
+        let year = realYear(birthday.year)
         return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: year, phone: phone)
     }
 }

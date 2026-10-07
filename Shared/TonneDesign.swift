@@ -555,7 +555,7 @@ extension Array where Element == WidgetSnapshot.BirthdayItem {
         return Array(prefix { Calendar.current.isDate($0.date, inSameDayAs: first.date) })
     }
 
-    /// Namen kurz zusammengefasst: „Oma Erika und Paul“ bzw. „Oma Erika, Paul +1“.
+    /// Namen kurz zusammengefasst: „Oma Erika, Paul“ bzw. „Oma Erika, Paul +1“.
     func names(max: Int = 2) -> String {
         ReminderPlanner.shortNames(map(\.name), max: max)
     }

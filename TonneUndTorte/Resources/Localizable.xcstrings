@@ -2761,6 +2761,16 @@
         }
       }
     },
+    "doppelt?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "duplicate?"
+          }
+        }
+      }
+    },
     "iCloud": {
       "localizations": {
         "en": {
