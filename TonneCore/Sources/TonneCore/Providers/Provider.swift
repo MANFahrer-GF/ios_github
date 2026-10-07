@@ -104,6 +104,8 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case nerdbridge
     case bsr
     case sitepark
+    case insertIT
+    case muellabfuhrDeutschland
 
     public var displayName: String {
         switch self {
@@ -125,6 +127,8 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .nerdbridge: return "Nerdbridge"
         case .bsr: return "BSR Berlin"
         case .sitepark: return L10n.t("Kreis-/Stadtportal", "District portal")
+        case .insertIT: return "Insert IT"
+        case .muellabfuhrDeutschland: return "Müllabfuhr Deutschland"
         }
     }
 }
@@ -202,6 +206,8 @@ public enum ProviderFactory {
         case .nerdbridge: return NerdbridgeProvider(client: client)
         case .bsr: return BSRProvider(client: client)
         case .sitepark: return SiteparkProvider(tenant: serviceKey, client: client)
+        case .insertIT: return InsertITProvider(city: serviceKey, client: client)
+        case .muellabfuhrDeutschland: return MuellabfuhrDeutschlandProvider(mandator: serviceKey, client: client)
         }
     }
 

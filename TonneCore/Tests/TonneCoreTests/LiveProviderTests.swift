@@ -126,6 +126,21 @@ extension LiveProviderTests {
         try await check(SiteparkProvider(tenant: "peine"), prefer: ["Broistedt"], minCount: 10)
     }
 
+    func testInsertITAllCities() async throws {
+        let streets = ["Hattingen": "Bahnhofstraße", "Herne": "Bahnhofstraße", "Kassel": "Wilhelmshöher Allee", "Krefeld": "Ostwall",
+                       "Luebeck": "Breite Straße", "Mannheim": "A 3", "Offenbach": "Kaiserstraße"]
+        for city in InsertITProvider.cities.keys.sorted() {
+            try await checkTyped(InsertITProvider(city: city), typed: [streets[city] ?? "a"], prefer: [])
+        }
+    }
+
+    func testMuellabfuhrDeutschlandAll() async throws {
+        let prefer = ["7": ["Ahlstädt"], "31": ["Lutherstadt Wittenberg", "Abtsdorf"]]
+        for mandator in ["7", "31", "40", "39", "194", "12", "35"] {
+            try await check(MuellabfuhrDeutschlandProvider(mandator: mandator), prefer: prefer[mandator] ?? [], minCount: 3)
+        }
+    }
+
     func testSiteparkAllTenants() async throws {
         for tenant in SiteparkProvider.tenants.keys.sorted() {
             try await check(SiteparkProvider(tenant: tenant), prefer: [], minCount: 3)

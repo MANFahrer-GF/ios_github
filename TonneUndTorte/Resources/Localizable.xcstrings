@@ -2801,7 +2801,7 @@
         }
       }
     },
-    "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.": {
+    "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Kreisportale (Sitepark) sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.": {
       "localizations": {
         "en": {
           "stringUnit": {

@@ -101,6 +101,18 @@ final class CoreTests: XCTestCase {
         for query in ["Peine", "Edemissen", "Vechelde", "Broistedt", "Goslar", "Plön", "Neubrandenburg", "Neuruppin", "Wittmund", "Arnstadt", "Hilchenbach", "Groß-Gerau", "Preußisch Oldendorf"] {
             XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .sitepark }, query)
         }
+        for query in ["Mannheim", "Kassel", "Lübeck", "Krefeld", "Herne", "Offenbach", "Hattingen"] {
+            XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .insertIT }, query)
+        }
+        for query in ["Wittenberg", "Naumburg", "Weißenfels", "Dessau", "Apolda", "Sömmerda", "Merseburg", "Hildburghausen"] {
+            XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .muellabfuhrDeutschland }, query)
+        }
+    }
+
+    func testInsertITNames() {
+        XCTAssertEqual(InsertITProvider.cleanName("Leerung: Biomüll (Kaiserstraße 1)"), "Biomüll")
+        XCTAssertEqual(InsertITProvider.cleanName("Leerung: Rest"), "Restmüll")
+        XCTAssertEqual(InsertITProvider.cleanName("Leerung: Grünschnitt / Weihnachtsbäume"), "Grünschnitt / Weihnachtsbäume")
     }
 
     func testShortNames() {
