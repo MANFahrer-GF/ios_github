@@ -85,6 +85,21 @@ struct NextPickupIntent: AppIntent {
     }
 }
 
+/// Siri / Kurzbefehle: „Wer hat als Nächstes Geburtstag?“
+struct NextBirthdayIntent: AppIntent {
+    static var title: LocalizedStringResource = "Nächste Geburtstage"
+    static var description = IntentDescription("Sagt dir, wer als Nächstes Geburtstag hat.")
+    static var openAppWhenRun = false
+
+    func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<String> {
+        guard let snapshot = SnapshotStore.load() else {
+            return .result(value: "", dialog: "Bitte öffne Tonne & Torte einmal, damit ich die Geburtstage kenne.")
+        }
+        let text = SpokenSummary.birthdays(snapshot.birthdays)
+        return .result(value: text, dialog: IntentDialog(stringLiteral: text))
+    }
+}
+
 /// Standort als App-Entity für Widget-Konfiguration und Siri – gelesen aus dem Snapshot.
 struct LocationEntity: AppEntity, Identifiable, Hashable {
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Standort"

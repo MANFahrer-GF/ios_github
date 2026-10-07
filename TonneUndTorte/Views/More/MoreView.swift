@@ -39,6 +39,7 @@ struct MoreView: View {
                     Text("Termine in iCloud, Google oder Outlook eintragen und automatisch aktuell halten.")
                 }
                 Section {
+                    NavigationLink { SiriView() } label: { Label("Siri & Kurzbefehle", systemImage: "waveform") }
                     NavigationLink { SettingsView() } label: { Label("Einstellungen", systemImage: "gearshape.fill") }
                 }
             }

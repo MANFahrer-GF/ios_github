@@ -65,6 +65,21 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(LiveActivityPlanner.plan(pickupDays: [days[0]], now: at(1, 13), eveningMinutes: 19 * 60, canSchedule: true).isEmpty)
     }
 
+    func testSpokenBirthdays() {
+        let today = Days.today()
+        func item(_ offset: Int, _ name: String, _ years: Int?) -> WidgetSnapshot.BirthdayItem {
+            WidgetSnapshot.BirthdayItem(date: Days.add(offset, to: today), name: name, years: years, colorHex: "#000000", initials: "X")
+        }
+        XCTAssertEqual(SpokenSummary.birthdays([]), L10n.t("Es stehen keine Geburtstage an.", "There are no upcoming birthdays."))
+        let one = SpokenSummary.birthdays([item(1, "Oma Erika", 80)])
+        XCTAssertEqual(one, L10n.t("Oma Erika wird morgen 80.", "Oma Erika turns 80 tomorrow."))
+        let two = SpokenSummary.birthdays([item(0, "Paul", nil), item(0, "Lena", 7), item(9, "Tom", 41)])
+        XCTAssertTrue(two.hasPrefix(L10n.t("Paul und Lena (7) haben heute Geburtstag.", "Paul and Lena (7) have their birthday today.")), two)
+        XCTAssertTrue(two.contains("Tom"))
+        // Vergangene zählen nicht
+        XCTAssertEqual(SpokenSummary.birthdays([item(-1, "Alt", 3), item(2, "Neu", nil)]), L10n.t("Neu hat übermorgen Geburtstag.", "Neu's birthday is the day after tomorrow."))
+    }
+
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), "A, B, C")

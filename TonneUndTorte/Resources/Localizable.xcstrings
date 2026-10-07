@@ -461,6 +461,16 @@
         }
       }
     },
+    "Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple requires an app’s Siri commands to include the app name – otherwise Siri doesn’t know which app you mean and answers itself. Just say “Tonne und Torte”."
+          }
+        }
+      }
+    },
     "Art": {
       "localizations": {
         "en": {
@@ -551,6 +561,16 @@
         }
       }
     },
+    "Bitte öffne Tonne & Torte einmal, damit ich die Geburtstage kenne.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please open Tonne & Torte once so I know the birthdays."
+          }
+        }
+      }
+    },
     "Clean. Ohne Mist.": {
       "localizations": {
         "en": {
@@ -567,6 +587,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Up next"
+          }
+        }
+      }
+    },
+    "Danach reicht „Hey Siri, Welche Tonne“ – Siri startet den Kurzbefehl direkt. Funktioniert auch auf der Apple Watch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Then “Hey Siri, Which bin” is enough – Siri runs the shortcut directly. Works on Apple Watch too."
           }
         }
       }
@@ -751,6 +781,16 @@
         }
       }
     },
+    "Eigener Satz ohne App-Namen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your own phrase without the app name"
+          }
+        }
+      }
+    },
     "Ein Abholtag": {
       "localizations": {
         "en": {
@@ -927,6 +967,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Done"
+          }
+        }
+      }
+    },
+    "Erledigt & Sperrbildschirm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done & Lock Screen"
           }
         }
       }
@@ -1217,6 +1267,86 @@
           "stringUnit": {
             "state": "translated",
             "value": "Collection today"
+          }
+        }
+      }
+    },
+    "Hey Siri, Tonne steht draußen in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, Tonne steht draußen in Tonne und Torte"
+          }
+        }
+      }
+    },
+    "Hey Siri, Tonne und Torte Geburtstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, Tonne und Torte Geburtstage"
+          }
+        }
+      }
+    },
+    "Hey Siri, Tonne und Torte Müll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, Tonne und Torte Müll"
+          }
+        }
+      }
+    },
+    "Hey Siri, Tonnen-Erinnerung starten in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, Tonnen-Erinnerung starten in Tonne und Torte"
+          }
+        }
+      }
+    },
+    "Hey Siri, frag Tonne und Torte, welche Tonne raus muss": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, frag Tonne und Torte, welche Tonne raus muss"
+          }
+        }
+      }
+    },
+    "Hey Siri, hat heute jemand Geburtstag in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, hat heute jemand Geburtstag in Tonne und Torte?"
+          }
+        }
+      }
+    },
+    "Hey Siri, wann kommt der Müll in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, wann kommt der Müll in Tonne und Torte?"
+          }
+        }
+      }
+    },
+    "Hey Siri, wer hat als Nächstes Geburtstag in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey Siri, wer hat als Nächstes Geburtstag in Tonne und Torte?"
           }
         }
       }
@@ -1931,6 +2061,16 @@
         }
       }
     },
+    "Nach der Installation die App einmal öffnen – erst dann kennt Siri die Befehle. Antwortet Siri trotzdem selbst (z. B. mit ChatGPT), hat sie den App-Namen nicht verstanden: langsam „Tonne und Torte“ sagen oder einen eigenen Kurzbefehl anlegen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the app once after installing – only then does Siri know the commands. If Siri still answers itself (e.g. with ChatGPT), it didn’t catch the app name: say “Tonne und Torte” slowly or create your own shortcut."
+          }
+        }
+      }
+    },
     "Nach draußen geht nur deine Adresse an den Entsorger, den du auswählst – damit er dir die Abfuhrtermine schickt": {
       "localizations": {
         "en": {
@@ -2211,6 +2351,16 @@
         }
       }
     },
+    "Nächste Geburtstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next birthdays"
+          }
+        }
+      }
+    },
     "Nächste Live-Aktivität": {
       "localizations": {
         "en": {
@@ -2321,12 +2471,32 @@
         }
       }
     },
+    "Sagt dir, wer als Nächstes Geburtstag hat.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you whose birthday is next."
+          }
+        }
+      }
+    },
     "Sichern": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Siri & Kurzbefehle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri & Shortcuts"
           }
         }
       }
@@ -2537,6 +2707,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tap “Choose people” and tick everyone whose birthday you want to add."
+          }
+        }
+      }
+    },
+    "Tippe in der Kurzbefehle-App auf „+“ für einen neuen Kurzbefehl, dann auf „Aktion hinzufügen“ und suche „Tonne & Torte“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In the Shortcuts app, tap “+” for a new shortcut, then “Add Action” and search for “Tonne & Torte”."
+          }
+        }
+      }
+    },
+    "Tippe oben auf den Namen des Kurzbefehls und nenne ihn so, wie du fragen willst – z. B. „Welche Tonne“ oder „Geburtstage“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the shortcut’s name at the top and call it what you want to say – e.g. “Which bin” or “Birthdays”."
+          }
+        }
+      }
+    },
+    "Tippe unten auf „Kurzbefehle öffnen“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap “Open Shortcuts” below."
           }
         }
       }
@@ -2811,6 +3011,16 @@
         }
       }
     },
+    "Wenn Siri nicht reagiert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If Siri doesn’t respond"
+          }
+        }
+      }
+    },
     "Widgets, Sperrbildschirm, Live-Aktivität, Apple Watch und Siri": {
       "localizations": {
         "en": {
@@ -2867,6 +3077,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Where the data comes from"
+          }
+        }
+      }
+    },
+    "Wähle z. B. „Nächste Abholung“ oder „Nächste Geburtstage“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose e.g. “Next collection” or “Next birthdays”."
           }
         }
       }
