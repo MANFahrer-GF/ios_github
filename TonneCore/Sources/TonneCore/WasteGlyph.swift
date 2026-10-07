@@ -12,11 +12,11 @@ public enum WasteGlyph {
         case "trash.fill", "trash":
             return "tt.bin"
         case "leaf.fill":
-            return mentions(name, ["laub", "leaf", "leaves"], except: ["urlaub", "erlaub"]) ? nil : "tt.bin.bio"
+            return mentions(name, ["laub"], except: ["urlaub", "erlaubt", "erlaubnis"], words: ["leaf", "leaves"]) ? nil : "tt.bin.bio"
         case "newspaper.fill":
             return "tt.bin.paper"
         case "bag.fill":
-            return mentions(name, ["tonne", "container"], words: ["bin", "bins"]) ? "tt.bin.yellow" : "tt.sack"
+            return mentions(name, ["tonne"], words: ["bin", "bins", "container", "containers"]) ? "tt.bin.yellow" : "tt.sack"
         case "wineglass.fill":
             return "tt.glass"
         case "tree.fill":
@@ -27,7 +27,7 @@ public enum WasteGlyph {
     }
 
     /// Deutsche Wortteile irgendwo im Wort („Herbstlaub“, „Wertstofftonnen“, „Christbäume“), außer in Wörtern mit
-    /// `except` („Urlaub“). Kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
+    /// `except` („Urlaub“). Englische Wörter („bin“, „leaf“, „fir“) nur als ganzes Wort.
     private static func mentions(_ name: String, _ parts: [String], except: [String] = [], words whole: [String] = []) -> Bool {
         guard !name.isEmpty else { return false }
         for word in name.lowercased().split(whereSeparator: { !$0.isLetter }).map(String.init) {

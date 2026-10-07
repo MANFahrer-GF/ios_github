@@ -18,6 +18,10 @@ enum SettingsKeys {
     static let customMinutes = "reminder.custom.minutes"
     static let locationFilter = "filter.locationID"
     static let liveActivities = "feature.liveActivities"
+    /// Live-Aktivitäten sind an, solange der Schalter nicht ausdrücklich ausgeschaltet wurde.
+    static func liveActivitiesEnabled(_ defaults: UserDefaults = .standard) -> Bool {
+        defaults.object(forKey: liveActivities) == nil || defaults.bool(forKey: liveActivities)
+    }
     static let backgroundRefreshID = "de.manfahrer.TonneUndTorte.refresh"
 
     static func reminderSettings(_ defaults: UserDefaults = .standard) -> ReminderSettings {
@@ -117,7 +121,7 @@ final class AppModel: ObservableObject {
         WatchSync.shared.send(snapshot)
         let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: SettingsKeys.reminderSettings())
         await notifications.apply(plan)
-        if UserDefaults.standard.object(forKey: SettingsKeys.liveActivities) == nil || UserDefaults.standard.bool(forKey: SettingsKeys.liveActivities) {
+        if SettingsKeys.liveActivitiesEnabled() {
             await LiveActivityManager.refresh(with: snapshot)
         } else {
             await LiveActivityManager.endAll()

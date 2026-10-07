@@ -231,6 +231,8 @@ struct ContactsImportView: View {
     @State private var selected: Set<String> = []
     @State private var isLoading = true
     @State private var isRefreshing = false
+    /// Während eines stillen Neuladens zurückgekehrt: danach noch einmal laden.
+    @State private var reloadAgain = false
     @State private var errorMessage: String?
     @State private var access: ContactsImport.Access = ContactsImport.access
     @State private var picked: [ContactsImport.Candidate] = []
@@ -256,10 +258,11 @@ struct ContactsImportView: View {
     private func computeMatching() -> Matching {
         var result = Matching()
         let linked = Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
-        // Über Name + Geburtstag nur von Hand angelegte Personen. Mit einem anderen Kontakt verknüpfte gelten
-        // als „doppelt?“ – so werden nie Daten eines fremden Kontakts in eine verknüpfte Person geschrieben.
+        // Über Name + Geburtstag: von Hand angelegte Personen und solche, deren Kontakt-ID hier nicht vorkommt
+        // (Kontakt-IDs unterscheiden sich je Gerät; Personen kommen per iCloud von anderen Geräten).
+        let candidateIDs = Set(candidates.map(\.identifier))
         var byKey: [String: Person] = [:]
-        for person in people where person.contactIdentifier == nil {
+        for person in people where person.contactIdentifier.map({ !candidateIDs.contains($0) }) ?? true {
             byKey[Self.matchKey(person)] = byKey[Self.matchKey(person)] ?? person
         }
         let personKeys = Set(people.map(Self.matchKey))
@@ -344,7 +347,8 @@ struct ContactsImportView: View {
             .onChange(of: people) { _, _ in matching = computeMatching() }
             // Zurück aus den Einstellungen: geänderte oder erweiterte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active, !isLoading, !isRefreshing { Task { await load(silent: true) } }
+                guard phase == .active, !isLoading else { return }
+                if isRefreshing { reloadAgain = true } else { Task { await load(silent: true) } }
             }
         }
     }
@@ -460,6 +464,7 @@ struct ContactsImportView: View {
             // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
             candidates = picked
             matching = computeMatching()
+            errorMessage = nil
         } catch {
             // Beim stillen Neuladen die bisherige Liste behalten.
             if !silent { errorMessage = error.localizedDescription }
@@ -467,6 +472,10 @@ struct ContactsImportView: View {
         // Nur auswählen, was noch in der Liste steht (z. B. nach Entzug der Freigabe).
         selected = selected.intersection(Set(candidates.map(\.identifier)))
         access = ContactsImport.access
+        if silent, reloadAgain {
+            reloadAgain = false
+            Task { await load(silent: true) }
+        }
     }
 
     private func openSettings() {

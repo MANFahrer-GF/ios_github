@@ -11,12 +11,12 @@ struct StartPickupLiveActivityIntent: LiveActivityIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let defaults = UserDefaults.standard
-        if defaults.object(forKey: SettingsKeys.liveActivities) != nil, !defaults.bool(forKey: SettingsKeys.liveActivities) {
+        if !SettingsKeys.liveActivitiesEnabled() {
             return .result(dialog: "Live-Aktivitäten sind in Tonne & Torte unter Einstellungen ausgeschaltet.")
         }
-        // Termine stammen aus dem zuletzt gespeicherten Stand der App; ist der zu alt, lieber nichts behaupten.
-        guard let snapshot = SnapshotStore.load(), snapshot.generatedAt > Date().addingTimeInterval(-14 * 86_400) else {
+        // Termine stammen aus dem zuletzt gespeicherten Stand der App (reicht 60 Tage voraus);
+        // ist der fast aufgebraucht, lieber nichts behaupten.
+        guard let snapshot = SnapshotStore.load(), snapshot.generatedAt > Date().addingTimeInterval(-50 * 86_400) else {
             return .result(dialog: "Öffne Tonne & Torte einmal, damit die Termine aktuell sind.")
         }
         switch await LiveActivityManager.refresh(with: snapshot) {
