@@ -939,11 +939,14 @@ Stadtkreis Ulm|Ulm
         "jumomind:kbl:Langen": ["Landkreis Offenbach|Langen (Hessen)"],
         "jumomind:lue:Lübbecke": ["Kreis Minden-Lübbecke|Lübbecke"],
         "jumomind:mymuell:MyMüll-App": ["Kreis Heinsberg|Wegberg", "Kreis Höxter|Beverungen", "Kreis Wesel|Kamp-Lintfort", "Landkreis Hochtaunuskreis|Grävenwiesbach", "Landkreis Hochtaunuskreis|Schmitten im Taunus", "Landkreis Hochtaunuskreis|Usingen", "Landkreis Offenbach|Hainburg", "Landkreis Offenbach|Mühlheim am Main", "Landkreis Offenbach|Seligenstadt", "Landkreis Waldeck-Frankenberg|Bad Arolsen", "Landkreis Waldeck-Frankenberg|Volkmarsen"],
+        "jumomind:sbm:Minden": ["Kreis Minden-Lübbecke|Minden"],
         "muellmax:Hal:Stadt Haltern am See": ["Kreis Recklinghausen|Haltern am See"],
         "muellmax:His:Stadt Hanau": ["Landkreis Main-Kinzig-Kreis|Hanau"],
         "muellmax:Mai:Stadt Maintal": ["Landkreis Main-Kinzig-Kreis|Maintal"],
         "sitepark:gross-gerau:Kreisstadt Groß-Gerau": ["Landkreis Groß-Gerau|Groß-Gerau"],
         "sitepark:hilchenbach:Stadt Hilchenbach": ["Kreis Siegen-Wittgenstein|Hilchenbach"],
+        "sitepark:muehlenkreis:Preußisch Oldendorf (Mühlenkreis)": ["Kreis Minden-Lübbecke|Preußisch Oldendorf"],
+        "sitepark:neunkirchen-siegerland:Gemeinde Neunkirchen (Siegerland)": ["Kreis Siegen-Wittgenstein|Neunkirchen"],
     ]
 
     /// Landkreis → Bundesland.
