@@ -25,6 +25,16 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(snapshot.upcomingBirthdays(from: today).birthdays.map(\.name).prefix(2).sorted(), ["A", "B"])
     }
 
+    func testPickupItemKeepsSFName() {
+        let item = WidgetSnapshot.PickupItem(name: "Gelber Sack", symbolName: "tt.sack", colorHex: "#F2C230")
+        XCTAssertEqual(item.symbolName, "bag.fill")
+        XCTAssertEqual(item.displaySymbol, "tt.sack")
+        // Ältere Schnappschüsse ohne glyphName lassen sich weiter lesen
+        let old = ##"{"name":"Restmüll","symbolName":"trash.fill","colorHex":"#5B6470"}"##
+        let decoded = try? JSONDecoder().decode(WidgetSnapshot.PickupItem.self, from: Data(old.utf8))
+        XCTAssertEqual(decoded?.displaySymbol, "trash.fill")
+    }
+
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), "A, B, C")

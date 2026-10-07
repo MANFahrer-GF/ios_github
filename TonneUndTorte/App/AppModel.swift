@@ -112,6 +112,7 @@ final class AppModel: ObservableObject {
 
     /// Erinnerungen, Widget-Snapshot und Live-Aktivität neu aufbauen.
     func refreshAll() async {
+        allWasteTypes().forEach { $0.dropStaleGlyph() }
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)
@@ -149,8 +150,8 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive {
             if let locationID, type.location?.id != locationID { continue }
             for date in type.pickupDates(from: from, to: to) {
-                // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Widgets, Live-Aktivität und Watch-App
-                // stecken im selben App-Paket und kennen es immer; gespeichert (iCloud) bleibt symbolName ein SF-Name.
+                // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
+                // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
                 result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date)))
             }
         }

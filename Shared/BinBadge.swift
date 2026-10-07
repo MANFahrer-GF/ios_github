@@ -17,14 +17,8 @@ struct BinBadge: View {
             if ring {
                 Circle().strokeBorder(.white.opacity(0.9), lineWidth: max(1, size / 16))
             }
-            Group {
-                if waste {
-                    WasteIcon(symbolName: symbolName, name: name, size: size * 0.46)
-                } else {
-                    Image(systemName: symbolName).font(.system(size: size * 0.46, weight: .bold))
-                }
-            }
-            .foregroundStyle(HexLuma.glyphColor(on: colorHex))
+            WasteIcon(symbolName: symbolName, name: name, size: size * 0.46, waste: waste)
+                .foregroundStyle(HexLuma.glyphColor(on: colorHex))
         }
         .frame(width: size, height: size)
         .shadow(color: .black.opacity(0.18), radius: size / 10, x: 0, y: size / 16)

@@ -18,8 +18,19 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var colorHex: String
         public var locationID: String?
         public var locationName: String?
+        /// Eigenes Piktogramm („tt.sack“). `symbolName` bleibt ein SF-Name, damit eine Watch mit älterer
+        /// App-Version (die den Schnappschuss ebenfalls bekommt) weiter ein Symbol zeigt.
+        public var glyphName: String?
+        /// Anzuzeigendes Symbol.
+        public var displaySymbol: String { glyphName ?? symbolName }
         public init(name: String, symbolName: String, colorHex: String, locationID: String? = nil, locationName: String? = nil) {
-            self.name = name; self.symbolName = symbolName; self.colorHex = colorHex; self.locationID = locationID; self.locationName = locationName
+            self.name = name; self.locationID = locationID; self.locationName = locationName; self.colorHex = colorHex
+            if WasteGlyph.all.contains(symbolName) {
+                self.symbolName = WasteGlyph.sfFallback(for: symbolName)
+                self.glyphName = symbolName
+            } else {
+                self.symbolName = symbolName
+            }
         }
     }
 

@@ -212,7 +212,7 @@ struct NewWasteTypeSheet: View {
             Form {
                 Section("Art") {
                     Picker("Art", selection: $category) {
-                        ForEach(WasteCategory.allCases, id: \.self) { category in Label { Text(category.name) } icon: { Image.waste(category.symbolName, name: category.name) }.tag(category) }
+                        ForEach(WasteCategory.allCases, id: \.self) { category in WasteCategoryLabel(category: category).tag(category) }
                     }
                     .onChange(of: category) { _, new in name = new == .other ? "" : new.name; colorHex = new.colorHex; symbolName = new.symbolName }
                     TextField("Name", text: $name)

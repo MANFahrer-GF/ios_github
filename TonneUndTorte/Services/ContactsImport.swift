@@ -64,7 +64,7 @@ enum ContactsImport {
     static func candidate(from contact: CNContact) -> Candidate? {
         guard contact.isKeyAvailable(CNContactBirthdayKey), let birthday = contact.birthday,
               let day = birthday.day, let month = birthday.month,
-              (1...12).contains(month), (1...31).contains(day) else { return nil }
+              DateComponents(calendar: Calendar(identifier: .gregorian), year: 2000, month: month, day: day).isValidDate else { return nil }
         var name = ""
         if contact.isKeyAvailable(CNContactGivenNameKey), contact.isKeyAvailable(CNContactFamilyNameKey) {
             name = [contact.givenName, contact.familyName].filter { !$0.isEmpty }.joined(separator: " ")

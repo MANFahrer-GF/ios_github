@@ -67,7 +67,7 @@ private struct PickupPage: View {
                 if let next {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(next.items.enumerated()), id: \.offset) { _, item in
-                            BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: 26, fontSize: 16)
+                            BinLine(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, dot: 26, fontSize: 16)
                         }
                     }
                     .opacity(done ? 0.55 : 1)
@@ -149,7 +149,7 @@ private struct UpcomingPage: View {
                             Text(DateText.short(day.date)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(.dark))
                         }
                         ForEach(Array(day.items.enumerated()), id: \.offset) { _, item in
-                            BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: 18, fontSize: 13)
+                            BinLine(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, dot: 18, fontSize: 13)
                         }
                     }
                     .padding(10)

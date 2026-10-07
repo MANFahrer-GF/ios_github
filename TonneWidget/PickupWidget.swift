@@ -155,7 +155,7 @@ struct PickupWidgetView: View {
         let rest = items.count - shown.count
         return VStack(alignment: .leading, spacing: spacing) {
             ForEach(Array(shown.enumerated()), id: \.offset) { _, item in
-                BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: dot, fontSize: font)
+                BinLine(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, dot: dot, fontSize: font)
             }
             if rest > 0 {
                 Text(L10n.t("+\(rest) weitere", "+\(rest) more")).font(KlarStyle.font(font - 1, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
@@ -313,7 +313,7 @@ struct PickupWidgetView: View {
 
     private var inline: some View {
         Group {
-            if let next { Text("\(Image.waste(next.items.first?.symbolName ?? "trash.fill", name: next.items.first?.name ?? "")) \(DateText.countdown(next.date)): \(names(next, max: 2))") }
+            if let next { Text("\(Image.waste(next.items.first?.displaySymbol ?? "trash.fill", name: next.items.first?.name ?? "")) \(DateText.countdown(next.date)): \(names(next, max: 2))") }
             else { Text("Keine Abholung") }
         }
         .containerBackground(for: .widget) { Color.clear }
@@ -323,7 +323,7 @@ struct PickupWidgetView: View {
         ZStack {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
-                Image.waste(next?.items.first?.symbolName ?? "trash.fill", name: next?.items.first?.name ?? "").font(.title3)
+                Image.waste(next?.items.first?.displaySymbol ?? "trash.fill", name: next?.items.first?.name ?? "").font(.title3)
                 Text(days.map { $0 == 0 ? "heute" : $0 == 1 ? "morgen" : "\($0) T." } ?? "–").font(.caption2.weight(.semibold))
             }
         }
@@ -334,7 +334,7 @@ struct PickupWidgetView: View {
         VStack(alignment: .leading, spacing: 1) {
             if let next {
                 if next.items.count == 1, let item = next.items.first {
-                    Text("\(Image.waste(item.symbolName, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
+                    Text("\(Image.waste(item.displaySymbol, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
                     Text(item.name).font(.caption).lineLimit(1)
                     if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
                         Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
@@ -342,7 +342,7 @@ struct PickupWidgetView: View {
                 } else {
                     Text(DateText.countdown(next.date)).font(.headline).lineLimit(1)
                     ForEach(Array(next.items.prefix(2).enumerated()), id: \.offset) { _, item in
-                        Text("\(Image.waste(item.symbolName, name: item.name)) \(item.name)").font(.caption).lineLimit(1)
+                        Text("\(Image.waste(item.displaySymbol, name: item.name)) \(item.name)").font(.caption).lineLimit(1)
                     }
                     if next.items.count > 2 {
                         Text("+\(next.items.count - 2) weitere").font(.caption2).opacity(0.8)

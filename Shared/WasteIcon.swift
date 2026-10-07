@@ -9,10 +9,12 @@ struct WasteIcon: View {
     var name: String = ""
     var size: CGFloat
     var weight: Font.Weight = .bold
+    /// `false` für Geburtstage, eigene Termine und Orte: dann immer das SF Symbol.
+    var waste = true
 
     var body: some View {
         // Die eigenen Symbole haben nur eine Strichstärke; `weight` wirkt beim SF-Rückfall.
-        Image.waste(symbolName, name: name).font(.system(size: size, weight: weight))
+        (waste ? Image.waste(symbolName, name: name) : Image(systemName: symbolName)).font(.system(size: size, weight: weight))
     }
 }
 

@@ -58,6 +58,11 @@ final class WasteType {
         }
     }
 
+    /// Gewähltes Piktogramm verwerfen, wenn eine ältere App-Version das Symbol inzwischen geändert hat.
+    func dropStaleGlyph() {
+        if let glyphName, WasteGlyph.sfFallback(for: glyphName) != symbolName { self.glyphName = nil }
+    }
+
     var category: WasteCategory {
         get { WasteCategory(rawValue: categoryRaw) ?? .other }
         set { categoryRaw = newValue.rawValue }

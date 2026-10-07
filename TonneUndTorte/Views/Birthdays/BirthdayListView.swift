@@ -340,12 +340,11 @@ struct ContactsImportView: View {
                 }
             }
             .task { await load() }
-            // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
             // Neue oder gelöschte Personen (z. B. iCloud-Abgleich). Feldänderungen fängt importSelected ab.
             .onChange(of: people) { _, _ in matching = computeMatching() }
-            // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
+            // Zurück aus den Einstellungen: geänderte oder erweiterte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
+                if phase == .active, !isLoading { Task { await load() } }
             }
         }
     }
@@ -482,7 +481,8 @@ struct ContactsImportView: View {
                     // Früher übernommenes Platzhalterjahr entfernen; ein echtes eigenes Jahr bleibt.
                     person.year = nil
                 }
-                person.contactIdentifier = candidate.identifier
+                // Eine bestehende Verknüpfung (Kontakt evtl. nur gerade nicht freigegeben) nicht umhängen.
+                if person.contactIdentifier == nil { person.contactIdentifier = candidate.identifier }
             } else {
                 person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
                 person.contactIdentifier = candidate.identifier

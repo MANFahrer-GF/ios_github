@@ -56,7 +56,7 @@ struct WatchPickupView: View {
         default: return "\(days) T."
         }
     }
-    private var symbol: String { items.first?.symbolName ?? "checkmark.circle" }
+    private var symbol: String { items.first?.displaySymbol ?? "checkmark.circle" }
     private var names: String { items.isEmpty ? L10n.t("Keine Abholung", "No pickup") : items.map(\.name).joined(separator: " + ") }
 
     var body: some View {
@@ -100,7 +100,7 @@ struct WatchPickupView: View {
             }
             ForEach(Array(items.prefix(2).enumerated()), id: \.offset) { _, item in
                 HStack(spacing: 4) {
-                    Image.waste(item.symbolName, name: item.name).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
+                    Image.waste(item.displaySymbol, name: item.name).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
                     Text(item.name).font(.system(size: 13, weight: .bold, design: .rounded)).lineLimit(1)
                 }
             }

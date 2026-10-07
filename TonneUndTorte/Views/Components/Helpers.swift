@@ -56,14 +56,8 @@ struct SymbolBadge: View {
     var body: some View {
         ZStack {
             Circle().fill(LinearGradient(colors: [Color(hex: colorHex), Color(hex: colorHex).opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Group {
-                if let wasteName {
-                    WasteIcon(symbolName: symbolName, name: wasteName, size: size * 0.45, weight: .semibold)
-                } else {
-                    Image(systemName: symbolName).font(.system(size: size * 0.45, weight: .semibold))
-                }
-            }
-            .foregroundStyle(HexLuma.glyphColor(on: colorHex))
+            WasteIcon(symbolName: symbolName, name: wasteName ?? "", size: size * 0.45, weight: .semibold, waste: wasteName != nil)
+                .foregroundStyle(HexLuma.glyphColor(on: colorHex))
         }
         .frame(width: size, height: size)
         .shadow(color: Color(hex: colorHex).opacity(0.35), radius: 6, x: 0, y: 3)
@@ -91,13 +85,7 @@ struct EventChip: View {
     var body: some View {
         HStack(spacing: 6) {
             if onLight {
-                Group {
-                    if event.kind == .waste {
-                        WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold)
-                    } else {
-                        Image(systemName: event.symbolName).font(.system(size: iconSize, weight: .semibold))
-                    }
-                }
+                WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold, waste: event.kind == .waste)
             } else {
                 BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22, waste: event.kind == .waste)
             }
@@ -190,6 +178,16 @@ struct SymbolPicker: View {
                 .onTapGesture { symbolName = symbol }
             }
         }
+    }
+}
+
+/// Kategorie mit ihrem Piktogramm, z. B. in Auswahlmenüs.
+struct WasteCategoryLabel: View {
+    let category: WasteCategory
+    var title: String? = nil
+
+    var body: some View {
+        Label { Text(title ?? category.name) } icon: { Image.waste(category.symbolName, name: category.name) }
     }
 }
 
