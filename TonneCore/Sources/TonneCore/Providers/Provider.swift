@@ -109,6 +109,13 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case heimatInfo
     case buergerportal
     case magdeburg
+    case hausmuellInfo
+    case wasteManagementServlet
+    case portalsSachsen
+    case portalsMV
+    case portalsMitte
+    case portalsBayern
+    case portalsBrandenburg
 
     public var displayName: String {
         switch self {
@@ -135,6 +142,13 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .heimatInfo: return "Heimat-Info"
         case .buergerportal: return "Bürgerportal"
         case .magdeburg: return "SAB Magdeburg"
+        case .hausmuellInfo: return "hausmüll.info"
+        case .wasteManagementServlet: return "WasteManagement-Portal"
+        case .portalsSachsen: return "Portale Sachsen"
+        case .portalsMV: return "Portale Mecklenburg-Vorpommern"
+        case .portalsMitte: return "Portale Thüringen/Sachsen-Anhalt"
+        case .portalsBayern: return "Portale Bayern"
+        case .portalsBrandenburg: return "Portale Brandenburg"
         }
     }
 }
@@ -217,6 +231,13 @@ public enum ProviderFactory {
         case .heimatInfo: return HeimatInfoProvider(commune: serviceKey, client: client)
         case .buergerportal: return BuergerportalProvider(operator: serviceKey, client: client)
         case .magdeburg: return MagdeburgProvider(client: client)
+        case .hausmuellInfo: return HausmuellInfoProvider(service: serviceKey, client: client)
+        case .wasteManagementServlet: return WasteManagementServletProvider(service: serviceKey, client: client)
+        case .portalsSachsen: return SachsenPortalsProvider(service: serviceKey, client: client)
+        case .portalsMV: return MecklenburgPortalsProvider(service: serviceKey, client: client)
+        case .portalsMitte: return MitteldeutschlandPortalsProvider(service: serviceKey, client: client)
+        case .portalsBayern: return BayernPortalsProvider(service: serviceKey, client: client)
+        case .portalsBrandenburg: return BrandenburgPortalsProvider(service: serviceKey, client: client)
         }
     }
 
