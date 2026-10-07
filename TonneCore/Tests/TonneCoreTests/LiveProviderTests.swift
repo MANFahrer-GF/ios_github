@@ -107,7 +107,7 @@ extension LiveProviderTests {
     }
 
     func testAWSHLauenburg() async throws {
-        try await check(AWSHProvider(), prefer: ["Lauenburg/Elbe", ""], minCount: 5)
+        try await check(AWSHProvider(), prefer: ["Lauenburg", "", "Restabfall 40L-240L · 2-wöchentlich", "", ""], minCount: 5)
     }
 
     func testLobbeIserlohn() async throws {

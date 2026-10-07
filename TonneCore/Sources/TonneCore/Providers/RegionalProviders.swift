@@ -89,7 +89,33 @@ public struct AWSHProvider: WasteProvider {
     private struct Streets: Decodable { let strassen: [Street] }
     private struct Street: Decodable { let strassennummer: Flexible; let strassenbezeichnung: String }
     private struct Types: Decodable { let abfallarten: [WasteType] }
-    private struct WasteType: Decodable { let id: Flexible }
+    struct WasteType: Decodable, Hashable {
+        let id: String
+        let bezeichnung: String
+        let zyklus: String?
+        /// Gruppe nach Kennbuchstabe: R = Restabfall, B = Bio, P = Papier, D = Wertstoff …
+        var group: String { String(id.prefix(1)) }
+        var label: String { [bezeichnung, zyklus].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · ") }
+    }
+
+    /// Abfallarten eines Ortes, gruppiert. Gruppen mit mehreren Varianten (Tonnengröße, Rhythmus)
+    /// werden im Assistenten abgefragt, damit nur die eigene Tonne im Kalender landet.
+    private func groups(city: String) async throws -> [(key: String, types: [WasteType])] {
+        let types: Types = try await client.json("\(base)/ort/\(city)/abfallarten")
+        var order: [String] = []
+        var map: [String: [WasteType]] = [:]
+        for type in types.abfallarten {
+            if map[type.group] == nil { order.append(type.group) }
+            map[type.group, default: []].append(type)
+        }
+        return order.map { (key: $0, types: map[$0] ?? []) }
+    }
+
+    private static func groupTitle(_ types: [WasteType]) -> String {
+        let first = types.first?.bezeichnung ?? ""
+        let base = first.components(separatedBy: CharacterSet.decimalDigits).first?.trimmingCharacters(in: .whitespaces) ?? first
+        return L10n.t("\(base.isEmpty ? first : base): welche Tonne hast du?", "\(base.isEmpty ? first : base): which bin do you have?")
+    }
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
@@ -100,19 +126,42 @@ public struct AWSHProvider: WasteProvider {
             let streets: Streets = try await client.json("\(base)/ort/\(selections[0].id)/strassen")
             return SelectionStep(title: SelectionStep.streetTitle, options: streets.strassen.map { SelectionOption(id: $0.strassennummer.value, title: $0.strassenbezeichnung) })
         default:
-            return nil
+            let choices = try await groups(city: selections[0].id).filter { $0.types.count > 1 }
+            let index = selections.count - 2
+            guard index < choices.count else { return nil }
+            let group = choices[index]
+            var options = group.types.map { SelectionOption(id: "type:\($0.id)", title: $0.label) }
+            options.append(SelectionOption(id: "type:none:\(group.key)", title: L10n.t("Habe ich nicht", "I don't have one")))
+            return SelectionStep(title: Self.groupTitle(group.types), options: options, searchable: false)
         }
     }
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
         let city = selections[0].id, street = selections[1].id
-        let types: Types = try await client.json("\(base)/ort/\(city)/abfallarten")
-        let ids = types.abfallarten.map(\.id.value).joined(separator: "-")
-        let text = try await client.string("\(base)/ort/\(city)/strasse/\(street)/hausnummern/0/abfallarten/\(ids)/kalender.ics")
+        let all = try await groups(city: city)
+        let chosen = Set(selections.dropFirst(2).compactMap { $0.id.hasPrefix("type:") && !$0.id.hasPrefix("type:none:") ? String($0.id.dropFirst(5)) : nil })
+        let answered = Set(selections.dropFirst(2).compactMap { option -> String? in
+            if option.id.hasPrefix("type:none:") { return String(option.id.dropFirst("type:none:".count)) }
+            if option.id.hasPrefix("type:") { return String(option.id.dropFirst(5).prefix(1)) }
+            return nil
+        })
+        var ids: [String] = []
+        for group in all {
+            if group.types.count == 1 { ids.append(group.types[0].id) }
+            else if answered.contains(group.key) { ids += group.types.map(\.id).filter(chosen.contains) }
+            else { ids += group.types.map(\.id) }
+        }
+        guard !ids.isEmpty else { throw ProviderError.noDataGeneric }
+        let text = try await client.string("\(base)/ort/\(city)/strasse/\(street)/hausnummern/0/abfallarten/\(ids.joined(separator: "-"))/kalender.ics")
         let events = ICS.parse(text, calendar: calendar)
         guard !events.isEmpty else { throw ProviderError.noDataGeneric }
-        return events.map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary)) }
+        return events.map { Pickup(date: $0.date, name: Self.cleanName($0.summary)) }
+    }
+
+    /// „Restabfall 40L-240L(2-wöchentlich)“ → „Restabfall 40L-240L“
+    static func cleanName(_ name: String) -> String {
+        NameCleaner.clean(name.replacingOccurrences(of: #"\s*\([^)]*wöchentlich\)|\s*\(monatlich\)"#, with: "", options: .regularExpression))
     }
 }
 

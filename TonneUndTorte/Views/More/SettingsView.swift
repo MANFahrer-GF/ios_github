@@ -60,11 +60,15 @@ struct SettingsView: View {
                 Button("Alle Daten löschen", role: .destructive) { showResetConfirm = true }
             } header: { Text("Daten") }
 
-            Section("Über") {
+            Section {
                 NavigationLink { AboutView() } label: {
                     Label("Über Tonne & Torte", systemImage: "info.circle.fill")
                 }
                 LabeledContent("Version", value: appVersion)
+            } header: {
+                Text("Über")
+            } footer: {
+                Text("Mit ❤️ aus Gifhorn – gebaut von Thomas Kant.")
             }
         }
         .navigationTitle("Einstellungen")

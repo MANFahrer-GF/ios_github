@@ -15,7 +15,8 @@ struct AboutView: View {
         ScrollView {
             VStack(spacing: 20) {
                 header
-                card(title: "Gebaut von Thomas Kant", symbol: "person.fill") {
+                madeBy
+                card(title: "Die Geschichte", symbol: "book.fill") {
                     Text("Tonne & Torte ist ein Hobbyprojekt aus Gifhorn. Entstanden, weil der Gelbe Sack einmal zu oft stehen geblieben ist und Geburtstage nicht im Kalender standen. Die App ist für mich und meine Familie gedacht und wird nebenbei weiterentwickelt.")
                 }
                 card(title: "Was die App kann", symbol: "sparkles") {
@@ -37,9 +38,13 @@ struct AboutView: View {
                 card(title: "Danke", symbol: "heart.fill") {
                     Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple.")
                 }
-                Text("Version \(version)")
-                    .font(.footnote).foregroundStyle(.secondary)
-                    .padding(.top, 4)
+                VStack(spacing: 4) {
+                    Text("Mit ❤️ gebaut in Gifhorn")
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
+                    Text("Version \(version)")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                .padding(.top, 4)
             }
             .padding()
         }
@@ -55,6 +60,26 @@ struct AboutView: View {
               let files = primary["CFBundleIconFiles"] as? [String],
               let name = files.last else { return nil }
         return UIImage(named: name)
+    }
+
+    /// Die Visitenkarte des Machers.
+    private var madeBy: some View {
+        VStack(spacing: 10) {
+            Text("❤️").font(.system(size: 40))
+            Text("Gebaut von Thomas Kant")
+                .font(.system(size: 22, weight: .black, design: .rounded))
+            Text("Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt\nund keine Torte vergessen wird.")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 22)
+        .padding(.horizontal, 16)
+        .background(
+            LinearGradient(colors: [Color(hex: "#FF5FA2").opacity(0.16), Color(hex: "#F2C230").opacity(0.14)], startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+        )
     }
 
     private var header: some View {
