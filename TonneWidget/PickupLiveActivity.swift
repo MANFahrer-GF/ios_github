@@ -11,7 +11,7 @@ struct PickupLiveActivity: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Image(systemName: context.state.symbolNames.first ?? "trash.fill").font(.title2).foregroundStyle(Color(hex: context.state.colorHexes.first ?? "#F2C230"))
+                    BinStack(bins: bins(context), size: 28)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     if !context.state.done {
@@ -27,7 +27,7 @@ struct PickupLiveActivity: Widget {
                     }
                 }
             } compactLeading: {
-                Image(systemName: context.state.symbolNames.first ?? "trash.fill").foregroundStyle(Color(hex: context.state.colorHexes.first ?? "#F2C230"))
+                BinStack(bins: bins(context), size: 18)
             } compactTrailing: {
                 Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).font(.caption2.weight(.semibold))
             } minimal: {
@@ -36,17 +36,18 @@ struct PickupLiveActivity: Widget {
         }
     }
 
+    private func bins(_ context: ActivityViewContext<PickupActivityAttributes>) -> [BinRef] {
+        zip(context.state.symbolNames, context.state.colorHexes).map { BinRef(symbolName: $0, colorHex: $1) }
+    }
+
     private func lockScreen(_ context: ActivityViewContext<PickupActivityAttributes>) -> some View {
-        let color = Color(hex: context.state.colorHexes.first ?? "#F2C230")
+        let color = HeroPalette.tint(for: context.state.colorHexes) ?? Color(hex: HeroPalette.neutralTop)
+        let subtitle = ReminderPlanner.joinNames(context.state.names) + (context.attributes.locationName.map { " · \($0)" } ?? "")
         return HStack(spacing: 14) {
-            ZStack {
-                Circle().fill(color.opacity(0.25))
-                Image(systemName: context.state.symbolNames.first ?? "trash.fill").font(.title2).foregroundStyle(color)
-            }
-            .frame(width: 48, height: 48)
+            BinStack(bins: bins(context), size: 40)
             VStack(alignment: .leading, spacing: 3) {
                 Text(context.state.done ? "Alles steht draußen 👍" : (Days.until(context.attributes.pickupDate) == 0 ? "Heute wird abgeholt" : "Heute Abend rausstellen!")).font(.headline)
-                Text(ReminderPlanner.joinNames(context.state.names) + (context.attributes.locationName.map { " · \($0)" } ?? "")).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
+                Text(subtitle).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
             }
             Spacer()
             if !context.state.done {

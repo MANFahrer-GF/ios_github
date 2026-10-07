@@ -25,7 +25,8 @@ struct WatchContentView: View {
     // MARK: Seite 1 – Nächste Abholung
 
     private var heroPage: some View {
-        let color = Color(hex: next?.items.first?.colorHex ?? "#2F6FED")
+        let color = HeroPalette.tint(for: next?.items.map(\.colorHex) ?? []) ?? Color(hex: HeroPalette.idle)
+        let bins = (next?.items ?? []).map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }
         let days = next.map { Days.until($0.date) }
         let eyebrow: String = next == nil ? "ALLES RUHIG" : (days == 0 ? "HEUTE" : (days == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG"))
         let headline: String = {
@@ -38,13 +39,17 @@ struct WatchContentView: View {
                 HStack {
                     Text(eyebrow).font(.caption2.weight(.bold)).foregroundStyle(color)
                     Spacer()
-                    Image(systemName: next?.items.first?.symbolName ?? "checkmark.circle.fill").foregroundStyle(color)
+                    if bins.isEmpty {
+                        Image(systemName: "checkmark.circle.fill").foregroundStyle(color)
+                    } else {
+                        BinStack(bins: bins, size: 22)
+                    }
                 }
                 if let next, let days {
                     Text(headline).font(.headline)
                     ForEach(next.items, id: \.self) { item in
                         HStack(spacing: 6) {
-                            Image(systemName: item.symbolName).foregroundStyle(Color(hex: item.colorHex))
+                            BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 20)
                             Text(item.name).font(.footnote)
                         }
                     }

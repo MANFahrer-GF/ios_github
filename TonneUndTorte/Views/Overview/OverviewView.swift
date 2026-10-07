@@ -92,7 +92,9 @@ struct OverviewView: View {
 
     private var heroCard: some View {
         let next = wasteDays.first
-        let color = next?.events.first?.color ?? Color.accentColor
+        let hexes = next?.events.map(\.colorHex) ?? []
+        let colors = HeroPalette.colors(for: hexes)
+        let shadow = colors.first ?? Color.accentColor
         let n = next.map { Days.until($0.day) }
         let allDone = next?.events.allSatisfy(\.done) ?? false
 
@@ -105,8 +107,11 @@ struct OverviewView: View {
                         .font(.title.weight(.bold))
                 }
                 Spacer()
-                Image(systemName: next == nil ? "checkmark.circle.fill" : (next?.events.first?.symbolName ?? "trash.fill"))
-                    .font(.system(size: 44, weight: .semibold)).opacity(0.9)
+                if let next {
+                    BinStack(bins: next.events.map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }, size: 46)
+                } else {
+                    Image(systemName: "checkmark.circle.fill").font(.system(size: 44, weight: .semibold)).opacity(0.9)
+                }
             }
             if let next {
                 FlowLayout(spacing: 8) { ForEach(next.events) { EventChip(event: $0, showLocation: locations.count > 1) } }
@@ -131,7 +136,7 @@ struct OverviewView: View {
         .foregroundStyle(.white)
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 26, style: .continuous).fill(LinearGradient(colors: [color, color.opacity(0.65)], startPoint: .topLeading, endPoint: .bottomTrailing)).shadow(color: color.opacity(0.4), radius: 16, x: 0, y: 8))
+        .background(RoundedRectangle(cornerRadius: 26, style: .continuous).fill(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)).shadow(color: shadow.opacity(0.4), radius: 16, x: 0, y: 8))
     }
 
     // MARK: - Listen

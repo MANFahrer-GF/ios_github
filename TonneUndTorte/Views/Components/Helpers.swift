@@ -80,13 +80,17 @@ struct EventChip: View {
     var showLocation = true
     var body: some View {
         HStack(spacing: 6) {
-            Image(systemName: event.symbolName).font(.caption.weight(.semibold))
+            if onLight {
+                Image(systemName: event.symbolName).font(.caption.weight(.semibold))
+            } else {
+                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 22)
+            }
             Text(event.title).font(.caption.weight(.semibold))
             if showLocation, let location = event.locationName { Text("· \(location)").font(.caption).opacity(0.8) }
             if event.done { Image(systemName: "checkmark.circle.fill").font(.caption) }
         }
-        .padding(.horizontal, 10).padding(.vertical, 6)
-        .background(onLight ? event.color.opacity(0.15) : Color.white.opacity(0.22), in: Capsule())
+        .padding(.leading, onLight ? 10 : 4).padding(.trailing, 10).padding(.vertical, onLight ? 6 : 4)
+        .background(onLight ? event.color.opacity(0.15) : Color.white.opacity(0.16), in: Capsule())
         .foregroundStyle(onLight ? event.color : .white)
     }
 }

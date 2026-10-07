@@ -80,7 +80,7 @@ struct PickupWidgetView: View {
 
     private var next: WidgetSnapshot.PickupDay? { entry.snapshot.nextPickupDay(from: entry.date) }
     private var days: Int? { next.map { Days.until($0.date) } }
-    private var heroColor: Color { Color(hex: next?.items.first?.colorHex ?? "#2F6FED") }
+    private var bins: [BinRef] { (next?.items ?? []).map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) } }
 
     var body: some View {
         switch family {
@@ -108,22 +108,64 @@ struct PickupWidgetView: View {
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
         let all = day.items.map(\.name)
-        let shown = all.prefix(max).joined(separator: ", ")
+        let shown = all.prefix(max).joined(separator: " + ")
         return all.count > max ? shown + " +\(all.count - max)" : shown
+    }
+
+    private func bins(_ day: WidgetSnapshot.PickupDay) -> [BinRef] {
+        day.items.map { BinRef(symbolName: $0.symbolName, colorHex: $0.colorHex) }
+    }
+
+    /// Kopfsymbol: eine Tonne groß, mehrere als Stapel, nichts anstehend ein Haken.
+    private func headerSymbol(size: CGFloat) -> some View {
+        Group {
+            if bins.isEmpty {
+                Image(systemName: "checkmark.circle.fill").font(.system(size: size * 0.8))
+            } else {
+                BinStack(bins: bins, size: size)
+            }
+        }
+    }
+
+    /// Reihe aus Tonnen mit Namen darunter, für das kleine Widget.
+    private func tileRow(_ day: WidgetSnapshot.PickupDay, size: CGFloat) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            ForEach(Array(day.items.prefix(3).enumerated()), id: \.offset) { _, item in
+                BinTile(name: item.name, bin: BinRef(symbolName: item.symbolName, colorHex: item.colorHex), size: size)
+            }
+            if day.items.count > 3 {
+                Text("+\(day.items.count - 3)").font(.caption2.weight(.bold)).padding(.top, size / 3)
+            }
+        }
+    }
+
+    /// Kleine farbige Punkte vor dem Text, für die Liste der nächsten Tage.
+    private func dotRow(_ day: WidgetSnapshot.PickupDay, max: Int) -> some View {
+        HStack(spacing: 4) {
+            HStack(spacing: -4) {
+                ForEach(Array(day.items.prefix(max).enumerated()), id: \.offset) { _, item in
+                    BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 14)
+                }
+            }
+            Text(names(day, max: max)).font(.caption2).opacity(0.9).lineLimit(1)
+        }
     }
 
     // MARK: Home-Screen
 
     private var small: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
-                Spacer()
-                Image(systemName: next?.items.first?.symbolName ?? "checkmark.circle.fill").font(.title3)
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
+                    Text(headline).font(.subheadline.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
+                }
+                Spacer(minLength: 4)
+                if bins.count <= 1 { headerSymbol(size: 26) }
             }
-            Text(headline).font(.headline).minimumScaleFactor(0.7).lineLimit(2)
             if let next {
-                Text(names(next, max: 2)).font(.caption.weight(.semibold)).lineLimit(2)
+                Spacer(minLength: 0)
+                tileRow(next, size: bins.count > 2 ? 26 : 30)
                 Spacer(minLength: 0)
                 HStack {
                     Text(DateText.short(next.date)).font(.caption2).opacity(0.85)
@@ -141,8 +183,14 @@ struct PickupWidgetView: View {
     private var medium: some View {
         HStack(alignment: .top, spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
-                Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
-                Text(headline).font(.title3.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(eyebrow).font(.caption2.weight(.bold)).opacity(0.85)
+                        Text(headline).font(.title3.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
+                    }
+                    Spacer(minLength: 4)
+                    headerSymbol(size: 30)
+                }
                 if let next {
                     chips(next.items)
                     Text(DateText.long(next.date)).font(.caption).opacity(0.85)
@@ -155,7 +203,7 @@ struct PickupWidgetView: View {
                 ForEach(entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) }.prefix(3), id: \.date) { day in
                     VStack(alignment: .leading, spacing: 1) {
                         Text(DateText.countdown(day.date)).font(.caption.weight(.semibold))
-                        Text(names(day, max: 2)).font(.caption2).opacity(0.85).lineLimit(1)
+                        dotRow(day, max: 2)
                     }
                 }
             }
@@ -175,7 +223,7 @@ struct PickupWidgetView: View {
                     Text(headline).font(.title2.weight(.bold)).minimumScaleFactor(0.7).lineLimit(2)
                 }
                 Spacer()
-                Image(systemName: next?.items.first?.symbolName ?? "checkmark.circle.fill").font(.largeTitle)
+                headerSymbol(size: 40)
             }
             if let next {
                 chips(next.items)
@@ -189,7 +237,7 @@ struct PickupWidgetView: View {
                 ForEach(entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) }.prefix(5), id: \.date) { day in
                     HStack {
                         Text(DateText.countdown(day.date)).font(.caption.weight(.semibold)).frame(width: 80, alignment: .leading)
-                        Text(names(day, max: 3)).font(.caption).opacity(0.9).lineLimit(1)
+                        dotRow(day, max: 3)
                         Spacer()
                         Text(DateText.short(day.date)).font(.caption2).opacity(0.7)
                     }
@@ -216,19 +264,23 @@ struct PickupWidgetView: View {
     }
 
     private var gradient: some View {
-        LinearGradient(colors: [heroColor, heroColor.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        HeroPalette.gradient(for: bins.map(\.colorHex))
     }
 
+    /// Jede Tonne als eigener Chip in ihrer Farbe.
     private func chips(_ items: [WidgetSnapshot.PickupItem]) -> some View {
         HStack(spacing: 6) {
-            ForEach(items.prefix(3), id: \.name) { item in
-                HStack(spacing: 4) {
-                    Image(systemName: item.symbolName).font(.caption2)
+            ForEach(Array(items.prefix(3).enumerated()), id: \.offset) { _, item in
+                HStack(spacing: 5) {
+                    BinBadge(symbolName: item.symbolName, colorHex: item.colorHex, size: 18)
                     Text(item.name).font(.caption2.weight(.semibold))
                 }
-                .padding(.horizontal, 8).padding(.vertical, 4)
-                .background(.white.opacity(0.22), in: Capsule())
+                .padding(.leading, 3).padding(.trailing, 8).padding(.vertical, 3)
+                .background(.white.opacity(0.16), in: Capsule())
                 .lineLimit(1)
+            }
+            if items.count > 3 {
+                Text("+\(items.count - 3)").font(.caption2.weight(.bold))
             }
         }
     }
@@ -264,11 +316,22 @@ struct PickupWidgetView: View {
     }
 
     private var rectangular: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 1) {
             if let next {
-                Text("\(DateText.countdown(next.date)): \(names(next, max: 2))").font(.headline).lineLimit(2)
-                if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
-                    Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption).opacity(0.8).lineLimit(1)
+                if next.items.count == 1, let item = next.items.first {
+                    Text("\(Image(systemName: item.symbolName)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
+                    Text(item.name).font(.caption).lineLimit(1)
+                    if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
+                        Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
+                    }
+                } else {
+                    Text(DateText.countdown(next.date)).font(.headline).lineLimit(1)
+                    ForEach(Array(next.items.prefix(2).enumerated()), id: \.offset) { _, item in
+                        Text("\(Image(systemName: item.symbolName)) \(item.name)").font(.caption).lineLimit(1)
+                    }
+                    if next.items.count > 2 {
+                        Text("+\(next.items.count - 2) weitere").font(.caption2).opacity(0.8)
+                    }
                 }
             } else {
                 Text("Keine Abholung").font(.headline)
