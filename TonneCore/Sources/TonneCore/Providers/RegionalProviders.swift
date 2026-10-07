@@ -77,12 +77,26 @@ public struct GemosWasteBoxProvider: WasteProvider {
 
 public struct AWSHProvider: WasteProvider {
     public let kind: ProviderKind = .awsh
-    public let serviceKey: String = "awsh"
-    public var displayName: String { "AWSH" }
+    public let serviceKey: String
+    public var displayName: String { serviceKey == "awsh" ? "AWSH" : kind.displayName }
     private let client: HTTPClient
-    private let base = "https://www.awsh.de/api_v2/collection_dates/1"
+    private let base: String
 
-    public init(client: HTTPClient = HTTPClient()) { self.client = client }
+    /// Gleiche Schnittstelle (api_v2) bei mehreren Kreisen in Schleswig-Holstein und Niedersachsen.
+    static let hosts: [String: String] = [
+        "awsh": "https://www.awsh.de",                    // Herzogtum Lauenburg, Stormarn
+        "steinburg": "https://abfall.steinburg.de",       // Kreis Steinburg
+        "awd": "https://api.awd-online.de",               // Dithmarschen
+        "awr": "https://www.awr.de",                      // Rendsburg-Eckernförde
+        "asf": "https://www.asf-online.de",               // Schleswig-Flensburg
+        "stade": "https://abfall.landkreis-stade.de",     // Landkreis Stade
+    ]
+
+    public init(region: String = "awsh", client: HTTPClient = HTTPClient()) {
+        self.serviceKey = region
+        self.client = client
+        self.base = (Self.hosts[region] ?? Self.hosts["awsh"]!) + "/api_v2/collection_dates/1"
+    }
 
     private struct Places: Decodable { let orte: [Place] }
     private struct Place: Decodable { let ortsnummer: Flexible; let ortsbezeichnung: String }
@@ -164,9 +178,10 @@ public struct AWSHProvider: WasteProvider {
         selections.prefix(2).map(\.title).joined(separator: ", ")
     }
 
-    /// „Restabfall 40L-240L(2-wöchentlich)“ → „Restabfall 40L-240L“
+    /// „Restabfall 40L-240L(2-wöchentlich)“ → „Restabfall 40L-240L“, „Biotonne(14tgl.)“ → „Biotonne“
     static func cleanName(_ name: String) -> String {
-        NameCleaner.clean(name.replacingOccurrences(of: #"\s*\([^)]*wöchentlich\)|\s*\(monatlich\)"#, with: "", options: .regularExpression))
+        let rhythm = #"\s*\((?:[^)]*wöchentlich|[^)]*täglich|\d+\s*tgl\.?|\d+\s*wö\.?|monatlich)\)"#
+        return NameCleaner.clean(name.replacingOccurrences(of: rhythm, with: "", options: .regularExpression))
     }
 }
 

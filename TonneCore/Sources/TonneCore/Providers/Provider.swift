@@ -116,6 +116,10 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case portalsMitte
     case portalsBayern
     case portalsBrandenburg
+    case portalsNord
+    case portalsNRW
+    case portalsRP
+    case portalsSuedwest
 
     public var displayName: String {
         switch self {
@@ -132,7 +136,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .ahaHannover: return "aha Region Hannover"
         case .abfallPlusApp: return "AbfallPlus-App"
         case .gemosWasteBox: return "Gemos WasteBox"
-        case .awsh: return "AWSH"
+        case .awsh: return L10n.t("Kreis-Abfallkalender (api_v2)", "District waste calendar")
         case .lobbe: return "Lobbe App"
         case .nerdbridge: return "Nerdbridge"
         case .bsr: return "BSR Berlin"
@@ -144,11 +148,8 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .magdeburg: return "SAB Magdeburg"
         case .hausmuellInfo: return "hausmüll.info"
         case .wasteManagementServlet: return "WasteManagement-Portal"
-        case .portalsSachsen: return "Portale Sachsen"
-        case .portalsMV: return "Portale Mecklenburg-Vorpommern"
-        case .portalsMitte: return "Portale Thüringen/Sachsen-Anhalt"
-        case .portalsBayern: return "Portale Bayern"
-        case .portalsBrandenburg: return "Portale Brandenburg"
+        case .portalsSachsen, .portalsMV, .portalsMitte, .portalsBayern, .portalsBrandenburg, .portalsNord, .portalsNRW, .portalsRP, .portalsSuedwest:
+            return L10n.t("Portal des Entsorgers", "Operator portal")
         }
     }
 }
@@ -221,7 +222,7 @@ public enum ProviderFactory {
         case .ahaHannover: return AhaHannoverProvider(client: client)
         case .abfallPlusApp: return AbfallPlusAppProvider(appID: serviceKey)
         case .gemosWasteBox: return GemosWasteBoxProvider(customer: serviceKey, client: client)
-        case .awsh: return AWSHProvider(client: client)
+        case .awsh: return AWSHProvider(region: serviceKey, client: client)
         case .lobbe: return LobbeProvider(client: client)
         case .nerdbridge: return NerdbridgeProvider(client: client)
         case .bsr: return BSRProvider(client: client)
@@ -238,6 +239,10 @@ public enum ProviderFactory {
         case .portalsMitte: return MitteldeutschlandPortalsProvider(service: serviceKey, client: client)
         case .portalsBayern: return BayernPortalsProvider(service: serviceKey, client: client)
         case .portalsBrandenburg: return BrandenburgPortalsProvider(service: serviceKey, client: client)
+        case .portalsNord: return NordPortalsProvider(service: serviceKey, client: client)
+        case .portalsNRW: return NRWPortalsProvider(service: serviceKey, client: client)
+        case .portalsRP: return RheinlandPfalzPortalsProvider(service: serviceKey, client: client)
+        case .portalsSuedwest: return SuedwestPortalsProvider(service: serviceKey, client: client)
         }
     }
 

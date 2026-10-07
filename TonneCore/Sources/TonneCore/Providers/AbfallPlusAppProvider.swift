@@ -164,8 +164,9 @@ public struct AbfallPlusAppProvider: WasteProvider {
         let pattern = #"awk_standort_auswahl_step_fertig\('((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([^']*)','([^']*)','[^']*'(?:,\{(.*?)\})?\)([^"]*)""#
         return HTMLText.matches(pattern, in: html).map { groups in
             var extra: [String: String] = [:]
-            for pair in HTMLText.matches(#"'(\w+)':'?([^,']*)'?"#, in: groups[4]) where pair.count == 2 {
-                extra[pair[0]] = pair[1]
+            // Werte in Anführungszeichen oder blank; verschachtelte Objekte ({…}) werden mit durchsucht.
+            for pair in HTMLText.matches(#"'(\w+)':(?:'([^']*)'|([^,'{}]*))"#, in: groups[4]) where pair.count == 3 {
+                extra[pair[0]] = pair[1].isEmpty ? pair[2] : pair[1]
             }
             let formStreet = HTMLText.firstMatch(#"#f_id_strasse'\)\.val\((\d+)\)"#, in: groups[5], group: 1)
             return Item(id: HTMLText.decodeEntities(groups[0].replacingOccurrences(of: "\\'", with: "'")),
@@ -321,7 +322,8 @@ public struct AbfallPlusAppProvider: WasteProvider {
                     if let bl = item.extra["set_id_bundesland"] { fields["bl"] = bl }
                     if item.extra["step_akt"] == "strasse" || item.next == "fertig" {
                         fields["done"] = "1"
-                        fields["str"] = item.id
+                        // „alle Straßen“ des Bezirks: Die Straßen-Kennung steckt in step_follow_data (wie in der App).
+                        fields["str"] = item.extra["step_akt"] == "strasse" ? (item.extra["id"] ?? item.id) : item.id
                     }
                     return SelectionOption(id: Self.encode(fields), title: item.name)
                 })

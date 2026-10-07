@@ -1,8 +1,8 @@
 import Foundation
 
-/// Portale Sachsen – Platzhalter, wird ausgebaut.
-public struct SachsenPortalsProvider: WasteProvider {
-    public let kind: ProviderKind = .portalsSachsen
+/// Portale in Hessen und Baden-Württemberg – Platzhalter, wird ausgebaut.
+public struct SuedwestPortalsProvider: WasteProvider {
+    public let kind: ProviderKind = .portalsSuedwest
     public let serviceKey: String
     public var displayName: String { kind.displayName }
     private let client: HTTPClient

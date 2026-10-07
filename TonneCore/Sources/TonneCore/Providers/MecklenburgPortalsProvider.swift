@@ -4,7 +4,7 @@ import Foundation
 public struct MecklenburgPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsMV
     public let serviceKey: String
-    public var displayName: String { "Portale Mecklenburg-Vorpommern" }
+    public var displayName: String { kind.displayName }
     private let client: HTTPClient
 
     public init(service: String, client: HTTPClient = HTTPClient()) {

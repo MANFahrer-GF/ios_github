@@ -171,6 +171,38 @@ extension LiveProviderTests {
         try await checkTyped(MagdeburgProvider(), typed: [""], prefer: ["Breiter Weg"])
     }
 
+    func testAPIv2Regions() async throws {
+        for region in AWSHProvider.hosts.keys.sorted() where region != "awsh" {
+            try await check(AWSHProvider(region: region), prefer: [], minCount: 3)
+        }
+    }
+
+    func testAbfallPlusAppNewApps() async throws {
+        try XCTSkipUnless(live, "TONNE_LIVE nicht gesetzt")
+        let cases: [(String, String, String)] = [("de.enzkreis.app", "Mühlacker", "Bahnhofstr"), ("de.abfallplus.bodenseekreis", "Friedrichshafen", "Friedrichstr"),
+                                                 ("de.remondis.rheinland", "Olpe", "Bahnhofstr"), ("de.k4systems.muellalarm", "Kevelaer", "Am"),
+                                                 ("de.k4systems.abfallhr", "Melsungen", "Am Markt"), ("de.drekopf.abfallplaner", "Hamminkeln", "Brüner")]
+        var failed: [String] = []
+        for (app, place, street) in cases {
+            do { try await checkTyped(AbfallPlusAppProvider(appID: app), typed: [street], prefer: [place], minCount: 3) } catch { failed.append("\(app): \(error)") }
+        }
+        XCTAssertTrue(failed.isEmpty, failed.joined(separator: "\n"))
+    }
+
+    func testWestMappedKeys() async throws {
+        try await check(AwidoProvider(customer: "rmk"), prefer: [], minCount: 3)
+        try await check(AwidoProvider(customer: "awld"), prefer: [], minCount: 3)
+        try await check(JumomindProvider(service: "rhe"), prefer: [], minCount: 3)
+        try await check(JumomindProvider(service: "ben"), prefer: [], minCount: 3)
+        try await check(AbfallnaviProvider(service: "wml2"), prefer: [], minCount: 3)
+        try await check(AbfallnaviProvider(service: "bav"), prefer: [], minCount: 3)
+        try await check(AbfallnaviProvider(service: "frankenthal"), prefer: [], minCount: 3)
+    }
+
+    func testMuellmaxEVS() async throws {
+        try await checkTyped(MuellmaxProvider(service: "Evs"), typed: ["Hauptstr"], prefer: [], minCount: 3)
+    }
+
     func testSiteparkAllTenants() async throws {
         for tenant in SiteparkProvider.tenants.keys.sorted() {
             try await check(SiteparkProvider(tenant: tenant), prefer: [], minCount: 3)

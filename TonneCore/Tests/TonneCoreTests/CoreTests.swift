@@ -426,3 +426,20 @@ final class CoreTests: XCTestCase {
         XCTAssertGreaterThan(WasteABC.entries.count, 80)
     }
 }
+
+final class APIv2NameTests: XCTestCase {
+    func testRhythmIsRemoved() {
+        XCTAssertEqual(AWSHProvider.cleanName("Biotonne(14tgl.)"), "Biotonne")
+        XCTAssertEqual(AWSHProvider.cleanName("Papiertonne(4wö.)"), "Papiertonne")
+        XCTAssertEqual(AWSHProvider.cleanName("Bioabfall(14-täglich)"), "Bioabfall")
+        XCTAssertEqual(AWSHProvider.cleanName("Restabfall 40L-240L(2-wöchentlich)"), "Restabfall 40L-240L")
+        XCTAssertEqual(AWSHProvider.cleanName("Restabfalltonne (60-120l)(4wö.)"), "Restabfalltonne (60-120l)")
+        XCTAssertEqual(AWSHProvider.cleanName("Strauchschnitt(gebündelt)"), "Strauchschnitt(gebündelt)")
+    }
+
+    func testRegionsHaveHosts() {
+        XCTAssertEqual(AWSHProvider(region: "stade").serviceKey, "stade")
+        XCTAssertEqual(AWSHProvider().serviceKey, "awsh")
+        XCTAssertEqual(Set(AWSHProvider.hosts.keys), ["awsh", "steinburg", "awd", "awr", "asf", "stade"])
+    }
+}
