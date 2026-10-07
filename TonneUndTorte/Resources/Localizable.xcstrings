@@ -511,6 +511,16 @@
         }
       }
     },
+    "Bereits übernommene Personen aktualisierst du, indem du sie erneut auswählst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To update people you already added, simply choose them again."
+          }
+        }
+      }
+    },
     "Bisherige Einzeltermine ersetzen": {
       "localizations": {
         "en": {
@@ -617,6 +627,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The app marks its events and only changes or deletes those. Your own events stay untouched."
+          }
+        }
+      }
+    },
+    "Die Erinnerung konnte gerade nicht gestartet werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The reminder couldn’t be started right now."
           }
         }
       }
@@ -1331,6 +1351,16 @@
         }
       }
     },
+    "Ist schon erledigt – alles steht draußen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already done – everything is out."
+          }
+        }
+      }
+    },
     "Jede Woche": {
       "localizations": {
         "en": {
@@ -1597,6 +1627,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Live Activity the evening before"
+          }
+        }
+      }
+    },
+    "Live-Aktivitäten sind für Tonne & Torte in den Einstellungen ausgeschaltet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activities are turned off for Tonne & Torte in Settings."
           }
         }
       }

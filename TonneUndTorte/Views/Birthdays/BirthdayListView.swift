@@ -344,7 +344,7 @@ struct ContactsImportView: View {
             .onChange(of: people) { _, _ in matching = computeMatching() }
             // Zurück aus den Einstellungen: geänderte oder erweiterte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active, !isLoading { Task { await load() } }
+                if phase == .active, !isLoading { Task { await load(silent: true) } }
             }
         }
     }
@@ -364,10 +364,13 @@ struct ContactsImportView: View {
                     Label("Warum sehe ich nicht alle Kontakte?", systemImage: "questionmark.circle")
                 }
             } footer: {
-                if access == .limited {
-                    Text("Du hast der App nur einzelne Kontakte freigegeben. Kein Problem: Wähle die Personen einfach aus, ganz ohne weitere Freigabe.")
-                } else {
-                    Text("Die App darf deine Kontakte nicht lesen. Kein Problem: Wähle die Personen einfach aus, ganz ohne Freigabe.")
+                VStack(alignment: .leading, spacing: 6) {
+                    if access == .limited {
+                        Text("Du hast der App nur einzelne Kontakte freigegeben. Kein Problem: Wähle die Personen einfach aus, ganz ohne weitere Freigabe.")
+                    } else {
+                        Text("Die App darf deine Kontakte nicht lesen. Kein Problem: Wähle die Personen einfach aus, ganz ohne Freigabe.")
+                    }
+                    Text("Bereits übernommene Personen aktualisierst du, indem du sie erneut auswählst.")
                 }
             }
         }
@@ -438,8 +441,9 @@ struct ContactsImportView: View {
         }
     }
 
-    private func load() async {
-        isLoading = true
+    /// `silent`: im Hintergrund neu lesen (Rückkehr in die App), ohne Ladeanzeige und ohne Flackern.
+    private func load(silent: Bool = false) async {
+        if !silent { isLoading = true }
         errorMessage = nil
         do {
             let fetched = try await ContactsImport.candidates()

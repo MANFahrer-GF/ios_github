@@ -75,6 +75,7 @@ final class CoreTests: XCTestCase {
         XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Tannenbäume"))
         XCTAssertNil(WasteGlyph.assetName(for: "leaf.fill", name: "Laubsäcke"))
         XCTAssertEqual(WasteGlyph.assetName(for: "leaf.fill", name: "Biotonne Urlaubsvertretung"), "tt.bin.bio")
+        XCTAssertEqual(WasteGlyph.assetName(for: "leaf.fill", name: "Biotonne Urlaub"), "tt.bin.bio")
         XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Wertstofftonne"), "tt.bin.yellow")
         XCTAssertEqual(WasteGlyph.sfFallback(for: "tt.sack"), "bag.fill")
         XCTAssertEqual(WasteGlyph.sfFallback(for: "tt.bin.yellow"), "bag.fill")

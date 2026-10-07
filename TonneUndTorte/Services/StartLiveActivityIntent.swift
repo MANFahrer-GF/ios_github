@@ -14,10 +14,17 @@ struct StartPickupLiveActivityIntent: LiveActivityIntent {
         guard let snapshot = SnapshotStore.load() else {
             return .result(dialog: "Öffne Tonne & Torte einmal, damit die Termine bekannt sind.")
         }
-        await LiveActivityManager.refresh(with: snapshot)
-        guard let next = snapshot.nextPickupDay(), Days.until(next.date) <= 1 else {
+        switch await LiveActivityManager.refresh(with: snapshot) {
+        case .shown(let names):
+            return .result(dialog: "Erinnerung für \(ReminderPlanner.joinNames(names)) ist auf dem Sperrbildschirm.")
+        case .nothingDue:
             return .result(dialog: "Morgen wird nichts abgeholt.")
+        case .alreadyDone:
+            return .result(dialog: "Ist schon erledigt – alles steht draußen.")
+        case .disabled:
+            return .result(dialog: "Live-Aktivitäten sind für Tonne & Torte in den Einstellungen ausgeschaltet.")
+        case .failed:
+            return .result(dialog: "Die Erinnerung konnte gerade nicht gestartet werden.")
         }
-        return .result(dialog: "Erinnerung für \(ReminderPlanner.joinNames(next.items.map(\.name))) ist auf dem Sperrbildschirm.")
     }
 }

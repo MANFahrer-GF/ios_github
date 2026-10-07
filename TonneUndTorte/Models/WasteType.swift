@@ -44,7 +44,7 @@ final class WasteType {
     /// ältere App-Version (iCloud) nur `symbolName`, gewinnt diese neuere Wahl.
     var displaySymbol: String {
         get {
-            if let glyphName, WasteGlyph.sfFallback(for: glyphName) == symbolName { return glyphName }
+            if let glyphName, !hasStaleGlyph { return glyphName }
             return WasteGlyph.assetName(for: symbolName, name: name) ?? symbolName
         }
         set {
@@ -60,7 +60,13 @@ final class WasteType {
 
     /// Gewähltes Piktogramm verwerfen, wenn eine ältere App-Version das Symbol inzwischen geändert hat.
     func dropStaleGlyph() {
-        if let glyphName, WasteGlyph.sfFallback(for: glyphName) != symbolName { self.glyphName = nil }
+        if hasStaleGlyph { glyphName = nil }
+    }
+
+    /// Das gewählte Piktogramm passt nicht mehr zum SF-Namen (eine ältere App-Version hat das Symbol geändert).
+    private var hasStaleGlyph: Bool {
+        guard let glyphName else { return false }
+        return WasteGlyph.sfFallback(for: glyphName) != symbolName
     }
 
     var category: WasteCategory {

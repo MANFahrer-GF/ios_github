@@ -12,27 +12,26 @@ public enum WasteGlyph {
         case "trash.fill", "trash":
             return "tt.bin"
         case "leaf.fill":
-            return mentions(name, ["laub", "leaf", "leaves"]) ? nil : "tt.bin.bio"
+            return mentions(name, prefixes: ["laub", "leaf", "leaves"]) ? nil : "tt.bin.bio"
         case "newspaper.fill":
             return "tt.bin.paper"
         case "bag.fill":
-            return mentions(name, ["tonne", "container"], words: ["bin"]) ? "tt.bin.yellow" : "tt.sack"
+            return mentions(name, prefixes: ["tonne", "container"], suffixes: ["tonne", "container"], words: ["bin"]) ? "tt.bin.yellow" : "tt.sack"
         case "wineglass.fill":
             return "tt.glass"
         case "tree.fill":
-            return mentions(name, ["weihnacht", "christbaum", "tanne", "christmas", "xmas"], words: ["fir"]) ? nil : "tt.green"
+            return mentions(name, prefixes: ["weihnacht", "christbaum", "tanne", "christmas", "xmas"], words: ["fir"]) ? nil : "tt.green"
         default:
             return all.contains(symbolName) ? symbolName : nil
         }
     }
 
-    /// Deutsche Wortteile am Wortanfang oder -ende („Laubsäcke“, „Wertstofftonne“, nicht „Urlaub…“ mitten im Wort),
-    /// kurze englische Wörter („bin“, „fir“) nur als ganzes Wort. Nur für die namensabhängigen Symbole ausgewertet.
-    private static func mentions(_ name: String, _ parts: [String], words whole: [String] = []) -> Bool {
+    /// Wortteile am Wortanfang („Laubsäcke“, „Tannenbäume“) bzw. -ende („Wertstofftonne“) – nicht mitten im
+    /// oder am Ende eines fremden Worts („Urlaub“). Kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
+    private static func mentions(_ name: String, prefixes: [String] = [], suffixes: [String] = [], words whole: [String] = []) -> Bool {
         guard !name.isEmpty else { return false }
-        let words = name.lowercased().split(whereSeparator: { !$0.isLetter }).map(String.init)
-        for word in words {
-            if parts.contains(where: { word.hasPrefix($0) || word.hasSuffix($0) }) || whole.contains(word) { return true }
+        for word in name.lowercased().split(whereSeparator: { !$0.isLetter }).map(String.init) {
+            if prefixes.contains(where: word.hasPrefix) || suffixes.contains(where: word.hasSuffix) || whole.contains(word) { return true }
         }
         return false
     }
