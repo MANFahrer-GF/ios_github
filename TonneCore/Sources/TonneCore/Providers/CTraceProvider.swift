@@ -37,13 +37,14 @@ public struct CTraceProvider: WasteProvider {
     }
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
-        let needsCity = service.fixedCity == nil
-        switch selections.count {
-        case 0 where needsCity:
+        // Schritte: Ort (nur wenn nicht fest vorgegeben) → Straße → Hausnummer
+        let stepIndex = selections.count + (service.fixedCity == nil ? 0 : 1)
+        switch stepIndex {
+        case 0:
             return .text(title: SelectionStep.cityTitle, placeholder: L10n.t("Ort, z. B. Königsbrunn", "Town, e.g. Königsbrunn"))
-        case 0, 1 where needsCity:
+        case 1:
             return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("Straßenname", "Street name"))
-        case 1, 2 where needsCity:
+        case 2:
             return .text(title: SelectionStep.houseNumberTitle, placeholder: "1")
         default:
             return nil
