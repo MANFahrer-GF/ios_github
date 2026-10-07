@@ -123,11 +123,38 @@ enum SyncService {
     static func readPickupFile(at url: URL) throws -> [Pickup] {
         let accessed = url.startAccessingSecurityScopedResource()
         defer { if accessed { url.stopAccessingSecurityScopedResource() } }
-        let text = HTTPClient.text(from: try Data(contentsOf: url))
+        // Koordiniert lesen, damit auch noch nicht geladene iCloud-Dateien zuverlässig kommen
+        var readError: Error?
+        var data = Data()
+        var coordinatorError: NSError?
+        NSFileCoordinator().coordinate(readingItemAt: url, options: [], error: &coordinatorError) { readURL in
+            do { data = try Data(contentsOf: readURL) } catch { readError = error }
+        }
+        if let error = readError ?? coordinatorError { throw error }
+        // Numbers-/Excel-Dateien (ZIP) und Pakete sind keine Tabellen im Textformat
+        if data.starts(with: [0x50, 0x4B]) || (try? url.resourceValues(forKeys: [.isPackageKey]))?.isPackage == true {
+            throw ImportError.spreadsheet
+        }
+        let text = decodeText(data)
         if text.contains("BEGIN:VCALENDAR") {
             return ICS.parse(text).map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary), note: $0.location) }
         }
         return PickupCSV.parse(text)
+    }
+
+    enum ImportError: LocalizedError {
+        case spreadsheet
+        var errorDescription: String? {
+            L10n.t("Das ist eine Numbers- oder Excel-Datei. Bitte als CSV speichern: In Numbers „Teilen › Exportieren › CSV“, in Excel „Speichern unter › CSV UTF-8“.",
+                   "This is a Numbers or Excel file. Please save it as CSV: in Numbers “Share › Export › CSV”, in Excel “Save As › CSV UTF-8”.")
+        }
+    }
+
+    /// UTF-8 (mit/ohne BOM), UTF-16 (Excel „Unicode-Text“), sonst Windows-1252 (älteres Excel).
+    static func decodeText(_ data: Data) -> String {
+        if data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]), let text = String(data: data, encoding: .utf16) { return text }
+        if let text = String(data: data, encoding: .utf8) { return text }
+        return String(data: data, encoding: .windowsCP1252) ?? HTTPClient.text(from: data)
     }
 
     /// Termine eines Standorts (letzte 30 Tage bis 1 Jahr voraus) für den CSV-Export.

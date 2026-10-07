@@ -17,7 +17,9 @@ struct CoverageView: View {
     private var missingCount: Int { all.filter { !$0.isCovered }.count }
     private var coveredCount: Int { all.count - missingCount }
 
-    private var filtered: [DistrictCoverage] {
+    private var filtered: [DistrictCoverage] { Self.filter(all, tab: tab, query: query) }
+
+    private static func filter(_ all: [DistrictCoverage], tab: Tab, query: String) -> [DistrictCoverage] {
         let base = all.filter { tab == .covered ? $0.isCovered : !$0.isCovered }
         let needle = ProviderCatalog.fold(query)
         guard !needle.isEmpty else { return base }
@@ -45,8 +47,8 @@ struct CoverageView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
             } footer: {
-                Text(L10n.t("\(coveredCount) von \(all.count) Landkreisen und kreisfreien Städten haben mindestens einen angebundenen Entsorger. In manchen Kreisen sind nur einzelne Gemeinden dabei.",
-                            "\(coveredCount) of \(all.count) districts have at least one connected operator. In some districts only individual municipalities are covered."))
+                Text(L10n.t("\(coveredCount) von \(all.count) Landkreisen und kreisfreien Städten sind angebunden. Halb gefüllter Kreis: nur einzelne Gemeinden sind dabei.",
+                            "\(coveredCount) of \(all.count) districts are connected. Half-filled circle: only some municipalities are covered."))
             }
 
             if tab == .missing { workaroundSection }
@@ -54,7 +56,7 @@ struct CoverageView: View {
             ForEach(grouped, id: \.state) { group in
                 Section(group.state) {
                     ForEach(group.items) { item in
-                        if item.isCovered {
+                        if item.isCovered || item.isPartial {
                             NavigationLink { DistrictEntriesView(coverage: item, onChoose: onChoose) } label: { row(item) }
                         } else {
                             row(item)
@@ -62,7 +64,7 @@ struct CoverageView: View {
                     }
                 }
             }
-            if filtered.isEmpty {
+            if grouped.isEmpty {
                 Text(L10n.t("Nichts gefunden.", "Nothing found.")).foregroundStyle(.secondary)
             }
         }
@@ -72,19 +74,30 @@ struct CoverageView: View {
 
     private func row(_ item: DistrictCoverage) -> some View {
         HStack(spacing: 12) {
-            Image(systemName: item.isCovered ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
-                .foregroundStyle(item.isCovered ? .green : .orange)
+            Image(systemName: item.isCovered ? "checkmark.circle.fill" : item.isPartial ? "circle.lefthalf.filled" : "exclamationmark.circle.fill")
+                .foregroundStyle(item.isCovered ? .green : item.isPartial ? .yellow : .orange)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.displayName)
-                Text(item.isCovered
-                     ? L10n.t("\(item.entryIDs.count) Entsorger · \(item.municipalityCount) Gemeinden", "\(item.entryIDs.count) operators · \(item.municipalityCount) municipalities")
-                     : L10n.t("Noch nicht angebunden · \(item.municipalityCount) Gemeinden", "Not connected yet · \(item.municipalityCount) municipalities"))
-                    .font(.caption).foregroundStyle(.secondary)
+                Text(subtitle(item)).font(.caption).foregroundStyle(.secondary).lineLimit(3)
             }
         }
         .accessibilityElement(children: .combine)
     }
+
+    private func subtitle(_ item: DistrictCoverage) -> String {
+        let municipalities = Self.count(item.municipalityCount, L10n.t("Gemeinde", "municipality"), L10n.t("Gemeinden", "municipalities"))
+        if item.isCovered {
+            return "\(Self.count(item.allEntryIDs.count, L10n.t("Entsorger", "operator"), L10n.t("Entsorger", "operators"))) · \(municipalities)"
+        }
+        if item.isPartial {
+            return L10n.t("Nur einzelne Gemeinden: \(item.localPlaces.joined(separator: ", "))",
+                          "Only some municipalities: \(item.localPlaces.joined(separator: ", "))")
+        }
+        return L10n.t("Noch nicht angebunden · \(municipalities)", "Not connected yet · \(municipalities)")
+    }
+
+    private static func count(_ value: Int, _ one: String, _ many: String) -> String { "\(value) \(value == 1 ? one : many)" }
 
     private var workaroundSection: some View {
         Section {

@@ -33,12 +33,11 @@ struct SourceWizardView: View {
     @State private var showCoverage = false
     @State private var showFileImporter = false
     @State private var importPickups: [Pickup] = []
-    @State private var importTarget: Location?
-    /// Für den Dateiimport neu angelegter Standort – wird wieder entfernt, wenn der Import abgebrochen wird.
-    @State private var createdForImport = false
     @State private var showImport = false
-
-    private static let coverageByDistrict = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
+    /// Suchergebnisse, einmal je Eingabe berechnet.
+    @State private var results: [CatalogEntry] = []
+    @State private var uncovered: (place: String, districts: [String])?
+    @State private var hint: String?
 
     var body: some View {
         NavigationStack {
@@ -73,14 +72,15 @@ struct SourceWizardView: View {
                 }
             }
             .fileImporter(isPresented: $showFileImporter, allowedContentTypes: LocationDetailView.importTypes, onCompletion: handleImportFile)
-            .sheet(isPresented: $showImport, onDismiss: cleanUpImport) {
-                ICSImportView(pickups: importPickups, location: importTarget) {
-                    createdForImport = false
+            .sheet(isPresented: $showImport) {
+                ICSImportView(pickups: importPickups, location: location, makeLocation: makeImportLocation) {
                     model.onboardingDone = true
-                    if let importTarget { onFinished?(importTarget) }
                     dismiss()
                 }
             }
+            .onChange(of: query) { _, _ in updateResults() }
+            .onChange(of: region.suggestions.map(\.id)) { _, _ in updateResults() }
+            .onAppear(perform: updateResults)
         }
     }
 
@@ -95,8 +95,16 @@ struct SourceWizardView: View {
 
     // MARK: - Suche
 
-    private var results: [CatalogEntry] {
-        query.isEmpty ? region.suggestions : ProviderCatalog.search(query)
+    private func updateResults() {
+        results = query.isEmpty ? region.suggestions : ProviderCatalog.search(query)
+        hint = query.isEmpty ? nil : ProviderCatalog.municipalityHint(for: query)
+        let missing = query.isEmpty ? [] : ProviderCatalog.uncoveredMunicipalities(matching: query)
+        if let first = missing.first {
+            let districts: [String] = Array(Set(missing.map(\.district))).sorted().map { DistrictCoverage.displayName($0) }
+            uncovered = (place: first.name, districts: districts)
+        } else {
+            uncovered = nil
+        }
     }
 
     private var searchStage: some View {
@@ -119,7 +127,7 @@ struct SourceWizardView: View {
                     Label(L10n.t("Welche Landkreise fehlen noch?", "Which districts are missing?"), systemImage: "map")
                 }
             }
-            if let missing = uncoveredHint { uncoveredSection(missing) }
+            if let uncovered { uncoveredSection(uncovered) }
             Section {
                 ForEach(query.isEmpty && region.suggestions.isEmpty ? ProviderCatalog.entries : results) { item in
                     Button { choose(item) } label: {
@@ -137,7 +145,7 @@ struct SourceWizardView: View {
             } header: {
                 Text(resultsHeader)
             } footer: {
-                if !query.isEmpty, let hint = ProviderCatalog.municipalityHint(for: query) {
+                if !query.isEmpty, let hint {
                     Text(hint)
                 }
             }
@@ -184,16 +192,6 @@ struct SourceWizardView: View {
 
     // MARK: - Nicht angebundene Regionen
 
-    /// Liegt der gesuchte Ort nur in Kreisen ohne Entsorger, sagen wir das deutlich – mit dem Weg über eine Datei.
-    private var uncoveredHint: (place: String, districts: [String])? {
-        guard !query.isEmpty else { return nil }
-        let hits = ProviderCatalog.municipalities(matching: query)
-        let districts = Set(hits.map(\.district))
-        guard let first = hits.first, !districts.isEmpty,
-              districts.allSatisfy({ Self.coverageByDistrict[$0]?.isCovered == false }) else { return nil }
-        return (first.name, districts.sorted().map { DistrictCoverage.displayName($0) })
-    }
-
     private func uncoveredSection(_ missing: (place: String, districts: [String])) -> some View {
         Section {
             Label {
@@ -220,35 +218,26 @@ struct SourceWizardView: View {
             let pickups = try SyncService.readPickupFile(at: result.get())
             guard !pickups.isEmpty else {
                 errorMessage = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Abfallart.",
-                                      "No dates found in the file. CSV files need a date (e.g. 2026-10-07) and a waste type per line.")
+                                      "No dates found in the file. CSV files need a date (e.g. 07.10.2026) and a waste type per line.")
                 return
             }
             importPickups = pickups
-            if let location {
-                importTarget = location
-                createdForImport = false
-            } else {
-                let name = uncoveredHint?.place ?? (query.isEmpty ? L10n.t("Zuhause", "Home") : query)
-                let target = Location(name: name, sortOrder: model.allLocations().count)
-                target.colorHex = Palette.colors[model.allLocations().count % Palette.colors.count]
-                context.insert(target)
-                importTarget = target
-                createdForImport = true
-            }
             showImport = true
+        } catch let error as SyncService.ImportError {
+            errorMessage = error.errorDescription
         } catch {
             errorMessage = L10n.t("Datei konnte nicht gelesen werden: \(error.localizedDescription)", "Could not read the file: \(error.localizedDescription)")
         }
     }
 
-    /// Abgebrochener Import: den dafür angelegten, leeren Standort wieder entfernen.
-    private func cleanUpImport() {
-        if createdForImport, let target = importTarget, (target.wasteTypes ?? []).isEmpty {
-            context.delete(target)
-            try? context.save()
-        }
-        createdForImport = false
-        importTarget = nil
+    /// Neuer Standort für den Dateiimport – erst beim Bestätigen angelegt, damit ein Abbruch nichts hinterlässt.
+    private func makeImportLocation() -> Location {
+        let name = uncovered?.place ?? (query.isEmpty ? L10n.t("Zuhause", "Home") : query)
+        let target = Location(name: name, sortOrder: model.allLocations().count)
+        target.colorHex = Palette.colors[model.allLocations().count % Palette.colors.count]
+        context.insert(target)
+        onFinished?(target)
+        return target
     }
 
     private func chooseICS() {

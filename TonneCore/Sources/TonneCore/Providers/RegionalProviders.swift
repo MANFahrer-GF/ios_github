@@ -51,6 +51,7 @@ public struct GemosWasteBoxProvider: WasteProvider {
         let now = Date()
         let year = calendar.component(.year, from: now)
         var result: [Pickup] = []
+        var lastError: Error?
         for target in [year, year + 1] {
             guard let html = try? await page(year: target, node: node) else { continue }
             let types = HTMLText.firstMatch(#"id="selectedWasteTypes" name="selectedWasteTypes" value="([^"]*)""#, in: html, group: 1) ?? ""
@@ -63,7 +64,8 @@ public struct GemosWasteBoxProvider: WasteProvider {
                                           : ["\(base)/\(categories)/Print/ics/Default/Abfuhrtermine.ics"]
             var events: [ICSEvent] = []
             for url in urls {
-                guard let text = try? await client.string(url) else { continue }
+                let text: String
+                do { text = try await client.string(url) } catch { lastError = error; break }   // Netzfehler nicht als „keine Termine“ verschleiern
                 events = ICS.parse(text, calendar: calendar).filter { !Self.isNotice($0.summary) }
                 if !events.isEmpty { break }
             }
@@ -73,7 +75,7 @@ public struct GemosWasteBoxProvider: WasteProvider {
                 result.append(Pickup(date: event.date, name: name))
             }
         }
-        guard !result.isEmpty else { throw ProviderError.noDataGeneric }
+        guard !result.isEmpty else { throw lastError ?? ProviderError.noDataGeneric }
         return Array(Set(result)).sorted { $0.date < $1.date }
     }
 

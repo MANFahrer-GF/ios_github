@@ -150,3 +150,10 @@ final class CoverageTests: XCTestCase {
         XCTAssertFalse(ProviderCatalog.search("Brandenburg an der Havel").isEmpty)
     }
 }
+
+final class GemosNoticeTests: XCTestCase {
+    func testNoticeIsNoPickup() {
+        XCTAssertTrue(GemosWasteBoxProvider.isNotice("Es sind neue Abfuhrtermine verfügbar! Bitte laden Sie den Kalender neu."))
+        XCTAssertFalse(GemosWasteBoxProvider.isNotice("Restabfall 2-wöchentlich"))
+    }
+}

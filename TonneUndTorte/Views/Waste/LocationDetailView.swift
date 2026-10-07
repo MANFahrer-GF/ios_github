@@ -16,6 +16,8 @@ struct LocationDetailView: View {
     @State private var isSyncing = false
     @State private var message: String?
     @State private var showDeleteConfirm = false
+    /// CSV der Termine – nur beim Öffnen und nach einem Abgleich berechnet, nicht bei jedem Tastendruck.
+    @State private var exportCSV: String?
 
     /// ICS und CSV (Excel/Numbers-Export); das Format wird beim Lesen am Inhalt erkannt.
     static let importTypes: [UTType] = [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .commaSeparatedText,
@@ -51,6 +53,9 @@ struct LocationDetailView: View {
                 model.deleteLater(location)
             }
         }
+        .onAppear(perform: updateExport)
+        .onChange(of: location.lastSyncAt) { _, _ in updateExport() }
+        .onChange(of: location.lastSyncMessage) { _, _ in updateExport() }
         .onDisappear {
             try? context.save()
             Task { await model.refreshAll() }
@@ -101,9 +106,8 @@ struct LocationDetailView: View {
             } label: {
                 Label(L10n.t("ICS- oder CSV-Datei importieren", "Import ICS or CSV file"), systemImage: "square.and.arrow.down")
             }
-            let rows = SyncService.csvRows(for: location)
-            if !rows.isEmpty {
-                ShareLink(item: PickupCSVFile(text: PickupCSV.build(rows), fileName: "\(location.name.isEmpty ? "Abfuhrtermine" : location.name).csv"),
+            if let exportCSV {
+                ShareLink(item: PickupCSVFile(text: exportCSV, fileName: "\(location.name.isEmpty ? "Abfuhrtermine" : location.name).csv"),
                           preview: SharePreview(L10n.t("Abfuhrtermine (CSV)", "Pickup dates (CSV)"))) {
                     Label(L10n.t("Termine als CSV exportieren", "Export dates as CSV"), systemImage: "tablecells")
                 }
@@ -156,6 +160,11 @@ struct LocationDetailView: View {
 
     // MARK: Aktionen
 
+    private func updateExport() {
+        let rows = SyncService.csvRows(for: location)
+        exportCSV = rows.isEmpty ? nil : PickupCSV.build(rows)
+    }
+
     private func handleFile(_ result: Result<URL, Error>) {
         switch result {
         case .success(let url):
@@ -168,7 +177,8 @@ struct LocationDetailView: View {
                     showImport = true
                 }
             } catch {
-                message = "Datei konnte nicht gelesen werden: \(error.localizedDescription)"
+                message = (error as? SyncService.ImportError)?.errorDescription
+                    ?? L10n.t("Datei konnte nicht gelesen werden: \(error.localizedDescription)", "Could not read the file: \(error.localizedDescription)")
             }
         case .failure(let error):
             message = error.localizedDescription
@@ -190,7 +200,9 @@ struct LocationDetailView: View {
 struct ICSImportView: View {
     let pickups: [Pickup]
     let location: Location?
-    /// Nach erfolgreichem Import (z. B. um den Assistenten zu schließen).
+    /// Legt den Standort erst beim Importieren an (Einrichtungsassistent) – bei Abbruch bleibt nichts zurück.
+    var makeLocation: (() -> Location)? = nil
+    /// Nach erfolgreichem Import, z. B. um den Assistenten zu schließen (schließt dann auch diese Ansicht).
     var onImported: (() -> Void)? = nil
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
@@ -202,41 +214,59 @@ struct ICSImportView: View {
         NavigationStack {
             Form {
                 Section {
-                    LabeledContent("Termine", value: "\(pickups.count)")
+                    LabeledContent(L10n.t("Termine", "Dates"), value: "\(pickups.count)")
                     if let first = pickups.first?.date, let last = pickups.last?.date {
-                        LabeledContent("Zeitraum", value: "\(DateText.short(first)) – \(DateText.short(last))")
+                        LabeledContent(L10n.t("Zeitraum", "Period"), value: "\(DateText.short(first)) – \(DateText.short(last))")
                     }
                 }
-                Section("Zuordnung") {
+                Section(L10n.t("Zuordnung", "Assignment")) {
                     ForEach($mappings) { $mapping in
                         MappingRow(mapping: $mapping, existingTypes: location?.sortedWasteTypes ?? [])
                     }
                 }
-                Section { Toggle("Bisherige Einzeltermine ersetzen", isOn: $replace) }
+                Section {
+                    Toggle(L10n.t("Bisherige Einzeltermine ersetzen", "Replace existing single dates"), isOn: $replace)
+                } footer: {
+                    if replace && replacesRhythm {
+                        Text(L10n.t("Achtung: Bei Müllarten mit festem Rhythmus wird der Rhythmus durch die importierten Termine ersetzt.",
+                                    "Note: for waste types with a fixed rhythm, the rhythm is replaced by the imported dates."))
+                    }
+                }
             }
             .navigationTitle(L10n.t("Termine importieren", "Import dates"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.t("Abbrechen", "Cancel")) { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Importieren", action: importNow).disabled(nothingSelected)
+                    Button(L10n.t("Importieren", "Import"), action: importNow).disabled(nothingSelected)
                 }
             }
             .onAppear {
-                if mappings.isEmpty { mappings = SyncService.suggestMappings(for: pickups, location: location) }
+                guard mappings.isEmpty else { return }
+                mappings = SyncService.suggestMappings(for: pickups, location: location)
+                // Nur ergänzen statt ersetzen, wenn sonst ein fester Rhythmus verloren ginge
+                if replacesRhythm { replace = false }
             }
         }
     }
 
     private var nothingSelected: Bool { mappings.allSatisfy { $0.target == .ignore } }
 
+    /// Eine Zuordnung zielt auf eine vorhandene Müllart mit festem Rhythmus.
+    private var replacesRhythm: Bool {
+        mappings.contains { mapping in
+            if case .existing(let type) = mapping.target { return type.intervalWeeks > 0 }
+            return false
+        }
+    }
+
     private func importNow() {
-        SyncService.apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: replace)
-        location?.lastSyncMessage = L10n.t("Datei importiert (\(pickups.count) Termine)", "File imported (\(pickups.count) dates)")
+        let target = location ?? makeLocation?()
+        SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: replace)
+        target?.lastSyncMessage = L10n.t("Datei importiert (\(pickups.count) Termine)", "File imported (\(pickups.count) dates)")
         try? context.save()
         Task { await model.refreshAll() }
-        dismiss()
-        onImported?()
+        if let onImported { onImported() } else { dismiss() }
     }
 }
 
@@ -252,8 +282,8 @@ private struct MappingRow: View {
                 Spacer()
                 Text("\(mapping.count)×").font(.caption).foregroundStyle(.secondary)
             }
-            Picker("Ziel", selection: $mapping.target) {
-                Text("Ignorieren").tag(SyncService.Target.ignore)
+            Picker(L10n.t("Ziel", "Target"), selection: $mapping.target) {
+                Text(L10n.t("Ignorieren", "Ignore")).tag(SyncService.Target.ignore)
                 ForEach(existingTypes) { type in
                     WasteLabel(title: type.name, symbolName: type.displaySymbol, name: type.name).tag(SyncService.Target.existing(type))
                 }
@@ -266,7 +296,7 @@ private struct MappingRow: View {
     }
 
     private func newTitle(for category: WasteCategory) -> String {
-        "Neu: \(mapping.summary) (\(category.name))"
+        L10n.t("Neu: \(mapping.summary) (\(category.name))", "New: \(mapping.summary) (\(category.name))")
     }
 }
 
@@ -276,7 +306,10 @@ struct PickupCSVFile: Transferable {
     var fileName = "Abfuhrtermine.csv"
     static var transferRepresentation: some TransferRepresentation {
         FileRepresentation(exportedContentType: .commaSeparatedText) { file in
-            let url = FileManager.default.temporaryDirectory.appendingPathComponent(file.safeFileName)
+            // Eigener Unterordner je Export, damit sich gleichzeitige Exporte nicht überschreiben
+            let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            let url = folder.appendingPathComponent(file.safeFileName)
             try Data(file.text.utf8).write(to: url, options: .atomic)
             return SentTransferredFile(url)
         }
