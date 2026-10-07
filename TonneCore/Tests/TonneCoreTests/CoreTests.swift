@@ -180,6 +180,21 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(decoded.filtered(locationID: "a").pickupDays.count, 1)
     }
 
+    func testBirthdayExportCSV() {
+        let rows = [
+            BirthdayExport.Row(name: "Oma Erika", annual: AnnualDate(day: 8, month: 10, year: 1948), notes: "Mag Blumen; keine Pralinen", giftIdeas: ["Schal", "Buch"]),
+            BirthdayExport.Row(name: "Lena", annual: AnnualDate(day: 29, month: 2), remindersEnabled: false, remindDaysBefore: 7),
+        ]
+        let csv = BirthdayExport.csv(rows, from: day("2026-10-07"), calendar: calendar)
+        let lines = csv.replacingOccurrences(of: "\u{FEFF}", with: "").components(separatedBy: "\r\n").filter { !$0.isEmpty }
+        XCTAssertEqual(lines.count, 3)
+        XCTAssertTrue(lines[0].hasPrefix("Name;Geburtstag;Geburtsjahr;Alter"))
+        XCTAssertTrue(lines[1].hasPrefix("Oma Erika;08.10.1948;1948;77;2026-10-08;1;78;"))
+        XCTAssertTrue(lines[1].contains("\"Mag Blumen; keine Pralinen\""))
+        XCTAssertTrue(lines[2].hasPrefix("Lena;29.02.;;;2027-02-28;144;;"))
+        XCTAssertEqual(BirthdayExport.currentAge(AnnualDate(day: 8, month: 10, year: 1948), from: day("2026-10-08"), calendar: calendar), 78)
+    }
+
     func testWasteABC() {
         XCTAssertEqual(WasteABC.search("pizza").first?.category, .paper)
         XCTAssertGreaterThan(WasteABC.entries.count, 80)

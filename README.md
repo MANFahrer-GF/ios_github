@@ -35,6 +35,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 
 **Mehr als Müll**
 - Geburtstage aus Kontakten importieren, runde Geburtstage hervorgehoben, Sternzeichen, Geschenkideen je Person, Glückwunsch per Nachricht
+- Geburtstagsliste exportieren als **CSV** (Excel, Semikolon, UTF-8) und als **PDF** zum Drucken
 - Eigene wiederkehrende Termine mit Vorlagen (Hochzeitstag, TÜV, Rauchmelder, Reifenwechsel …)
 - Abfall-ABC: „Pizzakarton“ eingeben, richtige Tonne sehen
 - Feiertagsregelungen: Termine verschieben oder ausfallen lassen

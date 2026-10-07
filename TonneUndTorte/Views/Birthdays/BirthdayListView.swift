@@ -1,6 +1,25 @@
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
 import TonneCore
+
+/// CSV-Datei zum Teilen (Excel).
+struct CSVFile: Transferable {
+    let text: String
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .commaSeparatedText) { file in Data(file.text.utf8) }
+            .suggestedFileName("Geburtstage.csv")
+    }
+}
+
+/// PDF-Datei zum Teilen.
+struct PDFFile: Transferable {
+    let data: Data
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .pdf) { file in file.data }
+            .suggestedFileName("Geburtstage.pdf")
+    }
+}
 
 struct BirthdayListView: View {
     @EnvironmentObject private var model: AppModel
@@ -45,6 +64,15 @@ struct BirthdayListView: View {
                     Menu {
                         Button { showNew = true } label: { Label("Neuer Geburtstag", systemImage: "plus") }
                         Button { showImport = true } label: { Label("Aus Kontakten importieren", systemImage: "person.crop.circle.badge.plus") }
+                        if !people.isEmpty {
+                            Divider()
+                            ShareLink(item: CSVFile(text: BirthdayExport.csv(people.map(\.exportRow))), preview: SharePreview("Geburtstage.csv")) {
+                                Label("Als CSV exportieren (Excel)", systemImage: "tablecells")
+                            }
+                            ShareLink(item: PDFFile(data: BirthdayPDF.render(people.map(\.exportRow))), preview: SharePreview("Geburtstage.pdf")) {
+                                Label("Als PDF exportieren", systemImage: "doc.richtext")
+                            }
+                        }
                     } label: { Image(systemName: "plus") }
                 }
             }

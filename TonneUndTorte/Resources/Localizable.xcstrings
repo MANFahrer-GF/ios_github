@@ -2230,6 +2230,36 @@
           }
         }
       }
+    },
+    "Als CSV exportieren (Excel)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as CSV (Excel)"
+          }
+        }
+      }
+    },
+    "Als PDF exportieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as PDF"
+          }
+        }
+      }
+    },
+    "Weiter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
