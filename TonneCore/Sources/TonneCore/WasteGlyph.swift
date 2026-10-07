@@ -26,15 +26,15 @@ public enum WasteGlyph {
         }
     }
 
-    /// Deutsche Wortteile („Wertstofftonne“) als Teilstring, kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
-    /// Wird nur für die wenigen namensabhängigen Symbole ausgewertet.
+    /// Deutsche Wortteile am Wortanfang oder -ende („Laubsäcke“, „Wertstofftonne“, nicht „Urlaub…“ mitten im Wort),
+    /// kurze englische Wörter („bin“, „fir“) nur als ganzes Wort. Nur für die namensabhängigen Symbole ausgewertet.
     private static func mentions(_ name: String, _ parts: [String], words whole: [String] = []) -> Bool {
         guard !name.isEmpty else { return false }
-        let lower = name.lowercased()
-        if parts.contains(where: lower.contains) { return true }
-        guard !whole.isEmpty else { return false }
-        let words = Set(lower.split(whereSeparator: { !$0.isLetter }).map(String.init))
-        return whole.contains(where: words.contains)
+        let words = name.lowercased().split(whereSeparator: { !$0.isLetter }).map(String.init)
+        for word in words {
+            if parts.contains(where: { word.hasPrefix($0) || word.hasSuffix($0) }) || whole.contains(word) { return true }
+        }
+        return false
     }
 
     /// SF Symbol, das ältere App-Versionen (über iCloud auf anderen Geräten) für ein eigenes Piktogramm zeigen.

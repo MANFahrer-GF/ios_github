@@ -442,8 +442,10 @@ struct ContactsImportView: View {
         isLoading = true
         errorMessage = nil
         do {
-            // Frisch gelesene Daten gewinnen gegenüber früher ausgewählten.
-            candidates = merge(picked, try await ContactsImport.candidates())
+            let fetched = try await ContactsImport.candidates()
+            // Erst nach dem Lesen auf `picked` zugreifen (Auswahl könnte währenddessen dazugekommen sein);
+            // frisch gelesene Daten gewinnen gegenüber früher ausgewählten.
+            candidates = merge(picked, fetched)
             matching = computeMatching()
             // Erstmals gezeigte, noch nicht angelegte Kontakte vorauswählen; Abwahlen des Nutzers bleiben bestehen.
             let ids = Set(candidates.map(\.identifier))

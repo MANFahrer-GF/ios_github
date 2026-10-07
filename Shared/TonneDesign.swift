@@ -127,7 +127,7 @@ struct BinTileRow: View {
     var body: some View {
         HStack(spacing: spacing) {
             ForEach(Array(shown.enumerated()), id: \.offset) { _, item in
-                BinTileView(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, width: width, height: height)
+                BinTileView(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, width: width, height: height)
             }
             if rest > 0 { MoreTileView(count: rest, width: width, height: height) }
         }

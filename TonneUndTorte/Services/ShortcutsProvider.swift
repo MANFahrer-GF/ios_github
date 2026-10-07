@@ -23,5 +23,14 @@ struct TonneShortcuts: AppShortcutsProvider {
             shortTitle: "Tonne steht draußen",
             systemImageName: "checkmark.circle.fill"
         )
+        AppShortcut(
+            intent: StartPickupLiveActivityIntent(),
+            phrases: [
+                "Tonnen-Erinnerung starten in \(.applicationName)",
+                "Zeig die Tonnen auf dem Sperrbildschirm mit \(.applicationName)",
+            ],
+            shortTitle: "Tonnen-Erinnerung starten",
+            systemImageName: "bell.badge.fill"
+        )
     }
 }

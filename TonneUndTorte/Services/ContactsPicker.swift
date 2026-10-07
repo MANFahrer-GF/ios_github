@@ -14,7 +14,9 @@ enum ContactsPicker {
     /// Liefert die übernehmbaren Personen und wie viele Ausgewählte ausgelassen wurden (kein Name oder kein vollständiges Datum).
     static func present(completion: @escaping (_ chosen: [ContactsImport.Candidate], _ skipped: Int) -> Void) {
         // Schon offen (z. B. Doppeltipp): nicht ein zweites Mal zeigen, sonst ginge die erste Auswahl verloren.
-        guard activePicker == nil, let presenter = topViewController() else { return }
+        guard activePicker == nil else { return }
+        delegate = nil // Auswahl wurde ohne Rückmeldung geschlossen: alten Delegate verwerfen.
+        guard let presenter = topViewController() else { return }
         let picker = CNContactPickerViewController()
         // Nur Kontakte mit Geburtstag sind auswählbar.
         picker.predicateForEnablingContact = NSPredicate(format: "birthday != nil")

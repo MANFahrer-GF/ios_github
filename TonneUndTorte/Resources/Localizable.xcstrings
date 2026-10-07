@@ -821,6 +821,16 @@
         }
       }
     },
+    "Erinnerung für %@ ist auf dem Sperrbildschirm.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder for %@ is on your Lock Screen."
+          }
+        }
+      }
+    },
     "Erinnerungen": {
       "localizations": {
         "en": {
@@ -1721,6 +1731,16 @@
         }
       }
     },
+    "Morgen wird nichts abgeholt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing is collected tomorrow."
+          }
+        }
+      }
+    },
     "Müll": {
       "localizations": {
         "en": {
@@ -2411,6 +2431,16 @@
         }
       }
     },
+    "Tonnen-Erinnerung starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start bin reminder"
+          }
+        }
+      }
+    },
     "Treffer (%lld)": {
       "localizations": {
         "en": {
@@ -2691,6 +2721,16 @@
         }
       }
     },
+    "Zeigt am Vorabend der Abholung die Live-Aktivität auf dem Sperrbildschirm – ohne die App zu öffnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the Live Activity on the Lock Screen the evening before pickup – without opening the app."
+          }
+        }
+      }
+    },
     "Zeigt die nächste Abholung – wahlweise für einen Standort.": {
       "localizations": {
         "en": {
@@ -2827,6 +2867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open Tonne & Torte on your iPhone and your dates will appear here."
+          }
+        }
+      }
+    },
+    "Öffne Tonne & Torte einmal, damit die Termine bekannt sind.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Tonne & Torte once so it knows your dates."
           }
         }
       }

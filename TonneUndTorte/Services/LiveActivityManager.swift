@@ -4,7 +4,8 @@ import TonneCore
 
 /// Startet am Vorabend eine Live-Aktivität „Tonne rausstellen“ und beendet sie nach der Abholung.
 /// Live-Aktivitäten können nur gestartet werden, während die App geöffnet ist – deshalb wird bei
-/// jedem Aktivwerden der App geprüft, ob eine fällig ist.
+/// jedem Aktivwerden der App geprüft, ob eine fällig ist. Ohne die App zu öffnen geht es über
+/// StartPickupLiveActivityIntent (Kurzbefehle-Automation am Abend, Siri, Aktionstaste).
 @MainActor
 enum LiveActivityManager {
     static func refresh(with snapshot: WidgetSnapshot) async {
@@ -25,7 +26,7 @@ enum LiveActivityManager {
         let dayKey = Days.iso(candidate.date)
         let state = PickupActivityAttributes.ContentState(
             names: candidate.items.map(\.name),
-            symbolNames: candidate.items.map(\.symbolName),
+            symbolNames: candidate.items.map(\.displaySymbol),
             colorHexes: candidate.items.map(\.colorHex),
             done: candidate.done
         )
