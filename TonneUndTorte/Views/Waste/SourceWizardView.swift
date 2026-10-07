@@ -96,7 +96,7 @@ struct SourceWizardView: View {
                     Button { choose(item) } label: {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.title).foregroundStyle(.primary)
-                            Text(item.kind.displayName + (item.places.isEmpty ? "" : " · " + item.places.prefix(3).joined(separator: ", ") + (item.places.count > 3 ? " …" : "")))
+                            Text(catalogSubtitle(item))
                                 .font(.caption).foregroundStyle(.secondary)
                         }
                     }
@@ -114,6 +114,16 @@ struct SourceWizardView: View {
             }
         }
         .searchable(text: $query, prompt: "Landkreis, Stadt oder Entsorger")
+    }
+
+    private func catalogSubtitle(_ item: CatalogEntry) -> String {
+        var text = item.kind.displayName
+        if !item.places.isEmpty {
+            text += " · "
+            text += item.places.prefix(3).joined(separator: ", ")
+            if item.places.count > 3 { text += " …" }
+        }
+        return text
     }
 
     private func choose(_ item: CatalogEntry) {

@@ -6,6 +6,16 @@ import TonneCore
 enum SyncService {
     struct Result {
         var importedCount: Int
+
+        /// Text für Hinweise nach dem Abgleich.
+        var summaryText: String {
+            var text = "\(importedCount) Termine übernommen."
+            if !changes.isEmpty {
+                text += "\n"
+                text += changes.joined(separator: "\n")
+            }
+            return text
+        }
         var changes: [String]   // lesbare Änderungen, z. B. „Gelber Sack: 8. Okt. → 9. Okt.“
     }
 

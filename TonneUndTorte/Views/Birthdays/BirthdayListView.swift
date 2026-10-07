@@ -96,7 +96,7 @@ struct BirthdayRow: View {
                     Text(person.name).font(.body.weight(.semibold))
                     if let years, AnnualDate.isMilestone(years) { Text("🎉 \(years)").font(.caption.weight(.bold)).padding(.horizontal, 6).padding(.vertical, 2).background(Color.pink.opacity(0.15), in: Capsule()).foregroundStyle(.pink) }
                 }
-                Text((years.map { isToday ? "wird heute \($0) · " : "wird \($0) · " } ?? "") + DateText.short(next) + (person.giftIdeas.isEmpty ? "" : " · 🎁 \(person.giftIdeas.count)"))
+                Text(subtitle(next: next, years: years, isToday: isToday))
                     .font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
@@ -104,6 +104,18 @@ struct BirthdayRow: View {
             if !person.remindersEnabled { Image(systemName: "bell.slash").font(.caption2).foregroundStyle(.tertiary) }
         }
         .padding(.vertical, 4)
+    }
+
+    private func subtitle(next: Date, years: Int?, isToday: Bool) -> String {
+        var text = ""
+        if let years {
+            text = isToday ? "wird heute \(years) · " : "wird \(years) · "
+        }
+        text += DateText.short(next)
+        if !person.giftIdeas.isEmpty {
+            text += " · 🎁 \(person.giftIdeas.count)"
+        }
+        return text
     }
 }
 

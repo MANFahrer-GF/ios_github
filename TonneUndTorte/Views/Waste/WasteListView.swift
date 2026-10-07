@@ -17,24 +17,20 @@ struct WasteListView: View {
 
     private var orphanTypes: [WasteType] { wasteTypes.filter { $0.location == nil } }
 
+    private var canSyncAny: Bool { locations.contains(where: \.canSync) }
+
+    private var showMessage: Binding<Bool> {
+        Binding(get: { message != nil }, set: { if !$0 { message = nil } })
+    }
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
                 ForEach(locations) { location in
-                    Section {
-                        locationRow(location)
-                        ForEach(location.sortedWasteTypes) { type in
-                            NavigationLink(value: type) { WasteTypeRow(type: type) }
-                        }
-                        .onDelete { offsets in delete(offsets.map { location.sortedWasteTypes[$0] }) }
-                        Button { newTypeLocation = location } label: { Label("Müllart hinzufügen", systemImage: "plus.circle.fill") }
-                    }
+                    locationSection(location)
                 }
                 if !orphanTypes.isEmpty {
-                    Section("Ohne Standort") {
-                        ForEach(orphanTypes) { NavigationLink(value: $0) { WasteTypeRow(type: $0) } }
-                            .onDelete { offsets in delete(offsets.map { orphanTypes[$0] }) }
-                    }
+                    orphanSection
                 }
                 if locations.isEmpty {
                     ContentUnavailableView("Noch kein Standort", systemImage: "house", description: Text("Finde deinen Entsorger – die Termine kommen automatisch."))
@@ -44,42 +40,76 @@ struct WasteListView: View {
             .navigationDestination(for: WasteType.self) { WasteDetailView(type: $0) }
             .navigationDestination(for: Location.self) { LocationDetailView(location: $0) }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Button { showWizard = true } label: { Label("Standort mit Entsorger anlegen", systemImage: "antenna.radiowaves.left.and.right") }
-                        Button { showManualLocation = true } label: { Label("Standort manuell anlegen", systemImage: "pencil") }
-                        Button { Task { await syncAll() } } label: { Label("Alle aktualisieren", systemImage: "arrow.triangle.2.circlepath") }
-                            .disabled(!locations.contains(where: \.canSync))
-                        NavigationLink { WasteABCView() } label: { Label("Abfall-ABC", systemImage: "book.fill") }
-                    } label: { Image(systemName: "plus") }
-                }
+                ToolbarItem(placement: .topBarTrailing) { addMenu }
             }
             .sheet(isPresented: $showWizard) { SourceWizardView(location: nil).environmentObject(model) }
             .sheet(isPresented: $showManualLocation) { NewLocationSheet { path.append($0) } }
             .sheet(item: $newTypeLocation) { NewWasteTypeSheet(location: $0) }
-            .alert("Hinweis", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) { Button("OK", role: .cancel) {} } message: { Text(message ?? "") }
+            .alert("Hinweis", isPresented: showMessage) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(message ?? "")
+            }
         }
     }
 
-    private func locationRow(_ location: Location) -> some View {
-        NavigationLink(value: location) {
-            HStack(spacing: 12) {
-                SymbolBadge(symbolName: location.symbolName, colorHex: location.colorHex, size: 44)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(location.name).font(.headline)
-                    Text(location.sourceDescription).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                    if let last = location.lastSyncAt {
-                        Text("Aktualisiert \(last.formatted(.relative(presentation: .named)))").font(.caption2).foregroundStyle(.tertiary)
-                    }
-                }
-                Spacer()
-                if location.canSync {
-                    if syncingID == location.id { ProgressView() } else {
-                        Button { Task { await sync(location) } } label: { Image(systemName: "arrow.triangle.2.circlepath").font(.body.weight(.semibold)) }.buttonStyle(.borderless)
-                    }
-                }
+    // MARK: Teile der Liste
+
+    private func locationSection(_ location: Location) -> some View {
+        Section {
+            LocationRow(location: location, isSyncing: syncingID == location.id) {
+                Task { await sync(location) }
             }
-            .padding(.vertical, 4)
+            ForEach(location.sortedWasteTypes) { type in
+                NavigationLink(value: type) { WasteTypeRow(type: type) }
+            }
+            .onDelete { offsets in
+                delete(offsets.map { location.sortedWasteTypes[$0] })
+            }
+            Button {
+                newTypeLocation = location
+            } label: {
+                Label("Müllart hinzufügen", systemImage: "plus.circle.fill")
+            }
+        }
+    }
+
+    private var orphanSection: some View {
+        Section("Ohne Standort") {
+            ForEach(orphanTypes) { type in
+                NavigationLink(value: type) { WasteTypeRow(type: type) }
+            }
+            .onDelete { offsets in
+                delete(offsets.map { orphanTypes[$0] })
+            }
+        }
+    }
+
+    private var addMenu: some View {
+        Menu {
+            Button {
+                showWizard = true
+            } label: {
+                Label("Standort mit Entsorger anlegen", systemImage: "antenna.radiowaves.left.and.right")
+            }
+            Button {
+                showManualLocation = true
+            } label: {
+                Label("Standort manuell anlegen", systemImage: "pencil")
+            }
+            Button {
+                Task { await syncAll() }
+            } label: {
+                Label("Alle aktualisieren", systemImage: "arrow.triangle.2.circlepath")
+            }
+            .disabled(!canSyncAny)
+            NavigationLink {
+                WasteABCView()
+            } label: {
+                Label("Abfall-ABC", systemImage: "book.fill")
+            }
+        } label: {
+            Image(systemName: "plus")
         }
     }
 
@@ -92,13 +122,56 @@ struct WasteListView: View {
     private func sync(_ location: Location) async {
         syncingID = location.id
         defer { syncingID = nil }
-        do { let r = try await model.sync(location: location); message = "\(r.importedCount) Termine übernommen" + (r.changes.isEmpty ? "" : "\n" + r.changes.joined(separator: "\n")) }
-        catch { message = error.localizedDescription }
+        do {
+            let result = try await model.sync(location: location)
+            message = result.summaryText
+        } catch {
+            message = error.localizedDescription
+        }
     }
 
     private func syncAll() async {
         let messages = await model.syncAll(force: true)
         message = messages.joined(separator: "\n")
+    }
+}
+
+/// Kopfzeile eines Standorts in der Müll-Liste.
+private struct LocationRow: View {
+    let location: Location
+    let isSyncing: Bool
+    let onSync: () -> Void
+
+    var body: some View {
+        NavigationLink(value: location) {
+            HStack(spacing: 12) {
+                SymbolBadge(symbolName: location.symbolName, colorHex: location.colorHex, size: 44)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(location.name).font(.headline)
+                    Text(location.sourceDescription).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    if let updated = updatedText {
+                        Text(updated).font(.caption2).foregroundStyle(.tertiary)
+                    }
+                }
+                Spacer()
+                if location.canSync {
+                    if isSyncing {
+                        ProgressView()
+                    } else {
+                        Button(action: onSync) {
+                            Image(systemName: "arrow.triangle.2.circlepath").font(.body.weight(.semibold))
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    private var updatedText: String? {
+        guard let last = location.lastSyncAt else { return nil }
+        return "Aktualisiert \(last.formatted(.relative(presentation: .named)))"
     }
 }
 
