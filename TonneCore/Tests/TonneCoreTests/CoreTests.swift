@@ -115,6 +115,18 @@ final class CoreTests: XCTestCase {
         }
     }
 
+    func testSearchFindsNewOctoberEntries() {
+        let expected: [(String, ProviderKind)] = [
+            ("Magdeburg", .magdeburg), ("Ehingen", .buergerportal), ("Cochem", .buergerportal), ("Illertissen", .buergerportal),
+            ("Sangerhausen", .gemosWasteBox), ("Werder", .gemosWasteBox), ("Haßfurt", .awido), ("Weiden", .awido),
+            ("Brandenburg an der Havel", .abfallAppNet), ("Deggendorf", .abfallPlusApp), ("Straubing", .abfallPlusApp),
+            ("Nördlingen", .awido), ("Pfarrkirchen", .awido), ("Saalfeld", .awido), ("Finsterwalde", .abfallPlusApp),
+        ]
+        for (query, kind) in expected {
+            XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == kind }, query)
+        }
+    }
+
     func testInsertITNames() {
         XCTAssertEqual(InsertITProvider.cleanName("Leerung: Biomüll (Kaiserstraße 1)"), "Biomüll")
         XCTAssertEqual(InsertITProvider.cleanName("Leerung: Rest"), "Restmüll")

@@ -147,6 +147,30 @@ extension LiveProviderTests {
         }
     }
 
+    func testBuergerportalAll() async throws {
+        // Beispieladressen aus hacs_waste_collection_schedule
+        let cases: [(String, [String], String)] = [
+            ("alb_donau", ["Blaubeuren", "Alberstraße"], "3"), ("cochem_zell", ["Bullay – Bullay", "Layenweg"], "3"),
+            ("biedenkopf", ["Biedenkopf – Breidenstein", "Auf dem Hammer"], "1"), ("bedburg", [], "1"), ("klevestadt", [], "1"), ("neu_ulm", ["Illertissen"], "1"),
+        ]
+        for (op, prefer, number) in cases {
+            try await checkTyped(BuergerportalProvider(operator: op), typed: [number], prefer: prefer, minCount: 5)
+        }
+    }
+
+    func testNewCatalogKeys() async throws {
+        try await check(AwidoProvider(customer: "awhas"), prefer: [], minCount: 5)
+        try await check(AwidoProvider(customer: "weiden"), prefer: [], minCount: 5)
+        try await check(GemosWasteBoxProvider(customer: "eaw"), prefer: [], minCount: 5)
+        try await check(GemosWasteBoxProvider(customer: "apm"), prefer: [], minCount: 5)
+        try await check(AbfallAppNetProvider(tenant: "brandenburg"), prefer: [], minCount: 5)
+    }
+
+    func testMagdeburg() async throws {
+        try await checkTyped(MagdeburgProvider(), typed: ["10"], prefer: ["Agnetenstraße"])
+        try await checkTyped(MagdeburgProvider(), typed: [""], prefer: ["Breiter Weg"])
+    }
+
     func testSiteparkAllTenants() async throws {
         for tenant in SiteparkProvider.tenants.keys.sorted() {
             try await check(SiteparkProvider(tenant: tenant), prefer: [], minCount: 3)
