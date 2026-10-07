@@ -93,8 +93,7 @@ struct OverviewView: View {
     private var heroCard: some View {
         let next = wasteDays.first
         let hexes = next?.events.map(\.colorHex) ?? []
-        let colors = HeroPalette.colors(for: hexes)
-        let shadow = colors.first ?? Color.accentColor
+        let shadow = HeroPalette.glow(for: hexes)
         let n = next.map { Days.until($0.day) }
         let allDone = next?.events.allSatisfy(\.done) ?? false
 
@@ -136,7 +135,11 @@ struct OverviewView: View {
         .foregroundStyle(.white)
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 26, style: .continuous).fill(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)).shadow(color: shadow.opacity(0.4), radius: 16, x: 0, y: 8))
+        .background(
+            HeroPalette.background(for: hexes)
+                .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+                .shadow(color: shadow.opacity(0.35), radius: 16, x: 0, y: 8)
+        )
     }
 
     // MARK: - Listen

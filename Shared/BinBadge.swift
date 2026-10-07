@@ -61,28 +61,31 @@ struct BinTile: View {
     }
 }
 
-/// Hintergrundfarben für die große Karte: eine Tonne bekommt ihre Farbe, bei mehreren bleibt der
-/// Hintergrund neutral dunkel, damit jede Tonne in ihrer eigenen Farbe erkennbar ist.
+/// Hintergrund für die große Karte und das Widget: immer neutral dunkel, damit jede Tonne in ihrer
+/// eigenen Farbe erkennbar bleibt. Die Farbe der ersten Tonne scheint nur als sanftes Leuchten oben links durch.
 enum HeroPalette {
     static let neutralTop = "#2E3646"
     static let neutralBottom = "#161B25"
     static let idle = "#2F6FED"
 
     static func colors(for hexes: [String]) -> [Color] {
-        let unique = Array(Set(hexes))
-        if unique.count == 1, let hex = unique.first {
-            let color = Color(hex: hex)
-            return [color, color.opacity(0.65)]
-        }
-        if unique.isEmpty {
-            let color = Color(hex: idle)
-            return [color, color.opacity(0.65)]
-        }
-        return [Color(hex: neutralTop), Color(hex: neutralBottom)]
+        [Color(hex: neutralTop), Color(hex: neutralBottom)]
     }
 
-    static func gradient(for hexes: [String]) -> LinearGradient {
-        LinearGradient(colors: colors(for: hexes), startPoint: .topLeading, endPoint: .bottomTrailing)
+    static func glow(for hexes: [String]) -> Color {
+        Color(hex: hexes.first ?? idle)
+    }
+
+    static func background(for hexes: [String]) -> some View {
+        ZStack {
+            LinearGradient(colors: colors(for: hexes), startPoint: .topLeading, endPoint: .bottomTrailing)
+            RadialGradient(colors: [glow(for: hexes).opacity(0.5), glow(for: hexes).opacity(0)],
+                           center: .topLeading, startRadius: 0, endRadius: 240)
+        }
+    }
+
+    static func gradient(for hexes: [String]) -> some View {
+        background(for: hexes)
     }
 
     /// Farbe für Text und Symbole auf hellem Grund: bei einer Tonne ihre Farbe, sonst Standard.
