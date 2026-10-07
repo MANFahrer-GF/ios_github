@@ -314,7 +314,21 @@ final class AppModel: ObservableObject {
         if settings.eveningEnabled { alarms.append(settings.eveningMinutes - 1440) }
         if settings.morningEnabled { alarms.append(settings.morningMinutes) }
         let multi = allLocations().count > 1
-        return events(from: today, to: Days.add(400, to: today)).map { event in
+        let options = CalendarSyncOptions.current
+        let contactPrefixes = Set(allPeople().filter { $0.contactIdentifier != nil }.map { "bday-\($0.id)-" })
+        let wanted = events(from: today, to: Days.add(400, to: today)).filter { event in
+            switch event.kind {
+            case .waste: return options.includeWaste
+            case .custom: return options.includeCustom
+            case .birthday:
+                switch options.birthdays {
+                case .none: return false
+                case .all: return true
+                case .manualOnly: return !contactPrefixes.contains(String(event.id.dropLast(10)))
+                }
+            }
+        }
+        return wanted.map { event in
             switch event.kind {
             case .waste:
                 return CalendarExport.Item(date: event.date, title: "🗑️ \(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")", notes: "Abholung", alarmMinutesFromMidnight: alarms)
@@ -324,6 +338,14 @@ final class AppModel: ObservableObject {
                 return CalendarExport.Item(date: event.date, title: "📌 \(event.title)", notes: nil, alarmMinutesFromMidnight: [settings.customMinutes])
             }
         }
+    }
+
+    /// Alle eingetragenen Termine als ICS-Datei (zum Teilen).
+    func feedText() -> String {
+        let events = calendarExportItems().map { item in
+            ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFFFF })@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight)
+        }
+        return ICS.build(name: "Tonne & Torte", events: events)
     }
 
     // MARK: - Hintergrund

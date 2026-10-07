@@ -5,8 +5,6 @@ import TonneCore
 /// Mehr: eigene Termine, Abfall-ABC, Kalender-Export, Einstellungen.
 struct MoreView: View {
     @EnvironmentObject private var model: AppModel
-    @State private var exportMessage: String?
-    @State private var isExporting = false
 
     @AppStorage(CalendarExport.autoSyncKey) private var calendarAutoSync = false
 
@@ -18,55 +16,30 @@ struct MoreView: View {
                     NavigationLink { WasteABCView() } label: { Label("Abfall-ABC", systemImage: "book.fill") }
                 }
                 Section {
-                    Button {
-                        Task {
-                            isExporting = true
-                            do { let n = try await CalendarExport.export(items: model.calendarExportItems()); exportMessage = "\(n) Termine im Kalender „Tonne & Torte“ eingetragen." }
-                            catch { exportMessage = error.localizedDescription }
-                            isExporting = false
-                        }
-                    } label: {
-                        HStack { Label("In Apple-Kalender eintragen", systemImage: "calendar.badge.plus"); Spacer(); if isExporting { ProgressView() } }
-                    }
-                    Toggle(isOn: $calendarAutoSync) {
-                        Label("Kalender automatisch aktuell halten", systemImage: "arrow.triangle.2.circlepath")
-                    }
-                    .onChange(of: calendarAutoSync) { _, enabled in
-                        guard enabled else { return }
-                        Task {
-                            isExporting = true
-                            do {
-                                let n = try await CalendarExport.export(items: model.calendarExportItems())
-                                CalendarExport.resetFingerprint()
-                                exportMessage = "\(n) Termine eingetragen. Der Kalender „Tonne & Torte“ wird ab jetzt nach jedem Abgleich von selbst aktualisiert."
-                            } catch {
-                                calendarAutoSync = false
-                                exportMessage = error.localizedDescription
+                    NavigationLink { CalendarSyncView() } label: {
+                        Label {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Kalender-Abgleich")
+                                Text(calendarAutoSync ? "Automatisch · \(CalendarExport.targetDescription())" : "Aus")
+                                    .font(.caption).foregroundStyle(.secondary).lineLimit(1)
                             }
-                            isExporting = false
+                        } icon: {
+                            Image(systemName: "calendar")
                         }
                     }
-                    ShareLink(item: FeedFile(text: feedText()), preview: SharePreview("Tonne & Torte.ics")) {
-                        Label("Als ICS-Datei teilen", systemImage: "square.and.arrow.up")
-                    }
-                } header: { Text("Apple-Kalender") } footer: { Text("Die App legt einen eigenen Kalender „Tonne & Torte“ mit denselben Alarmen an. Mit „automatisch aktuell halten“ werden verschobene oder neue Termine nach jedem Abgleich von selbst nachgetragen, ohne ICS-Datei. Über iCloud erscheint der Kalender auch auf iPad und Mac.") }
+                } header: {
+                    Text("Kalender-App")
+                } footer: {
+                    Text("Termine in iCloud, Google oder Outlook eintragen und automatisch aktuell halten.")
+                }
                 Section {
                     NavigationLink { SettingsView() } label: { Label("Einstellungen", systemImage: "gearshape.fill") }
                 }
             }
             .navigationTitle("Mehr")
-            .alert("Export", isPresented: Binding(get: { exportMessage != nil }, set: { if !$0 { exportMessage = nil } })) { Button("OK", role: .cancel) {} } message: { Text(exportMessage ?? "") }
         }
     }
 
-    private func feedText() -> String {
-        let settings = SettingsKeys.reminderSettings()
-        let events = model.calendarExportItems().map { item in
-            ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.hashValue)@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight)
-        }
-        _ = settings
-        return ICS.build(name: "Tonne & Torte", events: events)
-    }
 }
 
 /// ICS-Text als teilbare Datei.
