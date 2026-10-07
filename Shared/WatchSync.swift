@@ -39,27 +39,34 @@ final class WatchSync: NSObject, WCSessionDelegate {
     }
 
     /// Watch: „Erledigt“ ans iPhone melden.
-    static func sendDone(dayKey: String) {
+    static func sendDone(dayKey: String) { deliver([doneKey: dayKey]) }
+
+    /// Watch: „Erledigt“ zurücknehmen.
+    static func sendUndo(dayKey: String) { deliver([undoKey: dayKey]) }
+
+    /// Nachrichten, die vor dem Verbindungsaufbau entstehen (z. B. Siri startet die Watch-App im Hintergrund),
+    /// warten hier und gehen raus, sobald die Verbindung steht – statt verloren zu gehen.
+    private static var pending: [[String: Any]] = []
+    private static let pendingLock = NSLock()
+
+    private static func deliver(_ payload: [String: Any]) {
         guard WCSession.isSupported() else { return }
         let session = WCSession.default
-        guard session.activationState == .activated else { return }
+        guard session.activationState == .activated else {
+            pendingLock.lock(); pending.append(payload); pendingLock.unlock()
+            if session.delegate == nil { shared.activate() }
+            return
+        }
         if session.isReachable {
-            session.sendMessage([doneKey: dayKey], replyHandler: nil, errorHandler: { _ in session.transferUserInfo([doneKey: dayKey]) })
+            session.sendMessage(payload, replyHandler: nil, errorHandler: { _ in session.transferUserInfo(payload) })
         } else {
-            session.transferUserInfo([doneKey: dayKey])
+            session.transferUserInfo(payload)
         }
     }
 
-    /// Watch: „Erledigt“ zurücknehmen.
-    static func sendUndo(dayKey: String) {
-        guard WCSession.isSupported() else { return }
-        let session = WCSession.default
-        guard session.activationState == .activated else { return }
-        if session.isReachable {
-            session.sendMessage([undoKey: dayKey], replyHandler: nil, errorHandler: { _ in session.transferUserInfo([undoKey: dayKey]) })
-        } else {
-            session.transferUserInfo([undoKey: dayKey])
-        }
+    private static func flushPending() {
+        pendingLock.lock(); let queued = pending; pending.removeAll(); pendingLock.unlock()
+        queued.forEach(deliver)
     }
 
     /// Watch: iPhone um frische Daten bitten.
@@ -73,6 +80,7 @@ final class WatchSync: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         #if os(watchOS)
         apply(context: session.receivedApplicationContext)
+        if activationState == .activated { WatchSync.flushPending() }
         #else
         // iPhone: nach der Aktivierung den aktuellen Stand schicken
         if activationState == .activated {
