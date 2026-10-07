@@ -1,5 +1,6 @@
 import Foundation
 import EventKit
+import CoreGraphics
 import TonneCore
 
 /// Trägt Termine in den Apple-Kalender ein (eigener Kalender „Tonne & Torte“).
@@ -99,7 +100,11 @@ enum CalendarExport {
         }
         let calendar = EKCalendar(for: .event, eventStore: store)
         calendar.title = "Tonne & Torte"
-        guard let source = store.defaultCalendarForNewEvents?.source
+        calendar.cgColor = CGColor(red: 0.18, green: 0.62, blue: 0.42, alpha: 1)
+        // Bevorzugt iCloud, damit der Kalender automatisch auch auf iPad, Mac und Watch erscheint.
+        let iCloud = store.sources.first { $0.sourceType == .calDAV && $0.title.lowercased().contains("icloud") }
+        guard let source = iCloud
+            ?? store.defaultCalendarForNewEvents?.source
             ?? store.sources.first(where: { $0.sourceType == .calDAV })
             ?? store.sources.first(where: { $0.sourceType == .local }) else { throw ExportError.noSource }
         calendar.source = source
