@@ -8,17 +8,23 @@ import ContactsUI
 @MainActor
 enum ContactsPicker {
     private static var delegate: Delegate?
+    /// Die gerade gezeigte Auswahl. Schwach gehalten: Ist sie zu, wird das automatisch `nil`.
+    private static weak var activePicker: CNContactPickerViewController?
 
-    static func present(completion: @escaping ([ContactsImport.Candidate]) -> Void) {
-        guard let presenter = topViewController() else { return }
+    /// Liefert die übernehmbaren Personen und wie viele Ausgewählte keinen Geburtstag haben.
+    static func present(completion: @escaping (_ chosen: [ContactsImport.Candidate], _ skipped: Int) -> Void) {
+        // Schon offen (z. B. Doppeltipp): nicht ein zweites Mal zeigen, sonst ginge die erste Auswahl verloren.
+        guard activePicker == nil, let presenter = topViewController() else { return }
         let picker = CNContactPickerViewController()
         // Nur Kontakte mit Geburtstag sind auswählbar.
         picker.predicateForEnablingContact = NSPredicate(format: "birthday != nil")
         let delegate = Delegate { contacts in
-            completion(contacts.compactMap(ContactsImport.candidate(from:)))
             ContactsPicker.delegate = nil
+            let chosen = contacts.compactMap(ContactsImport.candidate(from:))
+            completion(chosen, contacts.count - chosen.count)
         }
         self.delegate = delegate
+        activePicker = picker
         picker.delegate = delegate
         presenter.present(picker, animated: true)
     }

@@ -57,23 +57,15 @@ struct WatchPickupView: View {
         }
     }
     private var symbol: String { items.first?.symbolName ?? "checkmark.circle" }
-    @ViewBuilder
-    private func glyph(size: CGFloat) -> some View {
-        if items.isEmpty {
-            Image(systemName: symbol).font(.system(size: size, weight: .semibold))
-        } else {
-            WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: size)
-        }
-    }
     private var names: String { items.isEmpty ? L10n.t("Keine Abholung", "No pickup") : items.map(\.name).joined(separator: " + ") }
 
     var body: some View {
         switch family {
         case .accessoryInline:
-            Text("\(next == nil ? Image(systemName: symbol) : Image.waste(symbol, name: items.first?.name ?? "")) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
+            Text("\(Image.waste(symbol, name: items.first?.name ?? "")) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryCorner:
-            glyph(size: 20).widgetAccentable()
+            WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: 20).widgetAccentable()
                 .widgetLabel { Text(next == nil ? "–" : "\(shortWhen) · \(names)") }
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryRectangular:
@@ -86,7 +78,7 @@ struct WatchPickupView: View {
                     if items.count > 1 {
                         Text("\(items.count)").font(.system(size: 18, weight: .black, design: .rounded)).widgetAccentable()
                     } else {
-                        glyph(size: 20).widgetAccentable()
+                        WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: 20).widgetAccentable()
                     }
                     Text(shortWhen).font(.system(size: 11, weight: .heavy, design: .rounded))
                 }

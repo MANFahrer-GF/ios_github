@@ -7,19 +7,24 @@ public enum WasteGlyph {
     /// - Parameter name: Name der Abfallart, z. B. „Gelbe Tonne“ statt „Gelber Sack“.
     public static func assetName(for symbolName: String, name: String = "") -> String? {
         let lower = name.lowercased()
+        let words = Set(lower.split(whereSeparator: { !$0.isLetter }).map(String.init))
+        // Deutsche Wortteile („Wertstofftonne“) als Teilstring, kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
+        func mentions(_ parts: [String], words whole: [String] = []) -> Bool {
+            parts.contains(where: lower.contains) || whole.contains(where: words.contains)
+        }
         switch symbolName {
         case "trash.fill", "trash":
             return "tt.bin"
         case "leaf.fill":
-            return lower.contains("laub") ? nil : "tt.bin.bio"
+            return mentions(["laub", "leaf", "leaves"]) ? nil : "tt.bin.bio"
         case "newspaper.fill":
             return "tt.bin.paper"
         case "bag.fill":
-            return lower.contains("tonne") ? "tt.bin.yellow" : "tt.sack"
+            return mentions(["tonne", "container"], words: ["bin"]) ? "tt.bin.yellow" : "tt.sack"
         case "wineglass.fill":
             return "tt.glass"
         case "tree.fill":
-            return ["weihnacht", "tanne", "christ"].contains(where: lower.contains) ? nil : "tt.green"
+            return mentions(["weihnacht", "tanne", "christmas", "xmas"], words: ["fir"]) ? nil : "tt.green"
         default:
             return all.contains(symbolName) ? symbolName : nil
         }

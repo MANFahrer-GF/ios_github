@@ -184,8 +184,11 @@ struct BirthdayWidgetView: View {
                             HStack(alignment: .center, spacing: 10) {
                                 KlarAvatarStack(people: avatars, size: 34)
                                 VStack(alignment: .leading, spacing: 1) {
-                                    ForEach(Array(nextDay.prefix(3).enumerated()), id: \.offset) { _, birthday in
+                                    ForEach(Array(nextDay.prefix(nextDay.count > 3 ? 2 : 3).enumerated()), id: \.offset) { _, birthday in
                                         nameLine(birthday, size: 14)
+                                    }
+                                    if nextDay.count > 3 {
+                                        Text(L10n.t("+\(nextDay.count - 2) weitere", "+\(nextDay.count - 2) more")).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
                                     }
                                 }
                             }

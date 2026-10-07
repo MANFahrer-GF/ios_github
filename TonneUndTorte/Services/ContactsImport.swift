@@ -57,7 +57,8 @@ enum ContactsImport {
     /// Kontakt mit Geburtstag als Kandidat. Funktioniert auch für Kontakte aus der Systemauswahl, die ohne Kontaktfreigabe kommen.
     static func candidate(from contact: CNContact) -> Candidate? {
         guard contact.isKeyAvailable(CNContactBirthdayKey), let birthday = contact.birthday,
-              let day = birthday.day, let month = birthday.month else { return nil }
+              let day = birthday.day, let month = birthday.month,
+              (1...12).contains(month), (1...31).contains(day) else { return nil }
         var name = ""
         if contact.isKeyAvailable(CNContactGivenNameKey), contact.isKeyAvailable(CNContactFamilyNameKey) {
             name = [contact.givenName, contact.familyName].filter { !$0.isEmpty }.joined(separator: " ")
@@ -65,6 +66,8 @@ enum ContactsImport {
         if name.isEmpty, contact.isKeyAvailable(CNContactNicknameKey) { name = contact.nickname }
         guard !name.isEmpty else { return nil }
         let phone = contact.isKeyAvailable(CNContactPhoneNumbersKey) ? contact.phoneNumbers.first?.value.stringValue : nil
-        return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: birthday.year, phone: phone)
+        // Manche Konten speichern „ohne Jahr“ als 1604 oder 1900 – das ist kein echtes Geburtsjahr.
+        let year = birthday.year.flatMap { $0 > 1900 ? $0 : nil }
+        return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: year, phone: phone)
     }
 }

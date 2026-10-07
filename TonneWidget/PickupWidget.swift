@@ -296,11 +296,17 @@ struct PickupWidgetView: View {
         }
     }
 
+    /// Platz im großen Widget: Bei drei Tonnen passen nur zwei Geburtstage, ohne Abholung drei.
+    private var largeBirthdayRows: Int {
+        guard let next else { return 3 }
+        return next.items.count >= 3 ? 2 : 3
+    }
+
     private var largeBirthdays: some View {
         VStack(alignment: .leading, spacing: 0) {
                 caption(L10n.t("GEBURTSTAGE", "BIRTHDAYS")).padding(.bottom, 8)
                 VStack(alignment: .leading, spacing: 7) {
-                    ForEach(Array(entry.snapshot.birthdays.prefix(3).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
+                    ForEach(Array(entry.snapshot.birthdays.prefix(largeBirthdayRows).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
                     if entry.snapshot.birthdays.isEmpty {
                         Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
                     }

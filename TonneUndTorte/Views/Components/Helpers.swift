@@ -87,10 +87,11 @@ struct EventChip: View {
     let event: CalendarEvent
     var onLight = false
     var showLocation = true
+    @ScaledMetric(relativeTo: .caption) private var iconSize: CGFloat = 12
     var body: some View {
         HStack(spacing: 6) {
             if onLight {
-                WasteIcon(symbolName: event.symbolName, name: event.title, size: 12, weight: .semibold)
+                WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold)
             } else {
                 BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22)
             }

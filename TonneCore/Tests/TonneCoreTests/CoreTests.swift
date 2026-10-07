@@ -25,6 +25,11 @@ final class CoreTests: XCTestCase {
         XCTAssertNil(WasteGlyph.assetName(for: "leaf.fill", name: "Laubsammlung"))
         XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Weihnachtsbäume"))
         XCTAssertNil(WasteGlyph.assetName(for: "sofa.fill"))
+        XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Yellow bin"), "tt.bin.yellow")
+        XCTAssertNil(WasteGlyph.assetName(for: "leaf.fill", name: "Leaf collection"))
+        XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Christmas trees"))
+        XCTAssertNil(WasteGlyph.assetName(for: "checkmark.circle"))
+        XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Kombinierte Wertstoffsammlung"), "tt.sack")
         for category in WasteCategory.allCases {
             if let asset = WasteGlyph.assetName(for: category.symbolName, name: category.name) {
                 XCTAssertTrue(WasteGlyph.all.contains(asset))

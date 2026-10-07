@@ -233,10 +233,29 @@ struct ContactsImportView: View {
     @State private var errorMessage: String?
     @State private var access: ContactsImport.Access = ContactsImport.access
     @State private var picked: [ContactsImport.Candidate] = []
+    @State private var pickNotice: String?
     @State private var search = ""
+    @Environment(\.scenePhase) private var scenePhase
 
-    private var existing: [String: Person] {
-        Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
+    /// Bereits angelegte Personen je Kontakt-ID. Wird nur neu berechnet, wenn sich die Kandidaten ändern.
+    @State private var existing: [String: Person] = [:]
+
+    /// Zuordnung über die Kontakt-ID oder – bei von Hand angelegten – über gleichen Namen und Geburtstag,
+    /// damit niemand doppelt in der Liste landet.
+    private func matchExisting() -> [String: Person] {
+        let linked = Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
+        let manual = Dictionary(people.filter { $0.contactIdentifier == nil }.map { (Self.matchKey(name: $0.name, day: $0.day, month: $0.month), $0) }, uniquingKeysWith: { first, _ in first })
+        var result: [String: Person] = [:]
+        for candidate in candidates {
+            if let person = linked[candidate.identifier] ?? manual[Self.matchKey(name: candidate.name, day: candidate.day, month: candidate.month)] {
+                result[candidate.identifier] = person
+            }
+        }
+        return result
+    }
+
+    private static func matchKey(name: String, day: Int, month: Int) -> String {
+        "\(name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil).trimmingCharacters(in: .whitespaces))|\(day)|\(month)"
     }
 
     private var visible: [ContactsImport.Candidate] {
@@ -253,6 +272,7 @@ struct ContactsImportView: View {
             List {
                 accessSection
                 if isLoading { ProgressView("Kontakte werden gelesen …") }
+                if let pickNotice { Text(pickNotice).foregroundStyle(.secondary) }
                 if let errorMessage { Text(errorMessage).foregroundStyle(.secondary) }
                 if !isLoading && candidates.isEmpty && errorMessage == nil {
                     if access == .full {
@@ -286,6 +306,11 @@ struct ContactsImportView: View {
                 }
             }
             .task { await load() }
+            .onChange(of: candidates) { _, _ in existing = matchExisting() }
+            // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
+            }
         }
     }
 
@@ -330,11 +355,21 @@ struct ContactsImportView: View {
     }
 
     private func pickContacts() {
-        ContactsPicker.present { chosen in
+        pickNotice = nil
+        ContactsPicker.present { chosen, skipped in
+            if skipped > 0 {
+                pickNotice = skipped == 1
+                    ? L10n.t("Bei einer ausgewählten Person ist kein Geburtstag eingetragen.", "One selected person has no birthday.")
+                    : L10n.t("Bei \(skipped) ausgewählten Personen ist kein Geburtstag eingetragen.", "\(skipped) selected people have no birthday.")
+            }
             guard !chosen.isEmpty else { return }
             picked = merge(picked, chosen)
             candidates = merge(candidates, chosen)
-            selected.formUnion(chosen.map(\.identifier))
+            // Wie beim Laden: nur neue Personen vorauswählen. Bereits angelegte bleiben unverändert,
+            // außer man hakt sie bewusst zum Aktualisieren an.
+            existing = matchExisting()
+            let known = Set(existing.keys)
+            selected.formUnion(chosen.map(\.identifier).filter { !known.contains($0) })
         }
     }
 
@@ -370,6 +405,7 @@ struct ContactsImportView: View {
         errorMessage = nil
         do {
             candidates = merge(try await ContactsImport.candidates(), picked)
+            existing = matchExisting()
             let known = Set(existing.keys)
             // Neue Kontakte vorauswählen, bisherige Auswahl behalten
             selected.formUnion(Set(candidates.map(\.identifier)).subtracting(known))
@@ -397,7 +433,9 @@ struct ContactsImportView: View {
                 person.name = candidate.name
                 person.day = candidate.day
                 person.month = candidate.month
-                person.year = candidate.year
+                // Ein von Hand eingetragenes Geburtsjahr nicht löschen, wenn der Kontakt keins hat.
+                if let year = candidate.year { person.year = year }
+                person.contactIdentifier = candidate.identifier
             } else {
                 person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
                 person.contactIdentifier = candidate.identifier

@@ -231,6 +231,16 @@
         }
       }
     },
+    "Aktualisieren (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update (%lld)"
+          }
+        }
+      }
+    },
     "Aktualisiert %@": {
       "localizations": {
         "en": {
