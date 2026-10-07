@@ -120,6 +120,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case portalsNRW
     case portalsRP
     case portalsSuedwest
+    case awmMuenchen
 
     public var displayName: String {
         switch self {
@@ -150,6 +151,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .wasteManagementServlet: return "WasteManagement-Portal"
         case .portalsSachsen, .portalsMV, .portalsMitte, .portalsBayern, .portalsBrandenburg, .portalsNord, .portalsNRW, .portalsRP, .portalsSuedwest:
             return L10n.t("Portal des Entsorgers", "Operator portal")
+        case .awmMuenchen: return "AWM München"
         }
     }
 }
@@ -243,6 +245,7 @@ public enum ProviderFactory {
         case .portalsNRW: return NRWPortalsProvider(service: serviceKey, client: client)
         case .portalsRP: return RheinlandPfalzPortalsProvider(service: serviceKey, client: client)
         case .portalsSuedwest: return SuedwestPortalsProvider(service: serviceKey, client: client)
+        case .awmMuenchen: return AWMMuenchenProvider(service: serviceKey, client: client)
         }
     }
 
