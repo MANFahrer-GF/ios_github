@@ -83,6 +83,17 @@ public enum ReminderPlanner {
         }
     }
 
+    /// Text der Abend-Erinnerung – auch für den Hinweis, mit dem sich die geplante Live-Aktivität meldet.
+    public static func eveningText(names: [String]) -> (title: String, body: String) {
+        if names.count == 1 {
+            return (L10n.t("Morgen: \(names[0])", "Tomorrow: \(names[0])"),
+                    L10n.t("Heute Abend rausstellen – morgen kommt die Abfuhr.", "Put it out tonight – collection is tomorrow."))
+        }
+        let list = joinNames(names)
+        return (L10n.t("Morgen wird abgeholt", "Collection tomorrow"),
+                L10n.t("\(list) – heute Abend rausstellen.", "\(list) – put them out tonight."))
+    }
+
     /// Kurzform für Widgets (wenig Platz, darum Kommas statt „und“): „A, B“ bzw. „A, B +2“.
     public static func shortNames(_ names: [String], max: Int) -> String {
         let limit = Swift.max(1, max)
@@ -116,10 +127,9 @@ public enum ReminderPlanner {
             let list = joinNames(names)
             let key = Days.iso(day, calendar: calendar)
             if settings.eveningEnabled, let fire = Days.at(minutes: settings.eveningMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
+                let text = eveningText(names: names)
                 result.append(PlannedNotification(
-                    identifier: "waste-evening-\(key)", fireDate: fire,
-                    title: names.count == 1 ? L10n.t("Morgen: \(names[0])", "Tomorrow: \(names[0])") : L10n.t("Morgen wird abgeholt", "Collection tomorrow"),
-                    body: names.count == 1 ? L10n.t("Heute Abend rausstellen – morgen kommt die Abfuhr.", "Put it out tonight – collection is tomorrow.") : L10n.t("\(list) – heute Abend rausstellen.", "\(list) – put them out tonight."),
+                    identifier: "waste-evening-\(key)", fireDate: fire, title: text.title, body: text.body,
                     category: .wasteEvening, threadIdentifier: "waste", dayKey: key))
             }
             if settings.eveningEnabled, settings.escalationEnabled, settings.escalationMinutes > settings.eveningMinutes,

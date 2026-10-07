@@ -33,11 +33,17 @@ struct AboutView: View {
                 card(title: "Woher die Daten kommen", symbol: "antenna.radiowaves.left.and.right") {
                     Text("Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt \(ProviderCatalog.count) Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.")
                 }
-                card(title: "Deine Daten", symbol: "lock.shield.fill") {
-                    Text("Es gibt kein Konto und keinen eigenen Server. Standorte, Müllarten und Geburtstage bleiben auf deinem Gerät und werden nur über deine eigene iCloud zwischen iPhone, iPad und Watch abgeglichen. Die App verschickt nichts an Dritte.")
+                card(title: "Clean. Ohne Mist.", symbol: "checkmark.seal.fill") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        bullet("Keine Werbung – nirgends, nie")
+                        bullet("Kein Tracking, keine Analyse-Tools, keine Werbe-ID")
+                        bullet("Kein Konto, kein Abo, keine In-App-Käufe")
+                        bullet("Kein eigener Server: Deine Daten bleiben auf deinen Geräten und in deiner eigenen iCloud")
+                        bullet("Nach draußen geht nur deine Adresse an den Entsorger, den du auswählst – damit er dir die Abfuhrtermine schickt")
+                    }
                 }
                 card(title: "Danke", symbol: "heart.fill") {
-                    Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple.")
+                    Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.")
                 }
                 VStack(spacing: 4) {
                     Text("Mit ❤️ gebaut in Gifhorn")

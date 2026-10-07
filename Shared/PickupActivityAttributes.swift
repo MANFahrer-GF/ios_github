@@ -14,5 +14,7 @@ struct PickupActivityAttributes: ActivityAttributes {
     var dayKey: String
     var pickupDate: Date
     var locationName: String?
+    /// Geplanter Start am Vorabend (iOS 26+), `nil` bei sofort gestarteten Aktivitäten.
+    var scheduledStart: Date? = nil
 }
 #endif

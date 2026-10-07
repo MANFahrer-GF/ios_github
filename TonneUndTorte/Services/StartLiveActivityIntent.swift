@@ -19,7 +19,8 @@ struct StartPickupLiveActivityIntent: LiveActivityIntent {
         guard let snapshot = SnapshotStore.load(), snapshot.generatedAt > Date().addingTimeInterval(-50 * 86_400) else {
             return .result(dialog: "Öffne Tonne & Torte einmal, damit die Termine aktuell sind.")
         }
-        switch await LiveActivityManager.refresh(with: snapshot) {
+        let evening = SettingsKeys.reminderSettings().eveningMinutes
+        switch await LiveActivityManager.refresh(with: snapshot, eveningMinutes: evening, showTomorrowNow: true).outcome {
         case .shown(let names):
             return .result(dialog: "Erinnerung für \(ReminderPlanner.joinNames(names)) ist auf dem Sperrbildschirm.")
         case .nothingDue:

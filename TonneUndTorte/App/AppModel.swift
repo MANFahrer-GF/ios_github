@@ -119,13 +119,18 @@ final class AppModel: ObservableObject {
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)
-        let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: SettingsKeys.reminderSettings())
-        await notifications.apply(plan)
+        let settings = SettingsKeys.reminderSettings()
+        // Zuerst die Live-Aktivitäten: Für Abende, an denen iOS die geplante Aktivität selbst startet,
+        // meldet sich diese mit eigenem Hinweis – die gleichlautende Abend-Mitteilung entfällt dann.
+        var scheduledDays: Set<String> = []
         if SettingsKeys.liveActivitiesEnabled() {
-            await LiveActivityManager.refresh(with: snapshot)
+            scheduledDays = await LiveActivityManager.refresh(with: snapshot, eveningMinutes: settings.eveningMinutes).scheduledDays
         } else {
             await LiveActivityManager.endAll()
         }
+        let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: settings)
+            .filter { !($0.category == .wasteEvening && scheduledDays.contains($0.dayKey)) }
+        await notifications.apply(plan)
         await CalendarExport.autoSyncIfEnabled(items: calendarExportItems())
     }
 

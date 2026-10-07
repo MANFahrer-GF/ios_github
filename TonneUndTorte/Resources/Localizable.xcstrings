@@ -531,6 +531,16 @@
         }
       }
     },
+    "Clean. Ohne Mist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean. No nonsense."
+          }
+        }
+      }
+    },
     "Danach": {
       "localizations": {
         "en": {
@@ -651,12 +661,12 @@
         }
       }
     },
-    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple.": {
+    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The provider list is based on the open-source project hacs_waste_collection_schedule (MIT license). Symbols: SF Symbols by Apple."
+            "value": "The list of waste services is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
           }
         }
       }
@@ -917,16 +927,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "First date"
-          }
-        }
-      }
-    },
-    "Es gibt kein Konto und keinen eigenen Server. Standorte, Müllarten und Geburtstage bleiben auf deinem Gerät und werden nur über deine eigene iCloud zwischen iPhone, iPad und Watch abgeglichen. Die App verschickt nichts an Dritte.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "There is no account and no server of our own. Locations, bins and birthdays stay on your device and only sync between iPhone, iPad and Watch through your own iCloud. The app sends nothing to third parties."
           }
         }
       }
@@ -1451,6 +1451,36 @@
         }
       }
     },
+    "Kein Konto, kein Abo, keine In-App-Käufe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No account, no subscription, no in-app purchases"
+          }
+        }
+      }
+    },
+    "Kein Tracking, keine Analyse-Tools, keine Werbe-ID": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tracking, no analytics, no advertising ID"
+          }
+        }
+      }
+    },
+    "Kein eigener Server: Deine Daten bleiben auf deinen Geräten und in deiner eigenen iCloud": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No server of ours: your data stays on your devices and in your own iCloud"
+          }
+        }
+      }
+    },
     "Kein fester Rhythmus": {
       "localizations": {
         "en": {
@@ -1527,6 +1557,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No dates in the next 6 months."
+          }
+        }
+      }
+    },
+    "Keine Werbung – nirgends, nie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No ads – anywhere, ever"
           }
         }
       }
@@ -1847,6 +1887,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waste types"
+          }
+        }
+      }
+    },
+    "Nach draußen geht nur deine Adresse an den Entsorger, den du auswählst – damit er dir die Abfuhrtermine schickt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The only thing that leaves your device is your address, sent to the waste service you choose so it can return your collection dates"
           }
         }
       }

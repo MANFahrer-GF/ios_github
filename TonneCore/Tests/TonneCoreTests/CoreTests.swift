@@ -35,6 +35,36 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(decoded?.displaySymbol, "trash.fill")
     }
 
+    func testLiveActivityPlanner() {
+        let cal = Calendar.current
+        let today = Days.today()
+        func at(_ dayOffset: Int, _ hour: Int) -> Date { cal.date(byAdding: .hour, value: hour, to: Days.add(dayOffset, to: today))! }
+        let item = WidgetSnapshot.PickupItem(name: "Restmüll", symbolName: "trash.fill", colorHex: "#5B6470")
+        let days = [
+            WidgetSnapshot.PickupDay(date: Days.add(1, to: today), items: [item]),
+            WidgetSnapshot.PickupDay(date: Days.add(8, to: today), items: [item]),
+            WidgetSnapshot.PickupDay(date: Days.add(15, to: today), items: [item]),
+        ]
+        // iOS 26, mittags: morgen wird für 19 Uhr heute geplant, plus ein weiterer Abend
+        let noon = LiveActivityPlanner.plan(pickupDays: days, now: at(0, 12), eveningMinutes: 19 * 60, canSchedule: true)
+        XCTAssertEqual(noon.map(\.start), [at(0, 19), at(7, 19)])
+        // nach 19 Uhr: morgen sofort, nächste Woche geplant
+        let evening = LiveActivityPlanner.plan(pickupDays: days, now: at(0, 20), eveningMinutes: 19 * 60, canSchedule: true)
+        XCTAssertEqual(evening.map(\.start), [nil, at(7, 19), at(14, 19)])
+        // Kurzbefehl: sofort zeigen, auch mittags
+        let shortcut = LiveActivityPlanner.plan(pickupDays: days, now: at(0, 12), eveningMinutes: 19 * 60, canSchedule: true, showTomorrowNow: true)
+        XCTAssertNil(shortcut.first?.start)
+        // vor iOS 26: nur „jetzt“, nichts geplant
+        let old = LiveActivityPlanner.plan(pickupDays: days, now: at(0, 12), eveningMinutes: 19 * 60, canSchedule: false)
+        XCTAssertEqual(old.count, 1)
+        XCTAssertNil(old.first?.start)
+        // Erledigte Tage und Abholtag nach Mittag fallen weg
+        var doneDays = days; doneDays[0].done = true
+        XCTAssertEqual(LiveActivityPlanner.plan(pickupDays: doneDays, now: at(0, 20), eveningMinutes: 19 * 60, canSchedule: true).map(\.dayKey),
+                       [Days.iso(Days.add(8, to: today)), Days.iso(Days.add(15, to: today))])
+        XCTAssertTrue(LiveActivityPlanner.plan(pickupDays: [days[0]], now: at(1, 13), eveningMinutes: 19 * 60, canSchedule: true).isEmpty)
+    }
+
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), "A, B, C")
