@@ -298,6 +298,11 @@ struct ContactsImportView: View {
                     Label("Personen auswählen", systemImage: "person.crop.circle.badge.plus").font(.body.weight(.semibold))
                 }
                 Button { openSettings() } label: { Label("Allen Kontakten Zugriff geben (Einstellungen)", systemImage: "gearshape") }
+                DisclosureGroup {
+                    accessExplanation
+                } label: {
+                    Label("Warum sehe ich nicht alle Kontakte?", systemImage: "questionmark.circle")
+                }
             } footer: {
                 if access == .limited {
                     Text("Du hast der App nur einzelne Kontakte freigegeben. Kein Problem: Wähle die Personen einfach aus, ganz ohne weitere Freigabe.")
@@ -306,6 +311,22 @@ struct ContactsImportView: View {
                 }
             }
         }
+    }
+
+    /// Erklärt, warum iOS der App nur einen Teil des Adressbuchs zeigt und was man tun kann.
+    private var accessExplanation: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if access == .limited {
+                Text("iOS schützt dein Adressbuch: Seit iOS 18 entscheidest du selbst, welche Kontakte eine App sehen darf. Du hast beim Nachfragen nur einzelne Kontakte ausgewählt – alle anderen bleiben für Tonne & Torte unsichtbar, auch wenn dort ein Geburtstag eingetragen ist.")
+            } else {
+                Text("iOS schützt dein Adressbuch: Du hast der App den Zugriff auf deine Kontakte nicht erlaubt. Deshalb kann Tonne & Torte von sich aus keine Geburtstage lesen.")
+            }
+            Text("„Personen auswählen“ öffnet die Kontaktliste von iOS selbst. Die App bekommt dabei nur die Personen, die du anhakst – sonst nichts aus deinem Adressbuch.")
+            Text("Lieber alle auf einmal? Dann in den Einstellungen unter Apps › Tonne & Torte › Kontakte „Vollständiger Zugriff“ wählen.")
+        }
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .padding(.vertical, 4)
     }
 
     private func pickContacts() {

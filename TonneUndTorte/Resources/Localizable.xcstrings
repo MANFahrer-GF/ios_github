@@ -1561,6 +1561,16 @@
         }
       }
     },
+    "Lieber alle auf einmal? Dann in den Einstellungen unter Apps › Tonne & Torte › Kontakte „Vollständiger Zugriff“ wählen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prefer all at once? In Settings, go to Apps › Tonne & Torte › Contacts and choose “Full Access”."
+          }
+        }
+      }
+    },
     "Live-Aktivität am Vorabend": {
       "localizations": {
         "en": {
@@ -2521,6 +2531,16 @@
         }
       }
     },
+    "Warum sehe ich nicht alle Kontakte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Why don’t I see all contacts?"
+          }
+        }
+      }
+    },
     "Was die App kann": {
       "localizations": {
         "en": {
@@ -2741,6 +2761,26 @@
         }
       }
     },
+    "iOS schützt dein Adressbuch: Du hast der App den Zugriff auf deine Kontakte nicht erlaubt. Deshalb kann Tonne & Torte von sich aus keine Geburtstage lesen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS protects your address book: you didn’t allow the app to access your contacts, so it can’t read any birthdays on its own."
+          }
+        }
+      }
+    },
+    "iOS schützt dein Adressbuch: Seit iOS 18 entscheidest du selbst, welche Kontakte eine App sehen darf. Du hast beim Nachfragen nur einzelne Kontakte ausgewählt – alle anderen bleiben für Tonne & Torte unsichtbar, auch wenn dort ein Geburtstag eingetragen ist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS protects your address book: since iOS 18 you decide which contacts an app may see. When asked, you only selected some contacts – all others stay hidden from Tonne & Torte, even if they have a birthday."
+          }
+        }
+      }
+    },
     "schon drin": {
       "localizations": {
         "en": {
@@ -2817,6 +2857,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Really delete “%@”?"
+          }
+        }
+      }
+    },
+    "„Personen auswählen“ öffnet die Kontaktliste von iOS selbst. Die App bekommt dabei nur die Personen, die du anhakst – sonst nichts aus deinem Adressbuch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Choose people” opens the iOS contact list itself. The app only receives the people you tick – nothing else from your address book."
           }
         }
       }
