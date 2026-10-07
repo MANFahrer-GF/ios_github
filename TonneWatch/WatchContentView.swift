@@ -15,8 +15,8 @@ struct WatchContentView: View {
             birthdayPage
         }
         .tabViewStyle(.verticalPage)
-        .onReceive(NotificationCenter.default.publisher(for: WatchSync.updatedNotification)) { _ in snapshot = SnapshotStore.load() }
-        .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName)) { _ in snapshot = SnapshotStore.load() }
+        .onReceive(NotificationCenter.default.publisher(for: WatchSync.updatedNotification).receive(on: DispatchQueue.main)) { _ in snapshot = SnapshotStore.load() }
+        .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName).receive(on: DispatchQueue.main)) { _ in snapshot = SnapshotStore.load() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { snapshot = SnapshotStore.load(); WatchSync.requestRefresh() }
         }
@@ -27,18 +27,22 @@ struct WatchContentView: View {
     private var heroPage: some View {
         let color = Color(hex: next?.items.first?.colorHex ?? "#2F6FED")
         let days = next.map { Days.until($0.date) }
-        return ScrollView {
+        let eyebrow: String = next == nil ? "ALLES RUHIG" : (days == 0 ? "HEUTE" : (days == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG"))
+        let headline: String = {
+            guard let next, let days else { return "Keine Abholung geplant" }
+            if next.done { return "Steht draußen 👍" }
+            return days == 0 ? "Heute wird abgeholt" : (days == 1 ? "Heute Abend rausstellen!" : "In \(days) Tagen")
+        }()
+        return NavigationStack { ScrollView {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text(next == nil ? "ALLES RUHIG" : days == 0 ? "HEUTE" : days == 1 ? "MORGEN" : "NÄCHSTE ABHOLUNG")
-                        .font(.caption2.weight(.bold)).foregroundStyle(color)
+                    Text(eyebrow).font(.caption2.weight(.bold)).foregroundStyle(color)
                     Spacer()
                     Image(systemName: next?.items.first?.symbolName ?? "checkmark.circle.fill").foregroundStyle(color)
                 }
                 if let next, let days {
-                    Text(next.done ? "Steht draußen 👍" : days == 0 ? "Heute wird abgeholt" : days == 1 ? "Heute Abend rausstellen!" : "In \(days) Tagen")
-                        .font(.headline)
-                    ForEach(next.items, id: \.name) { item in
+                    Text(headline).font(.headline)
+                    ForEach(next.items, id: \.self) { item in
                         HStack(spacing: 6) {
                             Image(systemName: item.symbolName).foregroundStyle(Color(hex: item.colorHex))
                             Text(item.name).font(.footnote)
@@ -65,13 +69,13 @@ struct WatchContentView: View {
             }
             .padding(.horizontal, 4)
         }
-        .navigationTitle("Tonne & Torte")
+        .navigationTitle("Tonne & Torte") }
     }
 
     // MARK: Seite 2 – Weitere Tage
 
     private var listPage: some View {
-        List {
+        NavigationStack { List {
             if let snapshot, !snapshot.pickupDays.isEmpty {
                 ForEach(snapshot.pickupDays.prefix(10), id: \.date) { day in
                     VStack(alignment: .leading, spacing: 2) {
@@ -80,7 +84,7 @@ struct WatchContentView: View {
                             Spacer()
                             Text(DateText.short(day.date)).font(.caption2).foregroundStyle(.secondary)
                         }
-                        ForEach(day.items, id: \.name) { item in
+                        ForEach(day.items, id: \.self) { item in
                             HStack(spacing: 5) {
                                 Image(systemName: item.symbolName).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
                                 Text(item.name).font(.caption2)
@@ -93,15 +97,15 @@ struct WatchContentView: View {
                 Text("Keine Termine").foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("Abholungen")
+        .navigationTitle("Abholungen") }
     }
 
     // MARK: Seite 3 – Geburtstage
 
     private var birthdayPage: some View {
-        List {
+        NavigationStack { List {
             if let snapshot, !snapshot.birthdays.isEmpty {
-                ForEach(snapshot.birthdays, id: \.name) { birthday in
+                ForEach(snapshot.birthdays, id: \.self) { birthday in
                     HStack(spacing: 8) {
                         ZStack {
                             Circle().fill(Color(hex: birthday.colorHex))
@@ -118,6 +122,6 @@ struct WatchContentView: View {
                 Text("Keine Geburtstage in den nächsten Wochen").foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("Geburtstage")
+        .navigationTitle("Geburtstage") }
     }
 }

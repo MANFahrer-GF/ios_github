@@ -13,17 +13,38 @@ public struct SelectionOption: Identifiable, Hashable, Codable {
     }
 }
 
-/// Ein Schritt im Einrichtungsassistenten.
+/// Ein Schritt im Einrichtungsassistenten: entweder eine Auswahlliste oder eine Texteingabe
+/// (z. B. Straßenname bei Portalen ohne Straßenliste). Bei Texteingabe liefert der Nutzer
+/// eine `SelectionOption` mit `id == title == eingegebener Text`.
 public struct SelectionStep: Hashable {
+    public enum Input: Hashable { case list, text }
+
     public var title: String
     public var options: [SelectionOption]
     public var searchable: Bool
+    public var input: Input
+    public var placeholder: String?
 
     public init(title: String, options: [SelectionOption], searchable: Bool = true) {
         self.title = title
         self.options = options
         self.searchable = searchable
+        self.input = .list
+        self.placeholder = nil
     }
+
+    public static func text(title: String, placeholder: String? = nil) -> SelectionStep {
+        var step = SelectionStep(title: title, options: [], searchable: false)
+        step.input = .text
+        step.placeholder = placeholder
+        return step
+    }
+
+    /// Standard-Schrittnamen
+    public static var cityTitle: String { L10n.t("Ort", "Town") }
+    public static var districtTitle: String { L10n.t("Ortsteil", "District") }
+    public static var streetTitle: String { L10n.t("Straße", "Street") }
+    public static var houseNumberTitle: String { L10n.t("Hausnummer", "House number") }
 }
 
 /// Ein Abholtermin aus einer Online-Quelle.
@@ -71,6 +92,11 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case abfallnavi
     case abfallAppNet
     case icsURL
+    case cTrace
+    case muellmax
+    case awbKoeln
+    case leipzig
+    case ahaHannover
 
     public var displayName: String {
         switch self {
@@ -79,7 +105,12 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .jumomind: return "Jumomind / MyMüll"
         case .abfallnavi: return "Abfallnavi"
         case .abfallAppNet: return "Abfall-App"
-        case .icsURL: return "ICS-Link"
+        case .icsURL: return L10n.t("ICS-Link", "ICS link")
+        case .cTrace: return "C-Trace"
+        case .muellmax: return "Müllmax"
+        case .awbKoeln: return "AWB Köln"
+        case .leipzig: return "Stadtreinigung Leipzig"
+        case .ahaHannover: return "aha Region Hannover"
         }
     }
 }
@@ -95,6 +126,14 @@ public enum ProviderError: LocalizedError {
         case .invalidSelection(let message): return message
         case .notSupported(let message): return message
         }
+    }
+
+    public static var noDataGeneric: ProviderError {
+        .noData(L10n.t("Das Portal hat keine Termine für diese Adresse geliefert.", "The portal returned no dates for this address."))
+    }
+
+    public static var selectAddressFirst: ProviderError {
+        .invalidSelection(L10n.t("Bitte zuerst eine Adresse wählen.", "Please choose an address first."))
     }
 }
 
@@ -133,6 +172,11 @@ public enum ProviderFactory {
         case .abfallnavi: return AbfallnaviProvider(service: serviceKey, client: client)
         case .abfallAppNet: return AbfallAppNetProvider(tenant: serviceKey, client: client)
         case .icsURL: return ICSURLProvider(url: serviceKey, client: client)
+        case .cTrace: return CTraceProvider(service: serviceKey, client: client)
+        case .muellmax: return MuellmaxProvider(service: serviceKey, client: client)
+        case .awbKoeln: return AWBKoelnProvider(client: client)
+        case .leipzig: return LeipzigProvider(client: client)
+        case .ahaHannover: return AhaHannoverProvider(client: client)
         }
     }
 

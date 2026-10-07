@@ -62,7 +62,7 @@ struct SettingsView: View {
 
             Section("Über") {
                 LabeledContent("Version", value: appVersion)
-                Text("Termine kommen direkt von den Portalen der Entsorger (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). Angaben ohne Gewähr. Katalog mit \(ProviderCatalog.count) Entsorgern.")
+                Text("Termine kommen direkt von den Portalen der Entsorger (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Köln, Leipzig, Hannover). Angaben ohne Gewähr. Katalog mit \(ProviderCatalog.count) Entsorgern.")
                     .font(.footnote).foregroundStyle(.secondary)
             }
         }

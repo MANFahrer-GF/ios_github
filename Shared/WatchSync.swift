@@ -59,6 +59,11 @@ final class WatchSync: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         #if os(watchOS)
         apply(context: session.receivedApplicationContext)
+        #else
+        // iPhone: nach der Aktivierung den aktuellen Stand schicken
+        if activationState == .activated {
+            DispatchQueue.main.async { NotificationCenter.default.post(name: WatchSync.updatedNotification, object: nil) }
+        }
         #endif
     }
 
@@ -77,7 +82,7 @@ final class WatchSync: NSObject, WCSessionDelegate {
     private func apply(context: [String: Any]) {
         guard let data = context[WatchSync.snapshotKey] as? Data, let snapshot = try? WidgetSnapshot.decode(data) else { return }
         SnapshotStore.save(snapshot)
-        NotificationCenter.default.post(name: WatchSync.updatedNotification, object: nil)
+        DispatchQueue.main.async { NotificationCenter.default.post(name: WatchSync.updatedNotification, object: nil) }
     }
 
     private func handle(_ message: [String: Any]) {

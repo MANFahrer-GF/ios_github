@@ -37,7 +37,7 @@ public struct AbfallAppNetProvider: WasteProvider {
             // Einträge ohne Ortsteile sind Karteileichen des Portals
             let list = try await cities().filter { !$0.districts.isEmpty }
             // Orte mit genau einem Ortsteil ohne Straßen direkt als Bezirk anbieten
-            return SelectionStep(title: "Ort", options: list.map { city in
+            return SelectionStep(title: SelectionStep.cityTitle, options: list.map { city in
                 if city.districts.count == 1, (city.districts[0].streets ?? []).isEmpty {
                     return SelectionOption(id: "district:\(city.districts[0].id.value)", title: city.name)
                 }
@@ -49,7 +49,7 @@ public struct AbfallAppNetProvider: WasteProvider {
             if city.districts.count == 1 {
                 return streetStep(for: city.districts[0])
             }
-            return SelectionStep(title: "Ortsteil", options: city.districts.map { district in
+            return SelectionStep(title: SelectionStep.districtTitle, options: city.districts.map { district in
                 let streets = district.streets ?? []
                 return SelectionOption(id: streets.isEmpty ? "district:\(district.id.value)" : "districtWithStreets:\(district.id.value)", title: district.name)
             })
@@ -66,7 +66,7 @@ public struct AbfallAppNetProvider: WasteProvider {
     private func streetStep(for district: District) -> SelectionStep? {
         let streets = district.streets ?? []
         guard !streets.isEmpty else { return nil }
-        return SelectionStep(title: "Straße", options: streets.map { SelectionOption(id: "street:\($0.id.value)", title: $0.name) })
+        return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id.value)", title: $0.name) })
     }
 
     public func downloadURL(for selections: [SelectionOption]) -> String? {

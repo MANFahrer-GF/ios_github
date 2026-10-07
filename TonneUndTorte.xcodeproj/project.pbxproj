@@ -625,6 +625,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.manfahrer.TonneUndTorte;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				INFOPLIST_KEY_WKWatchOnly = NO;
@@ -655,6 +656,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.manfahrer.TonneUndTorte;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				INFOPLIST_KEY_WKWatchOnly = NO;

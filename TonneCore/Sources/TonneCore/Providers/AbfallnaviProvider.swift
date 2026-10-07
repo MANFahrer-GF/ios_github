@@ -38,18 +38,18 @@ public struct AbfallnaviProvider: WasteProvider {
         switch selections.count {
         case 0:
             let cities: [Named] = try await fetch("orte")
-            return SelectionStep(title: "Ort", options: cities.map { SelectionOption(id: "city:\($0.id.value)", title: $0.name) })
+            return SelectionStep(title: SelectionStep.cityTitle, options: cities.map { SelectionOption(id: "city:\($0.id.value)", title: $0.name) })
         case 1:
             let cityID = selections[0].id.replacingOccurrences(of: "city:", with: "")
             let streets: [Named] = try await fetch("orte/\(cityID)/strassen")
             if streets.isEmpty { return nil }
-            return SelectionStep(title: "Straße", options: streets.map { SelectionOption(id: "street:\($0.id.value)", title: $0.name) })
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id.value)", title: $0.name) })
         case 2:
             let streetID = selections[1].id.replacingOccurrences(of: "street:", with: "")
             let detail: StreetDetail = try await fetch("strassen/\(streetID)")
             let numbers = detail.hausNrList ?? []
             if numbers.count <= 1 { return nil }
-            return SelectionStep(title: "Hausnummer", options: numbers.map { SelectionOption(id: "house:\($0.id.value)", title: $0.nr) })
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "house:\($0.id.value)", title: $0.nr) })
         default:
             return nil
         }

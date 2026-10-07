@@ -59,6 +59,16 @@ public struct HTTPClient {
         return try HTTPClient.decode(data)
     }
 
+    /// Liefert die endgültige URL nach Weiterleitungen (z. B. mit Sitzungs-ID im Pfad).
+    public func finalURL(_ urlString: String) async throws -> URL? {
+        guard let url = URL(string: urlString) else { throw HTTPError.badURL(urlString) }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = timeout
+        request.setValue(HTTPClient.userAgent, forHTTPHeaderField: "User-Agent")
+        let (_, response) = try await session.data(for: request)
+        return response.url
+    }
+
     public func string(_ urlString: String, headers: [String: String] = [:]) async throws -> String {
         let data = try await get(urlString, headers: headers)
         return HTTPClient.text(from: data)
@@ -112,17 +122,19 @@ public struct HTTPClient {
 public enum HTMLText {
     /// Alle `<option value="…">Text</option>` eines `<select name="…">`.
     public static func options(ofSelect name: String, in html: String) -> [(value: String, label: String)] {
-        guard let select = firstMatch(#"<select[^>]*name="\#(NSRegularExpression.escapedPattern(for: name))"[^>]*>([\s\S]*?)</select>"#, in: html, group: 1) else { return [] }
-        return matches(#"<option[^>]*value="([^"]*)"[^>]*>([\s\S]*?)</option>"#, in: select).map { groups in
-            (value: decodeEntities(groups[0]), label: decodeEntities(stripTags(groups[1])).trimmingCharacters(in: .whitespacesAndNewlines))
+        let escaped = NSRegularExpression.escapedPattern(for: name)
+        guard let select = firstMatch(#"<select[^>]*(?:name|id)=["']\#(escaped)["'][^>]*>([\s\S]*?)</select>"#, in: html, group: 1) else { return [] }
+        return matches(#"<option[^>]*value=(?:"([^"]*)"|'([^']*)')[^>]*>([\s\S]*?)</option>"#, in: select).map { groups in
+            let value = groups[0].isEmpty ? groups[1] : groups[0]
+            return (value: decodeEntities(value), label: decodeEntities(stripTags(groups[2])).trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
 
     /// Alle versteckten Eingabefelder als Name → Wert.
     public static func hiddenInputs(in html: String) -> [(name: String, value: String)] {
-        matches(#"<input[^>]*type="hidden"[^>]*>"#, in: html, wholeMatch: true).compactMap { tag in
-            guard let name = firstMatch(#"name="([^"]*)""#, in: tag[0], group: 1) else { return nil }
-            let value = firstMatch(#"value="([^"]*)""#, in: tag[0], group: 1) ?? ""
+        matches(#"<input[^>]*type=["']hidden["'][^>]*>"#, in: html, wholeMatch: true).compactMap { tag in
+            guard let name = firstMatch(#"name=["']([^"']*)["']"#, in: tag[0], group: 1) else { return nil }
+            let value = firstMatch(#"value=["']([^"']*)["']"#, in: tag[0], group: 1) ?? ""
             return (decodeEntities(name), decodeEntities(value))
         }
     }

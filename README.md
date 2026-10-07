@@ -28,7 +28,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 
 **Einfach**
 - Einrichtung in drei Schritten: Standort erlauben oder Ort suchen → Straße wählen → Tonnen ankreuzen
-- Katalog mit **159 Entsorgern** über die Plattformen AWIDO, AbfallPlus (neue und alte Schnittstelle), Jumomind/MyMüll, Abfallnavi und abfall-app.net; dazu beliebige ICS-Links und ICS-Dateien
+- Katalog mit **189 Entsorgern** über die Plattformen AWIDO, AbfallPlus (neue und alte Schnittstelle), Jumomind/MyMüll, Abfallnavi, abfall-app.net, C-Trace und Müllmax sowie die Städte Köln, Leipzig und Region Hannover; dazu beliebige ICS-Links und ICS-Dateien
 - Mehrere Standorte (z. B. Zuhause und Ferienhaus) mit Filter in Übersicht und Kalender
 - iCloud-Sync über CloudKit – kein Konto, kein Login
 - Streak-Anzeige: Abholungen dieses Jahr und davon bestätigt
@@ -38,6 +38,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 - Eigene wiederkehrende Termine mit Vorlagen (Hochzeitstag, TÜV, Rauchmelder, Reifenwechsel …)
 - Abfall-ABC: „Pizzakarton“ eingeben, richtige Tonne sehen
 - Feiertagsregelungen: Termine verschieben oder ausfallen lassen
+- Deutsch und Englisch (String-Katalog in der App, zweisprachige Mitteilungen im Kern)
 - Dark Mode, Dynamic Type, Haptik
 
 ## Projekt öffnen und auf das Gerät bringen
@@ -58,7 +59,8 @@ TonneCore (Swift-Package, plattformunabhängig)
 ├── WasteCategory / WasteABC / Palette    Zuordnung, Farben, Symbole, Abfall-ABC
 ├── WidgetSnapshot                        Datenstand für Widget, Live-Aktivität, Siri
 └── Providers                             WasteProvider-Protokoll + AWIDO, AbfallPlus (GraphQL/Legacy),
-                                          Jumomind, Abfallnavi, AbfallAppNet, ICS-URL, Katalog
+                                          Jumomind, Abfallnavi, AbfallAppNet, C-Trace, Müllmax, AWB Köln,
+                                          Stadtreinigung Leipzig, aha Hannover, ICS-URL, Katalog
 
 App (SwiftData + CloudKit)                Location · WasteType · Person · CustomEvent
 ├── AppModel                              Datenzugriff, Abgleich, Erinnerungen, Snapshot, Statistik
@@ -89,5 +91,4 @@ Die Plattform-Kennungen stehen in `TonneCore/Sources/TonneCore/Providers/Catalog
 ## Geplant
 
 - Haushalt mit Familie teilen (CloudKit Sharing) und „Wer ist dran?“
-- Englische Oberfläche
 - Weitere Plattformen (Abfall+ Apps von k4systems, AWBKoeln, Müllmax …)

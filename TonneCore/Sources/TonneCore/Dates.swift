@@ -68,12 +68,12 @@ public enum DateText {
     public static func countdown(_ date: Date, calendar: Calendar = .current) -> String {
         let diff = Days.until(date, calendar: calendar)
         switch diff {
-        case 0: return "Heute"
-        case 1: return "Morgen"
-        case 2: return "Übermorgen"
-        case -1: return "Gestern"
-        case ..<0: return "vor \(-diff) Tagen"
-        default: return "in \(diff) Tagen"
+        case 0: return L10n.t("Heute", "Today")
+        case 1: return L10n.t("Morgen", "Tomorrow")
+        case 2: return L10n.t("Übermorgen", "In 2 days")
+        case -1: return L10n.t("Gestern", "Yesterday")
+        case ..<0: return L10n.t("vor \(-diff) Tagen", "\(-diff) days ago")
+        default: return L10n.t("in \(diff) Tagen", "in \(diff) days")
         }
     }
 

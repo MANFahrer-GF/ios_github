@@ -1,0 +1,2236 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "Abbrechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Abfall-ABC": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waste A–Z"
+          }
+        }
+      }
+    },
+    "Abfuhrtermine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collection dates"
+          }
+        }
+      }
+    },
+    "Abgewählte Tonnen bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unchecked bins are kept but won't send reminders. You can change this anytime."
+          }
+        }
+      }
+    },
+    "Abholungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collections"
+          }
+        }
+      }
+    },
+    "Abholungen dieses Jahr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "collections this year"
+          }
+        }
+      }
+    },
+    "Abstand": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interval"
+          }
+        }
+      }
+    },
+    "Adresse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address"
+          }
+        }
+      }
+    },
+    "Adresse, Vorlieben …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address, preferences …"
+          }
+        }
+      }
+    },
+    "Aktiv": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active"
+          }
+        }
+      }
+    },
+    "Alle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "Alle Daten löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete all data"
+          }
+        }
+      }
+    },
+    "Alle Standorte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All locations"
+          }
+        }
+      }
+    },
+    "Alle aktualisieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh all"
+          }
+        }
+      }
+    },
+    "Alles eingerichtet!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All set!"
+          }
+        }
+      }
+    },
+    "Alles löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete everything"
+          }
+        }
+      }
+    },
+    "Als ICS-Datei teilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share as ICS file"
+          }
+        }
+      }
+    },
+    "Alter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age"
+          }
+        }
+      }
+    },
+    "Am Abholtag morgens erinnern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind in the morning of collection day"
+          }
+        }
+      }
+    },
+    "Am Vorabend erinnern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind the evening before"
+          }
+        }
+      }
+    },
+    "Anlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create"
+          }
+        }
+      }
+    },
+    "Art": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type"
+          }
+        }
+      }
+    },
+    "Aus Kontakten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From Contacts"
+          }
+        }
+      }
+    },
+    "Aus Kontakten importieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import from Contacts"
+          }
+        }
+      }
+    },
+    "Ausgefallene Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelled dates"
+          }
+        }
+      }
+    },
+    "Bisherige Einzeltermine ersetzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replace existing single dates"
+          }
+        }
+      }
+    },
+    "Darstellung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        }
+      }
+    },
+    "Daten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data"
+          }
+        }
+      }
+    },
+    "Der Kalender-Export legt einen eigenen Kalender an und enthält die gleichen Alarme wie die App.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The calendar export creates its own calendar with the same alerts as the app."
+          }
+        }
+      }
+    },
+    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island, sobald du die App am Vorabend öffnest.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island once you open the app the evening before."
+          }
+        }
+      }
+    },
+    "Eigene Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom events"
+          }
+        }
+      }
+    },
+    "Ein Abholtag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A known collection day"
+          }
+        }
+      }
+    },
+    "Einstellungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Einzeltermin hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add single date"
+          }
+        }
+      }
+    },
+    "Einzeltermine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single dates"
+          }
+        }
+      }
+    },
+    "Entsorger finden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find provider"
+          }
+        }
+      }
+    },
+    "Entsorger nicht dabei?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provider not listed?"
+          }
+        }
+      }
+    },
+    "Erinnern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind"
+          }
+        }
+      }
+    },
+    "Erinnerung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder"
+          }
+        }
+      }
+    },
+    "Erinnerungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminders"
+          }
+        }
+      }
+    },
+    "Erinnerungen sind aus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminders are off"
+          }
+        }
+      }
+    },
+    "Erlaube Mitteilungen, damit du keinen Gelben Sack mehr verpasst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow notifications so you never miss a collection again."
+          }
+        }
+      }
+    },
+    "Erlauben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow"
+          }
+        }
+      }
+    },
+    "Erledigt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Erledigt – steht draußen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done – it's out"
+          }
+        }
+      }
+    },
+    "Export": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        }
+      }
+    },
+    "Farbe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color"
+          }
+        }
+      }
+    },
+    "Farbe & Symbol": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color & symbol"
+          }
+        }
+      }
+    },
+    "Finde deinen Entsorger – die Termine kommen automatisch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find your waste provider – dates arrive automatically."
+          }
+        }
+      }
+    },
+    "Fällt aus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelled"
+          }
+        }
+      }
+    },
+    "Geburtsjahr bekannt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birth year known"
+          }
+        }
+      }
+    },
+    "Geburtstag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birthday"
+          }
+        }
+      }
+    },
+    "Geburtstag löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete birthday"
+          }
+        }
+      }
+    },
+    "Geburtstag wirklich löschen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Really delete this birthday?"
+          }
+        }
+      }
+    },
+    "Geburtstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birthdays"
+          }
+        }
+      }
+    },
+    "Geburtstage & Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birthdays & events"
+          }
+        }
+      }
+    },
+    "Geburtstage & eigene Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birthdays & custom events"
+          }
+        }
+      }
+    },
+    "Geplante Erinnerungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scheduled reminders"
+          }
+        }
+      }
+    },
+    "Geschenkideen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gift ideas"
+          }
+        }
+      }
+    },
+    "Gespeicherte Einzeltermine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stored single dates"
+          }
+        }
+      }
+    },
+    "Glückwunsch per Nachricht senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send greetings by message"
+          }
+        }
+      }
+    },
+    "Heute": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        }
+      }
+    },
+    "Hinweis": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        }
+      }
+    },
+    "Hochzeitstag, TÜV, Rauchmelder – alles, was regelmäßig wiederkommt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anniversary, car inspection, smoke detectors – anything that comes around regularly."
+          }
+        }
+      }
+    },
+    "ICS importieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import ICS"
+          }
+        }
+      }
+    },
+    "ICS-Datei importieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import ICS file"
+          }
+        }
+      }
+    },
+    "ICS-Link verwenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use ICS link"
+          }
+        }
+      }
+    },
+    "Idee hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add idea"
+          }
+        }
+      }
+    },
+    "Ignorieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignore"
+          }
+        }
+      }
+    },
+    "Importiere sie aus deinen Kontakten oder lege sie von Hand an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import them from your contacts or add them manually."
+          }
+        }
+      }
+    },
+    "Importieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import"
+          }
+        }
+      }
+    },
+    "In Apple-Kalender eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Apple Calendar"
+          }
+        }
+      }
+    },
+    "Jetzt aktualisieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh now"
+          }
+        }
+      }
+    },
+    "Kalender": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar"
+          }
+        }
+      }
+    },
+    "Kein fester Rhythmus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No fixed schedule"
+          }
+        }
+      }
+    },
+    "Keine Abholung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No collection"
+          }
+        }
+      }
+    },
+    "Keine Abholung geplant": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No collection scheduled"
+          }
+        }
+      }
+    },
+    "Keine Abholungen in den nächsten 60 Tagen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No collections in the next 60 days."
+          }
+        }
+      }
+    },
+    "Keine Geburtstage in den nächsten Wochen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No birthdays in the coming weeks"
+          }
+        }
+      }
+    },
+    "Keine Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No dates"
+          }
+        }
+      }
+    },
+    "Keine Termine in den nächsten 6 Monaten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No dates in the next 6 months."
+          }
+        }
+      }
+    },
+    "Kontakte werden gelesen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading contacts …"
+          }
+        }
+      }
+    },
+    "Lade …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading …"
+          }
+        }
+      }
+    },
+    "Landkreis, Stadt oder Entsorger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "District, city or provider"
+          }
+        }
+      }
+    },
+    "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a location under “Waste” – dates arrive automatically."
+          }
+        }
+      }
+    },
+    "Letzter Abgleich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last sync"
+          }
+        }
+      }
+    },
+    "Live-Aktivität am Vorabend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activity the evening before"
+          }
+        }
+      }
+    },
+    "Los geht's": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's go"
+          }
+        }
+      }
+    },
+    "Löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "Markiert die nächste Abholung als erledigt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marks the next collection as done."
+          }
+        }
+      }
+    },
+    "Mehr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        }
+      }
+    },
+    "Meinen Standort verwenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use my location"
+          }
+        }
+      }
+    },
+    "Mitteilungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
+          }
+        }
+      }
+    },
+    "Müll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waste"
+          }
+        }
+      }
+    },
+    "Müll-Erinnerungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waste reminders"
+          }
+        }
+      }
+    },
+    "Müllart hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add waste type"
+          }
+        }
+      }
+    },
+    "Müllart löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete waste type"
+          }
+        }
+      }
+    },
+    "Müllarten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waste types"
+          }
+        }
+      }
+    },
+    "Nach links wischen: verschieben oder ausfallen lassen (Feiertage).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe left to move or cancel a date (holidays)."
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Name (z. B. Zuhause)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name (e.g. Home)"
+          }
+        }
+      }
+    },
+    "Name des Standorts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location name"
+          }
+        }
+      }
+    },
+    "Neue Müllart": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New waste type"
+          }
+        }
+      }
+    },
+    "Neuer Geburtstag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New birthday"
+          }
+        }
+      }
+    },
+    "Neuer Standort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New location"
+          }
+        }
+      }
+    },
+    "Nichts gefunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing found."
+          }
+        }
+      }
+    },
+    "Nichts geplant – freier Tag für die Tonne.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing planned – a day off for the bin."
+          }
+        }
+      }
+    },
+    "Nie wieder den Gelben Sack verpassen.\\nNie wieder einen Geburtstag vergessen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never miss a collection again.\\nNever forget a birthday again."
+          }
+        }
+      }
+    },
+    "Noch kein Standort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location yet"
+          }
+        }
+      }
+    },
+    "Noch keine Geburtstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No birthdays yet"
+          }
+        }
+      }
+    },
+    "Noch keine Müllarten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No waste types yet."
+          }
+        }
+      }
+    },
+    "Noch keine eigenen Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No custom events yet"
+          }
+        }
+      }
+    },
+    "Nochmal erinnern, falls nicht „Erledigt“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind again unless marked “Done”"
+          }
+        }
+      }
+    },
+    "Notizen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes"
+          }
+        }
+      }
+    },
+    "Nur Einzeltermine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single dates only"
+          }
+        }
+      }
+    },
+    "Nächste Abholung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next collection"
+          }
+        }
+      }
+    },
+    "Nächste Abholungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming collections"
+          }
+        }
+      }
+    },
+    "Nächste Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming dates"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Ohne Entsorger starten (Rhythmus von Hand)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start without a provider (manual schedule)"
+          }
+        }
+      }
+    },
+    "Ohne Standort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location"
+          }
+        }
+      }
+    },
+    "Person": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Person"
+          }
+        }
+      }
+    },
+    "Quelle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        }
+      }
+    },
+    "Rhythmus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule"
+          }
+        }
+      }
+    },
+    "Sagt dir, wann die nächste Müllabfuhr kommt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells you when the next collection is."
+          }
+        }
+      }
+    },
+    "Sichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "Standort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location"
+          }
+        }
+      }
+    },
+    "Standort anlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create location"
+          }
+        }
+      }
+    },
+    "Standort löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete location"
+          }
+        }
+      }
+    },
+    "Standort manuell anlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create location manually"
+          }
+        }
+      }
+    },
+    "Standort mit Entsorger anlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create location with provider"
+          }
+        }
+      }
+    },
+    "Standort und alle Müllarten löschen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete location and all its waste types?"
+          }
+        }
+      }
+    },
+    "Suchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        }
+      }
+    },
+    "Telefon (für Glückwunsch per Nachricht)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phone (for greetings by message)"
+          }
+        }
+      }
+    },
+    "Termin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Event"
+          }
+        }
+      }
+    },
+    "Termin löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete event"
+          }
+        }
+      }
+    },
+    "Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates"
+          }
+        }
+      }
+    },
+    "Termine wurden verschoben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates have changed"
+          }
+        }
+      }
+    },
+    "Testmitteilung senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send test notification"
+          }
+        }
+      }
+    },
+    "Titel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        }
+      }
+    },
+    "Tonne & Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne & Torte"
+          }
+        }
+      }
+    },
+    "Tonne steht draußen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bin is out"
+          }
+        }
+      }
+    },
+    "Verbindung trennen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disconnect"
+          }
+        }
+      }
+    },
+    "Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connected locations sync their dates automatically every week. If the provider moves a date, you get a notification."
+          }
+        }
+      }
+    },
+    "Verschieben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "Viele Abfall-Portale bieten einen Link „Sync zu Kalender“ oder „ICS-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Many waste portals offer a “Sync to calendar” or “ICS export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
+          }
+        }
+      }
+    },
+    "Von Hand anlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add manually"
+          }
+        }
+      }
+    },
+    "Vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before"
+          }
+        }
+      }
+    },
+    "Vorlage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Template"
+          }
+        }
+      }
+    },
+    "Was soll weg? z. B. Pizzakarton": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What needs to go? e.g. pizza box"
+          }
+        }
+      }
+    },
+    "Welche Tonne muss raus?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which bin goes out?"
+          }
+        }
+      }
+    },
+    "Welche Tonne muss raus? Mit „Erledigt“-Knopf.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which bin goes out? With a “Done” button."
+          }
+        }
+      }
+    },
+    "Welche Tonnen hast du?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which bins do you have?"
+          }
+        }
+      }
+    },
+    "Wiederherstellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore"
+          }
+        }
+      }
+    },
+    "Wiederholung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat"
+          }
+        }
+      }
+    },
+    "Wiederkehrend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recurring"
+          }
+        }
+      }
+    },
+    "Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Really delete all locations, waste types, birthdays and events?"
+          }
+        }
+      }
+    },
+    "Zeigt die nächste Abholung – wahlweise für einen Standort.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the next collection – optionally for one location."
+          }
+        }
+      }
+    },
+    "Zeitraum": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period"
+          }
+        }
+      }
+    },
+    "Ziel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target"
+          }
+        }
+      }
+    },
+    "Zuordnung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mapping"
+          }
+        }
+      }
+    },
+    "Zusätzlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionally"
+          }
+        }
+      }
+    },
+    "davon bestätigt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "confirmed"
+          }
+        }
+      }
+    },
+    "iCloud": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud"
+          }
+        }
+      }
+    },
+    "schon drin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "already added"
+          }
+        }
+      }
+    },
+    "Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Tonne & Torte on your iPhone and your dates will appear here."
+          }
+        }
+      }
+    },
+    "Über": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "Übernehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply"
+          }
+        }
+      }
+    },
+    "Übersicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        }
+      }
+    },
+    "✓ steht draußen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✓ it's out"
+          }
+        }
+      }
+    },
+    "🎂 GEBURTSTAGE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎂 BIRTHDAYS"
+          }
+        }
+      }
+    },
+    "In %lld Tagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In %lld days"
+          }
+        }
+      }
+    },
+    "%lld Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dates"
+          }
+        }
+      }
+    },
+    "Importieren (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import (%lld)"
+          }
+        }
+      }
+    },
+    "Vorschläge für %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions for %@"
+          }
+        }
+      }
+    },
+    "· %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· %@"
+          }
+        }
+      }
+    },
+    "„%@“ wirklich löschen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Really delete “%@”?"
+          }
+        }
+      }
+    },
+    "🎁 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎁 %@"
+          }
+        }
+      }
+    },
+    "🎉 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 %lld"
+          }
+        }
+      }
+    },
+    "%lld×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld×"
+          }
+        }
+      }
+    },
+    "Aktualisiert %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated %@"
+          }
+        }
+      }
+    },
+    "%lld Termine sind da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dates loaded. The app reminds you the evening before – and refreshes the dates every week."
+          }
+        }
+      }
+    },
+    "%lld Termine gefunden für %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dates found for %@."
+          }
+        }
+      }
+    },
+    "Termine kommen aus dem Abfuhrkalender des Standorts („%@“).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates come from the location's collection calendar (“%@”)."
+          }
+        }
+      }
+    },
+    "Neu: %@ (%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New: %@ (%@)"
+          }
+        }
+      }
+    },
+    "Termine kommen direkt von den Portalen der Entsorger (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). Angaben ohne Gewähr. Katalog mit %lld Entsorgern.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates come directly from the providers' portals (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). No guarantee. Catalog with %lld providers."
+          }
+        }
+      }
+    },
+    "HEUTE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TODAY"
+          }
+        }
+      }
+    },
+    "MORGEN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TOMORROW"
+          }
+        }
+      }
+    },
+    "NÄCHSTE ABHOLUNG": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEXT COLLECTION"
+          }
+        }
+      }
+    },
+    "ALLES RUHIG": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ALL QUIET"
+          }
+        }
+      }
+    },
+    "Heute wird abgeholt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collection today"
+          }
+        }
+      }
+    },
+    "Heute Abend rausstellen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put it out tonight!"
+          }
+        }
+      }
+    },
+    "Alles steht draußen 👍": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything's out 👍"
+          }
+        }
+      }
+    },
+    "Steht draußen 👍": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's out 👍"
+          }
+        }
+      }
+    },
+    "Deaktiviert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disabled"
+          }
+        }
+      }
+    },
+    "Keine weiteren Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No further dates"
+          }
+        }
+      }
+    },
+    "Noch keine Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No dates yet"
+          }
+        }
+      }
+    },
+    "Manuell / ICS-Datei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual / ICS file"
+          }
+        }
+      }
+    },
+    "Jede Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every week"
+          }
+        }
+      }
+    },
+    "Alle %lld Wochen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every %lld weeks"
+          }
+        }
+      }
+    },
+    "Nur am Geburtstag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the birthday only"
+          }
+        }
+      }
+    },
+    "1 Tag vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 day before"
+          }
+        }
+      }
+    },
+    "2 Tage vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 days before"
+          }
+        }
+      }
+    },
+    "3 Tage vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 days before"
+          }
+        }
+      }
+    },
+    "1 Woche vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 week before"
+          }
+        }
+      }
+    },
+    "2 Wochen vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 weeks before"
+          }
+        }
+      }
+    },
+    "Am Tag selbst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the day"
+          }
+        }
+      }
+    },
+    "1 Monat vorher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 month before"
+          }
+        }
+      }
+    },
+    "Mitteilungen erlaubt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications allowed"
+          }
+        }
+      }
+    },
+    "Mitteilungen abgelehnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications denied"
+          }
+        }
+      }
+    },
+    "Noch nicht erlaubt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not allowed yet"
+          }
+        }
+      }
+    },
+    "Unbekannt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown"
+          }
+        }
+      }
+    },
+    "Entsorger oder Adresse ändern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change provider or address"
+          }
+        }
+      }
+    },
+    "Entsorger verbinden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect provider"
+          }
+        }
+      }
+    },
+    "Neuer Termin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New event"
+          }
+        }
+      }
+    },
+    "Termin bearbeiten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit event"
+          }
+        }
+      }
+    },
+    "Geburtstag bearbeiten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit birthday"
+          }
+        }
+      }
+    },
+    "Datum": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        }
+      }
+    },
+    "Erster Termin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First date"
+          }
+        }
+      }
+    },
+    "Standort erlauben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow location"
+          }
+        }
+      }
+    },
+    "Fertig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Abholung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collection"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

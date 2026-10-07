@@ -23,16 +23,16 @@ public struct AwidoProvider: WasteProvider {
         switch selections.count {
         case 0:
             let places: [Entry] = try await client.json("\(base)/getPlaces/client=\(serviceKey)")
-            return SelectionStep(title: "Ort", options: places.map { SelectionOption(id: $0.key, title: $0.value) })
+            return SelectionStep(title: SelectionStep.cityTitle, options: places.map { SelectionOption(id: $0.key, title: $0.value) })
         case 1:
             let streets: [Entry] = try await client.json("\(base)/getGroupedStreets/\(selections[0].id)?client=\(serviceKey)")
             if streets.isEmpty { return nil }
-            return SelectionStep(title: "Straße", options: streets.map { SelectionOption(id: $0.key, title: $0.value) })
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: $0.key, title: $0.value) })
         case 2:
             let numbers: [Entry] = try await client.json("\(base)/getStreetAddons/\(selections[1].id)?client=\(serviceKey)")
             let real = numbers.filter { !$0.value.trimmingCharacters(in: .whitespaces).isEmpty }
             if real.isEmpty { return nil }
-            return SelectionStep(title: "Hausnummer", options: real.map { SelectionOption(id: $0.key, title: $0.value) })
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: real.map { SelectionOption(id: $0.key, title: $0.value) })
         default:
             return nil
         }

@@ -10,10 +10,10 @@ public struct AbfallIOLegacyProvider: WasteProvider {
     private let client: HTTPClient
     private static let modus = "d6c5855a62cf32a4dadbc2831f0f295f"
     private static let fieldOrder: [(field: String, action: String, title: String)] = [
-        ("f_id_kommune", "auswahl_kommune_set", "Ort"),
-        ("f_id_bezirk", "auswahl_bezirk_set", "Ortsteil"),
-        ("f_id_strasse", "auswahl_strasse_set", "Straße"),
-        ("f_id_strasse_hnr", "auswahl_hnr_set", "Hausnummer"),
+        ("f_id_kommune", "auswahl_kommune_set", "city"),
+        ("f_id_bezirk", "auswahl_bezirk_set", "district"),
+        ("f_id_strasse", "auswahl_strasse_set", "street"),
+        ("f_id_strasse_hnr", "auswahl_hnr_set", "house"),
     ]
 
     public init(key: String, client: HTTPClient = HTTPClient()) {
@@ -56,7 +56,8 @@ public struct AbfallIOLegacyProvider: WasteProvider {
         for step in AbfallIOLegacyProvider.fieldOrder where !chosen.contains(step.field) {
             let options = HTMLText.options(ofSelect: step.field, in: html).filter { $0.value != "0" && !$0.value.isEmpty }
             if !options.isEmpty {
-                return SelectionStep(title: step.title, options: options.map { SelectionOption(id: "\(step.field):\($0.value)", title: $0.label) })
+                let titles = ["city": SelectionStep.cityTitle, "district": SelectionStep.districtTitle, "street": SelectionStep.streetTitle, "house": SelectionStep.houseNumberTitle]
+                return SelectionStep(title: titles[step.title] ?? step.title, options: options.map { SelectionOption(id: "\(step.field):\($0.value)", title: $0.label) })
             }
         }
         return nil

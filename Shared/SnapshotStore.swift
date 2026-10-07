@@ -58,7 +58,7 @@ enum SnapshotStore {
             }
             save(snapshot)
         }
-        NotificationCenter.default.post(name: notificationName, object: nil)
+        DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
     }
 
     static func clearDone(dayKey: String) {

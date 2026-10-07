@@ -29,7 +29,7 @@ public struct JumomindProvider: WasteProvider {
         case 0:
             let cities: [City] = try await client.json("\(api)?r=cities_web")
             // ID kodiert: city:<cityId>:<areaId>:<hasStreets>
-            return SelectionStep(title: "Ort", options: cities.map {
+            return SelectionStep(title: SelectionStep.cityTitle, options: cities.map {
                 SelectionOption(id: "city:\($0.id.value):\($0.area_id.value):\($0.has_streets.value ? 1 : 0)", title: $0.name)
             })
         case 1:
@@ -37,7 +37,7 @@ public struct JumomindProvider: WasteProvider {
             guard parts.count == 4, parts[3] == "1" else { return nil }
             let streets: [Street] = try await client.json("\(api)?r=streets&city_id=\(parts[1])")
             if streets.isEmpty { return nil }
-            return SelectionStep(title: "Straße", options: streets.enumerated().map { index, street in
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.enumerated().map { index, street in
                 let numbers = street.houseNumbers ?? []
                 let encodedNumbers = numbers.compactMap { pair -> String? in
                     guard pair.count >= 2 else { return nil }
@@ -52,7 +52,7 @@ public struct JumomindProvider: WasteProvider {
             let pairs = parts[3].split(separator: "|").map { $0.split(separator: "=", maxSplits: 1).map(String.init) }.filter { $0.count == 2 }
             let distinctAreas = Set(pairs.map { $0[1] })
             guard distinctAreas.count > 1 else { return nil }
-            return SelectionStep(title: "Hausnummer", options: pairs.map { SelectionOption(id: "house:\($0[1])", title: $0[0]) })
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: pairs.map { SelectionOption(id: "house:\($0[1])", title: $0[0]) })
         default:
             return nil
         }

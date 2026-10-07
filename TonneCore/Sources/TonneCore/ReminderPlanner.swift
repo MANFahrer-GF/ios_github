@@ -78,8 +78,8 @@ public enum ReminderPlanner {
         switch names.count {
         case 0: return ""
         case 1: return names[0]
-        case 2: return "\(names[0]) und \(names[1])"
-        default: return names.dropLast().joined(separator: ", ") + " und " + names[names.count - 1]
+        case 2: return L10n.t("\(names[0]) und \(names[1])", "\(names[0]) and \(names[1])")
+        default: return names.dropLast().joined(separator: ", ") + L10n.t(" und ", " and ") + names[names.count - 1]
         }
     }
 
@@ -111,23 +111,23 @@ public enum ReminderPlanner {
             if settings.eveningEnabled, let fire = Days.at(minutes: settings.eveningMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
                 result.append(PlannedNotification(
                     identifier: "waste-evening-\(key)", fireDate: fire,
-                    title: names.count == 1 ? "Morgen: \(names[0])" : "Morgen wird abgeholt",
-                    body: names.count == 1 ? "Heute Abend rausstellen – morgen kommt die Abfuhr." : "\(list) – heute Abend rausstellen.",
+                    title: names.count == 1 ? L10n.t("Morgen: \(names[0])", "Tomorrow: \(names[0])") : L10n.t("Morgen wird abgeholt", "Collection tomorrow"),
+                    body: names.count == 1 ? L10n.t("Heute Abend rausstellen – morgen kommt die Abfuhr.", "Put it out tonight – collection is tomorrow.") : L10n.t("\(list) – heute Abend rausstellen.", "\(list) – put them out tonight."),
                     category: .wasteEvening, threadIdentifier: "waste", dayKey: key))
             }
             if settings.eveningEnabled, settings.escalationEnabled, settings.escalationMinutes > settings.eveningMinutes,
                let fire = Days.at(minutes: settings.escalationMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
                 result.append(PlannedNotification(
                     identifier: "waste-escalation-\(key)", fireDate: fire,
-                    title: "Steht \(names.count == 1 ? "die Tonne" : "alles") schon draußen?",
-                    body: "\(list) – morgen früh ist die Abfuhr. Tippe „Erledigt“, wenn alles steht.",
+                    title: L10n.t("Steht \(names.count == 1 ? "die Tonne" : "alles") schon draußen?", names.count == 1 ? "Is the bin out yet?" : "Is everything out yet?"),
+                    body: L10n.t("\(list) – morgen früh ist die Abfuhr. Tippe „Erledigt“, wenn alles steht.", "\(list) – collection is tomorrow morning. Tap “Done” once it's out."),
                     category: .wasteEscalation, threadIdentifier: "waste", dayKey: key))
             }
             if settings.morningEnabled, let fire = Days.at(minutes: settings.morningMinutes, on: day, calendar: calendar), fire > now {
                 result.append(PlannedNotification(
                     identifier: "waste-morning-\(key)", fireDate: fire,
-                    title: names.count == 1 ? "Heute: \(names[0])" : "Heute wird abgeholt",
-                    body: names.count == 1 ? "Steht die Tonne schon draußen?" : "\(list) – steht alles draußen?",
+                    title: names.count == 1 ? L10n.t("Heute: \(names[0])", "Today: \(names[0])") : L10n.t("Heute wird abgeholt", "Collection today"),
+                    body: names.count == 1 ? L10n.t("Steht die Tonne schon draußen?", "Is the bin out yet?") : L10n.t("\(list) – steht alles draußen?", "\(list) – is everything out?"),
                     category: .wasteMorning, threadIdentifier: "waste", dayKey: key))
             }
         }
@@ -141,17 +141,17 @@ public enum ReminderPlanner {
             if let fire = Days.at(minutes: settings.birthdayMinutes, on: day, calendar: calendar), fire > now {
                 let body: String
                 if let years = birthday.years {
-                    body = milestone ? "\(birthday.name) wird heute \(years) – ein runder Geburtstag! 🎉" : "\(birthday.name) wird heute \(years). Zeit zum Gratulieren!"
+                    body = milestone ? L10n.t("\(birthday.name) wird heute \(years) – ein runder Geburtstag! 🎉", "\(birthday.name) turns \(years) today – a big one! 🎉") : L10n.t("\(birthday.name) wird heute \(years). Zeit zum Gratulieren!", "\(birthday.name) turns \(years) today. Time to celebrate!")
                 } else {
-                    body = "Zeit zum Gratulieren!"
+                    body = L10n.t("Zeit zum Gratulieren!", "Time to celebrate!")
                 }
-                result.append(PlannedNotification(identifier: "bday-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: "🎂 \(birthday.name) hat heute Geburtstag", body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
+                result.append(PlannedNotification(identifier: "bday-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: L10n.t("🎂 \(birthday.name) hat heute Geburtstag", "🎂 It's \(birthday.name)'s birthday today"), body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
             }
             if birthday.remindDaysBefore > 0,
                let fire = Days.at(minutes: settings.birthdayMinutes, on: Days.add(-birthday.remindDaysBefore, to: day, calendar: calendar), calendar: calendar), fire > now {
-                let when = birthday.remindDaysBefore == 1 ? "morgen" : "in \(birthday.remindDaysBefore) Tagen"
-                let body = birthday.years.map { "Wird \($0)\(milestone ? " – runder Geburtstag!" : ""). Noch ein Geschenk besorgen?" } ?? "Noch ein Geschenk besorgen?"
-                result.append(PlannedNotification(identifier: "bday-pre-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: "🎁 \(birthday.name) hat \(when) Geburtstag", body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
+                let when = birthday.remindDaysBefore == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("in \(birthday.remindDaysBefore) Tagen", "in \(birthday.remindDaysBefore) days")
+                let body = birthday.years.map { L10n.t("Wird \($0)\(milestone ? " – runder Geburtstag!" : ""). Noch ein Geschenk besorgen?", "Turns \($0)\(milestone ? " – a big one!" : ""). Need a present?") } ?? L10n.t("Noch ein Geschenk besorgen?", "Need a present?")
+                result.append(PlannedNotification(identifier: "bday-pre-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: L10n.t("🎁 \(birthday.name) hat \(when) Geburtstag", "🎁 \(birthday.name)'s birthday is \(when)"), body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
             }
         }
 
@@ -161,11 +161,11 @@ public enum ReminderPlanner {
             guard day >= today && day <= horizon else { continue }
             let key = Days.iso(day, calendar: calendar)
             if let fire = Days.at(minutes: settings.customMinutes, on: day, calendar: calendar), fire > now {
-                result.append(PlannedNotification(identifier: "custom-\(key)-\(event.title.hashValue)", fireDate: fire, title: "📌 Heute: \(event.title)", body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
+                result.append(PlannedNotification(identifier: "custom-\(key)-\(event.title.hashValue)", fireDate: fire, title: L10n.t("📌 Heute: \(event.title)", "📌 Today: \(event.title)"), body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
             }
             if event.remindDaysBefore > 0, let fire = Days.at(minutes: settings.customMinutes, on: Days.add(-event.remindDaysBefore, to: day, calendar: calendar), calendar: calendar), fire > now {
-                let when = event.remindDaysBefore == 1 ? "morgen" : "in \(event.remindDaysBefore) Tagen"
-                result.append(PlannedNotification(identifier: "custom-pre-\(key)-\(event.title.hashValue)", fireDate: fire, title: "📌 \(event.title) \(when)", body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
+                let when = event.remindDaysBefore == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("in \(event.remindDaysBefore) Tagen", "in \(event.remindDaysBefore) days")
+                result.append(PlannedNotification(identifier: "custom-pre-\(key)-\(event.title.hashValue)", fireDate: fire, title: L10n.t("📌 \(event.title) \(when)", "📌 \(event.title) \(when)"), body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
             }
         }
 

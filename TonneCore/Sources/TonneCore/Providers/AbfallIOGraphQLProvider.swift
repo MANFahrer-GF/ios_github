@@ -48,7 +48,7 @@ public struct AbfallIOGraphQLProvider: WasteProvider {
         let last = selections.last
         if last == nil {
             let data: CitiesData = try await query("{ cities { id name } }")
-            return SelectionStep(title: "Ort", options: data.cities.map { SelectionOption(id: "city:\($0.id)", title: $0.name) })
+            return SelectionStep(title: SelectionStep.cityTitle, options: data.cities.map { SelectionOption(id: "city:\($0.id)", title: $0.name) })
         }
         guard let last else { return nil }
         let parts = last.id.split(separator: ":", maxSplits: 1).map(String.init)
@@ -57,22 +57,22 @@ public struct AbfallIOGraphQLProvider: WasteProvider {
         case "city":
             let data: CityData = try await query("query($id: ID!) { city(id: $id) { streets { id name } districts { id name } } }", variables: ["id": parts[1]])
             if let districts = data.city?.districts, !districts.isEmpty {
-                return SelectionStep(title: "Ortsteil", options: districts.map { SelectionOption(id: "district:\($0.id)", title: $0.name) })
+                return SelectionStep(title: SelectionStep.districtTitle, options: districts.map { SelectionOption(id: "district:\($0.id)", title: $0.name) })
             }
             let streets = data.city?.streets ?? []
             if streets.isEmpty { return nil }
-            return SelectionStep(title: "Straße", options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
         case "district":
             let data: DistrictData = try await query("query($id: ID!) { district(id: $id) { streets { id name } } }", variables: ["id": parts[1]])
             let streets = data.district?.streets ?? []
             if streets.isEmpty { return nil }
-            return SelectionStep(title: "Straße", options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
         case "street":
             let data: StreetData = try await query("query($id: ID!) { street(id: $id) { houseNumbers { id name } } }", variables: ["id": parts[1]])
             let numbers = data.street?.houseNumbers ?? []
             if numbers.isEmpty { return nil }
-            if numbers.count == 1 { return SelectionStep(title: "Hausnummer", options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) }, searchable: false) }
-            return SelectionStep(title: "Hausnummer", options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) })
+            if numbers.count == 1 { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) }, searchable: false) }
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) })
         default:
             return nil
         }

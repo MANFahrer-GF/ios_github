@@ -23,6 +23,7 @@ struct SourceWizardView: View {
     @State private var selections: [SelectionOption] = []
     @State private var currentStep: SelectionStep?
     @State private var stepSearch = ""
+    @State private var textInput = ""
     @State private var pickups: [Pickup] = []
     @State private var categories: [WasteCategory: Bool] = [:]
     @State private var isLoading = false
@@ -137,7 +138,15 @@ struct SourceWizardView: View {
             if !selections.isEmpty {
                 Section { Text(selections.map(\.title).joined(separator: " › ")).font(.caption).foregroundStyle(.secondary) }
             }
-            if let step = currentStep {
+            if let step = currentStep, step.input == .text {
+                Section(step.title) {
+                    TextField(step.placeholder ?? step.title, text: $textInput)
+                        .textInputAutocapitalization(.words).autocorrectionDisabled()
+                        .onSubmit { submitText() }
+                    Button { submitText() } label: { Label("Weiter", systemImage: "arrow.right.circle.fill") }
+                        .disabled(textInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+            } else if let step = currentStep {
                 let filtered = stepSearch.isEmpty ? step.options : step.options.filter { $0.title.localizedCaseInsensitiveContains(stepSearch) }
                 Section(step.title) {
                     ForEach(filtered.prefix(400)) { option in
@@ -162,7 +171,14 @@ struct SourceWizardView: View {
     private func select(_ option: SelectionOption) {
         selections.append(option)
         stepSearch = ""
+        textInput = ""
         Task { await loadNextStep() }
+    }
+
+    private func submitText() {
+        let value = textInput.trimmingCharacters(in: .whitespaces)
+        guard !value.isEmpty else { return }
+        select(SelectionOption(id: value, title: value))
     }
 
     private func goBack() {

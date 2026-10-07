@@ -6,17 +6,17 @@ public enum WasteCategory: String, CaseIterable, Codable, Hashable {
 
     public var name: String {
         switch self {
-        case .residual: return "Restmüll"
-        case .organic: return "Biotonne"
-        case .paper: return "Papier"
-        case .packaging: return "Gelber Sack"
-        case .glass: return "Glas"
-        case .bulky: return "Sperrmüll"
-        case .hazardous: return "Schadstoffmobil"
-        case .green: return "Grünschnitt"
-        case .textiles: return "Altkleider"
-        case .electronics: return "Elektroschrott"
-        case .other: return "Sonstiges"
+        case .residual: return L10n.t("Restmüll", "General waste")
+        case .organic: return L10n.t("Biotonne", "Organic waste")
+        case .paper: return L10n.t("Papier", "Paper")
+        case .packaging: return L10n.t("Gelber Sack", "Packaging")
+        case .glass: return L10n.t("Glas", "Glass")
+        case .bulky: return L10n.t("Sperrmüll", "Bulky waste")
+        case .hazardous: return L10n.t("Schadstoffmobil", "Hazardous waste")
+        case .green: return L10n.t("Grünschnitt", "Garden waste")
+        case .textiles: return L10n.t("Altkleider", "Textiles")
+        case .electronics: return L10n.t("Elektroschrott", "E-waste")
+        case .other: return L10n.t("Sonstiges", "Other")
         }
     }
 

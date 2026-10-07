@@ -9,10 +9,10 @@ public enum Recurrence: Hashable, Codable {
 
     public var label: String {
         switch self {
-        case .once: return "Einmalig"
-        case .everyWeeks(let n): return n == 1 ? "Jede Woche" : "Alle \(n) Wochen"
-        case .everyMonths(let n): return n == 1 ? "Jeden Monat" : (n == 12 ? "Jedes Jahr" : "Alle \(n) Monate")
-        case .yearly: return "Jedes Jahr"
+        case .once: return L10n.t("Einmalig", "Once")
+        case .everyWeeks(let n): return n == 1 ? L10n.t("Jede Woche", "Every week") : L10n.t("Alle \(n) Wochen", "Every \(n) weeks")
+        case .everyMonths(let n): return n == 1 ? L10n.t("Jeden Monat", "Every month") : (n == 12 ? L10n.t("Jedes Jahr", "Every year") : L10n.t("Alle \(n) Monate", "Every \(n) months"))
+        case .yearly: return L10n.t("Jedes Jahr", "Every year")
         }
     }
 

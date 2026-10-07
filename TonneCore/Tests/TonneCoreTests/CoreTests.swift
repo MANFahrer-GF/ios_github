@@ -9,7 +9,22 @@ final class CoreTests: XCTestCase {
         return c
     }()
 
+    override func setUp() {
+        super.setUp()
+        L10n.forcedLanguage = "de"
+    }
+
     func day(_ iso: String) -> Date { Days.parse(iso, calendar: calendar)! }
+
+    func testL10n() {
+        L10n.forcedLanguage = "en-US"
+        XCTAssertEqual(WasteCategory.packaging.name, "Packaging")
+        XCTAssertEqual(Recurrence.everyWeeks(2).label, "Every 2 weeks")
+        XCTAssertEqual(ReminderPlanner.joinNames(["A", "B", "C"]), "A, B and C")
+        L10n.forcedLanguage = "de"
+        XCTAssertEqual(WasteCategory.packaging.name, "Gelber Sack")
+        XCTAssertEqual(ReminderPlanner.joinNames(["A", "B", "C"]), "A, B und C")
+    }
 
     func testScheduleBiweekly() {
         let schedule = PickupSchedule(intervalWeeks: 2, anchorDate: day("2026-01-02"))
@@ -133,7 +148,10 @@ final class CoreTests: XCTestCase {
     }
 
     func testCatalogSearch() {
-        XCTAssertGreaterThan(ProviderCatalog.count, 150)
+        XCTAssertGreaterThan(ProviderCatalog.count, 185)
+        XCTAssertEqual(ProviderCatalog.search("Köln").first?.kind, .awbKoeln)
+        XCTAssertTrue(ProviderCatalog.search("Hannover").contains { $0.kind == .ahaHannover })
+        XCTAssertTrue(ProviderCatalog.search("Bremen").contains { $0.kind == .cTrace })
         XCTAssertEqual(ProviderCatalog.search("gifhorn").first?.serviceKey, "gifhorn")
         XCTAssertEqual(ProviderCatalog.search("Stendal").first?.kind, .abfallAppNet)
         XCTAssertTrue(ProviderCatalog.search("darmstadt").contains { $0.kind == .jumomind })
