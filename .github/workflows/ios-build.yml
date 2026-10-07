@@ -3,6 +3,7 @@ name: iOS-Build
 on:
   push:
     branches: [ "**" ]
+    paths-ignore: [ "docs/**", "web/**", "**/*.md" ]
   workflow_dispatch:
 
 concurrency:
@@ -10,13 +11,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Linux statt macOS: TonneCore läuft auf beiden, Linux-Minuten sind deutlich günstiger.
   core-tests:
     name: TonneCore-Tests
-    runs-on: macos-15
+    runs-on: ubuntu-latest
+    container: swift:6.1
     steps:
       - uses: actions/checkout@v4
-      - name: Xcode wählen
-        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_*.app | grep -vi beta | sort -V | tail -1)"
       - name: Tests
         working-directory: TonneCore
         run: swift test
@@ -27,14 +28,11 @@ jobs:
     timeout-minutes: 30
     strategy:
       fail-fast: false
+      # Bei jedem Push nur Xcode 27 (macOS-Minuten zählen zehnfach); Xcode 26 zusätzlich beim manuellen Start.
       matrix:
-        include:
-          - runner: macos-15
-            xcode: "Xcode 26"
-            pattern: "Xcode_26"
-          - runner: xcode-27
-            xcode: "Xcode 27"
-            pattern: "Xcode_27"
+        include: ${{ fromJSON(github.event_name == 'workflow_dispatch'
+          && '[{"runner":"xcode-27","xcode":"Xcode 27","pattern":"Xcode_27"},{"runner":"macos-15","xcode":"Xcode 26","pattern":"Xcode_26"}]'
+          || '[{"runner":"xcode-27","xcode":"Xcode 27","pattern":"Xcode_27"}]') }}
     steps:
       - uses: actions/checkout@v4
       - name: Xcode wählen

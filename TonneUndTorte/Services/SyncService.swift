@@ -119,6 +119,25 @@ enum SyncService {
         return ICS.parse(text).map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary), note: $0.location) }
     }
 
+    /// Liest eine ICS- oder CSV-Datei des Nutzers; das Format wird am Inhalt erkannt.
+    static func readPickupFile(at url: URL) throws -> [Pickup] {
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+        let text = HTTPClient.text(from: try Data(contentsOf: url))
+        if text.contains("BEGIN:VCALENDAR") {
+            return ICS.parse(text).map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary), note: $0.location) }
+        }
+        return PickupCSV.parse(text)
+    }
+
+    /// Termine eines Standorts (letzte 30 Tage bis 1 Jahr voraus) für den CSV-Export.
+    static func csvRows(for location: Location) -> [PickupCSV.Row] {
+        let from = Days.add(-30, to: Days.today()), to = Days.add(366, to: Days.today())
+        return location.sortedWasteTypes.filter(\.isActive).flatMap { type in
+            type.pickupDates(from: from, to: to).map { PickupCSV.Row(date: $0, name: type.name) }
+        }
+    }
+
     static func bundledPickups(named resource: String) -> [Pickup] {
         guard let url = Bundle.main.url(forResource: resource, withExtension: "ics"),
               let text = try? String(contentsOf: url, encoding: .utf8) else { return [] }

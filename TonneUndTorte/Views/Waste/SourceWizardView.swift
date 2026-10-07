@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
 import TonneCore
 
 /// Einrichtungsassistent für eine Online-Quelle: Entsorger finden (Standort oder Suche),
@@ -29,6 +30,15 @@ struct SourceWizardView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var locationName = ""
+    @State private var showCoverage = false
+    @State private var showFileImporter = false
+    @State private var importPickups: [Pickup] = []
+    @State private var importTarget: Location?
+    /// Für den Dateiimport neu angelegter Standort – wird wieder entfernt, wenn der Import abgebrochen wird.
+    @State private var createdForImport = false
+    @State private var showImport = false
+
+    private static let coverageByDistrict = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
 
     var body: some View {
         NavigationStack {
@@ -56,6 +66,21 @@ struct SourceWizardView: View {
             .alert("Hinweis", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
                 Button("OK", role: .cancel) {}
             } message: { Text(errorMessage ?? "") }
+            .navigationDestination(isPresented: $showCoverage) {
+                CoverageView { entry in
+                    showCoverage = false
+                    choose(entry)
+                }
+            }
+            .fileImporter(isPresented: $showFileImporter, allowedContentTypes: LocationDetailView.importTypes, onCompletion: handleImportFile)
+            .sheet(isPresented: $showImport, onDismiss: cleanUpImport) {
+                ICSImportView(pickups: importPickups, location: importTarget) {
+                    createdForImport = false
+                    model.onboardingDone = true
+                    if let importTarget { onFinished?(importTarget) }
+                    dismiss()
+                }
+            }
         }
     }
 
@@ -90,7 +115,11 @@ struct SourceWizardView: View {
                     Text("Vorschläge für \(place)").font(.caption).foregroundStyle(.secondary)
                 }
                 if let message = region.errorMessage { Text(message).font(.caption).foregroundStyle(.secondary) }
+                Button { showCoverage = true } label: {
+                    Label(L10n.t("Welche Landkreise fehlen noch?", "Which districts are missing?"), systemImage: "map")
+                }
             }
+            if let missing = uncoveredHint { uncoveredSection(missing) }
             Section {
                 ForEach(query.isEmpty && region.suggestions.isEmpty ? ProviderCatalog.entries : results) { item in
                     Button { choose(item) } label: {
@@ -151,6 +180,75 @@ struct SourceWizardView: View {
         selections = []
         locationName = location?.name ?? ""
         Task { await loadNextStep() }
+    }
+
+    // MARK: - Nicht angebundene Regionen
+
+    /// Liegt der gesuchte Ort nur in Kreisen ohne Entsorger, sagen wir das deutlich – mit dem Weg über eine Datei.
+    private var uncoveredHint: (place: String, districts: [String])? {
+        guard !query.isEmpty else { return nil }
+        let hits = ProviderCatalog.municipalities(matching: query)
+        let districts = Set(hits.map(\.district))
+        guard let first = hits.first, !districts.isEmpty,
+              districts.allSatisfy({ Self.coverageByDistrict[$0]?.isCovered == false }) else { return nil }
+        return (first.name, districts.sorted().map { DistrictCoverage.displayName($0) })
+    }
+
+    private func uncoveredSection(_ missing: (place: String, districts: [String])) -> some View {
+        Section {
+            Label {
+                Text(L10n.t("\(missing.place) (\(missing.districts.joined(separator: ", "))) ist noch nicht angebunden. Du kannst die Termine trotzdem nutzen: als ICS-Link (unten) oder als CSV-/ICS-Datei.",
+                            "\(missing.place) (\(missing.districts.joined(separator: ", "))) is not connected yet. You can still use your dates: as an ICS link (below) or as a CSV/ICS file."))
+            } icon: {
+                Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+            }
+            .font(.subheadline)
+            Button { showFileImporter = true } label: {
+                Label(L10n.t("Termine aus CSV- oder ICS-Datei laden", "Load dates from CSV or ICS file"), systemImage: "square.and.arrow.down")
+            }
+            ShareLink(item: PickupCSVFile(text: PickupCSV.template(), fileName: L10n.t("Abfuhrtermine-Vorlage.csv", "Pickup-template.csv")),
+                      preview: SharePreview(L10n.t("CSV-Vorlage", "CSV template"))) {
+                Label(L10n.t("CSV-Vorlage zum Ausfüllen", "CSV template to fill in"), systemImage: "doc.badge.plus")
+            }
+        } header: {
+            Text(L10n.t("Noch nicht verfügbar", "Not available yet"))
+        }
+    }
+
+    private func handleImportFile(_ result: Result<URL, Error>) {
+        do {
+            let pickups = try SyncService.readPickupFile(at: result.get())
+            guard !pickups.isEmpty else {
+                errorMessage = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Abfallart.",
+                                      "No dates found in the file. CSV files need a date (e.g. 2026-10-07) and a waste type per line.")
+                return
+            }
+            importPickups = pickups
+            if let location {
+                importTarget = location
+                createdForImport = false
+            } else {
+                let name = uncoveredHint?.place ?? (query.isEmpty ? L10n.t("Zuhause", "Home") : query)
+                let target = Location(name: name, sortOrder: model.allLocations().count)
+                target.colorHex = Palette.colors[model.allLocations().count % Palette.colors.count]
+                context.insert(target)
+                importTarget = target
+                createdForImport = true
+            }
+            showImport = true
+        } catch {
+            errorMessage = L10n.t("Datei konnte nicht gelesen werden: \(error.localizedDescription)", "Could not read the file: \(error.localizedDescription)")
+        }
+    }
+
+    /// Abgebrochener Import: den dafür angelegten, leeren Standort wieder entfernen.
+    private func cleanUpImport() {
+        if createdForImport, let target = importTarget, (target.wasteTypes ?? []).isEmpty {
+            context.delete(target)
+            try? context.save()
+        }
+        createdForImport = false
+        importTarget = nil
     }
 
     private func chooseICS() {

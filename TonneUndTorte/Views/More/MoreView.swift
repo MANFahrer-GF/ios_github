@@ -20,6 +20,7 @@ struct MoreView: View {
                 Section {
                     NavigationLink { CustomEventsView() } label: { Label("Eigene Termine", systemImage: "pin.fill") }
                     NavigationLink { WasteABCView() } label: { Label("Abfall-ABC", systemImage: "book.fill") }
+                    NavigationLink { CoverageView() } label: { Label(L10n.t("Abdeckung nach Landkreis", "Coverage by district"), systemImage: "map.fill") }
                 }
                 Section {
                     NavigationLink { CalendarSyncView() } label: {

@@ -25,11 +25,15 @@ public extension ProviderCatalog {
         }
         let districts = Set(municipalities(matching: query).map(\.district))
         guard !districts.isEmpty else { return ranked }
-        let known = Set(direct.map(\.id))
-        let viaDistrict = entries.filter { entry in
-            !known.contains(entry.id) && (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains)
-        }.sorted { $0.title < $1.title }
-        return ranked + viaDistrict
+        // Entsorger des Kreises, in dem der gesuchte Ort liegt, vor bloßen Wortteil-Treffern
+        // („Bergen“ → erst Landkreis Celle, dann „Bergenhusen“ in Schleswig-Flensburg).
+        let strong = ranked.filter { (ranks[$0.id] ?? 2) < 2 }
+        let weak = ranked.filter { (ranks[$0.id] ?? 2) >= 2 }
+        let inDistrict = { (entry: CatalogEntry) in (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains) }
+        let known = Set(strong.map(\.id))
+        let viaDistrict = entries.filter { !known.contains($0.id) && inDistrict($0) }.sorted { $0.title < $1.title }
+        let rest = weak.filter { !inDistrict($0) }
+        return strong + viaDistrict + rest
     }
 
     /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.

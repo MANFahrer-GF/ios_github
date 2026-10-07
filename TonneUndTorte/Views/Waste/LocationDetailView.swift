@@ -17,7 +17,9 @@ struct LocationDetailView: View {
     @State private var message: String?
     @State private var showDeleteConfirm = false
 
-    private static let icsTypes: [UTType] = [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .text, .data]
+    /// ICS und CSV (Excel/Numbers-Export); das Format wird beim Lesen am Inhalt erkannt.
+    static let importTypes: [UTType] = [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .commaSeparatedText,
+                                        UTType(filenameExtension: "csv") ?? .data, .text, .data]
 
     private var title: String { location.name.isEmpty ? "Standort" : location.name }
 
@@ -37,7 +39,7 @@ struct LocationDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showWizard) { SourceWizardView(location: location).environmentObject(model) }
         .sheet(isPresented: $showImport) { ICSImportView(pickups: importPickups, location: location) }
-        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: Self.icsTypes, onCompletion: handleFile)
+        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: Self.importTypes, onCompletion: handleFile)
         .alert("Hinweis", isPresented: showMessage) {
             Button("OK", role: .cancel) {}
         } message: {
@@ -97,12 +99,24 @@ struct LocationDetailView: View {
             Button {
                 showFileImporter = true
             } label: {
-                Label("ICS-Datei importieren", systemImage: "square.and.arrow.down")
+                Label(L10n.t("ICS- oder CSV-Datei importieren", "Import ICS or CSV file"), systemImage: "square.and.arrow.down")
+            }
+            let rows = SyncService.csvRows(for: location)
+            if !rows.isEmpty {
+                ShareLink(item: PickupCSVFile(text: PickupCSV.build(rows), fileName: "\(location.name.isEmpty ? "Abfuhrtermine" : location.name).csv"),
+                          preview: SharePreview(L10n.t("Abfuhrtermine (CSV)", "Pickup dates (CSV)"))) {
+                    Label(L10n.t("Termine als CSV exportieren", "Export dates as CSV"), systemImage: "tablecells")
+                }
+            }
+            ShareLink(item: PickupCSVFile(text: PickupCSV.template(), fileName: L10n.t("Abfuhrtermine-Vorlage.csv", "Pickup-template.csv")),
+                      preview: SharePreview(L10n.t("CSV-Vorlage", "CSV template"))) {
+                Label(L10n.t("CSV-Vorlage zum Ausfüllen", "CSV template to fill in"), systemImage: "doc.badge.plus")
             }
         } header: {
             Text("Abfuhrtermine")
         } footer: {
-            Text("Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung.")
+            Text(L10n.t("Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung. Ohne Anbindung: Termine in die CSV-Vorlage eintragen (Datum;Abfallart, z. B. in Excel oder Numbers) und hier importieren.",
+                        "Connected locations sync weekly. If the operator moves a date, you get a notification. Without a connection: fill in the CSV template (date;waste type, e.g. in Excel or Numbers) and import it here."))
         }
     }
 
@@ -146,9 +160,10 @@ struct LocationDetailView: View {
         switch result {
         case .success(let url):
             do {
-                importPickups = try SyncService.readICSFile(at: url)
+                importPickups = try SyncService.readPickupFile(at: url)
                 if importPickups.isEmpty {
-                    message = "In der Datei wurden keine Termine gefunden."
+                    message = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Abfallart.",
+                                     "No dates found in the file. CSV files need a date (e.g. 2026-10-07) and a waste type per line.")
                 } else {
                     showImport = true
                 }
@@ -175,6 +190,8 @@ struct LocationDetailView: View {
 struct ICSImportView: View {
     let pickups: [Pickup]
     let location: Location?
+    /// Nach erfolgreichem Import (z. B. um den Assistenten zu schließen).
+    var onImported: (() -> Void)? = nil
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -197,7 +214,7 @@ struct ICSImportView: View {
                 }
                 Section { Toggle("Bisherige Einzeltermine ersetzen", isOn: $replace) }
             }
-            .navigationTitle("ICS importieren")
+            .navigationTitle(L10n.t("Termine importieren", "Import dates"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
@@ -215,10 +232,11 @@ struct ICSImportView: View {
 
     private func importNow() {
         SyncService.apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: replace)
-        location?.lastSyncMessage = "ICS-Datei importiert"
+        location?.lastSyncMessage = L10n.t("Datei importiert (\(pickups.count) Termine)", "File imported (\(pickups.count) dates)")
         try? context.save()
         Task { await model.refreshAll() }
         dismiss()
+        onImported?()
     }
 }
 
@@ -249,5 +267,24 @@ private struct MappingRow: View {
 
     private func newTitle(for category: WasteCategory) -> String {
         "Neu: \(mapping.summary) (\(category.name))"
+    }
+}
+
+/// Abfuhrtermine als CSV-Datei zum Teilen (Excel, Numbers, Mail).
+struct PickupCSVFile: Transferable {
+    let text: String
+    var fileName = "Abfuhrtermine.csv"
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(exportedContentType: .commaSeparatedText) { file in
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent(file.safeFileName)
+            try Data(file.text.utf8).write(to: url, options: .atomic)
+            return SentTransferredFile(url)
+        }
+    }
+
+    /// Ohne Schrägstriche und Doppelpunkte, damit der Dateiname überall gültig ist.
+    private var safeFileName: String {
+        let cleaned = fileName.replacingOccurrences(of: "/", with: "-").replacingOccurrences(of: ":", with: "-")
+        return cleaned.isEmpty ? "Abfuhrtermine.csv" : cleaned
     }
 }
