@@ -106,6 +106,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case sitepark
     case insertIT
     case muellabfuhrDeutschland
+    case heimatInfo
 
     public var displayName: String {
         switch self {
@@ -129,6 +130,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .sitepark: return L10n.t("Kreis-/Stadtportal", "District portal")
         case .insertIT: return "Insert IT"
         case .muellabfuhrDeutschland: return "Müllabfuhr Deutschland"
+        case .heimatInfo: return "Heimat-Info"
         }
     }
 }
@@ -208,6 +210,7 @@ public enum ProviderFactory {
         case .sitepark: return SiteparkProvider(tenant: serviceKey, client: client)
         case .insertIT: return InsertITProvider(city: serviceKey, client: client)
         case .muellabfuhrDeutschland: return MuellabfuhrDeutschlandProvider(mandator: serviceKey, client: client)
+        case .heimatInfo: return HeimatInfoProvider(commune: serviceKey, client: client)
         }
     }
 

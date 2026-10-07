@@ -31,7 +31,7 @@ struct AboutView: View {
                     }
                 }
                 card(title: "Woher die Daten kommen", symbol: "antenna.radiowaves.left.and.right") {
-                    Text("Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Kreisportale (Sitepark) sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt \(ProviderCatalog.count) Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.")
+                    Text("Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Heimat-Info, Kreisportale (Sitepark) sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt \(ProviderCatalog.count) Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.")
                 }
                 card(title: "Clean. Ohne Mist.", symbol: "checkmark.seal.fill") {
                     VStack(alignment: .leading, spacing: 8) {

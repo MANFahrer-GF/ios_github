@@ -141,6 +141,12 @@ extension LiveProviderTests {
         }
     }
 
+    func testHeimatInfo() async throws {
+        for commune in ["salgen", "gruendau", "aschheim"] {
+            try await check(HeimatInfoProvider(commune: commune), prefer: [], minCount: 5)
+        }
+    }
+
     func testSiteparkAllTenants() async throws {
         for tenant in SiteparkProvider.tenants.keys.sorted() {
             try await check(SiteparkProvider(tenant: tenant), prefer: [], minCount: 3)

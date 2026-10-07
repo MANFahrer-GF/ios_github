@@ -109,6 +109,12 @@ final class CoreTests: XCTestCase {
         }
     }
 
+    func testSearchFindsHeimatInfo() {
+        for query in ["Salgen", "Gründau", "Aschheim", "Mainburg", "Feucht"] {
+            XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .heimatInfo }, query)
+        }
+    }
+
     func testInsertITNames() {
         XCTAssertEqual(InsertITProvider.cleanName("Leerung: Biomüll (Kaiserstraße 1)"), "Biomüll")
         XCTAssertEqual(InsertITProvider.cleanName("Leerung: Rest"), "Restmüll")
