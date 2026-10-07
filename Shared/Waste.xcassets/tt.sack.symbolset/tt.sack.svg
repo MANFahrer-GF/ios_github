@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3300" height="2200">
+<!--glyph: "tt.sack", point size: 100.0, template writer version: "Tonne und Torte"-->
+<g id="Notes">
+  <text style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 263 322)">Weight/Scale Variations</text>
+  <text id="template-version" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2952.31 1933)">Template v.3.0</text>
+  <text style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2865.04 1951)">Requires Xcode 13 or greater</text>
+  <text id="descriptive-name" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2865.04 1969)">Gelber Sack</text>
+</g>
+<g id="Guides">
+  <line id="Baseline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="696" y2="696"/>
+  <line id="Capline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="625.541" y2="625.541"/>
+  <line id="Baseline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1126" y2="1126"/>
+  <line id="Capline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1055.54" y2="1055.54"/>
+  <line id="Baseline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1556" y2="1556"/>
+  <line id="Capline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1485.54" y2="1485.54"/>
+  <line id="left-margin-Regular-M" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1407.38" x2="1407.38" y1="1030" y2="1150"/>
+  <line id="right-margin-Regular-M" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1475.42" x2="1475.42" y1="1030" y2="1150"/>
+</g>
+<g id="Symbols">
+  <g id="Regular-M">
+    <path d="M1421.65,1049.69 C1429.55,1050.875 1435.87,1055.615 1438.635,1062.725 L1444.165,1062.725 C1446.93,1055.615 1453.25,1050.875 1461.15,1049.69 C1459.57,1057.985 1455.225,1064.305 1449.3,1068.255 L1433.5,1068.255 C1427.575,1064.305 1423.23,1057.985 1421.65,1049.69 Z"/>
+    <path d="M1435.87,1067.465 L1446.93,1067.465 C1448.675,1067.465 1450.09,1068.88 1450.09,1070.625 L1450.09,1071.81 C1450.09,1073.555 1448.675,1074.97 1446.93,1074.97 L1435.87,1074.97 C1434.125,1074.97 1432.71,1073.555 1432.71,1071.81 L1432.71,1070.625 C1432.71,1068.88 1434.125,1067.465 1435.87,1067.465 Z"/>
+    <path d="M1433.105,1076.945 L1449.695,1076.945 C1464.31,1081.685 1471.42,1094.72 1471.025,1110.125 C1470.63,1124.345 1460.36,1131.06 1441.4,1131.06 C1422.44,1131.06 1412.17,1124.345 1411.775,1110.125 C1411.38,1094.72 1418.49,1081.685 1433.105,1076.945 Z M1445.745,1084.45 Q1456.41,1097.09 1455.225,1120.79 Q1461.545,1098.67 1445.745,1084.45 Z M1437.055,1084.45 Q1421.255,1098.67 1427.575,1120.79 Q1426.39,1097.09 1437.055,1084.45 Z"/>
+  </g>
+</g>
+</svg>

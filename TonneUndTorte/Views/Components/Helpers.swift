@@ -173,24 +173,30 @@ struct SymbolPicker: View {
     @Binding var symbolName: String
     let colorHex: String
     var symbols: [String] = Palette.wasteSymbols
-    /// Abfallarten zeigen die eigenen Tonnen-Piktogramme, Orte und Termine die SF Symbols.
+    /// Gesetzt bei Abfallarten: Auswahl mit den eigenen Piktogrammen (Gelber Sack und Gelbe Tonne getrennt).
+    /// Orte und Termine zeigen weiter SF Symbols.
     var wasteName: String? = nil
     private let columns = [GridItem(.adaptive(minimum: 48), spacing: 10)]
+
+    private var choices: [String] { wasteName == nil ? symbols : WasteGlyph.pickerSymbols }
+
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(symbols, id: \.self) { symbol in
+            ForEach(choices, id: \.self) { symbol in
+                let isSelected = wasteName.map { WasteGlyph.matches(symbol, current: symbolName, name: $0) } ?? (symbol == symbolName)
                 Group {
-                    if let wasteName {
-                        WasteIcon(symbolName: symbol, name: wasteName, size: 20, weight: .semibold)
+                    if wasteName != nil {
+                        WasteIcon(symbolName: symbol, size: 20, weight: .semibold)
                     } else {
                         Image(systemName: symbol).font(.title3)
                     }
                 }
                 .frame(width: 44, height: 44)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(symbol == symbolName ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(symbol == symbolName ? Color(hex: colorHex) : .clear, lineWidth: 2))
-                    .foregroundStyle(symbol == symbolName ? Color(hex: colorHex) : .primary)
-                    .onTapGesture { symbolName = symbol }
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(isSelected ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
+                .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? Color(hex: colorHex) : .clear, lineWidth: 2))
+                .foregroundStyle(isSelected ? Color(hex: colorHex) : .primary)
+                .onTapGesture { symbolName = symbol }
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
     }

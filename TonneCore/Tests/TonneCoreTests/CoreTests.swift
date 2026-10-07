@@ -30,6 +30,14 @@ final class CoreTests: XCTestCase {
         XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Christmas trees"))
         XCTAssertNil(WasteGlyph.assetName(for: "checkmark.circle"))
         XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Kombinierte Wertstoffsammlung"), "tt.sack")
+        // Direkt gewählt: gilt unabhängig vom Namen
+        XCTAssertEqual(WasteGlyph.assetName(for: "tt.bin.yellow", name: "Gelber Sack"), "tt.bin.yellow")
+        XCTAssertEqual(WasteGlyph.pickerSymbols.prefix(7), ["tt.bin", "tt.bin.bio", "tt.bin.paper", "tt.bin.yellow", "tt.sack", "tt.glass", "tt.green"])
+        XCTAssertFalse(WasteGlyph.pickerSymbols.contains("bag.fill"))
+        XCTAssertTrue(WasteGlyph.pickerSymbols.contains("sofa.fill"))
+        XCTAssertTrue(WasteGlyph.matches("tt.sack", current: "bag.fill", name: "Gelber Sack"))
+        XCTAssertTrue(WasteGlyph.matches("tt.bin.yellow", current: "bag.fill", name: "Gelbe Tonne"))
+        XCTAssertFalse(WasteGlyph.matches("tt.sack", current: "bag.fill", name: "Gelbe Tonne"))
         for category in WasteCategory.allCases {
             if let asset = WasteGlyph.assetName(for: category.symbolName, name: category.name) {
                 XCTAssertTrue(WasteGlyph.all.contains(asset))

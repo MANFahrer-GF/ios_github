@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3300" height="2200">
+<!--glyph: "tt.bin.bio", point size: 100.0, template writer version: "Tonne und Torte"-->
+<g id="Notes">
+  <text style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 263 322)">Weight/Scale Variations</text>
+  <text id="template-version" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2952.31 1933)">Template v.3.0</text>
+  <text style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2865.04 1951)">Requires Xcode 13 or greater</text>
+  <text id="descriptive-name" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 2865.04 1969)">Biotonne</text>
+</g>
+<g id="Guides">
+  <line id="Baseline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="696" y2="696"/>
+  <line id="Capline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="625.541" y2="625.541"/>
+  <line id="Baseline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1126" y2="1126"/>
+  <line id="Capline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1055.54" y2="1055.54"/>
+  <line id="Baseline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1556" y2="1556"/>
+  <line id="Capline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1485.54" y2="1485.54"/>
+  <line id="left-margin-Regular-M" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1403.83" x2="1403.83" y1="1030" y2="1150"/>
+  <line id="right-margin-Regular-M" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1478.97" x2="1478.97" y1="1030" y2="1150"/>
+</g>
+<g id="Symbols">
+  <g id="Regular-M">
+    <path d="M1412.565,1059.96 L1470.235,1059.96 C1472.853,1059.96 1474.975,1062.082 1474.975,1064.7 L1474.975,1065.49 C1474.975,1068.108 1472.853,1070.23 1470.235,1070.23 L1412.565,1070.23 C1409.947,1070.23 1407.825,1068.108 1407.825,1065.49 L1407.825,1064.7 C1407.825,1062.082 1409.947,1059.96 1412.565,1059.96 Z"/>
+    <path d="M1434.29,1052.85 L1448.51,1052.85 C1450.692,1052.85 1452.46,1054.619 1452.46,1056.8 L1452.46,1058.38 C1452.46,1060.562 1450.692,1062.33 1448.51,1062.33 L1434.29,1062.33 C1432.109,1062.33 1430.34,1060.562 1430.34,1058.38 L1430.34,1056.8 C1430.34,1054.619 1432.109,1052.85 1434.29,1052.85 Z"/>
+    <path d="M1414.145,1074.575 L1468.655,1074.575 L1463.915,1118.025 Q1463.52,1121.975 1459.57,1121.975 L1423.23,1121.975 Q1419.28,1121.975 1418.885,1118.025 Z M1441.4,1082.475 C1427.97,1085.635 1425.6,1098.275 1441.4,1112.89 C1457.2,1098.275 1454.83,1085.635 1441.4,1082.475 Z M1439.623,1091.56 L1443.177,1091.56 L1443.177,1109.73 L1439.623,1109.73 Z"/>
+    <path d="M1431.525,1126.32 C1431.525,1129.81 1428.695,1132.64 1425.205,1132.64 C1421.715,1132.64 1418.885,1129.81 1418.885,1126.32 C1418.885,1122.83 1421.715,1120 1425.205,1120 C1428.695,1120 1431.525,1122.83 1431.525,1126.32 Z"/>
+    <path d="M1463.915,1126.32 C1463.915,1129.81 1461.085,1132.64 1457.595,1132.64 C1454.105,1132.64 1451.275,1129.81 1451.275,1126.32 C1451.275,1122.83 1454.105,1120 1457.595,1120 C1461.085,1120 1463.915,1122.83 1463.915,1126.32 Z"/>
+  </g>
+</g>
+</svg>
