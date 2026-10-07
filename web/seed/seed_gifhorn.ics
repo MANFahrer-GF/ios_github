@@ -1,0 +1,1577 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+METHOD:PUBLISH
+X-WR-CALNAME:Abfuhrkalender-Gifhorn-2026
+PRODID:-//portal.awido.de//iCal
+X-WR-CALDESC:Abfuhrkalender
+X-WR-TIMEZONE:Europe/Berlin
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+BEGIN:DAYLIGHT
+TZNAME:CEST
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZNAME:CET
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:AWIDO-GR-20260323T0000001
+SUMMARY:Grünrückstände
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260323
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260324
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260410T0000002
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260410
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260411
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260410T0000003
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260410
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260411
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261022T0000004
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261022
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261023
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261022T0000005
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261022
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261023
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260618T0000006
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260618
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260619
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260618T0000007
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260618
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260619
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260224T0000008
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260224T170000
+DTEND;TZID=Europe/Berlin:20260224T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261231T0000009
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261231
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20270101
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261231T00000010
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261231
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20270101
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260922T00000011
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260922T170000
+DTEND;TZID=Europe/Berlin:20260922T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260929T00000012
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260929
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260930
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260521T00000013
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260521
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260522
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260521T00000014
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260521
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260522
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260910T00000015
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260910
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260911
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260910T00000016
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260910
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260911
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260205T00000017
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260205
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260206
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260217T00000018
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260217
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260218
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20261124T00000019
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20261124T170000
+DTEND;TZID=Europe/Berlin:20261124T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20261124T00000020
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261124
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261125
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261119T00000021
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261119
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261120
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261119T00000022
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261119
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261120
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260804T00000023
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260804
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260805
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260115T00000024
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260115
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260116
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260115T00000025
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260115
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260116
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-WB-20260115T00000026
+SUMMARY:Weihnachtsbäume
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260115
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260116
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261001T00000027
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261001
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261002
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260212T00000028
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260212
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260213
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260212T00000029
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260212
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260213
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260813T00000030
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260813
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260814
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260813T00000031
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260813
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260814
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261210T00000032
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261210
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261211
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260122T00000033
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260122
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260123
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260716T00000034
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260716
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260717
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260716T00000035
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260716
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260717
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260901T00000036
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260901
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260902
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260820T00000037
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260820
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260821
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261105T00000038
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261105
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261106
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261105T00000039
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261105
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261106
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GR-20261105T00000040
+SUMMARY:Grünrückstände
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261105
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261106
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260317T00000041
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260317
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260318
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260903T00000042
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260903
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260904
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260305T00000043
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260305
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260306
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260512T00000044
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260512
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260513
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260226T00000045
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260226
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260227
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260226T00000046
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260226
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260227
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260401T00000047
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260401
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260402
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260120T00000048
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260120
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260121
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-SM-20260916T00000049
+SUMMARY:Sperrmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260916
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260917
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260102T00000050
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260102
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260103
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260102T00000051
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260102
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260103
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260723T00000052
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260723
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260724
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261112T00000053
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261112
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261113
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260623T00000054
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260623T170000
+DTEND;TZID=Europe/Berlin:20260623T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-SM-20260623T00000055
+SUMMARY:Sperrmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260623
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260624
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260917T00000056
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260917
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260918
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261203T00000057
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261203
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261204
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261203T00000058
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261203
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261204
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260730T00000059
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260730
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260731
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260730T00000060
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260730
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260731
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260924T00000061
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260924
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260925
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260924T00000062
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260924
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260925
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260507T00000063
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260507
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260508
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260507T00000064
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260507
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260508
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261217T00000065
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261217
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261218
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261217T00000066
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261217
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261218
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20261215T00000067
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20261215T170000
+DTEND;TZID=Europe/Berlin:20261215T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260827T00000068
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260827
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260828
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260827T00000069
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260827
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260828
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260312T00000070
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260312
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260313
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260312T00000071
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260312
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260313
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260529T00000072
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260529
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260530
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260423T00000073
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260423
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260424
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260423T00000074
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260423
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260424
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260728T00000075
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260728T170000
+DTEND;TZID=Europe/Berlin:20260728T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260611T00000076
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260611
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260612
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260604T00000077
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260604
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260605
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260604T00000078
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260604
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260605
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260429T00000079
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260429
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260430
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261029T00000080
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261029
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261030
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260609T00000081
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260609
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260610
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260707T00000082
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260707
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260708
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260319T00000083
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260319
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260320
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20260414T00000084
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260414
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260415
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260428T00000085
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260428T170000
+DTEND;TZID=Europe/Berlin:20260428T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260108T00000086
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260108
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260109
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261015T00000087
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261015
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261016
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260324T00000088
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260324T170000
+DTEND;TZID=Europe/Berlin:20260324T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260825T00000089
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260825T170000
+DTEND;TZID=Europe/Berlin:20260825T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20260526T00000090
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20260526T170000
+DTEND;TZID=Europe/Berlin:20260526T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20261008T00000091
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261008
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261009
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20261008T00000092
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261008
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261009
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260129T00000093
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260129
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260130
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260129T00000094
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260129
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260130
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20261221T00000095
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261221
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261222
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260625T00000096
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260625
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260626
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261126T00000097
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261126
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261127
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RC-20261027T00000098
+SUMMARY:Repair Café
+DTSTART;TZID=Europe/Berlin:20261027T170000
+DTEND;TZID=Europe/Berlin:20261027T190000
+DTSTAMP:20261007T000000Z
+LOCATION:Weltladen Gifhorn Cardenap 5 38518 Gifhorn
+DESCRIPTION:17:00 - 19:00
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-PT-20261027T00000099
+SUMMARY:Altpapier
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261027
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261028
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260709T000000100
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260709
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260710
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260515T000000101
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260515
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260516
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260806T000000102
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260806
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260807
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260219T000000103
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260219
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260220
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-SM-20260219T000000104
+SUMMARY:Sperrmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260219
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260220
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260702T000000105
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260702
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260703
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260702T000000106
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260702
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260703
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20260416T000000107
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260416
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260417
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-BT-20261223T000000108
+SUMMARY:Biomüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20261223
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20261224
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-RM-20260326T000000109
+SUMMARY:Restmüll
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260326
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260327
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+BEGIN:VEVENT
+UID:AWIDO-GS-20260326T000000110
+SUMMARY:Gelber Sack
+DTSTART;TZID=Europe/Berlin;VALUE=DATE:20260326
+DTEND;TZID=Europe/Berlin;VALUE=DATE:20260327
+DTSTAMP:20261007T000000Z
+LOCATION:Gifhorn\; Steinstraße
+TRANSP:TRANSPARENT
+SEQUENCE:0
+CLASS:PUBLIC
+PRIORITY:9
+STATUS:CONFIRMED
+URL:https://www.landkreis-gifhorn.de/B%C3%BCrgerservices/Organigramm/Vorstandsbereich-III/Fachbereich-9-Umwelt/9-3-Abfallbewirtschaftung-Boden-und-Immissionsschutz/index.php?object=tx%7c4083.5.1&ModID=7&FID=4083.5104.1&NavID=4083.978&La=1
+END:VEVENT
+END:VCALENDAR

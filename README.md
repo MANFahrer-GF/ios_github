@@ -2,6 +2,15 @@
 
 Müll- und Geburtstagskalender für iPhone und iPad mit Erinnerungen – damit der Gelbe Sack nie wieder stehen bleibt.
 
+Das Repo enthält zwei Varianten mit derselben Logik und denselben Datenquellen:
+
+| Ordner | Was | Für wen |
+|---|---|---|
+| [`web/`](web/) | **Web-App (PWA)** mit Push und Kalender-Abo, läuft auf jedem PHP-Webspace (IONOS) | ohne App Store, sofort nutzbar auf iPhone/iPad/Desktop |
+| [`TonneUndTorte/`](TonneUndTorte/) | **Native iOS-App** (SwiftUI, SwiftData) | später, wenn mehr native Funktionen gewünscht sind |
+
+Die Anleitung zur Web-App steht in [`web/README.md`](web/README.md). Der Rest dieser Seite beschreibt die iOS-App.
+
 ![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue) ![SwiftUI](https://img.shields.io/badge/SwiftUI-SwiftData-orange) ![Xcode 16](https://img.shields.io/badge/Xcode-16%2B-lightgrey)
 
 ## Was die App kann

@@ -1,0 +1,4 @@
+# Falls der Document-Root auf diesen Ordner zeigt: alles nach public/ leiten.
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/.*/?public/
+RewriteRule ^(.*)$ public/$1 [L]
