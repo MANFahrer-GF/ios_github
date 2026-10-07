@@ -159,11 +159,13 @@ public struct BayernPortalsProvider: WasteProvider {
     private static func cookies(from urlString: String) async -> String? {
         guard let url = URL(string: urlString) else { return nil }
         var request = URLRequest(url: url)
+        request.timeoutInterval = 30
         request.setValue(HTTPClient.userAgent, forHTTPHeaderField: "User-Agent")
-        guard let (_, response) = try? await URLSession.shared.data(for: request), let http = response as? HTTPURLResponse else { return nil }
+        guard let (_, response) = try? await HTTPClient.defaultSession.data(for: request), let http = response as? HTTPURLResponse else { return nil }
         var fields: [String: String] = [:]
         for (key, value) in http.allHeaderFields {
-            if let key = key as? String, let value = value as? String { fields[key] = value }
+            // HTTP/2 liefert „set-cookie“ klein – für HTTPCookie die übliche Schreibweise
+            if let key = key as? String, let value = value as? String { fields[key.lowercased() == "set-cookie" ? "Set-Cookie" : key] = value }
         }
         let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: url)
         return cookies.isEmpty ? nil : cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; ")

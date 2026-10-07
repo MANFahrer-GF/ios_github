@@ -149,8 +149,11 @@ private struct Potsdam {
     }
 
     func load(year: Int) async throws -> PageData {
+        if let cached: PageData = PotsdamCache.shared.get(year) { return cached }
         let data = try await client.get("https://www.geben-und-nehmen-markt.de/abfallkalender/potsdam/\(year)/page-data/index/page-data.json")
-        return try HTTPClient.decode(data)
+        let page: PageData = try HTTPClient.decode(data)
+        PotsdamCache.shared.set(page, for: year)
+        return page
     }
 
     func street(in page: PageData, district: String, street: String) -> PageData.Strasse? {
@@ -582,5 +585,25 @@ private struct KAEV {
             if name.hasSuffix(",") { name.removeLast() }
             return Pickup(date: event.date, name: NameCleaner.clean(name))
         }
+    }
+}
+
+/// Das Potsdamer Regelwerk ist entpackt rund 17 MB groß – einmal laden und für die Schritte des Assistenten
+/// und den Abgleich 15 Minuten im Speicher halten statt bei jedem Schritt neu zu dekodieren.
+final class PotsdamCache: @unchecked Sendable {
+    static let shared = PotsdamCache()
+    private let lock = NSLock()
+    private var store: [Int: (date: Date, page: Any)] = [:]
+
+    func get<T>(_ year: Int) -> T? {
+        lock.lock(); defer { lock.unlock() }
+        guard let entry = store[year], Date().timeIntervalSince(entry.date) < 15 * 60 else { return nil }
+        return entry.page as? T
+    }
+
+    func set(_ page: Any, for year: Int) {
+        lock.lock(); defer { lock.unlock() }
+        store = store.filter { Date().timeIntervalSince($0.value.date) < 15 * 60 }
+        store[year] = (Date(), page)
     }
 }

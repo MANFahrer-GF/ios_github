@@ -28,9 +28,24 @@ public struct HTTPClient {
     public var timeout: TimeInterval = 30
     private let session: URLSession
 
-    public init(session: URLSession = .shared) {
+    public init(session: URLSession = HTTPClient.defaultSession) {
         self.session = session
     }
+
+    /// Ohne gemeinsamen Cookie-Speicher und ohne Cache: Jede Anfrage verhält sich wie in den Tests unter Linux,
+    /// alte Sitzungen eines Portals schlagen nicht auf den nächsten Abruf durch. Anbieter, die Sitzungs-Cookies
+    /// brauchen, reichen sie selbst weiter. Zeitgrenze für die ganze Anfrage, damit nichts endlos hängt.
+    public static let defaultSession: URLSession = {
+        let config = URLSessionConfiguration.ephemeral
+        config.httpShouldSetCookies = false
+        config.httpCookieAcceptPolicy = .never
+        config.httpCookieStorage = nil
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 90
+        return URLSession(configuration: config)
+    }()
 
     public func get(_ urlString: String, headers: [String: String] = [:]) async throws -> Data {
         guard let url = URL(string: urlString) else { throw HTTPError.badURL(urlString) }
@@ -101,6 +116,13 @@ public struct HTTPClient {
     private func perform(_ request: URLRequest, headers: [String: String]) async throws -> Data {
         var request = request
         request.timeoutInterval = timeout
+        #if !canImport(FoundationNetworking)
+        // App Transport Security blockt http – aus Portalseiten gelesene http-Links auf https umstellen
+        if let url = request.url, url.scheme == "http", var parts = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            parts.scheme = "https"
+            request.url = parts.url ?? url
+        }
+        #endif
         request.setValue(HTTPClient.userAgent, forHTTPHeaderField: "User-Agent")
         request.setValue("de-DE,de;q=0.9", forHTTPHeaderField: "Accept-Language")
         for (key, value) in headers { request.setValue(value, forHTTPHeaderField: key) }

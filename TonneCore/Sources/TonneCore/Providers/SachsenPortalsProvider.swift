@@ -559,13 +559,19 @@ private final class DresdenPortal: NSObject, URLSessionTaskDelegate, @unchecked 
         config.httpShouldSetCookies = false
         config.httpCookieAcceptPolicy = .never
         config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 90
         portal.urlSession = URLSession(configuration: config, delegate: portal, delegateQueue: nil)
-        let (html, url) = try await portal.request(SachsenPortalsProvider.dresdenBase + "wastebins", ajax: false)
-        portal.page = html
-        if let query = url?.query { portal.baseQuery = "wastebins?" + query }
-        portal.absorbBehaviors(html)
-        guard portal.behaviors.contains(where: { $0.url.contains("searchForm-street") }) else { throw ProviderError.noDataGeneric }
-        return portal
+        do {
+            let (html, url) = try await portal.request(SachsenPortalsProvider.dresdenBase + "wastebins", ajax: false)
+            portal.page = html
+            if let query = url?.query { portal.baseQuery = "wastebins?" + query }
+            portal.absorbBehaviors(html)
+            guard portal.behaviors.contains(where: { $0.url.contains("searchForm-street") }) else { throw ProviderError.noDataGeneric }
+            return portal
+        } catch {
+            portal.close()   // sonst hält die Sitzung den Delegate bis zum App-Ende
+            throw error
+        }
     }
 
     /// Bricht den Verweis Sitzung → Delegate wieder auf.

@@ -247,8 +247,13 @@ public struct NRWPortalsProvider: WasteProvider {
         case 1:
             // Autocomplete sucht nach Wortanfang; ohne Treffer schrittweise kürzen.
             var term = selections[0].title.trimmingCharacters(in: .whitespaces)
-            while term.count >= 3 {
-                let streets: [String] = (try? await client.json("\(Self.awgURL)?eID=wastecalendar_autocomplete&term=\(HTTPClient.query(term))")) ?? []
+            var attempts = 0
+            while term.count >= 3, attempts < 5 {   // höchstens 5 Anfragen, damit der Assistent nicht lange hängt
+                attempts += 1
+                let streets: [String]
+                do { streets = try await client.json("\(Self.awgURL)?eID=wastecalendar_autocomplete&term=\(HTTPClient.query(term))") }
+                catch let error as HTTPError { if case .transport = error { throw error }; streets = [] }
+                catch { streets = [] }
                 if !streets.isEmpty {
                     return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(streets.map { SelectionOption(id: $0, title: $0) }))
                 }

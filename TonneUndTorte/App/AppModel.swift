@@ -368,11 +368,18 @@ final class AppModel: ObservableObject {
     private func registerBackgroundTask() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: SettingsKeys.backgroundRefreshID, using: nil) { [weak self] task in
             guard let self else { task.setTaskCompleted(success: false); return }
-            Task { @MainActor in
+            let work = Task { @MainActor in
                 await self.syncAll(force: false)
                 await self.refreshAll()
+                guard !Task.isCancelled else { return }
                 task.setTaskCompleted(success: true)
                 self.scheduleBackgroundRefresh()
+            }
+            // iOS gibt nur rund 30 Sekunden: bei Zeitablauf sauber abbrechen, statt die App beenden zu lassen
+            task.expirationHandler = {
+                work.cancel()
+                task.setTaskCompleted(success: false)
+                Task { @MainActor in self.scheduleBackgroundRefresh() }
             }
         }
     }

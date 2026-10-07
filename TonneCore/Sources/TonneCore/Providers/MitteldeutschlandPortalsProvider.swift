@@ -366,13 +366,8 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
 
     /// Eigene Sitzung mit Cookie-Weitergabe von Hand (zuverlässig auch unter Linux).
     private struct AWVSession {
-        let session: URLSession = {
-            let config = URLSessionConfiguration.ephemeral
-            config.httpShouldSetCookies = false
-            config.httpCookieAcceptPolicy = .never
-            config.timeoutIntervalForRequest = 30
-            return URLSession(configuration: config)
-        }()
+        /// Gemeinsame Sitzung ohne Cookie-Speicher (keine neue URLSession je Abruf)
+        var session: URLSession { HTTPClient.defaultSession }
 
         func calendar(form: String, ics: String, body: Data) async throws -> String {
             guard let formURL = URL(string: form), let icsURL = URL(string: ics) else { throw HTTPError.badURL(form) }
