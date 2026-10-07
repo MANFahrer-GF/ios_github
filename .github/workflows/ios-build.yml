@@ -32,7 +32,7 @@ jobs:
           - runner: macos-15
             xcode: "Xcode 26"
             pattern: "Xcode_26"
-          - runner: macos-26
+          - runner: xcode-27
             xcode: "Xcode 27"
             pattern: "Xcode_27"
     steps:
@@ -41,6 +41,8 @@ jobs:
         run: |
           echo "Installiert:"; ls -d /Applications/Xcode*.app
           XCODE="$(ls -d /Applications/${{ matrix.pattern }}*.app 2>/dev/null | sort -V | tail -1)"
+          # Images mit nur einer Xcode-Version haben teils nur /Applications/Xcode.app
+          if [ -z "$XCODE" ] && /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -version 2>/dev/null | grep -q "^${{ matrix.xcode }}"; then XCODE=/Applications/Xcode.app; fi
           if [ -z "$XCODE" ]; then echo "::error::${{ matrix.xcode }} ist auf ${{ matrix.runner }} nicht installiert"; exit 1; fi
           sudo xcode-select -s "$XCODE"
           xcodebuild -version
