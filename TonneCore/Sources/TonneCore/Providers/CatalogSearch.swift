@@ -13,7 +13,7 @@ public extension ProviderCatalog {
         guard !needle.isEmpty else { return entries }
         let words = needle.split(separator: " ").map(String.init)
         let direct = entries.filter { entry in
-            let haystack = entry.searchText
+            let haystack = SearchIndex.text[entry.id] ?? entry.searchText
             return words.allSatisfy { haystack.contains($0) }
         }
         // Reihenfolge: Titel beginnt mit der Eingabe, dann exakter Ortsname, dann nur Wortteil
@@ -23,13 +23,19 @@ public extension ProviderCatalog {
             let l = ranks[lhs.id] ?? 2, r = ranks[rhs.id] ?? 2
             return l != r ? l < r : lhs.title < rhs.title
         }
-        let districts = Set(municipalities(matching: query).map(\.district))
+        let hits = municipalities(matching: query)
+        let districts = Set(hits.map(\.district))
         guard !districts.isEmpty else { return ranked }
         // Entsorger des Kreises, in dem der gesuchte Ort liegt, vor bloßen Wortteil-Treffern
         // („Bergen“ → erst Landkreis Celle, dann „Bergenhusen“ in Schleswig-Flensburg).
         let strong = ranked.filter { (ranks[$0.id] ?? 2) < 2 }
         let weak = ranked.filter { (ranks[$0.id] ?? 2) >= 2 }
-        let inDistrict = { (entry: CatalogEntry) in (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains) }
+        // Kreisweite Entsorger des Kreises – Gemeinde-Einträge (z. B. Mein-Abfallkalender einer Stadt) nur für genau diese Gemeinde.
+        let pairs = Set(hits.map { "\($0.district)|\($0.name)" })
+        let inDistrict = { (entry: CatalogEntry) in
+            (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains)
+                || (CatalogRegions.localEntries[entry.id] ?? []).contains(where: pairs.contains)
+        }
         let known = Set(strong.map(\.id))
         let viaDistrict = entries.filter { !known.contains($0.id) && inDistrict($0) }.sorted { $0.title < $1.title }
         let rest = weak.filter { !inDistrict($0) }
@@ -38,9 +44,8 @@ public extension ProviderCatalog {
 
     /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.
     private static func rank(_ entry: CatalogEntry, needle: String) -> Int {
-        if entry.searchText.hasPrefix(needle) { return 0 }
-        for place in entry.places {
-            let folded = fold(place)
+        if (SearchIndex.text[entry.id] ?? entry.searchText).hasPrefix(needle) { return 0 }
+        for folded in SearchIndex.places[entry.id] ?? entry.places.map(fold) {
             guard folded.hasPrefix(needle) else { continue }
             if folded.count == needle.count { return 1 }
             let next = folded[folded.index(folded.startIndex, offsetBy: needle.count)]
@@ -61,6 +66,18 @@ public extension ProviderCatalog {
             return !next.isLetter
         } : exact
         return Array(hits.prefix(8)).map { (name: $0.name, district: $0.district) }
+    }
+
+    /// Gibt es für diese Gemeinde einen Entsorger – kreisweit oder eigens für die Gemeinde?
+    static func isCovered(municipality name: String, district: String) -> Bool {
+        SearchIndex.coveredDistricts.contains(district) || SearchIndex.coveredMunicipalities.contains("\(district)|\(name)")
+    }
+
+    /// Gefundene Gemeinden, für die es noch keinen Entsorger gibt (leer, wenn mindestens eine abgedeckt ist).
+    static func uncoveredMunicipalities(matching query: String) -> [(name: String, district: String)] {
+        let hits = municipalities(matching: query)
+        guard !hits.isEmpty, !hits.contains(where: { isCovered(municipality: $0.name, district: $0.district) }) else { return [] }
+        return hits
     }
 
     /// Kurzer Hinweis für die Suche, z. B. „Nostorf liegt im Landkreis Ludwigslust-Parchim.“
@@ -92,5 +109,22 @@ enum MunicipalityIndex {
             }
         }
         return result
+    }()
+}
+
+/// Einmal gefaltete Suchtexte, damit die Suche nicht bei jedem Tastendruck alle Einträge neu aufbereitet.
+enum SearchIndex {
+    static let text: [String: String] = Dictionary(ProviderCatalog.entries.map { ($0.id, $0.searchText) }, uniquingKeysWith: { first, _ in first })
+    static let places: [String: [String]] = Dictionary(ProviderCatalog.entries.map { ($0.id, $0.places.map(ProviderCatalog.fold)) },
+                                                        uniquingKeysWith: { first, _ in first })
+    /// Kreise mit mindestens einem kreisweiten Entsorger.
+    static let coveredDistricts: Set<String> = {
+        let known = Set(ProviderCatalog.entries.map(\.id))
+        return Set(CatalogRegions.entryDistricts.filter { known.contains($0.key) }.flatMap(\.value))
+    }()
+    /// „Landkreis|Gemeinde“ mit eigenem Gemeinde-Eintrag.
+    static let coveredMunicipalities: Set<String> = {
+        let known = Set(ProviderCatalog.entries.map(\.id))
+        return Set(CatalogRegions.localEntries.filter { known.contains($0.key) }.flatMap(\.value))
     }()
 }

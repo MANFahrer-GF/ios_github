@@ -29,6 +29,56 @@ final class PickupCSVTests: XCTestCase {
         XCTAssertEqual(Days.iso(rows[0].date, calendar: calendar), "2026-10-07")
     }
 
+    func testWeekdayAndNumberColumnsAreNoWasteTypes() {
+        let text = "Nr;Tag;Datum;Abfallart\n1;Mi;07.10.2026;Restmüll\n2;Do;08.10.2026;Biotonne\n"
+        XCTAssertEqual(PickupCSV.parse(text, calendar: calendar).map(\.name), ["Restmüll", "Biotonne"])
+        let noHeader = "Mi;07.10.2026;Restmüll\n3;08.10.2026;Papier\n"
+        XCTAssertEqual(PickupCSV.parse(noHeader, calendar: calendar).map(\.name), ["Restmüll", "Papier"])
+    }
+
+    func testSeveralTypesInOneRowAndWideFormat() {
+        let row = PickupCSV.parse("07.10.2026;Restmüll;Biotonne;ab 6 Uhr\n", calendar: calendar)
+        XCTAssertEqual(Set(row.map(\.name)), ["Restmüll", "Biotonne"])
+        let wide = "Restmüll;Biotonne;Papier\n07.10.2026;08.10.2026;09.10.2026\n21.10.2026;;\n"
+        let pickups = PickupCSV.parse(wide, calendar: calendar)
+        XCTAssertEqual(pickups.count, 4)
+        XCTAssertEqual(pickups.filter { $0.name == "Restmüll" }.count, 2)
+    }
+
+    func testMoreDateFormats() {
+        let today = calendar.date(from: DateComponents(year: 2026, month: 10, day: 1))!
+        func day(_ text: String) -> String? {
+            PickupCSV.date(from: text, calendar: calendar, today: today).map { Days.iso($0, calendar: calendar) }
+        }
+        XCTAssertEqual(day("07.10.2026 00:00"), "2026-10-07")
+        XCTAssertEqual(day("2026-10-07T00:00:00"), "2026-10-07")
+        XCTAssertEqual(day("Mittwoch, 7. Oktober 2026"), "2026-10-07")
+        XCTAssertEqual(day("Mi. 07.10.2026"), "2026-10-07")
+        XCTAssertEqual(day("Mi 07.10.2026"), "2026-10-07")
+        XCTAssertEqual(day("07-10-2026"), "2026-10-07")
+        XCTAssertEqual(day("07. Okt"), "2026-10-07")
+        XCTAssertEqual(day("05. Jan"), "2027-01-05")      // ohne Jahr: nächstes Vorkommen
+        XCTAssertNil(day("2.5"))
+        XCTAssertNil(day("1.100"))
+        XCTAssertNil(day("Restmüll 120 l"))
+    }
+
+    func testUSDatesAreDetected() {
+        let text = "Date,Waste type\n10/27/2026,Trash\n11/03/2026,Recycling\n"
+        let rows = PickupCSV.parse(text, calendar: calendar)
+        XCTAssertEqual(rows.map { Days.iso($0.date, calendar: calendar) }, ["2026-10-27", "2026-11-03"])
+    }
+
+    func testCommasInUnquotedNamesStillUseSemicolon() {
+        let text = "Datum;Abfallart\n07.10.2026;Papier, Pappe, Kartonage\n08.10.2026;Gelber Sack, Leichtverpackungen\n"
+        XCTAssertEqual(PickupCSV.parse(text, calendar: calendar).map(\.name), ["Papier, Pappe, Kartonage", "Gelber Sack, Leichtverpackungen"])
+    }
+
+    func testExportEscapesFormulas() {
+        let day = calendar.date(from: DateComponents(year: 2026, month: 12, day: 24))!
+        XCTAssertTrue(PickupCSV.build([.init(date: day, name: "=HYPERLINK(1)")], calendar: calendar).contains(";'=HYPERLINK(1);"))
+    }
+
     func testExportRoundTrip() {
         let day = calendar.date(from: DateComponents(year: 2026, month: 12, day: 24))!
         let csv = PickupCSV.build([.init(date: day, name: "Gelber Sack", note: "Hinweis; mit Semikolon")], calendar: calendar)
@@ -60,6 +110,27 @@ final class CoverageTests: XCTestCase {
         XCTAssertEqual(byName["Landkreis Peine"]?.isCovered, true)
         XCTAssertEqual(byName["Kreisfreie Stadt Brandenburg an der Havel"]?.isCovered, true)
         XCTAssertEqual(byName["Landkreis Potsdam-Mittelmark"]?.isCovered, true)
+    }
+
+    func testMunicipalityEntriesDoNotCoverWholeDistrict() {
+        let byName = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
+        // Hochtaunus: nur Gemeinde-Kalender (Bad Homburg, Oberursel …), kein kreisweiter Entsorger
+        let hochtaunus = byName["Landkreis Hochtaunuskreis"]
+        XCTAssertEqual(hochtaunus?.isCovered, false)
+        XCTAssertEqual(hochtaunus?.isPartial, true)
+        XCTAssertTrue(hochtaunus?.localPlaces.contains("Oberursel (Taunus)") == true)
+        // Eine kreisfreie Stadt mit eigenem Gemeinde-Kalender gilt als abgedeckt
+        XCTAssertEqual(byName["Kreisfreie Stadt Pirmasens"]?.isCovered, true)
+    }
+
+    func testSearchShowsOnlyMatchingMunicipalityEntries() {
+        // Unterhaching (Landkreis München): kein fremder Gemeinde-Kalender (Aschheim, Planegg …)
+        let titles = ProviderCatalog.search("Unterhaching").map(\.title)
+        XCTAssertTrue(titles.contains { $0.contains("Unterhaching") })
+        XCTAssertFalse(titles.contains { $0.contains("Aschheim") || $0.contains("Planegg") })
+        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Unterhaching").isEmpty)
+        // Soltau (Heidekreis) ist nicht angebunden
+        XCTAssertFalse(ProviderCatalog.uncoveredMunicipalities(matching: "Soltau").isEmpty)
     }
 
     func testDisplayNames() {
