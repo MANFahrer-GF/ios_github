@@ -8,6 +8,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 |---|---|
 | [`TonneUndTorte/`](TonneUndTorte/) | iOS-App (SwiftUI, SwiftData + CloudKit) |
 | [`TonneWidget/`](TonneWidget/) | Widget-Erweiterung: Home-/Sperrbildschirm-Widgets und Live-Aktivität |
+| [`TonneWatch/`](TonneWatch/), [`TonneWatchWidget/`](TonneWatchWidget/) | Apple-Watch-App mit „Erledigt“-Knopf und Komplikationen |
 | [`Shared/`](Shared/) | Code für App **und** Widget: Snapshot-Speicher, App Intents, Live-Activity-Attribute |
 | [`TonneCore/`](TonneCore/) | Swift-Package mit aller Logik und den Online-Anbietern – auf Linux getestet |
 | [`Config/`](Config/) | Entitlements und Info.plists |
@@ -20,6 +21,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 - Optional morgens am Abholtag
 - **Live-Aktivität** „Tonne rausstellen“ auf Sperrbildschirm und Dynamic Island (startet, wenn die App am Vorabend geöffnet wird)
 - **Widgets** klein/mittel/groß und Sperrbildschirm (rechteckig, rund, inline), Standort wählbar, „Erledigt“-Knopf direkt im Widget
+- **Apple Watch**: eigene App (nächste Abholung mit „Erledigt“, weitere Tage, Geburtstage) und Komplikationen für alle Zifferblatt-Plätze; Daten kommen automatisch vom iPhone
 - **Siri & Kurzbefehle**: „Wann kommt der Müll in Tonne & Torte?“, „Tonne steht draußen“
 - Hinweis-Mitteilung, wenn der Entsorger Termine verschiebt (wird beim wöchentlichen Abgleich erkannt)
 - Export in den Apple-Kalender (eigener Kalender mit Alarmen) oder als ICS-Datei
@@ -41,7 +43,7 @@ Native iOS-App (iPhone & iPad) für Abfuhrtermine, Geburtstage und wiederkehrend
 ## Projekt öffnen und auf das Gerät bringen
 
 1. `TonneUndTorte.xcodeproj` in Xcode 16 oder neuer öffnen.
-2. Für **beide** Targets (TonneUndTorte und TonneWidget) unter *Signing & Capabilities* dein Team wählen. Xcode legt App-Gruppe, iCloud-Container und Push-Berechtigung automatisch an (siehe `Config/*.entitlements`). Bundle-IDs bei Bedarf anpassen (`de.manfahrer.TonneUndTorte` und `…TonneUndTorte.TonneWidget`), dann auch in `Config/TonneUndTorte-Info.plist` (BGTaskScheduler-ID) und `TonneCore/Sources/TonneCore/WidgetSnapshot.swift` (App-Gruppe) nachziehen.
+2. Für **alle vier** Targets (TonneUndTorte, TonneWidget, TonneWatch, TonneWatchWidget) unter *Signing & Capabilities* dein Team wählen. Xcode legt App-Gruppe, iCloud-Container und Push-Berechtigung automatisch an (siehe `Config/*.entitlements`). Bundle-IDs bei Bedarf anpassen (`de.manfahrer.TonneUndTorte` und `…TonneUndTorte.TonneWidget`), dann auch in `Config/TonneUndTorte-Info.plist` (BGTaskScheduler-ID) und `TonneCore/Sources/TonneCore/WidgetSnapshot.swift` (App-Gruppe) nachziehen.
 3. Auf iPhone/iPad starten. Für TestFlight: *Product → Archive* und über App Store Connect verteilen.
 
 Beim ersten Start fragt die App nach dem Standort (optional) und schlägt Entsorger vor. Mitteilungen werden nach der Einrichtung angefragt.
@@ -66,7 +68,8 @@ App (SwiftData + CloudKit)                Location · WasteType · Person · Cus
 └── Views                                 Onboarding, Übersicht, Kalender, Müll (Assistent), Geburtstage, Mehr
 
 Widget-Extension                          PickupWidget (konfigurierbar), PickupLiveActivity
-Shared                                    SnapshotStore (App-Gruppe), MarkPickupDoneIntent, NextPickupIntent, LocationEntity
+Watch-App + Watch-Widget                  WatchContentView (3 Seiten), WatchPickupWidget (Komplikationen)
+Shared                                    SnapshotStore (App-Gruppe), WatchSync (WatchConnectivity), Intents, Color+hex
 ```
 
 ## Tests
@@ -85,7 +88,6 @@ Die Plattform-Kennungen stehen in `TonneCore/Sources/TonneCore/Providers/Catalog
 
 ## Geplant
 
-- Apple-Watch-App mit Komplikation
 - Haushalt mit Familie teilen (CloudKit Sharing) und „Wer ist dran?“
 - Englische Oberfläche
 - Weitere Plattformen (Abfall+ Apps von k4systems, AWBKoeln, Müllmax …)

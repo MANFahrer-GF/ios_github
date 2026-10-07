@@ -1,6 +1,7 @@
 import SwiftUI
 
 extension Color {
+    /// Farbe aus „#RRGGBB“ oder „#RRGGBBAA“.
     init(hex: String) {
         var cleaned = hex.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "#", with: "")
         if cleaned.count == 6 { cleaned += "FF" }

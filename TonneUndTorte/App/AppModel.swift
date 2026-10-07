@@ -77,6 +77,14 @@ final class AppModel: ObservableObject {
         notifications.onPickupDone = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
         }
+        // Apple Watch: Snapshot hinschicken, „Erledigt“ entgegennehmen
+        WatchSync.shared.activate()
+        WatchSync.shared.onDoneReceived = { [weak self] dayKey in
+            Task { await self?.markDone(dayKey: dayKey) }
+        }
+        NotificationCenter.default.addObserver(forName: WatchSync.updatedNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { await self?.refreshAll() }
+        }
         NotificationCenter.default.addObserver(forName: SnapshotStore.notificationName, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.applyPendingDoneMarkers() }
         }
@@ -101,6 +109,7 @@ final class AppModel: ObservableObject {
     func refreshAll() async {
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
+        WatchSync.shared.send(snapshot)
         let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: SettingsKeys.reminderSettings())
         await notifications.apply(plan)
         if UserDefaults.standard.object(forKey: SettingsKeys.liveActivities) == nil || UserDefaults.standard.bool(forKey: SettingsKeys.liveActivities) {

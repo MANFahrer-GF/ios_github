@@ -3,7 +3,13 @@ import AppIntents
 import TonneCore
 
 /// „Erledigt“ aus Widget, Live-Aktivität oder Mitteilung: markiert den Abholtag als bestätigt.
-struct MarkPickupDoneIntent: LiveActivityIntent {
+#if os(iOS)
+typealias DoneIntentBase = LiveActivityIntent
+#else
+typealias DoneIntentBase = AppIntent
+#endif
+
+struct MarkPickupDoneIntent: DoneIntentBase {
     static var title: LocalizedStringResource = "Tonne steht draußen"
     static var description = IntentDescription("Markiert die nächste Abholung als erledigt.")
     static var openAppWhenRun = false
@@ -18,6 +24,9 @@ struct MarkPickupDoneIntent: LiveActivityIntent {
         let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "")
         guard !key.isEmpty else { return .result(dialog: "Es steht keine Abholung an.") }
         SnapshotStore.markDone(dayKey: key)
+        #if os(watchOS)
+        WatchSync.sendDone(dayKey: key)
+        #endif
         return .result(dialog: "Super, alles steht draußen. 👍")
     }
 }
