@@ -622,5 +622,12 @@ Stadtkreis Ulm|Ulm
         "muellmax:Tbr:TBR Remscheid": ["Kreisfreie Stadt Remscheid"],
         "muellmax:Usb:USB Bochum": ["Kreisfreie Stadt Bochum"],
         "nerdbridge:northeim:Landkreis Northeim": ["Landkreis Northeim"],
+        "sitepark:goslar:Landkreis Goslar (KWB)": ["Landkreis Goslar"],
+        "sitepark:ilm-kreis:Ilm-Kreis (AIK)": ["Landkreis Ilm-Kreis"],
+        "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin": ["Landkreis Ostprignitz-Ruppin"],
+        "sitepark:peine:Landkreis Peine": ["Landkreis Peine"],
+        "sitepark:ploen:Kreis Plön": ["Kreis Plön"],
+        "sitepark:seenplatte:Landkreis Mecklenburgische Seenplatte": ["Landkreis Mecklenburgische Seenplatte"],
+        "sitepark:wittmund:Landkreis Wittmund": ["Landkreis Wittmund"],
     ]
 }

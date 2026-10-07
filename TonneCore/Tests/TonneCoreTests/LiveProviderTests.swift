@@ -117,6 +117,20 @@ extension LiveProviderTests {
     func testNerdbridgeEinbeck() async throws {
         try await check(NerdbridgeProvider(), prefer: ["Einbeck (Bezirk 2)"], minCount: 5)
     }
+
+    func testSiteparkPeineKernstadt() async throws {
+        try await check(SiteparkProvider(tenant: "peine"), prefer: ["Peine-Kernstadt", "Adlerstraße"], minCount: 10)
+    }
+
+    func testSiteparkPeineDorf() async throws {
+        try await check(SiteparkProvider(tenant: "peine"), prefer: ["Broistedt"], minCount: 10)
+    }
+
+    func testSiteparkAllTenants() async throws {
+        for tenant in SiteparkProvider.tenants.keys.sorted() {
+            try await check(SiteparkProvider(tenant: tenant), prefer: [], minCount: 3)
+        }
+    }
 }
 
 /// Prüft für jeden Katalogeintrag, ob der erste Auswahlschritt Daten liefert.

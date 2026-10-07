@@ -311,6 +311,16 @@
         }
       }
     },
+    "Alle Straßen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All streets"
+          }
+        }
+      }
+    },
     "Alle aktualisieren": {
       "localizations": {
         "en": {
@@ -461,12 +471,32 @@
         }
       }
     },
-    "Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“.": {
+    "Antwortet Siri selbst oder mit ChatGPT, hat sie den App-Namen nicht erkannt – dann noch einmal langsamer sagen oder unten einen eigenen Satz anlegen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple requires an app’s Siri commands to include the app name – otherwise Siri doesn’t know which app you mean and answers itself. Just say “Tonne und Torte”."
+            "value": "If Siri answers itself or with ChatGPT, it didn’t recognise the app name – say it again more slowly or create your own phrase below."
+          }
+        }
+      }
+    },
+    "Apple Watch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch"
+          }
+        }
+      }
+    },
+    "Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“. Ohne App-Namen geht es mit einem eigenen Kurzbefehl (ganz unten).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple requires an app’s Siri commands to include the app name – otherwise Siri doesn’t know which app you mean and answers itself. Just say “Tonne und Torte”. Without the app name, use your own shortcut (at the bottom)."
           }
         }
       }
@@ -477,6 +507,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Type"
+          }
+        }
+      }
+    },
+    "Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne die Watch-App dafür einmal, und die iPhone-App sollte die Termine schon geschickt haben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the watch, the phrases for collections, birthdays and “Done” work. Open the watch app once; the iPhone app should already have sent the dates."
           }
         }
       }
@@ -1061,6 +1101,36 @@
         }
       }
     },
+    "Frag Tonne und Torte, wann der Müll kommt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frag Tonne und Torte, wann der Müll kommt"
+          }
+        }
+      }
+    },
+    "Frag Tonne und Torte, welche Tonne raus muss": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frag Tonne und Torte, welche Tonne raus muss"
+          }
+        }
+      }
+    },
+    "Frag Tonne und Torte, wer Geburtstag hat": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frag Tonne und Torte, wer Geburtstag hat"
+          }
+        }
+      }
+    },
     "Fällt aus": {
       "localizations": {
         "en": {
@@ -1171,6 +1241,16 @@
         }
       }
     },
+    "Geburtstage in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geburtstage in Tonne und Torte"
+          }
+        }
+      }
+    },
     "Geburtstage mit Alter, runden Jubiläen und Geschenkideen": {
       "localizations": {
         "en": {
@@ -1241,6 +1321,26 @@
         }
       }
     },
+    "Hakt die nächste Abholung ab – wie der Knopf „Erledigt“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ticks off the next collection – like the “Done” button."
+          }
+        }
+      }
+    },
+    "Hat heute jemand Geburtstag in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hat heute jemand Geburtstag in Tonne und Torte?"
+          }
+        }
+      }
+    },
     "Heute": {
       "localizations": {
         "en": {
@@ -1267,86 +1367,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Collection today"
-          }
-        }
-      }
-    },
-    "Hey Siri, Tonne steht draußen in Tonne und Torte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, Tonne steht draußen in Tonne und Torte"
-          }
-        }
-      }
-    },
-    "Hey Siri, Tonne und Torte Geburtstage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, Tonne und Torte Geburtstage"
-          }
-        }
-      }
-    },
-    "Hey Siri, Tonne und Torte Müll": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, Tonne und Torte Müll"
-          }
-        }
-      }
-    },
-    "Hey Siri, Tonnen-Erinnerung starten in Tonne und Torte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, Tonnen-Erinnerung starten in Tonne und Torte"
-          }
-        }
-      }
-    },
-    "Hey Siri, frag Tonne und Torte, welche Tonne raus muss": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, frag Tonne und Torte, welche Tonne raus muss"
-          }
-        }
-      }
-    },
-    "Hey Siri, hat heute jemand Geburtstag in Tonne und Torte?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, hat heute jemand Geburtstag in Tonne und Torte?"
-          }
-        }
-      }
-    },
-    "Hey Siri, wann kommt der Müll in Tonne und Torte?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, wann kommt der Müll in Tonne und Torte?"
-          }
-        }
-      }
-    },
-    "Hey Siri, wer hat als Nächstes Geburtstag in Tonne und Torte?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hey Siri, wer hat als Nächstes Geburtstag in Tonne und Torte?"
           }
         }
       }
@@ -2011,6 +2031,16 @@
         }
       }
     },
+    "Müll ist erledigt in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Müll ist erledigt in Tonne und Torte"
+          }
+        }
+      }
+    },
     "Müll-Erinnerungen": {
       "localizations": {
         "en": {
@@ -2027,6 +2057,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waste collection"
+          }
+        }
+      }
+    },
+    "Müllabfuhr in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Müllabfuhr in Tonne und Torte"
           }
         }
       }
@@ -2061,12 +2101,12 @@
         }
       }
     },
-    "Nach der Installation die App einmal öffnen – erst dann kennt Siri die Befehle. Antwortet Siri trotzdem selbst (z. B. mit ChatGPT), hat sie den App-Namen nicht verstanden: langsam „Tonne und Torte“ sagen oder einen eigenen Kurzbefehl anlegen.": {
+    "Nach der Installation die App einmal öffnen – erst dann kennt Siri die Befehle. Das kann ein, zwei Minuten dauern.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open the app once after installing – only then does Siri know the commands. If Siri still answers itself (e.g. with ChatGPT), it didn’t catch the app name: say “Tonne und Torte” slowly or create your own shortcut."
+            "value": "Open the app once after installing – only then does Siri know the commands. This can take a minute or two."
           }
         }
       }
@@ -2341,6 +2381,16 @@
         }
       }
     },
+    "Nächste Abholung in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächste Abholung in Tonne und Torte"
+          }
+        }
+      }
+    },
     "Nächste Abholungen": {
       "localizations": {
         "en": {
@@ -2377,6 +2427,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Upcoming dates"
+          }
+        }
+      }
+    },
+    "Nächster Geburtstag in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächster Geburtstag in Tonne und Torte"
           }
         }
       }
@@ -2461,6 +2521,26 @@
         }
       }
     },
+    "Sag den Satz genau so wie unten. Andere Formulierungen kennt Siri meist nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say the phrase exactly as shown below. Siri usually doesn’t know other wordings."
+          }
+        }
+      }
+    },
+    "Sag „Hey Siri“ und warte kurz, bis Siri zuhört.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say “Hey Siri” and wait a moment until Siri is listening."
+          }
+        }
+      }
+    },
     "Sagt dir, wann die nächste Müllabfuhr kommt.": {
       "localizations": {
         "en": {
@@ -2497,6 +2577,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "Siri & Shortcuts"
+          }
+        }
+      }
+    },
+    "Siri sagt z. B.: „Gelber Sack und Restmüll kommen morgen.“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri says e.g.: “Gelber Sack und Restmüll kommen morgen.”"
+          }
+        }
+      }
+    },
+    "Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri says e.g.: “Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.”"
+          }
+        }
+      }
+    },
+    "So sprichst du richtig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How to speak to Siri"
+          }
+        }
+      }
+    },
+    "Sperrbildschirm (nur iPhone)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Screen (iPhone only)"
+          }
+        }
+      }
+    },
+    "Sprich den App-Namen als „Tonne und Torte“ – deutlich und ohne Pause dazwischen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say the app name as “Tonne und Torte” – clearly and without pausing in between."
           }
         }
       }
@@ -2781,12 +2911,62 @@
         }
       }
     },
+    "Tonne steht draußen in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne steht draußen in Tonne und Torte"
+          }
+        }
+      }
+    },
+    "Tonne und Torte Geburtstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne und Torte Geburtstage"
+          }
+        }
+      }
+    },
+    "Tonne und Torte Müll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne und Torte Müll"
+          }
+        }
+      }
+    },
+    "Tonne und Torte erledigt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne und Torte erledigt"
+          }
+        }
+      }
+    },
     "Tonnen-Erinnerung starten": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Start bin reminder"
+          }
+        }
+      }
+    },
+    "Tonnen-Erinnerung starten in Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonnen-Erinnerung starten in Tonne und Torte"
           }
         }
       }
@@ -2921,6 +3101,16 @@
         }
       }
     },
+    "Wann kommt der Müll in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wann kommt der Müll in Tonne und Torte?"
+          }
+        }
+      }
+    },
     "Warum sehe ich nicht alle Kontakte?": {
       "localizations": {
         "en": {
@@ -2981,6 +3171,16 @@
         }
       }
     },
+    "Welche Tonne muss raus in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welche Tonne muss raus in Tonne und Torte?"
+          }
+        }
+      }
+    },
     "Welche Tonne muss raus?": {
       "localizations": {
         "en": {
@@ -3017,6 +3217,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "If Siri doesn’t respond"
+          }
+        }
+      }
+    },
+    "Wer hat als Nächstes Geburtstag in Tonne und Torte?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wer hat als Nächstes Geburtstag in Tonne und Torte?"
           }
         }
       }
@@ -3091,12 +3301,32 @@
         }
       }
     },
+    "Zeig die Tonnen auf dem Sperrbildschirm mit Tonne und Torte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeig die Tonnen auf dem Sperrbildschirm mit Tonne und Torte"
+          }
+        }
+      }
+    },
     "Zeigt am Vorabend der Abholung die Live-Aktivität auf dem Sperrbildschirm – ohne die App zu öffnen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Shows the Live Activity on the Lock Screen the evening before pickup – without opening the app."
+          }
+        }
+      }
+    },
+    "Zeigt die Live-Aktivität sofort. Ab iOS 26 kommt sie am Vorabend ohnehin von selbst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the Live Activity right away. From iOS 26 it appears the evening before by itself anyway."
           }
         }
       }

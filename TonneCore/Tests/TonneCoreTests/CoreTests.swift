@@ -80,6 +80,29 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(SpokenSummary.birthdays([item(-1, "Alt", 3), item(2, "Neu", nil)]), L10n.t("Neu hat übermorgen Geburtstag.", "Neu's birthday is the day after tomorrow."))
     }
 
+    func testSiteparkSplit() {
+        XCTAssertTrue(SiteparkProvider.split("Adlerstraße (Peine-Kernstadt (mit Telgte))") == ("Adlerstraße", "Peine-Kernstadt (mit Telgte)"))
+        XCTAssertTrue(SiteparkProvider.split("Am Bahnhof (Bahnhof) (Neustrelitz)") == ("Am Bahnhof (Bahnhof)", "Neustrelitz"))
+        XCTAssertTrue(SiteparkProvider.split(" Ortsteil - Adenhausen (Seesen)") == ("Ortsteil - Adenhausen", "Seesen"))
+        XCTAssertTrue(SiteparkProvider.split("Broistedt - alle Straßen") == ("Broistedt - alle Straßen", ""))
+    }
+
+    func testSiteparkNamesClassify() {
+        let expected: [String: WasteCategory] = [
+            "Gelbe Säcke": .packaging, "Restmülltonne": .residual, "Altpapier": .paper, "Biotonne": .organic,
+            "Blaue Tonne": .paper, "Leichtverpackung": .packaging, "Wertstofftonne": .packaging, "Restabfalltonne": .residual,
+            "Bioabfall 2-wöchentlich": .organic, "Papier/Pappe": .paper, "Restabfall": .residual, "Gelbe Tonne - Gelber Sack": .packaging,
+            "Restmülltonne 14-täglichen Rhythmus": .residual, "Papiertonne / Papiercontainer": .paper, "Biomüll": .organic,
+        ]
+        for (name, category) in expected { XCTAssertEqual(WasteCategory.classify(name), category, name) }
+    }
+
+    func testSearchFindsSitepark() {
+        for query in ["Peine", "Edemissen", "Vechelde", "Broistedt", "Goslar", "Plön", "Neubrandenburg", "Neuruppin", "Wittmund", "Arnstadt", "Hilchenbach", "Groß-Gerau", "Preußisch Oldendorf"] {
+            XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .sitepark }, query)
+        }
+    }
+
     func testShortNames() {
         XCTAssertEqual(ReminderPlanner.shortNames(["A"], max: 2), "A")
         XCTAssertEqual(ReminderPlanner.shortNames(["A", "B", "C"], max: 3), "A, B, C")

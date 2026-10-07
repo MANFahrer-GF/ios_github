@@ -103,6 +103,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case lobbe
     case nerdbridge
     case bsr
+    case sitepark
 
     public var displayName: String {
         switch self {
@@ -123,6 +124,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .lobbe: return "Lobbe App"
         case .nerdbridge: return "Nerdbridge"
         case .bsr: return "BSR Berlin"
+        case .sitepark: return L10n.t("Kreis-/Stadtportal", "District portal")
         }
     }
 }
@@ -199,6 +201,7 @@ public enum ProviderFactory {
         case .lobbe: return LobbeProvider(client: client)
         case .nerdbridge: return NerdbridgeProvider(client: client)
         case .bsr: return BSRProvider(client: client)
+        case .sitepark: return SiteparkProvider(tenant: serviceKey, client: client)
         }
     }
 

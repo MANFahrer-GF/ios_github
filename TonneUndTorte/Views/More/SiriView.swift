@@ -10,22 +10,68 @@ struct SiriView: View {
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(Color.clear)
             } footer: {
-                Text("Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“.")
+                Text("Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“. Ohne App-Namen geht es mit einem eigenen Kurzbefehl (ganz unten).")
             }
 
-            Section("Müllabfuhr") {
-                phrase("Hey Siri, wann kommt der Müll in Tonne und Torte?")
-                phrase("Hey Siri, frag Tonne und Torte, welche Tonne raus muss")
-                phrase("Hey Siri, Tonne und Torte Müll")
+            Section {
+                tip("1", "Sag „Hey Siri“ und warte kurz, bis Siri zuhört.")
+                tip("2", "Sprich den App-Namen als „Tonne und Torte“ – deutlich und ohne Pause dazwischen.")
+                tip("3", "Sag den Satz genau so wie unten. Andere Formulierungen kennt Siri meist nicht.")
+                tip("4", "Antwortet Siri selbst oder mit ChatGPT, hat sie den App-Namen nicht erkannt – dann noch einmal langsamer sagen oder unten einen eigenen Satz anlegen.")
+            } header: {
+                Text("So sprichst du richtig")
             }
-            Section("Geburtstage") {
-                phrase("Hey Siri, wer hat als Nächstes Geburtstag in Tonne und Torte?")
-                phrase("Hey Siri, hat heute jemand Geburtstag in Tonne und Torte?")
-                phrase("Hey Siri, Tonne und Torte Geburtstage")
+
+            Section {
+                phrase("Wann kommt der Müll in Tonne und Torte?")
+                phrase("Frag Tonne und Torte, wann der Müll kommt")
+                phrase("Welche Tonne muss raus in Tonne und Torte?")
+                phrase("Frag Tonne und Torte, welche Tonne raus muss")
+                phrase("Nächste Abholung in Tonne und Torte")
+                phrase("Müllabfuhr in Tonne und Torte")
+                phrase("Tonne und Torte Müll")
+            } header: {
+                Label("Müllabfuhr", systemImage: "trash.fill")
+            } footer: {
+                Text("Siri sagt z. B.: „Gelber Sack und Restmüll kommen morgen.“")
             }
-            Section("Erledigt & Sperrbildschirm") {
-                phrase("Hey Siri, Tonne steht draußen in Tonne und Torte")
-                phrase("Hey Siri, Tonnen-Erinnerung starten in Tonne und Torte")
+
+            Section {
+                phrase("Wer hat als Nächstes Geburtstag in Tonne und Torte?")
+                phrase("Frag Tonne und Torte, wer Geburtstag hat")
+                phrase("Hat heute jemand Geburtstag in Tonne und Torte?")
+                phrase("Nächster Geburtstag in Tonne und Torte")
+                phrase("Geburtstage in Tonne und Torte")
+                phrase("Tonne und Torte Geburtstage")
+            } header: {
+                Label("Geburtstage", systemImage: "birthday.cake.fill")
+            } footer: {
+                Text("Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.“")
+            }
+
+            Section {
+                phrase("Tonne steht draußen in Tonne und Torte")
+                phrase("Müll ist erledigt in Tonne und Torte")
+                phrase("Tonne und Torte erledigt")
+            } header: {
+                Label("Erledigt", systemImage: "checkmark.circle.fill")
+            } footer: {
+                Text("Hakt die nächste Abholung ab – wie der Knopf „Erledigt“.")
+            }
+
+            Section {
+                phrase("Tonnen-Erinnerung starten in Tonne und Torte")
+                phrase("Zeig die Tonnen auf dem Sperrbildschirm mit Tonne und Torte")
+            } header: {
+                Label("Sperrbildschirm (nur iPhone)", systemImage: "bell.badge.fill")
+            } footer: {
+                Text("Zeigt die Live-Aktivität sofort. Ab iOS 26 kommt sie am Vorabend ohnehin von selbst.")
+            }
+
+            Section {
+                Text("Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne die Watch-App dafür einmal, und die iPhone-App sollte die Termine schon geschickt haben.")
+            } header: {
+                Label("Apple Watch", systemImage: "applewatch")
             }
 
             Section {
@@ -43,7 +89,7 @@ struct SiriView: View {
             }
 
             Section {
-                Text("Nach der Installation die App einmal öffnen – erst dann kennt Siri die Befehle. Antwortet Siri trotzdem selbst (z. B. mit ChatGPT), hat sie den App-Namen nicht verstanden: langsam „Tonne und Torte“ sagen oder einen eigenen Kurzbefehl anlegen.")
+                Text("Nach der Installation die App einmal öffnen – erst dann kennt Siri die Befehle. Das kann ein, zwei Minuten dauern.")
             } header: {
                 Text("Wenn Siri nicht reagiert")
             }
@@ -53,7 +99,15 @@ struct SiriView: View {
     }
 
     private func phrase(_ text: LocalizedStringKey) -> some View {
-        Label { Text(text) } icon: { Image(systemName: "waveform").foregroundStyle(.tint) }
+        Label { Text("„") + Text(text) + Text("“") } icon: { Image(systemName: "waveform").foregroundStyle(.tint) }
+    }
+
+    private func tip(_ number: String, _ text: LocalizedStringKey) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text(number).font(.subheadline.weight(.bold)).foregroundStyle(.white)
+                .frame(width: 22, height: 22).background(Circle().fill(.orange))
+            Text(text)
+        }
     }
 
     private func step(_ number: Int, _ text: LocalizedStringKey) -> some View {

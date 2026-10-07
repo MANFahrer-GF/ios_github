@@ -15,18 +15,34 @@ public extension ProviderCatalog {
         let direct = entries.filter { entry in
             let haystack = entry.searchText
             return words.allSatisfy { haystack.contains($0) }
-        }.sorted { lhs, rhs in
-            let lhsExact = lhs.searchText.hasPrefix(needle) ? 0 : 1
-            let rhsExact = rhs.searchText.hasPrefix(needle) ? 0 : 1
-            return lhsExact != rhsExact ? lhsExact < rhsExact : lhs.title < rhs.title
+        }
+        // Reihenfolge: Titel beginnt mit der Eingabe, dann exakter Ortsname, dann nur Wortteil
+        // („Rensdorf“ vor „Behrensdorf“).
+        let ranks = Dictionary(direct.map { ($0.id, rank($0, needle: needle)) }, uniquingKeysWith: { first, _ in first })
+        let ranked = direct.sorted { lhs, rhs in
+            let l = ranks[lhs.id] ?? 2, r = ranks[rhs.id] ?? 2
+            return l != r ? l < r : lhs.title < rhs.title
         }
         let districts = Set(municipalities(matching: query).map(\.district))
-        guard !districts.isEmpty else { return direct }
+        guard !districts.isEmpty else { return ranked }
         let known = Set(direct.map(\.id))
         let viaDistrict = entries.filter { entry in
             !known.contains(entry.id) && (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains)
         }.sorted { $0.title < $1.title }
-        return direct + viaDistrict
+        return ranked + viaDistrict
+    }
+
+    /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.
+    private static func rank(_ entry: CatalogEntry, needle: String) -> Int {
+        if entry.searchText.hasPrefix(needle) { return 0 }
+        for place in entry.places {
+            let folded = fold(place)
+            guard folded.hasPrefix(needle) else { continue }
+            if folded.count == needle.count { return 1 }
+            let next = folded[folded.index(folded.startIndex, offsetBy: needle.count)]
+            if !next.isLetter { return 1 }
+        }
+        return 2
     }
 
     /// Gemeinden, deren Name der Eingabe entspricht oder mit ihr beginnt (z. B. „Lauenburg“ → „Lauenburg/Elbe“).
