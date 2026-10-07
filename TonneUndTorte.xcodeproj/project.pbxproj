@@ -77,7 +77,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A1B2C3D4E5F6000000000001 /* TonneUndTorte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonneUndTorte.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tonne & Torte.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000015 /* TonneWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000051 /* TonneWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonneWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,7 +184,7 @@
 		A1B2C3D4E5F6000000000005 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6000000000001 /* TonneUndTorte.app */,
+				A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */,
 				A1B2C3D4E5F6000000000015 /* TonneWidget.appex */,
 				A1B2C3D4E5F6000000000051 /* TonneWatch.app */,
 				A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */,
@@ -195,9 +195,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1B2C3D4E5F6000000000006 /* TonneUndTorte */ = {
+		A1B2C3D4E5F6000000000006 /* Tonne & Torte */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "TonneUndTorte" */;
+			buildConfigurationList = A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "Tonne & Torte" */;
 			buildPhases = (
 				A1B2C3D4E5F6000000000008 /* Sources */,
 				A1B2C3D4E5F6000000000003 /* Frameworks */,
@@ -215,12 +215,12 @@
 				A1B2C3D4E5F6000000000002 /* TonneUndTorte */,
 				A1B2C3D4E5F6000000000070 /* Shared */,
 			);
-			name = TonneUndTorte;
+			name = "Tonne & Torte";
 			packageProductDependencies = (
 				A1B2C3D4E5F6000000000029 /* TonneCore */,
 			);
-			productName = TonneUndTorte;
-			productReference = A1B2C3D4E5F6000000000001 /* TonneUndTorte.app */;
+			productName = "Tonne & Torte";
+			productReference = A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A1B2C3D4E5F600000000001A /* TonneWidget */ = {
@@ -339,7 +339,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1B2C3D4E5F6000000000006 /* TonneUndTorte */,
+				A1B2C3D4E5F6000000000006 /* Tonne & Torte */,
 				A1B2C3D4E5F600000000001A /* TonneWidget */,
 				A1B2C3D4E5F6000000000056 /* TonneWatch */,
 				A1B2C3D4E5F600000000006A /* TonneWatchWidget */,
@@ -521,7 +521,7 @@
 				);
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -552,7 +552,7 @@
 				);
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -740,7 +740,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "TonneUndTorte" */ = {
+		A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "Tonne & Torte" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1B2C3D4E5F600000000000E /* Debug */,

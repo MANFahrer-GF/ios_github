@@ -30,19 +30,19 @@ open TonneUndTorte.xcodeproj
 
 Links im Navigator siehst du:
 
-- **TonneUndTorte** – die iPhone/iPad-App
+- **Tonne & Torte** (Ordner TonneUndTorte) – die iPhone/iPad-App
 - **TonneWidget** – Widgets und Live-Aktivität
 - **TonneWatch** / **TonneWatchWidget** – Apple-Watch-App und Komplikationen
 - **Shared** – Code für alle
 - **Config** – Entitlements und Info.plists
 - **Packages → TonneCore** – die Logik (wird beim ersten Öffnen aufgelöst, kurz warten)
 
-Oben in der Leiste wählst du das **Schema** (links, „TonneUndTorte“) und das **Zielgerät** (rechts daneben).
+Oben in der Leiste wählst du das **Schema** (links, „Tonne & Torte“) und das **Zielgerät** (rechts daneben).
 
 ## 4. Signieren (einmalig)
 
 1. Ganz oben im Navigator den blauen Projekteintrag **TonneUndTorte** anklicken.
-2. In der Mitte unter **TARGETS** nacheinander jedes der vier Targets wählen und den Reiter **Signing & Capabilities** öffnen.
+2. In der Mitte unter **TARGETS** nacheinander jedes der vier Targets (Tonne & Torte, TonneWidget, TonneWatch, TonneWatchWidget) wählen und den Reiter **Signing & Capabilities** öffnen.
 3. Bei jedem Target: **Automatically manage signing** anhaken, bei **Team** dein Team wählen.
 4. Xcode registriert jetzt Bundle-IDs, App-Gruppe, iCloud-Container und Push im Developer-Portal. Rote Meldungen → **Try Again**. Das kann zwei, drei Anläufe brauchen, ist normal.
 5. Wenn eine Bundle-ID schon vergeben ist (unwahrscheinlich), unter **Bundle Identifier** eine eigene wählen, z. B. `de.deinname.TonneUndTorte`, und die Erweiterungen entsprechend anpassen (`…TonneUndTorte.TonneWidget`, `…TonneUndTorte.watchkitapp`, `…watchkitapp.TonneWatchWidget`). Dann auch in `Config/TonneUndTorte-Info.plist` (BGTaskScheduler-ID, URL-Schema) und `TonneCore/Sources/TonneCore/WidgetSnapshot.swift` (App-Gruppe `group.…`) nachziehen.
@@ -51,7 +51,7 @@ Oben in der Leiste wählst du das **Schema** (links, „TonneUndTorte“) und da
 
 1. iPhone per Kabel anschließen, „Diesem Computer vertrauen“ bestätigen.
 2. Auf dem iPhone: *Einstellungen → Datenschutz & Sicherheit → Entwicklermodus* einschalten (iPhone startet neu).
-3. In Xcode oben als Zielgerät dein iPhone wählen, Schema **TonneUndTorte**.
+3. In Xcode oben als Zielgerät dein iPhone wählen, Schema **Tonne & Torte**.
 4. **▶︎ Run** (⌘R). Beim ersten Mal baut Xcode ein paar Minuten.
 5. Auf dem iPhone: *Einstellungen → Allgemein → VPN & Geräteverwaltung* → deinem Entwicklerprofil vertrauen. Dann die App vom Home-Bildschirm starten.
 6. Für die Watch-App: Schema **TonneWatch**, Ziel „Apple Watch via iPhone“, ▶︎ Run. Oder einfach warten: Nach der Installation der iPhone-App erscheint die Watch-App auf der Uhr unter „Verfügbare Apps“.
