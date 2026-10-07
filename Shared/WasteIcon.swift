@@ -11,11 +11,8 @@ struct WasteIcon: View {
     var weight: Font.Weight = .bold
 
     var body: some View {
-        if let asset = WasteGlyph.assetName(for: symbolName, name: name) {
-            Image(asset).font(.system(size: size, weight: weight))
-        } else {
-            Image(systemName: symbolName).font(.system(size: size, weight: weight))
-        }
+        // Die eigenen Symbole haben nur eine Strichstärke; `weight` wirkt beim SF-Rückfall.
+        Image.waste(symbolName, name: name).font(.system(size: size, weight: weight))
     }
 }
 

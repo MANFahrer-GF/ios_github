@@ -244,7 +244,9 @@ struct ContactsImportView: View {
     /// damit niemand doppelt in der Liste landet.
     private func matchExisting() -> [String: Person] {
         let linked = Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
-        let manual = Dictionary(people.filter { $0.contactIdentifier == nil }.map { (Self.matchKey(name: $0.name, day: $0.day, month: $0.month), $0) }, uniquingKeysWith: { first, _ in first })
+        // Auch schon verknüpfte Personen: Steht jemand doppelt im Adressbuch (z. B. iCloud und Google),
+        // gilt der zweite Eintrag als „schon drin“ statt als neue Person.
+        let manual = Dictionary(people.map { (Self.matchKey(name: $0.name, day: $0.day, month: $0.month), $0) }, uniquingKeysWith: { first, _ in first })
         var result: [String: Person] = [:]
         for candidate in candidates {
             if let person = linked[candidate.identifier] ?? manual[Self.matchKey(name: candidate.name, day: candidate.day, month: candidate.month)] {
@@ -252,6 +254,10 @@ struct ContactsImportView: View {
             }
         }
         return result
+    }
+
+    private var peopleSignature: [String] {
+        people.map { "\($0.id)|\($0.contactIdentifier ?? "")|\($0.name)|\($0.day).\($0.month)" }
     }
 
     private static func matchKey(name: String, day: Int, month: Int) -> String {
@@ -306,7 +312,8 @@ struct ContactsImportView: View {
                 }
             }
             .task { await load() }
-            .onChange(of: candidates) { _, _ in existing = matchExisting() }
+            // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
+            .onChange(of: peopleSignature) { _, _ in existing = matchExisting() }
             // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }
@@ -406,16 +413,17 @@ struct ContactsImportView: View {
         do {
             candidates = merge(try await ContactsImport.candidates(), picked)
             existing = matchExisting()
-            let known = Set(existing.keys)
             // Neue Kontakte vorauswählen, bisherige Auswahl behalten
-            selected.formUnion(Set(candidates.map(\.identifier)).subtracting(known))
-            selected = selected.intersection(Set(candidates.map(\.identifier)))
+            selected.formUnion(Set(candidates.map(\.identifier)).subtracting(existing.keys))
         } catch ContactsImport.ImportError.denied {
             // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
             candidates = picked
+            existing = matchExisting()
         } catch {
             errorMessage = error.localizedDescription
         }
+        // Nur auswählen, was noch in der Liste steht (z. B. nach Entzug der Freigabe).
+        selected = selected.intersection(Set(candidates.map(\.identifier)))
         access = ContactsImport.access
         isLoading = false
     }
@@ -425,17 +433,24 @@ struct ContactsImportView: View {
     }
 
     private func importSelected() {
-        let current = existing
+        let current = matchExisting()
+        var updated = Set<UUID>()
         for (index, candidate) in candidates.enumerated() where selected.contains(candidate.identifier) {
             let person: Person
             if let known = current[candidate.identifier] {
+                // Zwei Kontakte derselben Person: nur einmal aktualisieren, keine Dublette anlegen.
+                guard updated.insert(known.id).inserted else { continue }
                 person = known
                 person.name = candidate.name
                 person.day = candidate.day
                 person.month = candidate.month
-                // Ein von Hand eingetragenes Geburtsjahr nicht löschen, wenn der Kontakt keins hat.
-                if let year = candidate.year { person.year = year }
-                person.contactIdentifier = candidate.identifier
+                if let year = candidate.year {
+                    person.year = year
+                } else if let old = person.year, old <= 1900 {
+                    // Früher übernommenes Platzhalterjahr (1604/1900) entfernen; ein echtes eigenes Jahr bleibt.
+                    person.year = nil
+                }
+                if person.contactIdentifier == nil { person.contactIdentifier = candidate.identifier }
             } else {
                 person = Person(name: candidate.name, day: candidate.day, month: candidate.month, year: candidate.year, colorHex: Palette.colors[index % Palette.colors.count])
                 person.contactIdentifier = candidate.identifier

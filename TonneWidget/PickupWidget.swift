@@ -328,7 +328,7 @@ struct PickupWidgetView: View {
         ZStack {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
-                WasteIcon(symbolName: next?.items.first?.symbolName ?? "trash.fill", name: next?.items.first?.name ?? "", size: 20)
+                Image.waste(next?.items.first?.symbolName ?? "trash.fill", name: next?.items.first?.name ?? "").font(.title3)
                 Text(days.map { $0 == 0 ? "heute" : $0 == 1 ? "morgen" : "\($0) T." } ?? "–").font(.caption2.weight(.semibold))
             }
         }
@@ -339,10 +339,7 @@ struct PickupWidgetView: View {
         VStack(alignment: .leading, spacing: 1) {
             if let next {
                 if next.items.count == 1, let item = next.items.first {
-                    HStack(spacing: 4) {
-                        WasteIcon(symbolName: item.symbolName, name: item.name, size: 15)
-                        Text(DateText.countdown(next.date)).font(.headline).lineLimit(1)
-                    }
+                    Text("\(Image.waste(item.symbolName, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
                     Text(item.name).font(.caption).lineLimit(1)
                     if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
                         Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
@@ -350,10 +347,7 @@ struct PickupWidgetView: View {
                 } else {
                     Text(DateText.countdown(next.date)).font(.headline).lineLimit(1)
                     ForEach(Array(next.items.prefix(2).enumerated()), id: \.offset) { _, item in
-                        HStack(spacing: 4) {
-                            WasteIcon(symbolName: item.symbolName, name: item.name, size: 11)
-                            Text(item.name).font(.caption).lineLimit(1)
-                        }
+                        Text("\(Image.waste(item.symbolName, name: item.name)) \(item.name)").font(.caption).lineLimit(1)
                     }
                     if next.items.count > 2 {
                         Text("+\(next.items.count - 2) weitere").font(.caption2).opacity(0.8)

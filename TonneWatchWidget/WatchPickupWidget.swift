@@ -65,7 +65,7 @@ struct WatchPickupView: View {
             Text("\(Image.waste(symbol, name: items.first?.name ?? "")) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryCorner:
-            WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: 20).widgetAccentable()
+            Image.waste(symbol, name: items.first?.name ?? "").font(.title3).widgetAccentable()
                 .widgetLabel { Text(next == nil ? "–" : "\(shortWhen) · \(names)") }
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryRectangular:
@@ -78,7 +78,7 @@ struct WatchPickupView: View {
                     if items.count > 1 {
                         Text("\(items.count)").font(.system(size: 18, weight: .black, design: .rounded)).widgetAccentable()
                     } else {
-                        WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: 20).widgetAccentable()
+                        Image.waste(symbol, name: items.first?.name ?? "").font(.title3).widgetAccentable()
                     }
                     Text(shortWhen).font(.system(size: 11, weight: .heavy, design: .rounded))
                 }
@@ -100,7 +100,7 @@ struct WatchPickupView: View {
             }
             ForEach(Array(items.prefix(2).enumerated()), id: \.offset) { _, item in
                 HStack(spacing: 4) {
-                    WasteIcon(symbolName: item.symbolName, name: item.name, size: 11).foregroundStyle(Color(hex: item.colorHex))
+                    Image.waste(item.symbolName, name: item.name).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
                     Text(item.name).font(.system(size: 13, weight: .bold, design: .rounded)).lineLimit(1)
                 }
             }

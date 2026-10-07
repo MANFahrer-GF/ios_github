@@ -32,11 +32,15 @@ public enum WasteGlyph {
 
     /// Auswahl für Abfallarten: zuerst die eigenen Piktogramme (Gelber Sack und Gelbe Tonne getrennt wählbar),
     /// dann die übrigen SF Symbols ohne die, die ohnehin durch ein eigenes Piktogramm ersetzt werden.
-    public static let pickerSymbols: [String] = ordered + Palette.wasteSymbols.filter { assetName(for: $0) == nil }
+    /// „leaf“ und „tree“ (ohne .fill) bleiben als echte SF Symbols wählbar, z. B. für Laub oder Weihnachtsbäume.
+    public static let pickerSymbols: [String] = ordered + ["leaf", "tree"] + Palette.wasteSymbols.filter { assetName(for: $0) == nil }
 
     /// Ist `candidate` in der Auswahl das Symbol, das `symbolName` gerade anzeigt?
     public static func matches(_ candidate: String, current symbolName: String, name: String = "") -> Bool {
-        candidate == symbolName || assetName(for: symbolName, name: name) == candidate
+        if candidate == symbolName { return true }
+        if let asset = assetName(for: symbolName, name: name) { return asset == candidate }
+        // Gespeichertes „leaf.fill“ bei „Laubsammlung“ bleibt SF und entspricht der Auswahl „leaf“.
+        return symbolName.hasSuffix(".fill") && candidate == String(symbolName.dropLast(5))
     }
 
     static let ordered = ["tt.bin", "tt.bin.bio", "tt.bin.paper", "tt.bin.yellow", "tt.sack", "tt.glass", "tt.green"]

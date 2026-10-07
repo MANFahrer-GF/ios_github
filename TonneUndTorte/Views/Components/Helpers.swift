@@ -186,7 +186,7 @@ struct SymbolPicker: View {
                 let isSelected = wasteName.map { WasteGlyph.matches(symbol, current: symbolName, name: $0) } ?? (symbol == symbolName)
                 Group {
                     if wasteName != nil {
-                        WasteIcon(symbolName: symbol, size: 20, weight: .semibold)
+                        Image.waste(symbol).font(.title3)
                     } else {
                         Image(systemName: symbol).font(.title3)
                     }
