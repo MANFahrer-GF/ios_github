@@ -74,31 +74,13 @@ struct BirthdayWidgetView: View {
 
     // MARK: Bausteine
 
-    private var hero: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if let next {
-                InitialsAvatar(initials: next.initials, colorHex: next.colorHex, size: 46)
-                Text(next.name).font(.system(size: 19, weight: .black)).tracking(-0.4).foregroundStyle(textColor).lineLimit(1).minimumScaleFactor(0.7).padding(.top, 10)
-                Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1).padding(.top, 3)
-                Spacer(minLength: 6)
-                BirthdayPill(text: PickupWords.birthdayPill(date: next.date))
-            } else {
-                Text("🎂").font(.system(size: 34))
-                Text(L10n.t("Keine Geburtstage", "No birthdays")).font(.system(size: 17, weight: .black)).foregroundStyle(textColor).padding(.top, 8)
-                Text(L10n.t("In der App unter „Geburtstage“ eintragen.", "Add them under “Birthdays” in the app.")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(2).padding(.top, 3)
-                Spacer(minLength: 0)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
+    private var ink: Color { KlarStyle.birthdayInk(scheme) }
 
-    private func row(_ birthday: WidgetSnapshot.BirthdayItem) -> some View {
-        HStack(spacing: 8) {
-            InitialsAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(birthday.name).font(.system(size: 11, weight: .bold)).foregroundStyle(textColor).lineLimit(1)
-                Text(detail(birthday)).font(.system(size: 10, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1)
-            }
+    private func top(_ title: String) -> some View {
+        HStack {
+            Text(title).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(ink).lineLimit(1)
+            Spacer(minLength: 4)
+            Text("🎂").font(.system(size: 17))
         }
     }
 
@@ -108,29 +90,89 @@ struct BirthdayWidgetView: View {
         return when
     }
 
-    private func surface() -> some View { DesignSurface(glowHex: next.map { _ in DesignColor.birthday }) }
+    private func row(_ birthday: WidgetSnapshot.BirthdayItem) -> some View {
+        HStack(spacing: 8) {
+            KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(birthday.name).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(detail(birthday)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+            }
+        }
+    }
+
+    private var empty: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            top(L10n.t("GEBURTSTAG", "BIRTHDAY"))
+            Spacer(minLength: 0)
+            Text(L10n.t("Keine Geburtstage", "No birthdays")).font(KlarStyle.font(16, .black)).foregroundStyle(KlarStyle.text(scheme))
+            Text(L10n.t("In der App unter „Geburtstage“ eintragen.", "Add them under “Birthdays” in the app.")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(2)
+        }
+    }
+
+    private func surface() -> some View { KlarSurface(tintHex: KlarStyle.birthday) }
 
     // MARK: Home-Screen
 
     private var small: some View {
-        hero
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .containerBackground(for: .widget) { surface() }
+        Group {
+            if let next {
+                VStack(alignment: .leading, spacing: 0) {
+                    top(Days.until(next.date) == 0 ? L10n.t("HEUTE", "TODAY") : L10n.t("GEBURTSTAG", "BIRTHDAY"))
+                    KlarAvatar(initials: next.initials, colorHex: next.colorHex, size: 42).padding(.top, 8)
+                    Spacer(minLength: 4)
+                    Text(next.name).font(KlarStyle.font(16, .black)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                    HStack(spacing: 4) {
+                        if let years = next.years {
+                            Text(L10n.t("wird \(years) ·", "turns \(years) ·")).foregroundStyle(KlarStyle.muted(scheme))
+                        }
+                        Text(DateText.countdown(next.date)).foregroundStyle(ink)
+                    }
+                    .font(KlarStyle.font(12, .heavy))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding(.top, 1)
+                }
+            } else {
+                empty
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) { surface() }
     }
 
     private var medium: some View {
         HStack(alignment: .top, spacing: 0) {
-            hero
-            Rectangle().fill(DesignColor.hairline(scheme)).frame(width: 1).padding(.horizontal, 12)
-            VStack(alignment: .leading, spacing: 8) {
-                Text(L10n.t("DANACH", "UP NEXT")).font(.system(size: 9, weight: .heavy)).tracking(1.2).foregroundStyle(mutedColor)
+            Group {
+                if let next {
+                    VStack(alignment: .leading, spacing: 0) {
+                        top(Days.until(next.date) == 0 ? L10n.t("HEUTE", "TODAY") : L10n.t("NÄCHSTER GEBURTSTAG", "NEXT BIRTHDAY"))
+                        Spacer(minLength: 4)
+                        HStack(spacing: 10) {
+                            KlarAvatar(initials: next.initials, colorHex: next.colorHex, size: 42)
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(next.name).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                                Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            }
+                        }
+                        Text(DateText.countdown(next.date)).font(KlarStyle.font(22, .black)).foregroundStyle(ink).lineLimit(1).minimumScaleFactor(0.7).padding(.top, 8)
+                    }
+                } else {
+                    empty
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            Rectangle().fill(KlarStyle.hairline(scheme)).frame(width: 1).padding(.horizontal, 14)
+            VStack(alignment: .leading, spacing: 9) {
+                Text(L10n.t("DANACH", "UP NEXT")).font(KlarStyle.font(10, .heavy)).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
                 ForEach(Array(later.prefix(3).enumerated()), id: \.offset) { _, birthday in row(birthday) }
-                if later.isEmpty { Text(L10n.t("Keine weiteren", "None further")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
+                if later.isEmpty {
+                    Text(L10n.t("Keine weiteren", "None further")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                }
                 Spacer(minLength: 0)
             }
-            .frame(width: 136, alignment: .leading)
+            .frame(width: 128, alignment: .leading)
+            .frame(maxHeight: .infinity, alignment: .topLeading)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) { surface() }
     }
 

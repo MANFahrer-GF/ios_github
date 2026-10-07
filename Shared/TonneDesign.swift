@@ -257,3 +257,271 @@ enum PickupWords {
         return "🎂 " + DateText.countdown(date).uppercased()
     }
 }
+
+// MARK: - Aurora (kräftige Variante für Widgets und Übersichtskarte)
+
+/// Hell oder dunkel? Für die Schriftfarbe auf einer Tonne (Gelb braucht dunkle Schrift).
+enum HexLuma {
+    static func isLight(_ hex: String) -> Bool {
+        var value = hex.trimmingCharacters(in: .whitespaces)
+        if value.hasPrefix("#") { value.removeFirst() }
+        guard value.count >= 6, let number = UInt32(value.prefix(6), radix: 16) else { return false }
+        let r = Double((number >> 16) & 0xFF) / 255, g = Double((number >> 8) & 0xFF) / 255, b = Double(number & 0xFF) / 255
+        return 0.299 * r + 0.587 * g + 0.114 * b > 0.62
+    }
+}
+
+/// Dunkles Glas mit Farbnebel in den Farben der Tonnen. Bleibt in Hell und Dunkel gleich,
+/// damit die Tonnen auf jedem Hintergrund leuchten.
+struct AuroraSurface: View {
+    var hexes: [String]
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width, h = geo.size.height
+            let first = Color(hex: hexes.first ?? HeroPalette.idle)
+            let second = Color(hex: hexes.dropFirst().first ?? hexes.first ?? HeroPalette.idle)
+            ZStack {
+                Color(hex: "#0F1218")
+                Circle().fill(first)
+                    .frame(width: h * 1.05, height: h * 1.05)
+                    .blur(radius: h * 0.22)
+                    .opacity(0.72)
+                    .position(x: h * 0.18, y: h * 0.02)
+                Circle().fill(second)
+                    .frame(width: h * 0.95, height: h * 0.95)
+                    .blur(radius: h * 0.24)
+                    .opacity(0.5)
+                    .position(x: w - h * 0.12, y: h * 1.02)
+                LinearGradient(colors: [.white.opacity(0.06), .black.opacity(0.24)], startPoint: .top, endPoint: .bottom)
+            }
+        }
+    }
+}
+
+/// Eine Mülltonne mit Deckel, Rillen und Rädern in ihrer Farbe, beschriftet mit dem Kurznamen.
+struct TrashBinView: View {
+    let name: String
+    let colorHex: String
+    var width: CGFloat = 40
+
+    var body: some View {
+        let color = Color(hex: colorHex)
+        let label = HexLuma.isLight(colorHex) ? Color(hex: "#1B1F27") : Color.white
+        VStack(spacing: 0) {
+            // Deckel
+            RoundedRectangle(cornerRadius: width * 0.12, style: .continuous)
+                .fill(color)
+                .overlay(alignment: .bottom) { Rectangle().fill(.black.opacity(0.2)).frame(height: width * 0.06) }
+                .clipShape(RoundedRectangle(cornerRadius: width * 0.12, style: .continuous))
+                .frame(width: width * 1.08, height: width * 0.24)
+                .shadow(color: .black.opacity(0.35), radius: 2, x: 0, y: 1)
+                .zIndex(1)
+            // Korpus
+            ZStack {
+                UnevenRoundedRectangle(topLeadingRadius: width * 0.06, bottomLeadingRadius: width * 0.2,
+                                       bottomTrailingRadius: width * 0.2, topTrailingRadius: width * 0.06, style: .continuous)
+                    .fill(color)
+                UnevenRoundedRectangle(topLeadingRadius: width * 0.06, bottomLeadingRadius: width * 0.2,
+                                       bottomTrailingRadius: width * 0.2, topTrailingRadius: width * 0.06, style: .continuous)
+                    .fill(LinearGradient(stops: [
+                        .init(color: .black.opacity(0.26), location: 0),
+                        .init(color: .clear, location: 0.3),
+                        .init(color: .white.opacity(0.2), location: 0.52),
+                        .init(color: .clear, location: 0.74),
+                        .init(color: .black.opacity(0.3), location: 1),
+                    ], startPoint: .leading, endPoint: .trailing))
+                HStack {
+                    Capsule().fill(.black.opacity(0.14)).frame(width: max(1.5, width * 0.04))
+                    Spacer()
+                    Capsule().fill(.black.opacity(0.14)).frame(width: max(1.5, width * 0.04))
+                }
+                .padding(.horizontal, width * 0.2)
+                .padding(.vertical, width * 0.16)
+                Text(ShortName.bin(name))
+                    .font(.system(size: max(7, width * 0.19), weight: .black))
+                    .tracking(0.3)
+                    .foregroundStyle(label)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .padding(.horizontal, 2)
+            }
+            .frame(width: width, height: width * 0.92)
+            .shadow(color: .black.opacity(0.4), radius: width * 0.12, x: 0, y: width * 0.1)
+            // Räder
+            HStack {
+                Capsule().fill(Color(hex: "#1B1F27")).frame(width: width * 0.24, height: width * 0.15)
+                Spacer()
+                Capsule().fill(Color(hex: "#1B1F27")).frame(width: width * 0.24, height: width * 0.15)
+            }
+            .frame(width: width * 0.76)
+            .offset(y: -width * 0.05)
+        }
+        .frame(width: width * 1.08, height: width * 1.26)
+    }
+}
+
+/// Reihe aus Tonnen mit fester Anzahl Plätze; bei Überlauf wird der letzte Platz „+n“.
+struct TrashBinRow: View {
+    let items: [BinTileItem]
+    var slots: Int = 3
+    var width: CGFloat = 40
+    var spacing: CGFloat = 6
+
+    private var shown: [BinTileItem] { items.count > slots ? Array(items.prefix(max(slots - 1, 1))) : items }
+    private var rest: Int { items.count - shown.count }
+
+    var body: some View {
+        HStack(alignment: .bottom, spacing: spacing) {
+            ForEach(Array(shown.enumerated()), id: \.offset) { _, item in
+                TrashBinView(name: item.name, colorHex: item.colorHex, width: width)
+            }
+            if rest > 0 {
+                Text("+\(rest)")
+                    .font(.system(size: width * 0.34, weight: .black))
+                    .foregroundStyle(.white)
+                    .frame(width: width * 0.8, height: width * 1.26)
+            }
+        }
+    }
+}
+
+// MARK: - „Klar“: ruhiges Design im Stil der Apple-Widgets (aktuelle Gestaltung)
+
+enum KlarStyle {
+    static func font(_ size: CGFloat, _ weight: Font.Weight = .bold) -> Font { .system(size: size, weight: weight, design: .rounded) }
+
+    static func text(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#F5F5F7") : Color(hex: "#111114") }
+    static func muted(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#9A9AA4") : Color(hex: "#8A8A92") }
+    static func hairline(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#2E2E34") : Color(hex: "#ECECF0") }
+    static func base(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#1C1C20") : .white }
+    static func buttonBackground(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#F5F5F7") : Color(hex: "#111114") }
+    static func buttonForeground(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#111114") : .white }
+    static let done = Color(hex: "#34C759")
+    static let birthday = "#FF5FA2"
+
+    /// Farbe für Überschriften in Tonnenfarbe: Gelb wird im hellen Modus abgedunkelt, damit es lesbar bleibt.
+    static func ink(_ hex: String, _ scheme: ColorScheme) -> Color {
+        guard scheme == .light, HexLuma.isLight(hex) else {
+            if scheme == .dark, hex.uppercased() == "#8B5E34" { return Color(hex: "#D9A066") }
+            return Color(hex: hex)
+        }
+        return HexLuma.scaled(hex, by: 0.72)
+    }
+
+    static func birthdayInk(_ scheme: ColorScheme) -> Color { scheme == .dark ? Color(hex: "#FF6AA8") : Color(hex: "#E0287A") }
+}
+
+extension HexLuma {
+    static func scaled(_ hex: String, by factor: Double) -> Color {
+        var value = hex.trimmingCharacters(in: .whitespaces)
+        if value.hasPrefix("#") { value.removeFirst() }
+        guard value.count >= 6, let number = UInt32(value.prefix(6), radix: 16) else { return Color(hex: hex) }
+        let r = Double((number >> 16) & 0xFF) / 255 * factor
+        let g = Double((number >> 8) & 0xFF) / 255 * factor
+        let b = Double(number & 0xFF) / 255 * factor
+        return Color(red: r, green: g, blue: b)
+    }
+}
+
+/// Hintergrund: weiß bzw. dunkelgrau mit einem sanften Farbschleier oben in der Tonnenfarbe.
+struct KlarSurface: View {
+    var tintHex: String?
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        ZStack {
+            KlarStyle.base(scheme)
+            if let tintHex {
+                LinearGradient(stops: [
+                    .init(color: Color(hex: tintHex).opacity(scheme == .dark ? 0.26 : 0.16), location: 0),
+                    .init(color: Color(hex: tintHex).opacity(0), location: 0.58),
+                ], startPoint: .top, endPoint: .bottom)
+            }
+        }
+    }
+}
+
+/// Farbiger Kreis mit Symbol – eine Tonne.
+struct BinDot: View {
+    let symbolName: String
+    let colorHex: String
+    var size: CGFloat = 22
+
+    var body: some View {
+        ZStack {
+            Circle().fill(Color(hex: colorHex))
+            Image(systemName: symbolName)
+                .font(.system(size: size * 0.5, weight: .bold))
+                .foregroundStyle(HexLuma.isLight(colorHex) ? Color(hex: "#2A2210") : .white)
+        }
+        .frame(width: size, height: size)
+    }
+}
+
+/// Eine Zeile pro Tonne: Kreis + Name.
+struct BinLine: View {
+    let name: String
+    let symbolName: String
+    let colorHex: String
+    var dot: CGFloat = 22
+    var fontSize: CGFloat = 13
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        HStack(spacing: dot * 0.36) {
+            BinDot(symbolName: symbolName, colorHex: colorHex, size: dot)
+            Text(name).font(KlarStyle.font(fontSize, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.75)
+        }
+    }
+}
+
+/// Mehrere kleine Farbpunkte überlappend (für „Danach“-Listen).
+struct MiniDots: View {
+    let hexes: [String]
+    var size: CGFloat = 10
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        HStack(spacing: -size * 0.28) {
+            ForEach(Array(hexes.prefix(3).enumerated()), id: \.offset) { _, hex in
+                Circle().fill(Color(hex: hex))
+                    .overlay(Circle().strokeBorder(KlarStyle.base(scheme), lineWidth: max(1.5, size * 0.16)))
+                    .frame(width: size, height: size)
+            }
+        }
+    }
+}
+
+/// Runder Knopf oben rechts: dunkel mit Haken, nach dem Tippen grün.
+struct KlarCheckButtonLabel: View {
+    var done: Bool
+    var size: CGFloat = 28
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        ZStack {
+            Circle().fill(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme))
+            Image(systemName: "checkmark")
+                .font(.system(size: size * 0.42, weight: .heavy))
+                .foregroundStyle(done ? .white : KlarStyle.buttonForeground(scheme))
+        }
+        .frame(width: size, height: size)
+    }
+}
+
+/// Initialen im runden Verlauf.
+struct KlarAvatar: View {
+    let initials: String
+    let colorHex: String
+    var size: CGFloat = 26
+
+    var body: some View {
+        let color = Color(hex: colorHex)
+        ZStack {
+            Circle().fill(LinearGradient(colors: [color, HexLuma.scaled(colorHex, by: 1.0).opacity(0.75)], startPoint: .topLeading, endPoint: .bottomTrailing))
+            Text(initials).font(KlarStyle.font(size * 0.38, .black)).foregroundStyle(.white)
+        }
+        .frame(width: size, height: size)
+    }
+}

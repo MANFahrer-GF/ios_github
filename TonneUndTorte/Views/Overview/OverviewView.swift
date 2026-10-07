@@ -108,18 +108,21 @@ struct OverviewView: View {
         }()
 
         return VStack(alignment: .leading, spacing: 0) {
-            Text(eyebrow).font(.system(size: 11, weight: .heavy)).tracking(1.4).foregroundStyle(DesignColor.accent(scheme)).lineLimit(1)
+            Text(eyebrow).font(KlarStyle.font(12, .heavy)).tracking(0.8)
+                .foregroundStyle(allDone ? KlarStyle.done : (tiles.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? KlarStyle.muted(scheme)))
+                .lineLimit(1)
             Text(PickupWords.headline(days: n, done: allDone))
-                .font(.system(size: 36, weight: .black)).tracking(-1).foregroundStyle(DesignColor.text(scheme))
-                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 4)
-            Text(subline).font(.subheadline.weight(.semibold)).foregroundStyle(DesignColor.muted(scheme)).padding(.top, 2)
+                .font(KlarStyle.font(40, .black)).foregroundStyle(KlarStyle.text(scheme))
+                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 2)
+            Text(subline).font(KlarStyle.font(15, .bold)).foregroundStyle(KlarStyle.muted(scheme)).padding(.top, 1)
             if let next {
                 HStack(alignment: .bottom, spacing: 10) {
-                    FlowLayout(spacing: 8) {
+                    VStack(alignment: .leading, spacing: 10) {
                         ForEach(Array(tiles.enumerated()), id: \.offset) { _, tile in
-                            BinTileView(name: tile.name, symbolName: tile.symbolName, colorHex: tile.colorHex, width: 52, height: 58)
+                            BinLine(name: tile.name, symbolName: tile.symbolName, colorHex: tile.colorHex, dot: 32, fontSize: 18)
                         }
                     }
+                    .opacity(allDone ? 0.55 : 1)
                     Spacer(minLength: 0)
                     if let n, n <= 1 {
                         if allDone {
@@ -128,10 +131,10 @@ struct OverviewView: View {
                                 Task { await model.markUndone(dayKey: Days.iso(next.day)); refreshToken += 1 }
                             } label: {
                                 Label("Zurück", systemImage: "arrow.uturn.backward")
-                                    .font(.subheadline.weight(.bold))
-                                    .foregroundStyle(DesignColor.text(scheme))
+                                    .font(KlarStyle.font(15, .heavy))
+                                    .foregroundStyle(.white)
                                     .padding(.horizontal, 14).padding(.vertical, 10)
-                                    .background(DesignColor.tileMore(scheme), in: Capsule())
+                                    .background(KlarStyle.done, in: Capsule())
                             }
                             .buttonStyle(.plain)
                         } else {
@@ -140,11 +143,10 @@ struct OverviewView: View {
                                 Task { await model.markDone(dayKey: Days.iso(next.day)); refreshToken += 1 }
                             } label: {
                                 Label("Erledigt", systemImage: "checkmark")
-                                    .font(.subheadline.weight(.bold))
-                                    .foregroundStyle(.white)
+                                    .font(KlarStyle.font(15, .heavy))
+                                    .foregroundStyle(KlarStyle.buttonForeground(scheme))
                                     .padding(.horizontal, 14).padding(.vertical, 10)
-                                    .background(DesignColor.button(scheme), in: Capsule())
-                                    .overlay(Capsule().strokeBorder(.white.opacity(scheme == .dark ? 0.16 : 0), lineWidth: 1))
+                                    .background(KlarStyle.buttonBackground(scheme), in: Capsule())
                             }
                             .buttonStyle(.plain)
                         }
@@ -153,24 +155,24 @@ struct OverviewView: View {
                 .padding(.top, 18)
                 if let nextAfter {
                     HStack(spacing: 8) {
-                        Text("Danach").font(.caption.weight(.heavy)).foregroundStyle(DesignColor.muted(scheme))
-                        BinDots(hexes: nextAfter.events.map(\.colorHex), size: 10)
+                        Text("Danach").font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                        MiniDots(hexes: nextAfter.events.map(\.colorHex), size: 11)
                         Text("\(DateText.countdown(nextAfter.day)) · \(nextAfter.events.map(\.title).joined(separator: ", "))")
-                            .font(.caption.weight(.semibold)).foregroundStyle(DesignColor.muted(scheme)).lineLimit(1)
+                            .font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                     }
                     .padding(.top, 14)
                 }
             } else {
                 Text("Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.")
-                    .font(.subheadline).foregroundStyle(DesignColor.muted(scheme)).padding(.top, 12)
+                    .font(KlarStyle.font(15, .semibold)).foregroundStyle(KlarStyle.muted(scheme)).padding(.top, 12)
             }
         }
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            DesignSurface(glowHex: tiles.first?.colorHex)
+            KlarSurface(tintHex: allDone ? "#34C759" : tiles.first?.colorHex)
                 .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
-                .shadow(color: .black.opacity(scheme == .dark ? 0.35 : 0.12), radius: 16, x: 0, y: 8)
+                .shadow(color: .black.opacity(scheme == .dark ? 0.35 : 0.08), radius: 16, x: 0, y: 6)
         )
     }
 

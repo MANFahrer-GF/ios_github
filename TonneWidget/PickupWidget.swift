@@ -81,10 +81,12 @@ struct PickupWidgetView: View {
 
     private var next: WidgetSnapshot.PickupDay? { entry.snapshot.nextPickupDay(from: entry.date) }
     private var days: Int? { next.map { Days.until($0.date) } }
-    private var tiles: [BinTileItem] { (next?.items ?? []).map { BinTileItem(name: $0.name, symbolName: $0.symbolName, colorHex: $0.colorHex) } }
+    private var items: [WidgetSnapshot.PickupItem] { next?.items ?? [] }
     private var later: [WidgetSnapshot.PickupDay] { entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) } }
+    private var done: Bool { next?.done ?? false }
     /// Knopf nur, wenn heute oder morgen abgeholt wird.
     private var showsButton: Bool { next != nil && (days ?? 99) <= 1 }
+    private var tintHex: String? { done ? "#34C759" : items.first?.colorHex }
 
     var body: some View {
         switch family {
@@ -99,13 +101,16 @@ struct PickupWidgetView: View {
 
     // MARK: Texte
 
-    private var eyebrow: String { PickupWords.eyebrow(date: next?.date, location: family == .systemSmall ? nil : entry.locationName) }
-    private var headline: String { PickupWords.headline(days: days, done: next?.done ?? false) }
-    private var subline: String {
+    private var eyebrow: String {
+        if done, let days, days == 0 { return L10n.t("HEUTE", "TODAY") }
+        return PickupWords.eyebrow(date: next?.date)
+    }
+    private var headline: String { PickupWords.headline(days: days, done: done) }
+    private var hint: String {
         if next == nil, let first = entry.snapshot.pickupDays.first {
             return L10n.t("nächste \(DateText.countdown(first.date))", "next \(DateText.countdown(first.date))")
         }
-        return PickupWords.subline(days: days, done: next?.done ?? false)
+        return PickupWords.subline(days: days, done: done)
     }
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
@@ -114,62 +119,74 @@ struct PickupWidgetView: View {
         return all.count > max ? shown + " +\(all.count - max)" : shown
     }
 
+    private var eyebrowColor: Color {
+        if done { return KlarStyle.done }
+        guard let hex = items.first?.colorHex else { return KlarStyle.muted(scheme) }
+        return KlarStyle.ink(hex, scheme)
+    }
+
     // MARK: Bausteine
 
-    private var textColor: Color { DesignColor.text(scheme) }
-    private var mutedColor: Color { DesignColor.muted(scheme) }
-
-    private var header: some View {
+    private func header(titleSize: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(eyebrow).font(.system(size: 10, weight: .heavy)).tracking(1.2).foregroundStyle(DesignColor.accent(scheme)).lineLimit(1)
-            Text(headline).font(.system(size: 24, weight: .black)).tracking(-0.6).foregroundStyle(textColor).lineLimit(1).minimumScaleFactor(0.65).padding(.top, 3)
-            Text(subline).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1).padding(.top, 3)
+            HStack(alignment: .center, spacing: 6) {
+                Text(eyebrow).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
+                Spacer(minLength: 4)
+                if let next, showsButton { button(next) }
+            }
+            .frame(minHeight: 28)
+            Text(headline).font(KlarStyle.font(titleSize, .black)).foregroundStyle(KlarStyle.text(scheme))
+                .lineLimit(1).minimumScaleFactor(0.6)
         }
     }
 
-    /// Kachelreihe plus Knopf: feste Plätze, nichts überlappt.
-    private func tileRow(slots: Int, width: CGFloat = 38, height: CGFloat = 44) -> some View {
-        HStack(alignment: .bottom, spacing: 6) {
-            BinTileRow(items: tiles, slots: showsButton ? min(slots, 2) : slots, width: width, height: height, spacing: 5)
-            Spacer(minLength: 4)
-            if let next, showsButton { actionButton(next) }
-        }
-    }
-
-    private func actionButton(_ day: WidgetSnapshot.PickupDay) -> some View {
+    private func button(_ day: WidgetSnapshot.PickupDay) -> some View {
         Group {
             if day.done {
-                Button(intent: UndoPickupDoneIntent(dayKey: Days.iso(day.date))) {
-                    ZStack {
-                        Circle().fill(DesignColor.button(scheme))
-                        Image(systemName: "arrow.uturn.backward").font(.system(size: 12, weight: .heavy)).foregroundStyle(.white)
-                    }
-                    .frame(width: 32, height: 32)
-                }
-                .buttonStyle(.plain)
+                Button(intent: UndoPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: true) }
             } else {
-                Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) {
-                    CheckCircleLabel(size: 32)
-                }
-                .buttonStyle(.plain)
+                Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: false) }
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// Tonnen als Zeilen. Passen nicht alle hinein, steht unten „+n weitere“.
+    private func binLines(max: Int, dot: CGFloat = 22, font: CGFloat = 13, spacing: CGFloat = 7) -> some View {
+        let shown = items.count > max ? Array(items.prefix(max - 1)) : items
+        let rest = items.count - shown.count
+        return VStack(alignment: .leading, spacing: spacing) {
+            ForEach(Array(shown.enumerated()), id: \.offset) { _, item in
+                BinLine(name: item.name, symbolName: item.symbolName, colorHex: item.colorHex, dot: dot, fontSize: font)
+            }
+            if rest > 0 {
+                Text(L10n.t("+\(rest) weitere", "+\(rest) more")).font(KlarStyle.font(font - 1, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                    .frame(height: dot)
+            }
+        }
+        .opacity(done ? 0.55 : 1)
+    }
+
+    private var hintView: some View {
+        Text(hint).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).padding(.top, 1)
+    }
+
+    private func laterLine(_ day: WidgetSnapshot.PickupDay, maxNames: Int) -> some View {
+        HStack(spacing: 7) {
+            MiniDots(hexes: day.items.map(\.colorHex))
+            VStack(alignment: .leading, spacing: 0) {
+                Text(DateText.short(day.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(names(day, max: maxNames)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
             }
         }
     }
 
-    private func laterRow(_ day: WidgetSnapshot.PickupDay, maxNames: Int) -> some View {
-        HStack(spacing: 7) {
-            Text(DateText.short(day.date)).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor).frame(width: 46, alignment: .leading).lineLimit(1)
-            BinDots(hexes: day.items.map(\.colorHex))
-            Text(names(day, max: maxNames)).font(.system(size: 11, weight: .bold)).foregroundStyle(textColor).lineLimit(1)
-        }
-    }
-
-    private func birthdayRow(_ birthday: WidgetSnapshot.BirthdayItem) -> some View {
+    private func birthdayLine(_ birthday: WidgetSnapshot.BirthdayItem, size: CGFloat = 26) -> some View {
         HStack(spacing: 8) {
-            InitialsAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(birthday.name).font(.system(size: 11, weight: .bold)).foregroundStyle(textColor).lineLimit(1)
-                Text(birthdayDetail(birthday)).font(.system(size: 10, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1)
+            KlarAvatar(initials: birthday.initials, colorHex: KlarStyle.birthday, size: size)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(birthday.name).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(birthdayDetail(birthday)).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
             }
         }
     }
@@ -180,80 +197,99 @@ struct PickupWidgetView: View {
         return when
     }
 
-    private var caption: (String) -> Text {
-        { Text($0).font(.system(size: 9, weight: .heavy)).tracking(1.2).foregroundStyle(mutedColor) }
+    private func caption(_ text: String) -> some View {
+        Text(text).font(KlarStyle.font(10, .heavy)).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
     }
 
-    private func surface() -> some View { DesignSurface(glowHex: tiles.first?.colorHex) }
+    private var divider: some View { Rectangle().fill(KlarStyle.hairline(scheme)).frame(height: 1) }
 
     // MARK: Home-Screen
 
     private var small: some View {
         VStack(alignment: .leading, spacing: 0) {
-            header
+            header(titleSize: 27)
+            if items.count <= 2 { hintView }
             Spacer(minLength: 6)
-            if next != nil { tileRow(slots: 3) }
+            if next != nil { binLines(max: 3) }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .containerBackground(for: .widget) { surface() }
+        .containerBackground(for: .widget) { KlarSurface(tintHex: tintHex) }
     }
 
     private var medium: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                header
+                header(titleSize: 27)
+                if items.count <= 2 { hintView }
                 Spacer(minLength: 6)
-                if next != nil { tileRow(slots: 3) }
+                if next != nil { binLines(max: 3) }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            Rectangle().fill(DesignColor.hairline(scheme)).frame(width: 1).padding(.horizontal, 12)
-            VStack(alignment: .leading, spacing: 8) {
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            Rectangle().fill(KlarStyle.hairline(scheme)).frame(width: 1).padding(.horizontal, 14)
+            VStack(alignment: .leading, spacing: 9) {
                 caption(L10n.t("DANACH", "UP NEXT"))
-                ForEach(Array(later.prefix(2).enumerated()), id: \.offset) { _, day in laterRow(day, maxNames: 2) }
-                if later.isEmpty { Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
+                ForEach(Array(later.prefix(2).enumerated()), id: \.offset) { _, day in laterLine(day, maxNames: 2) }
+                if later.isEmpty {
+                    Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                }
                 Spacer(minLength: 0)
                 if let birthday = entry.snapshot.birthdays.first {
-                    birthdayRow(birthday)
+                    birthdayLine(birthday)
                 } else if later.count > 2 {
-                    laterRow(later[2], maxNames: 2)
+                    laterLine(later[2], maxNames: 2)
                 }
             }
-            .frame(width: 136, alignment: .leading)
+            .frame(width: 128, alignment: .leading)
+            .frame(maxHeight: .infinity, alignment: .topLeading)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .containerBackground(for: .widget) { surface() }
+        .containerBackground(for: .widget) { KlarSurface(tintHex: tintHex) }
     }
 
     private var large: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top) {
-                header
-                Spacer(minLength: 8)
-                if let next, showsButton { actionButton(next) }
-            }
-            if !tiles.isEmpty { BinTileRow(items: tiles, slots: 5, width: 44, height: 50, spacing: 7) }
-            Rectangle().fill(DesignColor.hairline(scheme)).frame(height: 1)
-            VStack(alignment: .leading, spacing: 7) {
-                caption(L10n.t("DANACH", "UP NEXT"))
-                ForEach(Array(later.prefix(4).enumerated()), id: \.offset) { _, day in
-                    HStack {
-                        laterRow(day, maxNames: 3)
-                        Spacer(minLength: 4)
-                        Text(DateText.countdown(day.date)).font(.system(size: 10, weight: .semibold)).foregroundStyle(mutedColor).lineLimit(1)
-                    }
-                }
-                if later.isEmpty { Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
-            }
-            Rectangle().fill(DesignColor.hairline(scheme)).frame(height: 1)
-            VStack(alignment: .leading, spacing: 7) {
-                caption(L10n.t("GEBURTSTAGE", "BIRTHDAYS"))
-                ForEach(Array(entry.snapshot.birthdays.prefix(2).enumerated()), id: \.offset) { _, birthday in birthdayRow(birthday) }
-                if entry.snapshot.birthdays.isEmpty { Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(.system(size: 11, weight: .semibold)).foregroundStyle(mutedColor) }
-            }
+        VStack(alignment: .leading, spacing: 0) {
+            header(titleSize: 30)
+            hintView
+            if next != nil { binLines(max: 3, dot: 24, font: 14, spacing: 7).padding(.top, 12) }
+            divider.padding(.vertical, 12)
+            largeUpcoming
+            divider.padding(.vertical, 12)
+            largeBirthdays
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .containerBackground(for: .widget) { surface() }
+        .containerBackground(for: .widget) { KlarSurface(tintHex: tintHex) }
+    }
+
+    private var largeUpcoming: some View {
+        VStack(alignment: .leading, spacing: 0) {
+                caption(L10n.t("DANACH", "UP NEXT")).padding(.bottom, 8)
+                VStack(alignment: .leading, spacing: 7) {
+                    ForEach(Array(later.prefix(3).enumerated()), id: \.offset) { _, day in
+                        HStack(spacing: 8) {
+                            MiniDots(hexes: day.items.map(\.colorHex))
+                            Text(DateText.short(day.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).frame(width: 62, alignment: .leading).lineLimit(1)
+                            Text(names(day, max: 3)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            Spacer(minLength: 4)
+                            Text(DateText.countdown(day.date)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                        }
+                    }
+                    if later.isEmpty {
+                        Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                    }
+                }
+        }
+    }
+
+    private var largeBirthdays: some View {
+        VStack(alignment: .leading, spacing: 0) {
+                caption(L10n.t("GEBURTSTAGE", "BIRTHDAYS")).padding(.bottom, 8)
+                VStack(alignment: .leading, spacing: 7) {
+                    ForEach(Array(entry.snapshot.birthdays.prefix(2).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
+                    if entry.snapshot.birthdays.isEmpty {
+                        Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                    }
+                }
+        }
     }
 
     // MARK: Sperrbildschirm

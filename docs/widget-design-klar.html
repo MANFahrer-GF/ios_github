@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root { font-family: "SF Pro Rounded", Nunito, -apple-system, system-ui, sans-serif; }
+  body { margin: 0; padding: 28px; width: 1180px; background: #c9ccd6; }
+  .stage { display: flex; gap: 28px; }
+  .phone { width: 560px; border-radius: 44px; padding: 34px 26px; box-sizing: border-box; position: relative; overflow: hidden; }
+  .phone.light { background: radial-gradient(120% 80% at 20% 0%, #ffd9c2 0%, #f7c6d9 35%, #c9d8ff 75%, #b8e3d6 100%); }
+  .phone.dark { background: radial-gradient(120% 80% at 20% 0%, #3b2a5a 0%, #1d2547 45%, #0f1a2b 80%, #0b1218 100%); }
+  .cap { font-size: 13px; font-weight: 800; letter-spacing: .12em; margin: 0 0 14px 4px; }
+  .light .cap { color: #3a3a40; } .dark .cap { color: #d8d8e0; }
+  .grid { display: grid; grid-template-columns: 240px 240px; gap: 22px; }
+  .span2 { grid-column: span 2; }
+
+  /* Widget */
+  .w { border-radius: 28px; padding: 18px; box-sizing: border-box; position: relative; overflow: hidden; }
+  .s { width: 240px; height: 240px; }
+  .m { width: 502px; height: 240px; display: flex; gap: 0; }
+  .light .w { background: #ffffff; color: #111114; box-shadow: 0 10px 30px rgba(40,30,60,.18); }
+  .dark .w { background: #1c1c20; color: #f5f5f7; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .w .tint { position: absolute; inset: 0; pointer-events: none; }
+  .light .w .tint { background: linear-gradient(180deg, color-mix(in srgb, var(--c) 16%, transparent) 0%, transparent 55%); }
+  .dark .w .tint { background: linear-gradient(180deg, color-mix(in srgb, var(--c) 26%, transparent) 0%, transparent 60%); }
+  .col { position: relative; display: flex; flex-direction: column; height: 100%; min-width: 0; }
+
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--c-ink); white-space: nowrap; }
+  .title { font-size: 38px; font-weight: 900; letter-spacing: -.02em; line-height: 1.02; margin-top: 2px; }
+  .hint { font-size: 14px; font-weight: 700; margin-top: 3px; }
+  .light .hint, .light .muted { color: #8a8a92; } .dark .hint, .dark .muted { color: #9a9aa4; }
+  .rows { margin-top: auto; display: flex; flex-direction: column; gap: 9px; }
+  .row { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; white-space: nowrap; }
+  .dot { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; }
+  .dot svg { width: 17px; height: 17px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .dot.dk svg { stroke: #2a2210; }
+  .more { font-size: 13px; font-weight: 800; }
+  .btn { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; }
+  .light .btn { background: #111114; } .dark .btn { background: #f5f5f7; }
+  .btn svg { width: 18px; height: 18px; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .light .btn svg { stroke: #fff; } .dark .btn svg { stroke: #111114; }
+  .btn.done { background: #34c759 !important; } .btn.done svg { stroke: #fff !important; }
+
+  .side { width: 196px; flex: none; position: relative; padding-left: 18px; margin-left: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .light .side { border-left: 1.5px solid #ececf0; } .dark .side { border-left: 1.5px solid #2e2e34; }
+  .sh { font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+  .li { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .li .when { font-size: 14px; font-weight: 800; white-space: nowrap; }
+  .li .what { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini { display: flex; } .mini i { width: 12px; height: 12px; border-radius: 50%; display: block; margin-right: -3px; border: 2px solid var(--bg); }
+  .light .mini i { --bg: #fff; } .dark .mini i { --bg: #1c1c20; }
+
+  .av { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 13px; flex: none; }
+  .av.xl { width: 58px; height: 58px; font-size: 21px; }
+  .pinkink { color: #e0287a; } .dark .pinkink { color: #ff6aa8; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></symbol>
+  <symbol id="bag" viewBox="0 0 24 24"><path d="M6 9h12l-1 11H7L6 9zM9 9V7a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/></symbol>
+  <symbol id="paper" viewBox="0 0 24 24"><path d="M6 4h9l3 3v13H6zM9 11h6M9 15h6"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<div class="stage">
+<!-- ============ HELL ============ -->
+<div class="phone light">
+  <div class="cap">HELL</div>
+  <div class="grid">
+    <!-- Müll klein: 2 Tonnen -->
+    <div class="w s" style="--c:#f2c230; --c-ink:#b8860b">
+      <div class="tint"></div>
+      <div class="col">
+        <div class="top"><span class="eyebrow">Do 8. Okt</span><span class="btn"><svg><use href="#check"/></svg></span></div>
+        <div class="title">Morgen</div>
+        <div class="hint">abends rausstellen</div>
+        <div class="rows">
+          <div class="row"><span class="dot dk" style="background:#f2c230"><svg><use href="#bag"/></svg></span>Gelber Sack</div>
+          <div class="row"><span class="dot" style="background:#5b6470"><svg><use href="#trash"/></svg></span>Restmüll</div>
+        </div>
+      </div>
+    </div>
+    <!-- Geburtstag klein -->
+    <div class="w s" style="--c:#ff5fa2; --c-ink:#e0287a">
+      <div class="tint"></div>
+      <div class="col">
+        <div class="top"><span class="eyebrow">Geburtstag</span><span style="font-size:22px">🎂</span></div>
+        <div class="av xl" style="background:linear-gradient(135deg,#ff5fa2,#ff9a4a); margin-top:12px">OE</div>
+        <div style="margin-top:auto">
+          <div style="font-size:22px; font-weight:900; white-space:nowrap">Oma Erika</div>
+          <div class="hint">wird 80 · <span class="pinkink" style="font-weight:900">in 3 Tagen</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Müll mittel -->
+    <div class="w m span2" style="--c:#f2c230; --c-ink:#b8860b">
+      <div class="tint"></div>
+      <div class="col" style="flex:1">
+        <div class="top"><span class="eyebrow">Do 8. Okt</span><span class="btn"><svg><use href="#check"/></svg></span></div>
+        <div class="title">Morgen</div>
+        <div class="hint">abends rausstellen</div>
+        <div class="rows">
+          <div class="row"><span class="dot dk" style="background:#f2c230"><svg><use href="#bag"/></svg></span>Gelber Sack</div>
+          <div class="row"><span class="dot" style="background:#5b6470"><svg><use href="#trash"/></svg></span>Restmüll</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="sh muted">DANACH</div>
+        <div class="li"><span class="mini"><i style="background:#8b5e34"></i></span><div><div class="when">Mo 13.</div><div class="what muted">Bioabfall</div></div></div>
+        <div class="li"><span class="mini"><i style="background:#2f6fed"></i><i style="background:#f2c230"></i></span><div style="min-width:0"><div class="when">Mi 15.</div><div class="what muted">Papier, Gelber Sack</div></div></div>
+        <div class="li" style="margin-top:auto"><span class="av" style="background:linear-gradient(135deg,#ff5fa2,#ff9a4a)">OE</span><div style="min-width:0"><div class="when">Oma Erika</div><div class="what pinkink">80 · in 3 Tagen</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DUNKEL ============ -->
+<div class="phone dark">
+  <div class="cap">DUNKEL</div>
+  <div class="grid">
+    <!-- Müll klein: 3 Tonnen, kein Knopf -->
+    <div class="w s" style="--c:#8b5e34; --c-ink:#d9a066">
+      <div class="tint"></div>
+      <div class="col">
+        <div class="top"><span class="eyebrow">Mo 13. Okt</span></div>
+        <div class="title">In 5 Tagen</div>
+        <div class="rows" style="gap:8px">
+          <div class="row"><span class="dot" style="background:#8b5e34"><svg><use href="#leaf"/></svg></span>Bioabfall</div>
+          <div class="row"><span class="dot" style="background:#2f6fed"><svg><use href="#paper"/></svg></span>Papier</div>
+          <div class="row"><span class="dot dk" style="background:#f2c230"><svg><use href="#bag"/></svg></span>Gelber Sack</div>
+        </div>
+      </div>
+    </div>
+    <!-- Müll klein: erledigt -->
+    <div class="w s" style="--c:#34c759; --c-ink:#34c759">
+      <div class="tint"></div>
+      <div class="col">
+        <div class="top"><span class="eyebrow">Heute</span><span class="btn done"><svg><use href="#check"/></svg></span></div>
+        <div class="title">Erledigt</div>
+        <div class="hint">steht draußen 👍</div>
+        <div class="rows" style="opacity:.55">
+          <div class="row"><span class="dot dk" style="background:#f2c230"><svg><use href="#bag"/></svg></span>Gelber Sack</div>
+          <div class="row"><span class="dot" style="background:#5b6470"><svg><use href="#trash"/></svg></span>Restmüll</div>
+        </div>
+      </div>
+    </div>
+    <!-- Geburtstag mittel -->
+    <div class="w m span2" style="--c:#ff5fa2; --c-ink:#ff6aa8">
+      <div class="tint"></div>
+      <div class="col" style="flex:1">
+        <div class="top"><span class="eyebrow">Nächster Geburtstag</span><span style="font-size:22px">🎂</span></div>
+        <div style="display:flex; align-items:center; gap:14px; margin-top:auto">
+          <span class="av xl" style="background:linear-gradient(135deg,#ff5fa2,#ff9a4a)">OE</span>
+          <div style="min-width:0">
+            <div style="font-size:24px; font-weight:900; white-space:nowrap">Oma Erika</div>
+            <div class="hint">wird 80 · Fr 10. Okt</div>
+          </div>
+        </div>
+        <div class="pinkink" style="font-size:30px; font-weight:900; margin-top:10px">in 3 Tagen</div>
+      </div>
+      <div class="side">
+        <div class="sh muted">DANACH</div>
+        <div class="li"><span class="av" style="background:linear-gradient(135deg,#4f8cff,#7c5cff)">PK</span><div style="min-width:0"><div class="when">Paul Kant</div><div class="what muted">12 · in 12 Tagen</div></div></div>
+        <div class="li"><span class="av" style="background:linear-gradient(135deg,#2ecc9a,#1f9d5f)">MS</span><div style="min-width:0"><div class="when">Maria S.</div><div class="what muted">in 20 Tagen</div></div></div>
+        <div class="li"><span class="av" style="background:linear-gradient(135deg,#ffb84d,#ff7a3d)">TK</span><div style="min-width:0"><div class="when">Tom K.</div><div class="what muted">41 · in 31 Tagen</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
