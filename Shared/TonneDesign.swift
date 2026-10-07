@@ -86,7 +86,7 @@ struct BinTileView: View {
             RoundedRectangle(cornerRadius: width * 0.3, style: .continuous)
                 .strokeBorder(.white.opacity(0.18), lineWidth: 1)
             VStack(spacing: 3) {
-                Image(systemName: symbolName).font(.system(size: width * 0.42, weight: .bold))
+                WasteIcon(symbolName: symbolName, name: name, size: width * 0.42)
                 Text(ShortName.bin(name)).font(.system(size: max(7, width * 0.2), weight: .heavy)).tracking(0.3).lineLimit(1).minimumScaleFactor(0.7)
             }
             .foregroundStyle(.white)
@@ -446,13 +446,13 @@ struct KlarSurface: View {
 struct BinDot: View {
     let symbolName: String
     let colorHex: String
+    var name: String = ""
     var size: CGFloat = 22
 
     var body: some View {
         ZStack {
             Circle().fill(Color(hex: colorHex))
-            Image(systemName: symbolName)
-                .font(.system(size: size * 0.5, weight: .bold))
+            WasteIcon(symbolName: symbolName, name: name, size: size * 0.5)
                 .foregroundStyle(HexLuma.isLight(colorHex) ? Color(hex: "#2A2210") : .white)
         }
         .frame(width: size, height: size)
@@ -470,7 +470,7 @@ struct BinLine: View {
 
     var body: some View {
         HStack(spacing: dot * 0.36) {
-            BinDot(symbolName: symbolName, colorHex: colorHex, size: dot)
+            BinDot(symbolName: symbolName, colorHex: colorHex, name: name, size: dot)
             Text(name).font(KlarStyle.font(fontSize, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.75)
         }
     }

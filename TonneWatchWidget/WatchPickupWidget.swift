@@ -57,15 +57,23 @@ struct WatchPickupView: View {
         }
     }
     private var symbol: String { items.first?.symbolName ?? "checkmark.circle" }
+    @ViewBuilder
+    private func glyph(size: CGFloat) -> some View {
+        if items.isEmpty {
+            Image(systemName: symbol).font(.system(size: size, weight: .semibold))
+        } else {
+            WasteIcon(symbolName: symbol, name: items.first?.name ?? "", size: size)
+        }
+    }
     private var names: String { items.isEmpty ? L10n.t("Keine Abholung", "No pickup") : items.map(\.name).joined(separator: " + ") }
 
     var body: some View {
         switch family {
         case .accessoryInline:
-            Text("\(Image(systemName: symbol)) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
+            Text("\(next == nil ? Image(systemName: symbol) : Image.waste(symbol, name: items.first?.name ?? "")) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryCorner:
-            Image(systemName: symbol).font(.title3).widgetAccentable()
+            glyph(size: 20).widgetAccentable()
                 .widgetLabel { Text(next == nil ? "–" : "\(shortWhen) · \(names)") }
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryRectangular:
@@ -78,7 +86,7 @@ struct WatchPickupView: View {
                     if items.count > 1 {
                         Text("\(items.count)").font(.system(size: 18, weight: .black, design: .rounded)).widgetAccentable()
                     } else {
-                        Image(systemName: symbol).font(.title3).widgetAccentable()
+                        glyph(size: 20).widgetAccentable()
                     }
                     Text(shortWhen).font(.system(size: 11, weight: .heavy, design: .rounded))
                 }
@@ -100,7 +108,7 @@ struct WatchPickupView: View {
             }
             ForEach(Array(items.prefix(2).enumerated()), id: \.offset) { _, item in
                 HStack(spacing: 4) {
-                    Image(systemName: item.symbolName).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
+                    WasteIcon(symbolName: item.symbolName, name: item.name, size: 11).foregroundStyle(Color(hex: item.colorHex))
                     Text(item.name).font(.system(size: 13, weight: .bold, design: .rounded)).lineLimit(1)
                 }
             }

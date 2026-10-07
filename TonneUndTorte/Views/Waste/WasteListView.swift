@@ -179,7 +179,7 @@ struct WasteTypeRow: View {
     let type: WasteType
     var body: some View {
         HStack(spacing: 12) {
-            SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 40).opacity(type.isActive ? 1 : 0.4)
+            SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 40, wasteName: type.name).opacity(type.isActive ? 1 : 0.4)
             VStack(alignment: .leading, spacing: 2) {
                 Text(type.name).font(.body.weight(.semibold)).foregroundStyle(type.isActive ? .primary : .secondary)
                 Text(subtitle).font(.caption).foregroundStyle(.secondary)
@@ -219,7 +219,7 @@ struct NewWasteTypeSheet: View {
                 }
                 Section("Darstellung") {
                     PaletteColorPicker(colorHex: $colorHex)
-                    SymbolPicker(symbolName: $symbolName, colorHex: colorHex)
+                    SymbolPicker(symbolName: $symbolName, colorHex: colorHex, wasteName: name)
                 }
                 Section("Rhythmus") {
                     Picker("Abstand", selection: $intervalWeeks) {

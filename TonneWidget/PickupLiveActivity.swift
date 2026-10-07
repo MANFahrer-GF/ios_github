@@ -31,13 +31,21 @@ struct PickupLiveActivity: Widget {
             } compactTrailing: {
                 Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).font(.caption2.weight(.semibold))
             } minimal: {
-                Image(systemName: context.state.done ? "checkmark.circle.fill" : (context.state.symbolNames.first ?? "trash.fill"))
+                if context.state.done {
+                    Image(systemName: "checkmark.circle.fill")
+                } else {
+                    WasteIcon(symbolName: context.state.symbolNames.first ?? "trash.fill", name: context.state.names.first ?? "", size: 15)
+                }
             }
         }
     }
 
     private func bins(_ context: ActivityViewContext<PickupActivityAttributes>) -> [BinRef] {
-        zip(context.state.symbolNames, context.state.colorHexes).map { BinRef(symbolName: $0, colorHex: $1) }
+        context.state.symbolNames.indices.compactMap { index in
+            guard index < context.state.colorHexes.count else { return nil }
+            let name = index < context.state.names.count ? context.state.names[index] : ""
+            return BinRef(symbolName: context.state.symbolNames[index], colorHex: context.state.colorHexes[index], name: name)
+        }
     }
 
     private func lockScreen(_ context: ActivityViewContext<PickupActivityAttributes>) -> some View {

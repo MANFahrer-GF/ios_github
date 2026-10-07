@@ -16,6 +16,22 @@ final class CoreTests: XCTestCase {
 
     func day(_ iso: String) -> Date { Days.parse(iso, calendar: calendar)! }
 
+    func testWasteGlyph() {
+        XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Gelber Sack"), "tt.sack")
+        XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Gelbe Tonne"), "tt.bin.yellow")
+        XCTAssertEqual(WasteGlyph.assetName(for: "bag.fill", name: "Wertstofftonne"), "tt.bin.yellow")
+        XCTAssertEqual(WasteGlyph.assetName(for: "trash.fill"), "tt.bin")
+        XCTAssertEqual(WasteGlyph.assetName(for: "leaf.fill", name: "Biotonne"), "tt.bin.bio")
+        XCTAssertNil(WasteGlyph.assetName(for: "leaf.fill", name: "Laubsammlung"))
+        XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Weihnachtsbäume"))
+        XCTAssertNil(WasteGlyph.assetName(for: "sofa.fill"))
+        for category in WasteCategory.allCases {
+            if let asset = WasteGlyph.assetName(for: category.symbolName, name: category.name) {
+                XCTAssertTrue(WasteGlyph.all.contains(asset))
+            }
+        }
+    }
+
     func testL10n() {
         L10n.forcedLanguage = "en-US"
         XCTAssertEqual(WasteCategory.packaging.name, "Packaging")

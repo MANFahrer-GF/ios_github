@@ -321,6 +321,16 @@
         }
       }
     },
+    "Allen Kontakten Zugriff geben (Einstellungen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow access to all contacts (Settings)"
+          }
+        }
+      }
+    },
     "Alles eingerichtet!": {
       "localizations": {
         "en": {
@@ -581,6 +591,16 @@
         }
       }
     },
+    "Die App darf deine Kontakte nicht lesen. Kein Problem: Wähle die Personen einfach aus, ganz ohne Freigabe.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app can’t read your contacts. No problem: just choose the people, no access needed."
+          }
+        }
+      }
+    },
     "Die App markiert ihre Termine und ändert oder löscht nur diese. Deine eigenen Termine bleiben unberührt.": {
       "localizations": {
         "en": {
@@ -627,6 +647,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "You only shared selected contacts with the app."
+          }
+        }
+      }
+    },
+    "Du hast der App nur einzelne Kontakte freigegeben. Kein Problem: Wähle die Personen einfach aus, ganz ohne weitere Freigabe.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You only shared some contacts with the app. No problem: just choose the people, no further access needed."
           }
         }
       }
@@ -1247,6 +1277,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add to Apple Calendar"
+          }
+        }
+      }
+    },
+    "In deinen Kontakten ist kein Geburtstag eingetragen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None of your contacts has a birthday."
           }
         }
       }
@@ -2051,6 +2091,16 @@
         }
       }
     },
+    "Personen auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose people"
+          }
+        }
+      }
+    },
     "Quelle": {
       "localizations": {
         "en": {
@@ -2287,6 +2337,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Send test notification"
+          }
+        }
+      }
+    },
+    "Tippe auf „Personen auswählen“ und hake alle an, deren Geburtstag du übernehmen möchtest.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap “Choose people” and tick everyone whose birthday you want to add."
           }
         }
       }

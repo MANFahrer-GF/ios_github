@@ -232,7 +232,7 @@ struct ContactsImportView: View {
     @State private var isLoading = true
     @State private var errorMessage: String?
     @State private var access: ContactsImport.Access = ContactsImport.access
-    @State private var showAccessPicker = false
+    @State private var picked: [ContactsImport.Candidate] = []
     @State private var search = ""
 
     private var existing: [String: Person] {
@@ -255,7 +255,11 @@ struct ContactsImportView: View {
                 if isLoading { ProgressView("Kontakte werden gelesen …") }
                 if let errorMessage { Text(errorMessage).foregroundStyle(.secondary) }
                 if !isLoading && candidates.isEmpty && errorMessage == nil {
-                    Text("In den freigegebenen Kontakten ist kein Geburtstag eingetragen.").foregroundStyle(.secondary)
+                    if access == .full {
+                        Text("In deinen Kontakten ist kein Geburtstag eingetragen.").foregroundStyle(.secondary)
+                    } else {
+                        Text("Tippe auf „Personen auswählen“ und hake alle an, deren Geburtstag du übernehmen möchtest.").foregroundStyle(.secondary)
+                    }
                 }
                 Section {
                     ForEach(visible) { candidate in row(candidate) }
@@ -281,25 +285,42 @@ struct ContactsImportView: View {
                     }
                 }
             }
-            .modifier(ContactAccessPickerModifier(isPresented: $showAccessPicker) { Task { await load() } })
             .task { await load() }
         }
     }
 
+    /// Ohne vollen Kontaktzugriff wählt man die Personen direkt in der Systemauswahl aus – dafür braucht es keine Freigabe.
     @ViewBuilder
     private var accessSection: some View {
-        if access == .limited {
+        if access != .full && !isLoading {
             Section {
-                Label("Du hast der App nur ausgewählte Kontakte freigegeben.", systemImage: "person.crop.circle.badge.exclamationmark")
-                Button { showAccessPicker = true } label: { Label("Weitere Kontakte freigeben", systemImage: "person.crop.circle.badge.plus") }
-                Button { openSettings() } label: { Label("Alle Kontakte freigeben (Einstellungen)", systemImage: "gearshape") }
-            }
-        } else if access == .denied {
-            Section {
-                Label("Kontaktzugriff ist ausgeschaltet.", systemImage: "person.crop.circle.badge.xmark")
-                Button { openSettings() } label: { Label("In den Einstellungen erlauben", systemImage: "gearshape") }
+                Button { pickContacts() } label: {
+                    Label("Personen auswählen", systemImage: "person.crop.circle.badge.plus").font(.body.weight(.semibold))
+                }
+                Button { openSettings() } label: { Label("Allen Kontakten Zugriff geben (Einstellungen)", systemImage: "gearshape") }
+            } footer: {
+                if access == .limited {
+                    Text("Du hast der App nur einzelne Kontakte freigegeben. Kein Problem: Wähle die Personen einfach aus, ganz ohne weitere Freigabe.")
+                } else {
+                    Text("Die App darf deine Kontakte nicht lesen. Kein Problem: Wähle die Personen einfach aus, ganz ohne Freigabe.")
+                }
             }
         }
+    }
+
+    private func pickContacts() {
+        ContactsPicker.present { chosen in
+            guard !chosen.isEmpty else { return }
+            picked = merge(picked, chosen)
+            candidates = merge(candidates, chosen)
+            selected.formUnion(chosen.map(\.identifier))
+        }
+    }
+
+    /// Ergänzt Kandidaten ohne Dubletten; neuere Daten ersetzen ältere.
+    private func merge(_ base: [ContactsImport.Candidate], _ extra: [ContactsImport.Candidate]) -> [ContactsImport.Candidate] {
+        let ids = Set(extra.map(\.identifier))
+        return (base.filter { !ids.contains($0.identifier) } + extra).sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 
     private func row(_ candidate: ContactsImport.Candidate) -> some View {
@@ -327,11 +348,14 @@ struct ContactsImportView: View {
         isLoading = true
         errorMessage = nil
         do {
-            candidates = try await ContactsImport.candidates()
+            candidates = merge(try await ContactsImport.candidates(), picked)
             let known = Set(existing.keys)
             // Neue Kontakte vorauswählen, bisherige Auswahl behalten
             selected.formUnion(Set(candidates.map(\.identifier)).subtracting(known))
             selected = selected.intersection(Set(candidates.map(\.identifier)))
+        } catch ContactsImport.ImportError.denied {
+            // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
+            candidates = picked
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -363,19 +387,5 @@ struct ContactsImportView: View {
         try? context.save()
         Task { await model.refreshAll() }
         dismiss()
-    }
-}
-
-/// iOS 18: Systemauswahl „Weitere Kontakte freigeben“. Auf älteren Systemen ohne Wirkung.
-private struct ContactAccessPickerModifier: ViewModifier {
-    @Binding var isPresented: Bool
-    var onChange: () -> Void
-
-    func body(content: Content) -> some View {
-        if #available(iOS 18.0, *) {
-            content.contactAccessPicker(isPresented: $isPresented) { _ in onChange() }
-        } else {
-            content
-        }
     }
 }

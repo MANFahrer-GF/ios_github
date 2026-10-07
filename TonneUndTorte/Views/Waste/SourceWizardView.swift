@@ -275,7 +275,7 @@ struct SourceWizardView: View {
                 ForEach(binNames, id: \.category) { bin in
                     Toggle(isOn: Binding(get: { categories[bin.category] ?? false }, set: { categories[bin.category] = $0 })) {
                         HStack(spacing: 12) {
-                            SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36)
+                            SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36, wasteName: bin.names.first ?? bin.category.name)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(bin.names.joined(separator: ", ")).font(.body.weight(.semibold)).lineLimit(2)
                                 Text("\(bin.count) Termine").font(.caption).foregroundStyle(.secondary)

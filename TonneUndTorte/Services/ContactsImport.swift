@@ -33,21 +33,38 @@ enum ContactsImport {
     }
 
     static func candidates() async throws -> [Candidate] {
-        let store = CNContactStore()
         if access == .notDetermined {
-            _ = try await store.requestAccess(for: .contacts)
+            _ = try? await CNContactStore().requestAccess(for: .contacts)
         }
         guard access == .full || access == .limited else { throw ImportError.denied }
-        let keys: [CNKeyDescriptor] = [CNContactGivenNameKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactNicknameKey as CNKeyDescriptor, CNContactBirthdayKey as CNKeyDescriptor, CNContactPhoneNumbersKey as CNKeyDescriptor]
+        // Viele Kontakte zu lesen dauert, darum nicht auf dem Hauptthread.
+        return try await Task.detached(priority: .userInitiated) { try fetchAll() }.value
+    }
+
+    private static func fetchAll() throws -> [Candidate] {
+        let store = CNContactStore()
         let request = CNContactFetchRequest(keysToFetch: keys)
         request.sortOrder = .givenName
         var result: [Candidate] = []
         try store.enumerateContacts(with: request) { contact, _ in
-            guard let birthday = contact.birthday, let day = birthday.day, let month = birthday.month else { return }
-            let name = [contact.givenName, contact.familyName].filter { !$0.isEmpty }.joined(separator: " ")
-            guard !name.isEmpty else { return }
-            result.append(Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: birthday.year, phone: contact.phoneNumbers.first?.value.stringValue))
+            if let candidate = candidate(from: contact) { result.append(candidate) }
         }
         return result
+    }
+
+    private static let keys: [CNKeyDescriptor] = [CNContactGivenNameKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactNicknameKey as CNKeyDescriptor, CNContactBirthdayKey as CNKeyDescriptor, CNContactPhoneNumbersKey as CNKeyDescriptor]
+
+    /// Kontakt mit Geburtstag als Kandidat. Funktioniert auch für Kontakte aus der Systemauswahl, die ohne Kontaktfreigabe kommen.
+    static func candidate(from contact: CNContact) -> Candidate? {
+        guard contact.isKeyAvailable(CNContactBirthdayKey), let birthday = contact.birthday,
+              let day = birthday.day, let month = birthday.month else { return nil }
+        var name = ""
+        if contact.isKeyAvailable(CNContactGivenNameKey), contact.isKeyAvailable(CNContactFamilyNameKey) {
+            name = [contact.givenName, contact.familyName].filter { !$0.isEmpty }.joined(separator: " ")
+        }
+        if name.isEmpty, contact.isKeyAvailable(CNContactNicknameKey) { name = contact.nickname }
+        guard !name.isEmpty else { return nil }
+        let phone = contact.isKeyAvailable(CNContactPhoneNumbersKey) ? contact.phoneNumbers.first?.value.stringValue : nil
+        return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: birthday.year, phone: phone)
     }
 }

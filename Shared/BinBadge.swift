@@ -5,6 +5,7 @@ import SwiftUI
 struct BinBadge: View {
     let symbolName: String
     let colorHex: String
+    var name: String = ""
     var size: CGFloat = 28
     var ring = true
 
@@ -14,9 +15,8 @@ struct BinBadge: View {
             if ring {
                 Circle().strokeBorder(.white.opacity(0.9), lineWidth: max(1, size / 16))
             }
-            Image(systemName: symbolName)
-                .font(.system(size: size * 0.46, weight: .bold))
-                .foregroundStyle(.white)
+            WasteIcon(symbolName: symbolName, name: name, size: size * 0.46)
+                .foregroundStyle(HexLuma.isLight(colorHex) ? Color(hex: "#2A2210") : .white)
         }
         .frame(width: size, height: size)
         .shadow(color: .black.opacity(0.18), radius: size / 10, x: 0, y: size / 16)
@@ -27,6 +27,7 @@ struct BinBadge: View {
 struct BinRef: Hashable {
     let symbolName: String
     let colorHex: String
+    var name: String = ""
 }
 
 /// Mehrere Tonnen leicht überlappend, für Kopfzeilen.
@@ -37,7 +38,7 @@ struct BinStack: View {
     var body: some View {
         HStack(spacing: -size * 0.3) {
             ForEach(Array(bins.prefix(4).enumerated()), id: \.offset) { _, bin in
-                BinBadge(symbolName: bin.symbolName, colorHex: bin.colorHex, size: size)
+                BinBadge(symbolName: bin.symbolName, colorHex: bin.colorHex, name: bin.name, size: size)
             }
         }
     }
@@ -51,7 +52,7 @@ struct BinTile: View {
 
     var body: some View {
         VStack(spacing: 3) {
-            BinBadge(symbolName: bin.symbolName, colorHex: bin.colorHex, size: size)
+            BinBadge(symbolName: bin.symbolName, colorHex: bin.colorHex, name: bin.name, size: size)
             Text(name)
                 .font(.system(size: 10, weight: .semibold))
                 .lineLimit(1)

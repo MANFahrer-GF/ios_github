@@ -51,10 +51,19 @@ struct SymbolBadge: View {
     let symbolName: String
     let colorHex: String
     var size: CGFloat = 44
+    /// Name der Abfallart. Gesetzt: eigenes Tonnen-Piktogramm statt SF Symbol (nicht für Orte).
+    var wasteName: String? = nil
     var body: some View {
         ZStack {
             Circle().fill(LinearGradient(colors: [Color(hex: colorHex), Color(hex: colorHex).opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Image(systemName: symbolName).font(.system(size: size * 0.45, weight: .semibold)).foregroundStyle(.white)
+            Group {
+                if let wasteName {
+                    WasteIcon(symbolName: symbolName, name: wasteName, size: size * 0.45, weight: .semibold)
+                } else {
+                    Image(systemName: symbolName).font(.system(size: size * 0.45, weight: .semibold))
+                }
+            }
+            .foregroundStyle(.white)
         }
         .frame(width: size, height: size)
         .shadow(color: Color(hex: colorHex).opacity(0.35), radius: 6, x: 0, y: 3)
@@ -81,9 +90,9 @@ struct EventChip: View {
     var body: some View {
         HStack(spacing: 6) {
             if onLight {
-                Image(systemName: event.symbolName).font(.caption.weight(.semibold))
+                WasteIcon(symbolName: event.symbolName, name: event.title, size: 12, weight: .semibold)
             } else {
-                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 22)
+                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22)
             }
             Text(event.title).font(.caption.weight(.semibold))
             if showLocation, let location = event.locationName { Text("· \(location)").font(.caption).opacity(0.8) }
@@ -102,7 +111,7 @@ struct EventRow: View {
             if event.kind == .birthday {
                 InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 38)
             } else {
-                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 38)
+                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 38, wasteName: event.title)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(event.title).font(.body.weight(.semibold))
@@ -163,11 +172,20 @@ struct SymbolPicker: View {
     @Binding var symbolName: String
     let colorHex: String
     var symbols: [String] = Palette.wasteSymbols
+    /// Abfallarten zeigen die eigenen Tonnen-Piktogramme, Orte und Termine die SF Symbols.
+    var wasteName: String? = nil
     private let columns = [GridItem(.adaptive(minimum: 48), spacing: 10)]
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(symbols, id: \.self) { symbol in
-                Image(systemName: symbol).font(.title3).frame(width: 44, height: 44)
+                Group {
+                    if let wasteName {
+                        WasteIcon(symbolName: symbol, name: wasteName, size: 20, weight: .semibold)
+                    } else {
+                        Image(systemName: symbol).font(.title3)
+                    }
+                }
+                .frame(width: 44, height: 44)
                     .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(symbol == symbolName ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
                     .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(symbol == symbolName ? Color(hex: colorHex) : .clear, lineWidth: 2))
                     .foregroundStyle(symbol == symbolName ? Color(hex: colorHex) : .primary)
