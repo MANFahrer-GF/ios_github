@@ -12,26 +12,28 @@ public enum WasteGlyph {
         case "trash.fill", "trash":
             return "tt.bin"
         case "leaf.fill":
-            return mentions(name, prefixes: ["laub", "leaf", "leaves"]) ? nil : "tt.bin.bio"
+            return mentions(name, ["laub", "leaf", "leaves"], except: ["urlaub", "erlaub"]) ? nil : "tt.bin.bio"
         case "newspaper.fill":
             return "tt.bin.paper"
         case "bag.fill":
-            return mentions(name, prefixes: ["tonne", "container"], suffixes: ["tonne", "container"], words: ["bin"]) ? "tt.bin.yellow" : "tt.sack"
+            return mentions(name, ["tonne", "container"], words: ["bin", "bins"]) ? "tt.bin.yellow" : "tt.sack"
         case "wineglass.fill":
             return "tt.glass"
         case "tree.fill":
-            return mentions(name, prefixes: ["weihnacht", "christbaum", "tanne", "christmas", "xmas"], words: ["fir"]) ? nil : "tt.green"
+            return mentions(name, ["weihnacht", "christb", "tanne", "christmas", "xmas"], words: ["fir"]) ? nil : "tt.green"
         default:
             return all.contains(symbolName) ? symbolName : nil
         }
     }
 
-    /// Wortteile am Wortanfang („Laubsäcke“, „Tannenbäume“) bzw. -ende („Wertstofftonne“) – nicht mitten im
-    /// oder am Ende eines fremden Worts („Urlaub“). Kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
-    private static func mentions(_ name: String, prefixes: [String] = [], suffixes: [String] = [], words whole: [String] = []) -> Bool {
+    /// Deutsche Wortteile irgendwo im Wort („Herbstlaub“, „Wertstofftonnen“, „Christbäume“), außer in Wörtern mit
+    /// `except` („Urlaub“). Kurze englische Wörter („bin“, „fir“) nur als ganzes Wort.
+    private static func mentions(_ name: String, _ parts: [String], except: [String] = [], words whole: [String] = []) -> Bool {
         guard !name.isEmpty else { return false }
         for word in name.lowercased().split(whereSeparator: { !$0.isLetter }).map(String.init) {
-            if prefixes.contains(where: word.hasPrefix) || suffixes.contains(where: word.hasSuffix) || whole.contains(word) { return true }
+            if whole.contains(word) { return true }
+            if except.contains(where: word.contains) { continue }
+            if parts.contains(where: word.contains) { return true }
         }
         return false
     }

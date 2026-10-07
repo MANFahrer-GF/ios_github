@@ -1641,6 +1641,16 @@
         }
       }
     },
+    "Live-Aktivitäten sind in Tonne & Torte unter Einstellungen ausgeschaltet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activities are turned off in Tonne & Torte’s settings."
+          }
+        }
+      }
+    },
     "Los geht's": {
       "localizations": {
         "en": {
@@ -2911,12 +2921,12 @@
         }
       }
     },
-    "Öffne Tonne & Torte einmal, damit die Termine bekannt sind.": {
+    "Öffne Tonne & Torte einmal, damit die Termine aktuell sind.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Tonne & Torte once so it knows your dates."
+            "value": "Open Tonne & Torte once so your dates are up to date."
           }
         }
       }

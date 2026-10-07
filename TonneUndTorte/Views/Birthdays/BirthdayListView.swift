@@ -230,6 +230,7 @@ struct ContactsImportView: View {
     @State private var candidates: [ContactsImport.Candidate] = []
     @State private var selected: Set<String> = []
     @State private var isLoading = true
+    @State private var isRefreshing = false
     @State private var errorMessage: String?
     @State private var access: ContactsImport.Access = ContactsImport.access
     @State private var picked: [ContactsImport.Candidate] = []
@@ -254,12 +255,11 @@ struct ContactsImportView: View {
 
     private func computeMatching() -> Matching {
         var result = Matching()
-        let candidateIDs = Set(candidates.map(\.identifier))
         let linked = Dictionary(people.compactMap { person in person.contactIdentifier.map { ($0, person) } }, uniquingKeysWith: { first, _ in first })
-        // Über Name + Geburtstag nur Personen, deren eigener Kontakt nicht in der Liste steht
-        // (von Hand angelegt oder Kontakt nicht freigegeben).
+        // Über Name + Geburtstag nur von Hand angelegte Personen. Mit einem anderen Kontakt verknüpfte gelten
+        // als „doppelt?“ – so werden nie Daten eines fremden Kontakts in eine verknüpfte Person geschrieben.
         var byKey: [String: Person] = [:]
-        for person in people where person.contactIdentifier.map({ !candidateIDs.contains($0) }) ?? true {
+        for person in people where person.contactIdentifier == nil {
             byKey[Self.matchKey(person)] = byKey[Self.matchKey(person)] ?? person
         }
         let personKeys = Set(people.map(Self.matchKey))
@@ -344,7 +344,7 @@ struct ContactsImportView: View {
             .onChange(of: people) { _, _ in matching = computeMatching() }
             // Zurück aus den Einstellungen: geänderte oder erweiterte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active, !isLoading { Task { await load(silent: true) } }
+                if phase == .active, !isLoading, !isRefreshing { Task { await load(silent: true) } }
             }
         }
     }
@@ -443,8 +443,8 @@ struct ContactsImportView: View {
 
     /// `silent`: im Hintergrund neu lesen (Rückkehr in die App), ohne Ladeanzeige und ohne Flackern.
     private func load(silent: Bool = false) async {
-        if !silent { isLoading = true }
-        errorMessage = nil
+        if silent { isRefreshing = true } else { isLoading = true; errorMessage = nil }
+        defer { if silent { isRefreshing = false } else { isLoading = false } }
         do {
             let fetched = try await ContactsImport.candidates()
             // Erst nach dem Lesen auf `picked` zugreifen (Auswahl könnte währenddessen dazugekommen sein);
@@ -455,17 +455,18 @@ struct ContactsImportView: View {
             let ids = Set(candidates.map(\.identifier))
             selected.formUnion(ids.subtracting(seen).subtracting(existing.keys).subtracting(matching.duplicates))
             seen.formUnion(ids)
+            errorMessage = nil
         } catch ContactsImport.ImportError.denied {
             // Kein Fehler: Personen lassen sich trotzdem über die Systemauswahl übernehmen.
             candidates = picked
             matching = computeMatching()
         } catch {
-            errorMessage = error.localizedDescription
+            // Beim stillen Neuladen die bisherige Liste behalten.
+            if !silent { errorMessage = error.localizedDescription }
         }
         // Nur auswählen, was noch in der Liste steht (z. B. nach Entzug der Freigabe).
         selected = selected.intersection(Set(candidates.map(\.identifier)))
         access = ContactsImport.access
-        isLoading = false
     }
 
     private func openSettings() {

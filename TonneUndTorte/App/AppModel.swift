@@ -112,7 +112,6 @@ final class AppModel: ObservableObject {
 
     /// Erinnerungen, Widget-Snapshot und Live-Aktivität neu aufbauen.
     func refreshAll() async {
-        allWasteTypes().forEach { $0.dropStaleGlyph() }
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)

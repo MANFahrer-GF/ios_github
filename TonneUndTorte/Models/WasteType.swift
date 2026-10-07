@@ -58,12 +58,8 @@ final class WasteType {
         }
     }
 
-    /// Gewähltes Piktogramm verwerfen, wenn eine ältere App-Version das Symbol inzwischen geändert hat.
-    func dropStaleGlyph() {
-        if hasStaleGlyph { glyphName = nil }
-    }
-
     /// Das gewählte Piktogramm passt nicht mehr zum SF-Namen (eine ältere App-Version hat das Symbol geändert).
+    /// Nur beim Lesen ausgewertet – nichts wird automatisch gelöscht, auch keine Piktogramme neuerer Versionen.
     private var hasStaleGlyph: Bool {
         guard let glyphName else { return false }
         return WasteGlyph.sfFallback(for: glyphName) != symbolName

@@ -181,13 +181,23 @@ struct SymbolPicker: View {
     }
 }
 
-/// Kategorie mit ihrem Piktogramm, z. B. in Auswahlmenüs.
+/// Abfallart oder Kategorie mit Piktogramm, z. B. in Auswahlmenüs (dort zählen nur Text und Image).
+struct WasteLabel: View {
+    let title: String
+    let symbolName: String
+    var name: String = ""
+
+    var body: some View {
+        Label { Text(title) } icon: { Image.waste(symbolName, name: name) }
+    }
+}
+
 struct WasteCategoryLabel: View {
     let category: WasteCategory
     var title: String? = nil
 
     var body: some View {
-        Label { Text(title ?? category.name) } icon: { Image.waste(category.symbolName, name: category.name) }
+        WasteLabel(title: title ?? category.name, symbolName: category.symbolName, name: category.name)
     }
 }
 
