@@ -192,7 +192,7 @@ struct PickupWidgetView: View {
     /// Alle Geburtstage des nächsten Tages in einer Zeile: Avatare übereinander, Namen zusammengefasst.
     @ViewBuilder
     private func birthdayDayLine(_ day: [WidgetSnapshot.BirthdayItem]) -> some View {
-        if day.count <= 1, let only = day.first {
+        if day.count == 1, let only = day.first {
             birthdayLine(only)
         } else if let first = day.first {
             HStack(spacing: 8) {

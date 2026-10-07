@@ -20,7 +20,7 @@ extension Image {
     /// Abfall-Piktogramm für Text-Einbettungen wie `Text("\(Image.waste(...)) morgen")`.
     static func waste(_ symbolName: String, name: String = "") -> Image {
         if let asset = WasteGlyph.assetName(for: symbolName, name: name) {
-            return Image(asset)
+            return Image(asset, label: Text(WasteGlyph.accessibilityName(for: asset)))
         }
         return Image(systemName: symbolName)
     }

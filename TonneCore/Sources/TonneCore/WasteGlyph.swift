@@ -1,10 +1,9 @@
 import Foundation
 
 /// Eigene Abfall-Piktogramme statt SF Symbols: Tonne mit Rädern, zugeknoteter Sack, Flasche, Zweig.
-/// Gespeichert bleibt der SF-Symbolname; erst beim Anzeigen wird auf das passende Bild aus dem Asset-Katalog umgeschaltet.
-/// Bewusst keine Umschreibung der gespeicherten Namen: Die Daten laufen über iCloud auch zu Geräten mit älterer
-/// App-Version, die nur SF Symbols kennen. Ein `tt.*`-Name wird nur gespeichert, wenn die Wahl in der Auswahl
-/// vom Namen abweicht (siehe `storedName`).
+/// Im Feld `symbolName` steht immer ein SF-Name – Geräte mit älterer App-Version (iCloud) zeigen damit weiter ein Symbol.
+/// Ein ausdrücklich gewähltes Piktogramm liegt zusätzlich in `WasteType.glyphName` und gilt unabhängig vom Namen.
+/// Ohne Wahl wird das Piktogramm beim Anzeigen aus SF-Name und Name abgeleitet.
 public enum WasteGlyph {
     /// Name des Bildes im Asset-Katalog oder `nil`, wenn das SF Symbol passt.
     /// - Parameter name: Name der Abfallart, z. B. „Gelbe Tonne“ statt „Gelber Sack“.
@@ -38,12 +37,21 @@ public enum WasteGlyph {
         return whole.contains(where: words.contains)
     }
 
-    /// Was beim Antippen in der Auswahl gespeichert wird. Ergibt der bisherige SF-Name mit diesem Namen dasselbe
-    /// Piktogramm, bleibt es beim SF-Namen – so sehen auch Geräte mit älterer App-Version (iCloud) ein Symbol.
-    /// Nur wenn die Wahl vom Namen abweicht (z. B. Tonne bei „Gelber Sack“), wird der `tt.*`-Name gespeichert.
-    public static func storedName(for choice: String, name: String) -> String {
-        guard let base = sfBase[choice], assetName(for: base, name: name) == choice else { return choice }
-        return base
+    /// SF Symbol, das ältere App-Versionen (über iCloud auf anderen Geräten) für ein eigenes Piktogramm zeigen.
+    public static func sfFallback(for choice: String) -> String { sfBase[choice] ?? choice }
+
+    /// Name für VoiceOver statt des Asset-Namens („tt.sack“).
+    public static func accessibilityName(for asset: String) -> String {
+        switch asset {
+        case "tt.bin": return L10n.t("Mülltonne", "Bin")
+        case "tt.bin.bio": return L10n.t("Biotonne", "Organic bin")
+        case "tt.bin.paper": return L10n.t("Papiertonne", "Paper bin")
+        case "tt.bin.yellow": return L10n.t("Gelbe Tonne", "Recycling bin")
+        case "tt.sack": return L10n.t("Gelber Sack", "Recycling bag")
+        case "tt.glass": return L10n.t("Glas", "Glass")
+        case "tt.green": return L10n.t("Grünschnitt", "Garden waste")
+        default: return asset
+        }
     }
 
     private static let sfBase: [String: String] = [

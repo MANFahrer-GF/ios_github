@@ -62,15 +62,13 @@ final class CoreTests: XCTestCase {
         XCTAssertFalse(WasteGlyph.matches("leaf", current: "leaf.fill", name: "Biotonne"))
         XCTAssertNil(WasteGlyph.assetName(for: "leaf"))
         XCTAssertNil(WasteGlyph.assetName(for: "tree.fill", name: "Christbaumabholung"))
-        XCTAssertEqual(WasteGlyph.storedName(for: "tt.sack", name: "Gelber Sack"), "bag.fill")
-        XCTAssertEqual(WasteGlyph.storedName(for: "tt.bin.yellow", name: "Gelbe Tonne"), "bag.fill")
-        XCTAssertEqual(WasteGlyph.storedName(for: "tt.bin.yellow", name: "Gelber Sack"), "tt.bin.yellow")
-        XCTAssertEqual(WasteGlyph.storedName(for: "tt.green", name: "Weihnachtsbäume"), "tt.green")
-        XCTAssertEqual(WasteGlyph.storedName(for: "sofa.fill", name: "Sperrmüll"), "sofa.fill")
-        for choice in WasteGlyph.pickerSymbols {
-            for name in ["Gelber Sack", "Gelbe Tonne", "Laub", "Biotonne", ""] {
-                XCTAssertTrue(WasteGlyph.matches(choice, current: WasteGlyph.storedName(for: choice, name: name), name: name), "\(choice) \(name)")
-            }
+        XCTAssertEqual(WasteGlyph.sfFallback(for: "tt.sack"), "bag.fill")
+        XCTAssertEqual(WasteGlyph.sfFallback(for: "tt.bin.yellow"), "bag.fill")
+        XCTAssertEqual(WasteGlyph.sfFallback(for: "sofa.fill"), "sofa.fill")
+        for asset in WasteGlyph.all {
+            XCTAssertNotEqual(WasteGlyph.accessibilityName(for: asset), asset)
+            XCTAssertNotNil(WasteGlyph.sfFallback(for: asset).firstIndex(of: "."))
+            XCTAssertFalse(WasteGlyph.sfFallback(for: asset).hasPrefix("tt."))
         }
         // Jedes Symbol der Auswahl ist genau einmal drin
         XCTAssertEqual(Set(WasteGlyph.pickerSymbols).count, WasteGlyph.pickerSymbols.count)

@@ -89,7 +89,7 @@ struct BinTileView: View {
                 WasteIcon(symbolName: symbolName, name: name, size: width * 0.42)
                 Text(ShortName.bin(name)).font(.system(size: max(7, width * 0.2), weight: .heavy)).tracking(0.3).lineLimit(1).minimumScaleFactor(0.7)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(HexLuma.glyphColor(on: colorHex))
             .padding(.horizontal, 2)
         }
         .frame(width: width, height: height)

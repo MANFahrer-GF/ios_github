@@ -57,7 +57,6 @@ public struct WidgetSnapshot: Codable, Hashable {
     public static let appGroup = "group.de.manfahrer.TonneUndTorte"
     public static let fileName = "widget-snapshot.json"
 
-    /// Nur Tage eines Standorts (nil = alle).
     /// Nur Geburtstage ab dem Tag von `date`, nach Datum sortiert – für Widget-Einträge, die erst später (z. B. um Mitternacht) gezeigt werden.
     public func upcomingBirthdays(from date: Date, calendar: Calendar = .current) -> WidgetSnapshot {
         var copy = self
@@ -66,6 +65,7 @@ public struct WidgetSnapshot: Codable, Hashable {
         return copy
     }
 
+    /// Nur Tage eines Standorts (nil = alle).
     public func filtered(locationID: String?) -> WidgetSnapshot {
         guard let locationID else { return self }
         var copy = self

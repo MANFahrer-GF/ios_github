@@ -179,7 +179,7 @@ struct WasteTypeRow: View {
     let type: WasteType
     var body: some View {
         HStack(spacing: 12) {
-            SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 40, wasteName: type.name).opacity(type.isActive ? 1 : 0.4)
+            SymbolBadge(symbolName: type.displaySymbol, colorHex: type.colorHex, size: 40, wasteName: type.name).opacity(type.isActive ? 1 : 0.4)
             VStack(alignment: .leading, spacing: 2) {
                 Text(type.name).font(.body.weight(.semibold)).foregroundStyle(type.isActive ? .primary : .secondary)
                 Text(subtitle).font(.caption).foregroundStyle(.secondary)
@@ -219,7 +219,7 @@ struct NewWasteTypeSheet: View {
                 }
                 Section("Darstellung") {
                     PaletteColorPicker(colorHex: $colorHex)
-                    SymbolPicker(symbolName: $symbolName, colorHex: colorHex, wasteName: name)
+                    WasteSymbolPicker(symbolName: $symbolName, colorHex: colorHex, wasteName: name)
                 }
                 Section("Rhythmus") {
                     Picker("Abstand", selection: $intervalWeeks) {
@@ -235,7 +235,8 @@ struct NewWasteTypeSheet: View {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Anlegen") {
-                        let type = WasteType(name: name.trimmingCharacters(in: .whitespaces), category: category, colorHex: colorHex, symbolName: symbolName, sortOrder: model.allWasteTypes().count)
+                        let type = WasteType(name: name.trimmingCharacters(in: .whitespaces), category: category, colorHex: colorHex, sortOrder: model.allWasteTypes().count)
+                        type.displaySymbol = symbolName
                         type.intervalWeeks = intervalWeeks
                         type.anchorDate = intervalWeeks > 0 ? Days.start(of: anchorDate) : nil
                         context.insert(type)

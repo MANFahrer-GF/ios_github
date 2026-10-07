@@ -258,16 +258,6 @@ struct ContactsImportView: View {
         return result
     }
 
-    /// Ändert sich bei jeder für den Abgleich wichtigen Änderung an Personen (Anzahl, Name, Datum, Verknüpfung).
-    private var peopleStamp: Int {
-        var hasher = Hasher()
-        for person in people {
-            hasher.combine(person.id); hasher.combine(person.contactIdentifier)
-            hasher.combine(person.name); hasher.combine(person.day); hasher.combine(person.month)
-        }
-        return hasher.finalize()
-    }
-
     private static func matchKey(name: String, day: Int, month: Int) -> String {
         "\(name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil).trimmingCharacters(in: .whitespaces))|\(day)|\(month)"
     }
@@ -321,7 +311,9 @@ struct ContactsImportView: View {
             }
             .task { await load() }
             // Ändern sich die Personen (z. B. iCloud-Abgleich), Zuordnung neu berechnen.
-            .onChange(of: peopleStamp) { _, _ in existing = matchExisting() }
+            // Neue oder gelöschte Personen (z. B. iCloud-Abgleich): Zuordnung neu berechnen. Der Vergleich prüft nur
+            // Objekt-Identitäten; Feldänderungen fängt importSelected ab, das die Zuordnung immer frisch berechnet.
+            .onChange(of: people) { _, _ in existing = matchExisting() }
             // Zurück aus den Einstellungen: geänderte Kontaktfreigabe sofort übernehmen.
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active, !isLoading, ContactsImport.access != access { Task { await load() } }

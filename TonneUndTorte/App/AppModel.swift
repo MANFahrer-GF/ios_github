@@ -149,7 +149,7 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive {
             if let locationID, type.location?.id != locationID { continue }
             for date in type.pickupDates(from: from, to: to) {
-                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.symbolName, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date)))
+                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date)))
             }
         }
         for person in allPeople() {
@@ -184,7 +184,7 @@ final class AppModel: ObservableObject {
         let horizon = Days.add(90, to: today)
         return allWasteTypes().filter(\.isActive).flatMap { type in
             type.pickupDates(from: today, to: horizon).map {
-                PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.symbolName, remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0))
+                PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol, remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0))
             }
         }
     }

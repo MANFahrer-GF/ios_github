@@ -22,7 +22,7 @@ struct WasteDetailView: View {
         Form {
             Section {
                 HStack(spacing: 16) {
-                    SymbolBadge(symbolName: type.symbolName, colorHex: type.colorHex, size: 56, wasteName: type.name)
+                    SymbolBadge(symbolName: type.displaySymbol, colorHex: type.colorHex, size: 56, wasteName: type.name)
                     VStack(alignment: .leading, spacing: 4) {
                         TextField("Name", text: $type.name).font(.title3.weight(.semibold))
                         if let location = type.location { Label(location.name, systemImage: location.symbolName).font(.caption).foregroundStyle(.secondary) }
@@ -37,7 +37,7 @@ struct WasteDetailView: View {
             }
             Section("Farbe & Symbol") {
                 PaletteColorPicker(colorHex: $type.colorHex)
-                SymbolPicker(symbolName: $type.symbolName, colorHex: type.colorHex, wasteName: type.name)
+                WasteSymbolPicker(symbolName: $type.displaySymbol, colorHex: type.colorHex, wasteName: type.name)
             }
             Section {
                 Picker("Rhythmus", selection: $type.intervalWeeks) {

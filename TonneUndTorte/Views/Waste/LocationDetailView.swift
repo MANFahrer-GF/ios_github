@@ -237,7 +237,7 @@ private struct MappingRow: View {
             Picker("Ziel", selection: $mapping.target) {
                 Text("Ignorieren").tag(SyncService.Target.ignore)
                 ForEach(existingTypes) { type in
-                    Label { Text(type.name) } icon: { Image.waste(type.symbolName, name: type.name) }.tag(SyncService.Target.existing(type))
+                    Label { Text(type.name) } icon: { Image.waste(type.displaySymbol, name: type.name) }.tag(SyncService.Target.existing(type))
                 }
                 ForEach(WasteCategory.allCases, id: \.self) { category in
                     Label { Text(newTitle(for: category)) } icon: { Image.waste(category.symbolName, name: category.name) }.tag(SyncService.Target.new(category))

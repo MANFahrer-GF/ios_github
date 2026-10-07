@@ -179,32 +179,53 @@ struct SymbolPicker: View {
     @Binding var symbolName: String
     let colorHex: String
     var symbols: [String] = Palette.wasteSymbols
-    /// Gesetzt bei Abfallarten: Auswahl mit den eigenen Piktogrammen (Gelber Sack und Gelbe Tonne getrennt).
-    /// Orte und Termine zeigen weiter SF Symbols.
-    var wasteName: String? = nil
     private let columns = [GridItem(.adaptive(minimum: 48), spacing: 10)]
-
-    private var choices: [String] { wasteName == nil ? symbols : WasteGlyph.pickerSymbols }
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(choices, id: \.self) { symbol in
-                let isSelected = wasteName.map { WasteGlyph.matches(symbol, current: symbolName, name: $0) } ?? (symbol == symbolName)
-                Group {
-                    if wasteName != nil {
-                        Image.waste(symbol).font(.title3)
-                    } else {
-                        Image(systemName: symbol).font(.title3)
-                    }
+            ForEach(symbols, id: \.self) { symbol in
+                SymbolTile(isSelected: symbol == symbolName, colorHex: colorHex) {
+                    Image(systemName: symbol).font(.title3)
                 }
-                .frame(width: 44, height: 44)
-                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(isSelected ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
-                .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? Color(hex: colorHex) : .clear, lineWidth: 2))
-                .foregroundStyle(isSelected ? Color(hex: colorHex) : .primary)
-                .onTapGesture { symbolName = wasteName.map { WasteGlyph.storedName(for: symbol, name: $0) } ?? symbol }
-                .accessibilityAddTraits(isSelected ? .isSelected : [])
+                .onTapGesture { symbolName = symbol }
             }
         }
+    }
+}
+
+/// Auswahl für Abfallarten: zuerst die eigenen Piktogramme (Gelber Sack und Gelbe Tonne getrennt), dann SF Symbols.
+/// `symbolName` ist das angezeigte Symbol (`WasteType.displaySymbol`).
+struct WasteSymbolPicker: View {
+    @Binding var symbolName: String
+    let colorHex: String
+    let wasteName: String
+    private let columns = [GridItem(.adaptive(minimum: 48), spacing: 10)]
+
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach(WasteGlyph.pickerSymbols, id: \.self) { symbol in
+                SymbolTile(isSelected: WasteGlyph.matches(symbol, current: symbolName, name: wasteName), colorHex: colorHex) {
+                    Image.waste(symbol).font(.title3)
+                }
+                .onTapGesture { symbolName = symbol }
+            }
+        }
+    }
+}
+
+private struct SymbolTile<Content: View>: View {
+    let isSelected: Bool
+    let colorHex: String
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        content
+            .frame(width: 44, height: 44)
+            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(isSelected ? Color(hex: colorHex).opacity(0.2) : Color(.tertiarySystemFill)))
+            .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? Color(hex: colorHex) : .clear, lineWidth: 2))
+            .foregroundStyle(isSelected ? Color(hex: colorHex) : .primary)
+            .contentShape(Rectangle())
+            .accessibilityAddTraits(isSelected ? [.isSelected, .isButton] : .isButton)
     }
 }
 

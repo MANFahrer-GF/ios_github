@@ -28,16 +28,14 @@ struct BirthdayTimelineProvider: TimelineProvider {
         var entries = [current]
         if let midnight = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, minute: 1), matchingPolicy: .nextTime) {
             // Ab Mitternacht zählen die heutigen Geburtstage nicht mehr als „nächste“.
-            let start = Calendar.current.startOfDay(for: midnight)
-            entries.append(BirthdayEntry(date: midnight, birthdays: current.birthdays.filter { $0.date >= start }))
+            entries.append(BirthdayEntry(date: midnight, birthdays: WidgetSnapshot(birthdays: current.birthdays).upcomingBirthdays(from: midnight).birthdays))
         }
         completion(Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600))))
     }
 
     private func entry() -> BirthdayEntry {
-        let today = Days.today()
-        let upcoming = (SnapshotStore.load()?.birthdays ?? []).filter { $0.date >= today }.sorted { $0.date < $1.date }
-        return BirthdayEntry(date: Date(), birthdays: upcoming)
+        let now = Date()
+        return BirthdayEntry(date: now, birthdays: SnapshotStore.load()?.upcomingBirthdays(from: now).birthdays ?? [])
     }
 }
 

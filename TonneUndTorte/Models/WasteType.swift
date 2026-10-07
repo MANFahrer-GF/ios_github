@@ -8,7 +8,10 @@ final class WasteType {
     var id: UUID = UUID()
     var name: String = ""
     var colorHex: String = "#5B6470"
+    /// Immer ein SF-Symbolname, damit auch ältere App-Versionen ein Symbol zeigen.
     var symbolName: String = "trash.fill"
+    /// Ausdrücklich gewähltes eigenes Piktogramm („tt.sack“ …), unabhängig vom Namen.
+    var glyphName: String?
     var categoryRaw: String = WasteCategory.other.rawValue
     var sortOrder: Int = 0
     var isActive: Bool = true
@@ -34,6 +37,20 @@ final class WasteType {
         self.sortOrder = sortOrder
         self.sourceKey = sourceKey
         self.createdAt = Date()
+    }
+
+    /// Angezeigtes Symbol: das gewählte Piktogramm, sonst der SF-Name (aus dem beim Anzeigen abgeleitet wird).
+    var displaySymbol: String {
+        get { glyphName ?? symbolName }
+        set {
+            if WasteGlyph.all.contains(newValue) {
+                glyphName = newValue
+                symbolName = WasteGlyph.sfFallback(for: newValue)
+            } else {
+                glyphName = nil
+                symbolName = newValue
+            }
+        }
     }
 
     var category: WasteCategory {
