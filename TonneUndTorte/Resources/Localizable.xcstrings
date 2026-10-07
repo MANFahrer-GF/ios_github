@@ -441,6 +441,16 @@
         }
       }
     },
+    "Am Vorabend um %@ erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, die Abend-Erinnerung kommt dann nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At %@ the evening before, “Put the bin out” appears on the Lock Screen and in the Dynamic Island by itself – even when the app is closed. It announces itself with an alert, so the evening reminder isn’t sent twice. The next two collections are always planned ahead; just open the app now and then."
+          }
+        }
+      }
+    },
     "Anlegen": {
       "localizations": {
         "en": {
@@ -457,6 +467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Type"
+          }
+        }
+      }
+    },
+    "Auf diesem iPhone (iOS %@) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On this iPhone (iOS %@) the Live Activity appears when you open the app the evening before – from iOS 26 on it appears by itself. Without opening the app, use the shortcut “Start bin reminder”, e.g. as an automation in the Shortcuts app."
           }
         }
       }
@@ -671,12 +691,12 @@
         }
       }
     },
-    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island, sobald du die App am Vorabend öffnest.": {
+    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island once you open the app the evening before."
+            "value": "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island."
           }
         }
       }
@@ -1661,6 +1681,16 @@
         }
       }
     },
+    "Live-Aktivität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activity"
+          }
+        }
+      }
+    },
     "Live-Aktivität am Vorabend": {
       "localizations": {
         "en": {
@@ -1687,6 +1717,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Live Activities are turned off in Tonne & Torte’s settings."
+          }
+        }
+      }
+    },
+    "Live-Aktivitäten sind in den iOS-Einstellungen für Tonne & Torte ausgeschaltet: Einstellungen › Apps › Tonne & Torte › Live-Aktivitäten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activities are turned off for Tonne & Torte in iOS Settings: Settings › Apps › Tonne & Torte › Live Activities."
           }
         }
       }
@@ -2167,6 +2207,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Upcoming collections"
+          }
+        }
+      }
+    },
+    "Nächste Live-Aktivität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Live Activity"
           }
         }
       }

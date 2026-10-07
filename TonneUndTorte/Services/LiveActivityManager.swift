@@ -111,6 +111,27 @@ enum LiveActivityManager {
         return false
     }
 
+    /// Für die Einstellungen: läuft gerade eine Aktivität, oder wann startet die nächste geplante?
+    enum Status { case running(names: [String]), planned(start: Date, names: [String]), none }
+
+    static func status(now: Date = Date()) -> Status {
+        let activities = Activity<PickupActivityAttributes>.activities
+        if let running = activities.first(where: { $0.activityState == .active && ($0.attributes.scheduledStart ?? .distantPast) <= now }) {
+            return .running(names: running.content.state.names)
+        }
+        let planned = activities
+            .compactMap { activity -> (Date, [String])? in
+                guard let start = activity.attributes.scheduledStart, start > now else { return nil }
+                return (start, activity.content.state.names)
+            }
+            .min { $0.0 < $1.0 }
+        if let planned { return .planned(start: planned.0, names: planned.1) }
+        return .none
+    }
+
+    /// Hat die Person Live-Aktivitäten für die App in den iOS-Einstellungen erlaubt?
+    static var systemAllows: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
+
     static func endAll() async {
         for activity in Activity<PickupActivityAttributes>.activities {
             await activity.end(nil, dismissalPolicy: .immediate)

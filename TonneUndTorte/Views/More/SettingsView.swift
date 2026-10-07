@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import SwiftData
 import TonneCore
 
@@ -16,6 +17,7 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.birthdayMinutes) private var birthdayMinutes = 9 * 60
     @AppStorage(SettingsKeys.customMinutes) private var customMinutes = 9 * 60
     @AppStorage(SettingsKeys.liveActivities) private var liveActivities = true
+    @State private var activityStatus: LiveActivityManager.Status = .none
     @State private var showResetConfirm = false
     @State private var info: String?
 
@@ -46,8 +48,13 @@ struct SettingsView: View {
                 Toggle("Am Abholtag morgens erinnern", isOn: $morningEnabled)
                 if morningEnabled { TimeOfDayPicker(title: "Uhrzeit morgens", minutes: $morningMinutes) }
                 Toggle("Live-Aktivität am Vorabend", isOn: $liveActivities)
+                if liveActivities {
+                    // Die Live-Aktivität startet zur Abendzeit – auch wenn die Abend-Mitteilung aus ist.
+                    if !eveningEnabled { TimeOfDayPicker(title: L10n.t("Uhrzeit Live-Aktivität", "Live Activity time"), minutes: $eveningMinutes) }
+                    if LiveActivityManager.canSchedule, LiveActivityManager.systemAllows { activityStatusRow }
+                }
             } header: { Text("Müll-Erinnerungen") } footer: {
-                Text("Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island, sobald du die App am Vorabend öffnest.")
+                liveActivityFooter
             }
 
             Section("Geburtstage & eigene Termine") {
@@ -91,7 +98,40 @@ struct SettingsView: View {
             }
         }
         .alert("Hinweis", isPresented: Binding(get: { info != nil }, set: { if !$0 { info = nil } })) { Button("OK", role: .cancel) {} } message: { Text(info ?? "") }
-        .task { await notifications.refreshStatus() }
+        .task {
+            await notifications.refreshStatus()
+            activityStatus = LiveActivityManager.status()
+        }
+    }
+
+    // MARK: Live-Aktivität
+
+    private var eveningTimeText: String { String(format: "%02d:%02d", eveningMinutes / 60, eveningMinutes % 60) }
+
+    @ViewBuilder
+    private var activityStatusRow: some View {
+        switch activityStatus {
+        case .running(let names):
+            LabeledContent("Live-Aktivität", value: L10n.t("läuft gerade · ", "running · ") + ReminderPlanner.joinNames(names))
+        case .planned(let start, let names):
+            LabeledContent("Nächste Live-Aktivität", value: start.formatted(.dateTime.weekday(.abbreviated).hour().minute()) + " · " + ReminderPlanner.joinNames(names))
+        case .none:
+            LabeledContent("Nächste Live-Aktivität", value: L10n.t("keine geplant", "none planned"))
+        }
+    }
+
+    /// Erklärt, wie die Live-Aktivität auf genau diesem iPhone startet.
+    @ViewBuilder
+    private var liveActivityFooter: some View {
+        if !liveActivities {
+            Text("Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island.")
+        } else if !LiveActivityManager.systemAllows {
+            Text("Live-Aktivitäten sind in den iOS-Einstellungen für Tonne & Torte ausgeschaltet: Einstellungen › Apps › Tonne & Torte › Live-Aktivitäten.")
+        } else if LiveActivityManager.canSchedule {
+            Text("Am Vorabend um \(eveningTimeText) erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, die Abend-Erinnerung kommt dann nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.")
+        } else {
+            Text("Auf diesem iPhone (iOS \(UIDevice.current.systemVersion)) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.")
+        }
     }
 
     private var statusText: String {
@@ -109,5 +149,10 @@ struct SettingsView: View {
         return "\(v) (\(b))"
     }
 
-    private func refresh() { Task { await model.refreshAll() } }
+    private func refresh() {
+        Task {
+            await model.refreshAll()
+            activityStatus = LiveActivityManager.status()
+        }
+    }
 }
