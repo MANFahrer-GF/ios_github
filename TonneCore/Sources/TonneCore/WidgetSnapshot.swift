@@ -128,9 +128,12 @@ public struct WidgetSnapshot: Codable, Hashable {
 
     /// Die nächste Abholung, um die man sich kümmern muss. Die heutige zählt nicht mehr, sobald sie als erledigt
     /// markiert ist (15 Minuten später, zum Zurücknehmen) oder es nach 17 Uhr ist – dann steht die nächste im Widget.
-    public func nextPickupDay(from date: Date = Date(), calendar: Calendar = .current) -> PickupDay? {
+    /// `countDone: true` (Siri „Wann kommt die Müllabfuhr?“): die heutige Abholung zählt bis 17 Uhr, auch wenn sie erledigt ist.
+    public func nextPickupDay(from date: Date = Date(), countDone: Bool = false, calendar: Calendar = .current) -> PickupDay? {
         let today = calendar.startOfDay(for: date)
-        return pickupDays.first { $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: $0.done, doneAt: $0.doneAt, now: date, calendar: calendar) }
+        return pickupDays.first {
+            $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: countDone ? false : $0.done, doneAt: $0.doneAt, now: date, calendar: calendar)
+        }
     }
 
     public func encoded() throws -> Data {

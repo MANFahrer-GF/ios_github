@@ -122,11 +122,16 @@ final class BringInTests: XCTestCase {
         XCTAssertEqual(snap.undoTargetDay(from: at(8, 9), calendar: calendar)?.items.first?.name, "Restmüll")
         // Am Vorabend: morgen ist dran
         XCTAssertEqual(snap.doneTargetDay(from: at(14, 19), calendar: calendar)?.items.first?.name, "Biotonne")
-        // Heute erledigt und morgen wieder Abholung: vor 17 Uhr kein Sprung auf morgen, danach schon
+        // Heute erledigt und morgen wieder Abholung: direkt nach dem Tippen kein Sprung auf morgen, später schon
         var twoDays = snap
         twoDays.pickupDays[1].date = calendar.startOfDay(for: at(9, 0))
-        XCTAssertNil(twoDays.doneTargetDay(from: at(8, 9), calendar: calendar))
+        twoDays.pickupDays[0].doneAt = at(8, 9)
+        XCTAssertNil(twoDays.doneTargetDay(from: at(8, 9, 5), calendar: calendar))
+        XCTAssertEqual(twoDays.doneTargetDay(from: at(8, 15), calendar: calendar)?.items.first?.name, "Biotonne")
         XCTAssertEqual(twoDays.doneTargetDay(from: at(8, 19), calendar: calendar)?.items.first?.name, "Biotonne")
+        // „Wann kommt die Müllabfuhr?“ nennt heute bis 17 Uhr, auch wenn erledigt
+        XCTAssertEqual(twoDays.nextPickupDay(from: at(8, 10), countDone: true, calendar: calendar)?.items.first?.name, "Restmüll")
+        XCTAssertEqual(twoDays.nextPickupDay(from: at(8, 17, 30), countDone: true, calendar: calendar)?.items.first?.name, "Biotonne")
     }
 
     func testBringInHintFollowsSetting() {

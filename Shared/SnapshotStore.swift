@@ -49,13 +49,13 @@ enum SnapshotStore {
         Set(defaults.stringArray(forKey: doneKey) ?? [])
     }
 
-    static func markDone(dayKey: String) {
+    static func markDone(dayKey: String, at date: Date = Date()) {
         var days = doneDays()
         days.insert(dayKey)
         defaults.set(Array(days).sorted(), forKey: doneKey)
         // Neuer Zeitstempel, außer der Tag war schon erledigt (sonst gälte eine alte Markierung)
         let wasDone = load()?.pickupDays.first(where: { Days.iso($0.date) == dayKey })?.done ?? false
-        let at = recordDoneTime(dayKey: dayKey, overwrite: !wasDone)
+        let at = recordDoneTime(dayKey: dayKey, at: date, overwrite: !wasDone)
         clearUndo(dayKey: dayKey)
         #if os(iOS)
         // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft
@@ -152,6 +152,11 @@ enum SnapshotStore {
 
     static func markBroughtIn(dayKey: String) {
         guard !dayKey.isEmpty else { return }
+        // „Ist drin“ heißt: Die Tonne stand draußen – noch nicht bestätigte Abholung zählt als erledigt.
+        // Zeitpunkt Tagesbeginn, damit der Tag nicht noch 15 Minuten zum Zurücknehmen stehen bleibt.
+        if let day = load()?.pickupDays.first(where: { Days.iso($0.date) == dayKey }), !day.done {
+            markDone(dayKey: dayKey, at: Days.parse(dayKey) ?? Date())
+        }
         // Nur die letzten Tage aufheben – ältere Markierungen braucht niemand mehr
         let cutoff = Days.iso(Days.add(-14, to: Days.today()))
         var days = broughtInDays().filter { $0 >= cutoff }

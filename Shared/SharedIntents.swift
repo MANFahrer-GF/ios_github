@@ -22,8 +22,12 @@ struct MarkPickupDoneIntent: DoneIntentBase {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // Ohne Tag (Siri, Kurzbefehl): nur heute oder morgen – nie still eine Abholung in einer Woche
-        let target = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.doneTargetDay().map { Days.iso($0.date) } ?? "")
-        guard !target.isEmpty else { return .result(dialog: "Heute und morgen steht keine Abholung an.") }
+        let snapshot = SnapshotStore.load()
+        let target = (dayKey?.isEmpty == false) ? dayKey! : (snapshot?.doneTargetDay().map { Days.iso($0.date) } ?? "")
+        guard !target.isEmpty else {
+            let todayDone = snapshot?.pickupDays.contains { Days.until($0.date) == 0 && $0.done } ?? false
+            return .result(dialog: todayDone ? "Heute ist schon alles erledigt. 👍" : "Heute und morgen steht keine Abholung an.")
+        }
         SnapshotStore.markDone(dayKey: target)
         #if os(watchOS)
         WatchSync.sendDone(dayKey: target)
@@ -89,7 +93,8 @@ struct NextPickupIntent: AppIntent {
             return .result(value: "", dialog: "Bitte öffne Tonne & Torte einmal, damit ich deine Termine kenne.")
         }
         let filtered = snapshot.filtered(locationID: location?.id)
-        guard let next = filtered.nextPickupDay() else {
+        // Heute zählt bis 17 Uhr, auch wenn die Tonne schon draußen steht – das Müllauto kommt ja noch
+        guard let next = filtered.nextPickupDay(countDone: true) else {
             return .result(value: "", dialog: "In den nächsten Wochen steht keine Abholung an.")
         }
         let names = next.items.map(\.name)

@@ -91,8 +91,9 @@ public extension WidgetSnapshot {
         let today = calendar.startOfDay(for: date)
         if let day = pickupDays.first(where: { calendar.isDate($0.date, inSameDayAs: today) }),
            PickupTiming.minutes(of: date, calendar: calendar) < PickupTiming.collectionOverMinutes {
-            // Heute schon erledigt: kein Sprung auf morgen (zweimal „steht draußen“ gesagt)
-            return day.done ? nil : day
+            if !day.done { return day }
+            // Gerade erst erledigt (Doppeltipp, zweimal gesagt): nicht auf morgen springen
+            if !PickupTiming.isFinished(day: day.date, done: true, doneAt: day.doneAt, now: date, calendar: calendar) { return nil }
         }
         let tomorrow = Days.add(1, to: today, calendar: calendar)
         if let day = pickupDays.first(where: { calendar.isDate($0.date, inSameDayAs: tomorrow) }), !day.done { return day }

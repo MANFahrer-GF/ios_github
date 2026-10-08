@@ -50,6 +50,14 @@ struct OverviewView: View {
         return names.isEmpty ? nil : (day: today.day, names: names)
     }
 
+    /// Die heutige Abholung, nachdem sie aus der Hauptkarte verschwunden ist (erledigt oder nach 17 Uhr):
+    /// bleibt bis Mitternacht hier, damit man sie noch bestätigen oder zurücknehmen kann.
+    private var todayRecap: (day: Date, events: [CalendarEvent])? {
+        guard let today = wasteDays.first(where: { Calendar.current.isDateInToday($0.day) }),
+              !activeWasteDays.contains(where: { $0.day == today.day }) else { return nil }
+        return today
+    }
+
     private var otherUpcoming: [CalendarEvent] {
         days.flatMap(\.events).filter { $0.kind != .waste }
     }
@@ -60,7 +68,7 @@ struct OverviewView: View {
                 VStack(spacing: 20) {
                     if !notifications.isAuthorized { permissionBanner }
                     if !model.recentChanges.isEmpty { changesBanner }
-                    if let bringIn { bringInCard(bringIn) }
+                    if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
                     heroCard
                     nextPickupsSection
                     birthdaysSection
@@ -138,6 +146,34 @@ struct OverviewView: View {
             }
             .buttonStyle(.borderedProminent).controlSize(.small)
             .accessibilityLabel(L10n.t("\(ReminderPlanner.joinNames(bringIn.names)) ist wieder drin", "\(ReminderPlanner.joinNames(bringIn.names)) is back in"))
+        }
+        .card()
+    }
+
+    private func todayRecapCard(_ today: (day: Date, events: [CalendarEvent])) -> some View {
+        let done = today.events.allSatisfy(\.done)
+        let names = ReminderPlanner.joinNames(today.events.map(\.title))
+        return HStack(spacing: 12) {
+            Image(systemName: done ? "checkmark.circle.fill" : "clock.badge.questionmark")
+                .font(.title2).foregroundStyle(done ? KlarStyle.done : .orange)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(L10n.t("Heute: \(names)", "Today: \(names)")).font(.subheadline.weight(.semibold)).lineLimit(2)
+                Text(done ? L10n.t("Erledigt – stand draußen.", "Done – it was out.") : L10n.t("Nicht als erledigt bestätigt.", "Not confirmed as done."))
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Spacer()
+            Button {
+                Haptics.tap()
+                Task {
+                    if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await model.markDone(dayKey: Days.iso(today.day)) }
+                    refreshToken += 1
+                }
+            } label: {
+                Text(done ? L10n.t("Zurück", "Undo") : L10n.t("Erledigt", "Done"))
+            }
+            .buttonStyle(.bordered).controlSize(.small)
+            .accessibilityLabel(done ? L10n.t("\(names): erledigt zurücknehmen", "\(names): undo done") : L10n.t("\(names) als erledigt bestätigen", "Confirm \(names) as done"))
         }
         .card()
     }
