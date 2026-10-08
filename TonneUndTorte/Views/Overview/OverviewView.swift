@@ -12,7 +12,12 @@ struct OverviewView: View {
     @ObservedObject private var notifications = NotificationManager.shared
     @AppStorage(SettingsKeys.locationFilter) private var filterID: String = ""
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.scenePhase) private var scenePhase
+    @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
+    @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
     @State private var refreshToken = 0
+    /// Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
+    private let clock = Timer.publish(every: 300, on: .main, in: .common).autoconnect()
 
     private var days: [(day: Date, events: [CalendarEvent])] {
         _ = refreshToken
@@ -30,15 +35,17 @@ struct OverviewView: View {
     /// Abholungen, um die man sich noch kümmern muss – die heutige fällt weg, sobald sie erledigt ist oder es nach 17 Uhr ist.
     private var activeWasteDays: [(day: Date, events: [CalendarEvent])] {
         let now = Date()
-        return wasteDays.filter { !PickupTiming.isFinished(day: $0.day, done: $0.events.allSatisfy(\.done), now: now) }
+        let doneTimes = SnapshotStore.doneTimes()
+        return wasteDays.filter { !PickupTiming.isFinished(day: $0.day, done: $0.events.allSatisfy(\.done), doneAt: doneTimes[Days.iso($0.day)], now: now) }
     }
 
     /// Heute geleerte Tonnen, die wieder herein müssen (ab mittags, bis „Ist drin“). Säcke und Grünschnitt zählen nicht.
     private var bringIn: (day: Date, names: [String])? {
         _ = refreshToken
         let now = Date()
-        guard let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
-              PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now) else { return nil }
+        guard bringInEnabled, let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
+              PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now,
+                                        fromMinutes: min(PickupTiming.bringInHintMinutes, bringInMinutes)) else { return nil }
         let names = today.events.filter { WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
         return names.isEmpty ? nil : (day: today.day, names: names)
     }
@@ -71,6 +78,9 @@ struct OverviewView: View {
                 refreshToken += 1
             }
             .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName)) { _ in refreshToken += 1 }
+            .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.broughtInNotification)) { _ in refreshToken += 1 }
+            .onReceive(clock) { _ in refreshToken += 1 }
+            .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
         }
     }
 
@@ -127,6 +137,7 @@ struct OverviewView: View {
                 Text(L10n.t("Ist drin", "It's in"))
             }
             .buttonStyle(.borderedProminent).controlSize(.small)
+            .accessibilityLabel(L10n.t("\(ReminderPlanner.joinNames(bringIn.names)) ist wieder drin", "\(ReminderPlanner.joinNames(bringIn.names)) is back in"))
         }
         .card()
     }

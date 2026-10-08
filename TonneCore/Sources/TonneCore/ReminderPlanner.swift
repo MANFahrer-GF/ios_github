@@ -108,10 +108,10 @@ public enum ReminderPlanner {
         let list = joinNames(names)
         if names.count == 1 {
             return (L10n.t("\(names[0]) wieder reinholen", "Bring the \(names[0]) back in"),
-                    L10n.t("Die Abfuhr war heute. Tippe „Ist drin“, wenn die Tonne wieder steht.", "Collection was today. Tap “It's in” once it's back."))
+                    L10n.t("Die Tonne ist geleert. Tippe „Ist drin“, wenn sie wieder steht.", "The bin has been emptied. Tap “It's in” once it's back."))
         }
         return (L10n.t("Tonnen wieder reinholen", "Bring the bins back in"),
-                L10n.t("\(list) – die Abfuhr war heute.", "\(list) – collection was today."))
+                L10n.t("\(list) sind geleert. Tippe „Ist drin“, wenn alles wieder steht.", "\(list) have been emptied. Tap “It's in” once they're back."))
     }
 
     public static func shortNames(_ names: [String], max: Int) -> String {
@@ -171,9 +171,11 @@ public enum ReminderPlanner {
         // --- Tonnen wieder hereinholen (nur Tonnen; Säcke, Grünschnitt, Sperrmüll bleiben draußen) ---
         if settings.bringInEnabled {
             var binsByDay: [Date: [PlannedPickup]] = [:]
+            // Nur zwei Wochen im Voraus – iOS erlaubt nur 64 geplante Mitteilungen, die Abend-Erinnerungen gehen vor
+            let bringInHorizon = Days.add(14, to: today, calendar: calendar)
             for pickup in pickups where pickup.remindersEnabled && !pickup.broughtIn && pickup.isBin {
                 let day = calendar.startOfDay(for: pickup.date)
-                guard day >= today && day <= horizon else { continue }
+                guard day >= today && day <= min(horizon, bringInHorizon) else { continue }
                 binsByDay[day, default: []].append(pickup)
             }
             for (day, items) in binsByDay {

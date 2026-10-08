@@ -40,11 +40,13 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var done: Bool
         /// Tonnen nach der Abfuhr wieder hereingeholt („Ist drin“).
         public var broughtIn: Bool
-        public init(date: Date, items: [PickupItem], done: Bool = false, broughtIn: Bool = false) {
-            self.date = date; self.items = items; self.done = done; self.broughtIn = broughtIn
+        /// Wann „Erledigt“ getippt wurde – kurz danach bleibt der Tag noch stehen (zum Zurücknehmen).
+        public var doneAt: Date?
+        public init(date: Date, items: [PickupItem], done: Bool = false, broughtIn: Bool = false, doneAt: Date? = nil) {
+            self.date = date; self.items = items; self.done = done; self.broughtIn = broughtIn; self.doneAt = doneAt
         }
 
-        private enum CodingKeys: String, CodingKey { case date, items, done, broughtIn }
+        private enum CodingKeys: String, CodingKey { case date, items, done, broughtIn, doneAt }
 
         /// `broughtIn` fehlt in Schnappschüssen älterer App-Versionen (z. B. auf der Watch).
         public init(from decoder: Decoder) throws {
@@ -53,6 +55,7 @@ public struct WidgetSnapshot: Codable, Hashable {
             items = try container.decode([PickupItem].self, forKey: .items)
             done = try container.decodeIfPresent(Bool.self, forKey: .done) ?? false
             broughtIn = try container.decodeIfPresent(Bool.self, forKey: .broughtIn) ?? false
+            doneAt = try container.decodeIfPresent(Date.self, forKey: .doneAt)
         }
     }
 
@@ -73,9 +76,32 @@ public struct WidgetSnapshot: Codable, Hashable {
     public var birthdays: [BirthdayItem]
     public var missedCountThisYear: Int
     public var doneCountThisYear: Int
+    /// Einstellung „Tonnen wieder reinholen“ (das Widget kann die App-Einstellungen nicht lesen).
+    public var bringInEnabled: Bool
+    /// Ab dieser Uhrzeit (Minuten) erscheint am Abholtag „wieder reinholen“.
+    public var bringInFromMinutes: Int
 
-    public init(generatedAt: Date = Date(), locations: [Location] = [], pickupDays: [PickupDay] = [], birthdays: [BirthdayItem] = [], missedCountThisYear: Int = 0, doneCountThisYear: Int = 0) {
+    public init(generatedAt: Date = Date(), locations: [Location] = [], pickupDays: [PickupDay] = [], birthdays: [BirthdayItem] = [], missedCountThisYear: Int = 0, doneCountThisYear: Int = 0,
+                bringInEnabled: Bool = true, bringInFromMinutes: Int = PickupTiming.bringInHintMinutes) {
         self.generatedAt = generatedAt; self.locations = locations; self.pickupDays = pickupDays; self.birthdays = birthdays; self.missedCountThisYear = missedCountThisYear; self.doneCountThisYear = doneCountThisYear
+        self.bringInEnabled = bringInEnabled; self.bringInFromMinutes = bringInFromMinutes
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case generatedAt, locations, pickupDays, birthdays, missedCountThisYear, doneCountThisYear, bringInEnabled, bringInFromMinutes
+    }
+
+    /// Neuere Felder fehlen in Schnappschüssen älterer App-Versionen (z. B. vom iPhone an eine neuere Watch).
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        generatedAt = try container.decode(Date.self, forKey: .generatedAt)
+        locations = try container.decode([Location].self, forKey: .locations)
+        pickupDays = try container.decode([PickupDay].self, forKey: .pickupDays)
+        birthdays = try container.decode([BirthdayItem].self, forKey: .birthdays)
+        missedCountThisYear = try container.decodeIfPresent(Int.self, forKey: .missedCountThisYear) ?? 0
+        doneCountThisYear = try container.decodeIfPresent(Int.self, forKey: .doneCountThisYear) ?? 0
+        bringInEnabled = try container.decodeIfPresent(Bool.self, forKey: .bringInEnabled) ?? true
+        bringInFromMinutes = try container.decodeIfPresent(Int.self, forKey: .bringInFromMinutes) ?? PickupTiming.bringInHintMinutes
     }
 
     public static let appGroup = "group.de.manfahrer.TonneUndTorte"
@@ -95,16 +121,16 @@ public struct WidgetSnapshot: Codable, Hashable {
         var copy = self
         copy.pickupDays = pickupDays.compactMap { day in
             let items = day.items.filter { $0.locationID == locationID }
-            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: day.done, broughtIn: day.broughtIn)
+            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: day.done, broughtIn: day.broughtIn, doneAt: day.doneAt)
         }
         return copy
     }
 
     /// Die nächste Abholung, um die man sich kümmern muss. Die heutige zählt nicht mehr, sobald sie als erledigt
-    /// markiert ist oder es nach 17 Uhr ist – dann steht die nächste im Widget, nicht den ganzen Tag „heute“.
+    /// markiert ist (15 Minuten später, zum Zurücknehmen) oder es nach 17 Uhr ist – dann steht die nächste im Widget.
     public func nextPickupDay(from date: Date = Date(), calendar: Calendar = .current) -> PickupDay? {
         let today = calendar.startOfDay(for: date)
-        return pickupDays.first { $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: $0.done, now: date, calendar: calendar) }
+        return pickupDays.first { $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: $0.done, doneAt: $0.doneAt, now: date, calendar: calendar) }
     }
 
     public func encoded() throws -> Data {

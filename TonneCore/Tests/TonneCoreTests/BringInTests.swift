@@ -24,6 +24,13 @@ final class BringInTests: XCTestCase {
         XCTAssertFalse(WasteReturn.isBin(name: "Schadstoffmobil"))
         XCTAssertFalse(WasteReturn.isBin(name: "Weihnachtsbaum"))
         XCTAssertFalse(WasteReturn.isBin(name: "Papiercontainer"))
+        XCTAssertFalse(WasteReturn.isBin(name: "Altglascontainer"))
+        XCTAssertTrue(WasteReturn.isBin(name: "Restmüllcontainer 1100 l"))
+        XCTAssertFalse(WasteReturn.isBin(name: "Grüngutsammlung", symbol: "tt.bin.bio"))
+        XCTAssertTrue(WasteReturn.isBin(name: "Papier/Pappe/Kartonage"))
+        XCTAssertTrue(WasteReturn.isBin(name: "Wertstofftonne"))
+        XCTAssertFalse(WasteReturn.isBin(name: "Altglas"))
+        XCTAssertFalse(WasteReturn.isBin(name: "Problemabfall"))
         // Die eigene Wahl im Symbol gewinnt
         XCTAssertFalse(WasteReturn.isBin(name: "Restmüll", symbol: "tt.sack"))
         XCTAssertTrue(WasteReturn.isBin(name: "Leichtverpackungen", symbol: "tt.bin.yellow"))
@@ -90,5 +97,46 @@ final class BringInTests: XCTestCase {
         settings.bringInEnabled = false
         XCTAssertTrue(ReminderPlanner.plan(pickups: pickups, birthdays: [], settings: settings, now: at(8, 7), calendar: calendar)
             .filter { $0.category == .wasteBringIn }.isEmpty)
+    }
+
+    func testJustMarkedDayStaysForUndo() {
+        var snap = snapshot
+        // Heute um 7:00 erledigt getippt: bis 7:15 bleibt der Tag (Zurücknehmen, kein Doppeltipp auf morgen)
+        snap.pickupDays[0].doneAt = at(8, 7)
+        XCTAssertEqual(snap.nextPickupDay(from: at(8, 7, 5), calendar: calendar)?.items.first?.name, "Gelbe Tonne")
+        XCTAssertEqual(snap.nextPickupDay(from: at(8, 7, 20), calendar: calendar)?.items.first?.name, "Restmüll")
+        // Schon am Vorabend erledigt → am Abholtag sofort weiter
+        snap.pickupDays[0].doneAt = at(7, 19)
+        XCTAssertEqual(snap.nextPickupDay(from: at(8, 6), calendar: calendar)?.items.first?.name, "Restmüll")
+    }
+
+    func testSiriTargetsTodayOrTomorrowOnly() {
+        let snap = WidgetSnapshot(pickupDays: [
+            .init(date: calendar.startOfDay(for: at(8, 0)), items: [.init(name: "Restmüll", symbolName: "trash.fill", colorHex: "#5B6470")], done: true),
+            .init(date: calendar.startOfDay(for: at(15, 0)), items: [.init(name: "Biotonne", symbolName: "leaf.fill", colorHex: "#8B5E34")]),
+        ])
+        // Heute schon erledigt, morgen nichts → Siri markiert nicht die Abholung in einer Woche
+        XCTAssertNil(snap.doneTargetDay(from: at(8, 9), calendar: calendar))
+        XCTAssertEqual(snap.undoTargetDay(from: at(8, 9), calendar: calendar)?.items.first?.name, "Restmüll")
+        // Am Vorabend: morgen ist dran
+        XCTAssertEqual(snap.doneTargetDay(from: at(14, 19), calendar: calendar)?.items.first?.name, "Biotonne")
+    }
+
+    func testBringInHintFollowsSetting() {
+        var snap = snapshot
+        snap.bringInEnabled = false
+        XCTAssertNil(snap.bringInDay(at: at(8, 13), calendar: calendar))
+        snap.bringInEnabled = true
+        snap.bringInFromMinutes = 15 * 60
+        XCTAssertNil(snap.bringInDay(at: at(8, 13), calendar: calendar))
+        XCTAssertNotNil(snap.bringInDay(at: at(8, 15, 30), calendar: calendar))
+    }
+
+    func testBringInReminderOnlyTwoWeeksAhead() {
+        var settings = ReminderSettings()
+        settings.eveningEnabled = false
+        let pickups = (0..<8).map { week in PlannedPickup(date: Days.add(week * 7, to: calendar.startOfDay(for: at(8, 0)), calendar: calendar), name: "Restmüll") }
+        let plan = ReminderPlanner.plan(pickups: pickups, birthdays: [], settings: settings, now: at(8, 7), calendar: calendar)
+        XCTAssertEqual(plan.filter { $0.category == .wasteBringIn }.count, 3)   // heute, +7, +14
     }
 }

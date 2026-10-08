@@ -21,9 +21,15 @@ struct WatchPickupProvider: TimelineProvider {
         let snapshot = SnapshotStore.load() ?? WidgetSnapshot()
         let now = Date()
         var entries = [WatchPickupEntry(date: now, snapshot: snapshot)]
-        if let midnight = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, minute: 1), matchingPolicy: .nextTime) {
-            entries.append(WatchPickupEntry(date: midnight, snapshot: snapshot))
+        // Tageswechsel, 17 Uhr (heutige Abfuhr vorbei) und 15 Minuten nach „Erledigt“ neu zeichnen
+        var dates: [Date] = []
+        for hour in [0, 17] {
+            if let date = Calendar.current.nextDate(after: now, matching: DateComponents(hour: hour, minute: hour == 0 ? 1 : 0), matchingPolicy: .nextTime) { dates.append(date) }
         }
+        if let doneAt = snapshot.pickupDays.compactMap(\.doneAt).max(), doneAt.addingTimeInterval(PickupTiming.undoGrace) > now {
+            dates.append(doneAt.addingTimeInterval(PickupTiming.undoGrace + 1))
+        }
+        entries += dates.sorted().map { WatchPickupEntry(date: $0, snapshot: snapshot) }
         completion(Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600))))
     }
 

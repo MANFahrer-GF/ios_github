@@ -40,6 +40,10 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
         if let evening = calendar.nextDate(after: now, matching: DateComponents(hour: 17, minute: 0), matchingPolicy: .nextTime) { dates.append(evening) }
         // Mittags erscheint am Abholtag „Tonne wieder reinholen“
         if let noon = calendar.nextDate(after: now, matching: DateComponents(hour: 12, minute: 0), matchingPolicy: .nextTime) { dates.append(noon) }
+        // 15 Minuten nach „Erledigt“ springt das Widget zur nächsten Abholung
+        if let doneAt = entry.snapshot.pickupDays.compactMap(\.doneAt).max(), doneAt.addingTimeInterval(PickupTiming.undoGrace) > now {
+            dates.append(doneAt.addingTimeInterval(PickupTiming.undoGrace + 1))
+        }
         let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot.upcomingBirthdays(from: $0), locationName: entry.locationName) }
         return Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600)))
     }
@@ -88,8 +92,8 @@ struct PickupWidgetView: View {
     private var done: Bool { next?.done ?? false }
     /// Heute geleerte Tonnen, die wieder hereingeholt werden sollen (ab mittags, bis „Ist drin“).
     private var bringIn: WidgetSnapshot.PickupDay? { entry.snapshot.bringInDay(at: entry.date) }
-    /// Knopf nur, wenn heute oder morgen abgeholt wird – oder heute Tonnen wieder herein müssen.
-    private var showsButton: Bool { bringIn != nil || (next != nil && (days ?? 99) <= 1) }
+    /// „Erledigt“-Knopf, wenn heute oder morgen abgeholt wird – er hat Vorrang vor „Ist drin“.
+    private var showsButton: Bool { next != nil && (days ?? 99) <= 1 }
     private var tintHex: String? { done ? "#34C759" : items.first?.colorHex }
 
     var body: some View {
@@ -139,11 +143,13 @@ struct PickupWidgetView: View {
             HStack(alignment: .center, spacing: 6) {
                 Text(eyebrow).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
                 Spacer(minLength: 4)
-                if let bringIn {
-                    Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringIn.date))) { KlarCheckButtonLabel(done: false) }
+                if let next, showsButton {
+                    button(next)
+                } else if let bringIn {
+                    Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringIn.date))) { KlarCheckButtonLabel(done: false, symbol: "arrow.uturn.backward") }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(L10n.t("Tonne ist wieder drin", "Bin is back in"))
-                } else if let next, showsButton { button(next) }
+                        .accessibilityLabel(L10n.t("\(names(bringIn, max: 3)) ist wieder drin", "\(names(bringIn, max: 3)) is back in"))
+                }
             }
             .frame(minHeight: 28)
             Text(headline).font(KlarStyle.font(titleSize, .black)).foregroundStyle(KlarStyle.text(scheme))
@@ -155,8 +161,10 @@ struct PickupWidgetView: View {
         Group {
             if day.done {
                 Button(intent: UndoPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: true) }
+                    .accessibilityLabel(L10n.t("Erledigt zurücknehmen", "Undo done"))
             } else {
                 Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: false) }
+                    .accessibilityLabel(L10n.t("\(names(day, max: 3)) steht draußen", "\(names(day, max: 3)) is out"))
             }
         }
         .buttonStyle(.plain)

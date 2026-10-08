@@ -233,6 +233,7 @@ final class AppModel: ObservableObject {
         }
         try? context.save()
         notifications.cancelWasteReminders(dayKey: dayKey)
+        SnapshotStore.recordDoneTime(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
         await refreshAll()
     }
@@ -244,6 +245,7 @@ final class AppModel: ObservableObject {
             type.unmarkDone(on: day)
         }
         try? context.save()
+        SnapshotStore.clearDoneTime(dayKey: dayKey)
         SnapshotStore.clearUndo(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
         await refreshAll()
@@ -303,17 +305,21 @@ final class AppModel: ObservableObject {
         let locations = allLocations().map { WidgetSnapshot.Location(id: $0.id.uuidString, name: $0.name, symbolName: $0.symbolName, colorHex: $0.colorHex) }
         let days = upcomingByDay(days: 60)
         let broughtIn = SnapshotStore.broughtInDays()
+        let doneTimes = SnapshotStore.doneTimes()
         let pickupDays: [WidgetSnapshot.PickupDay] = days.compactMap { entry in
             let items = entry.events.filter { $0.kind == .waste }
             guard !items.isEmpty else { return nil }
+            let key = Days.iso(entry.day), done = items.allSatisfy(\.done)
             return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName) },
-                                            done: items.allSatisfy(\.done), broughtIn: broughtIn.contains(Days.iso(entry.day)))
+                                            done: done, broughtIn: broughtIn.contains(key), doneAt: done ? doneTimes[key] : nil)
         }
         let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
             WidgetSnapshot.BirthdayItem(date: $0.date, name: $0.title, years: $0.years, colorHex: $0.colorHex, initials: NameText.initials($0.title))
         }
         let stats = statistics()
-        return WidgetSnapshot(generatedAt: Date(), locations: locations, pickupDays: pickupDays, birthdays: Array(birthdays), missedCountThisYear: stats.total - stats.confirmed, doneCountThisYear: stats.confirmed)
+        let settings = SettingsKeys.reminderSettings()
+        return WidgetSnapshot(generatedAt: Date(), locations: locations, pickupDays: pickupDays, birthdays: Array(birthdays), missedCountThisYear: stats.total - stats.confirmed, doneCountThisYear: stats.confirmed,
+                              bringInEnabled: settings.bringInEnabled, bringInFromMinutes: min(PickupTiming.bringInHintMinutes, settings.bringInMinutes))
     }
 
     func statistics() -> (total: Int, confirmed: Int) {

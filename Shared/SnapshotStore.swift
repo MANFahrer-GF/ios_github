@@ -53,10 +53,11 @@ enum SnapshotStore {
         var days = doneDays()
         days.insert(dayKey)
         defaults.set(Array(days).sorted(), forKey: doneKey)
+        let at = recordDoneTime(dayKey: dayKey)
         if var snapshot = load() {
             snapshot.pickupDays = snapshot.pickupDays.map { day in
                 var copy = day
-                if Days.iso(day.date) == dayKey { copy.done = true }
+                if Days.iso(day.date) == dayKey { copy.done = true; copy.doneAt = at }
                 return copy
             }
             save(snapshot)
@@ -83,13 +84,14 @@ enum SnapshotStore {
         var done = doneDays()
         done.remove(dayKey)
         defaults.set(Array(done).sorted(), forKey: doneKey)
+        clearDoneTime(dayKey: dayKey)
         var undo = undoDays()
         undo.insert(dayKey)
         defaults.set(Array(undo).sorted(), forKey: undoKey)
         if var snapshot = load() {
             snapshot.pickupDays = snapshot.pickupDays.map { day in
                 var copy = day
-                if Days.iso(day.date) == dayKey { copy.done = false }
+                if Days.iso(day.date) == dayKey { copy.done = false; copy.doneAt = nil }
                 return copy
             }
             save(snapshot)
@@ -101,6 +103,32 @@ enum SnapshotStore {
         var days = undoDays()
         days.remove(dayKey)
         defaults.set(Array(days).sorted(), forKey: undoKey)
+    }
+
+    // MARK: - Zeitpunkt von „Erledigt“ (kurz danach bleibt der Tag zum Zurücknehmen stehen)
+
+    static let doneAtKey = "pickup.doneAt"
+
+    static func doneTimes() -> [String: Date] {
+        (defaults.dictionary(forKey: doneAtKey) as? [String: Double] ?? [:]).mapValues { Date(timeIntervalSince1970: $0) }
+    }
+
+    /// Merkt den ersten Zeitpunkt, an dem der Tag als erledigt markiert wurde, und gibt ihn zurück.
+    @discardableResult
+    static func recordDoneTime(dayKey: String, at date: Date = Date()) -> Date {
+        var times = defaults.dictionary(forKey: doneAtKey) as? [String: Double] ?? [:]
+        if let existing = times[dayKey] { return Date(timeIntervalSince1970: existing) }
+        let cutoff = Days.iso(Days.add(-14, to: Days.today()))
+        times = times.filter { $0.key >= cutoff }
+        times[dayKey] = date.timeIntervalSince1970
+        defaults.set(times, forKey: doneAtKey)
+        return date
+    }
+
+    static func clearDoneTime(dayKey: String) {
+        var times = defaults.dictionary(forKey: doneAtKey) as? [String: Double] ?? [:]
+        times.removeValue(forKey: dayKey)
+        defaults.set(times, forKey: doneAtKey)
     }
 
     // MARK: - „Ist drin“: Tonnen nach der Abfuhr wieder hereingeholt (nur auf diesem Gerät gemerkt)

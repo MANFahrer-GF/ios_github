@@ -28,8 +28,8 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
 
     func configure() {
         center.delegate = self
-        let done = UNNotificationAction(identifier: NotificationManager.doneAction, title: "✅ Erledigt – steht draußen", options: [])
-        let snooze = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: "⏰ In 1 Stunde nochmal", options: [])
+        let done = UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Erledigt – steht draußen", "✅ Done – it's out"), options: [])
+        let snooze = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let waste = UNNotificationCategory(identifier: "WASTE", actions: [done, snooze], intentIdentifiers: [], options: [])
         let inside = UNNotificationAction(identifier: NotificationManager.bringInAction, title: L10n.t("✅ Ist drin", "✅ It's in"), options: [])
         let later = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
@@ -69,7 +69,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     // MARK: - Planung
 
     func apply(_ plan: [PlannedNotification]) async {
-        center.removeAllPendingNotificationRequests()
+        // Alles Geplante ersetzen – nur „In 1 Stunde nochmal“ bleibt, das ist eine Bitte des Nutzers
+        let pending = await center.pendingNotificationRequests().map(\.identifier)
+        center.removePendingNotificationRequests(withIdentifiers: pending.filter { !$0.contains("-snooze-") })
         for item in plan.prefix(maxRequests) {
             let content = UNMutableNotificationContent()
             content.title = item.title

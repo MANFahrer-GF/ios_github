@@ -21,13 +21,15 @@ struct MarkPickupDoneIntent: DoneIntentBase {
     init(dayKey: String) { self.dayKey = dayKey }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "")
-        guard !key.isEmpty else { return .result(dialog: "Es steht keine Abholung an.") }
-        SnapshotStore.markDone(dayKey: key)
+        // Ohne Tag (Siri, Kurzbefehl): nur heute oder morgen – nie still eine Abholung in einer Woche
+        let target = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.doneTargetDay().map { Days.iso($0.date) } ?? "")
+        guard !target.isEmpty else { return .result(dialog: "Heute und morgen steht keine Abholung an.") }
+        SnapshotStore.markDone(dayKey: target)
         #if os(watchOS)
-        WatchSync.sendDone(dayKey: key)
+        WatchSync.sendDone(dayKey: target)
         #endif
-        return .result(dialog: "Super, alles steht draußen. 👍")
+        let when = Days.parse(target).map { Days.until($0) == 0 ? "heute" : "morgen" } ?? ""
+        return .result(dialog: "Super, alles für \(when) steht draußen. 👍")
     }
 }
 
@@ -44,8 +46,8 @@ struct UndoPickupDoneIntent: DoneIntentBase {
     init(dayKey: String) { self.dayKey = dayKey }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.nextPickupDay().map { Days.iso($0.date) } ?? "")
-        guard !key.isEmpty else { return .result(dialog: "Es steht keine Abholung an.") }
+        let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.undoTargetDay().map { Days.iso($0.date) } ?? "")
+        guard !key.isEmpty else { return .result(dialog: "Heute und morgen ist nichts als erledigt markiert.") }
         SnapshotStore.markUndone(dayKey: key)
         #if os(watchOS)
         WatchSync.sendUndo(dayKey: key)
@@ -69,7 +71,7 @@ struct MarkBroughtInIntent: DoneIntentBase {
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let key = (dayKey?.isEmpty == false) ? dayKey! : Days.iso(Days.today())
         SnapshotStore.markBroughtIn(dayKey: key)
-        return .result(dialog: "Prima, die Tonne ist wieder drin.")
+        return .result(dialog: "Prima, alles ist wieder drin.")
     }
 }
 

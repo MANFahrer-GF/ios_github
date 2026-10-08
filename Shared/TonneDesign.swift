@@ -502,12 +502,14 @@ struct MiniDots: View {
 struct KlarCheckButtonLabel: View {
     var done: Bool
     var size: CGFloat = 28
+    /// Anderes Symbol für andere Aktionen (z. B. Pfeil für „Tonne ist wieder drin“).
+    var symbol: String = "checkmark"
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         ZStack {
             Circle().fill(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme))
-            Image(systemName: "checkmark")
+            Image(systemName: symbol)
                 .font(.system(size: size * 0.42, weight: .heavy))
                 .foregroundStyle(done ? .white : KlarStyle.buttonForeground(scheme))
         }
