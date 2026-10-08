@@ -103,6 +103,10 @@ final class WatchSync: NSObject, WCSessionDelegate {
 
     private func apply(context: [String: Any]) {
         guard let data = context[WatchSync.snapshotKey] as? Data, let snapshot = try? WidgetSnapshot.decode(data) else { return }
+        #if os(watchOS)
+        // Auf dem iPhone zurückgenommen: alten „Erledigt“-Zeitpunkt der Watch verwerfen
+        for day in snapshot.pickupDays where !day.done { SnapshotStore.clearDoneTime(dayKey: Days.iso(day.date)) }
+        #endif
         SnapshotStore.save(snapshot)
         DispatchQueue.main.async { NotificationCenter.default.post(name: WatchSync.updatedNotification, object: nil) }
     }

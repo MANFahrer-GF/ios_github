@@ -118,7 +118,7 @@ struct OverviewView: View {
 
     private func bringInCard(_ bringIn: (day: Date, names: [String])) -> some View {
         HStack(spacing: 12) {
-            Image(systemName: "arrow.uturn.backward.circle.fill").font(.title2).foregroundStyle(.tint)
+            Image(systemName: "house.circle.fill").font(.title2).foregroundStyle(.tint)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(bringIn.names.count == 1 ? L10n.t("\(bringIn.names[0]) wieder reinholen", "Bring the \(bringIn.names[0]) back in")

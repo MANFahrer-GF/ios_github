@@ -228,12 +228,14 @@ final class AppModel: ObservableObject {
 
     func markDone(dayKey: String) async {
         guard let day = Days.parse(dayKey) else { return }
+        // Zeitpunkt: aus dem Widget/der Watch schon gemerkt (ausstehende Markierung) – sonst jetzt
+        let pendingFromWidget = SnapshotStore.doneDays().contains(dayKey)
+        SnapshotStore.recordDoneTime(dayKey: dayKey, overwrite: !pendingFromWidget)
         for type in allWasteTypes() where type.isActive && type.pickupDates(from: day, to: day).contains(day) {
             type.markDone(on: day)
         }
         try? context.save()
         notifications.cancelWasteReminders(dayKey: dayKey)
-        SnapshotStore.recordDoneTime(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
         await refreshAll()
     }

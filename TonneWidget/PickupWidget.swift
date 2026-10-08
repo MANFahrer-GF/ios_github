@@ -40,6 +40,10 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
         if let evening = calendar.nextDate(after: now, matching: DateComponents(hour: 17, minute: 0), matchingPolicy: .nextTime) { dates.append(evening) }
         // Mittags erscheint am Abholtag „Tonne wieder reinholen“
         if let noon = calendar.nextDate(after: now, matching: DateComponents(hour: 12, minute: 0), matchingPolicy: .nextTime) { dates.append(noon) }
+        // Hinweis „wieder reinholen“ ab der eingestellten Zeit (wenn früher als 12 Uhr)
+        if let from = calendar.date(bySettingHour: entry.snapshot.bringInFromMinutes / 60, minute: entry.snapshot.bringInFromMinutes % 60, second: 0, of: now), from > now {
+            dates.append(from)
+        }
         // 15 Minuten nach „Erledigt“ springt das Widget zur nächsten Abholung
         if let doneAt = entry.snapshot.pickupDays.compactMap(\.doneAt).max(), doneAt.addingTimeInterval(PickupTiming.undoGrace) > now {
             dates.append(doneAt.addingTimeInterval(PickupTiming.undoGrace + 1))
@@ -92,8 +96,10 @@ struct PickupWidgetView: View {
     private var done: Bool { next?.done ?? false }
     /// Heute geleerte Tonnen, die wieder hereingeholt werden sollen (ab mittags, bis „Ist drin“).
     private var bringIn: WidgetSnapshot.PickupDay? { entry.snapshot.bringInDay(at: entry.date) }
-    /// „Erledigt“-Knopf, wenn heute oder morgen abgeholt wird – er hat Vorrang vor „Ist drin“.
-    private var showsButton: Bool { next != nil && (days ?? 99) <= 1 }
+    /// „Ist drin“ ist die Aktion, außer morgen steht die nächste Abholung an – dann gehört Knopf und Hinweis dem „Erledigt“ für morgen.
+    private var bringInAction: WidgetSnapshot.PickupDay? { days == 1 ? nil : bringIn }
+    /// „Erledigt“-Knopf, wenn heute oder morgen abgeholt wird und nicht gerade „Ist drin“ dran ist.
+    private var showsButton: Bool { bringInAction == nil && next != nil && (days ?? 99) <= 1 }
     private var tintHex: String? { done ? "#34C759" : items.first?.colorHex }
 
     var body: some View {
@@ -115,7 +121,7 @@ struct PickupWidgetView: View {
     }
     private var headline: String { PickupWords.headline(days: days, done: done) }
     private var hint: String {
-        if let bringIn { return bringInText(bringIn) }
+        if let bringInAction { return bringInText(bringInAction) }
         if next == nil, let first = entry.snapshot.pickupDays.first {
             return L10n.t("nächste \(DateText.countdown(first.date))", "next \(DateText.countdown(first.date))")
         }
@@ -123,7 +129,7 @@ struct PickupWidgetView: View {
     }
 
     private func bringInText(_ day: WidgetSnapshot.PickupDay) -> String {
-        L10n.t("↩ \(names(day, max: 2)) reinholen", "↩ Bring in \(names(day, max: 2))")
+        L10n.t("⌂ \(names(day, max: 2)) reinholen", "⌂ Bring in \(names(day, max: 2))")
     }
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
@@ -143,12 +149,12 @@ struct PickupWidgetView: View {
             HStack(alignment: .center, spacing: 6) {
                 Text(eyebrow).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
                 Spacer(minLength: 4)
-                if let next, showsButton {
-                    button(next)
-                } else if let bringIn {
-                    Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringIn.date))) { KlarCheckButtonLabel(done: false, symbol: "arrow.uturn.backward") }
+                if let bringInAction {
+                    Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringInAction.date))) { KlarCheckButtonLabel(done: false, symbol: "house.fill") }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(L10n.t("\(names(bringIn, max: 3)) ist wieder drin", "\(names(bringIn, max: 3)) is back in"))
+                        .accessibilityLabel(L10n.t("\(names(bringInAction, max: 3)) ist wieder drin", "\(names(bringInAction, max: 3)) is back in"))
+                } else if let next, showsButton {
+                    button(next)
                 }
             }
             .frame(minHeight: 28)
@@ -188,7 +194,7 @@ struct PickupWidgetView: View {
 
     private var hintView: some View {
         Text(hint).font(KlarStyle.font(12, .bold))
-            .foregroundStyle(bringIn != nil ? KlarStyle.text(scheme) : KlarStyle.muted(scheme))
+            .foregroundStyle(bringInAction != nil ? KlarStyle.text(scheme) : KlarStyle.muted(scheme))
             .lineLimit(1).minimumScaleFactor(0.8).padding(.top, 1)
     }
 
@@ -245,9 +251,9 @@ struct PickupWidgetView: View {
     private var small: some View {
         VStack(alignment: .leading, spacing: 0) {
             header(titleSize: 27)
-            if items.count <= 2 || bringIn != nil { hintView }
+            if items.count <= 2 || bringInAction != nil { hintView }
             Spacer(minLength: 6)
-            if next != nil { binLines(max: bringIn != nil ? 2 : 3) }
+            if next != nil { binLines(max: bringInAction != nil ? 2 : 3) }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) { KlarSurface(tintHex: tintHex) }
@@ -257,9 +263,9 @@ struct PickupWidgetView: View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 header(titleSize: 27)
-                if items.count <= 2 || bringIn != nil { hintView }
+                if items.count <= 2 || bringInAction != nil { hintView }
                 Spacer(minLength: 6)
-                if next != nil { binLines(max: bringIn != nil ? 2 : 3) }
+                if next != nil { binLines(max: bringInAction != nil ? 2 : 3) }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             Rectangle().fill(KlarStyle.hairline(scheme)).frame(width: 1).padding(.horizontal, 14)
@@ -359,8 +365,8 @@ struct PickupWidgetView: View {
                 if next.items.count == 1, let item = next.items.first {
                     Text("\(Image.waste(item.displaySymbol, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
                     Text(item.name).font(.caption).lineLimit(1)
-                    if let bringIn {
-                        Text(bringInText(bringIn)).font(.caption2).lineLimit(1)
+                    if let bringInAction {
+                        Text(bringInText(bringInAction)).font(.caption2).lineLimit(1)
                     } else if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
                         Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
                     }

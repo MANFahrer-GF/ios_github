@@ -18,8 +18,8 @@ public enum WasteReturn {
         let words = lower.split(whereSeparator: { !$0.isLetter }).map(String.init)
         if neverReturned.contains(where: { lower.contains($0) }) && !lower.contains("tonne") { return false }
         // Container: öffentliche Sammelcontainer bleiben stehen, Großbehälter mit Literangabe (Wohnanlage) werden zurückgestellt
-        if lower.contains("container") {
-            let sized = lower.range(of: #"\d+[.,]?\d*\s*(l\b|liter|m³|m3|cbm)"#, options: .regularExpression) != nil
+        if lower.contains("container") && !lower.contains("tonne") {
+            let sized = lower.range(of: #"\d+[.,]?\d*\s*(ltr|liter|l|m³|m3|cbm)(?![a-zäöü])"#, options: .regularExpression) != nil
             if !sized { return false }
         }
         if let symbol, symbol.hasPrefix("tt.bin") { return true }
@@ -89,8 +89,11 @@ public extension WidgetSnapshot {
     /// Tag für „Erledigt“ per Siri oder Kurzbefehl: heute (noch offen, vor 17 Uhr), sonst morgen – nie eine Abholung in einer Woche.
     func doneTargetDay(from date: Date = Date(), calendar: Calendar = .current) -> PickupDay? {
         let today = calendar.startOfDay(for: date)
-        if let day = pickupDays.first(where: { calendar.isDate($0.date, inSameDayAs: today) }), !day.done,
-           PickupTiming.minutes(of: date, calendar: calendar) < PickupTiming.collectionOverMinutes { return day }
+        if let day = pickupDays.first(where: { calendar.isDate($0.date, inSameDayAs: today) }),
+           PickupTiming.minutes(of: date, calendar: calendar) < PickupTiming.collectionOverMinutes {
+            // Heute schon erledigt: kein Sprung auf morgen (zweimal „steht draußen“ gesagt)
+            return day.done ? nil : day
+        }
         let tomorrow = Days.add(1, to: today, calendar: calendar)
         if let day = pickupDays.first(where: { calendar.isDate($0.date, inSameDayAs: tomorrow) }), !day.done { return day }
         return nil

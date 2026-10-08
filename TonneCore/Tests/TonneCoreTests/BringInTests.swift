@@ -26,6 +26,8 @@ final class BringInTests: XCTestCase {
         XCTAssertFalse(WasteReturn.isBin(name: "Papiercontainer"))
         XCTAssertFalse(WasteReturn.isBin(name: "Altglascontainer"))
         XCTAssertTrue(WasteReturn.isBin(name: "Restmüllcontainer 1100 l"))
+        XCTAssertTrue(WasteReturn.isBin(name: "Restmüll Container 1100 Ltr."))
+        XCTAssertTrue(WasteReturn.isBin(name: "Wertstofftonne/Container"))
         XCTAssertFalse(WasteReturn.isBin(name: "Grüngutsammlung", symbol: "tt.bin.bio"))
         XCTAssertTrue(WasteReturn.isBin(name: "Papier/Pappe/Kartonage"))
         XCTAssertTrue(WasteReturn.isBin(name: "Wertstofftonne"))
@@ -120,6 +122,11 @@ final class BringInTests: XCTestCase {
         XCTAssertEqual(snap.undoTargetDay(from: at(8, 9), calendar: calendar)?.items.first?.name, "Restmüll")
         // Am Vorabend: morgen ist dran
         XCTAssertEqual(snap.doneTargetDay(from: at(14, 19), calendar: calendar)?.items.first?.name, "Biotonne")
+        // Heute erledigt und morgen wieder Abholung: vor 17 Uhr kein Sprung auf morgen, danach schon
+        var twoDays = snap
+        twoDays.pickupDays[1].date = calendar.startOfDay(for: at(9, 0))
+        XCTAssertNil(twoDays.doneTargetDay(from: at(8, 9), calendar: calendar))
+        XCTAssertEqual(twoDays.doneTargetDay(from: at(8, 19), calendar: calendar)?.items.first?.name, "Biotonne")
     }
 
     func testBringInHintFollowsSetting() {

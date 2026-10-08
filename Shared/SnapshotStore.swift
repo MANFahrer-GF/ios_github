@@ -53,7 +53,16 @@ enum SnapshotStore {
         var days = doneDays()
         days.insert(dayKey)
         defaults.set(Array(days).sorted(), forKey: doneKey)
-        let at = recordDoneTime(dayKey: dayKey)
+        // Neuer Zeitstempel, außer der Tag war schon erledigt (sonst gälte eine alte Markierung)
+        let wasDone = load()?.pickupDays.first(where: { Days.iso($0.date) == dayKey })?.done ?? false
+        let at = recordDoneTime(dayKey: dayKey, overwrite: !wasDone)
+        clearUndo(dayKey: dayKey)
+        #if os(iOS)
+        // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft
+        let ids = ["evening", "escalation", "morning", "snooze"].map { "waste-\($0)-\(dayKey)" }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+        #endif
         if var snapshot = load() {
             snapshot.pickupDays = snapshot.pickupDays.map { day in
                 var copy = day
@@ -113,11 +122,12 @@ enum SnapshotStore {
         (defaults.dictionary(forKey: doneAtKey) as? [String: Double] ?? [:]).mapValues { Date(timeIntervalSince1970: $0) }
     }
 
-    /// Merkt den ersten Zeitpunkt, an dem der Tag als erledigt markiert wurde, und gibt ihn zurück.
+    /// Merkt, wann der Tag als erledigt markiert wurde, und gibt den Zeitpunkt zurück.
+    /// `overwrite: false` behält einen vorhandenen Zeitpunkt (Markierung aus dem Widget, die die App nachträgt).
     @discardableResult
-    static func recordDoneTime(dayKey: String, at date: Date = Date()) -> Date {
+    static func recordDoneTime(dayKey: String, at date: Date = Date(), overwrite: Bool = true) -> Date {
         var times = defaults.dictionary(forKey: doneAtKey) as? [String: Double] ?? [:]
-        if let existing = times[dayKey] { return Date(timeIntervalSince1970: existing) }
+        if !overwrite, let existing = times[dayKey] { return Date(timeIntervalSince1970: existing) }
         let cutoff = Days.iso(Days.add(-14, to: Days.today()))
         times = times.filter { $0.key >= cutoff }
         times[dayKey] = date.timeIntervalSince1970
