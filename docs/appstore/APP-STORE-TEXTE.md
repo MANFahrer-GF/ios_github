@@ -56,8 +56,8 @@ Müllabfuhr,Abfallkalender,Müll,Gelber Sack,Abfall,Mülltonne,Biotonne,Geburtst
 
 ### Support-URL (Pflicht)
 
-`https://claude.ai/artifact/XxkZGf4DnQJWnzsyxQFL8d`
-(veröffentlicht; über „Teilen“ öffentlich freigeben. Alternativ `support.html` aus diesem Ordner auf den eigenen Webspace legen.)
+`https://manfahrer-gf.github.io/ios_github/appstore/support.html`
+(GitHub Pages, siehe unten „Seiten auf GitHub veröffentlichen“)
 
 ### Marketing-URL (optional)
 
@@ -95,8 +95,8 @@ Ergebnis: **4+**
 
 ### Datenschutzrichtlinien-URL (Pflicht)
 
-`https://claude.ai/artifact/DLSkKsMPyJD7esQ9vkWx82`
-(veröffentlicht; über „Teilen“ öffentlich freigeben. Alternativ `datenschutz.html` aus diesem Ordner auf den eigenen Webspace legen.)
+`https://manfahrer-gf.github.io/ios_github/appstore/datenschutz.html`
+(GitHub Pages, siehe unten „Seiten auf GitHub veröffentlichen“)
 
 ### Datenerfassung
 
@@ -113,3 +113,35 @@ Begründung (für dich, falls Apple nachfragt):
 ### Tracking
 
 Frage: „Werden Daten zum Tracking verwendet?“ → **Nein**
+
+---
+
+## 4. Seiten auf GitHub veröffentlichen (einmalig)
+
+1. Repo öffentlich machen: GitHub → `ios_github` → **Settings → General → Danger Zone → Change visibility → Public**
+   (GitHub Pages gibt es bei privaten Repos nur mit einem Bezahl-Tarif).
+2. **Settings → Pages** → *Build and deployment* → Source **Deploy from a branch** →
+   Branch **claude/adoring-ride-nxgrwn**, Ordner **/docs** → **Save**.
+3. Nach 1–2 Minuten sind die Seiten erreichbar:
+   - https://manfahrer-gf.github.io/ios_github/appstore/datenschutz.html
+   - https://manfahrer-gf.github.io/ios_github/appstore/support.html
+
+---
+
+## 5. Screenshots
+
+Liegen in `docs/appstore/screenshots/` – je Gerätegröße ein Ordner, Reihenfolge nach Nummer im Dateinamen:
+
+| App Store Connect | Ordner | Pixel |
+|---|---|---|
+| iPhone 6,9" | `iPhone-6.9` | 1320 × 2868 |
+| iPhone 6,7"/6,5" | `iPhone-6.7` | 1290 × 2796 |
+| iPhone 6,3" (Dynamic Island, mittel) | `iPhone-6.3` | 1206 × 2622 |
+| iPhone 6,1" | `iPhone-6.1` | 1179 × 2556 |
+| iPad 13" | `iPad-13` | 2064 × 2752 |
+| Apple Watch Ultra 3 | `Watch-Ultra-422x514` | 422 × 514 |
+| Apple Watch Series 10/11 (46 mm) | `Watch-46mm-416x496` | 416 × 496 |
+| Apple Watch Ultra/Ultra 2 | `Watch-Ultra-410x502` | 410 × 502 |
+| Apple Watch Series 7–9 (45 mm) | `Watch-45mm-396x484` | 396 × 484 |
+
+Es reicht jeweils die größte verlangte Größe; App Store Connect skaliert für kleinere Geräte.

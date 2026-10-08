@@ -1,0 +1,272 @@
+[
+{
+"district": "Kreisfreie Stadt Braunschweig",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Delmenhorst",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Emden",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Oldenburg (Oldb)",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Osnabrück",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Salzgitter",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Wilhelmshaven",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Kreisfreie Stadt Wolfsburg",
+"regional": 1,
+"local": 0,
+"mun": 1
+},
+{
+"district": "Landkreis Ammerland",
+"regional": 1,
+"local": 0,
+"mun": 6
+},
+{
+"district": "Landkreis Aurich",
+"regional": 2,
+"local": 0,
+"mun": 25
+},
+{
+"district": "Landkreis Celle",
+"regional": 1,
+"local": 0,
+"mun": 21
+},
+{
+"district": "Landkreis Cloppenburg",
+"regional": 1,
+"local": 0,
+"mun": 13
+},
+{
+"district": "Landkreis Cuxhaven",
+"regional": 3,
+"local": 1,
+"mun": 29
+},
+{
+"district": "Landkreis Diepholz",
+"regional": 1,
+"local": 0,
+"mun": 45
+},
+{
+"district": "Landkreis Emsland",
+"regional": 1,
+"local": 0,
+"mun": 60
+},
+{
+"district": "Landkreis Friesland",
+"regional": 1,
+"local": 0,
+"mun": 8
+},
+{
+"district": "Landkreis Gifhorn",
+"regional": 1,
+"local": 0,
+"mun": 42
+},
+{
+"district": "Landkreis Goslar",
+"regional": 1,
+"local": 0,
+"mun": 8
+},
+{
+"district": "Landkreis Grafschaft Bentheim",
+"regional": 1,
+"local": 0,
+"mun": 25
+},
+{
+"district": "Landkreis Göttingen",
+"regional": 3,
+"local": 0,
+"mun": 40
+},
+{
+"district": "Landkreis Hameln-Pyrmont",
+"regional": 1,
+"local": 0,
+"mun": 8
+},
+{
+"district": "Landkreis Harburg",
+"regional": 1,
+"local": 0,
+"mun": 42
+},
+{
+"district": "Landkreis Heidekreis",
+"regional": 0,
+"local": 0,
+"mun": 23
+},
+{
+"district": "Landkreis Helmstedt",
+"regional": 1,
+"local": 0,
+"mun": 25
+},
+{
+"district": "Landkreis Hildesheim",
+"regional": 1,
+"local": 0,
+"mun": 20
+},
+{
+"district": "Landkreis Holzminden",
+"regional": 1,
+"local": 0,
+"mun": 35
+},
+{
+"district": "Landkreis Leer",
+"regional": 1,
+"local": 0,
+"mun": 20
+},
+{
+"district": "Landkreis Lüchow-Dannenberg",
+"regional": 1,
+"local": 0,
+"mun": 27
+},
+{
+"district": "Landkreis Lüneburg",
+"regional": 1,
+"local": 0,
+"mun": 43
+},
+{
+"district": "Landkreis Nienburg (Weser)",
+"regional": 1,
+"local": 0,
+"mun": 36
+},
+{
+"district": "Landkreis Northeim",
+"regional": 1,
+"local": 0,
+"mun": 12
+},
+{
+"district": "Landkreis Oldenburg",
+"regional": 1,
+"local": 0,
+"mun": 15
+},
+{
+"district": "Landkreis Osnabrück",
+"regional": 2,
+"local": 0,
+"mun": 34
+},
+{
+"district": "Landkreis Osterholz",
+"regional": 2,
+"local": 0,
+"mun": 11
+},
+{
+"district": "Landkreis Peine",
+"regional": 1,
+"local": 0,
+"mun": 7
+},
+{
+"district": "Landkreis Region Hannover",
+"regional": 1,
+"local": 0,
+"mun": 21
+},
+{
+"district": "Landkreis Rotenburg (Wümme)",
+"regional": 2,
+"local": 0,
+"mun": 57
+},
+{
+"district": "Landkreis Schaumburg",
+"regional": 1,
+"local": 0,
+"mun": 38
+},
+{
+"district": "Landkreis Stade",
+"regional": 1,
+"local": 0,
+"mun": 40
+},
+{
+"district": "Landkreis Uelzen",
+"regional": 1,
+"local": 0,
+"mun": 27
+},
+{
+"district": "Landkreis Vechta",
+"regional": 1,
+"local": 0,
+"mun": 10
+},
+{
+"district": "Landkreis Verden",
+"regional": 1,
+"local": 0,
+"mun": 11
+},
+{
+"district": "Landkreis Wesermarsch",
+"regional": 1,
+"local": 0,
+"mun": 9
+},
+{
+"district": "Landkreis Wittmund",
+"regional": 2,
+"local": 0,
+"mun": 19
+},
+{
+"district": "Landkreis Wolfenbüttel",
+"regional": 1,
+"local": 0,
+"mun": 35
+}
+]
