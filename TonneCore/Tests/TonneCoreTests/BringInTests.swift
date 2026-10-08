@@ -132,6 +132,9 @@ final class BringInTests: XCTestCase {
         // „Wann kommt die Müllabfuhr?“ nennt heute bis 17 Uhr, auch wenn erledigt
         XCTAssertEqual(twoDays.nextPickupDay(from: at(8, 10), countDone: true, calendar: calendar)?.items.first?.name, "Restmüll")
         XCTAssertEqual(twoDays.nextPickupDay(from: at(8, 17, 30), countDone: true, calendar: calendar)?.items.first?.name, "Biotonne")
+        // Schon geleert und wieder drin → Siri nennt die nächste Abholung
+        twoDays.pickupDays[0].broughtIn = true
+        XCTAssertEqual(twoDays.nextPickupDay(from: at(8, 14), countDone: true, calendar: calendar)?.items.first?.name, "Biotonne")
     }
 
     func testBringInHintFollowsSetting() {

@@ -132,7 +132,9 @@ public struct WidgetSnapshot: Codable, Hashable {
     public func nextPickupDay(from date: Date = Date(), countDone: Bool = false, calendar: Calendar = .current) -> PickupDay? {
         let today = calendar.startOfDay(for: date)
         return pickupDays.first {
-            $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: countDone ? false : $0.done, doneAt: $0.doneAt, now: date, calendar: calendar)
+            // Mit countDone zählt nur „Ist drin“ (Tonne schon geleert und zurück) als vorbei
+            $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: countDone ? $0.broughtIn : $0.done,
+                                                         doneAt: countDone ? nil : $0.doneAt, now: date, calendar: calendar)
         }
     }
 
