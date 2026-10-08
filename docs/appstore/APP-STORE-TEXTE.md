@@ -1,6 +1,6 @@
 # App Store Connect – Texte und Antworten für „Tonne & Torte“
 
-Alles zum Hineinkopieren. Stellen mit **[eckigen Klammern]** musst du selbst ausfüllen.
+Alles zum Hineinkopieren.
 
 ---
 
@@ -56,8 +56,8 @@ Müllabfuhr,Abfallkalender,Müll,Gelber Sack,Abfall,Mülltonne,Biotonne,Geburtst
 
 ### Support-URL (Pflicht)
 
-Die Seite `support.html` (liegt in diesem Ordner) auf deinen Webspace hochladen, z. B.
-`https://[deine-domain.de]/tonne/support.html`
+`https://claude.ai/artifact/XxkZGf4DnQJWnzsyxQFL8d`
+(veröffentlicht; über „Teilen“ öffentlich freigeben. Alternativ `support.html` aus diesem Ordner auf den eigenen Webspace legen.)
 
 ### Marketing-URL (optional)
 
@@ -95,9 +95,8 @@ Ergebnis: **4+**
 
 ### Datenschutzrichtlinien-URL (Pflicht)
 
-Die Seite `datenschutz.html` (liegt in diesem Ordner) hochladen, z. B.
-`https://[deine-domain.de]/tonne/datenschutz.html`
-Vorher in der Datei Name und **Anschrift** eintragen (Pflicht nach DSGVO).
+`https://claude.ai/artifact/DLSkKsMPyJD7esQ9vkWx82`
+(veröffentlicht; über „Teilen“ öffentlich freigeben. Alternativ `datenschutz.html` aus diesem Ordner auf den eigenen Webspace legen.)
 
 ### Datenerfassung
 
