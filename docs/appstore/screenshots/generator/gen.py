@@ -6,7 +6,7 @@ import json, os, html
 HERE = os.path.dirname(os.path.abspath(__file__))
 GLYPHS = json.load(open(os.path.join(HERE, "glyphs.json")))
 NDS = json.load(open(os.path.join(HERE, "nds.json")))
-OUT = os.path.join(HERE, "html")  # Zwischenstand, nicht einchecken
+OUT = os.path.join(HERE, "html")
 os.makedirs(OUT, exist_ok=True)
 
 E = html.escape
@@ -440,6 +440,7 @@ DEVICES = {
     "iPhone-6.9": (1320, 2868, 3, (440, 956), False),
     "iPhone-6.7": (1290, 2796, 3, (430, 932), False),
     "iPad-13": (2064, 2752, 2, (1032, 1376), True),
+    "iPad-12.9": (2048, 2732, 2, (1024, 1366), True),
 }
 WATCHES = {
     "Watch-Ultra-422x514": (422, 514),

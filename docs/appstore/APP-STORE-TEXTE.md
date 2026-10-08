@@ -138,7 +138,8 @@ Liegen in `docs/appstore/screenshots/` – je Gerätegröße ein Ordner, Reihenf
 | iPhone 6,7"/6,5" | `iPhone-6.7` | 1290 × 2796 |
 | iPhone 6,3" (Dynamic Island, mittel) | `iPhone-6.3` | 1206 × 2622 |
 | iPhone 6,1" | `iPhone-6.1` | 1179 × 2556 |
-| iPad 13" | `iPad-13` | 2064 × 2752 |
+| iPad 13" | `iPad-13` | 2064 × 2752 (PNG und JPG) |
+| iPad 12,9" | `iPad-12.9` | 2048 × 2732 (PNG und JPG) |
 | Apple Watch Ultra 3 | `Watch-Ultra-422x514` | 422 × 514 |
 | Apple Watch Series 10/11 (46 mm) | `Watch-46mm-416x496` | 416 × 496 |
 | Apple Watch Ultra/Ultra 2 | `Watch-Ultra-410x502` | 410 × 502 |
