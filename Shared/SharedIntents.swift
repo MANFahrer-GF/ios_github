@@ -54,6 +54,25 @@ struct UndoPickupDoneIntent: DoneIntentBase {
     }
 }
 
+/// „Ist drin“: Tonnen nach der Abfuhr wieder hereingeholt – blendet den Hinweis im Widget aus.
+struct MarkBroughtInIntent: DoneIntentBase {
+    static var title: LocalizedStringResource = "Tonne ist wieder drin"
+    static var description = IntentDescription("Bestätigt, dass die geleerten Tonnen wieder hereingeholt sind.")
+    static var openAppWhenRun = false
+
+    @Parameter(title: "Tag")
+    var dayKey: String?
+
+    init() { dayKey = nil }
+    init(dayKey: String) { self.dayKey = dayKey }
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let key = (dayKey?.isEmpty == false) ? dayKey! : Days.iso(Days.today())
+        SnapshotStore.markBroughtIn(dayKey: key)
+        return .result(dialog: "Prima, die Tonne ist wieder drin.")
+    }
+}
+
 /// Siri / Kurzbefehle: „Wann kommt die nächste Müllabfuhr?“
 struct NextPickupIntent: AppIntent {
     static var title: LocalizedStringResource = "Nächste Abholung"

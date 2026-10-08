@@ -38,8 +38,21 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var date: Date
         public var items: [PickupItem]
         public var done: Bool
-        public init(date: Date, items: [PickupItem], done: Bool = false) {
-            self.date = date; self.items = items; self.done = done
+        /// Tonnen nach der Abfuhr wieder hereingeholt („Ist drin“).
+        public var broughtIn: Bool
+        public init(date: Date, items: [PickupItem], done: Bool = false, broughtIn: Bool = false) {
+            self.date = date; self.items = items; self.done = done; self.broughtIn = broughtIn
+        }
+
+        private enum CodingKeys: String, CodingKey { case date, items, done, broughtIn }
+
+        /// `broughtIn` fehlt in Schnappschüssen älterer App-Versionen (z. B. auf der Watch).
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            date = try container.decode(Date.self, forKey: .date)
+            items = try container.decode([PickupItem].self, forKey: .items)
+            done = try container.decodeIfPresent(Bool.self, forKey: .done) ?? false
+            broughtIn = try container.decodeIfPresent(Bool.self, forKey: .broughtIn) ?? false
         }
     }
 
@@ -82,14 +95,16 @@ public struct WidgetSnapshot: Codable, Hashable {
         var copy = self
         copy.pickupDays = pickupDays.compactMap { day in
             let items = day.items.filter { $0.locationID == locationID }
-            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: day.done)
+            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: day.done, broughtIn: day.broughtIn)
         }
         return copy
     }
 
+    /// Die nächste Abholung, um die man sich kümmern muss. Die heutige zählt nicht mehr, sobald sie als erledigt
+    /// markiert ist oder es nach 17 Uhr ist – dann steht die nächste im Widget, nicht den ganzen Tag „heute“.
     public func nextPickupDay(from date: Date = Date(), calendar: Calendar = .current) -> PickupDay? {
         let today = calendar.startOfDay(for: date)
-        return pickupDays.first { $0.date >= today }
+        return pickupDays.first { $0.date >= today && !PickupTiming.isFinished(day: $0.date, done: $0.done, now: date, calendar: calendar) }
     }
 
     public func encoded() throws -> Data {

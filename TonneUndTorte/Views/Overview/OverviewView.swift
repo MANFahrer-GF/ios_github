@@ -27,6 +27,22 @@ struct OverviewView: View {
         }
     }
 
+    /// Abholungen, um die man sich noch kümmern muss – die heutige fällt weg, sobald sie erledigt ist oder es nach 17 Uhr ist.
+    private var activeWasteDays: [(day: Date, events: [CalendarEvent])] {
+        let now = Date()
+        return wasteDays.filter { !PickupTiming.isFinished(day: $0.day, done: $0.events.allSatisfy(\.done), now: now) }
+    }
+
+    /// Heute geleerte Tonnen, die wieder herein müssen (ab mittags, bis „Ist drin“). Säcke und Grünschnitt zählen nicht.
+    private var bringIn: (day: Date, names: [String])? {
+        _ = refreshToken
+        let now = Date()
+        guard let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
+              PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now) else { return nil }
+        let names = today.events.filter { WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
+        return names.isEmpty ? nil : (day: today.day, names: names)
+    }
+
     private var otherUpcoming: [CalendarEvent] {
         days.flatMap(\.events).filter { $0.kind != .waste }
     }
@@ -37,6 +53,7 @@ struct OverviewView: View {
                 VStack(spacing: 20) {
                     if !notifications.isAuthorized { permissionBanner }
                     if !model.recentChanges.isEmpty { changesBanner }
+                    if let bringIn { bringInCard(bringIn) }
                     heroCard
                     nextPickupsSection
                     birthdaysSection
@@ -89,16 +106,41 @@ struct OverviewView: View {
         .card()
     }
 
+    private func bringInCard(_ bringIn: (day: Date, names: [String])) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: "arrow.uturn.backward.circle.fill").font(.title2).foregroundStyle(.tint)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(bringIn.names.count == 1 ? L10n.t("\(bringIn.names[0]) wieder reinholen", "Bring the \(bringIn.names[0]) back in")
+                                              : L10n.t("Tonnen wieder reinholen", "Bring the bins back in"))
+                    .font(.subheadline.weight(.semibold))
+                Text(bringIn.names.count == 1 ? L10n.t("Die Abfuhr war heute.", "Collection was today.")
+                                              : ReminderPlanner.joinNames(bringIn.names))
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Spacer()
+            Button {
+                Haptics.success()
+                SnapshotStore.markBroughtIn(dayKey: Days.iso(bringIn.day))
+                refreshToken += 1
+            } label: {
+                Text(L10n.t("Ist drin", "It's in"))
+            }
+            .buttonStyle(.borderedProminent).controlSize(.small)
+        }
+        .card()
+    }
+
     // MARK: - Hero
 
     private var heroCard: some View {
-        let next = wasteDays.first
+        let next = activeWasteDays.first
         let n = next.map { Days.until($0.day) }
         let allDone = next?.events.allSatisfy(\.done) ?? false
         let tiles = next?.events.map { BinTileItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex) } ?? []
-        let nextAfter = wasteDays.dropFirst().first
+        let nextAfter = activeWasteDays.dropFirst().first
         let subline: String = {
-            if next == nil, let first = wasteDays.first { return "nächste \(DateText.countdown(first.day))" }
+            if next == nil, let first = activeWasteDays.first { return "nächste \(DateText.countdown(first.day))" }
             return PickupWords.subline(days: n, done: allDone)
         }()
         let eyebrow: String = {

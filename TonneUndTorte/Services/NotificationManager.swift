@@ -17,6 +17,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     static let doneAction = "PICKUP_DONE"
     static let snoozeAction = "PICKUP_SNOOZE"
     static let giftAction = "BIRTHDAY_GIFT"
+    static let bringInAction = "PICKUP_BROUGHT_IN"
 
     /// Wird aufgerufen, wenn der Nutzer in einer Mitteilung „Erledigt“ tippt (dayKey).
     var onPickupDone: ((String) -> Void)?
@@ -30,9 +31,12 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let done = UNNotificationAction(identifier: NotificationManager.doneAction, title: "✅ Erledigt – steht draußen", options: [])
         let snooze = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: "⏰ In 1 Stunde nochmal", options: [])
         let waste = UNNotificationCategory(identifier: "WASTE", actions: [done, snooze], intentIdentifiers: [], options: [])
+        let inside = UNNotificationAction(identifier: NotificationManager.bringInAction, title: L10n.t("✅ Ist drin", "✅ It's in"), options: [])
+        let later = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
+        let bringIn = UNNotificationCategory(identifier: "WASTE_BRINGIN", actions: [inside, later], intentIdentifiers: [], options: [])
         let birthday = UNNotificationCategory(identifier: "BIRTHDAY", actions: [], intentIdentifiers: [], options: [])
         let custom = UNNotificationCategory(identifier: "CUSTOM", actions: [], intentIdentifiers: [], options: [])
-        center.setNotificationCategories([waste, birthday, custom])
+        center.setNotificationCategories([waste, bringIn, birthday, custom])
     }
 
     func refreshStatus() async {
@@ -77,6 +81,8 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             case .wasteEvening, .wasteMorning, .wasteEscalation:
                 content.categoryIdentifier = "WASTE"
                 content.interruptionLevel = item.category == .wasteEscalation ? .timeSensitive : .active
+            case .wasteBringIn:
+                content.categoryIdentifier = "WASTE_BRINGIN"
             case .birthday:
                 content.categoryIdentifier = "BIRTHDAY"
             case .custom:
@@ -123,14 +129,18 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
                 SnapshotStore.markDone(dayKey: dayKey)
                 self.onPickupDone?(dayKey)
             }
+        case NotificationManager.bringInAction:
+            await MainActor.run { SnapshotStore.markBroughtIn(dayKey: dayKey) }
         case NotificationManager.snoozeAction:
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = body
             content.sound = .default
-            content.categoryIdentifier = "WASTE"
+            let isBringIn = response.notification.request.content.categoryIdentifier == "WASTE_BRINGIN"
+            content.categoryIdentifier = isBringIn ? "WASTE_BRINGIN" : "WASTE"
             content.userInfo = userInfo
-            let request = UNNotificationRequest(identifier: "waste-snooze-\(dayKey)", content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: false))
+            let identifier = isBringIn ? "waste-bringin-snooze-\(dayKey)" : "waste-snooze-\(dayKey)"
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: false))
             try? await center.add(request)
         default:
             break

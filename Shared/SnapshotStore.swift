@@ -1,5 +1,8 @@
 import Foundation
 import TonneCore
+#if os(iOS)
+import UserNotifications
+#endif
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
@@ -98,5 +101,38 @@ enum SnapshotStore {
         var days = undoDays()
         days.remove(dayKey)
         defaults.set(Array(days).sorted(), forKey: undoKey)
+    }
+
+    // MARK: - „Ist drin“: Tonnen nach der Abfuhr wieder hereingeholt (nur auf diesem Gerät gemerkt)
+
+    static let broughtInKey = "pickup.broughtInDays"
+    static let broughtInNotification = Notification.Name("de.manfahrer.TonneUndTorte.broughtIn")
+
+    static func broughtInDays() -> Set<String> {
+        Set(defaults.stringArray(forKey: broughtInKey) ?? [])
+    }
+
+    static func markBroughtIn(dayKey: String) {
+        guard !dayKey.isEmpty else { return }
+        // Nur die letzten Tage aufheben – ältere Markierungen braucht niemand mehr
+        let cutoff = Days.iso(Days.add(-14, to: Days.today()))
+        var days = broughtInDays().filter { $0 >= cutoff }
+        days.insert(dayKey)
+        defaults.set(Array(days).sorted(), forKey: broughtInKey)
+        if var snapshot = load() {
+            snapshot.pickupDays = snapshot.pickupDays.map { day in
+                var copy = day
+                if Days.iso(day.date) == dayKey { copy.broughtIn = true }
+                return copy
+            }
+            save(snapshot)
+        }
+        #if os(iOS)
+        // Erinnerung „wieder reinholen“ für diesen Tag entfernen (geplant und schon angezeigt)
+        let ids = ["waste-bringin-\(dayKey)", "waste-bringin-snooze-\(dayKey)"]
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+        #endif
+        DispatchQueue.main.async { NotificationCenter.default.post(name: broughtInNotification, object: nil) }
     }
 }

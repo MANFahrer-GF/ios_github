@@ -17,6 +17,8 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.birthdayMinutes) private var birthdayMinutes = 9 * 60
     @AppStorage(SettingsKeys.customMinutes) private var customMinutes = 9 * 60
     @AppStorage(SettingsKeys.liveActivities) private var liveActivities = true
+    @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
+    @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
     @State private var activityStatus: LiveActivityManager.Status = .none
     @State private var showResetConfirm = false
     @State private var info: String?
@@ -47,6 +49,8 @@ struct SettingsView: View {
                 }
                 Toggle("Am Abholtag morgens erinnern", isOn: $morningEnabled)
                 if morningEnabled { TimeOfDayPicker(title: "Uhrzeit morgens", minutes: $morningMinutes) }
+                Toggle(L10n.t("Tonnen wieder reinholen", "Bring bins back in"), isOn: $bringInEnabled)
+                if bringInEnabled { TimeOfDayPicker(title: L10n.t("Uhrzeit am Abholtag", "Time on collection day"), minutes: $bringInMinutes) }
                 Toggle("Live-Aktivität am Vorabend", isOn: $liveActivities)
                 if liveActivities {
                     // Die Live-Aktivität startet zur Abendzeit – auch wenn die Abend-Mitteilung aus ist.
@@ -54,7 +58,13 @@ struct SettingsView: View {
                     if LiveActivityManager.canSchedule, LiveActivityManager.systemAllows { activityStatusRow }
                 }
             } header: { Text("Müll-Erinnerungen") } footer: {
-                liveActivityFooter
+                VStack(alignment: .leading, spacing: 6) {
+                    if bringInEnabled {
+                        Text(L10n.t("„Wieder reinholen“ gilt nur für Tonnen – Gelbe Säcke, Grünschnitt oder Sperrmüll bleiben draußen. Ob Sack oder Tonne, richtet sich nach dem Symbol der Müllart.",
+                                    "“Bring back in” only applies to bins – yellow bags, garden waste or bulky waste stay out. Bag or bin follows the waste type's icon."))
+                    }
+                    liveActivityFooter
+                }
             }
 
             Section("Geburtstage & eigene Termine") {
@@ -88,6 +98,8 @@ struct SettingsView: View {
         .onChange(of: birthdayMinutes) { _, _ in refresh() }
         .onChange(of: customMinutes) { _, _ in refresh() }
         .onChange(of: liveActivities) { _, _ in refresh() }
+        .onChange(of: bringInEnabled) { _, _ in refresh() }
+        .onChange(of: bringInMinutes) { _, _ in refresh() }
         .confirmationDialog("Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?", isPresented: $showResetConfirm, titleVisibility: .visible) {
             Button("Alles löschen", role: .destructive) {
                 try? context.delete(model: WasteType.self); try? context.delete(model: Location.self)

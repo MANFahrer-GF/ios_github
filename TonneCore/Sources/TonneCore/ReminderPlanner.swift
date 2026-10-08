@@ -9,6 +9,9 @@ public struct ReminderSettings: Hashable, Codable {
     /// Zweite Erinnerung am Abend, falls „Erledigt“ nicht bestätigt wurde.
     public var escalationEnabled: Bool = true
     public var escalationMinutes: Int = 21 * 60
+    /// Am Abholtag: Tonnen wieder hereinholen (nur Tonnen, keine Säcke).
+    public var bringInEnabled: Bool = true
+    public var bringInMinutes: Int = 17 * 60
     public var birthdayMinutes: Int = 9 * 60
     public var customMinutes: Int = 9 * 60
 
@@ -25,10 +28,15 @@ public struct PlannedPickup: Hashable {
     public var remindersEnabled: Bool
     /// Vom Nutzer bereits als erledigt markiert (Tonne steht draußen).
     public var done: Bool
+    /// Nach der Abfuhr schon wieder hereingeholt („Ist drin“).
+    public var broughtIn: Bool
 
-    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false) {
-        self.date = date; self.name = name; self.locationName = locationName; self.colorHex = colorHex; self.symbolName = symbolName; self.remindersEnabled = remindersEnabled; self.done = done
+    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false) {
+        self.date = date; self.name = name; self.locationName = locationName; self.colorHex = colorHex; self.symbolName = symbolName; self.remindersEnabled = remindersEnabled; self.done = done; self.broughtIn = broughtIn
     }
+
+    /// Eine Tonne, die nach der Abfuhr wieder hereingeholt wird.
+    public var isBin: Bool { WasteReturn.isBin(name: name, symbol: symbolName) }
 }
 
 public struct PlannedBirthday: Hashable {
@@ -56,7 +64,7 @@ public struct PlannedCustomEvent: Hashable {
 
 /// Eine konkrete Mitteilung mit Zeitpunkt.
 public struct PlannedNotification: Hashable {
-    public enum Category: String { case wasteEvening = "WASTE_EVENING", wasteMorning = "WASTE_MORNING", wasteEscalation = "WASTE_ESCALATION", birthday = "BIRTHDAY", custom = "CUSTOM" }
+    public enum Category: String { case wasteEvening = "WASTE_EVENING", wasteMorning = "WASTE_MORNING", wasteEscalation = "WASTE_ESCALATION", wasteBringIn = "WASTE_BRINGIN", birthday = "BIRTHDAY", custom = "CUSTOM" }
 
     public var identifier: String
     public var fireDate: Date
@@ -95,6 +103,17 @@ public enum ReminderPlanner {
     }
 
     /// Kurzform für Widgets (wenig Platz, darum Kommas statt „und“): „A, B“ bzw. „A, B +2“.
+    /// „Gelbe Tonne wieder reinholen“ – nach der Abfuhr am Abholtag.
+    public static func bringInText(names: [String]) -> (title: String, body: String) {
+        let list = joinNames(names)
+        if names.count == 1 {
+            return (L10n.t("\(names[0]) wieder reinholen", "Bring the \(names[0]) back in"),
+                    L10n.t("Die Abfuhr war heute. Tippe „Ist drin“, wenn die Tonne wieder steht.", "Collection was today. Tap “It's in” once it's back."))
+        }
+        return (L10n.t("Tonnen wieder reinholen", "Bring the bins back in"),
+                L10n.t("\(list) – die Abfuhr war heute.", "\(list) – collection was today."))
+    }
+
     public static func shortNames(_ names: [String], max: Int) -> String {
         let limit = Swift.max(1, max)
         let shown = names.prefix(limit).joined(separator: ", ")
@@ -146,6 +165,24 @@ public enum ReminderPlanner {
                     title: names.count == 1 ? L10n.t("Heute: \(names[0])", "Today: \(names[0])") : L10n.t("Heute wird abgeholt", "Collection today"),
                     body: names.count == 1 ? L10n.t("Steht die Tonne schon draußen?", "Is the bin out yet?") : L10n.t("\(list) – steht alles draußen?", "\(list) – is everything out?"),
                     category: .wasteMorning, threadIdentifier: "waste", dayKey: key))
+            }
+        }
+
+        // --- Tonnen wieder hereinholen (nur Tonnen; Säcke, Grünschnitt, Sperrmüll bleiben draußen) ---
+        if settings.bringInEnabled {
+            var binsByDay: [Date: [PlannedPickup]] = [:]
+            for pickup in pickups where pickup.remindersEnabled && !pickup.broughtIn && pickup.isBin {
+                let day = calendar.startOfDay(for: pickup.date)
+                guard day >= today && day <= horizon else { continue }
+                binsByDay[day, default: []].append(pickup)
+            }
+            for (day, items) in binsByDay {
+                guard let fire = Days.at(minutes: settings.bringInMinutes, on: day, calendar: calendar), fire > now else { continue }
+                let names = items.map { multiLocation && $0.locationName != nil ? "\($0.name) (\($0.locationName!))" : $0.name }
+                let text = bringInText(names: names)
+                result.append(PlannedNotification(
+                    identifier: "waste-bringin-\(Days.iso(day, calendar: calendar))", fireDate: fire, title: text.title, body: text.body,
+                    category: .wasteBringIn, threadIdentifier: "waste", dayKey: Days.iso(day, calendar: calendar)))
             }
         }
 

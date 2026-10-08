@@ -38,6 +38,8 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
         let calendar = Calendar.current
         if let midnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 1), matchingPolicy: .nextTime) { dates.append(midnight) }
         if let evening = calendar.nextDate(after: now, matching: DateComponents(hour: 17, minute: 0), matchingPolicy: .nextTime) { dates.append(evening) }
+        // Mittags erscheint am Abholtag „Tonne wieder reinholen“
+        if let noon = calendar.nextDate(after: now, matching: DateComponents(hour: 12, minute: 0), matchingPolicy: .nextTime) { dates.append(noon) }
         let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot.upcomingBirthdays(from: $0), locationName: entry.locationName) }
         return Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600)))
     }
@@ -84,8 +86,10 @@ struct PickupWidgetView: View {
     private var items: [WidgetSnapshot.PickupItem] { next?.items ?? [] }
     private var later: [WidgetSnapshot.PickupDay] { entry.snapshot.pickupDays.filter { $0.date > (next?.date ?? .distantPast) } }
     private var done: Bool { next?.done ?? false }
-    /// Knopf nur, wenn heute oder morgen abgeholt wird.
-    private var showsButton: Bool { next != nil && (days ?? 99) <= 1 }
+    /// Heute geleerte Tonnen, die wieder hereingeholt werden sollen (ab mittags, bis „Ist drin“).
+    private var bringIn: WidgetSnapshot.PickupDay? { entry.snapshot.bringInDay(at: entry.date) }
+    /// Knopf nur, wenn heute oder morgen abgeholt wird – oder heute Tonnen wieder herein müssen.
+    private var showsButton: Bool { bringIn != nil || (next != nil && (days ?? 99) <= 1) }
     private var tintHex: String? { done ? "#34C759" : items.first?.colorHex }
 
     var body: some View {
@@ -107,10 +111,15 @@ struct PickupWidgetView: View {
     }
     private var headline: String { PickupWords.headline(days: days, done: done) }
     private var hint: String {
+        if let bringIn { return bringInText(bringIn) }
         if next == nil, let first = entry.snapshot.pickupDays.first {
             return L10n.t("nächste \(DateText.countdown(first.date))", "next \(DateText.countdown(first.date))")
         }
         return PickupWords.subline(days: days, done: done)
+    }
+
+    private func bringInText(_ day: WidgetSnapshot.PickupDay) -> String {
+        L10n.t("↩ \(names(day, max: 2)) reinholen", "↩ Bring in \(names(day, max: 2))")
     }
 
     private func names(_ day: WidgetSnapshot.PickupDay, max: Int) -> String {
@@ -130,7 +139,11 @@ struct PickupWidgetView: View {
             HStack(alignment: .center, spacing: 6) {
                 Text(eyebrow).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
                 Spacer(minLength: 4)
-                if let next, showsButton { button(next) }
+                if let bringIn {
+                    Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringIn.date))) { KlarCheckButtonLabel(done: false) }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(L10n.t("Tonne ist wieder drin", "Bin is back in"))
+                } else if let next, showsButton { button(next) }
             }
             .frame(minHeight: 28)
             Text(headline).font(KlarStyle.font(titleSize, .black)).foregroundStyle(KlarStyle.text(scheme))
@@ -166,7 +179,9 @@ struct PickupWidgetView: View {
     }
 
     private var hintView: some View {
-        Text(hint).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).padding(.top, 1)
+        Text(hint).font(KlarStyle.font(12, .bold))
+            .foregroundStyle(bringIn != nil ? KlarStyle.text(scheme) : KlarStyle.muted(scheme))
+            .lineLimit(1).minimumScaleFactor(0.8).padding(.top, 1)
     }
 
     private func laterLine(_ day: WidgetSnapshot.PickupDay, maxNames: Int) -> some View {
@@ -222,9 +237,9 @@ struct PickupWidgetView: View {
     private var small: some View {
         VStack(alignment: .leading, spacing: 0) {
             header(titleSize: 27)
-            if items.count <= 2 { hintView }
+            if items.count <= 2 || bringIn != nil { hintView }
             Spacer(minLength: 6)
-            if next != nil { binLines(max: 3) }
+            if next != nil { binLines(max: bringIn != nil ? 2 : 3) }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) { KlarSurface(tintHex: tintHex) }
@@ -234,9 +249,9 @@ struct PickupWidgetView: View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 header(titleSize: 27)
-                if items.count <= 2 { hintView }
+                if items.count <= 2 || bringIn != nil { hintView }
                 Spacer(minLength: 6)
-                if next != nil { binLines(max: 3) }
+                if next != nil { binLines(max: bringIn != nil ? 2 : 3) }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             Rectangle().fill(KlarStyle.hairline(scheme)).frame(width: 1).padding(.horizontal, 14)
@@ -336,7 +351,9 @@ struct PickupWidgetView: View {
                 if next.items.count == 1, let item = next.items.first {
                     Text("\(Image.waste(item.displaySymbol, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
                     Text(item.name).font(.caption).lineLimit(1)
-                    if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
+                    if let bringIn {
+                        Text(bringInText(bringIn)).font(.caption2).lineLimit(1)
+                    } else if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
                         Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
                     }
                 } else {

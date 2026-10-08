@@ -16,6 +16,8 @@ enum SettingsKeys {
     static let escalationMinutes = "reminder.escalation.minutes"
     static let birthdayMinutes = "reminder.birthday.minutes"
     static let customMinutes = "reminder.custom.minutes"
+    static let bringInEnabled = "reminder.bringIn.enabled"
+    static let bringInMinutes = "reminder.bringIn.minutes"
     static let locationFilter = "filter.locationID"
     static let liveActivities = "feature.liveActivities"
     /// Live-Aktivitäten sind an, solange der Schalter nicht ausdrücklich ausgeschaltet wurde.
@@ -36,6 +38,8 @@ enum SettingsKeys {
         settings.escalationMinutes = int(escalationMinutes, 21 * 60)
         settings.birthdayMinutes = int(birthdayMinutes, 9 * 60)
         settings.customMinutes = int(customMinutes, 9 * 60)
+        settings.bringInEnabled = bool(bringInEnabled, true)
+        settings.bringInMinutes = int(bringInMinutes, 17 * 60)
         return settings
     }
 }
@@ -96,6 +100,10 @@ final class AppModel: ObservableObject {
         }
         NotificationCenter.default.addObserver(forName: SnapshotStore.notificationName, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.applyPendingDoneMarkers() }
+        }
+        // „Ist drin“ aus Widget oder Mitteilung: Hinweis und Erinnerung für heute entfallen
+        NotificationCenter.default.addObserver(forName: SnapshotStore.broughtInNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { await self?.refreshAll() }
         }
     }
 
@@ -193,9 +201,11 @@ final class AppModel: ObservableObject {
     private func plannedPickups() -> [PlannedPickup] {
         let today = Days.today()
         let horizon = Days.add(90, to: today)
+        let broughtIn = SnapshotStore.broughtInDays()
         return allWasteTypes().filter(\.isActive).flatMap { type in
             type.pickupDates(from: today, to: horizon).map {
-                PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol, remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0))
+                PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol,
+                              remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)))
             }
         }
     }
@@ -292,10 +302,12 @@ final class AppModel: ObservableObject {
     func buildSnapshot() -> WidgetSnapshot {
         let locations = allLocations().map { WidgetSnapshot.Location(id: $0.id.uuidString, name: $0.name, symbolName: $0.symbolName, colorHex: $0.colorHex) }
         let days = upcomingByDay(days: 60)
+        let broughtIn = SnapshotStore.broughtInDays()
         let pickupDays: [WidgetSnapshot.PickupDay] = days.compactMap { entry in
             let items = entry.events.filter { $0.kind == .waste }
             guard !items.isEmpty else { return nil }
-            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName) }, done: items.allSatisfy(\.done))
+            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName) },
+                                            done: items.allSatisfy(\.done), broughtIn: broughtIn.contains(Days.iso(entry.day)))
         }
         let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
             WidgetSnapshot.BirthdayItem(date: $0.date, name: $0.title, years: $0.years, colorHex: $0.colorHex, initials: NameText.initials($0.title))
