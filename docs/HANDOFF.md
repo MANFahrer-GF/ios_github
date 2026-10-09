@@ -32,7 +32,9 @@ Der frühere Branch `claude/adoring-ride-nxgrwn` ist veraltet (Stand 936b145) un
 | Screenshots | `docs/appstore/screenshots/<Gerät>/` (iPhone 6,9/6,7/6,3/6,1″, iPad 13/12,9″, 4 Watch-Größen). Aus dem Code nachgebaut; Generator in `docs/appstore/screenshots/generator/` (`python3 gen.py && node render.js`, braucht Playwright) |
 | Presse | Mail an iFun (`ifun.de@gmail.com`) ist verschickt |
 
-**Noch offen beim Nutzer:** Im CloudKit-Container `iCloud.de.manfahrer.TonneUndTorte` einmal „Deploy Schema Changes“ nach Production ausführen. Ob das schon passiert ist, ist unbekannt. Ohne diesen Schritt funktioniert der iCloud-Sync in der App-Store-Version nicht.
+**CloudKit:** Schema am 9. Okt. 2026 nach Production übertragen (vorher war weder Development noch Production befüllt – bis dahin hat keine
+Store-/TestFlight-Version abgeglichen). Enthält bereits die 2.0.3-Felder. Bei neuen Modell-Feldern: Debug-Build aus Xcode auf einem Gerät mit iCloud
+starten, Datensatz speichern, dann im CloudKit-Dashboard „Deploy Schema Changes…“ (Seitenleiste unten). TestFlight/App Store nutzen immer Production.
 
 ## 3. Aufbau
 
@@ -130,9 +132,9 @@ QS am 9. Okt.: 334 Offline-Tests grün, Live-Tests (328) und Katalog-Sweep grün
 - Geburtstagsliste: nach rechts wischen → „Gratulieren“ / „Anrufen“.
 - Übersicht: „Weitere Abholungen“ beginnt nach den beiden Terminen der großen Karte, höchstens 4 Tage, Ort einmal je Zeile; „Geburtstage & Termine“ steht darüber.
 
-**Offen beim Nutzer:** **vor dem Einreichen CloudKit-Schema nach Production** (neue Felder `CustomEvent.timeOfDay`, `weekdayOrdinal`,
-`weekdayNumber` – vorher einmal den Debug-Build mit iCloud starten, damit sie in Development angelegt sind); auf dem iPhone testen – vor allem
-die Knöpfe in den Mitteilungen (im Simulator ohne Mitteilungs-Erlaubnis nicht auslösbar).
+**Offen beim Nutzer:** CloudKit-Schema ist übertragen (9. Okt.). Noch: 2.0.3 archivieren und einreichen (2.0.2 ist „Bereit für Vertrieb“);
+die Knöpfe in den Mitteilungen auf einem Gerät testen. Auf dem iPad liegt derzeit ein Debug-Build (Development-Datenbank) – für echte Daten
+wieder die TestFlight-/Store-Version installieren.
 
 **QS 9. Okt. (Claude + Codex, zwei Runden):** behoben – Uhrzeit/Wochentag-Regel jetzt in eigenen Feldern (vorher in `startDate`: Zeitzonenwechsel
 verschob sie, 2.0.2 löschte sie beim Bearbeiten), Vorlauf darf auf den Vortag fallen, Snooze zählt beim 64er-Limit mit, Kalender-Export mit echter
