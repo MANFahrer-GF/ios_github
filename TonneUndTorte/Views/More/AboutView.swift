@@ -75,7 +75,7 @@ struct AboutView: View {
             Text("❤️").font(.system(size: 40))
             Text("Gebaut von Thomas Kant")
                 .font(.system(size: 22, weight: .black, design: .rounded))
-            Text("Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt\nund keine Torte vergessen wird.")
+            Text("Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt und keine Torte vergessen wird.")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)

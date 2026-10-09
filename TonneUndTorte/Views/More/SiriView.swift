@@ -6,9 +6,9 @@ struct SiriView: View {
     var body: some View {
         List {
             Section {
-                SiriTipView(intent: NextPickupIntent())
-                    .listRowInsets(EdgeInsets())
-                    .listRowBackground(Color.clear)
+                // Eigener Hinweis statt SiriTipView: Apples Baustein holt den Satz erst beim Siri-Dienst ab und erscheint verzögert
+                Label("Sag: „Wann kommt der Müll in Tonne und Torte?“", systemImage: "waveform")
+                    .font(.headline)
             } footer: {
                 Text("Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“. Ohne App-Namen geht es mit einem eigenen Kurzbefehl (ganz unten).")
             }

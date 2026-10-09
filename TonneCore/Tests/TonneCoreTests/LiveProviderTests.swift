@@ -227,7 +227,10 @@ final class CatalogSweepTests: XCTestCase {
                     let provider = ProviderFactory.make(kind: entry.kind, serviceKey: entry.serviceKey)
                     do {
                         guard let step = try await provider.nextStep(after: []) else {
-                            return entry.kind == .icsURL ? nil : "\(entry.kind.rawValue) | \(entry.title) | kein erster Schritt"
+                            // Ohne Auswahl (gemeindeweiter Kalender): dann müssen gleich Termine kommen
+                            if entry.kind == .icsURL { return nil }
+                            let pickups = try await provider.pickups(for: [], calendar: .current)
+                            return pickups.isEmpty ? "\(entry.kind.rawValue) | \(entry.title) | ohne Auswahl keine Termine" : nil
                         }
                         if step.input == .list && step.options.isEmpty { return "\(entry.kind.rawValue) | \(entry.title) | leere Liste" }
                         return nil
