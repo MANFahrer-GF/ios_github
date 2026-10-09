@@ -1,0 +1,661 @@
+Ahrensboek
+Albertinenhof
+Alt Brenz
+Alt Damerow
+Alt Jabel
+Alt Krenzlin
+Alt Necheln
+Alt Schlagsdorf (Dobin am See)
+Alt Schwinz
+Alt Zachun
+Altenlinden
+Altona (Str. n. Eldena)
+Amholz (Teldau)
+Augustenhof
+Augzin
+Badegow
+Badekow
+Bahlen/Bahlendorf
+Bahlenhüschen
+Bahlenrade
+Bakendorf
+Balow
+Bandekow (bei Boizenburg/Elbe (Teldau)
+Bandekow (bei Lübtheen)
+Bandenitz
+Bantin/Bantin Ausbau
+Banzin
+Banzkow
+Barkow/Plau
+Barkow/Stolpe
+Barnin + Wochenendsiedlung
+Basthorst
+Bauerkuhl
+Beckendorf
+Beckendorf (Groß Bengerstorf)
+Beckentin
+Below
+Belsch
+Bennin
+Benthen
+Benz
+Benzin
+Bergrade Dorf
+Bergrade Hof
+Bernstorf
+Besendorf
+Besitz
+Bickhusen
+Blankenberg
+Blievenstorf
+Blumenberg
+Blücher
+Bobzin
+Bochin
+Bockstanz
+Bockup
+Boddin
+Boek
+Boissow
+Boize
+Boizenburg/Elbe
+Boldela
+Bolz
+Borkow
+Brahlstorf
+Bresegard bei Eldena
+Bresegard bei Picher
+Bretzin (Wiebendorf)
+Briest
+Broock
+Bruchmühle
+Brunow
+Brömsenberg
+Brüel
+Brüz
+Buchholz
+Buchholz (Dobin am See)
+Buerbeck
+Burow
+Bülow
+Bürgerhof (Leisterförde)
+Büthberg (Mestlin)
+Cambs
+Camin
+Carlshof
+Charlottenhof
+Clausenheim (Setzin)
+Conow
+Consrade
+Crivitz
+Dabel
+Dabel-Woland
+Dadow
+Dambeck
+Damm
+Dammereez
+Dargelütz
+Darze
+Darß (Gehlsbach)
+Daschow
+Deibow
+Demen inkl. Ziolkowskiring
+Dersenow
+Dessin
+Diestelow
+Dinnies
+Dobbertin
+Dobbin
+Dodow
+Domsühl
+Dorf Poltnitz (Ruhner Berge)
+Dreenkrögen
+Drefahl
+Dreilützow
+Drenkow (Ruhner Berge)
+Dresenow/Dresenower Mühle
+Drönnewitz
+Döbbersen
+Dömitz
+Dümmer
+Düssin
+Dütschow
+Eldena
+Fahrbinde
+Finkenwerder (Wendisch-Waren)
+Flessenow + Wochenendsiedlung
+Fliegenhof (bei Kogel)
+Fliegenhof (bei Parum)
+Forsthof/Mestlin
+Frauenmark
+Fresenbrügge
+Friedrichshof (Vellahn)
+Friedrichsmoor
+Friedrichsruhe Dorf
+Friedrichsruhe Hof
+Friedrichswalde
+Gaarz
+Gallin
+Gallin/Gallin Hof
+Gamm (Neu Gülze)
+Gammelin
+Ganzlin
+Garlitz
+Garwitz
+Gehrum
+Gischow
+Glaisin
+Glaserhorst (Hagenow)
+Gneven + Wochenendsiedlung
+Gnevsdorf
+Godern + Wochenendsiedlung
+Golchen
+Goldberg
+Goldenbow
+Goldenitz
+Goldenstädt
+Goosfeld (Düssin)
+Gorlosen
+Gothmann
+Grabenau (Teldau)
+Grabow
+Grabow Hechtsforthschleuse
+Grabow Ludwigsluster Chaussee
+Grabow Ziegelscheune
+Grambow
+Gramnitz/Gramnitz Hof
+Granzin
+Granzin (bei Stolpe)
+Granzin bei Boizenburg/Elbe
+Granzin bei Hagenow
+Grebbin
+Grebs
+Gresse
+Greven
+Griebow/Griebow-Mühle (Ruhner Berge)
+Grittel
+Groß Bengerstorf
+Groß Godems
+Groß Görnow
+Groß Krams
+Groß Laasch
+Groß Niendorf
+Groß Pankow
+Groß Poserin
+Groß Raden
+Groß Rogahn
+Groß Schmölen
+Groß Timkenberg (Teldau)
+Grünhof
+Grünhof bei Ludwigslust (Grabower Ch.)
+Gudow
+Gustävel (Kuhlen-Wendorf)
+Gädebehn
+Gägelow
+Göhlen
+Göhren + Wochenendsiedlung
+Görnitz
+Görslow
+Gößlow
+Gülze (Teldau)
+Güritz
+Hagenow (einschließlich Hagenow Land)
+Hagenow Heide
+Hakendorf
+Harst
+Hasenhäge
+Hatzberg (Lüttenmark)
+Heiddorf
+Heide
+Heidehof
+Heidekrug
+Heidhof
+Helm
+Herzberg
+Herzfeld
+Hinterhagen (Teldau)
+Hirschkrug (Dammereez)
+Hof Barnin
+Hof Gischow
+Hof Grabow
+Hof Hagen
+Hof Karbow (Gehlsbach)
+Hof Kreien
+Hof Lalchow
+Hof Poltnitz (Ruhner Berge)
+Hof Retzow
+Hof Wandrum
+Hohen Pritz
+Hohen Pritz Siedlung
+Hohen Woos
+Hohenfelde
+Hohes Feld
+Hohewisch
+Holdorf (Kuhlen-Wendorf)
+Holthusen
+Holthusen-Bahnhof
+Holzendorf (Dabel)
+Holzendorf bei Kuhlen (Kuhlen-Wendorf)
+Holzkrug
+Hoort
+Hornkaten
+Horst (bei Boizenburg/Elbe)
+Horst (bei Grabow)
+Häven (Kloster Tempzin)
+Hühnerbusch
+Hühnerland
+Hülseburg
+Jamel
+Jarchow (Ruhner Berge)
+Jasnitz
+Jellen
+Jesow
+Jessenitz Werk
+Jessenitz/Jessenitz Siedlung
+Jülchendorf
+Kaarz
+Kadow
+Kaliß
+Karbow (Gehlsbach)
+Karenz
+Karft
+Karnin
+Karow
+Karrenzin
+Karstädt
+Kastorf
+Kavelmoor
+Keez
+Kiekindemark
+Kirch Jesar
+Kladow
+Kladrum
+Klebe
+Kleefeld/Kleefeld-Siedlung
+Kleesten
+Klein Bengerstorf
+Klein Dammerow
+Klein Görnow
+Klein Jarchow (Kloster Tempzin)
+Klein Krams + Ausbau
+Klein Laasch
+Klein Niendorf
+Klein Pankow
+Klein Pritz
+Klein Rogahn
+Klein Schmölen
+Klein Wangelin
+Klein Wolde
+Klinken
+Kloddram
+Kläden
+Klüß
+Knebelstorf
+Kobande
+Kobrow I + II
+Kogel
+Kolbow
+Kolonie Kreien
+Kolonie Lalchow
+Kossebade
+Kothendorf
+Kraak
+Kreien + Ausbau
+Kremmin
+Krenzliner Hütte
+Kressin
+Krinitz
+Kritzow
+Kritzow (b. Langen Brütz) + Wochenendsiedlung
+Krohn
+Kronshof
+Kronskamp
+Krumbeck
+Kuhlen (Kuhlen-Wendorf)
+Kuhlenfeld
+Kuhstorf
+Kukuk
+Kummer
+Kuppentin
+Kölzin
+Körchow
+Kützin
+Lancken
+Langen Brütz
+Langen Jammer (Bresegard b. Picher)
+Langen Jarchow (Kloster Tempzin)
+Langenhagen
+Langenheide
+Lank
+Lassahn
+Laupin
+Leezen
+Lehmkuhlen
+Lehsen
+Leisten
+Leisterförde
+Lenschow
+Lenzen
+Leppin (Ruhner Berge)
+Leussow
+Liebhof (Wendisch-Priborn)
+Liepe
+Liessow (Dobin am See)
+Lindenbeck
+Loiz
+Loosen
+Luckwitz
+Ludwigslust
+Ludwigslust Industriegelände Dohlsche Tannen
+Lutheran
+Löcknitz (Brunow)
+Lübbendorf
+Lübesse
+Lüblow
+Lübtheen
+Lübz
+Lüschow
+Lüttenmark
+Lüttow/Lüttow Ausbau
+Malchow
+Malk Göhren
+Malliß-Kammerun
+Malliß/Malliß Schleuse
+Malow (Ruhner Berge)
+Marnitz (Ruhner Berge)
+Marsow
+Matzlow
+Medow
+Meierstorf
+Melkof
+Menkendorf
+Mentin (Ruhner Berge)
+Menzendorf
+Mestlin + Ausbau
+Metlitz/Metlitzhof
+Milow
+Mirow
+Mooster (Ruhner Berge)
+Moraas
+Muchelwitz
+Muchow
+Mustin
+Mäthus
+Möderitz
+Möllenbeck
+Mühlenbeck
+Mühlenhof
+Müsselmow (Kuhlen-Wendorf)
+Necheln
+Neese
+Neu Benthen
+Neu Brenz
+Neu Brüz
+Neu Damerow
+Neu Godern
+Neu Göhren
+Neu Gülze
+Neu Herzfeld
+Neu Jabel
+Neu Kaliß
+Neu Karstädt
+Neu Klüß
+Neu Krenzlin
+Neu Lüblow
+Neu Lübtheen
+Neu Matzlow
+Neu Pastin
+Neu Poserin
+Neu Ruthenbeck
+Neu Schlagsdorf (Dobin am See)
+Neu Schwinz
+Neu Wandrum
+Neu Woserin
+Neu Zachun
+Neu Zarrentin
+Neuburg
+Neuendamm
+Neuenkirchen
+Neuenrode
+Neuhof (bei Diestelow)
+Neuhof (bei Dobbertin)
+Neuhof (bei Neustadt-Glewe)
+Neuhof (bei Parchim)
+Neuhof (bei Zarrentin)
+Neuklockow
+Neustadt-Glewe
+Nieklitz
+Niendorf (bei Weselsdorf)
+Niendorf an der Rögnitz
+Nostorf
+Nutteln (Kuhlen-Wendorf)
+Ortkrug
+Paarsch
+Pampin
+Pampow
+Pamprin
+Panstorf
+Parchim
+Parum
+Passow
+Pastin
+Peckatel
+Penzin
+Penzlin
+Perdöhl
+Picher
+Pinnow + Wochenendsiedlung
+Plate
+Platschow
+Plau am See
+Plauerhagen
+Pogreß
+Poitendorf (Ruhner Berge)
+Polz
+Presek
+Prestin
+Primank
+Prislich
+Pritzier/Pritzier-Bahnhof
+Probst Jesar
+Probst Woos
+Pätow
+Püttelkow
+Quassel/Quassel Ausbau
+Quaßlin/Quaßliner Mühle (Gehlsbach)
+Quetzin
+Raben Steinfeld (Oberdorf)
+Raben Steinfeld (Unterdorf)
+Raddenfort
+Radelübbe
+Radepohl
+Raduhn
+Raguth
+Ramm
+Rampe
+Rastow
+Rautenhof (Liessow - Dobin am See)
+Redefin
+Redlin
+Rensdorf
+Reppentin
+Repzin
+Retgendorf (Dobin am See) + Wochenendsiedlung
+Retzow
+Riederfelde
+Riet Ut (Teldau)
+Rodenwalde
+Rom
+Rothen
+Rubow (Dobin am See)
+Ruchow
+Ruest/Ruest Krug + Ausbau + Siedlung
+Ruhetal
+Runow
+Rusch
+Ruthen/Obstbau Ruthen
+Ruthenbeck
+Rüterberg
+Sagsdorf
+Samelow (Basthorst)
+Sandhof
+Sandkrug (Gehlsbach)
+Schaalmühle
+Schadeland
+Scharbow
+Schiefer Stiefel (Lüttenmark)
+Schildfeld
+Schlemmin
+Schlesin/Schlesin Hof
+Schleusenow (Teldau)
+Schlieven
+Schlonsberge (Woosmer)
+Schlowe
+Schnaterei (Mestlin)
+Schossin
+Schwabendorf (Teldau)
+Schwaberow
+Schwanheide
+Schwartow/Schwartow Hof
+Schwechow
+Schönlage
+Sehlsdorf
+Semmerin
+Settin/Wochenendsiedlung
+Setzin
+Severin
+Sieben Eichen
+Siggelkow
+Slate
+Soltow (Teldau)
+Sonnenberg (Dersenow)
+Spendin
+Speuss (Bülow)
+Spornitz
+Sprengelshof (Teldau)
+Steegen
+Steesow
+Steinbeck (b. Goldberg)
+Steinbeck (b. Spornitz)
+Sternberg
+Sternberger Burg
+Sternsruh
+Stieten
+Stintenburg
+Stintenburger Hütte
+Stolpe
+Stralendorf
+Strassen
+Streitheide
+Stresendorf
+Strohkirchen
+Stuck
+Stuck Ausbau
+Suckow (Ruhner Berge)
+Sudenhof
+Sukow
+Sülstorf
+Sülte
+Sülten
+Tannenhof
+Techentin
+Techin
+Tempzin
+Teschenbrügge (Teldau)
+Tessenow (Ruhner Berge)
+Tessin (Kuhlen-Wendorf)
+Tessin bei Kuhlenfeld
+Tessin bei Wittenburg
+Testorf
+Tewswoos
+Thurow
+Toddin
+Tramm
+Trebs
+Tuckhude
+Turloff (Dabel)
+Twietfort
+Tönchow
+Tüschow
+Uelitz
+Unter Brüz
+Valluhn
+Valluhn/Gallin Businesspark A24
+Vellahn
+Venzkow
+Vielank
+Vier
+Vietingshof (Parchim)
+Vietlübbe (Gehlsbach)
+Vietow
+Viez
+Vimfow
+Volzrade
+Vorbeck
+Vorderhagen (Teldau)
+Wabel
+Wahlstorf (Gehlsbach)
+Walsmühlen
+Wamckow
+Wangelin
+Wanzlitz
+Warlitz
+Warlow
+Warsow
+Waschow
+Weberin (Kuhlen-Wendorf)
+Weisin
+Weitendorf
+Weiße Krug (Blankenberg)
+Welzin
+Wendisch Priborn
+Wendisch Waren
+Wendorf (Kuhlen-Wendorf)
+Werder
+Werle
+Weselsdorf
+Wessentin
+Wessin
+Wiebendorf
+Wilsen
+Winkelmoor
+Wipersdorf
+Wittenburg
+Wittenförden
+Witzin
+Woeten
+Woez
+Woldmühle (Helm)
+Woosmer/Woosmerhof
+Woosten/Neu Woosten
+Wooster Teerofen
+Woserin
+Wozinkel
+Wulfsahl
+Wulfskuhl
+Wöbbelin
+Wölzow
+Zachow (Ruhner Berge)
+Zahren
+Zahrensdorf
+Zahrensdorf (Kloster Tempzin)
+Zapel
+Zapel Ausbau
+Zapel Hof
+Zapel Siedlung
+Zarchlin
+Zarrentin
+Zaschendorf (Kuhlen-Wendorf)
+Zidderich
+Ziegendorf
+Zierzow
+Zieslübbe (b. Parchim)
+Zietlitz
+Ziggelmark
+Zittow + Wochenendsiedlung
+Zuggelrade
+Zweedorf
+Zwölf Apostel
+Zölkow
+Zühr
+Zülow

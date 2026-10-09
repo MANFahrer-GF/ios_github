@@ -1,0 +1,42 @@
+[
+  {
+    "kind": "portalsBrandenburg",
+    "key": "potsdam",
+    "title": "Landeshauptstadt Potsdam",
+    "website": "https://www.potsdam.de/",
+    "places": ["Potsdam"],
+    "districts": ["Kreisfreie Stadt Potsdam"]
+  },
+  {
+    "kind": "portalsBrandenburg",
+    "key": "kwu",
+    "title": "KWU Entsorgung Landkreis Oder-Spree",
+    "website": "https://www.kwu-entsorgung.de/",
+    "places": ["Bad Saarow", "Beeskow", "Berkenbrück", "Briesen (Mark)", "Brieskow-Finkenheerd", "Diensdorf-Radlow", "Eisenhüttenstadt", "Erkner", "Friedland", "Fürstenwalde/Spree", "Gosen-Neu Zittau", "Groß Lindow", "Grunow-Dammendorf", "Grünheide (Mark)", "Jacobsdorf", "Langewahl", "Lawitz", "Mixdorf", "Müllrose", "Neißemünde", "Neuzelle", "Ragow-Merz", "Rauen", "Reichenwalde", "Rietz-Neuendorf", "Schlaubetal", "Schöneiche bei Berlin", "Siehdichum", "Spreenhagen", "Steinhöfel", "Storkow (Mark)", "Tauche", "Vogelsang", "Wendisch Rietz", "Wiesenau", "Woltersdorf", "Ziltendorf"],
+    "districts": ["Landkreis Oder-Spree"]
+  },
+  {
+    "kind": "portalsBrandenburg",
+    "key": "spn",
+    "title": "Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße",
+    "website": "https://www.eigenbetrieb-abfallwirtschaft.de/",
+    "places": ["Briesen", "Burg (Spreewald)", "Dissen-Striesow", "Döbern", "Drachhausen", "Drebkau", "Drehnow", "Felixsee", "Forst (Lausitz)", "Groß Schacksdorf-Simmersdorf", "Guben", "Guhrow", "Heinersbrück", "Jämlitz-Klein Düben", "Jänschwalde", "Kolkwitz", "Neiße-Malxetal", "Neuhausen/Spree", "Peitz", "Schenkendöbern", "Schmogrow-Fehrow", "Spremberg", "Tauer", "Teichland", "Tschernitz", "Turnow-Preilack", "Welzow", "Werben", "Wiesengrund"],
+    "districts": ["Landkreis Spree-Neiße"]
+  },
+  {
+    "kind": "portalsBrandenburg",
+    "key": "kaev",
+    "title": "KAEV Niederlausitz",
+    "website": "https://www.kaev.de/",
+    "places": ["Alt Zauche-Wußwerk", "Altdöbern", "Bersteland", "Bronkow", "Byhleguhre-Byhlen", "Calau", "Drahnsdorf", "Golßen", "Heideblick", "Jamlitz", "Kasel-Golzig", "Krausnick-Groß Wasserburg", "Lieberose", "Luckaitztal", "Luckau", "Lübben (Spreewald)", "Lübbenau/Spreewald", "Märkische Heide", "Neu Zauche", "Neu-Seeland", "Neupetershain", "Rietzneuendorf-Staakow", "Schlepzig", "Schwielochsee", "Schönwald", "Spreewaldheide", "Steinreich", "Straupitz (Spreewald)", "Unterspreewald", "Vetschau/Spreewald"],
+    "districts": ["Landkreis Dahme-Spreewald", "Landkreis Oberspreewald-Lausitz"]
+  },
+  {
+    "kind": "portalsBrandenburg",
+    "key": "ffo",
+    "title": "FDH Frankfurt (Oder) – Abfuhrkalender",
+    "website": "https://fdh-ffo.de/entsorgung/abfuhrkalender/",
+    "places": ["Frankfurt (Oder)"],
+    "districts": ["Kreisfreie Stadt Frankfurt (Oder)"]
+  }
+]

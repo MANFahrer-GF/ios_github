@@ -1,0 +1,14 @@
+[
+ {
+  "kind": "awmMuenchen",
+  "key": "muenchen",
+  "title": "AWM München (Abfallwirtschaftsbetrieb München)",
+  "website": "https://www.awm-muenchen.de/abfall-entsorgen/muelltonnen/abfuhrkalender",
+  "places": [
+   "München"
+  ],
+  "districts": [
+   "Kreisfreie Stadt München"
+  ]
+ }
+]

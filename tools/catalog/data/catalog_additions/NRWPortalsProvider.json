@@ -1,0 +1,19 @@
+[
+  {"kind": "portalsNRW", "key": "awista", "title": "AWISTA Düsseldorf", "website": "https://www.awista-kommunal.de/abfallkalender",
+   "places": ["Düsseldorf"], "districts": ["Kreisfreie Stadt Düsseldorf"]},
+  {"kind": "portalsNRW", "key": "mags", "title": "mags Mönchengladbach", "website": "https://mags.de/online-abfuhrkalender/",
+   "places": ["Mönchengladbach"], "districts": ["Kreisfreie Stadt Mönchengladbach"]},
+  {"kind": "portalsNRW", "key": "awg", "title": "AWG Wuppertal", "website": "https://awg-wuppertal.de/privatkunden/abfallkalender.html",
+   "places": ["Wuppertal"], "districts": ["Kreisfreie Stadt Wuppertal"]},
+  {"kind": "portalsNRW", "key": "rsag", "title": "RSAG Rhein-Sieg-Kreis", "website": "https://www.rsag.de/abfallkalender/abfuhrtermine",
+   "places": ["Alfter", "Bad Honnef", "Bornheim", "Eitorf", "Hennef (Sieg)", "Königswinter", "Lohmar", "Meckenheim", "Much", "Neunkirchen-Seelscheid", "Niederkassel", "Rheinbach", "Ruppichteroth", "Sankt Augustin", "Siegburg", "Swisttal", "Troisdorf", "Wachtberg", "Windeck"],
+   "districts": ["Kreis Rhein-Sieg-Kreis"]},
+  {"kind": "portalsNRW", "key": "gelsendienste", "title": "Gelsendienste Gelsenkirchen", "website": "https://gelsendienste.abisapp.de/abfuhrkalender",
+   "places": ["Gelsenkirchen"], "districts": ["Kreisfreie Stadt Gelsenkirchen"]},
+  {"kind": "portalsNRW", "key": "best", "title": "BEST Bottrop", "website": "https://www.best-bottrop.de/abfuhrkalender",
+   "places": ["Bottrop"], "districts": ["Kreisfreie Stadt Bottrop"]},
+  {"kind": "portalsNRW", "key": "herford", "title": "Abfallkalender Kreis Herford (SWK Herford und Kommunen)", "website": "https://swk.herford.de/Entsorgung/Abfallkalender/",
+   "places": ["Bünde", "Enger", "Herford", "Hiddenhausen", "Kirchlengern", "Löhne", "Rödinghausen", "Spenge", "Vlotho"], "districts": ["Kreis Herford"]},
+  {"kind": "portalsNRW", "key": "enni", "title": "ENNI Moers", "website": "https://abfallkalender.enni.de/",
+   "places": ["Moers"], "districts": ["Kreis Wesel"]}
+]

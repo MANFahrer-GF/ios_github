@@ -1,0 +1,142 @@
+[
+ {
+  "id": "peine",
+  "title": "Landkreis Peine",
+  "base": "https://www.ab-peine.de",
+  "page": "/Abfuhrtermine/",
+  "district": "Landkreis Peine",
+  "extra": [
+   "Peine",
+   "Edemissen",
+   "Hohenhameln",
+   "Ilsede",
+   "Lengede",
+   "Vechelde",
+   "Wendeburg"
+  ]
+ },
+ {
+  "id": "wittmund",
+  "title": "Landkreis Wittmund",
+  "base": "https://www.landkreis-wittmund.de",
+  "page": "/Leben-Wohnen/Wohnen/Abfall/Abfuhrkalender/",
+  "dl": "ArtID%5B0%5D=3105.1&ArtID%5B1%5D=1.4&ArtID%5B2%5D=1.2&ArtID%5B3%5D=1.3&ArtID%5B4%5D=1.1&alarm=0",
+  "district": "Landkreis Wittmund",
+  "extra": [
+   "Wittmund",
+   "Esens",
+   "Friedeburg",
+   "Holtriem",
+   "Langeoog",
+   "Spiekeroog",
+   "Neuharlingersiel"
+  ]
+ },
+ {
+  "id": "goslar",
+  "title": "Landkreis Goslar (KWB)",
+  "base": "https://www.kwb-goslar.de",
+  "district": "Landkreis Goslar",
+  "extra": [
+   "Goslar",
+   "Bad Harzburg",
+   "Seesen",
+   "Langelsheim",
+   "Liebenburg",
+   "Clausthal-Zellerfeld",
+   "Braunlage",
+   "Lutter am Barenberge"
+  ]
+ },
+ {
+  "id": "ploen",
+  "title": "Kreis Plön",
+  "base": "https://www.kreis-ploen.de",
+  "district": "Kreis Plön",
+  "extra": [
+   "Plön",
+   "Preetz",
+   "Lütjenburg",
+   "Schönberg (Holstein)",
+   "Heikendorf",
+   "Laboe"
+  ]
+ },
+ {
+  "id": "seenplatte",
+  "title": "Landkreis Mecklenburgische Seenplatte",
+  "base": "https://www.lk-mecklenburgische-seenplatte.de",
+  "district": "Landkreis Mecklenburgische Seenplatte",
+  "extra": [
+   "Neubrandenburg",
+   "Waren (Müritz)",
+   "Neustrelitz",
+   "Demmin",
+   "Malchin",
+   "Röbel/Müritz"
+  ]
+ },
+ {
+  "id": "muehlenkreis",
+  "title": "Preußisch Oldendorf (Mühlenkreis)",
+  "base": "https://www.muehlenkreis.de",
+  "extra": [
+   "Preußisch Oldendorf"
+  ]
+ },
+ {
+  "id": "ostprignitz-ruppin",
+  "title": "Landkreis Ostprignitz-Ruppin",
+  "base": "https://www.ostprignitz-ruppin.de",
+  "dl": "monat=&alarm=0",
+  "district": "Landkreis Ostprignitz-Ruppin",
+  "extra": [
+   "Neuruppin",
+   "Kyritz",
+   "Wittstock/Dosse",
+   "Rheinsberg",
+   "Fehrbellin",
+   "Wusterhausen/Dosse"
+  ]
+ },
+ {
+  "id": "ilm-kreis",
+  "title": "Ilm-Kreis (AIK)",
+  "base": "https://aik.ilm-kreis.de",
+  "district": "Landkreis Ilm-Kreis",
+  "extra": [
+   "Arnstadt",
+   "Ilmenau",
+   "Stadtilm",
+   "Großbreitenbach"
+  ]
+ },
+ {
+  "id": "neunkirchen-siegerland",
+  "title": "Gemeinde Neunkirchen (Siegerland)",
+  "base": "https://www.neunkirchen-siegerland.de",
+  "refid": "3362.1",
+  "dl": "kat=1&alarm=0",
+  "extra": [
+   "Neunkirchen"
+  ]
+ },
+ {
+  "id": "hilchenbach",
+  "title": "Stadt Hilchenbach",
+  "base": "https://hilchenbach.de",
+  "dl": "kat=1&alarm=0",
+  "extra": [
+   "Hilchenbach"
+  ]
+ },
+ {
+  "id": "gross-gerau",
+  "title": "Kreisstadt Groß-Gerau",
+  "base": "https://www.gross-gerau.de",
+  "refid": "3411.1",
+  "extra": [
+   "Groß-Gerau"
+  ]
+ }
+]

@@ -1,0 +1,333 @@
+[
+ {
+  "kind": "portalsNord",
+  "key": "hamburg",
+  "title": "Stadtreinigung Hamburg",
+  "website": "https://www.stadtreinigung.hamburg/abfuhrkalender/",
+  "places": [
+   "Hamburg",
+   "Altona",
+   "Bergedorf",
+   "Eimsbüttel",
+   "Hamburg-Mitte",
+   "Hamburg-Nord",
+   "Wandsbek",
+   "Hamburg-Harburg"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Hamburg"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "bremerhaven",
+  "title": "BEG Bremerhaven (Bremerhavener Entsorgungsgesellschaft)",
+  "website": "https://beg-bhv.de/",
+  "places": [
+   "Bremerhaven",
+   "Cuxhaven"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Bremerhaven"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "kiel",
+  "title": "ABK Kiel (Abfallwirtschaftsbetrieb Kiel)",
+  "website": "https://abki.de/",
+  "places": [
+   "Kiel"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Kiel"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "zvo",
+  "title": "ZVO Ostholstein (Zweckverband Ostholstein)",
+  "website": "https://www.zvo.com/abfuhrkalender2026",
+  "places": [
+   "Ostholstein",
+   "Ahrensbök",
+   "Altenkrempe",
+   "Bad Schwartau",
+   "Beschendorf",
+   "Bosau",
+   "Dahme",
+   "Damlos",
+   "Eutin",
+   "Fehmarn",
+   "Gremersdorf",
+   "Großenbrode",
+   "Grube",
+   "Grömitz",
+   "Göhl",
+   "Harmsdorf",
+   "Heiligenhafen",
+   "Heringsdorf",
+   "Kabelhorst",
+   "Kasseedorf",
+   "Kellenhusen (Ostsee)",
+   "Lensahn",
+   "Malente",
+   "Manhagen",
+   "Neukirchen",
+   "Neustadt in Holstein",
+   "Oldenburg in Holstein",
+   "Ratekau",
+   "Riepsdorf",
+   "Scharbeutz",
+   "Schashagen",
+   "Schönwalde am Bungsberg",
+   "Sierksdorf",
+   "Stockelsdorf",
+   "Süsel",
+   "Timmendorfer Strand",
+   "Wangels"
+  ],
+  "districts": [
+   "Kreis Ostholstein"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "wolfsburg",
+  "title": "WAS Wolfsburg (Abfallwirtschaft und Straßenreinigung)",
+  "website": "https://abfuhrtermine.waswob.de/",
+  "places": [
+   "Wolfsburg"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Wolfsburg"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "awigo",
+  "title": "AWIGO Landkreis Osnabrück",
+  "website": "https://www.awigo.de/",
+  "places": [
+   "Alfhausen",
+   "Ankum",
+   "Bad Essen",
+   "Bad Iburg",
+   "Bad Laer",
+   "Bad Rothenfelde",
+   "Badbergen",
+   "Belm",
+   "Berge",
+   "Bersenbrück",
+   "Bippen",
+   "Bissendorf",
+   "Bohmte",
+   "Bramsche",
+   "Dissen a.T.W.",
+   "Eggermühlen",
+   "Fürstenau",
+   "Gehrde",
+   "Georgsmarienhütte",
+   "Glandorf",
+   "Hagen a.T.W.",
+   "Hasbergen",
+   "Hilter a.T.W.",
+   "Kettenkamp",
+   "Melle",
+   "Menslage",
+   "Merzen",
+   "Neuenkirchen",
+   "Nortrup",
+   "Ostercappeln",
+   "Quakenbrück",
+   "Rieste",
+   "Voltlage",
+   "Wallenhorst",
+   "Dissen am Teutoburger Wald",
+   "Hagen am Teutoburger Wald",
+   "Hilter am Teutoburger Wald"
+  ],
+  "districts": [
+   "Landkreis Osnabrück"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "osnabrueck",
+  "title": "OSB Osnabrück (Osnabrücker ServiceBetrieb)",
+  "website": "https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/",
+  "places": [
+   "Osnabrück"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Osnabrück"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "harburg",
+  "title": "Abfallwirtschaft Landkreis Harburg",
+  "website": "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/",
+  "places": [
+   "Buchholz",
+   "Elbmarsch",
+   "Hanstedt",
+   "Hollenstedt",
+   "Jesteburg",
+   "Neu Wulmstorf",
+   "Rosengarten",
+   "Salzhausen",
+   "Seevetal",
+   "Stelle",
+   "Tostedt",
+   "Winsen",
+   "Appel",
+   "Asendorf",
+   "Bendestorf",
+   "Brackel",
+   "Buchholz in der Nordheide",
+   "Dohren",
+   "Drage",
+   "Drestedt",
+   "Egestorf",
+   "Eyendorf",
+   "Garlstorf",
+   "Garstedt",
+   "Gödenstorf",
+   "Halvesbostel",
+   "Handeloh",
+   "Harmstorf",
+   "Heidenau",
+   "Kakenstorf",
+   "Königsmoor",
+   "Marschacht",
+   "Marxen",
+   "Moisburg",
+   "Otter",
+   "Regesbostel",
+   "Tespe",
+   "Toppenstedt",
+   "Undeloh",
+   "Vierhöfen",
+   "Welle",
+   "Wenzendorf",
+   "Winsen (Luhe)",
+   "Wistedt",
+   "Wulfsen"
+  ],
+  "districts": [
+   "Landkreis Harburg"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "ammerland",
+  "title": "AWB Ammerland",
+  "website": "https://www.awb-ammerland.de/",
+  "places": [
+   "Apen",
+   "Bad Zwischenahn",
+   "Edewecht",
+   "Rastede",
+   "Westerstede",
+   "Wiefelstede"
+  ],
+  "districts": [
+   "Landkreis Ammerland"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "helmstedt",
+  "title": "Landkreis Helmstedt Abfallwirtschaft",
+  "website": "https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html",
+  "places": [
+   "Bahrdorf",
+   "Beierstedt",
+   "Brunsleberfeld",
+   "Danndorf",
+   "Frellstedt",
+   "Gevensleben",
+   "Grafhorst",
+   "Grasleben",
+   "Groß Twülpstedt",
+   "Helmstedt",
+   "Jerxheim",
+   "Königslutter",
+   "Königslutter am Elm",
+   "Lehre",
+   "Mariental",
+   "Querenhorst",
+   "Rennau",
+   "Räbke",
+   "Schöningen",
+   "Söllingen",
+   "Süpplingen",
+   "Süpplingenburg",
+   "Velpke",
+   "Warberg",
+   "Wolsdorf"
+  ],
+  "districts": [
+   "Landkreis Helmstedt"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "hildesheim",
+  "title": "ZAH Hildesheim (Zweckverband Abfallwirtschaft Hildesheim)",
+  "website": "https://www.zah-hildesheim.de/",
+  "places": [
+   "Alfeld",
+   "Algermissen",
+   "Bad Salzdetfurth",
+   "Bockenem",
+   "Diekholzen",
+   "Duingen",
+   "Eime",
+   "Elze",
+   "Freden",
+   "Giesen",
+   "Gronau",
+   "Harsum",
+   "Hildesheim",
+   "Holle",
+   "Lamspringe",
+   "Nordstemmen",
+   "Sarstedt",
+   "Schellerten",
+   "Sibbesse",
+   "Söhlde",
+   "Alfeld (Leine)",
+   "Freden (Leine)",
+   "Gronau (Leine)"
+  ],
+  "districts": [
+   "Landkreis Hildesheim"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "emden",
+  "title": "BEE Emden (Bau- und Entsorgungsbetrieb Emden)",
+  "website": "https://www.bee-emden.de/abfall/entsorgungssystem/abfuhrkalender",
+  "places": [
+   "Emden"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Emden"
+  ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "delmenhorst",
+  "title": "Stadt Delmenhorst Abfallkalender",
+  "website": "https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php",
+  "places": [
+   "Delmenhorst"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Delmenhorst"
+  ]
+ }
+]

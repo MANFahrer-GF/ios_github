@@ -1,0 +1,525 @@
+[
+ {
+  "kind": "portalsBayern",
+  "key": "cham",
+  "title": "Abfallwirtschaft Landkreis Cham",
+  "website": "https://www.entsorgung-cham.de/",
+  "places": [
+   "Arnschwang",
+   "Arrach",
+   "Bad Kötzting",
+   "Blaibach",
+   "Cham",
+   "Chamerau",
+   "Eschlkam",
+   "Falkenstein",
+   "Furth im Wald",
+   "Gleißenberg",
+   "Grafenwiesen",
+   "Hohenwarth",
+   "Lam",
+   "Lohberg",
+   "Michelsneukirchen",
+   "Miltach",
+   "Neukirchen b.Hl.Blut",
+   "Pemfling",
+   "Pösing",
+   "Reichenbach",
+   "Rettenbach",
+   "Rimbach",
+   "Roding",
+   "Runding",
+   "Rötz",
+   "Schorndorf",
+   "Schönthal",
+   "Stamsried",
+   "Tiefenbach",
+   "Traitsching",
+   "Treffelstein",
+   "Waffenbrunn",
+   "Wald",
+   "Walderbach",
+   "Waldmünchen",
+   "Weiding",
+   "Willmering",
+   "Zandt",
+   "Zell"
+  ],
+  "districts": [
+   "Landkreis Cham"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "schwandorf",
+  "title": "Abfallwirtschaft Landkreis Schwandorf",
+  "website": "https://entsorgung-sad.de/",
+  "places": [
+   "Altendorf",
+   "Bodenwöhr",
+   "Bruck i.d.OPf.",
+   "Burglengenfeld",
+   "Dieterskirchen",
+   "Fensterbach",
+   "Gleiritsch",
+   "Guteneck",
+   "Maxhütte-Haidhof",
+   "Nabburg",
+   "Neukirchen-Balbini",
+   "Neunburg vorm Wald",
+   "Niedermurach",
+   "Nittenau",
+   "Oberviechtach",
+   "Pfreimd",
+   "Schmidgaden",
+   "Schwandorf",
+   "Schwarzach b.Nabburg",
+   "Schwarzenfeld",
+   "Schwarzhofen",
+   "Schönsee",
+   "Stadlern",
+   "Steinberg am See",
+   "Stulln",
+   "Teublitz",
+   "Teunz",
+   "Thanstein",
+   "Trausnitz",
+   "Wackersdorf",
+   "Weiding",
+   "Wernberg-Köblitz",
+   "Winklarn"
+  ],
+  "districts": [
+   "Landkreis Schwandorf"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "bamberg_lk",
+  "title": "Landkreis Bamberg (Abfalltermine)",
+  "website": "https://www.abfalltermine-bamberg.de/",
+  "places": [
+   "Altendorf",
+   "Baunach",
+   "Bischberg",
+   "Breitengüßbach",
+   "Burgebrach",
+   "Burgwindheim",
+   "Buttenheim",
+   "Ebrach",
+   "Frensdorf",
+   "Gerach",
+   "Gundelsheim",
+   "Hallstadt",
+   "Heiligenstadt i.OFr.",
+   "Hirschaid",
+   "Kemmern",
+   "Königsfeld",
+   "Lauter",
+   "Lisberg",
+   "Litzendorf",
+   "Memmelsdorf",
+   "Oberhaid",
+   "Pettstadt",
+   "Pommersfelden",
+   "Priesendorf",
+   "Rattelsdorf",
+   "Reckendorf",
+   "Scheßlitz",
+   "Schlüsselfeld",
+   "Schönbrunn i.Steigerwald",
+   "Stadelhofen",
+   "Stegaurach",
+   "Strullendorf",
+   "Viereth-Trunstadt",
+   "Walsdorf",
+   "Wattendorf",
+   "Zapfendorf"
+  ],
+  "districts": [
+   "Landkreis Bamberg"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "forchheim",
+  "title": "Landkreis Forchheim (Abfalltermine)",
+  "website": "https://www.abfalltermine-forchheim.de/",
+  "places": [
+   "Dormitz",
+   "Ebermannstadt",
+   "Effeltrich",
+   "Eggolsheim",
+   "Egloffstein",
+   "Forchheim",
+   "Gräfenberg",
+   "Gößweinstein",
+   "Hallerndorf",
+   "Hausen",
+   "Heroldsbach",
+   "Hetzles",
+   "Hiltpoltstein",
+   "Igensdorf",
+   "Kirchehrenbach",
+   "Kleinsendelbach",
+   "Kunreuth",
+   "Langensendelbach",
+   "Leutenbach",
+   "Neunkirchen a.Brand",
+   "Obertrubach",
+   "Pinzberg",
+   "Poxdorf",
+   "Pretzfeld",
+   "Unterleinleiter",
+   "Weilersbach",
+   "Weißenohe",
+   "Wiesenthau",
+   "Wiesenttal"
+  ],
+  "districts": [
+   "Landkreis Forchheim"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "eva",
+  "title": "EVA Weilheim-Schongau",
+  "website": "https://www.eva-abfallentsorgung.de/",
+  "places": [
+   "Altenstadt",
+   "Antdorf",
+   "Bernbeuren",
+   "Bernried am Starnberger See",
+   "Burggen",
+   "Böbing",
+   "Eberfing",
+   "Eglfing",
+   "Habach",
+   "Hohenfurch",
+   "Hohenpeißenberg",
+   "Huglfing",
+   "Iffeldorf",
+   "Ingenried",
+   "Oberhausen",
+   "Obersöchering",
+   "Peiting",
+   "Peißenberg",
+   "Penzberg",
+   "Polling",
+   "Prem",
+   "Pähl",
+   "Raisting",
+   "Rottenbuch",
+   "Schongau",
+   "Schwabbruck",
+   "Schwabsoien",
+   "Seeshaupt",
+   "Sindelsdorf",
+   "Steingaden",
+   "Weilheim i.OB",
+   "Wessobrunn",
+   "Wielenbach",
+   "Wildsteig"
+  ],
+  "districts": [
+   "Landkreis Weilheim-Schongau"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "erh",
+  "title": "Landkreis Erlangen-Höchstadt",
+  "website": "https://www.erlangen-hoechstadt.de/aktuelles/abfallkalender/",
+  "places": [
+   "Adelsdorf",
+   "Aurachtal",
+   "Baiersdorf",
+   "Bubenreuth",
+   "Buckenhof",
+   "Eckental",
+   "Gremsdorf",
+   "Großenseebach",
+   "Hemhofen",
+   "Heroldsberg",
+   "Herzogenaurach",
+   "Heßdorf",
+   "Höchstadt a.d.Aisch",
+   "Kalchreuth",
+   "Lonnerstadt",
+   "Marloffstein",
+   "Möhrendorf",
+   "Mühlhausen",
+   "Oberreichenbach",
+   "Röttenbach",
+   "Spardorf",
+   "Uttenreuth",
+   "Vestenbergsgreuth",
+   "Wachenroth",
+   "Weisendorf"
+  ],
+  "districts": [
+   "Landkreis Erlangen-Höchstadt"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "neumarkt",
+  "title": "Landkreis Neumarkt i.d.OPf. (Abfuhrplan)",
+  "website": "https://www.abfuhrplan-landkreis-neumarkt.de/",
+  "places": [
+   "Berching",
+   "Berg b.Neumarkt i.d.OPf.",
+   "Berngau",
+   "Breitenbrunn",
+   "Deining",
+   "Dietfurt a.d.Altmühl",
+   "Freystadt",
+   "Hohenfels",
+   "Lauterhofen",
+   "Lupburg",
+   "Mühlhausen",
+   "Neumarkt i.d.OPf.",
+   "Parsberg",
+   "Pilsach",
+   "Postbauer-Heng",
+   "Pyrbaum",
+   "Sengenthal",
+   "Seubersdorf i.d.OPf.",
+   "Velburg"
+  ],
+  "districts": [
+   "Landkreis Neumarkt i.d.OPf."
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "schwabach",
+  "title": "Stadt Schwabach (Abfuhrplan)",
+  "website": "https://www.abfuhrplan-schwabach.de/",
+  "places": [
+   "Schwabach"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Schwabach"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "heinz",
+  "title": "Landkreis Freising (Heinz Entsorgung)",
+  "website": "https://abfallkalender.heinz-entsorgung.de/",
+  "places": [
+   "Allershausen",
+   "Attenkirchen",
+   "Au i.d.Hallertau",
+   "Eching",
+   "Fahrenzhausen",
+   "Freising",
+   "Gammelsdorf",
+   "Haag a.d.Amper",
+   "Hallbergmoos",
+   "Hohenkammer",
+   "Hörgertshausen",
+   "Kirchdorf a.d.Amper",
+   "Kranzberg",
+   "Langenbach",
+   "Marzling",
+   "Mauern",
+   "Moosburg a.d.Isar",
+   "Nandlstadt",
+   "Neufahrn b.Freising",
+   "Paunzhausen",
+   "Rudelzhausen",
+   "Wang",
+   "Wolfersdorf",
+   "Zolling"
+  ],
+  "districts": [
+   "Landkreis Freising"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "amberg",
+  "title": "Stadt Amberg",
+  "website": "https://amberg.de/abfallberatung/",
+  "places": [
+   "Amberg"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Amberg"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "coburg",
+  "title": "CEB Coburg",
+  "website": "https://abfuhrkalender.ceb-coburg.de/",
+  "places": [
+   "Coburg"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Coburg"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "fuerth",
+  "title": "Abfallwirtschaft Stadt Fürth",
+  "website": "https://abfallwirtschaft.fuerth.eu/",
+  "places": [
+   "Fürth"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Fürth"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "schweinfurt",
+  "title": "Abfallwirtschaft Stadt Schweinfurt",
+  "website": "https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/",
+  "places": [
+   "Schweinfurt"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Schweinfurt"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "hof_stadt",
+  "title": "AZV Hof – Stadt Hof",
+  "website": "https://www.azv-hof.de/",
+  "places": [
+   "Hof"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Hof"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "hof_lk",
+  "title": "AZV Hof – Landkreis Hof",
+  "website": "https://www.azv-hof.de/",
+  "places": [
+   "Bad Steben",
+   "Berg",
+   "Döhlau",
+   "Feilitzsch",
+   "Gattendorf",
+   "Geroldsgrün",
+   "Helmbrechts",
+   "Issigau",
+   "Konradsreuth",
+   "Köditz",
+   "Leupoldsgrün",
+   "Lichtenberg",
+   "Münchberg",
+   "Naila",
+   "Oberkotzau",
+   "Regnitzlosau",
+   "Rehau",
+   "Schauenstein",
+   "Schwarzenbach a.Wald",
+   "Schwarzenbach a.d.Saale",
+   "Selbitz",
+   "Sparneck",
+   "Stammbach",
+   "Trogen",
+   "Töpen",
+   "Weißdorf",
+   "Zell im Fichtelgebirge"
+  ],
+  "districts": [
+   "Landkreis Hof"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "nuernberger_land",
+  "title": "Abfallwirtschaft Nürnberger Land",
+  "website": "https://abfuhrkalender.nuernberger-land.de/",
+  "places": [
+   "Alfeld",
+   "Altdorf b.Nürnberg",
+   "Burgthann",
+   "Engelthal",
+   "Feucht",
+   "Happurg",
+   "Hartenstein",
+   "Henfenfeld",
+   "Hersbruck",
+   "Kirchensittenbach",
+   "Lauf a.d.Pegnitz",
+   "Leinburg",
+   "Neuhaus a.d.Pegnitz",
+   "Neunkirchen a.Sand",
+   "Offenhausen",
+   "Ottensoos",
+   "Pommelsbrunn",
+   "Reichenschwand",
+   "Röthenbach a.d.Pegnitz",
+   "Rückersdorf",
+   "Schnaittach",
+   "Schwaig b.Nürnberg",
+   "Schwarzenbruck",
+   "Simmelsdorf",
+   "Velden",
+   "Vorra",
+   "Winkelhaid"
+  ],
+  "districts": [
+   "Landkreis Nürnberger Land"
+  ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "rhoen_grabfeld",
+  "title": "Abfallwirtschaft Landkreis Rhön-Grabfeld",
+  "website": "https://www.abfallinfo-rhoen-grabfeld.de/",
+  "places": [
+   "Aubstadt",
+   "Bad Königshofen i.Grabfeld",
+   "Bad Neustadt a.d.Saale",
+   "Bastheim",
+   "Bischofsheim i.d.Rhön",
+   "Burglauer",
+   "Fladungen",
+   "Großbardorf",
+   "Großeibstadt",
+   "Hausen",
+   "Hendungen",
+   "Herbstadt",
+   "Heustreu",
+   "Hohenroth",
+   "Hollstadt",
+   "Höchheim",
+   "Mellrichstadt",
+   "Niederlauer",
+   "Nordheim v.d.Rhön",
+   "Oberelsbach",
+   "Oberstreu",
+   "Ostheim v.d.Rhön",
+   "Rödelmaier",
+   "Saal a.d.Saale",
+   "Salz",
+   "Sandberg",
+   "Schönau a.d.Brend",
+   "Sondheim v.d.Rhön",
+   "Stockheim",
+   "Strahlungen",
+   "Sulzdorf a.d.Lederhecke",
+   "Sulzfeld",
+   "Trappstadt",
+   "Unsleben",
+   "Willmars",
+   "Wollbach",
+   "Wülfershausen a.d.Saale"
+  ],
+  "districts": [
+   "Landkreis Rhön-Grabfeld"
+  ]
+ }
+]
