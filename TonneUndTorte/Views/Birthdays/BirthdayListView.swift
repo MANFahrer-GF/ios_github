@@ -26,6 +26,7 @@ struct BirthdayListView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Query(sort: \Person.name) private var people: [Person]
+    @Environment(\.openURL) private var openURL
     @State private var editing: Person?
     @State private var showNew = false
     @State private var showImport = false
@@ -50,6 +51,14 @@ struct BirthdayListView: View {
                     List {
                         ForEach(sorted, id: \.person.id) { entry in
                             Button { editing = entry.person } label: { BirthdayRow(person: entry.person, next: entry.next, years: entry.years) }.buttonStyle(.plain)
+                                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                    if let url = NotificationManager.greetingURL(name: entry.person.name, phone: entry.person.phone) {
+                                        Button { openURL(url) } label: { Label(L10n.t("Gratulieren", "Send wishes"), systemImage: "message.fill") }.tint(.pink)
+                                    }
+                                    if let phone = entry.person.phone, case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
+                                        Button { openURL(url) } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }.tint(.green)
+                                    }
+                                }
                         }
                         .onDelete { offsets in
                             offsets.forEach { context.delete(sorted[$0].person) }

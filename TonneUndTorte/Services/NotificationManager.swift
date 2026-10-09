@@ -98,7 +98,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         // Alles Geplante ersetzen – nur „In 1 Stunde nochmal“ bleibt, das ist eine Bitte des Nutzers
         let pending = await center.pendingNotificationRequests().map(\.identifier)
         center.removePendingNotificationRequests(withIdentifiers: pending.filter { !$0.contains("-snooze-") })
-        for item in plan.prefix(maxRequests) {
+        // Die bleibenden „In 1 Stunde nochmal“ zählen beim iOS-Limit (64) mit
+        let snoozed = pending.filter { $0.contains("-snooze-") }.count
+        for item in plan.prefix(max(0, maxRequests - snoozed)) {
             let content = UNMutableNotificationContent()
             content.title = item.title
             content.body = item.body
@@ -185,7 +187,14 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         case UNNotificationDefaultActionIdentifier where category == PlannedNotification.Category.custom.rawValue:
             if let targetID { await MainActor.run { self.open(.event(targetID)) } }
         case NotificationManager.customDoneAction:
-            if let targetID { await MainActor.run { self.onCustomDone?(targetID, dayKey) } }
+            // Der Knopf startet die App nur im Hintergrund – dort gibt es evtl. noch kein App-Modell. Darum hier selbst
+            // speichern und die übrigen Mitteilungen dieses Termins an diesem Tag entfernen; das Modell plant danach neu.
+            guard let targetID else { break }
+            await MainActor.run { SettingsKeys.setCustomDone(true, id: targetID, dayKey: dayKey) }
+            let suffix = "-\(dayKey)-\(targetID.uuidString)"
+            let pending = await center.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix("custom") && $0.hasSuffix(suffix) }
+            center.removePendingNotificationRequests(withIdentifiers: pending)
+            await MainActor.run { self.onCustomDone?(targetID, dayKey) }
         case NotificationManager.doneAction:
             await MainActor.run {
                 SnapshotStore.markDone(dayKey: dayKey)

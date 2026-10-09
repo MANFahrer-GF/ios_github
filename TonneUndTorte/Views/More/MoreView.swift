@@ -228,8 +228,10 @@ struct CustomEventEditView: View {
         var text: String
         if hasTime {
             let lead = settings.customLeadMinutes
+            let at = timeMinutes - lead
+            let when = at < 0 ? L10n.t("am Vortag um \(time(at + 1440))", "the day before at \(time(at + 1440))") : L10n.t("um \(time(at))", "at \(time(at))")
             text = lead == 0 ? L10n.t("Erinnerung zur Terminzeit", "Reminder at the event time")
-                : L10n.t("Erinnerung \(SettingsView.leadText(lead)) vorher, um \(time(max(0, timeMinutes - lead)))", "Reminder \(SettingsView.leadText(lead)) before, at \(time(max(0, timeMinutes - lead)))")
+                : L10n.t("Erinnerung \(SettingsView.leadText(lead)) vorher, \(when)", "Reminder \(SettingsView.leadText(lead)) before, \(when)")
         } else {
             text = L10n.t("Erinnerung am Termintag um \(time(settings.customMinutes))", "Reminder on the day at \(time(settings.customMinutes))")
         }

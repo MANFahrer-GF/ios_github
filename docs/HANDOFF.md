@@ -124,13 +124,22 @@ QS am 9. Okt.: 334 Offline-Tests grün, Live-Tests (328) und Katalog-Sweep grün
   Wer vor 2.0.3 die Tageszeit geändert hatte, behält sie auch für die Vorab-Uhrzeit (`SettingsKeys.migrate`).
 - Geburtstags-Mitteilungen: „📞 Anrufen“ (nur mit Nummer), „💬 Glückwunsch schreiben“, vorab „🎁 Geschenkideen ansehen“; Geschenkideen im Text;
   mehrere Geburtstage an einem Tag in einer Mitteilung. Tippen öffnet Person bzw. Termin (auch beim Kaltstart, `NotificationManager.pendingOpen`).
-- Eigene Termine: Uhrzeit pro Termin, gespeichert als Tageszeit in `startDate` (0:00:00 = ganztägig) – **bewusst kein neues Feld**, damit kein
-  CloudKit-Schema-Deploy nötig wird. „Erledigt“ (Mitteilung oder Wischen in der Liste) liegt nur lokal in UserDefaults (`custom.doneOccurrences`).
-  „In 1 Stunde nochmal“, neue Wiederholung „jeden n-ten/letzten Wochentag im Monat“ (`Recurrence.monthlyWeekday`; ältere App-Versionen zeigen solche
-  Termine als „Jedes Jahr“), Vorab-Auswahl nur noch kürzer als der Abstand, 73 Symbole nach Themen auf eigener Seite.
+- Eigene Termine: Uhrzeit pro Termin (Feld `timeOfDay`, -1 = ganztägig). „Erledigt“ (Mitteilung oder Wischen in der Liste) liegt nur lokal in UserDefaults (`custom.doneOccurrences`).
+  „In 1 Stunde nochmal“, neue Wiederholung „jeden n-ten/letzten Wochentag im Monat“ (`Recurrence.monthlyWeekday`, gespeichert als
+  `recurrenceJSON` = jeden Monat + `weekdayOrdinal`/`weekdayNumber`), Vorab-Auswahl nur noch kürzer als der Abstand, 73 Symbole nach Themen auf eigener Seite.
+- Geburtstagsliste: nach rechts wischen → „Gratulieren“ / „Anrufen“.
 - Übersicht: „Weitere Abholungen“ beginnt nach den beiden Terminen der großen Karte, höchstens 4 Tage, Ort einmal je Zeile; „Geburtstage & Termine“ steht darüber.
 
-**Offen beim Nutzer:** auf dem iPhone testen – vor allem die Knöpfe in den Mitteilungen (im Simulator ohne Mitteilungs-Erlaubnis nicht auslösbar).
+**Offen beim Nutzer:** **vor dem Einreichen CloudKit-Schema nach Production** (neue Felder `CustomEvent.timeOfDay`, `weekdayOrdinal`,
+`weekdayNumber` – vorher einmal den Debug-Build mit iCloud starten, damit sie in Development angelegt sind); auf dem iPhone testen – vor allem
+die Knöpfe in den Mitteilungen (im Simulator ohne Mitteilungs-Erlaubnis nicht auslösbar).
+
+**QS 9. Okt. (Claude + Codex, zwei Runden):** behoben – Uhrzeit/Wochentag-Regel jetzt in eigenen Feldern (vorher in `startDate`: Zeitzonenwechsel
+verschob sie, 2.0.2 löschte sie beim Bearbeiten), Vorlauf darf auf den Vortag fallen, Snooze zählt beim 64er-Limit mit, Kalender-Export mit echter
+Uhrzeit (EventKit + ICS), „Erledigt“ speichert auch bei Hintergrundstart, Uhrzeit-Auswahl an Umstellungstagen.
+Bekannte Grenzen: 2.0.2 zeigt „n-ter Wochentag“ als „Jeden Monat“ (am Datum des ersten Termins); stellt jemand dort ausdrücklich auf „Jeden Monat“,
+bleibt in 2.0.3 die Wochentag-Regel. „Erledigt“ für eigene Termine gilt nur auf dem Gerät. Eigene Termine (`startDate`) verschieben sich beim Wechsel
+der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
 
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 

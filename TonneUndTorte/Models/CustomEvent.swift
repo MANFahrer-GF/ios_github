@@ -15,6 +15,13 @@ final class CustomEvent {
     var remindersEnabled: Bool = true
     var notes: String = ""
     var createdAt: Date = Date()
+    /// Uhrzeit in Minuten ab Mitternacht, -1 = ganztägig (ab 2.0.3). Als Zahl statt in `startDate`, damit sie beim
+    /// Wechsel der Zeitzone gleich bleibt und ein Gerät mit 2.0.2 sie beim Bearbeiten nicht überschreibt.
+    var timeOfDay: Int = -1
+    /// „Jeden n-ten Wochentag im Monat“ (ab 2.0.3): 1…4 oder -1 = letzter, 0 = keine solche Regel; Wochentag 1 = Sonntag.
+    /// In `recurrenceJSON` steht dann „jeden Monat“ – das versteht auch 2.0.2 und lässt diese Felder beim Speichern stehen.
+    var weekdayOrdinal: Int = 0
+    var weekdayNumber: Int = 0
 
     init(title: String, symbolName: String = "star.fill", colorHex: String = "#7C3AED", startDate: Date, recurrence: Recurrence, remindDaysBefore: Int = 1) {
         self.id = UUID()
@@ -30,29 +37,29 @@ final class CustomEvent {
     var recurrence: Recurrence {
         get {
             guard let data = recurrenceJSON.data(using: .utf8), let value = try? JSONDecoder().decode(Recurrence.self, from: data) else { return .yearly }
+            // Hat 2.0.2 die Wiederholung inzwischen geändert, gilt deren Regel und die Wochentag-Felder sind überholt
+            if value == .everyMonths(1), weekdayOrdinal != 0, (1...7).contains(weekdayNumber) {
+                return .monthlyWeekday(ordinal: weekdayOrdinal, weekday: weekdayNumber)
+            }
             return value
         }
         set {
-            recurrenceJSON = (try? JSONEncoder().encode(newValue)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
+            let stored: Recurrence
+            if case .monthlyWeekday(let ordinal, let weekday) = newValue {
+                stored = .everyMonths(1); weekdayOrdinal = ordinal; weekdayNumber = weekday
+            } else {
+                stored = newValue; weekdayOrdinal = 0; weekdayNumber = 0
+            }
+            recurrenceJSON = (try? JSONEncoder().encode(stored)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
         }
     }
 
     var nextOccurrence: Date? { recurrence.next(start: startDate) }
 
-    /// Uhrzeit des Termins (Minuten ab Mitternacht), nil = ganztägig. Sie steckt in der Tageszeit von `startDate`,
-    /// damit kein neues Feld ins iCloud-Schema muss; die Wiederholung rechnet ohnehin nur mit dem Tag.
-    /// Genau 0:00:00 heißt „ganztägig“ – wer 0:00 Uhr wählt, bekommt darum eine Sekunde dazu.
+    /// Uhrzeit des Termins (Minuten ab Mitternacht), nil = ganztägig.
     var timeMinutes: Int? {
-        get {
-            let c = Calendar.current.dateComponents([.hour, .minute, .second], from: startDate)
-            let minutes = (c.hour ?? 0) * 60 + (c.minute ?? 0)
-            return minutes == 0 && (c.second ?? 0) == 0 ? nil : minutes
-        }
-        set {
-            let day = Days.start(of: startDate)
-            guard let newValue, let date = Days.at(minutes: newValue, on: day) else { startDate = day; return }
-            startDate = newValue == 0 ? date.addingTimeInterval(1) : date
-        }
+        get { (0..<1440).contains(timeOfDay) ? timeOfDay : nil }
+        set { timeOfDay = newValue.map { min(1439, max(0, $0)) } ?? -1 }
     }
 
     var timeText: String? { timeMinutes.map { String(format: "%02d:%02d", $0 / 60, $0 % 60) } }

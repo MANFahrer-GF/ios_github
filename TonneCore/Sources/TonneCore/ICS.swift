@@ -153,9 +153,11 @@ public enum ICS {
         public var description: String?
         /// Alarme als Minuten relativ zum Tagesbeginn (negativ = vorher), z. B. -300 = 19:00 Uhr am Vortag.
         public var alarmMinutes: [Int]
+        /// Uhrzeit (Minuten ab Mitternacht): dann ein einstündiger Termin zu dieser Ortszeit statt ganztägig.
+        public var timeMinutes: Int?
 
-        public init(uid: String, date: Date, summary: String, description: String? = nil, alarmMinutes: [Int] = []) {
-            self.uid = uid; self.date = date; self.summary = summary; self.description = description; self.alarmMinutes = alarmMinutes
+        public init(uid: String, date: Date, summary: String, description: String? = nil, alarmMinutes: [Int] = [], timeMinutes: Int? = nil) {
+            self.uid = uid; self.date = date; self.summary = summary; self.description = description; self.alarmMinutes = alarmMinutes; self.timeMinutes = timeMinutes
         }
     }
 
@@ -168,11 +170,22 @@ public enum ICS {
         for event in events {
             let day = Days.iso(event.date, calendar: calendar).replacingOccurrences(of: "-", with: "")
             let next = Days.iso(Days.add(1, to: event.date, calendar: calendar), calendar: calendar).replacingOccurrences(of: "-", with: "")
-            out += ["BEGIN:VEVENT", "UID:" + event.uid, "DTSTAMP:" + stamp, "DTSTART;VALUE=DATE:" + day, "DTEND;VALUE=DATE:" + next, "SUMMARY:" + escape(event.summary)]
+            out += ["BEGIN:VEVENT", "UID:" + event.uid, "DTSTAMP:" + stamp]
+            if let time = event.timeMinutes {
+                // Ortszeit ohne Zeitzone („floating“): 14:30 bleibt 14:30, wo auch immer der Kalender gerade ist
+                // Eine Stunde – bei 23:30 also bis 00:30 am Folgetag
+                let end = (time + 60) % 1440
+                out += ["DTSTART:" + day + String(format: "T%02d%02d00", time / 60, time % 60),
+                        "DTEND:" + (time + 60 >= 1440 ? next : day) + String(format: "T%02d%02d00", end / 60, end % 60)]
+            } else {
+                out += ["DTSTART;VALUE=DATE:" + day, "DTEND;VALUE=DATE:" + next]
+            }
+            out.append("SUMMARY:" + escape(event.summary))
             if let description = event.description, !description.isEmpty { out.append("DESCRIPTION:" + escape(description)) }
-            out.append("TRANSP:TRANSPARENT")
+            out.append(event.timeMinutes == nil ? "TRANSP:TRANSPARENT" : "TRANSP:OPAQUE")
             for minutes in event.alarmMinutes {
-                out += ["BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + escape(event.summary), "TRIGGER:" + trigger(minutes: minutes), "END:VALARM"]
+                // Bei Terminen mit Uhrzeit beziehen sich Alarme auf den Beginn, nicht auf Mitternacht
+                out += ["BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + escape(event.summary), "TRIGGER:" + trigger(minutes: minutes - (event.timeMinutes ?? 0)), "END:VALARM"]
             }
             out.append("END:VEVENT")
         }

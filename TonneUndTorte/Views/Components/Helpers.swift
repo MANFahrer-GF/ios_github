@@ -15,8 +15,9 @@ extension Color {
 // MARK: - Uhrzeit
 
 enum TimeOfDay {
+    /// Über Kalender-Bestandteile statt Sekunden ab Mitternacht – sonst zeigt die Auswahl an den Tagen der Zeitumstellung eine Stunde daneben.
     static func date(fromMinutes minutes: Int) -> Date {
-        Days.add(0, to: Days.today()).addingTimeInterval(TimeInterval(minutes * 60))
+        Days.at(minutes: minutes, on: Days.today()) ?? Days.today().addingTimeInterval(TimeInterval(minutes * 60))
     }
     static func minutes(from date: Date) -> Int {
         let c = Calendar.current.dateComponents([.hour, .minute], from: date)

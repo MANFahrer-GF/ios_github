@@ -306,9 +306,12 @@ public enum ReminderPlanner {
                 guard day >= today && day <= Days.add(31, to: horizon, calendar: calendar) else { continue }
                 let key = Days.iso(day, calendar: calendar)
                 let time = event.timeMinutes.map { String(format: "%02d:%02d", $0 / 60, $0 % 60) }
-                // Mit Uhrzeit: die eingestellte Vorlaufzeit vorher, frühestens um Mitternacht. Ohne: zur Tageszeit aus den Einstellungen.
-                let dayMinutes = event.timeMinutes.map { max(0, $0 - settings.customLeadMinutes) } ?? settings.customMinutes
-                if day <= horizon, let fire = Days.at(minutes: dayMinutes, on: day, calendar: calendar), fire > now {
+                // Mit Uhrzeit: die eingestellte Vorlaufzeit vorher – bei 0:30 Uhr und 1 Std. also am Vorabend um 23:30.
+                // Ohne Uhrzeit: zur Tageszeit aus den Einstellungen.
+                let dayFire: Date? = event.timeMinutes.map { minutes in
+                    Days.at(minutes: minutes, on: day, calendar: calendar).flatMap { calendar.date(byAdding: .minute, value: -settings.customLeadMinutes, to: $0) }
+                } ?? Days.at(minutes: settings.customMinutes, on: day, calendar: calendar)
+                if day <= horizon, let fire = dayFire, fire > now {
                     let title = time.map { L10n.t("📌 Heute um \($0): \(event.title)", "📌 Today at \($0): \(event.title)") } ?? L10n.t("📌 Heute: \(event.title)", "📌 Today: \(event.title)")
                     result.append(PlannedNotification(identifier: "custom-\(key)-\(event.id)", fireDate: fire, title: title, body: DateText.long(day),
                                                       category: .custom, threadIdentifier: "custom", dayKey: key, targetID: event.id))

@@ -324,6 +324,16 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(ICS.trigger(minutes: -(1440 - 19 * 60)), "-PT5H")
         XCTAssertEqual(ICS.trigger(minutes: 540 - 7 * 1440), "-P6DT15H")
         XCTAssertEqual(ICS.parse(feed, calendar: calendar).first?.summary, "Gelber Sack; Gifhorn")
+
+        // Termin mit Uhrzeit: echte Start-/Endzeit, Alarm relativ zum Beginn (13:30 bei 14:30 = 1 Std. vorher)
+        let timed = ICS.build(name: "Test", events: [ICS.FeedEvent(uid: "t@y", date: day("2026-10-09"), summary: "Zahnarzt", alarmMinutes: [13 * 60 + 30], timeMinutes: 14 * 60 + 30)], calendar: calendar)
+        XCTAssertTrue(timed.contains("DTSTART:20261009T143000"))
+        XCTAssertTrue(timed.contains("DTEND:20261009T153000"))
+        XCTAssertTrue(timed.contains("TRIGGER:-PT1H"))
+        XCTAssertFalse(timed.contains("VALUE=DATE"))
+        let late = ICS.build(name: "Test", events: [ICS.FeedEvent(uid: "l@y", date: day("2026-10-09"), summary: "Spät", timeMinutes: 23 * 60 + 30)], calendar: calendar)
+        XCTAssertTrue(late.contains("DTSTART:20261009T233000"))
+        XCTAssertTrue(late.contains("DTEND:20261010T003000"))
     }
 
     func testPlanner() {
@@ -441,10 +451,10 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(calendar.component(.hour, from: tuev.fireDate), 8)
         XCTAssertEqual(plan.first { $0.identifier == "custom-pre3-2026-10-06-e2" }?.title, "📌 TÜV in 3 Tagen")
 
-        // Vorlauf über Mitternacht hinaus: bleibt am Termintag um 0:00
+        // Vorlauf über Mitternacht hinaus: 0:30 Uhr mit 90 Min. → Vorabend 23:00
         let early = plan.first { $0.identifier == "custom-2026-10-07-e3" }!
-        XCTAssertEqual(Days.iso(early.fireDate, calendar: calendar), "2026-10-07")
-        XCTAssertEqual(calendar.component(.hour, from: early.fireDate), 0)
+        XCTAssertEqual(Days.iso(early.fireDate, calendar: calendar), "2026-10-06")
+        XCTAssertEqual(calendar.dateComponents([.hour, .minute], from: early.fireDate), DateComponents(hour: 23, minute: 0))
 
         // Zusätzlich am Vortag: nur, wo die Vorab-Erinnerung früher liegt (TÜV 3 Tage), nicht doppelt beim Zahnarzt (1 Tag)
         settings.customDayBefore = true

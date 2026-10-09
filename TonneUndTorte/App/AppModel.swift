@@ -131,8 +131,9 @@ final class AppModel: ObservableObject {
         registerBackgroundTask()
         SettingsKeys.migrate()
         notifications.onOpen = { [weak self] target in self?.open(target) }
-        notifications.onCustomDone = { [weak self] id, dayKey in
-            Task { await self?.setCustomDone(true, id: id, dayKey: dayKey) }
+        // Gespeichert hat die Mitteilung schon selbst – hier nur neu planen und Ansichten auffrischen
+        notifications.onCustomDone = { [weak self] _, _ in
+            Task { self?.objectWillChange.send(); await self?.refreshAll() }
         }
         notifications.onPickupDone = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
@@ -453,11 +454,10 @@ final class AppModel: ObservableObject {
             case .birthday:
                 return CalendarExport.Item(date: event.date, title: "🎂 \(event.title)\(event.years.map { " (\($0))" } ?? "")", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
             case .custom:
-                // Ganztägiger Eintrag; bei Terminen mit Uhrzeit steht sie im Titel und der Alarm kommt mit dem eingestellten Vorlauf
+                // Mit Uhrzeit ein einstündiger Termin, Alarm mit dem eingestellten Vorlauf (darf auf den Vortag fallen)
                 let time = customTimes[event.id]
-                let alarm = time.map { max(0, $0 - settings.customLeadMinutes) } ?? settings.customMinutes
-                let timeText = time.map { String(format: "%02d:%02d ", $0 / 60, $0 % 60) } ?? ""
-                return CalendarExport.Item(date: event.date, title: "📌 \(timeText)\(event.title)", notes: nil, alarmMinutesFromMidnight: [alarm])
+                let alarm = time.map { $0 - settings.customLeadMinutes } ?? settings.customMinutes
+                return CalendarExport.Item(date: event.date, title: "📌 \(event.title)", notes: nil, alarmMinutesFromMidnight: [alarm], timeMinutes: time)
             }
         }
     }
@@ -465,7 +465,7 @@ final class AppModel: ObservableObject {
     /// Alle eingetragenen Termine als ICS-Datei (zum Teilen).
     func feedText() -> String {
         let events = calendarExportItems(applyingSyncOptions: false).map { item in
-            ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFFFF })@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight)
+            ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFFFF })@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight, timeMinutes: item.timeMinutes)
         }
         return ICS.build(name: "Tonne & Torte", events: events)
     }

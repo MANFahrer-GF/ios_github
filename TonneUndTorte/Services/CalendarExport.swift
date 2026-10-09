@@ -28,6 +28,8 @@ enum CalendarExport {
         var title: String
         var notes: String?
         var alarmMinutesFromMidnight: [Int]
+        /// Uhrzeit (Minuten ab Mitternacht) – dann ein einstündiger Termin statt ganztägig.
+        var timeMinutes: Int? = nil
     }
 
     /// Wohin geschrieben wird.
@@ -172,7 +174,7 @@ enum CalendarExport {
     }
 
     private static func fingerprint(_ items: [Item]) -> String {
-        stableHash(items.map { "\(Days.iso($0.date))|\($0.title)|\($0.alarmMinutesFromMidnight)" }.joined(separator: ";") + "#\(String(describing: resolvedTarget()))")
+        stableHash(items.map { "\(Days.iso($0.date))|\($0.title)|\($0.alarmMinutesFromMidnight)|\($0.timeMinutes ?? -1)" }.joined(separator: ";") + "#\(String(describing: resolvedTarget()))")
     }
 
     /// Über Programmstarts hinweg gleich (anders als `hashValue`).
@@ -234,11 +236,18 @@ enum CalendarExport {
             event.title = item.title
             event.notes = [item.notes, marker].compactMap { $0 }.joined(separator: "\n")
             event.url = markerURL
-            event.isAllDay = true
-            event.startDate = item.date
-            event.endDate = item.date
+            if let time = item.timeMinutes, let start = Days.at(minutes: time, on: item.date) {
+                event.isAllDay = false
+                event.startDate = start
+                event.endDate = start.addingTimeInterval(3600)
+            } else {
+                event.isAllDay = true
+                event.startDate = item.date
+                event.endDate = item.date
+            }
             for minutes in item.alarmMinutesFromMidnight {
-                event.addAlarm(EKAlarm(relativeOffset: TimeInterval(minutes * 60)))
+                // Alarme beziehen sich auf den Beginn – bei ganztägigen Terminen Mitternacht
+                event.addAlarm(EKAlarm(relativeOffset: TimeInterval((minutes - (item.timeMinutes ?? 0)) * 60)))
             }
             try store.save(event, span: .thisEvent, commit: false)
             count += 1
