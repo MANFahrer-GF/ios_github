@@ -349,5 +349,31 @@
    "Kreis Minden-Lübbecke"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false&tagMode=ALL#ohne=(Bezirk 2)|Großbehälter",
+  "title": "Steinbach (Taunus) Bezirk 1 (Abfallkalender)",
+  "website": "https://www.stadt-steinbach.de/",
+  "places": [
+   "Steinbach (Taunus)"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false&tagMode=ALL#ohne=(Bezirk 1)|Großbehälter",
+  "title": "Steinbach (Taunus) Bezirk 2 (Abfallkalender)",
+  "website": "https://www.stadt-steinbach.de/",
+  "places": [
+   "Steinbach (Taunus)"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
  }
 ]

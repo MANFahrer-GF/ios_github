@@ -35,6 +35,37 @@ final class ICSURLProviderTests: XCTestCase {
         XCTAssertTrue(WasteCategory.isIgnorableTitle("Wertstoffhof geöffnet (WH) – W1"), "Öffnungstage sind keine Abholung")
     }
 
+    /// Steinbach: eine Datei für beide Bezirke – `#ohne=` lässt den anderen Bezirk und Großbehälter weg.
+    func testExcludeMarker() async throws {
+        ICSStub.body = """
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        DTSTART;VALUE=DATE:20261009
+        SUMMARY:Restmüll (Bezirk 1)
+        END:VEVENT
+        BEGIN:VEVENT
+        DTSTART;VALUE=DATE:20261012
+        SUMMARY:Restmüll (Bezirk 2)
+        END:VEVENT
+        BEGIN:VEVENT
+        DTSTART;VALUE=DATE:20261013
+        SUMMARY:Restmüll Großbehälter 1\\,1 m³
+        END:VEVENT
+        BEGIN:VEVENT
+        DTSTART;VALUE=DATE:20261015
+        SUMMARY:Biomüll
+        END:VEVENT
+        END:VCALENDAR
+        """
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [ICSStub.self]
+        let provider = ICSURLProvider(url: "https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false#ohne=(Bezirk 2)|Großbehälter",
+                                      client: HTTPClient(session: URLSession(configuration: config)))
+        let pickups = try await provider.pickups(for: [], calendar: Calendar(identifier: .gregorian))
+        XCTAssertEqual(pickups.map(\.name), ["Restmüll (Bezirk 1)", "Biomüll"])
+        XCTAssertEqual(ICSStub.lastURL, "https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false", "Filter geht nicht mit zum Server")
+    }
+
     /// Ausschnitte der echten Seiten (Oktober 2026).
     func testLinkOnPage() throws {
         let hille = """
@@ -87,4 +118,20 @@ final class ICSURLProviderTests: XCTestCase {
         }
         XCTAssertTrue(failures.isEmpty, failures.joined(separator: "\n"))
     }
+}
+
+/// Liefert eine feste ICS-Datei und merkt sich die angefragte Adresse.
+final class ICSStub: URLProtocol {
+    nonisolated(unsafe) static var body = ""
+    nonisolated(unsafe) static var lastURL = ""
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        Self.lastURL = request.url?.absoluteString ?? ""
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/calendar"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: Data(Self.body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
 }

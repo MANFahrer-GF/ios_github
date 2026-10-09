@@ -962,6 +962,8 @@ Stadtkreis Ulm|Ulm
         "icsURL:https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-3_woechentlich.ics:Schwalbach am Taunus Bezirk 3, Restmüll wöchentlich (Abfallkalender)": ["Landkreis Main-Taunus-Kreis|Schwalbach am Taunus"],
         "icsURL:https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-4_14-taegig.ics:Schwalbach am Taunus Bezirk 4, Restmüll 14-täglich (Abfallkalender)": ["Landkreis Main-Taunus-Kreis|Schwalbach am Taunus"],
         "icsURL:https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-4_woechentlich.ics:Schwalbach am Taunus Bezirk 4, Restmüll wöchentlich (Abfallkalender)": ["Landkreis Main-Taunus-Kreis|Schwalbach am Taunus"],
+        "icsURL:https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false&tagMode=ALL#ohne=(Bezirk 1)|Großbehälter:Steinbach (Taunus) Bezirk 2 (Abfallkalender)": ["Landkreis Hochtaunuskreis|Steinbach (Taunus)"],
+        "icsURL:https://www.stadt-steinbach.de/kalender/abfallkalender/event.ics?weekends=false&tagMode=ALL#ohne=(Bezirk 2)|Großbehälter:Steinbach (Taunus) Bezirk 1 (Abfallkalender)": ["Landkreis Hochtaunuskreis|Steinbach (Taunus)"],
         "icsURL:https://www.tengen.de/site/Tengen/zmservice/2266403/ical/vevent.ics:Tengen (Abfallkalender)": ["Landkreis Konstanz|Tengen"],
         "icsURL:https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Friedrichsthal:Wehrheim-Friedrichsthal (Abfallkalender)": ["Landkreis Hochtaunuskreis|Wehrheim"],
         "icsURL:https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Obernhain:Wehrheim-Obernhain (Abfallkalender)": ["Landkreis Hochtaunuskreis|Wehrheim"],

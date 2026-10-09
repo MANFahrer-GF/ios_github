@@ -35,6 +35,12 @@ public struct ICSURLProvider: WasteProvider {
         if link.lowercased().hasPrefix("webcal://") { link = "https://" + link.dropFirst("webcal://".count) }
         let year = calendar.component(.year, from: Date())
         link = link.replacingOccurrences(of: "{%Y}", with: String(year))
+        var excluded: [String] = []
+        if let marker = link.range(of: Self.excludeMarker) {
+            // Eine Datei für mehrere Bezirke: Termine mit diesen Texten im Titel gehören nicht zur Auswahl.
+            excluded = link[marker.upperBound...].split(separator: "|").map { $0.lowercased() }
+            link = String(link[..<marker.lowerBound])
+        }
         if let marker = link.range(of: Self.pageMarker) {
             // Seite mit wechselndem Kalenderlink (Jahr/Kennung im Dateinamen): den passenden Link auf der Seite suchen.
             let page = String(link[..<marker.lowerBound]), needle = String(link[marker.upperBound...])
@@ -47,13 +53,17 @@ public struct ICSURLProvider: WasteProvider {
         let text = try await client.string(link)
         let events = ICS.parse(text, calendar: calendar)
         guard !events.isEmpty else { throw ProviderError.noData("Die ICS-Datei enthält keine Termine.") }
-        return events.filter { !WasteCategory.isIgnorableTitle($0.summary) }
+        return events.filter { event in !WasteCategory.isIgnorableTitle(event.summary) && !excluded.contains { event.summary.lowercased().contains($0) } }
             .flatMap { event in Self.names(event.summary).map { Pickup(date: event.date, name: $0, note: event.location) } }
     }
 
     /// `<Seite>#link=<Text>`: Kalender ist der erste ICS-Link der Seite, dessen Adresse oder Linktext `<Text>` enthält
     /// (`{%Y}` wird vorher durch das Jahr ersetzt).
     static let pageMarker = "#link="
+
+    /// `<Link>#ohne=<Text>|<Text>`: Termine, deren Titel einen dieser Texte enthält, weglassen
+    /// (z. B. Steinbach: eine Datei für Bezirk 1 und 2, Titel „Restmüll (Bezirk 2)“).
+    static let excludeMarker = "#ohne="
 
     static func link(in html: String, base: URL, matching needle: String) -> URL? {
         let wanted = needle.lowercased()
