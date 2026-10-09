@@ -356,7 +356,12 @@ struct SourceWizardView: View {
             Section {
                 TextField("Name des Standorts", text: $locationName)
             } header: { Text("Standort") } footer: {
-                Text("\(pickups.count) Termine gefunden für \(provider?.label(for: selections) ?? entry?.title ?? "").")
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("\(pickups.count) Termine gefunden für \(provider?.label(for: selections) ?? entry?.title ?? "").")
+                    if let notice = provider?.notice {
+                        Label(notice, systemImage: "info.circle")
+                    }
+                }
             }
             Section {
                 ForEach(binNames, id: \.category) { bin in

@@ -37,6 +37,13 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
 
     public var displayName: String { Self.names[serviceKey] ?? kind.displayName }
 
+    /// Weimar veröffentlicht nur Wochentag und gerade/ungerade Kalenderwoche je Straße – die Termine rechnet die App.
+    public var notice: String? {
+        guard serviceKey == "weimar" else { return nil }
+        return L10n.t("Termine berechnet aus dem Entsorgungsplan des Kommunalservice Weimar (Wochentag und gerade/ungerade Woche). Verschiebungen an Feiertagen und zum Jahreswechsel sind nicht enthalten – bitte die Hinweise des KS Weimar beachten. Bei 60-l-Tonnen mit 4-wöchentlicher Leerung zeigt die App zu viele Restmüll-Termine.",
+                      "Dates calculated from the Kommunalservice Weimar collection plan (weekday and even/odd week). Holiday and year-end shifts are not included – please check the KS Weimar notices. For 60 l bins emptied every 4 weeks the app shows too many residual waste dates.")
+    }
+
     private var unknownService: ProviderError {
         .invalidSelection(L10n.t("Unbekannter Betreiber: \(serviceKey)", "Unknown operator: \(serviceKey)"))
     }
