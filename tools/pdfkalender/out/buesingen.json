@@ -1,0 +1,410 @@
+{
+ "key": "buesingen",
+ "title": "Gemeinde Büsingen am Hochrhein",
+ "source": "https://www.buesingen.de/de/Rathaus/Abfallentsorgung",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Ort",
+ "notice": null,
+ "areas": [
+  {
+   "id": "buesingen",
+   "title": "Büsingen am Hochrhein",
+   "group": null,
+   "plan": "p1"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-08",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-01-09",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-14",
+    "Grünmüll"
+   ],
+   [
+    "2026-01-22",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-01-28",
+    "Grünmüll"
+   ],
+   [
+    "2026-02-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-05",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-02-07",
+    "Altpapier",
+    "9.00–11.30 Uhr"
+   ],
+   [
+    "2026-02-11",
+    "Grünmüll"
+   ],
+   [
+    "2026-02-19",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-02-25",
+    "Grünmüll"
+   ],
+   [
+    "2026-03-04",
+    "Grünmüll"
+   ],
+   [
+    "2026-03-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-05",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-03-11",
+    "Grünmüll"
+   ],
+   [
+    "2026-03-18",
+    "Grünmüll"
+   ],
+   [
+    "2026-03-19",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-03-25",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-01",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-01",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-04-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-08",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-15",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-16",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-04-22",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-25",
+    "Altpapier",
+    "9.00–11.30 Uhr"
+   ],
+   [
+    "2026-04-29",
+    "Grünmüll"
+   ],
+   [
+    "2026-04-29",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-04-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-06",
+    "Grünmüll"
+   ],
+   [
+    "2026-05-13",
+    "Grünmüll"
+   ],
+   [
+    "2026-05-13",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-05-20",
+    "Grünmüll"
+   ],
+   [
+    "2026-05-27",
+    "Grünmüll"
+   ],
+   [
+    "2026-05-28",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-05-29",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-03",
+    "Grünmüll"
+   ],
+   [
+    "2026-06-10",
+    "Grünmüll"
+   ],
+   [
+    "2026-06-11",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-06-17",
+    "Grünmüll"
+   ],
+   [
+    "2026-06-24",
+    "Grünmüll"
+   ],
+   [
+    "2026-06-25",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-25",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-07-01",
+    "Grünmüll"
+   ],
+   [
+    "2026-07-08",
+    "Grünmüll"
+   ],
+   [
+    "2026-07-09",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-07-15",
+    "Grünmüll"
+   ],
+   [
+    "2026-07-22",
+    "Grünmüll"
+   ],
+   [
+    "2026-07-23",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-23",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-07-29",
+    "Grünmüll"
+   ],
+   [
+    "2026-08-05",
+    "Grünmüll"
+   ],
+   [
+    "2026-08-06",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-08-12",
+    "Grünmüll"
+   ],
+   [
+    "2026-08-15",
+    "Altpapier",
+    "9.00–11.30 Uhr"
+   ],
+   [
+    "2026-08-19",
+    "Grünmüll"
+   ],
+   [
+    "2026-08-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-20",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-08-26",
+    "Grünmüll"
+   ],
+   [
+    "2026-09-02",
+    "Grünmüll"
+   ],
+   [
+    "2026-09-03",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-09-09",
+    "Grünmüll"
+   ],
+   [
+    "2026-09-16",
+    "Grünmüll"
+   ],
+   [
+    "2026-09-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-17",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-09-23",
+    "Grünmüll"
+   ],
+   [
+    "2026-09-30",
+    "Grünmüll"
+   ],
+   [
+    "2026-10-01",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-10-07",
+    "Grünmüll"
+   ],
+   [
+    "2026-10-10",
+    "Altpapier",
+    "9.00–11.30 Uhr"
+   ],
+   [
+    "2026-10-14",
+    "Grünmüll"
+   ],
+   [
+    "2026-10-15",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-15",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-10-21",
+    "Grünmüll"
+   ],
+   [
+    "2026-10-28",
+    "Grünmüll"
+   ],
+   [
+    "2026-10-29",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-11-04",
+    "Grünmüll"
+   ],
+   [
+    "2026-11-11",
+    "Grünmüll"
+   ],
+   [
+    "2026-11-12",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-12",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-11-18",
+    "Grünmüll"
+   ],
+   [
+    "2026-11-25",
+    "Grünmüll"
+   ],
+   [
+    "2026-11-26",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-12-02",
+    "Grünmüll"
+   ],
+   [
+    "2026-12-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-10",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-12-16",
+    "Grünmüll"
+   ],
+   [
+    "2026-12-23",
+    "Restmüll (Schwarzabfuhr)",
+    "ab 13 Uhr"
+   ],
+   [
+    "2026-12-30",
+    "Grünmüll"
+   ]
+  ]
+ }
+}

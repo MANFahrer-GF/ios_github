@@ -1,0 +1,381 @@
+{
+ "key": "huellhorst",
+ "title": "Gemeinde Hüllhorst",
+ "source": "https://serviceportal.huellhorst.de:443/detail/-/vr-bis-detail/dokument/39157/download?_19_WAR_vrportlet_priv_r_p_action=vr-bis-detail-dienstleistung-show",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Ort",
+ "notice": null,
+ "areas": [
+  {
+   "id": "huellhorst",
+   "title": "Hüllhorst",
+   "group": null,
+   "plan": "p1"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-05",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-01-07",
+    "Biomüll"
+   ],
+   [
+    "2026-01-14",
+    "Altpapier"
+   ],
+   [
+    "2026-01-21",
+    "Biomüll"
+   ],
+   [
+    "2026-01-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-28",
+    "Restmüll"
+   ],
+   [
+    "2026-02-02",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-02-04",
+    "Biomüll"
+   ],
+   [
+    "2026-02-11",
+    "Altpapier"
+   ],
+   [
+    "2026-02-13",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-02-18",
+    "Biomüll"
+   ],
+   [
+    "2026-02-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-25",
+    "Restmüll"
+   ],
+   [
+    "2026-03-02",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-03-04",
+    "Biomüll"
+   ],
+   [
+    "2026-03-11",
+    "Altpapier"
+   ],
+   [
+    "2026-03-14",
+    "Sondermüll-Annahme",
+    "Wertstoffhof der EMiL-AöR, Hüllhorst"
+   ],
+   [
+    "2026-03-18",
+    "Biomüll"
+   ],
+   [
+    "2026-03-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-25",
+    "Restmüll"
+   ],
+   [
+    "2026-03-30",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-03-31",
+    "Biomüll"
+   ],
+   [
+    "2026-04-09",
+    "Altpapier"
+   ],
+   [
+    "2026-04-13",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-04-15",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-04-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-22",
+    "Restmüll"
+   ],
+   [
+    "2026-04-27",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-04-28",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-05-06",
+    "Altpapier"
+   ],
+   [
+    "2026-05-13",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-05-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-20",
+    "Restmüll"
+   ],
+   [
+    "2026-05-26",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-05-28",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-06-03",
+    "Altpapier"
+   ],
+   [
+    "2026-06-10",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-06-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-13",
+    "Sondermüll-Annahme",
+    "Wertstoffhof der EMiL-AöR, Hüllhorst"
+   ],
+   [
+    "2026-06-17",
+    "Restmüll"
+   ],
+   [
+    "2026-06-19",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-06-22",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-06-24",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-07-01",
+    "Altpapier"
+   ],
+   [
+    "2026-07-08",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-07-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-15",
+    "Restmüll"
+   ],
+   [
+    "2026-07-20",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-07-22",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-07-29",
+    "Altpapier"
+   ],
+   [
+    "2026-08-05",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-08-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-12",
+    "Restmüll"
+   ],
+   [
+    "2026-08-14",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-08-17",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-08-19",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-08-26",
+    "Altpapier"
+   ],
+   [
+    "2026-09-02",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-09-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-09",
+    "Restmüll"
+   ],
+   [
+    "2026-09-14",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-09-16",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-09-23",
+    "Altpapier"
+   ],
+   [
+    "2026-09-30",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-10-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-07",
+    "Restmüll"
+   ],
+   [
+    "2026-10-12",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-10-14",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-10-21",
+    "Altpapier"
+   ],
+   [
+    "2026-10-23",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-10-28",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-10-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-04",
+    "Restmüll"
+   ],
+   [
+    "2026-11-07",
+    "Sondermüll-Annahme",
+    "Wertstoffhof der EMiL-AöR, Hüllhorst"
+   ],
+   [
+    "2026-11-09",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-11-11",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-11-18",
+    "Altpapier"
+   ],
+   [
+    "2026-11-25",
+    "Biomüll und Sommerbiotonne"
+   ],
+   [
+    "2026-11-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-02",
+    "Restmüll"
+   ],
+   [
+    "2026-12-07",
+    "Gelbe Container (1.100 l)"
+   ],
+   [
+    "2026-12-09",
+    "Biomüll"
+   ],
+   [
+    "2026-12-16",
+    "Altpapier"
+   ],
+   [
+    "2026-12-18",
+    "Sperrmüll",
+    "nur nach Anmeldung bei der EMiL-AöR"
+   ],
+   [
+    "2026-12-22",
+    "Biomüll"
+   ],
+   [
+    "2026-12-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-30",
+    "Restmüll"
+   ]
+  ]
+ }
+}

@@ -1,0 +1,380 @@
+{
+ "key": "gaienhofen",
+ "title": "Gemeinde Gaienhofen",
+ "source": "https://www.gaienhofen.de/_Resources/Persistent/72f24706f7f3467365476ec13c83578a460e861f/Abfallkalender_Gaienhofen_2026.pdf",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Ort",
+ "notice": null,
+ "areas": [
+  {
+   "id": "gaienhofen",
+   "title": "Gaienhofen",
+   "group": null,
+   "plan": "p1"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-05",
+    "Biomüll"
+   ],
+   [
+    "2026-01-07",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-01-08",
+    "Restmüll"
+   ],
+   [
+    "2026-01-17",
+    "Biomüll"
+   ],
+   [
+    "2026-01-27",
+    "Elektroschrott"
+   ],
+   [
+    "2026-01-30",
+    "Biomüll"
+   ],
+   [
+    "2026-01-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-02",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-02-03",
+    "Restmüll"
+   ],
+   [
+    "2026-02-13",
+    "Biomüll"
+   ],
+   [
+    "2026-02-27",
+    "Biomüll"
+   ],
+   [
+    "2026-02-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-02",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-03-03",
+    "Restmüll"
+   ],
+   [
+    "2026-03-13",
+    "Biomüll"
+   ],
+   [
+    "2026-03-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-30",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-03-31",
+    "Restmüll"
+   ],
+   [
+    "2026-04-07",
+    "Biomüll"
+   ],
+   [
+    "2026-04-13",
+    "Biomüll"
+   ],
+   [
+    "2026-04-18",
+    "Biomüll"
+   ],
+   [
+    "2026-04-23",
+    "Altholz"
+   ],
+   [
+    "2026-04-24",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll"
+   ],
+   [
+    "2026-04-27",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-04-28",
+    "Problemstoffsammlung"
+   ],
+   [
+    "2026-04-28",
+    "Restmüll"
+   ],
+   [
+    "2026-05-02",
+    "Biomüll"
+   ],
+   [
+    "2026-05-08",
+    "Biomüll"
+   ],
+   [
+    "2026-05-16",
+    "Biomüll"
+   ],
+   [
+    "2026-05-22",
+    "Biomüll"
+   ],
+   [
+    "2026-05-22",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-26",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-05-27",
+    "Restmüll"
+   ],
+   [
+    "2026-05-30",
+    "Biomüll"
+   ],
+   [
+    "2026-06-06",
+    "Biomüll"
+   ],
+   [
+    "2026-06-12",
+    "Biomüll"
+   ],
+   [
+    "2026-06-19",
+    "Biomüll"
+   ],
+   [
+    "2026-06-19",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-22",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-06-23",
+    "Restmüll"
+   ],
+   [
+    "2026-06-26",
+    "Biomüll"
+   ],
+   [
+    "2026-07-02",
+    "Elektroschrott"
+   ],
+   [
+    "2026-07-03",
+    "Biomüll"
+   ],
+   [
+    "2026-07-08",
+    "Problemstoffsammlung"
+   ],
+   [
+    "2026-07-10",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-20",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-07-21",
+    "Restmüll"
+   ],
+   [
+    "2026-07-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-31",
+    "Biomüll"
+   ],
+   [
+    "2026-08-07",
+    "Biomüll"
+   ],
+   [
+    "2026-08-14",
+    "Biomüll"
+   ],
+   [
+    "2026-08-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-17",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-08-18",
+    "Restmüll"
+   ],
+   [
+    "2026-08-21",
+    "Biomüll"
+   ],
+   [
+    "2026-08-28",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-14",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-09-15",
+    "Restmüll"
+   ],
+   [
+    "2026-09-18",
+    "Biomüll"
+   ],
+   [
+    "2026-09-25",
+    "Biomüll"
+   ],
+   [
+    "2026-10-02",
+    "Biomüll"
+   ],
+   [
+    "2026-10-09",
+    "Biomüll"
+   ],
+   [
+    "2026-10-09",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-12",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-10-13",
+    "Restmüll"
+   ],
+   [
+    "2026-10-16",
+    "Biomüll"
+   ],
+   [
+    "2026-10-23",
+    "Biomüll"
+   ],
+   [
+    "2026-10-30",
+    "Biomüll"
+   ],
+   [
+    "2026-11-06",
+    "Biomüll"
+   ],
+   [
+    "2026-11-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-09",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-11-10",
+    "Restmüll"
+   ],
+   [
+    "2026-11-16",
+    "Altholz"
+   ],
+   [
+    "2026-11-17",
+    "Sperrmüll"
+   ],
+   [
+    "2026-11-20",
+    "Biomüll"
+   ],
+   [
+    "2026-12-04",
+    "Biomüll"
+   ],
+   [
+    "2026-12-04",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-07",
+    "Altpapier (Blaue Tonne)"
+   ],
+   [
+    "2026-12-07",
+    "Problemstoffsammlung"
+   ],
+   [
+    "2026-12-08",
+    "Restmüll"
+   ],
+   [
+    "2026-12-18",
+    "Biomüll"
+   ]
+  ]
+ }
+}

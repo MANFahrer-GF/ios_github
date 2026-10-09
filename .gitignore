@@ -19,3 +19,7 @@ build/
 
 # Arbeitskopien von Hilfs-Agenten
 .claude/worktrees/
+
+# Jahresdaten: PDF-Downloads
+tools/pdfkalender/cache/
+__pycache__/

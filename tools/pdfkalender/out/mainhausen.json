@@ -1,0 +1,2770 @@
+{
+ "key": "mainhausen",
+ "title": "Gemeinde Mainhausen",
+ "source": "https://www.mainhausen.de/fileadmin/Dateien/Cross7/Startseite/Bauen%2C_Umwelt_%26_Abfall/Abfallwirtschaft/Abfallkalender/abfallkalender-2026-web.pdf",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Straße",
+ "notice": null,
+ "areas": [
+  {
+   "id": "aussenliegend",
+   "title": "Außenliegend",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "falkenauerstrasse",
+   "title": "Falkenauerstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_graessigsten_weg_aussenliegend",
+   "title": "Am grässigsten Weg / Außenliegend",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "faehrweg",
+   "title": "Fährweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "ahornstrasse",
+   "title": "Ahornstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "feldchengasse",
+   "title": "Feldchengasse",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "akazienweg",
+   "title": "Akazienweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "feldstrasse",
+   "title": "Feldstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "albert_schweitzer_strasse",
+   "title": "Albert-Schweitzer-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "fliederweg",
+   "title": "Fliederweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_alten_forsthaus",
+   "title": "Am alten Forsthaus",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "forsthausstrasse",
+   "title": "Forsthausstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_bahnhof",
+   "title": "Am Bahnhof",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "freiheitsstrasse",
+   "title": "Freiheitsstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_gellmannsroedchen",
+   "title": "Am Gellmannsrödchen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "friedensstrasse",
+   "title": "Friedensstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_muehlbach",
+   "title": "Am Mühlbach",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "friedhofstrasse",
+   "title": "Friedhofstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_schwalbennest",
+   "title": "Am Schwalbennest",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "friedrich_ebert_strasse",
+   "title": "Friedrich-Ebert-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_see",
+   "title": "Am See",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "gartenstrasse",
+   "title": "Gartenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_sportplatz",
+   "title": "Am Sportplatz",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "geschwister_scholl_strasse",
+   "title": "Geschwister-Scholl-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_wolfsbaum",
+   "title": "Am Wolfsbaum",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "ginkgoring",
+   "title": "Ginkgoring",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_zellerbruch",
+   "title": "Am Zellerbruch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "goethestrasse",
+   "title": "Goethestraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "an_den_mainwiesen",
+   "title": "An den Mainwiesen",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "goetzenweg",
+   "title": "Götzenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "augsburger_weg",
+   "title": "Augsburger Weg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "grenzweg",
+   "title": "Grenzweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "aussigerstrasse",
+   "title": "Aussigerstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "grimmstrasse",
+   "title": "Grimmstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "babenhaeuser_strasse",
+   "title": "Babenhäuser Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "grundstrasse",
+   "title": "Grundstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bahnhofstrasse",
+   "title": "Bahnhofstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "haagstrasse",
+   "title": "Haagstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bensbruchstrasse",
+   "title": "Bensbruchstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hammerstrasse",
+   "title": "Hammerstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "berliner_strasse",
+   "title": "Berliner Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "harreshaeuser_strasse",
+   "title": "Harreshäuser Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "birkenstrasse",
+   "title": "Birkenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hauptstrasse",
+   "title": "Hauptstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "blumenweg",
+   "title": "Blumenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "heimatstrasse",
+   "title": "Heimatstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "breslauer_strasse",
+   "title": "Breslauer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "heinrich_heine_strasse",
+   "title": "Heinrich-Heine-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "brueder_grimm_strasse",
+   "title": "Brüder-Grimm-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hellmesbruch",
+   "title": "Hellmesbruch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "buchenlohweg",
+   "title": "Buchenlohweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hermannstrasse",
+   "title": "Hermannstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "buchenstrasse",
+   "title": "Buchenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hirtengasse",
+   "title": "Hirtengasse",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "chemnitzer_strasse",
+   "title": "Chemnitzer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "huegelstrasse",
+   "title": "Hügelstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "danziger_strasse",
+   "title": "Danziger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "humboldtstrasse",
+   "title": "Humboldtstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dieselstrasse",
+   "title": "Dieselstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "industriestrasse",
+   "title": "Industriestraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "eger_strasse",
+   "title": "Eger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "jahnstrasse",
+   "title": "Jahnstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "eichenstrasse",
+   "title": "Eichenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kantstrasse",
+   "title": "Kantstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "eifelstrasse",
+   "title": "Eifelstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "niedergaertenstrasse",
+   "title": "Niedergärtenstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "sudetensiedlung",
+   "title": "Sudetensiedlung",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "erlenweg",
+   "title": "Erlenweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "nord_west_ring_strasse",
+   "title": "Nord-West-Ring-Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "taunusstrasse",
+   "title": "Taunusstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "erwin_grimm_ring",
+   "title": "Erwin-Grimm-Ring",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "obergaertenstrasse",
+   "title": "Obergärtenstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "theodor_heuss_strasse",
+   "title": "Theodor-Heuss-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "erzbergerstrasse",
+   "title": "Erzbergerstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "obergasse",
+   "title": "Obergasse",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "tulpenweg",
+   "title": "Tulpenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kaethchen_paulus_strasse",
+   "title": "Käthchen-Paulus-Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "odenwaldstrasse",
+   "title": "Odenwaldstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "waldstrasse",
+   "title": "Waldstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "karl_steil_strasse",
+   "title": "Karl-Steil-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "karl_liebknecht_strasse",
+   "title": "Karl-Liebknecht-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "wendelinusstrasse",
+   "title": "Wendelinusstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "keilmannplatz",
+   "title": "Keilmannplatz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ostring",
+   "title": "Ostring",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wiesenstrasse",
+   "title": "Wiesenstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "keilmannstrasse",
+   "title": "Keilmannstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "pfortenstrasse",
+   "title": "Pfortenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "wingertspfad",
+   "title": "Wingertspfad",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kettelerstrasse",
+   "title": "Kettelerstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "platanenstrasse",
+   "title": "Platanenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "wingertstrasse",
+   "title": "Wingertstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kilianusstrasse",
+   "title": "Kilianusstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "poelser_strasse",
+   "title": "Pölser Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "wupperstrasse",
+   "title": "Wupperstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "kirchgasse",
+   "title": "Kirchgasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "querstrasse",
+   "title": "Querstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zellhaeuser_strasse",
+   "title": "Zellhäuser Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "kirchwaldstrasse",
+   "title": "Kirchwaldstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "rathausstrasse",
+   "title": "Rathausstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "zellweg",
+   "title": "Zellweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "klein_welzheimer_strasse",
+   "title": "Klein-Welzheimer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "rathenaustrasse",
+   "title": "Rathenaustraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zellwiesenweg",
+   "title": "Zellwiesenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "konrad_adenauer_strasse",
+   "title": "Konrad-Adenauer-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "rheinstrasse",
+   "title": "Rheinstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "kurt_schumacher_strasse",
+   "title": "Kurt-Schumacher-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "rhoenstrasse",
+   "title": "Rhönstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "lahnstrasse",
+   "title": "Lahnstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "ringstrasse",
+   "title": "Ringstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "lehmkautenweg",
+   "title": "Lehmkautenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "roehrigstrasse",
+   "title": "Röhrigstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "lehrer_lommel_weg",
+   "title": "Lehrer-Lommel Weg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "roemerstrasse",
+   "title": "Römerstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lessingstrasse_ost_nr_1_11",
+   "title": "Lessingstraße/ Ost (Nr.1-11)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "rosenweg",
+   "title": "Rosenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "lessingstrasse_west_nr_12_ende",
+   "title": "Lessingstraße/ West (Nr. 12 - Ende)",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "ruhrstrasse",
+   "title": "Ruhrstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "leuschnerplatz",
+   "title": "Leuschnerplatz",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "sandgasse",
+   "title": "Sandgasse",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "ludwigstrasse_ost_nr_1_17",
+   "title": "Ludwigstraße/ Ost (Nr. 1-17)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schillerstrasse",
+   "title": "Schillerstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "ludwigstrasse_west_nr_18_ende",
+   "title": "Ludwigstraße/ West (Nr. 18-Ende)",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schimmelweg",
+   "title": "Schimmelweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "magdruh",
+   "title": "Magdruh",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schmalwiesenweg",
+   "title": "Schmalwiesenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "mainflinger_strasse",
+   "title": "Mainflinger Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "schulstrasse",
+   "title": "Schulstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "mainring",
+   "title": "Mainring",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "seestrasse",
+   "title": "Seestraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mainuferweg",
+   "title": "Mainuferweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "seligenstaedter_strasse_ost_nr_1_35",
+   "title": "Seligenstädter Straße/ Ost (Nr. 1-35)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mainweg",
+   "title": "Mainweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "seligenstaedter_strasse_west_36_ende_32_34",
+   "title": "Seligenstädter Straße/ West (36-Ende) + 32 + 34",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "martinstrasse_ost_nr_1_21",
+   "title": "Martinstraße/ Ost (Nr. 1-21)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "spessartstrasse",
+   "title": "Spessartstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "martinstrasse_west_nr_22_ende",
+   "title": "Martinstraße/ West (Nr. 22-Ende)",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "stauffenbergstrasse",
+   "title": "Stauffenbergstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "mozartstrasse",
+   "title": "Mozartstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "steinweg",
+   "title": "Steinweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "muehlwiesenweg",
+   "title": "Mühlwiesenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "stockstaedter_strasse",
+   "title": "Stockstädter Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "neckarstrasse",
+   "title": "Neckarstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "stockstaedter_weg",
+   "title": "Stockstädter Weg",
+   "group": null,
+   "plan": "p4"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-02",
+    "Biomüll"
+   ],
+   [
+    "2026-01-13",
+    "Altpapier"
+   ],
+   [
+    "2026-01-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-14",
+    "Restmüll"
+   ],
+   [
+    "2026-01-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-15",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-16",
+    "Biomüll"
+   ],
+   [
+    "2026-01-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-28",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Schadstoffmobil",
+    "16.00–18.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-30",
+    "Biomüll"
+   ],
+   [
+    "2026-02-10",
+    "Altpapier"
+   ],
+   [
+    "2026-02-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-11",
+    "Restmüll"
+   ],
+   [
+    "2026-02-13",
+    "Biomüll"
+   ],
+   [
+    "2026-02-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-25",
+    "Restmüll"
+   ],
+   [
+    "2026-02-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-10",
+    "Altpapier"
+   ],
+   [
+    "2026-03-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-11",
+    "Restmüll"
+   ],
+   [
+    "2026-03-12",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-13",
+    "Biomüll"
+   ],
+   [
+    "2026-03-14",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-03-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-25",
+    "Restmüll"
+   ],
+   [
+    "2026-03-27",
+    "Biomüll"
+   ],
+   [
+    "2026-04-07",
+    "Altpapier"
+   ],
+   [
+    "2026-04-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-08",
+    "Restmüll"
+   ],
+   [
+    "2026-04-10",
+    "Biomüll"
+   ],
+   [
+    "2026-04-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-22",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-04-24",
+    "Biomüll"
+   ],
+   [
+    "2026-05-05",
+    "Altpapier"
+   ],
+   [
+    "2026-05-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-06",
+    "Restmüll"
+   ],
+   [
+    "2026-05-08",
+    "Biomüll"
+   ],
+   [
+    "2026-05-15",
+    "Biomüll"
+   ],
+   [
+    "2026-05-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-20",
+    "Restmüll"
+   ],
+   [
+    "2026-05-22",
+    "Biomüll"
+   ],
+   [
+    "2026-05-29",
+    "Biomüll"
+   ],
+   [
+    "2026-06-02",
+    "Altpapier"
+   ],
+   [
+    "2026-06-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-03",
+    "Restmüll"
+   ],
+   [
+    "2026-06-05",
+    "Biomüll"
+   ],
+   [
+    "2026-06-12",
+    "Biomüll"
+   ],
+   [
+    "2026-06-13",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-06-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-17",
+    "Restmüll"
+   ],
+   [
+    "2026-06-19",
+    "Biomüll"
+   ],
+   [
+    "2026-06-26",
+    "Biomüll"
+   ],
+   [
+    "2026-06-30",
+    "Altpapier"
+   ],
+   [
+    "2026-06-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-01",
+    "Restmüll"
+   ],
+   [
+    "2026-07-03",
+    "Biomüll"
+   ],
+   [
+    "2026-07-10",
+    "Biomüll"
+   ],
+   [
+    "2026-07-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-15",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Schadstoffmobil",
+    "15.00–17.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-07-17",
+    "Biomüll"
+   ],
+   [
+    "2026-07-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-28",
+    "Altpapier"
+   ],
+   [
+    "2026-07-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-29",
+    "Restmüll"
+   ],
+   [
+    "2026-07-29",
+    "Schadstoffmobil",
+    "15.30–18.00 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-07-31",
+    "Biomüll"
+   ],
+   [
+    "2026-08-07",
+    "Biomüll"
+   ],
+   [
+    "2026-08-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-12",
+    "Restmüll"
+   ],
+   [
+    "2026-08-14",
+    "Biomüll"
+   ],
+   [
+    "2026-08-21",
+    "Biomüll"
+   ],
+   [
+    "2026-08-25",
+    "Altpapier"
+   ],
+   [
+    "2026-08-25",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-26",
+    "Restmüll"
+   ],
+   [
+    "2026-08-28",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Biomüll"
+   ],
+   [
+    "2026-09-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-09-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-09",
+    "Restmüll"
+   ],
+   [
+    "2026-09-11",
+    "Biomüll"
+   ],
+   [
+    "2026-09-18",
+    "Biomüll"
+   ],
+   [
+    "2026-09-22",
+    "Altpapier"
+   ],
+   [
+    "2026-09-22",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-23",
+    "Restmüll"
+   ],
+   [
+    "2026-09-25",
+    "Biomüll"
+   ],
+   [
+    "2026-10-02",
+    "Biomüll"
+   ],
+   [
+    "2026-10-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-07",
+    "Restmüll"
+   ],
+   [
+    "2026-10-09",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-10-20",
+    "Altpapier"
+   ],
+   [
+    "2026-10-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-21",
+    "Restmüll"
+   ],
+   [
+    "2026-10-23",
+    "Biomüll"
+   ],
+   [
+    "2026-11-03",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-04",
+    "Restmüll"
+   ],
+   [
+    "2026-11-06",
+    "Biomüll"
+   ],
+   [
+    "2026-11-12",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-17",
+    "Altpapier"
+   ],
+   [
+    "2026-11-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-18",
+    "Restmüll"
+   ],
+   [
+    "2026-11-20",
+    "Biomüll"
+   ],
+   [
+    "2026-12-01",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-02",
+    "Restmüll"
+   ],
+   [
+    "2026-12-04",
+    "Biomüll"
+   ],
+   [
+    "2026-12-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-12-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-15",
+    "Altpapier"
+   ],
+   [
+    "2026-12-16",
+    "Restmüll"
+   ],
+   [
+    "2026-12-18",
+    "Biomüll"
+   ],
+   [
+    "2026-12-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-30",
+    "Restmüll"
+   ],
+   [
+    "2026-12-31",
+    "Biomüll"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-12",
+    "Restmüll"
+   ],
+   [
+    "2026-01-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-15",
+    "Altpapier"
+   ],
+   [
+    "2026-01-16",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-26",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-01-28",
+    "Schadstoffmobil",
+    "16.00–18.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-02-09",
+    "Restmüll"
+   ],
+   [
+    "2026-02-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-12",
+    "Altpapier"
+   ],
+   [
+    "2026-02-23",
+    "Restmüll"
+   ],
+   [
+    "2026-02-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-09",
+    "Restmüll"
+   ],
+   [
+    "2026-03-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-12",
+    "Altpapier"
+   ],
+   [
+    "2026-03-13",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-14",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-03-23",
+    "Restmüll"
+   ],
+   [
+    "2026-03-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-04-07",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll"
+   ],
+   [
+    "2026-04-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-09",
+    "Altpapier"
+   ],
+   [
+    "2026-04-20",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-22",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-05-04",
+    "Restmüll"
+   ],
+   [
+    "2026-05-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-07",
+    "Altpapier"
+   ],
+   [
+    "2026-05-13",
+    "Biomüll"
+   ],
+   [
+    "2026-05-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-18",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-27",
+    "Biomüll"
+   ],
+   [
+    "2026-06-01",
+    "Restmüll"
+   ],
+   [
+    "2026-06-02",
+    "Altpapier"
+   ],
+   [
+    "2026-06-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-10",
+    "Biomüll"
+   ],
+   [
+    "2026-06-13",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-06-15",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-24",
+    "Biomüll"
+   ],
+   [
+    "2026-06-29",
+    "Restmüll"
+   ],
+   [
+    "2026-06-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-02",
+    "Altpapier"
+   ],
+   [
+    "2026-07-08",
+    "Biomüll"
+   ],
+   [
+    "2026-07-13",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-15",
+    "Schadstoffmobil",
+    "15.00–17.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-07-22",
+    "Biomüll"
+   ],
+   [
+    "2026-07-27",
+    "Restmüll"
+   ],
+   [
+    "2026-07-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-29",
+    "Schadstoffmobil",
+    "15.30–18.00 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-07-30",
+    "Altpapier"
+   ],
+   [
+    "2026-08-05",
+    "Biomüll"
+   ],
+   [
+    "2026-08-10",
+    "Restmüll"
+   ],
+   [
+    "2026-08-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-19",
+    "Biomüll"
+   ],
+   [
+    "2026-08-24",
+    "Restmüll"
+   ],
+   [
+    "2026-08-25",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-08-27",
+    "Altpapier"
+   ],
+   [
+    "2026-09-02",
+    "Biomüll"
+   ],
+   [
+    "2026-09-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-09-07",
+    "Restmüll"
+   ],
+   [
+    "2026-09-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-16",
+    "Biomüll"
+   ],
+   [
+    "2026-09-21",
+    "Restmüll"
+   ],
+   [
+    "2026-09-22",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-24",
+    "Altpapier"
+   ],
+   [
+    "2026-09-30",
+    "Biomüll"
+   ],
+   [
+    "2026-10-05",
+    "Restmüll"
+   ],
+   [
+    "2026-10-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-10-19",
+    "Restmüll"
+   ],
+   [
+    "2026-10-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-10-22",
+    "Altpapier"
+   ],
+   [
+    "2026-11-02",
+    "Restmüll"
+   ],
+   [
+    "2026-11-03",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-13",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-16",
+    "Restmüll"
+   ],
+   [
+    "2026-11-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-19",
+    "Altpapier"
+   ],
+   [
+    "2026-11-30",
+    "Restmüll"
+   ],
+   [
+    "2026-12-01",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-12-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-14",
+    "Restmüll"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-17",
+    "Altpapier"
+   ],
+   [
+    "2026-12-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-28",
+    "Restmüll"
+   ],
+   [
+    "2026-12-30",
+    "Biomüll"
+   ]
+  ],
+  "p3": [
+   [
+    "2026-01-12",
+    "Restmüll"
+   ],
+   [
+    "2026-01-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-14",
+    "Altpapier"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-16",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-26",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-01-28",
+    "Schadstoffmobil",
+    "16.00–18.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-02-09",
+    "Restmüll"
+   ],
+   [
+    "2026-02-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-11",
+    "Altpapier"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-23",
+    "Restmüll"
+   ],
+   [
+    "2026-02-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-09",
+    "Restmüll"
+   ],
+   [
+    "2026-03-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-11",
+    "Altpapier"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-13",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-14",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-03-23",
+    "Restmüll"
+   ],
+   [
+    "2026-03-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-04-07",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Altpapier"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll"
+   ],
+   [
+    "2026-04-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-20",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-22",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-05-04",
+    "Restmüll"
+   ],
+   [
+    "2026-05-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-06",
+    "Altpapier"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-13",
+    "Biomüll"
+   ],
+   [
+    "2026-05-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-18",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-27",
+    "Biomüll"
+   ],
+   [
+    "2026-06-01",
+    "Restmüll"
+   ],
+   [
+    "2026-06-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-03",
+    "Altpapier"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-10",
+    "Biomüll"
+   ],
+   [
+    "2026-06-13",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-06-15",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-24",
+    "Biomüll"
+   ],
+   [
+    "2026-06-29",
+    "Restmüll"
+   ],
+   [
+    "2026-06-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-01",
+    "Altpapier"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-08",
+    "Biomüll"
+   ],
+   [
+    "2026-07-13",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-15",
+    "Schadstoffmobil",
+    "15.00–17.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-07-22",
+    "Biomüll"
+   ],
+   [
+    "2026-07-27",
+    "Restmüll"
+   ],
+   [
+    "2026-07-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-29",
+    "Altpapier"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-29",
+    "Schadstoffmobil",
+    "15.30–18.00 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-08-05",
+    "Biomüll"
+   ],
+   [
+    "2026-08-10",
+    "Restmüll"
+   ],
+   [
+    "2026-08-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-19",
+    "Biomüll"
+   ],
+   [
+    "2026-08-24",
+    "Restmüll"
+   ],
+   [
+    "2026-08-25",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-26",
+    "Altpapier"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-09-02",
+    "Biomüll"
+   ],
+   [
+    "2026-09-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-09-07",
+    "Restmüll"
+   ],
+   [
+    "2026-09-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-16",
+    "Biomüll"
+   ],
+   [
+    "2026-09-21",
+    "Restmüll"
+   ],
+   [
+    "2026-09-22",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-23",
+    "Altpapier"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-30",
+    "Biomüll"
+   ],
+   [
+    "2026-10-05",
+    "Restmüll"
+   ],
+   [
+    "2026-10-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-10-19",
+    "Restmüll"
+   ],
+   [
+    "2026-10-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-21",
+    "Altpapier"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-11-02",
+    "Restmüll"
+   ],
+   [
+    "2026-11-03",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-13",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-16",
+    "Restmüll"
+   ],
+   [
+    "2026-11-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-18",
+    "Altpapier"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-30",
+    "Restmüll"
+   ],
+   [
+    "2026-12-01",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-12-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-14",
+    "Restmüll"
+   ],
+   [
+    "2026-12-16",
+    "Altpapier"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-28",
+    "Restmüll"
+   ],
+   [
+    "2026-12-30",
+    "Biomüll"
+   ]
+  ],
+  "p4": [
+   [
+    "2026-01-02",
+    "Biomüll"
+   ],
+   [
+    "2026-01-12",
+    "Altpapier"
+   ],
+   [
+    "2026-01-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-13",
+    "Restmüll"
+   ],
+   [
+    "2026-01-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-15",
+    "Biomüll"
+   ],
+   [
+    "2026-01-15",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-27",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Schadstoffmobil",
+    "16.00–18.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-01-29",
+    "Biomüll"
+   ],
+   [
+    "2026-02-09",
+    "Altpapier"
+   ],
+   [
+    "2026-02-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-10",
+    "Restmüll"
+   ],
+   [
+    "2026-02-12",
+    "Biomüll"
+   ],
+   [
+    "2026-02-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-24",
+    "Restmüll"
+   ],
+   [
+    "2026-02-26",
+    "Biomüll"
+   ],
+   [
+    "2026-03-09",
+    "Altpapier"
+   ],
+   [
+    "2026-03-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-10",
+    "Restmüll"
+   ],
+   [
+    "2026-03-12",
+    "Biomüll"
+   ],
+   [
+    "2026-03-12",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-14",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-03-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-24",
+    "Restmüll"
+   ],
+   [
+    "2026-03-26",
+    "Biomüll"
+   ],
+   [
+    "2026-04-07",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Altpapier"
+   ],
+   [
+    "2026-04-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-09",
+    "Biomüll"
+   ],
+   [
+    "2026-04-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-21",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-04-23",
+    "Biomüll"
+   ],
+   [
+    "2026-05-04",
+    "Altpapier"
+   ],
+   [
+    "2026-05-05",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-05",
+    "Restmüll"
+   ],
+   [
+    "2026-05-07",
+    "Biomüll"
+   ],
+   [
+    "2026-05-13",
+    "Biomüll"
+   ],
+   [
+    "2026-05-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-19",
+    "Restmüll"
+   ],
+   [
+    "2026-05-21",
+    "Biomüll"
+   ],
+   [
+    "2026-05-28",
+    "Biomüll"
+   ],
+   [
+    "2026-06-01",
+    "Altpapier"
+   ],
+   [
+    "2026-06-02",
+    "Biomüll"
+   ],
+   [
+    "2026-06-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-02",
+    "Restmüll"
+   ],
+   [
+    "2026-06-11",
+    "Biomüll"
+   ],
+   [
+    "2026-06-13",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-06-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-16",
+    "Restmüll"
+   ],
+   [
+    "2026-06-18",
+    "Biomüll"
+   ],
+   [
+    "2026-06-25",
+    "Biomüll"
+   ],
+   [
+    "2026-06-29",
+    "Altpapier"
+   ],
+   [
+    "2026-06-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-30",
+    "Restmüll"
+   ],
+   [
+    "2026-07-02",
+    "Biomüll"
+   ],
+   [
+    "2026-07-09",
+    "Biomüll"
+   ],
+   [
+    "2026-07-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-14",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Schadstoffmobil",
+    "15.00–17.00 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-07-16",
+    "Biomüll"
+   ],
+   [
+    "2026-07-23",
+    "Biomüll"
+   ],
+   [
+    "2026-07-27",
+    "Altpapier"
+   ],
+   [
+    "2026-07-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-28",
+    "Restmüll"
+   ],
+   [
+    "2026-07-29",
+    "Schadstoffmobil",
+    "15.30–18.00 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-07-30",
+    "Biomüll"
+   ],
+   [
+    "2026-08-06",
+    "Biomüll"
+   ],
+   [
+    "2026-08-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-11",
+    "Restmüll"
+   ],
+   [
+    "2026-08-13",
+    "Biomüll"
+   ],
+   [
+    "2026-08-20",
+    "Biomüll"
+   ],
+   [
+    "2026-08-24",
+    "Altpapier"
+   ],
+   [
+    "2026-08-25",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-25",
+    "Restmüll"
+   ],
+   [
+    "2026-08-27",
+    "Biomüll"
+   ],
+   [
+    "2026-09-03",
+    "Biomüll"
+   ],
+   [
+    "2026-09-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-09-08",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-08",
+    "Restmüll"
+   ],
+   [
+    "2026-09-10",
+    "Biomüll"
+   ],
+   [
+    "2026-09-17",
+    "Biomüll"
+   ],
+   [
+    "2026-09-21",
+    "Altpapier"
+   ],
+   [
+    "2026-09-22",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-22",
+    "Restmüll"
+   ],
+   [
+    "2026-09-24",
+    "Biomüll"
+   ],
+   [
+    "2026-10-01",
+    "Biomüll"
+   ],
+   [
+    "2026-10-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-06",
+    "Restmüll"
+   ],
+   [
+    "2026-10-08",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Schadstoffmobil",
+    "15.00–17.30 Uhr, Zellhausen, Ostring gegenüber Hausnummer 25"
+   ],
+   [
+    "2026-10-19",
+    "Altpapier"
+   ],
+   [
+    "2026-10-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-20",
+    "Restmüll"
+   ],
+   [
+    "2026-10-22",
+    "Biomüll"
+   ],
+   [
+    "2026-11-03",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-03",
+    "Restmüll"
+   ],
+   [
+    "2026-11-05",
+    "Biomüll"
+   ],
+   [
+    "2026-11-12",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-16",
+    "Altpapier"
+   ],
+   [
+    "2026-11-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-17",
+    "Restmüll"
+   ],
+   [
+    "2026-11-19",
+    "Biomüll"
+   ],
+   [
+    "2026-12-01",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-01",
+    "Restmüll"
+   ],
+   [
+    "2026-12-03",
+    "Biomüll"
+   ],
+   [
+    "2026-12-05",
+    "Schadstoffmobil",
+    "11.30–13.30 Uhr, Mainflingen, Parkplatz am TSG-Sportplatz, Am Sportplatz 1"
+   ],
+   [
+    "2026-12-14",
+    "Altpapier"
+   ],
+   [
+    "2026-12-14",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-15",
+    "Restmüll"
+   ],
+   [
+    "2026-12-17",
+    "Biomüll"
+   ],
+   [
+    "2026-12-28",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-29",
+    "Restmüll"
+   ],
+   [
+    "2026-12-31",
+    "Biomüll"
+   ]
+  ]
+ }
+}
