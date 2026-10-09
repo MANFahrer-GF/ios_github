@@ -98,6 +98,10 @@ INSERT_IT=[('Mannheim','Mannheim','https://www.insert-it.de/BmsAbfallkalenderMan
 MANUAL_EXTRA={}
 # Einträge, deren Kreise ausdrücklich feststehen: keine Zuordnung über gleichnamige Orte oder den Titel
 ONLY_DISTRICTS=set()
+# Einträge, die ihre Kreise nur teilweise bedienen: zählen nur für die Gemeinden in `places`
+PARTIAL=set()
+# Titel „Kreis Karlsruhe“ traf auch den Stadtkreis – die Landkreis-App bedient die Stadt nicht (Stadt: Müllmann/TSK)
+MANUAL_EXTRA[('abfallPlusApp','de.k4systems.abfallappka')]=['Landkreis Karlsruhe']; ONLY_DISTRICTS.add(('abfallPlusApp','de.k4systems.abfallappka'))
 for key,title,web,places,districts in INSERT_IT:
     new.append(('insertIT',key,title,web,places))
     if districts: MANUAL_EXTRA[('insertIT',key)]=districts
@@ -171,6 +175,7 @@ for f in sorted(glob.glob(S+'catalog_additions/*.json')):
         new.append((e['kind'],e['key'],e['title'],e.get('website') or '',e.get('places') or []))
         if e.get('districts'): MANUAL_EXTRA[(e['kind'],e['key'])]=list(e['districts'])
         if e.get('onlyDistricts'): ONLY_DISTRICTS.add((e['kind'],e['key']))
+        if e.get('partial'): PARTIAL.add((e['kind'],e['key']))
 
 lines=[]
 for kind,key,title,web,places in new:
@@ -344,7 +349,7 @@ for kind,key,title,places in entries:
     pl=re.findall(r'"((?:[^"\\]|\\.)*)"',places or '')
     regional=set(mapping.get(eid,[]))
     found=set(LOCAL_MANUAL.get((kind,key),[]))
-    if kind in LOCAL_KINDS:
+    if kind in LOCAL_KINDS or (kind,key) in PARTIAL:
         mapping.pop(eid,None)
         for p in pl:
             for k in regional:

@@ -39,18 +39,18 @@
    "website": "https://muellmann-app.de/",
    "places": ["Aach", "Allensbach", "Bodman-Ludwigshafen", "Gailingen am Hochrhein", "Hohenfels", "Karlsruhe", "Konstanz", "Moos",
               "Mühlhausen-Ehingen", "Mühlingen", "Orsingen-Nenzingen", "Radolfzell am Bodensee", "Reichenau", "Singen (Hohentwiel)", "Stockach"],
-   "districts": ["Landkreis Konstanz", "Stadtkreis Karlsruhe"], "onlyDistricts": true},
+   "districts": ["Landkreis Konstanz", "Stadtkreis Karlsruhe"], "onlyDistricts": true, "partial": true},
   {"kind": "portalsSuedwest", "key": "zvawmk", "title": "ZVA Werra-Meißner-Kreis",
    "website": "https://www.zva-wmk.de/termine/pers%C3%B6nlicher-terminkalender-2026",
    "places": ["Bad Sooden-Allendorf", "Berkatal", "Großalmerode", "Herleshausen", "Hessisch Lichtenau", "Meinhard", "Meißner",
               "Neu-Eichenberg", "Ringgau", "Waldkappel", "Wanfried", "Wehretal", "Weißenborn"],
-   "districts": ["Landkreis Werra-Meißner-Kreis"], "onlyDistricts": true},
+   "districts": ["Landkreis Werra-Meißner-Kreis"], "onlyDistricts": true, "partial": true},
   {"kind": "portalsSuedwest", "key": "kelkheim", "title": "Stadt Kelkheim (Taunus)",
    "website": "https://kelkheim.de/mod_abfallkalender/",
    "places": ["Kelkheim (Taunus)"],
-   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true},
+   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true, "partial": true},
   {"kind": "portalsSuedwest", "key": "floersheim", "title": "Flörsheimer Umweltkalender",
    "website": "https://www.floersheim-umweltkalender.de/abfuhrtermine.html",
    "places": ["Flörsheim am Main"],
-   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true}
+   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true, "partial": true}
 ]
