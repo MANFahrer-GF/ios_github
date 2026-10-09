@@ -87,7 +87,7 @@ enum SyncService {
                 if target.name == old { target.name = mapping.summary }
                 target.sourceKey = mapping.summary
             }
-            if target.sourceKey == nil { target.sourceKey = mapping.summary }
+            if target.sourceKey == nil, (sharedTargets[ObjectIdentifier(target)] ?? 1) == 1 { target.sourceKey = mapping.summary }
             let days = Set(items.map { Days.start(of: $0.date) })
             if let index = collected.firstIndex(where: { $0.target === target }) {
                 collected[index].days.formUnion(days)
