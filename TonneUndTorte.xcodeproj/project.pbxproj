@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E10E44B7D3491D018BD40D7 /* TonneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */; };
+		6EDDBDD64B5C5A76C60B64F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BE9AD4316C1BA62B95B13F /* Foundation.framework */; };
 		A1B2C3D4E5F600000000002B /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F6000000000029 /* TonneCore */; };
 		A1B2C3D4E5F600000000002C /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600000000002A /* TonneCore */; };
 		A1B2C3D4E5F6000000000033 /* TonneWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000015 /* TonneWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -17,6 +19,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4A3B11D6627A6BDBB515E7C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1B2C3D4E5F600000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1B2C3D4E5F6000000000006;
+			remoteInfo = "Tonne & Torte";
+		};
 		A1B2C3D4E5F6000000000035 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A1B2C3D4E5F600000000000A /* Project object */;
@@ -77,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TonneUITests.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tonne & Torte.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000015 /* TonneWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F600000000003D /* TonneUndTorte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneUndTorte.entitlements; sourceTree = "<group>"; };
@@ -89,37 +99,57 @@
 		A1B2C3D4E5F6000000000083 /* TonneWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWatchWidget.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000084 /* TonneWatchWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatchWidget-Info.plist"; sourceTree = "<group>"; };
 		A1B2C3D4E5F60000000000A0 /* TonneWatch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatch-Info.plist"; sourceTree = "<group>"; };
+		A7BE9AD4316C1BA62B95B13F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		C6EF72657DEE35D1CED10DF4 /* TonneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1B2C3D4E5F6000000000002 /* TonneUndTorte */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TonneUndTorte;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000016 /* TonneWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TonneWidget;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000052 /* TonneWatch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TonneWatch;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000066 /* TonneWatchWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TonneWatchWidget;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000070 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6518E3DFAC6228F72490E77B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EDDBDD64B5C5A76C60B64F7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1B2C3D4E5F6000000000003 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -155,6 +185,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D783FAFC03E526157B4EF18 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82EB3B1520F53BCCCE138E04 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		359AA73763E96E10C6E1E122 /* TonneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */,
+			);
+			name = TonneUITests;
+			path = TonneUITests;
+			sourceTree = "<group>";
+		};
+		82EB3B1520F53BCCCE138E04 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A7BE9AD4316C1BA62B95B13F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		A1B2C3D4E5F6000000000004 = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +220,8 @@
 				A1B2C3D4E5F6000000000070 /* Shared */,
 				A1B2C3D4E5F600000000003C /* Config */,
 				A1B2C3D4E5F6000000000005 /* Products */,
+				1D783FAFC03E526157B4EF18 /* Frameworks */,
+				359AA73763E96E10C6E1E122 /* TonneUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -175,6 +232,7 @@
 				A1B2C3D4E5F6000000000015 /* TonneWidget.appex */,
 				A1B2C3D4E5F6000000000051 /* TonneWatch.app */,
 				A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */,
+				C6EF72657DEE35D1CED10DF4 /* TonneUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,6 +255,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		20C7900442ADCE4036338EB8 /* TonneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA57AC793209CF8D929E52C4 /* Build configuration list for PBXNativeTarget "TonneUITests" */;
+			buildPhases = (
+				267DC5183B22525EB2818AD4 /* Sources */,
+				6518E3DFAC6228F72490E77B /* Frameworks */,
+				2D062E69090ABE465F0AB79B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EBD4E96B98EA6C5625A49F54 /* PBXTargetDependency */,
+			);
+			name = TonneUITests;
+			productName = TonneUITests;
+			productReference = C6EF72657DEE35D1CED10DF4 /* TonneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		A1B2C3D4E5F6000000000006 /* Tonne & Torte */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "Tonne & Torte" */;
@@ -345,11 +421,19 @@
 				A1B2C3D4E5F600000000001A /* TonneWidget */,
 				A1B2C3D4E5F6000000000056 /* TonneWatch */,
 				A1B2C3D4E5F600000000006A /* TonneWatchWidget */,
+				20C7900442ADCE4036338EB8 /* TonneUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D062E69090ABE465F0AB79B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1B2C3D4E5F6000000000009 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +465,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		267DC5183B22525EB2818AD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E10E44B7D3491D018BD40D7 /* TonneUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1B2C3D4E5F6000000000008 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,9 +519,50 @@
 			target = A1B2C3D4E5F600000000006A /* TonneWatchWidget */;
 			targetProxy = A1B2C3D4E5F600000000007F /* PBXContainerItemProxy */;
 		};
+		EBD4E96B98EA6C5625A49F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Tonne & Torte";
+			target = A1B2C3D4E5F6000000000006 /* Tonne & Torte */;
+			targetProxy = 4A3B11D6627A6BDBB515E7C4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		4A72F92D7A70781C988EC707 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.UITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = TonneUITests;
+				TEST_TARGET_NAME = "Tonne & Torte";
+			};
+			name = Debug;
+		};
+		5C8A2288192011263970D105 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.UITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = TonneUITests;
+				TEST_TARGET_NAME = "Tonne & Torte";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A1B2C3D4E5F600000000000C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -790,6 +923,15 @@
 			buildConfigurations = (
 				A1B2C3D4E5F600000000006E /* Debug */,
 				A1B2C3D4E5F600000000006F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA57AC793209CF8D929E52C4 /* Build configuration list for PBXNativeTarget "TonneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C8A2288192011263970D105 /* Release */,
+				4A72F92D7A70781C988EC707 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

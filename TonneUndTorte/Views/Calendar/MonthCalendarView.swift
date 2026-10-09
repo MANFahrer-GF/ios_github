@@ -13,6 +13,7 @@ struct MonthCalendarView: View {
 
     @State private var monthStart = MonthCalendarView.firstOfMonth(Date())
     @State private var selectedDay = Days.today()
+    @State private var editing: EventEditTarget?
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
@@ -56,6 +57,7 @@ struct MonthCalendarView: View {
                 ToolbarItem(placement: .topBarLeading) { Button("Heute") { goToToday() } }
                 ToolbarItem(placement: .topBarTrailing) { LocationFilterMenu(locations: locations) }
             }
+            .eventEditorSheet($editing)
         }
     }
 
@@ -122,13 +124,15 @@ struct MonthCalendarView: View {
             if events.isEmpty {
                 Text("Nichts geplant – freier Tag für die Tonne.").font(.subheadline).foregroundStyle(.secondary).card()
             } else {
-                VStack(spacing: 0) {
-                    ForEach(Array(events.enumerated()), id: \.element.id) { index, event in
-                        EventRow(event: event).padding(.vertical, 8)
-                        if index < events.count - 1 { Divider() }
+                // Dieselbe Zeile wie in der Übersicht: Foto, Alter, Jahrgang, Sternzeichen, Anrufen/Nachricht; Tippen öffnet
+                VStack(spacing: 8) {
+                    ForEach(events) { event in
+                        EventItemCard(event: event, person: event.personID.flatMap { id in people.first { $0.id == id } },
+                                      size: 40, showLocation: locations.count > 1) {
+                            editing = EventEditTarget.target(for: event, model: model)
+                        }
                     }
                 }
-                .card()
             }
         }
     }

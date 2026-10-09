@@ -4,14 +4,46 @@ import TonneCore
 /// Geburtstagsliste als PDF: Titel, Datum, Tabelle mit Name, Geburtstag, Alter, nächster Termin, Geschenkideen.
 enum BirthdayPDF {
     static func render(_ rows: [BirthdayExport.Row], title: String = "Tonne & Torte – Geburtstage") -> Data {
-        let pageRect = CGRect(x: 0, y: 0, width: 595, height: 842) // A4 in Punkt
-        let margin: CGFloat = 40
-        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: UIGraphicsPDFRendererFormat())
         let sorted = BirthdayExport.sorted(rows)
         let columns: [(title: String, width: CGFloat)] = [
             (L10n.t("Name", "Name"), 150), (L10n.t("Geburtstag", "Birthday"), 80), (L10n.t("Alter", "Age"), 45),
             (L10n.t("Nächster", "Next"), 110), (L10n.t("Geschenkideen / Notizen", "Gift ideas / notes"), 130),
         ]
+        let values: [[String]] = sorted.map { row in
+            let next = row.annual.next()
+            let turns = next.flatMap { row.annual.years(on: $0) }
+            let nextText = next.map { "\(DateText.short($0)) · \(DateText.countdown($0))" + (turns.map { " (\($0))" } ?? "") } ?? "–"
+            let extra = (row.giftIdeas.map { "🎁 \($0)" } + (row.notes.isEmpty ? [] : [row.notes])).joined(separator: " · ")
+            return [row.name, BirthdayExport.dateString(row.annual), BirthdayExport.currentAge(row.annual).map(String.init) ?? "–", nextText, extra]
+        }
+        let footer = L10n.t("\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · erstellt mit Tonne & Torte", "\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · created with Tonne & Torte")
+        return TablePDF.render(title: title, columns: columns, rows: values, footer: footer)
+    }
+}
+
+/// Eigene Termine als PDF – gleiche Tabelle wie bei den Geburtstagen.
+enum CustomEventPDF {
+    static func render(_ rows: [CustomEventExport.Row], title: String = L10n.t("Tonne & Torte – Eigene Termine", "Tonne & Torte – Custom events")) -> Data {
+        let sorted = CustomEventExport.sorted(rows)
+        let columns: [(title: String, width: CGFloat)] = [
+            (L10n.t("Termin", "Event"), 170), (L10n.t("Wiederholung", "Repeats"), 110), (L10n.t("Uhrzeit", "Time"), 45),
+            (L10n.t("Nächster", "Next"), 110), (L10n.t("Notizen", "Notes"), 80),
+        ]
+        let values: [[String]] = sorted.map { row in
+            [row.title, row.recurrence, row.timeText.isEmpty ? "–" : row.timeText,
+             row.next.map { "\(DateText.short($0)) · \(DateText.countdown($0))" } ?? "–", row.notes]
+        }
+        let footer = L10n.t("\(L10n.count(sorted.count, "Termin", "Termine", "event", "events")) · erstellt mit Tonne & Torte", "\(L10n.count(sorted.count, "Termin", "Termine", "event", "events")) · created with Tonne & Torte")
+        return TablePDF.render(title: title, columns: columns, rows: values, footer: footer)
+    }
+}
+
+/// A4-Tabelle mit Titel, Datum/Seitenzahl, Kopfzeile, abwechselnd hinterlegten Zeilen und Fußzeile.
+enum TablePDF {
+    static func render(title: String, columns: [(title: String, width: CGFloat)], rows: [[String]], footer: String) -> Data {
+        let pageRect = CGRect(x: 0, y: 0, width: 595, height: 842) // A4 in Punkt
+        let margin: CGFloat = 40
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: UIGraphicsPDFRendererFormat())
         let titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         let headFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
         let bodyFont = UIFont.systemFont(ofSize: 10)
@@ -40,17 +72,12 @@ enum BirthdayPDF {
                 y += rowHeight + 2
             }
             startPage()
-            for (index, row) in sorted.enumerated() {
+            for (index, values) in rows.enumerated() {
                 if y + rowHeight > pageRect.height - margin { startPage() }
                 if index % 2 == 1 {
                     UIColor.systemGray6.withAlphaComponent(0.6).setFill()
                     UIBezierPath(rect: CGRect(x: margin, y: y, width: pageRect.width - 2 * margin, height: rowHeight)).fill()
                 }
-                let next = row.annual.next()
-                let turns = next.flatMap { row.annual.years(on: $0) }
-                let nextText = next.map { "\(DateText.short($0)) · \(DateText.countdown($0))" + (turns.map { " (\($0))" } ?? "") } ?? "–"
-                let extra = (row.giftIdeas.map { "🎁 \($0)" } + (row.notes.isEmpty ? [] : [row.notes])).joined(separator: " · ")
-                let values = [row.name, BirthdayExport.dateString(row.annual), BirthdayExport.currentAge(row.annual).map(String.init) ?? "–", nextText, extra]
                 var x = margin
                 for (column, value) in zip(columns, values) {
                     let paragraph = NSMutableParagraphStyle()
@@ -60,7 +87,6 @@ enum BirthdayPDF {
                 }
                 y += rowHeight
             }
-            let footer = L10n.t("\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · erstellt mit Tonne & Torte", "\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · created with Tonne & Torte")
             footer.draw(at: CGPoint(x: margin, y: pageRect.height - margin + 10), withAttributes: [.font: smallFont, .foregroundColor: UIColor.secondaryLabel])
         }
     }
@@ -69,5 +95,12 @@ enum BirthdayPDF {
 extension Person {
     var exportRow: BirthdayExport.Row {
         BirthdayExport.Row(name: name, annual: annual, notes: notes, giftIdeas: giftIdeas, phone: phone, remindersEnabled: remindersEnabled, remindDaysBefore: remindDaysBefore)
+    }
+}
+
+extension CustomEvent {
+    var exportRow: CustomEventExport.Row {
+        CustomEventExport.Row(title: title, recurrence: recurrence.label, start: startDate, timeMinutes: timeMinutes, next: nextOccurrence,
+                              remindersEnabled: remindersEnabled, remindDaysBefore: remindDaysBefore, notes: notes)
     }
 }

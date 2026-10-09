@@ -24,7 +24,7 @@ struct CalendarSyncOptions {
     var birthdays: Birthdays
 
     static var current: CalendarSyncOptions {
-        let defaults = UserDefaults.standard
+        let defaults = SettingsKeys.store
         return CalendarSyncOptions(
             includeWaste: defaults.object(forKey: wasteKey) as? Bool ?? true,
             includeCustom: defaults.object(forKey: customKey) as? Bool ?? true,

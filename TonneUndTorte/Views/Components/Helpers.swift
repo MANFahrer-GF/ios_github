@@ -103,48 +103,6 @@ struct PersonAvatar: View {
     }
 }
 
-struct EventChip: View {
-    let event: CalendarEvent
-    var onLight = false
-    var showLocation = true
-    @ScaledMetric(relativeTo: .caption) private var iconSize: CGFloat = 12
-    var body: some View {
-        HStack(spacing: 6) {
-            if onLight {
-                WasteIcon(symbolName: event.symbolName, name: event.title, size: iconSize, weight: .semibold, waste: event.kind == .waste)
-            } else {
-                BinBadge(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: 22, waste: event.kind == .waste)
-            }
-            Text(event.title).font(.caption.weight(.semibold))
-            if showLocation, let location = event.locationName { Text("· \(location)").font(.caption).opacity(0.8) }
-            if event.done { Image(systemName: "checkmark.circle.fill").font(.caption) }
-        }
-        .padding(.leading, onLight ? 10 : 4).padding(.trailing, 10).padding(.vertical, onLight ? 6 : 4)
-        .background(onLight ? event.color.opacity(0.15) : Color.white.opacity(0.16), in: Capsule())
-        .foregroundStyle(onLight ? event.color : .white)
-    }
-}
-
-struct EventRow: View {
-    let event: CalendarEvent
-    var body: some View {
-        HStack(spacing: 12) {
-            if event.kind == .birthday {
-                InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 38)
-            } else {
-                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 38, wasteName: event.kind == .waste ? event.title : nil)
-            }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(event.title).font(.body.weight(.semibold))
-                Text(event.subtitle).font(.caption).foregroundStyle(.secondary)
-            }
-            Spacer()
-            if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂") }
-            if event.done { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green) }
-        }
-    }
-}
-
 /// Einfaches Umbruch-Layout für Chips.
 struct FlowLayout: Layout {
     var spacing: CGFloat = 8
@@ -290,4 +248,203 @@ struct LocationFilterMenu: View {
 enum Haptics {
     static func success() { UINotificationFeedbackGenerator().notificationOccurred(.success) }
     static func tap() { UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+}
+
+// MARK: - Anrufen (immer mit Nachfrage)
+
+enum CallLink {
+    /// tel:-Link aus einer Telefonnummer, nil ohne Ziffern.
+    static func url(_ phone: String?) -> URL? {
+        let digits = (phone ?? "").filter { "+0123456789".contains($0) }
+        return digits.isEmpty ? nil : URL(string: "tel:\(digits)")
+    }
+}
+
+private struct CallConfirmation: ViewModifier {
+    @Binding var isPresented: Bool
+    let name: String
+    let url: URL
+    @Environment(\.openURL) private var openURL
+    func body(content: Content) -> some View {
+        content.confirmationDialog(L10n.t("\(name) anrufen?", "Call \(name)?"), isPresented: $isPresented, titleVisibility: .visible) {
+            Button(L10n.t("Anrufen", "Call")) { openURL(url) }
+            Button(L10n.t("Abbrechen", "Cancel"), role: .cancel) {}
+        }
+    }
+}
+
+extension View {
+    /// Vor dem Anruf nachfragen – nicht aus Versehen telefonieren.
+    func callConfirmation(isPresented: Binding<Bool>, name: String, url: URL) -> some View {
+        modifier(CallConfirmation(isPresented: isPresented, name: name, url: url))
+    }
+}
+
+// MARK: - Einträge: gemeinsame Zeile und gemeinsames Bearbeiten-Fenster (Übersicht, Kalender)
+
+/// Was ein Tipp auf einen Eintrag öffnet. Je Seite gibt es genau ein Sheet dafür – verschachtelte Sheets blockieren sich.
+enum EventEditTarget: Identifiable {
+    case person(Person), event(CustomEvent), waste(WasteType)
+
+    var id: String {
+        switch self {
+        case .person(let p): return "person-\(p.id)"
+        case .event(let e): return "event-\(e.id)"
+        case .waste(let w): return "waste-\(w.id)"
+        }
+    }
+
+    @MainActor
+    static func target(for event: CalendarEvent, model: AppModel) -> EventEditTarget? {
+        if let id = event.personID, let person = model.allPeople().first(where: { $0.id == id }) { return .person(person) }
+        if let id = event.eventID, let custom = model.allCustomEvents().first(where: { $0.id == id }) { return .event(custom) }
+        if let id = event.wasteTypeID, let type = model.allWasteTypes().first(where: { $0.id == id }) { return .waste(type) }
+        return nil
+    }
+}
+
+private struct EventEditorSheet: ViewModifier {
+    @Binding var target: EventEditTarget?
+    func body(content: Content) -> some View {
+        content.sheet(item: $target) { item in
+            switch item {
+            case .person(let person): BirthdayEditView(person: person)
+            case .event(let event): CustomEventEditView(event: event)
+            case .waste(let type):
+                // Müllart (Erinnerungen, Farbe, Symbol, Termine) – wie unter „Müll“, hier als Fenster
+                NavigationStack {
+                    WasteDetailView(type: type)
+                        .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.t("Fertig", "Done")) { target = nil } } }
+                }
+            }
+        }
+    }
+}
+
+extension View {
+    func eventEditorSheet(_ target: Binding<EventEditTarget?>) -> some View { modifier(EventEditorSheet(target: target)) }
+}
+
+/// Texte zu einem Eintrag – überall gleich.
+enum EventText {
+    /// Der Name bzw. Titel – „hat Geburtstag“ sagt schon das 🎂-Schildchen und der Tag darüber.
+    static func title(_ event: CalendarEvent) -> String { event.title }
+
+    static func birthYear(_ event: CalendarEvent) -> Int? {
+        event.years.map { Calendar.current.component(.year, from: event.date) - $0 }
+    }
+
+    /// Angaben als einzelne Schildchen – stehen geordnet nebeneinander und brechen nur als Ganzes um.
+    /// Geburtstag: „wird 66“, „Jg. 1960“, „♎️ Waage“ („Zeit zum Gratulieren“ nur am Tag selbst ohne bekanntes Alter).
+    /// Eigener Termin: Uhrzeit, Wiederholung. Tonne: Standort, falls gewünscht.
+    static func tags(_ event: CalendarEvent, person: Person?, showLocation: Bool = false) -> [String] {
+        switch event.kind {
+        case .birthday:
+            var tags: [String] = []
+            let cake = event.isMilestone ? "🎉" : "🎂"
+            if let years = event.years, let year = birthYear(event) {
+                tags += [cake + " " + L10n.t("wird \(years)", "turns \(years)"), L10n.t("Jg. \(year)", "b. \(year)")]
+            } else {
+                tags.append(cake + " " + (Days.until(event.date) == 0 ? L10n.t("Zeit zum Gratulieren", "Time to celebrate") : L10n.t("Geburtstag", "Birthday")))
+            }
+            if let zodiac = person?.zodiacLabel { tags.append(zodiac) }
+            return tags
+        case .custom:
+            return event.subtitle.components(separatedBy: " · ")
+        case .waste:
+            return showLocation ? [event.locationName].compactMap { $0 } : []
+        }
+    }
+}
+
+/// Kleines graues Schildchen für eine Angabe.
+struct InfoTag: View {
+    let text: String
+    var size: CGFloat = 12
+    @Environment(\.colorScheme) private var scheme
+    var body: some View {
+        Text(text).font(KlarStyle.font(size, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+            .padding(.horizontal, 7).padding(.vertical, 3)
+            .background(Color(.tertiarySystemFill), in: Capsule())
+    }
+}
+
+/// Schildchen in einer Reihe, die bei Platzmangel als Ganzes umbrechen.
+struct InfoTags: View {
+    let tags: [String]
+    var size: CGFloat = 12
+    var body: some View {
+        if !tags.isEmpty {
+            FlowLayout(spacing: 5) { ForEach(tags, id: \.self) { InfoTag(text: $0, size: size) } }
+        }
+    }
+}
+
+
+/// Eine Zeile wie in der großen Übersichtskarte: helle Fläche, Symbol bzw. Foto, Name, Angaben als Schildchen.
+/// Am Geburtstag selbst darunter „Anrufen“ (mit Nummer, mit Nachfrage) und „Nachricht“ – vorher ergibt das keinen Sinn.
+struct EventItemCard: View {
+    let event: CalendarEvent
+    var person: Person? = nil
+    var size: CGFloat = 36
+    var showLocation = false
+    let onOpen: () -> Void
+    @Environment(\.colorScheme) private var scheme
+    @Environment(\.openURL) private var openURL
+    @State private var confirmCall = false
+
+    private var callURL: URL? { CallLink.url(person?.phone) }
+    private var messageURL: URL? { NotificationManager.greetingURL(name: person?.name ?? event.title, phone: person?.phone) }
+    private var showsActions: Bool { event.kind == .birthday && Days.until(event.date) == 0 }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button(action: onOpen) {
+                HStack(spacing: 12) {
+                    leading
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(EventText.title(event)).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                            .lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                        InfoTags(tags: EventText.tags(event, person: person, showLocation: showLocation))
+                    }
+                    Spacer(minLength: 0)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            // Eigene Reihe über die volle Breite – nimmt Name und Angaben keinen Platz weg
+            if showsActions {
+                HStack(spacing: 8) {
+                    if let url = callURL {
+                        actionButton("phone.fill", label: L10n.t("Anrufen", "Call"), color: .green) { confirmCall = true }
+                            .callConfirmation(isPresented: $confirmCall, name: person?.name ?? event.title, url: url)
+                    }
+                    if let url = messageURL {
+                        actionButton("message.fill", label: L10n.t("Nachricht", "Message"), color: .blue) { openURL(url) }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 12).padding(.vertical, 10)
+        .background(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .opacity(event.kind == .waste && event.done ? 0.55 : 1)
+    }
+
+    @ViewBuilder
+    private var leading: some View {
+        switch event.kind {
+        case .waste: BinDot(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: size)
+        case .birthday: PersonAvatar(person: person, initials: NameText.initials(event.title), colorHex: event.colorHex, size: size)
+        case .custom: SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: size)
+        }
+    }
+
+    private func actionButton(_ symbol: String, label: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Label(label, systemImage: symbol).font(KlarStyle.font(15, .heavy)).foregroundStyle(.white)
+                .frame(maxWidth: .infinity).padding(.vertical, 10)
+                .background(color, in: Capsule())
+        }
+        .buttonStyle(.plain)
+    }
 }

@@ -58,18 +58,18 @@ public struct AnnualDate: Hashable, Codable {
     /// Sternzeichen zum Datum.
     public var zodiac: String {
         switch (month, day) {
-        case (3, 21...31), (4, 1...19): return "♈︎ Widder"
-        case (4, 20...30), (5, 1...20): return "♉︎ Stier"
-        case (5, 21...31), (6, 1...20): return "♊︎ Zwillinge"
-        case (6, 21...30), (7, 1...22): return "♋︎ Krebs"
-        case (7, 23...31), (8, 1...22): return "♌︎ Löwe"
-        case (8, 23...31), (9, 1...22): return "♍︎ Jungfrau"
-        case (9, 23...30), (10, 1...22): return "♎︎ Waage"
-        case (10, 23...31), (11, 1...21): return "♏︎ Skorpion"
-        case (11, 22...30), (12, 1...21): return "♐︎ Schütze"
-        case (12, 22...31), (1, 1...19): return "♑︎ Steinbock"
-        case (1, 20...31), (2, 1...18): return "♒︎ Wassermann"
-        default: return "♓︎ Fische"
+        case (3, 21...31), (4, 1...19): return "♈︎ " + L10n.t("Widder", "Aries")
+        case (4, 20...30), (5, 1...20): return "♉︎ " + L10n.t("Stier", "Taurus")
+        case (5, 21...31), (6, 1...20): return "♊︎ " + L10n.t("Zwillinge", "Gemini")
+        case (6, 21...30), (7, 1...22): return "♋︎ " + L10n.t("Krebs", "Cancer")
+        case (7, 23...31), (8, 1...22): return "♌︎ " + L10n.t("Löwe", "Leo")
+        case (8, 23...31), (9, 1...22): return "♍︎ " + L10n.t("Jungfrau", "Virgo")
+        case (9, 23...30), (10, 1...22): return "♎︎ " + L10n.t("Waage", "Libra")
+        case (10, 23...31), (11, 1...21): return "♏︎ " + L10n.t("Skorpion", "Scorpio")
+        case (11, 22...30), (12, 1...21): return "♐︎ " + L10n.t("Schütze", "Sagittarius")
+        case (12, 22...31), (1, 1...19): return "♑︎ " + L10n.t("Steinbock", "Capricorn")
+        case (1, 20...31), (2, 1...18): return "♒︎ " + L10n.t("Wassermann", "Aquarius")
+        default: return "♓︎ " + L10n.t("Fische", "Pisces")
         }
     }
 }

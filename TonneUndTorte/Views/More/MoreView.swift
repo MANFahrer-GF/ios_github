@@ -87,6 +87,7 @@ struct CustomEventsView: View {
                         } else if let next { Text(DateText.countdown(next)).font(.subheadline.weight(.semibold)).foregroundStyle(.secondary) }
                     }
                 }
+                .buttonStyle(.plain)
                 .swipeActions(edge: .leading) {
                     if let next {
                         Button {
@@ -173,7 +174,7 @@ struct CustomEventEditView: View {
                     Section { Button("Termin löschen", role: .destructive) { dismiss(); model.deleteLater(event) } }
                 }
             }
-            .navigationTitle(event == nil ? "Neuer Termin" : "Termin bearbeiten").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(event == nil ? "Neuer Termin" : "Termin").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Sichern") { save() }.disabled(title.trimmingCharacters(in: .whitespaces).isEmpty) }

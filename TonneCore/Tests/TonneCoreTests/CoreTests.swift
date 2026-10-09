@@ -563,6 +563,18 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(BirthdayExport.currentAge(AnnualDate(day: 8, month: 10, year: 1948), from: day("2026-10-08"), calendar: calendar), 78)
     }
 
+    func testCustomEventExportCSV() {
+        let rows = [
+            CustomEventExport.Row(title: "TÜV; Gifhorn", recurrence: "Alle 24 Monate", start: day("2025-03-01"), timeMinutes: 14 * 60 + 30, next: day("2027-03-01"), remindersEnabled: true, remindDaysBefore: 7, notes: "Zeile1\nZeile2"),
+            CustomEventExport.Row(title: "Hochzeitstag", recurrence: "Jedes Jahr", start: day("2010-06-12"), timeMinutes: nil, next: day("2027-06-12"), remindersEnabled: false, remindDaysBefore: 1, notes: ""),
+        ]
+        let csv = CustomEventExport.csv(rows, from: day("2026-10-09"), calendar: calendar)
+        let lines = csv.dropFirst().components(separatedBy: "\r\n")
+        XCTAssertTrue(csv.hasPrefix("\u{FEFF}Termin;Wiederholung;"))
+        XCTAssertTrue(lines[1].hasPrefix("\"TÜV; Gifhorn\";Alle 24 Monate;2025-03-01;14:30;2027-03-01;143;ja;7;Zeile1 Zeile2"), lines[1])
+        XCTAssertTrue(lines[2].hasPrefix("Hochzeitstag;Jedes Jahr;2010-06-12;;2027-06-12;"), lines[2])
+    }
+
     func testWasteABC() {
         XCTAssertEqual(WasteABC.search("pizza").first?.category, .paper)
         XCTAssertGreaterThan(WasteABC.entries.count, 80)

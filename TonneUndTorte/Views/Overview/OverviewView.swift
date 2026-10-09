@@ -21,17 +21,8 @@ struct OverviewView: View {
     @AppStorage(SettingsKeys.overviewDays) private var previewDays = 60
     @AppStorage(SettingsKeys.overviewStats) private var showStats = true
     @State private var refreshToken = 0
-    /// Geburtstag oder Termin, der gerade bearbeitet wird – ein einziges Sheet für beides.
-    private enum Editing: Identifiable {
-        case person(Person), event(CustomEvent)
-        var id: String {
-            switch self {
-            case .person(let p): return "person-\(p.id)"
-            case .event(let e): return "event-\(e.id)"
-            }
-        }
-    }
-    @State private var editing: Editing?
+    /// Geburtstag, Termin oder Müllart, die gerade bearbeitet wird – ein einziges Sheet.
+    @State private var editing: EventEditTarget?
     /// Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
     private let clock = Timer.publish(every: 300, on: .main, in: .common).autoconnect()
 
@@ -133,12 +124,7 @@ struct OverviewView: View {
             .onReceive(clock) { _ in refreshToken += 1 }
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
             // Geburtstag oder Termin direkt hier öffnen – nicht in einen anderen Tab springen
-            .sheet(item: $editing) { item in
-                switch item {
-                case .person(let person): BirthdayEditView(person: person)
-                case .event(let event): CustomEventEditView(event: event)
-                }
-            }
+            .eventEditorSheet($editing)
         }
     }
 
@@ -282,60 +268,14 @@ struct OverviewView: View {
                 // „Erledigt“ gilt für alle Tonnen des Tages – darum beim Tag, nicht an einer einzelnen Tonne
                 if !group.waste.isEmpty && n <= 1 { doneButton(day: group.day, done: allDone) }
             }
-            // Alle Einträge in derselben Form: helle Fläche, Symbol, Name
+            // Alle Einträge in derselben Form (gemeinsame Zeile mit dem Kalender)
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(group.waste) { event in
-                    itemCard {
-                        BinDot(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: badge)
-                    } title: {
-                        event.title
-                    } detail: {
-                        locations.count > 1 && place == nil ? event.locationName : nil
-                    }
-                    .opacity(allDone ? 0.55 : 1)
-                }
-                ForEach(group.other) { event in
-                    Button { open(event) } label: {
-                        itemCard {
-                            if event.kind == .birthday {
-                                PersonAvatar(person: person(for: event), initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
-                            } else {
-                                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: badge)
-                            }
-                        } title: {
-                            event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title
-                        } detail: {
-                            // „Zeit zum Gratulieren“ nur am Geburtstag selbst; ohne bekanntes Alter sonst keine zweite Zeile
-                            event.kind == .birthday ? birthdayDetail(event) : event.subtitle
-                        } trailing: {
-                            if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.title3) }
-                        }
-                    }
-                    .buttonStyle(.plain)
+                ForEach(group.waste + group.other) { event in
+                    EventItemCard(event: event, person: person(for: event), size: badge, showLocation: locations.count > 1 && place == nil) { open(event) }
                 }
             }
             .padding(.top, 12)
         }
-    }
-
-    /// Eine Zeile der großen Karte: helle Fläche, Symbol, Titel und optional eine zweite Zeile.
-    private func itemCard<Leading: View, Trailing: View>(@ViewBuilder leading: () -> Leading, title: () -> String, detail: () -> String?,
-                                                         @ViewBuilder trailing: () -> Trailing = { EmptyView() }) -> some View {
-        let detailText = detail()
-        return HStack(spacing: 12) {
-            leading()
-            VStack(alignment: .leading, spacing: 1) {
-                Text(title()).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
-                if let detailText {
-                    Text(detailText).font(KlarStyle.font(15, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).minimumScaleFactor(0.85)
-                }
-            }
-            Spacer(minLength: 0)
-            trailing()
-        }
-        .padding(.horizontal, 12).padding(.vertical, 9)
-        .background(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .contentShape(Rectangle())
     }
 
     /// Ein späterer Tag: links Datum und Abstand wie oben, rechts dieselben Symbole – nur eine Nummer kleiner.
@@ -350,27 +290,33 @@ struct OverviewView: View {
             .frame(width: 112, alignment: .leading)
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(group.waste) { event in
-                    HStack(spacing: 8) {
-                        BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
-                        if locations.count > 1, let location = event.locationName {
-                            Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                    Button { open(event) } label: {
+                        HStack(spacing: 8) {
+                            BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
+                            if locations.count > 1, let location = event.locationName {
+                                Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            }
                         }
+                        .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
                 }
                 ForEach(group.other) { event in
                     Button { open(event) } label: {
-                        HStack(spacing: 9) {
+                        HStack(alignment: .top, spacing: 9) {
                             if event.kind == .birthday {
                                 PersonAvatar(person: person(for: event), initials: NameText.initials(event.title), colorHex: event.colorHex, size: 26)
                             } else {
                                 SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 26)
                             }
-                            Text(event.kind == .birthday ? (event.years.map { L10n.t("\(event.title) wird \($0)", "\(event.title) turns \($0)") } ?? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday")) : event.title)
-                                .font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
-                            if let detail = [birthYear(event).map { L10n.t("Jahrgang \($0)", "born \($0)") }, person(for: event)?.zodiacLabel].compactMap({ $0 }).joined(separator: " · ").nilIfEmpty {
-                                Text(detail).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            // Name oben, Angaben als Schildchen darunter – geordnet wie in der großen Karte
+                            // Volle Restbreite – sonst rechnet SwiftUI die Spalte zu schmal und die Schildchen stapeln sich
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(event.title).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                                    .lineLimit(3).fixedSize(horizontal: false, vertical: true)
+                                InfoTags(tags: EventText.tags(event, person: person(for: event)), size: 11)
                             }
-                            if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.subheadline) }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         .contentShape(Rectangle())
                     }
@@ -385,23 +331,6 @@ struct OverviewView: View {
 
     private func person(for event: CalendarEvent) -> Person? {
         event.personID.flatMap { id in people.first { $0.id == id } }
-    }
-
-    /// Geburtsjahr aus Alter und Geburtstag – nur wenn das Jahr bekannt ist.
-    private func birthYear(_ event: CalendarEvent) -> Int? {
-        event.years.map { Calendar.current.component(.year, from: event.date) - $0 }
-    }
-
-    /// „wird 66 · Jahrgang 1960 · ♎︎ Waage“; „Zeit zum Gratulieren“ nur am Geburtstag selbst und ohne bekanntes Alter.
-    private func birthdayDetail(_ event: CalendarEvent) -> String? {
-        var parts: [String] = []
-        if let years = event.years, let year = birthYear(event) {
-            parts += [L10n.t("wird \(years)", "turns \(years)"), L10n.t("Jahrgang \(year)", "born \(year)")]
-        } else if Days.until(event.date) == 0 {
-            parts.append(L10n.t("Zeit zum Gratulieren", "Time to celebrate"))
-        }
-        if let zodiac = person(for: event)?.zodiacLabel { parts.append(zodiac) }
-        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     private func doneButton(day: Date, done: Bool) -> some View {
@@ -421,10 +350,7 @@ struct OverviewView: View {
         .buttonStyle(.plain)
     }
 
-    private func open(_ event: CalendarEvent) {
-        if let id = event.personID, let person = model.allPeople().first(where: { $0.id == id }) { editing = .person(person) }
-        else if let id = event.eventID, let custom = model.allCustomEvents().first(where: { $0.id == id }) { editing = .event(custom) }
-    }
+    private func open(_ event: CalendarEvent) { editing = EventEditTarget.target(for: event, model: model) }
 
     private var statsCard: some View {
         let stats = model.statistics()
@@ -443,8 +369,4 @@ struct OverviewView: View {
         }
         .card()
     }
-}
-
-private extension String {
-    var nilIfEmpty: String? { isEmpty ? nil : self }
 }

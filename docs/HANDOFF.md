@@ -143,6 +143,21 @@ Bekannte Grenzen: 2.0.2 zeigt „n-ter Wochentag“ als „Jeden Monat“ (am Da
 bleibt in 2.0.3 die Wochentag-Regel. „Erledigt“ für eigene Termine gilt nur auf dem Gerät. Eigene Termine (`startDate`) verschieben sich beim Wechsel
 der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
 
+## 5c. Nachgezogen am 9. Okt. abends (noch 2.0.3, Build 4)
+
+- Übersicht „Die nächsten Tage“: eine Karte, groß bis zur nächsten Abholung, darunter bis 6 weitere Tage; gemeinsame Zeile `EventItemCard`
+  (Helpers.swift) für Übersicht und Kalender: Foto/Initialen, Name, Angaben als Schildchen (`InfoTags`), am Geburtstag selbst „Anrufen“
+  (immer mit Nachfrage, `callConfirmation`) und „Nachricht“. Tippen öffnet über `eventEditorSheet` (Geburtstag, Termin, Müllart).
+- Tab „Termine“ (Geburtstage | Eigene Termine), je Seite genau EIN `.sheet` – verschachtelte Sheets blockierten „+“ und „Abbrechen“.
+- Fotos: `Person.photoData` (externalStorage, ≤600 px), sonst Kontaktfoto (`ContactPhotoCache`), sonst Initialen. CloudKit: neues Feld →
+  nach einem Foto aus dem Debug-Build noch einmal „Deploy Schema Changes“.
+- Ohne Geburtsjahr: Tag/Monat statt Datumsauswahl (kein Platzhalterjahr sichtbar). Sternzeichen überall (Emoji, DE/EN).
+- Export eigene Termine (CSV `CustomEventExport`, PDF über gemeinsames `TablePDF`). Einstellungen › Übersicht (Müll/Geburtstage/Termine, Vorschau, Statistik).
+- **Oberflächen-Tests** `TonneUITests` (8 Tests, iPhone-Simulator, alle grün): `xcodebuild test -scheme "Tonne & Torte" -destination 'id=<iPhone-Sim>'`.
+  Testmodus nur in Debug (`-uiTesting`/`TONNE_UITESTING=1`): Datenbank im Speicher mit Testdaten, eigene Einstellungs-Ablage, keine
+  Widgets/Watch/Mitteilungen/Kalender. `testScreenshotsAllPages` legt Screenshots jeder Seite ins Testergebnis (Layout-Prüfung).
+- Codex-Review dieses Stands: 3 Befunde (Testmodus-Seiteneffekte, 29. Februar beim Einschalten des Jahres, Sternzeichen nur deutsch) behoben.
+
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
 - **„Tonne wieder reinholen“:**

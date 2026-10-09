@@ -7,6 +7,9 @@ import TonneCore
 
 /// Einstellungs-Schlüssel (UserDefaults) – von Views per @AppStorage und vom Modell genutzt.
 enum SettingsKeys {
+    /// Ablage aller Einstellungen. Im Oberflächen-Test eine eigene Ablage – echte Einstellungen bleiben unberührt.
+    static let store: UserDefaults = TonneUndTorteApp.isUITesting ? (UserDefaults(suiteName: uiTestSuite) ?? .standard) : .standard
+    static let uiTestSuite = "de.manfahrer.TonneUndTorte.uitests"
     static let onboardingDone = "app.onboardingDone"
     static let eveningEnabled = "reminder.evening.enabled"
     static let eveningMinutes = "reminder.evening.minutes"
@@ -33,10 +36,10 @@ enum SettingsKeys {
 
     /// „Erledigt“ für eigene Termine: je Vorkommen „<id>|<Tag>“. Nur auf diesem Gerät – es unterdrückt Erinnerungen,
     /// damit ist kein neues Feld im iCloud-Schema nötig. Ältere Einträge als 60 Tage fallen beim Speichern heraus.
-    static func customDoneKeys(_ defaults: UserDefaults = .standard) -> Set<String> {
+    static func customDoneKeys(_ defaults: UserDefaults = SettingsKeys.store) -> Set<String> {
         Set(defaults.stringArray(forKey: customDone) ?? [])
     }
-    static func setCustomDone(_ done: Bool, id: UUID, dayKey: String, defaults: UserDefaults = .standard) {
+    static func setCustomDone(_ done: Bool, id: UUID, dayKey: String, defaults: UserDefaults = SettingsKeys.store) {
         var keys = customDoneKeys(defaults)
         let key = "\(id.uuidString)|\(dayKey)"
         if done { keys.insert(key) } else { keys.remove(key) }
@@ -49,12 +52,12 @@ enum SettingsKeys {
     static let locationFilter = "filter.locationID"
     static let liveActivities = "feature.liveActivities"
     /// Live-Aktivitäten sind an, solange der Schalter nicht ausdrücklich ausgeschaltet wurde.
-    static func liveActivitiesEnabled(_ defaults: UserDefaults = .standard) -> Bool {
+    static func liveActivitiesEnabled(_ defaults: UserDefaults = SettingsKeys.store) -> Bool {
         defaults.object(forKey: liveActivities) == nil || defaults.bool(forKey: liveActivities)
     }
     static let backgroundRefreshID = "de.manfahrer.TonneUndTorte.refresh"
 
-    static func reminderSettings(_ defaults: UserDefaults = .standard) -> ReminderSettings {
+    static func reminderSettings(_ defaults: UserDefaults = SettingsKeys.store) -> ReminderSettings {
         var settings = ReminderSettings()
         func int(_ key: String, _ fallback: Int) -> Int { defaults.object(forKey: key) == nil ? fallback : defaults.integer(forKey: key) }
         func bool(_ key: String, _ fallback: Bool) -> Bool { defaults.object(forKey: key) == nil ? fallback : defaults.bool(forKey: key) }
@@ -80,7 +83,7 @@ enum SettingsKeys {
 
     /// Bis 2.0.2 kamen Vorab-Erinnerungen zur selben Uhrzeit wie am Tag selbst. Wer die Uhrzeit geändert hatte,
     /// behält sie darum auch für die neue, getrennte Vorab-Uhrzeit.
-    static func migrate(_ defaults: UserDefaults = .standard) {
+    static func migrate(_ defaults: UserDefaults = SettingsKeys.store) {
         for (day, pre) in [(birthdayMinutes, birthdayPreMinutes), (customMinutes, customPreMinutes)]
         where defaults.object(forKey: pre) == nil && defaults.object(forKey: day) != nil {
             defaults.set(defaults.integer(forKey: day), forKey: pre)
@@ -108,6 +111,7 @@ struct CalendarEvent: Identifiable, Hashable {
     /// Die Person hinter einem Geburtstag bzw. der eigene Termin.
     var personID: UUID? = nil
     var eventID: UUID? = nil
+    var wasteTypeID: UUID? = nil
     var color: Color { Color(hex: colorHex) }
     var isMilestone: Bool { years.map { AnnualDate.isMilestone($0) } ?? false }
 }
@@ -125,8 +129,8 @@ final class AppModel: ObservableObject {
     /// Aus einer Mitteilung angetippt: diese Person bzw. diesen Termin öffnen.
     @Published var personToOpen: UUID?
     @Published var eventToOpen: UUID?
-    @Published var onboardingDone: Bool = UserDefaults.standard.bool(forKey: SettingsKeys.onboardingDone) {
-        didSet { UserDefaults.standard.set(onboardingDone, forKey: SettingsKeys.onboardingDone) }
+    @Published var onboardingDone: Bool = SettingsKeys.store.bool(forKey: SettingsKeys.onboardingDone) {
+        didSet { SettingsKeys.store.set(onboardingDone, forKey: SettingsKeys.onboardingDone) }
     }
 
     private let notifications = NotificationManager.shared
@@ -182,6 +186,8 @@ final class AppModel: ObservableObject {
 
     /// Erinnerungen, Widget-Snapshot und Live-Aktivität neu aufbauen.
     func refreshAll() async {
+        // Oberflächen-Test: keine Widgets, Watch, Live-Aktivität, Mitteilungen oder Kalender anfassen
+        guard !TonneUndTorteApp.isUITesting else { return }
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)
@@ -226,7 +232,7 @@ final class AppModel: ObservableObject {
             for date in type.pickupDates(from: from, to: to) {
                 // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
                 // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
-                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date)))
+                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id))
             }
         }
         for person in allPeople() {

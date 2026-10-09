@@ -67,12 +67,12 @@ enum CalendarExport {
 
     static var target: Target {
         get {
-            guard let data = UserDefaults.standard.data(forKey: targetKey),
+            guard let data = SettingsKeys.store.data(forKey: targetKey),
                   let value = try? JSONDecoder().decode(Target.self, from: data) else { return .own(sourceID: nil) }
             return value
         }
         set {
-            UserDefaults.standard.set(try? JSONEncoder().encode(newValue), forKey: targetKey)
+            SettingsKeys.store.set(try? JSONEncoder().encode(newValue), forKey: targetKey)
             resetFingerprint()
         }
     }
@@ -163,14 +163,14 @@ enum CalendarExport {
     /// Hält den Kalender von selbst aktuell: läuft nach jedem Abgleich, fragt nie nach Rechten und
     /// schreibt nur, wenn sich die Termine seit dem letzten Mal geändert haben.
     static func autoSyncIfEnabled(items: [Item]) async {
-        guard UserDefaults.standard.bool(forKey: autoSyncKey), hasFullAccess else { return }
-        guard UserDefaults.standard.string(forKey: fingerprintKey) != fingerprint(items) else { return }
+        guard SettingsKeys.store.bool(forKey: autoSyncKey), hasFullAccess else { return }
+        guard SettingsKeys.store.string(forKey: fingerprintKey) != fingerprint(items) else { return }
         _ = try? await export(items: items, askForAccess: false)
     }
 
     /// Fingerabdruck verwerfen, damit der nächste automatische Abgleich sicher schreibt.
     static func resetFingerprint() {
-        UserDefaults.standard.removeObject(forKey: fingerprintKey)
+        SettingsKeys.store.removeObject(forKey: fingerprintKey)
     }
 
     private static func fingerprint(_ items: [Item]) -> String {
@@ -196,7 +196,7 @@ enum CalendarExport {
             let store = EKEventStore()
             let calendar = try resolveCalendar(in: store, target: target, create: true)
             let count = try write(items, into: calendar, store: store)
-            UserDefaults.standard.set(fingerprint(items), forKey: fingerprintKey)
+            SettingsKeys.store.set(fingerprint(items), forKey: fingerprintKey)
             return count
         }
     }
@@ -221,7 +221,7 @@ enum CalendarExport {
                     try? store.commit()
                 }
             }
-            UserDefaults.standard.set(fingerprint(items), forKey: fingerprintKey)
+            SettingsKeys.store.set(fingerprint(items), forKey: fingerprintKey)
             return count
         }
     }

@@ -14,6 +14,21 @@ struct CSVFile: Transferable {
     }
 }
 
+/// PDF mit eigenem Dateinamen (z. B. „Eigene Termine.pdf“).
+struct NamedPDFFile: Transferable {
+    let data: Data
+    let fileName: String
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(exportedContentType: .pdf) { file in
+            let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            let url = folder.appendingPathComponent(file.fileName)
+            try file.data.write(to: url, options: .atomic)
+            return SentTransferredFile(url)
+        }
+    }
+}
+
 /// PDF-Datei zum Teilen.
 struct PDFFile: Transferable {
     let data: Data
@@ -29,6 +44,7 @@ struct BirthdayListView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Query(sort: \Person.name) private var people: [Person]
+    @Query(sort: \CustomEvent.title) private var customEvents: [CustomEvent]
     @Environment(\.openURL) private var openURL
     @SceneStorage("termine.segment") private var segment: Segment = .birthdays
     /// Alle Fenster dieses Tabs über eine einzige Stelle – verschachtelte .sheet-Modifier blockieren sich sonst gegenseitig.
@@ -45,6 +61,8 @@ struct BirthdayListView: View {
         }
     }
     @State private var sheet: SheetKind?
+    /// Person, die angerufen werden soll – erst nach Nachfrage.
+    @State private var callPerson: Person?
 
     /// Nach Monat des nächsten Geburtstags; das Jahr steht nur dabei, wenn es nicht das laufende ist.
     private var monthSections: [(title: String, entries: [(person: Person, next: Date, years: Int?)])] {
@@ -71,11 +89,11 @@ struct BirthdayListView: View {
                         PersonAvatar(person: entry.person, initials: entry.person.initials, colorHex: entry.person.colorHex, size: 56)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(entry.person.name).font(KlarStyle.font(19, .heavy)).foregroundStyle(.primary)
-                            Text(([entry.years.flatMap { years in entry.person.knownYear.map { L10n.t("wird \(years) · Jahrgang \($0)", "turns \(years) · born \($0)") } }, entry.person.zodiacLabel] as [String?]).compactMap { $0 }.joined(separator: " · "))
-                                .font(KlarStyle.font(15, .bold)).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.85)
+                                .lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                            InfoTags(tags: ([entry.years.map { (AnnualDate.isMilestone($0) ? "🎉 " : "🎂 ") + L10n.t("wird \($0)", "turns \($0)") }, entry.person.knownYear.map { L10n.t("Jg. \($0)", "b. \($0)") }, entry.person.zodiacLabel] as [String?]).compactMap { $0 }, size: 13)
+                                .padding(.top, 2)
                         }
                         Spacer(minLength: 0)
-                        Text(entry.years.map { AnnualDate.isMilestone($0) } == true ? "🎉" : "🎂").font(.title2)
                     }
                     .contentShape(Rectangle())
                 }
@@ -121,9 +139,27 @@ struct BirthdayListView: View {
                             }
                         } label: { Image(systemName: "plus") }
                     } else {
-                        Button { sheet = .newEvent } label: { Image(systemName: "plus") }
+                        Menu {
+                            Button { sheet = .newEvent } label: { Label(L10n.t("Neuer Termin", "New event"), systemImage: "plus") }
+                            if !customEvents.isEmpty {
+                                Divider()
+                                ShareLink(item: PickupCSVFile(text: CustomEventExport.csv(customEvents.map(\.exportRow)), fileName: L10n.t("Eigene Termine.csv", "Custom events.csv")),
+                                          preview: SharePreview(L10n.t("Eigene Termine.csv", "Custom events.csv"))) {
+                                    Label("Als CSV exportieren (Excel)", systemImage: "tablecells")
+                                }
+                                ShareLink(item: NamedPDFFile(data: CustomEventPDF.render(customEvents.map(\.exportRow)), fileName: L10n.t("Eigene Termine.pdf", "Custom events.pdf")),
+                                          preview: SharePreview(L10n.t("Eigene Termine.pdf", "Custom events.pdf"))) {
+                                    Label("Als PDF exportieren", systemImage: "doc.richtext")
+                                }
+                            }
+                        } label: { Image(systemName: "plus") }
                     }
                 }
+            }
+            .confirmationDialog(L10n.t("\(callPerson?.name ?? "") anrufen?", "Call \(callPerson?.name ?? "")?"),
+                                isPresented: Binding(get: { callPerson != nil }, set: { if !$0 { callPerson = nil } }), titleVisibility: .visible) {
+                Button(L10n.t("Anrufen", "Call")) { if let url = CallLink.url(callPerson?.phone) { openURL(url) } }
+                Button(L10n.t("Abbrechen", "Cancel"), role: .cancel) {}
             }
             .sheet(item: $sheet) { kind in
                 switch kind {
@@ -175,8 +211,8 @@ struct BirthdayListView: View {
                                             if let url = NotificationManager.greetingURL(name: entry.person.name, phone: entry.person.phone) {
                                                 Button { openURL(url) } label: { Label(L10n.t("Gratulieren", "Send wishes"), systemImage: "message.fill") }.tint(.pink)
                                             }
-                                            if let phone = entry.person.phone, case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
-                                                Button { openURL(url) } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }.tint(.green)
+                                            if CallLink.url(entry.person.phone) != nil {
+                                                Button { callPerson = entry.person } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }.tint(.green)
                                             }
                                         }
                                 }
@@ -204,14 +240,15 @@ struct BirthdayRow: View {
     private var daysLeft: Int { Days.until(next) }
 
     var body: some View {
-        HStack(spacing: 14) {
-            PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex, size: 48)
+        HStack(spacing: 12) {
+            PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex, size: 42)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
-                    Text(person.name).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                    Text(person.name).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                        .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                     if !person.remindersEnabled { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.tertiary) }
                 }
-                Text(detail).font(KlarStyle.font(14, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).minimumScaleFactor(0.85)
+                InfoTags(tags: tags, size: 11).padding(.top, 2)
             }
             Spacer(minLength: 8)
             countdown
@@ -220,31 +257,34 @@ struct BirthdayRow: View {
         .contentShape(Rectangle())
     }
 
-    /// „Sa 24. Okt · wird 73 · Jahrgang 1953 · 🎁 2“
-    private var detail: String {
-        var parts = [DateText.short(next)]
-        if let years, let year = person.knownYear {
-            parts.append(L10n.t("wird \(years)", "turns \(years)") + (AnnualDate.isMilestone(years) ? " 🎉" : ""))
-            parts.append(L10n.t("Jahrgang \(year)", "born \(year)"))
-        }
-        parts.append(person.zodiacLabel)
-        if !person.giftIdeas.isEmpty { parts.append("🎁 \(person.giftIdeas.count)") }
-        return parts.joined(separator: " · ")
+    /// Schildchen: „wird 73 🎉“, „Jg. 1953“, „♏️ Skorpion“, „🎁 2“ – das Datum steht rechts unter den Tagen
+    private var tags: [String] {
+        var tags: [String] = []
+        if let years { tags.append(L10n.t("wird \(years)", "turns \(years)") + (AnnualDate.isMilestone(years) ? " 🎉" : "")) }
+        if let year = person.knownYear { tags.append(L10n.t("Jg. \(year)", "b. \(year)")) }
+        // In der Liste nur das Sternzeichen-Symbol – ausgeschrieben passt es auf dem iPhone nicht in eine Reihe
+        tags.append(String(person.zodiacLabel.prefix(while: { $0 != " " })))
+        if !person.giftIdeas.isEmpty { tags.append("🎁 \(person.giftIdeas.count)") }
+        return tags
     }
 
-    @ViewBuilder
+    /// Rechts: Tage bis zum Geburtstag groß, darunter das Datum.
     private var countdown: some View {
-        switch daysLeft {
-        case 0:
-            Text(L10n.t("Heute 🎉", "Today 🎉")).font(KlarStyle.font(16, .heavy)).foregroundStyle(.pink)
-        case 1:
-            Text(L10n.t("Morgen", "Tomorrow")).font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme))
-        default:
-            VStack(alignment: .trailing, spacing: -2) {
-                Text("\(daysLeft)").font(KlarStyle.font(22, .black)).foregroundStyle(KlarStyle.text(scheme))
-                Text(L10n.t("Tage", "days")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+        VStack(alignment: .trailing, spacing: 1) {
+            switch daysLeft {
+            case 0:
+                Text(L10n.t("Heute 🎉", "Today 🎉")).font(KlarStyle.font(16, .heavy)).foregroundStyle(.pink)
+            case 1:
+                Text(L10n.t("Morgen", "Tomorrow")).font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+            default:
+                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                    Text("\(daysLeft)").font(KlarStyle.font(20, .black)).foregroundStyle(KlarStyle.text(scheme))
+                    Text(L10n.t("Tage", "days")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                }
             }
+            Text(DateText.short(next)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
         }
+        .fixedSize()
     }
 }
 
@@ -257,6 +297,9 @@ struct BirthdayEditView: View {
     @State private var name = ""
     @State private var date = Days.make(year: 1990, month: 1, day: 1) ?? Date()
     @State private var yearKnown = true
+    /// Tag und Monat, wenn das Geburtsjahr nicht bekannt ist – dann ohne Datumsauswahl mit erfundenem Jahr.
+    @State private var dayOnly = 1
+    @State private var monthOnly = 1
     @State private var notes = ""
     @State private var colorHex = "#EC4899"
     @State private var remindersEnabled = true
@@ -266,6 +309,7 @@ struct BirthdayEditView: View {
     @State private var phone = ""
     @State private var showDeleteConfirm = false
     @State private var photoData: Data?
+    @State private var confirmCall = false
     @State private var photoItem: PhotosPickerItem?
 
     private let options: [(String, Int)] = [("Nur am Geburtstag", 0), ("1 Tag vorher", 1), ("2 Tage vorher", 2), ("3 Tage vorher", 3), ("1 Woche vorher", 7), ("2 Wochen vorher", 14)]
@@ -291,6 +335,19 @@ struct BirthdayEditView: View {
                     }
                     .padding(.vertical, 4)
                 }
+                .onChange(of: yearKnown) { _, known in
+                    let cal = Calendar.current
+                    if known {
+                        // Gibt es den Tag in diesem Jahr nicht (29. Februar), ein Schaltjahr nehmen statt den Tag zu ändern
+                        var year = cal.component(.year, from: date)
+                        let maxDay = Days.make(year: year, month: monthOnly, day: 1).flatMap { cal.range(of: .day, in: .month, for: $0)?.count } ?? 28
+                        if dayOnly > maxDay { year = 2000 }
+                        date = Days.make(year: year, month: monthOnly, day: dayOnly) ?? date
+                    } else {
+                        dayOnly = cal.component(.day, from: date); monthOnly = cal.component(.month, from: date)
+                    }
+                }
+                .onChange(of: monthOnly) { _, month in dayOnly = min(dayOnly, daysIn(month: month)) }
                 .onChange(of: photoItem) { _, item in
                     guard let item else { return }
                     Task {
@@ -299,11 +356,23 @@ struct BirthdayEditView: View {
                 }
                 Section("Person") {
                     TextField("Name", text: $name)
-                    DatePicker("Geburtstag", selection: $date, in: ...Date(), displayedComponents: .date)
                     Toggle("Geburtsjahr bekannt", isOn: $yearKnown)
                     if yearKnown {
+                        DatePicker("Geburtstag", selection: $date, in: ...Date(), displayedComponents: .date)
+                    } else {
+                        // Ohne Jahr: nur Tag und Monat – kein Platzhalter-Jahr, das falsch aussieht
+                        Picker(L10n.t("Tag", "Day"), selection: $dayOnly) {
+                            ForEach(1...daysIn(month: monthOnly), id: \.self) { Text("\($0).").tag($0) }
+                        }
+                        Picker(L10n.t("Monat", "Month"), selection: $monthOnly) {
+                            ForEach(1...12, id: \.self) { Text(Calendar.current.monthSymbols[$0 - 1]).tag($0) }
+                        }
+                    }
+                    if yearKnown {
                         let annual = AnnualDate(day: Calendar.current.component(.day, from: date), month: Calendar.current.component(.month, from: date), year: Calendar.current.component(.year, from: date))
-                        LabeledContent("Alter", value: "\(L10n.count(annual.years(on: Date()) ?? 0, "Jahr", "Jahre", "year", "years")) · \(annual.zodiac)")
+                        LabeledContent("Alter", value: "\(L10n.count(annual.years(on: Date()) ?? 0, "Jahr", "Jahre", "year", "years")) · \(annual.zodiac.replacingOccurrences(of: "\u{FE0E}", with: "\u{FE0F}"))")
+                    } else {
+                        LabeledContent(L10n.t("Sternzeichen", "Star sign"), value: AnnualDate(day: dayOnly, month: monthOnly, year: nil).zodiac.replacingOccurrences(of: "\u{FE0E}", with: "\u{FE0F}"))
                     }
                     TextField("Telefon (für Glückwunsch per Nachricht)", text: $phone).keyboardType(.phonePad)
                 }
@@ -330,14 +399,15 @@ struct BirthdayEditView: View {
                             Link(destination: url) { Label("Glückwunsch per Nachricht senden", systemImage: "message.fill") }
                         }
                         // Nummer aus dem Feld oben – auch wenn sie gerade erst eingetragen und noch nicht gesichert ist
-                        if case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
-                            Link(destination: url) { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }
+                        if let url = CallLink.url(phone) {
+                            Button { confirmCall = true } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }
+                                .callConfirmation(isPresented: $confirmCall, name: name, url: url)
                         }
                         Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Geburtstag löschen", systemImage: "trash") }
                     }
                 }
             }
-            .navigationTitle(person == nil ? "Neuer Geburtstag" : "Geburtstag bearbeiten").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Geburtstag").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Sichern") { save() }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty) }
@@ -365,6 +435,11 @@ struct BirthdayEditView: View {
         NotificationManager.greetingURL(name: person.name, phone: person.phone)
     }
 
+    /// Tage eines Monats; Februar mit 29, damit Schalttags-Geburtstage gehen.
+    private func daysIn(month: Int) -> Int {
+        [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][max(1, min(12, month)) - 1]
+    }
+
     /// Fotos auf höchstens 600 Pixel verkleinern (JPEG) – reicht für die runden Bilder und hält iCloud klein.
     static func downscaled(_ data: Data) -> Data? {
         guard let image = UIImage(data: data) else { return nil }
@@ -381,11 +456,15 @@ struct BirthdayEditView: View {
         remindDaysBefore = person.remindDaysBefore; giftIdeas = person.giftIdeas; phone = person.phone ?? ""
         photoData = person.photoData
         yearKnown = person.knownYear != nil
+        dayOnly = person.day; monthOnly = person.month
+        // Ohne bekanntes Jahr wird die Datumsauswahl nicht gezeigt; das Jahr ist nur ein Startwert, falls man es einschaltet.
+        // 2000 ist ein Schaltjahr – sonst würde ein 29. Februar beim Einschalten zum 28.
         date = Days.make(year: person.knownYear ?? 2000, month: person.month, day: person.day) ?? Date()
     }
 
     private func save() {
-        let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        var c = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        if !yearKnown { c.day = min(dayOnly, daysIn(month: monthOnly)); c.month = monthOnly }
         let target = person ?? Person(name: name, day: c.day ?? 1, month: c.month ?? 1)
         if person == nil { context.insert(target) }
         target.name = name.trimmingCharacters(in: .whitespaces)
