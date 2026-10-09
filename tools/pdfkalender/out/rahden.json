@@ -1,0 +1,4150 @@
+{
+ "key": "rahden",
+ "title": "Stadt Rahden",
+ "source": "https://www.rahden.de/wp-content/uploads/Abfall-Entsorgungskalender2026.pdf",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Straße",
+ "notice": null,
+ "areas": [
+  {
+   "id": "ahlfeld",
+   "title": "Ahlfeld",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "alte_kirchstrasse",
+   "title": "Alte Kirchstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "alte_muehle",
+   "title": "Alte Mühle",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "alte_wiesen",
+   "title": "Alte Wiesen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "alte_zollstation",
+   "title": "Alte Zollstation",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "alter_kirchweg",
+   "title": "Alter Kirchweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "alter_markt",
+   "title": "Alter Markt",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "alter_postweg",
+   "title": "Alter Postweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "alwes_kamp",
+   "title": "Alwes Kamp",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_alten_diek",
+   "title": "Am Alten Diek",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_birkholz",
+   "title": "Am Birkholz",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_blanken_boom",
+   "title": "Am Blanken Boom",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_boomkamp",
+   "title": "Am Boomkamp",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_brullfeld",
+   "title": "Am Brullfeld",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_denkmal",
+   "title": "Am Denkmal",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_dorfplatz",
+   "title": "Am Dorfplatz",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_eichholz",
+   "title": "Am Eichholz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_espelkaemper_feld",
+   "title": "Am Espelkämper Feld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_freibad",
+   "title": "Am Freibad",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_friedhof",
+   "title": "Am Friedhof",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_glockenstuhl",
+   "title": "Am Glockenstuhl",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_grossen_feld",
+   "title": "Am Großen Feld",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_hagedorn",
+   "title": "Am Hagedorn",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_herrenteich",
+   "title": "Am Herrenteich",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_hoebel",
+   "title": "Am Höbel",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_holtkamp",
+   "title": "Am Holtkamp",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_hopfengarten",
+   "title": "Am Hopfengarten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_kindergarten",
+   "title": "Am Kindergarten",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_kirchplatz",
+   "title": "Am Kirchplatz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_klosterkamp",
+   "title": "Am Klosterkamp",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_kornfeld",
+   "title": "Am Kornfeld",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_lintelfeld",
+   "title": "Am Lintelfeld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_moor",
+   "title": "Am Moor",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_moorland",
+   "title": "Am Moorland",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_paal",
+   "title": "Am Paal",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_placken",
+   "title": "Am Placken",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_schulhof",
+   "title": "Am Schulhof",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "am_schulplatz",
+   "title": "Am Schulplatz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_specken",
+   "title": "Am Specken",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_specker_feld",
+   "title": "Am Specker Feld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_speukebusch",
+   "title": "Am Speukebusch",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_sportplatz",
+   "title": "Am Sportplatz",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_sprakel",
+   "title": "Am Sprakel",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_steller_damm",
+   "title": "Am Steller Damm",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_stroeher_bahnhof",
+   "title": "Am Ströher Bahnhof",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_thie",
+   "title": "Am Thie",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_tunhau",
+   "title": "Am Tunhau",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_weidengrund",
+   "title": "Am Weidengrund",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "am_weissen_moor",
+   "title": "Am Weißen Moor",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "am_ziegelhof",
+   "title": "Am Ziegelhof",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "ammenweg",
+   "title": "Ammenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "amselweg",
+   "title": "Amselweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "an_den_riehen",
+   "title": "An den Riehen",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "an_der_alten_molkerei",
+   "title": "An der Alten Molkerei",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "an_der_aue",
+   "title": "An der Aue",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "an_der_bleiche",
+   "title": "An der Bleiche",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "an_der_kuethe",
+   "title": "An der Küthe",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "an_der_muehle",
+   "title": "An der Mühle",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "an_der_niedermuehle",
+   "title": "An der Niedermühle",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "an_der_wickriede",
+   "title": "An der Wickriede",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "an_wehes_hof",
+   "title": "An Wehes Hof",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_dem_pustel",
+   "title": "Auf dem Pustel",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "auedamm",
+   "title": "Auedamm",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_dem_flage",
+   "title": "Auf dem Flage",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "auf_dem_thie",
+   "title": "Auf dem Thie",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "auf_dem_witting",
+   "title": "Auf dem Witting",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_der_graefte",
+   "title": "Auf der Gräfte",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "auf_der_hardt",
+   "title": "Auf der Hardt",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_der_heide",
+   "title": "Auf der Heide",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "auf_der_kolkhorst",
+   "title": "Auf der Kolkhorst",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "auf_der_masch_1_10",
+   "title": "Auf der Masch 1 - 10",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "auf_der_masch_12_22",
+   "title": "Auf der Masch 12 - 22",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "auf_der_roethe",
+   "title": "Auf der Röthe",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_der_schwielge",
+   "title": "Auf der Schwielge",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "auf_der_welle",
+   "title": "Auf der Welle",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "aug_kolbus_weg",
+   "title": "Aug.-Kolbus-Weg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "azaleenweg",
+   "title": "Azaleenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "bachstrasse",
+   "title": "Bachstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bahnhofstrasse",
+   "title": "Bahnhofstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bargs_kamp",
+   "title": "Bargs Kamp",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "barler_kamp",
+   "title": "Barler Kamp",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "barler_strasse_1_19",
+   "title": "Barler Straße 1 - 19",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "barler_strasse_21",
+   "title": "Barler Straße 21",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bauerbrinker_strasse",
+   "title": "Bauerbrinker Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "baumweg",
+   "title": "Baumweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "beckwiehe",
+   "title": "Beckwiehe",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "beekebruch",
+   "title": "Beekebruch",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "binnenheide",
+   "title": "Binnenheide",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "birkenweg",
+   "title": "Birkenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bocks_allee",
+   "title": "Bocks Allee",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "bollbrink",
+   "title": "Bollbrink",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "borsigstrasse",
+   "title": "Borsigstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "boessel",
+   "title": "Bössel",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "brakwiese",
+   "title": "Brakwiese",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "brambruch",
+   "title": "Brambruch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "brandheideweg",
+   "title": "Brandheideweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "bremer_strasse_1_59_69",
+   "title": "Bremer Straße 1 - 59, 69",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bremer_strasse_63_abfuhr_erfolgt_an_der_specker_str",
+   "title": "Bremer Straße 63 (Abfuhr erfolgt an der Specker Str.)",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "brinkgarten",
+   "title": "Brinkgarten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "brinkweg",
+   "title": "Brinkweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bruchdamm",
+   "title": "Bruchdamm",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bruchgraben",
+   "title": "Bruchgraben",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bruchmuehlenstrasse",
+   "title": "Bruchmühlenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bruchorter_allee",
+   "title": "Bruchorter Allee",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bruchstrasse",
+   "title": "Bruchstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bruchweg",
+   "title": "Bruchweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "buchenweg",
+   "title": "Buchenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "bultweg",
+   "title": "Bultweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "bulzendorf",
+   "title": "Bulzendorf",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "bungenort",
+   "title": "Bungenort",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "burggarten",
+   "title": "Burggarten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "buschhuegel",
+   "title": "Buschhügel",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "carl_diem_strasse",
+   "title": "Carl-Diem-Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "carl_zeiss_strasse",
+   "title": "Carl-Zeiss-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "dalgeweg",
+   "title": "Dalgeweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "daukuhle",
+   "title": "Daukuhle",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "dieckerort",
+   "title": "Dieckerort",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "dieklage",
+   "title": "Dieklage",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "diekweg",
+   "title": "Diekweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "diepholzer_strasse",
+   "title": "Diepholzer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "domaenenweg",
+   "title": "Domänenweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "donzliger_ort",
+   "title": "Donzliger Ort",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "dr_grote_weg",
+   "title": "Dr.-Grote-Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "dreistatt",
+   "title": "Dreistatt",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "driffort",
+   "title": "Driffort",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "drohneweg",
+   "title": "Drohneweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "drosselweg",
+   "title": "Drosselweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "durch_die_heide",
+   "title": "Durch die Heide",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "eibenweg",
+   "title": "Eibenweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "eichendamm",
+   "title": "Eichendamm",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "eichenweg",
+   "title": "Eichenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "eisenbahnstrasse",
+   "title": "Eisenbahnstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "erlenweg",
+   "title": "Erlenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "erich_heinzig_strasse",
+   "title": "Erich-Heinzig-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "fahriehen",
+   "title": "Fahriehen",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "fangort",
+   "title": "Fangort",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "farnhorst_1",
+   "title": "Farnhorst 1",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "farnhorst_3_5",
+   "title": "Farnhorst 3 + 5",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "fasanenweg",
+   "title": "Fasanenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "feldstrasse",
+   "title": "Feldstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "filger_bruch",
+   "title": "Filger Bruch",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "finkenweg",
+   "title": "Finkenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "fischerstatt",
+   "title": "Fischerstatt",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "flachsstrasse",
+   "title": "Flachsstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "freiherr_vom_stein_strasse",
+   "title": "Freiherr-vom-Stein-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "fritz_rueter_weg",
+   "title": "Fritz-Rüter-Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "fuenfhausen",
+   "title": "Fünfhausen",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "galgenkamp",
+   "title": "Galgenkamp",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "gaensebrink",
+   "title": "Gänsebrink",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gartenstrasse",
+   "title": "Gartenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gattgarten",
+   "title": "Gattgarten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "gerichtsstrasse",
+   "title": "Gerichtsstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gerlager_strasse_1_2_3_4_6_11_13_15",
+   "title": "Gerlager Straße 1, 2, 3, 4, 6, 11, 13, 15",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "gerlager_strasse_5_7",
+   "title": "Gerlager Straße 5 + 7",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "grasdamm",
+   "title": "Grasdamm",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "grenzweg",
+   "title": "Grenzweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "gross_barl",
+   "title": "Groß Barl",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "grosse_masch",
+   "title": "Große Masch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "gruener_weg",
+   "title": "Grüner Weg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hackelbarg",
+   "title": "Hackelbarg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hagebuttenweg",
+   "title": "Hagebuttenweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "hahnenkamp",
+   "title": "Hahnenkamp",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hahnenkaemper_weg",
+   "title": "Hahnenkämper Weg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hasslage",
+   "title": "Haßlage",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hasslinger_weg",
+   "title": "Hasslinger Weg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hassmoor",
+   "title": "Haßmoor",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "heckenweg",
+   "title": "Heckenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "heidegrund",
+   "title": "Heidegrund",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "heidemoor",
+   "title": "Heidemoor",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "heideweg",
+   "title": "Heideweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "heidkamp",
+   "title": "Heidkamp",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "heimweg",
+   "title": "Heimweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "heinr_wlecke_strasse",
+   "title": "Heinr.-Wlecke-Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "heller_kamp",
+   "title": "Heller Kamp",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "heuerorter_strasse",
+   "title": "Heuerorter Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "heuweg",
+   "title": "Heuweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hindenburgdamm",
+   "title": "Hindenburgdamm",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hinter_der_kirche",
+   "title": "Hinter der Kirche",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hinterm_felde",
+   "title": "Hinterm Felde",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hinterm_fledder",
+   "title": "Hinterm Fledder",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hinterm_lohbusch",
+   "title": "Hinterm Lohbusch",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hinterm_nordfeld",
+   "title": "Hinterm Nordfeld",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hoeferort",
+   "title": "Höferort",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hohe_muehle",
+   "title": "Hohe Mühle",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "hohensteiner_muehle",
+   "title": "Hohensteiner Mühle",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hohes_feld",
+   "title": "Hohes Feld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "holsinger_strasse_1_15",
+   "title": "Holsinger Straße 1 - 15",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "holsinger_strasse_20_21",
+   "title": "Holsinger Straße 20 + 21",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "holunderweg",
+   "title": "Holunderweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "horstweg",
+   "title": "Horstweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hortweg",
+   "title": "Hortweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "hudeweg",
+   "title": "Hudeweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "huelsenbrink",
+   "title": "Hülsenbrink",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "husener_strasse",
+   "title": "Husener Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "huesinger_feld",
+   "title": "Hüsinger Feld",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "im_bahndreieck",
+   "title": "Im Bahndreieck",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_buelten",
+   "title": "Im Bülten",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "im_dieke",
+   "title": "Im Dieke",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "im_fang",
+   "title": "Im Fang",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "im_felde",
+   "title": "Im Felde",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_fiskus",
+   "title": "Im Fiskus",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "im_hausgarten",
+   "title": "Im Hausgarten",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_muehlenfeld",
+   "title": "Im Mühlenfeld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "im_roen",
+   "title": "Im Roen",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "im_rosengarten",
+   "title": "Im Rosengarten",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_sande",
+   "title": "Im Sande",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_springel",
+   "title": "Im Springel",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "im_strang",
+   "title": "Im Strang",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "im_teiche",
+   "title": "Im Teiche",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "im_twielen_4_6_8",
+   "title": "Im Twielen 4, 6, 8",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_twielen_2_10_11_12_13",
+   "title": "Im Twielen 2, 10, 11, 12, 13",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "im_walde",
+   "title": "Im Walde",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "im_westerfeld",
+   "title": "Im Westerfeld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "immengarten",
+   "title": "Immengarten",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "immenweg",
+   "title": "Immenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_den_birken",
+   "title": "In den Birken",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_den_daemmen",
+   "title": "In den Dämmen",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_den_eickmoesen",
+   "title": "In den Eickmösen",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_den_fichten",
+   "title": "In den Fichten",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "in_den_koelken",
+   "title": "In den Kölken",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "in_den_sennen",
+   "title": "In den Sennen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "in_der_heide",
+   "title": "In der Heide",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "in_der_laune",
+   "title": "In der Laune",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_der_strasse",
+   "title": "In der Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "industriestrasse",
+   "title": "Industriestraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "jahnstrasse",
+   "title": "Jahnstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "joh_chr_klasing_strasse",
+   "title": "Joh.-Chr.-Klasing-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "kampstrasse",
+   "title": "Kampstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kattwiehe",
+   "title": "Kattwiehe",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "katzengasse",
+   "title": "Katzengasse",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kirchdamm",
+   "title": "Kirchdamm",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kleiberweg",
+   "title": "Kleiberweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kleihuegel",
+   "title": "Kleihügel",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kleine_masch",
+   "title": "Kleine Masch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "kleines_feld",
+   "title": "Kleines Feld",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kleiriehe",
+   "title": "Kleiriehe",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "klostergarten",
+   "title": "Klostergarten",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "klumpheide",
+   "title": "Klumpheide",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "klusweg",
+   "title": "Klusweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "konrad_zuse_strasse",
+   "title": "Konrad-Zuse-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kornweg",
+   "title": "Kornweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "krallhardt",
+   "title": "Krallhardt",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "kreuzkuhlenweg",
+   "title": "Kreuzkuhlenweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "kreuzweg",
+   "title": "Kreuzweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "kronspon",
+   "title": "Kronspon",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kurze_strasse",
+   "title": "Kurze Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "kuethe",
+   "title": "Küthe",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "lampenort_1_3_4_6",
+   "title": "Lampenort 1, 3, 4, 6",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lampenort_7",
+   "title": "Lampenort 7",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "lange_reihe",
+   "title": "Lange Reihe",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "lange_strasse",
+   "title": "Lange Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "langendamm",
+   "title": "Langendamm",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "langenhorst",
+   "title": "Langenhorst",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "langer_damm",
+   "title": "Langer Damm",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lehmkuhle",
+   "title": "Lehmkuhle",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lemfoerder_strasse_1_43",
+   "title": "Lemförder Straße 1 - 43",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "lemfoerder_strasse_ab_49",
+   "title": "Lemförder Straße ab 49",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lerchenweg",
+   "title": "Lerchenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "leverner_strasse",
+   "title": "Leverner Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "linteln",
+   "title": "Linteln",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "logemanns_damm",
+   "title": "Logemanns Damm",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "lohbusch",
+   "title": "Lohbusch",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lohkamp",
+   "title": "Lohkamp",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "luebbecker_strasse",
+   "title": "Lübbecker Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "luetkenloh",
+   "title": "Lütkenloh",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "marktstrasse",
+   "title": "Marktstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "maschweg",
+   "title": "Maschweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "meisenweg",
+   "title": "Meisenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "meisterstrasse",
+   "title": "Meisterstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "mindener_postweg",
+   "title": "Mindener Postweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "mindener_strasse_1_158",
+   "title": "Mindener Straße 1 - 158",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "mindener_strasse_166_ende",
+   "title": "Mindener Straße 166 - Ende",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "molkenhoewel",
+   "title": "Molkenhöwel",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "moellers_garten",
+   "title": "Möllers Garten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "moororter_birkenweg",
+   "title": "Moororter Birkenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "moororter_heide",
+   "title": "Moororter Heide",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "moororter_strasse",
+   "title": "Moororter Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "moorweg",
+   "title": "Moorweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "mooswiehe",
+   "title": "Mooswiehe",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "muehlendamm_1_20",
+   "title": "Mühlendamm 1 - 20",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "muehlendamm_24_32",
+   "title": "Mühlendamm 24 - 32",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "muehlensteg",
+   "title": "Mühlensteg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "muehlenstrasse",
+   "title": "Mühlenstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "muehlenweg",
+   "title": "Mühlenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "museumshof",
+   "title": "Museumshof",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "nachtigallenweg",
+   "title": "Nachtigallenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "neuer_markt",
+   "title": "Neuer Markt",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "neuer_ort",
+   "title": "Neuer Ort",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "neuer_weg",
+   "title": "Neuer Weg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "neustadt",
+   "title": "Neustadt",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "nordweg",
+   "title": "Nordweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "nuttelkamp",
+   "title": "Nuttelkamp",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "nuttelner_damm",
+   "title": "Nuttelner Damm",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "nuttelner_strasse",
+   "title": "Nuttelner Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "oppenweher_strasse",
+   "title": "Oppenweher Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "oerlingerhausen_4_13",
+   "title": "Örlingerhausen 4 - 13",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "oerlingerhausen_15",
+   "title": "Örlingerhausen 15",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "osnabruecker_strasse",
+   "title": "Osnabrücker Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "osterweg",
+   "title": "Osterweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ostlandstrasse",
+   "title": "Ostlandstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ostweg",
+   "title": "Ostweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "papenheide",
+   "title": "Papenheide",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "pestalozziweg",
+   "title": "Pestalozziweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "poggendiek",
+   "title": "Poggendiek",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "postschlueters_weg",
+   "title": "Postschlüters Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "pr_stroeher_allee",
+   "title": "Pr.-Ströher-Allee",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "prof_langhorst_strasse",
+   "title": "Prof.-Langhorst-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "pulverstrasse",
+   "title": "Pulverstraße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "quellenweg",
+   "title": "Quellenweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "rapslage_1_11",
+   "title": "Rapslage 1 - 11",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "rapslage_15_22",
+   "title": "Rapslage 15 + 22",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "rapslager_weg",
+   "title": "Rapslager Weg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "regetfeld",
+   "title": "Regetfeld",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "ringstrasse",
+   "title": "Ringstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "robert_koch_strasse",
+   "title": "Robert-Koch-Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "roedenbecks_hof",
+   "title": "Rödenbecks Hof",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "rosenweg",
+   "title": "Rosenweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "rudolf_diesel_strasse",
+   "title": "Rudolf-Diesel-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "sandtrift",
+   "title": "Sandtrift",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "sauerbruchstrasse",
+   "title": "Sauerbruchstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "schaeferweg",
+   "title": "Schäferweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schaeferwiese",
+   "title": "Schäferwiese",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "schlangenstrasse",
+   "title": "Schlangenstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "schlosserstrasse",
+   "title": "Schlosserstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schmalger_weg_4_5",
+   "title": "Schmalger Weg 4 + 5",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "schmalger_weg_6_ende",
+   "title": "Schmalger Weg 6 - Ende",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "schmiedestrasse",
+   "title": "Schmiedestraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schnakenpohl",
+   "title": "Schnakenpohl",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schnat",
+   "title": "Schnat",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "schroeers_kamp",
+   "title": "Schröers Kamp",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "schullenmoor",
+   "title": "Schullenmoor",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schulstrasse",
+   "title": "Schulstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "schwalbenweg",
+   "title": "Schwalbenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "schwarzes_moor",
+   "title": "Schwarzes Moor",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "seufzerallee",
+   "title": "Seufzerallee",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "siegmeiers_weg",
+   "title": "Siegmeiers Weg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "sielhorster_bruch",
+   "title": "Sielhorster Bruch",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "sielhorster_moorweg",
+   "title": "Sielhorster Moorweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "sielhorster_strasse_2_23",
+   "title": "Sielhorster Straße 2 - 23",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "sielhorster_strasse_27_40",
+   "title": "Sielhorster Straße 27 - 40",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "sielhorster_weg",
+   "title": "Sielhorster Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "sohrenholz",
+   "title": "Sohrenholz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "sonnenseite",
+   "title": "Sonnenseite",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "specker_kamp",
+   "title": "Specker Kamp",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "specker_strasse",
+   "title": "Specker Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "sprados_kamp",
+   "title": "Sprados Kamp",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "springeldamm",
+   "title": "Springeldamm",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "stattdamm",
+   "title": "Stattdamm",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "steger_holz",
+   "title": "Steger Holz",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "steinmasch",
+   "title": "Steinmasch",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "steinstrasse",
+   "title": "Steinstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "steller_strasse",
+   "title": "Steller Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "stellerloh",
+   "title": "Stellerloh",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "stellge",
+   "title": "Stellge",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "stroeher_bruch",
+   "title": "Ströher Bruch",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "strohweg",
+   "title": "Strohweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "sudriede",
+   "title": "Sudriede",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "suedring",
+   "title": "Südring",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "tanneneck",
+   "title": "Tanneneck",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "thiegarten",
+   "title": "Thiegarten",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "thielemanns_damm",
+   "title": "Thielemanns Damm",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "tiefes_tal",
+   "title": "Tiefes Tal",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "tielger_strasse",
+   "title": "Tielger Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "tielger_winkel",
+   "title": "Tielger Winkel",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "tonnenheider_kirchweg",
+   "title": "Tonnenheider Kirchweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "tonnenheider_schulweg",
+   "title": "Tonnenheider Schulweg",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "tonnenheider_strasse",
+   "title": "Tonnenheider Straße",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "ulmenweg",
+   "title": "Ulmenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "unter_den_eichen",
+   "title": "Unter den Eichen",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "uppen_brinke",
+   "title": "Uppen Brinke",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "varler_brink",
+   "title": "Varler Brink",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "varler_schulweg",
+   "title": "Varler Schulweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "varler_strasse",
+   "title": "Varler Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "varler_wald",
+   "title": "Varler Wald",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "varlheider_strasse",
+   "title": "Varlheider Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "volkeningweg",
+   "title": "Volkeningweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "von_bodelschwingh_strasse",
+   "title": "Von-Bodelschwingh-Straße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "von_roden_strasse",
+   "title": "Von-Roden-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "vor_den_wiesen",
+   "title": "Vor den Wiesen",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "vordamm",
+   "title": "Vordamm",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "vorwerker_feld",
+   "title": "Vorwerker Feld",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "wagenfelder_strasse_1_49",
+   "title": "Wagenfelder Straße 1 - 49",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "wagenfelder_strasse_51_74",
+   "title": "Wagenfelder Straße 51 - 74",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "walage",
+   "title": "Walage",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "waldweg",
+   "title": "Waldweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "weberstrasse",
+   "title": "Weberstraße",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "weddingfeld",
+   "title": "Weddingfeld",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wehdemer_weg",
+   "title": "Wehdemer Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "weher_esch",
+   "title": "Weher Esch",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "weher_moorort",
+   "title": "Weher Moorort",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "weher_strasse_1_151",
+   "title": "Weher Straße 1-151",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weher_strasse_161_ende",
+   "title": "Weher Straße 161 - Ende",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wehme",
+   "title": "Wehme",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weidenweg",
+   "title": "Weidenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weissdornweg",
+   "title": "Weißdornweg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "wellerstrasse",
+   "title": "Wellerstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "werner_von_siemens_strasse",
+   "title": "Werner-von-Siemens-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "westerheide",
+   "title": "Westerheide",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "westerlage",
+   "title": "Westerlage",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "westermoor",
+   "title": "Westermoor",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wiemelkenmoor",
+   "title": "Wiemelkenmoor",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wiesenweg",
+   "title": "Wiesenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "wilhelm_rehling_weg",
+   "title": "Wilhelm-Rehling-Weg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "willers_kamp",
+   "title": "Willers Kamp",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "winkelstrasse",
+   "title": "Winkelstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ziegeleiweg",
+   "title": "Ziegeleiweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zum_alten_rennplatz",
+   "title": "Zum Alten Rennplatz",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zum_bauerbrink",
+   "title": "Zum Bauerbrink",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "zum_eckerngarten",
+   "title": "Zum Eckerngarten",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zum_fiskus",
+   "title": "Zum Fiskus",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zum_grenzwall",
+   "title": "Zum Grenzwall",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zum_hochmoor",
+   "title": "Zum Hochmoor",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zum_kleihuegel",
+   "title": "Zum Kleihügel",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zum_lohne",
+   "title": "Zum Lohne",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zum_nordfeld",
+   "title": "Zum Nordfeld",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zum_schnakenpohl",
+   "title": "Zum Schnakenpohl",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zum_schullenmoor",
+   "title": "Zum Schullenmoor",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zur_alten_schule",
+   "title": "Zur Alten Schule",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zur_amlage",
+   "title": "Zur Amlage",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zur_barler_heide",
+   "title": "Zur Barler Heide",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zur_bockwindmuehle",
+   "title": "Zur Bockwindmühle",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zur_brandheide",
+   "title": "Zur Brandheide",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zur_friedenseiche",
+   "title": "Zur Friedenseiche",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "zur_landesgrenze",
+   "title": "Zur Landesgrenze",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zur_langenhorst",
+   "title": "Zur Langenhorst",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "zur_muehlenbruecke",
+   "title": "Zur Mühlenbrücke",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zur_niedermuehle",
+   "title": "Zur Niedermühle",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "zur_sandhordt",
+   "title": "Zur Sandhordt",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "zur_steinkaemper_muehle",
+   "title": "Zur Steinkämper Mühle",
+   "group": null,
+   "plan": "p3"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-03",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-01-06",
+    "Altpapier"
+   ],
+   [
+    "2026-01-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-13",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-01-20",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Biomüll"
+   ],
+   [
+    "2026-02-03",
+    "Altpapier"
+   ],
+   [
+    "2026-02-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-10",
+    "Biomüll"
+   ],
+   [
+    "2026-02-17",
+    "Restmüll"
+   ],
+   [
+    "2026-02-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-03",
+    "Altpapier"
+   ],
+   [
+    "2026-03-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-10",
+    "Biomüll"
+   ],
+   [
+    "2026-03-17",
+    "Restmüll"
+   ],
+   [
+    "2026-03-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-30",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-03-30",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-14",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-04-27",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-27",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-05",
+    "Biomüll"
+   ],
+   [
+    "2026-05-12",
+    "Restmüll"
+   ],
+   [
+    "2026-05-19",
+    "Biomüll"
+   ],
+   [
+    "2026-05-27",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-27",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-02",
+    "Biomüll"
+   ],
+   [
+    "2026-06-09",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Biomüll"
+   ],
+   [
+    "2026-06-23",
+    "Altpapier"
+   ],
+   [
+    "2026-06-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-30",
+    "Biomüll"
+   ],
+   [
+    "2026-07-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-07-07",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-07-21",
+    "Altpapier"
+   ],
+   [
+    "2026-07-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-28",
+    "Biomüll"
+   ],
+   [
+    "2026-08-04",
+    "Restmüll"
+   ],
+   [
+    "2026-08-11",
+    "Biomüll"
+   ],
+   [
+    "2026-08-18",
+    "Altpapier"
+   ],
+   [
+    "2026-08-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-25",
+    "Biomüll"
+   ],
+   [
+    "2026-09-01",
+    "Restmüll"
+   ],
+   [
+    "2026-09-08",
+    "Biomüll"
+   ],
+   [
+    "2026-09-15",
+    "Altpapier"
+   ],
+   [
+    "2026-09-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-22",
+    "Biomüll"
+   ],
+   [
+    "2026-09-29",
+    "Restmüll"
+   ],
+   [
+    "2026-10-06",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-10-13",
+    "Altpapier"
+   ],
+   [
+    "2026-10-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-20",
+    "Biomüll"
+   ],
+   [
+    "2026-10-20",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-10-27",
+    "Restmüll"
+   ],
+   [
+    "2026-11-03",
+    "Biomüll"
+   ],
+   [
+    "2026-11-10",
+    "Altpapier"
+   ],
+   [
+    "2026-11-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-17",
+    "Biomüll"
+   ],
+   [
+    "2026-11-24",
+    "Restmüll"
+   ],
+   [
+    "2026-12-01",
+    "Biomüll"
+   ],
+   [
+    "2026-12-08",
+    "Altpapier"
+   ],
+   [
+    "2026-12-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-15",
+    "Biomüll"
+   ],
+   [
+    "2026-12-21",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-12-29",
+    "Biomüll"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-02",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-01-03",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-01-08",
+    "Altpapier"
+   ],
+   [
+    "2026-01-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-15",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-01-22",
+    "Restmüll"
+   ],
+   [
+    "2026-01-29",
+    "Biomüll"
+   ],
+   [
+    "2026-02-05",
+    "Altpapier"
+   ],
+   [
+    "2026-02-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-12",
+    "Biomüll"
+   ],
+   [
+    "2026-02-19",
+    "Restmüll"
+   ],
+   [
+    "2026-02-26",
+    "Biomüll"
+   ],
+   [
+    "2026-03-05",
+    "Altpapier"
+   ],
+   [
+    "2026-03-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-12",
+    "Biomüll"
+   ],
+   [
+    "2026-03-19",
+    "Restmüll"
+   ],
+   [
+    "2026-03-26",
+    "Biomüll"
+   ],
+   [
+    "2026-04-01",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-01",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-04-10",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-16",
+    "Restmüll"
+   ],
+   [
+    "2026-04-23",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-04-29",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-29",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-07",
+    "Biomüll"
+   ],
+   [
+    "2026-05-15",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-21",
+    "Biomüll"
+   ],
+   [
+    "2026-05-29",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-29",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-05",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-11",
+    "Restmüll"
+   ],
+   [
+    "2026-06-18",
+    "Biomüll"
+   ],
+   [
+    "2026-06-25",
+    "Altpapier"
+   ],
+   [
+    "2026-06-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-02",
+    "Biomüll"
+   ],
+   [
+    "2026-07-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-07-09",
+    "Restmüll"
+   ],
+   [
+    "2026-07-16",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-07-23",
+    "Altpapier"
+   ],
+   [
+    "2026-07-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-30",
+    "Biomüll"
+   ],
+   [
+    "2026-08-06",
+    "Restmüll"
+   ],
+   [
+    "2026-08-13",
+    "Biomüll"
+   ],
+   [
+    "2026-08-20",
+    "Altpapier"
+   ],
+   [
+    "2026-08-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-27",
+    "Biomüll"
+   ],
+   [
+    "2026-09-03",
+    "Restmüll"
+   ],
+   [
+    "2026-09-10",
+    "Biomüll"
+   ],
+   [
+    "2026-09-17",
+    "Altpapier"
+   ],
+   [
+    "2026-09-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-24",
+    "Biomüll"
+   ],
+   [
+    "2026-10-01",
+    "Restmüll"
+   ],
+   [
+    "2026-10-08",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-10-15",
+    "Altpapier"
+   ],
+   [
+    "2026-10-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-20",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-10-22",
+    "Biomüll"
+   ],
+   [
+    "2026-10-29",
+    "Restmüll"
+   ],
+   [
+    "2026-11-05",
+    "Biomüll"
+   ],
+   [
+    "2026-11-12",
+    "Altpapier"
+   ],
+   [
+    "2026-11-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-19",
+    "Biomüll"
+   ],
+   [
+    "2026-11-26",
+    "Restmüll"
+   ],
+   [
+    "2026-12-03",
+    "Biomüll"
+   ],
+   [
+    "2026-12-10",
+    "Altpapier"
+   ],
+   [
+    "2026-12-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-17",
+    "Biomüll"
+   ],
+   [
+    "2026-12-23",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-12-31",
+    "Biomüll"
+   ]
+  ],
+  "p3": [
+   [
+    "2026-01-03",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-01-03",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-01-09",
+    "Altpapier"
+   ],
+   [
+    "2026-01-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-16",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-01-23",
+    "Restmüll"
+   ],
+   [
+    "2026-01-30",
+    "Biomüll"
+   ],
+   [
+    "2026-02-06",
+    "Altpapier"
+   ],
+   [
+    "2026-02-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-13",
+    "Biomüll"
+   ],
+   [
+    "2026-02-20",
+    "Restmüll"
+   ],
+   [
+    "2026-02-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-06",
+    "Altpapier"
+   ],
+   [
+    "2026-03-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-13",
+    "Biomüll"
+   ],
+   [
+    "2026-03-20",
+    "Restmüll"
+   ],
+   [
+    "2026-03-27",
+    "Biomüll"
+   ],
+   [
+    "2026-04-02",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-02",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-04-11",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-17",
+    "Restmüll"
+   ],
+   [
+    "2026-04-24",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-04-30",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-30",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-08",
+    "Biomüll"
+   ],
+   [
+    "2026-05-16",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-22",
+    "Biomüll"
+   ],
+   [
+    "2026-05-30",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-30",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-06",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-12",
+    "Restmüll"
+   ],
+   [
+    "2026-06-19",
+    "Biomüll"
+   ],
+   [
+    "2026-06-26",
+    "Altpapier"
+   ],
+   [
+    "2026-06-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-03",
+    "Biomüll"
+   ],
+   [
+    "2026-07-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-07-10",
+    "Restmüll"
+   ],
+   [
+    "2026-07-17",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-07-24",
+    "Altpapier"
+   ],
+   [
+    "2026-07-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-31",
+    "Biomüll"
+   ],
+   [
+    "2026-08-07",
+    "Restmüll"
+   ],
+   [
+    "2026-08-14",
+    "Biomüll"
+   ],
+   [
+    "2026-08-21",
+    "Altpapier"
+   ],
+   [
+    "2026-08-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-28",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Restmüll"
+   ],
+   [
+    "2026-09-11",
+    "Biomüll"
+   ],
+   [
+    "2026-09-18",
+    "Altpapier"
+   ],
+   [
+    "2026-09-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-25",
+    "Biomüll"
+   ],
+   [
+    "2026-10-02",
+    "Restmüll"
+   ],
+   [
+    "2026-10-09",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-10-16",
+    "Altpapier"
+   ],
+   [
+    "2026-10-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-20",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-10-23",
+    "Biomüll"
+   ],
+   [
+    "2026-10-30",
+    "Restmüll"
+   ],
+   [
+    "2026-11-06",
+    "Biomüll"
+   ],
+   [
+    "2026-11-13",
+    "Altpapier"
+   ],
+   [
+    "2026-11-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-20",
+    "Biomüll"
+   ],
+   [
+    "2026-11-27",
+    "Restmüll"
+   ],
+   [
+    "2026-12-04",
+    "Biomüll"
+   ],
+   [
+    "2026-12-11",
+    "Altpapier"
+   ],
+   [
+    "2026-12-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-18",
+    "Biomüll"
+   ],
+   [
+    "2026-12-24",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ]
+  ],
+  "p4": [
+   [
+    "2026-01-03",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-01-05",
+    "Altpapier"
+   ],
+   [
+    "2026-01-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-12",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-01-19",
+    "Restmüll"
+   ],
+   [
+    "2026-01-26",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Altpapier"
+   ],
+   [
+    "2026-02-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-09",
+    "Biomüll"
+   ],
+   [
+    "2026-02-16",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Biomüll"
+   ],
+   [
+    "2026-03-02",
+    "Altpapier"
+   ],
+   [
+    "2026-03-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-09",
+    "Biomüll"
+   ],
+   [
+    "2026-03-16",
+    "Restmüll"
+   ],
+   [
+    "2026-03-23",
+    "Biomüll"
+   ],
+   [
+    "2026-03-28",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-03-28",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-04-07",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-13",
+    "Restmüll"
+   ],
+   [
+    "2026-04-20",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-04-25",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-25",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-04",
+    "Biomüll"
+   ],
+   [
+    "2026-05-11",
+    "Restmüll"
+   ],
+   [
+    "2026-05-18",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-26",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-01",
+    "Biomüll"
+   ],
+   [
+    "2026-06-08",
+    "Restmüll"
+   ],
+   [
+    "2026-06-15",
+    "Biomüll"
+   ],
+   [
+    "2026-06-22",
+    "Altpapier"
+   ],
+   [
+    "2026-06-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-07-06",
+    "Restmüll"
+   ],
+   [
+    "2026-07-13",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-07-20",
+    "Altpapier"
+   ],
+   [
+    "2026-07-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-27",
+    "Biomüll"
+   ],
+   [
+    "2026-08-03",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Biomüll"
+   ],
+   [
+    "2026-08-17",
+    "Altpapier"
+   ],
+   [
+    "2026-08-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-24",
+    "Biomüll"
+   ],
+   [
+    "2026-08-31",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Biomüll"
+   ],
+   [
+    "2026-09-14",
+    "Altpapier"
+   ],
+   [
+    "2026-09-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-21",
+    "Biomüll"
+   ],
+   [
+    "2026-09-28",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-10-12",
+    "Altpapier"
+   ],
+   [
+    "2026-10-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-19",
+    "Biomüll"
+   ],
+   [
+    "2026-10-20",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-10-26",
+    "Restmüll"
+   ],
+   [
+    "2026-11-02",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Altpapier"
+   ],
+   [
+    "2026-11-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-16",
+    "Biomüll"
+   ],
+   [
+    "2026-11-23",
+    "Restmüll"
+   ],
+   [
+    "2026-11-30",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Altpapier"
+   ],
+   [
+    "2026-12-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-14",
+    "Biomüll"
+   ],
+   [
+    "2026-12-19",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-12-28",
+    "Biomüll"
+   ]
+  ],
+  "p5": [
+   [
+    "2026-01-03",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-01-07",
+    "Altpapier"
+   ],
+   [
+    "2026-01-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-01-21",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-02-04",
+    "Altpapier"
+   ],
+   [
+    "2026-02-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-18",
+    "Restmüll"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-04",
+    "Altpapier"
+   ],
+   [
+    "2026-03-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-18",
+    "Restmüll"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-31",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-03-31",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-04-09",
+    "Biomüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-15",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-04-28",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-04-28",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-13",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-28",
+    "Altpapier",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-05-28",
+    "Gelbe Tonne",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-10",
+    "Restmüll"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-24",
+    "Altpapier"
+   ],
+   [
+    "2026-06-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-04",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-07-08",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-07-22",
+    "Altpapier"
+   ],
+   [
+    "2026-07-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-08-05",
+    "Restmüll"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-19",
+    "Altpapier"
+   ],
+   [
+    "2026-08-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-09-02",
+    "Restmüll"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-16",
+    "Altpapier"
+   ],
+   [
+    "2026-09-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-30",
+    "Restmüll"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Schadstoffannahme",
+    "9–11 Uhr, Betriebshof AMR Entsorgung, Wellerstraße 15"
+   ],
+   [
+    "2026-10-14",
+    "Altpapier"
+   ],
+   [
+    "2026-10-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-20",
+    "Sperrmüll",
+    "nur mit Anmeldung bei der Stadt Rahden (spätestens eine Woche vorher), kostenpflichtig"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-10-28",
+    "Restmüll"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-11",
+    "Altpapier"
+   ],
+   [
+    "2026-11-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-25",
+    "Restmüll"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-09",
+    "Altpapier"
+   ],
+   [
+    "2026-12-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-22",
+    "Restmüll",
+    "geänderter Abfuhrtermin"
+   ],
+   [
+    "2026-12-30",
+    "Biomüll"
+   ]
+  ]
+ }
+}

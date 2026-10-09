@@ -1,0 +1,230 @@
+[
+ {
+  "kind": "jahresdaten",
+  "key": "ansbach",
+  "title": "Stadt Ansbach",
+  "website": "https://www.p-42.net/cal/sansb2/index_str.php",
+  "places": [
+   "Ansbach"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Ansbach"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "saaleholzland",
+  "title": "Saale-Holzland-Kreis",
+  "website": "https://www.saaleholzlandkreis.de/datei/anzeigen/id/6210/2026_abfallkalender_shk.pdf",
+  "places": [
+   "Albersdorf",
+   "St. Gangloff",
+   "Reinstädt",
+   "Rattelsdorf",
+   "Mörsdorf",
+   "Gumperda",
+   "Laasdorf",
+   "Walpernhain",
+   "Nausnitz",
+   "Silbitz",
+   "Graitschen b.Bürgel",
+   "Tautendorf",
+   "Seitenroda",
+   "Lippersdorf-Erdmannsdorf",
+   "Bobeck",
+   "Tröbnitz",
+   "Ottendorf",
+   "Tautenhain",
+   "Kleinbockedra",
+   "Stadtroda",
+   "Golmsdorf",
+   "Lehesten",
+   "Bibra",
+   "Lindig",
+   "Hainspitz",
+   "Orlamünde",
+   "Großlöbichau",
+   "Reichenbach",
+   "Schlöben",
+   "Bad Klosterlausnitz",
+   "Hartmannsdorf",
+   "Großeutersdorf",
+   "Schöps",
+   "Waltersdorf",
+   "Zöllnitz",
+   "Löberschütz",
+   "Scheiditz",
+   "Oberbodnitz",
+   "Sulza",
+   "Eineborn",
+   "Milda",
+   "Eisenberg",
+   "Jenalöbnitz",
+   "Unterbodnitz",
+   "Weißenborn",
+   "Crossen an der Elster",
+   "Neuengönna",
+   "Rothenstein",
+   "Altenberga",
+   "Thierschneck",
+   "Frauenprießnitz",
+   "Hainichen",
+   "Schleifreisen",
+   "Hermsdorf",
+   "Schöngleina",
+   "Trockenborn-Wolfersdorf",
+   "Rauda",
+   "Kahla",
+   "Kleinebersdorf",
+   "Freienorla",
+   "Rauschwitz",
+   "Meusebach",
+   "Weißbach",
+   "Bucha",
+   "Bürgel",
+   "Rausdorf",
+   "Petersberg",
+   "Hummelshain",
+   "Bremsnitz",
+   "Schkölen",
+   "Ruttersdorf-Lotschen",
+   "Heideland",
+   "Großpürschütz",
+   "Dornburg-Camburg",
+   "Möckern",
+   "Zimmern",
+   "Waldeck",
+   "Mertendorf",
+   "Karlsdorf",
+   "Gösen",
+   "Tissa",
+   "Poxdorf",
+   "Gneus",
+   "Großbockedra",
+   "Wichmar",
+   "Kleineutersdorf",
+   "Geisenhain",
+   "Eichenberg",
+   "Renthendorf",
+   "Serba",
+   "Tautenburg"
+  ],
+  "districts": [
+   "Landkreis Saale-Holzland-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rahden",
+  "title": "Stadt Rahden",
+  "website": "https://www.rahden.de/wp-content/uploads/Abfall-Entsorgungskalender2026.pdf",
+  "places": [
+   "Rahden"
+  ],
+  "districts": [
+   "Kreis Minden-Lübbecke"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "stemwede",
+  "title": "Gemeinde Stemwede",
+  "website": "https://www.stemwede.de/bauen-wirtschaft-klimaschutz/abfall/2026/gemeinde-stemwede-abfallkalender-2026.pdf?cid=5sa",
+  "places": [
+   "Stemwede"
+  ],
+  "districts": [
+   "Kreis Minden-Lübbecke"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "mainhausen",
+  "title": "Gemeinde Mainhausen",
+  "website": "https://www.mainhausen.de/fileadmin/Dateien/Cross7/Startseite/Bauen%2C_Umwelt_%26_Abfall/Abfallwirtschaft/Abfallkalender/abfallkalender-2026-web.pdf",
+  "places": [
+   "Mainhausen"
+  ],
+  "districts": [
+   "Landkreis Offenbach"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "sontra",
+  "title": "Stadt Sontra",
+  "website": "https://daten2.verwaltungsportal.de/dateien/seitengenerator/a702117c2bd33eabfeea1a6c5d97865587538/Abfallkalender_2026_Sontra.pdf",
+  "places": [
+   "Sontra"
+  ],
+  "districts": [
+   "Landkreis Werra-Meißner-Kreis"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "liederbach",
+  "title": "Gemeinde Liederbach am Taunus",
+  "website": "https://www.liederbach.eu/eigene_dateien/aktuell/2023-aktuelles/september/liederbachmuell_2026.pdf",
+  "places": [
+   "Liederbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "gaienhofen",
+  "title": "Gemeinde Gaienhofen",
+  "website": "https://www.gaienhofen.de/_Resources/Persistent/72f24706f7f3467365476ec13c83578a460e861f/Abfallkalender_Gaienhofen_2026.pdf",
+  "places": [
+   "Gaienhofen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "oehningen",
+  "title": "Gemeinde Öhningen",
+  "website": "https://www.oehningen.de/fileadmin/redakteur/Abfallkalender_%C3%96hningen_2026.pdf",
+  "places": [
+   "Öhningen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "buesingen",
+  "title": "Gemeinde Büsingen am Hochrhein",
+  "website": "https://www.buesingen.de/de/Rathaus/Abfallentsorgung",
+  "places": [
+   "Büsingen am Hochrhein"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true,
+  "partial": true
+ }
+]

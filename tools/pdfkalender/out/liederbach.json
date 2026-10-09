@@ -1,0 +1,1392 @@
+{
+ "key": "liederbach",
+ "title": "Gemeinde Liederbach am Taunus",
+ "source": "https://www.liederbach.eu/eigene_dateien/aktuell/2023-aktuelles/september/liederbachmuell_2026.pdf",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Restmüllbehälter",
+ "notice": null,
+ "areas": [
+  {
+   "id": "tonnen_bis_240_l",
+   "title": "Restmüll-Tonne bis 240 l (14-täglich)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "container_1_1_m3",
+   "title": "Restmüll-Container 1,1 m³",
+   "group": null,
+   "plan": "p2"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-02",
+    "Altpapier"
+   ],
+   [
+    "2026-01-03",
+    "Biomüll"
+   ],
+   [
+    "2026-01-05",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-01-09",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-09",
+    "Restmüll"
+   ],
+   [
+    "2026-01-10",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-01-13",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-16",
+    "Biomüll"
+   ],
+   [
+    "2026-01-23",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-23",
+    "Restmüll"
+   ],
+   [
+    "2026-01-29",
+    "Altpapier"
+   ],
+   [
+    "2026-01-30",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-02-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-06",
+    "Restmüll"
+   ],
+   [
+    "2026-02-13",
+    "Biomüll"
+   ],
+   [
+    "2026-02-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-20",
+    "Restmüll"
+   ],
+   [
+    "2026-02-25",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-02-26",
+    "Altpapier"
+   ],
+   [
+    "2026-02-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-03-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-06",
+    "Restmüll"
+   ],
+   [
+    "2026-03-13",
+    "Biomüll"
+   ],
+   [
+    "2026-03-13",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-03-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-20",
+    "Restmüll"
+   ],
+   [
+    "2026-03-26",
+    "Altpapier"
+   ],
+   [
+    "2026-03-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-27",
+    "Grünschnitt"
+   ],
+   [
+    "2026-04-02",
+    "Biomüll"
+   ],
+   [
+    "2026-04-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-02",
+    "Restmüll"
+   ],
+   [
+    "2026-04-10",
+    "Biomüll"
+   ],
+   [
+    "2026-04-11",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-04-13",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-04-17",
+    "Biomüll"
+   ],
+   [
+    "2026-04-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-17",
+    "Restmüll"
+   ],
+   [
+    "2026-04-23",
+    "Altpapier"
+   ],
+   [
+    "2026-04-24",
+    "Biomüll"
+   ],
+   [
+    "2026-05-02",
+    "Biomüll"
+   ],
+   [
+    "2026-05-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-02",
+    "Restmüll"
+   ],
+   [
+    "2026-05-04",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-05-08",
+    "Biomüll"
+   ],
+   [
+    "2026-05-08",
+    "Grünschnitt"
+   ],
+   [
+    "2026-05-16",
+    "Biomüll"
+   ],
+   [
+    "2026-05-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-16",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-05-21",
+    "Altpapier"
+   ],
+   [
+    "2026-05-22",
+    "Biomüll"
+   ],
+   [
+    "2026-05-30",
+    "Biomüll"
+   ],
+   [
+    "2026-05-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-30",
+    "Restmüll"
+   ],
+   [
+    "2026-06-01",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-06-06",
+    "Biomüll"
+   ],
+   [
+    "2026-06-12",
+    "Biomüll"
+   ],
+   [
+    "2026-06-12",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-12",
+    "Restmüll"
+   ],
+   [
+    "2026-06-12",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-06-18",
+    "Altpapier"
+   ],
+   [
+    "2026-06-19",
+    "Biomüll"
+   ],
+   [
+    "2026-06-26",
+    "Biomüll"
+   ],
+   [
+    "2026-06-26",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-26",
+    "Restmüll"
+   ],
+   [
+    "2026-07-03",
+    "Biomüll"
+   ],
+   [
+    "2026-07-06",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-07-10",
+    "Biomüll"
+   ],
+   [
+    "2026-07-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-10",
+    "Restmüll"
+   ],
+   [
+    "2026-07-11",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-07-16",
+    "Altpapier"
+   ],
+   [
+    "2026-07-17",
+    "Biomüll"
+   ],
+   [
+    "2026-07-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-24",
+    "Restmüll"
+   ],
+   [
+    "2026-07-31",
+    "Biomüll"
+   ],
+   [
+    "2026-08-03",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-08-07",
+    "Biomüll"
+   ],
+   [
+    "2026-08-07",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-07",
+    "Restmüll"
+   ],
+   [
+    "2026-08-13",
+    "Altpapier"
+   ],
+   [
+    "2026-08-13",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-08-14",
+    "Biomüll"
+   ],
+   [
+    "2026-08-21",
+    "Biomüll"
+   ],
+   [
+    "2026-08-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-21",
+    "Restmüll"
+   ],
+   [
+    "2026-08-28",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-04",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-09-10",
+    "Altpapier"
+   ],
+   [
+    "2026-09-11",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-09-18",
+    "Biomüll"
+   ],
+   [
+    "2026-09-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-18",
+    "Restmüll"
+   ],
+   [
+    "2026-09-25",
+    "Biomüll"
+   ],
+   [
+    "2026-09-25",
+    "Grünschnitt"
+   ],
+   [
+    "2026-10-02",
+    "Biomüll"
+   ],
+   [
+    "2026-10-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-02",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-10-08",
+    "Altpapier"
+   ],
+   [
+    "2026-10-09",
+    "Biomüll"
+   ],
+   [
+    "2026-10-10",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-10-16",
+    "Biomüll"
+   ],
+   [
+    "2026-10-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-16",
+    "Restmüll"
+   ],
+   [
+    "2026-10-23",
+    "Biomüll"
+   ],
+   [
+    "2026-10-30",
+    "Biomüll"
+   ],
+   [
+    "2026-10-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-30",
+    "Restmüll"
+   ],
+   [
+    "2026-11-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-11-05",
+    "Altpapier"
+   ],
+   [
+    "2026-11-06",
+    "Biomüll"
+   ],
+   [
+    "2026-11-10",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-11-13",
+    "Biomüll"
+   ],
+   [
+    "2026-11-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-13",
+    "Restmüll"
+   ],
+   [
+    "2026-11-20",
+    "Biomüll"
+   ],
+   [
+    "2026-11-20",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-27",
+    "Biomüll"
+   ],
+   [
+    "2026-11-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-27",
+    "Restmüll"
+   ],
+   [
+    "2026-12-03",
+    "Altpapier"
+   ],
+   [
+    "2026-12-04",
+    "Biomüll"
+   ],
+   [
+    "2026-12-04",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-12-07",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-12-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-11",
+    "Restmüll"
+   ],
+   [
+    "2026-12-18",
+    "Biomüll"
+   ],
+   [
+    "2026-12-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-24",
+    "Restmüll"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-02",
+    "Altpapier"
+   ],
+   [
+    "2026-01-03",
+    "Biomüll"
+   ],
+   [
+    "2026-01-03",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-01-05",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-01-05",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-01-09",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-10",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-01-12",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-01-13",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-16",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-01-19",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-01-23",
+    "Gelber Sack"
+   ],
+   [
+    "2026-01-26",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-01-29",
+    "Altpapier"
+   ],
+   [
+    "2026-01-30",
+    "Biomüll"
+   ],
+   [
+    "2026-01-30",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-02-02",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-02-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-02-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-09",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-02-13",
+    "Biomüll"
+   ],
+   [
+    "2026-02-13",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-02-16",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-02-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-02-23",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-02-25",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-02-26",
+    "Altpapier"
+   ],
+   [
+    "2026-02-27",
+    "Biomüll"
+   ],
+   [
+    "2026-02-27",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-03-02",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-03-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-03-06",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-09",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-03-13",
+    "Biomüll"
+   ],
+   [
+    "2026-03-13",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-03-13",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-03-16",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-03-20",
+    "Gelber Sack"
+   ],
+   [
+    "2026-03-23",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-03-26",
+    "Altpapier"
+   ],
+   [
+    "2026-03-27",
+    "Biomüll"
+   ],
+   [
+    "2026-03-27",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-27",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-03-30",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-04-02",
+    "Biomüll"
+   ],
+   [
+    "2026-04-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-07",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-04-10",
+    "Biomüll"
+   ],
+   [
+    "2026-04-10",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-04-11",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-04-13",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-04-13",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-04-17",
+    "Biomüll"
+   ],
+   [
+    "2026-04-17",
+    "Gelber Sack"
+   ],
+   [
+    "2026-04-20",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-04-23",
+    "Altpapier"
+   ],
+   [
+    "2026-04-24",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-04-27",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-05-02",
+    "Biomüll"
+   ],
+   [
+    "2026-05-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-04",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-05-04",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-05-08",
+    "Biomüll"
+   ],
+   [
+    "2026-05-08",
+    "Grünschnitt"
+   ],
+   [
+    "2026-05-08",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-05-11",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-05-16",
+    "Biomüll"
+   ],
+   [
+    "2026-05-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-05-18",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-05-20",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-05-21",
+    "Altpapier"
+   ],
+   [
+    "2026-05-22",
+    "Biomüll"
+   ],
+   [
+    "2026-05-22",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-05-26",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-05-30",
+    "Biomüll"
+   ],
+   [
+    "2026-05-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-01",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-06-01",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-06-06",
+    "Biomüll"
+   ],
+   [
+    "2026-06-06",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-06-08",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-06-12",
+    "Biomüll"
+   ],
+   [
+    "2026-06-12",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-12",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-06-15",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-06-18",
+    "Altpapier"
+   ],
+   [
+    "2026-06-19",
+    "Biomüll"
+   ],
+   [
+    "2026-06-19",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-06-22",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-06-26",
+    "Biomüll"
+   ],
+   [
+    "2026-06-26",
+    "Gelber Sack"
+   ],
+   [
+    "2026-06-29",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-07-03",
+    "Biomüll"
+   ],
+   [
+    "2026-07-03",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-07-06",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-07-06",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-07-10",
+    "Biomüll"
+   ],
+   [
+    "2026-07-10",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-11",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-07-13",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-07-16",
+    "Altpapier"
+   ],
+   [
+    "2026-07-17",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-07-20",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-07-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-07-27",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-07-31",
+    "Biomüll"
+   ],
+   [
+    "2026-07-31",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-08-03",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-08-03",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-08-07",
+    "Biomüll"
+   ],
+   [
+    "2026-08-07",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-10",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-08-13",
+    "Altpapier"
+   ],
+   [
+    "2026-08-13",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-08-14",
+    "Biomüll"
+   ],
+   [
+    "2026-08-14",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-08-17",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-08-21",
+    "Biomüll"
+   ],
+   [
+    "2026-08-21",
+    "Gelber Sack"
+   ],
+   [
+    "2026-08-24",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-08-28",
+    "Biomüll"
+   ],
+   [
+    "2026-08-28",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-08-31",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-09-04",
+    "Biomüll"
+   ],
+   [
+    "2026-09-04",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-07",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-09-07",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-09-10",
+    "Altpapier"
+   ],
+   [
+    "2026-09-11",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-09-11",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-09-14",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-09-18",
+    "Biomüll"
+   ],
+   [
+    "2026-09-18",
+    "Gelber Sack"
+   ],
+   [
+    "2026-09-21",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-09-25",
+    "Biomüll"
+   ],
+   [
+    "2026-09-25",
+    "Grünschnitt"
+   ],
+   [
+    "2026-09-25",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-09-28",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-10-02",
+    "Biomüll"
+   ],
+   [
+    "2026-10-02",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-05",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-10-05",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-10-08",
+    "Altpapier"
+   ],
+   [
+    "2026-10-09",
+    "Biomüll"
+   ],
+   [
+    "2026-10-09",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-10-10",
+    "Sondermüll-Kleinmengensammlung",
+    "11:30–13:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-10-12",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-10-16",
+    "Biomüll"
+   ],
+   [
+    "2026-10-16",
+    "Gelber Sack"
+   ],
+   [
+    "2026-10-19",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-10-23",
+    "Biomüll"
+   ],
+   [
+    "2026-10-23",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-10-26",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-10-30",
+    "Biomüll"
+   ],
+   [
+    "2026-10-30",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-02",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-11-02",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-11-05",
+    "Altpapier"
+   ],
+   [
+    "2026-11-06",
+    "Biomüll"
+   ],
+   [
+    "2026-11-06",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-11-09",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-11-10",
+    "Sondermüll-Kleinmengensammlung",
+    "16:30–18:00 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-11-13",
+    "Biomüll"
+   ],
+   [
+    "2026-11-13",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-16",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-11-20",
+    "Biomüll"
+   ],
+   [
+    "2026-11-20",
+    "Grünschnitt"
+   ],
+   [
+    "2026-11-20",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-11-23",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-11-27",
+    "Biomüll"
+   ],
+   [
+    "2026-11-27",
+    "Gelber Sack"
+   ],
+   [
+    "2026-11-30",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-12-03",
+    "Altpapier"
+   ],
+   [
+    "2026-12-04",
+    "Biomüll"
+   ],
+   [
+    "2026-12-04",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-12-04",
+    "Sondermüll-Kleinmengensammlung",
+    "13–14:30 Uhr, ohne Anmeldung, großer Parkplatz Liederbachhalle"
+   ],
+   [
+    "2026-12-07",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-12-07",
+    "Sperrmüll und Elektrogeräte",
+    "nur nach Anmeldung (069 30098-0) bis Donnerstag davor 12 Uhr"
+   ],
+   [
+    "2026-12-11",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-14",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-12-18",
+    "Biomüll"
+   ],
+   [
+    "2026-12-18",
+    "Restmüll 1,1-m³-Behälter (1. Leerung)"
+   ],
+   [
+    "2026-12-21",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ],
+   [
+    "2026-12-24",
+    "Gelber Sack"
+   ],
+   [
+    "2026-12-28",
+    "Restmüll 1,1-m³-Behälter (2. Leerung)"
+   ]
+  ]
+ }
+}

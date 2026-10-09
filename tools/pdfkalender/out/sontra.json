@@ -1,0 +1,2626 @@
+{
+ "key": "sontra",
+ "title": "Stadt Sontra",
+ "source": "https://daten2.verwaltungsportal.de/dateien/seitengenerator/a702117c2bd33eabfeea1a6c5d97865587538/Abfallkalender_2026_Sontra.pdf",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Straße / Ortsteil",
+ "notice": "Gelbe Tonne nicht enthalten – die Termine veröffentlicht der Entsorger gesondert.",
+ "areas": [
+  {
+   "id": "am_rasen",
+   "title": "Am Rasen",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auweg",
+   "title": "Auweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "barbaraplatz",
+   "title": "Barbaraplatz",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "barbarastrasse",
+   "title": "Barbarastraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bergstrasse",
+   "title": "Bergstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "berliner_strasse",
+   "title": "Berliner Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "brandenburger_strasse",
+   "title": "Brandenburger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "brodbergstrasse",
+   "title": "Brodbergstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "brueckenland",
+   "title": "Brückenland",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "danziger_strasse",
+   "title": "Danziger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "dietharzer_strasse",
+   "title": "Dietharzer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "dr_deist_strasse",
+   "title": "Dr.-Deist-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "dresdener_strasse",
+   "title": "Dresdener Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "eisenacher_strasse",
+   "title": "Eisenacher Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "freiherr_vom_stein_strasse",
+   "title": "Freiherr-vom-Stein-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "fuldaer_strasse",
+   "title": "Fuldaer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "galgenbergstrasse",
+   "title": "Galgenbergstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "goettinger_strasse",
+   "title": "Göttinger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gruener_weg",
+   "title": "Grüner Weg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hollenbach",
+   "title": "Hollenbach",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "husarenallee",
+   "title": "Husarenallee",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hute",
+   "title": "Hute",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "huettenstrasse",
+   "title": "Hüttenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "leipziger_strasse",
+   "title": "Leipziger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "lindenstrasse",
+   "title": "Lindenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "mainstrasse",
+   "title": "Mainstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "moselstrasse",
+   "title": "Moselstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "oderstrasse",
+   "title": "Oderstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "pommernstrasse",
+   "title": "Pommernstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "rheinstrasse",
+   "title": "Rheinstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "roter_rain",
+   "title": "Roter Rain",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "schlossberg",
+   "title": "Schloßberg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "schlossstrasse",
+   "title": "Schloßstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "seegel",
+   "title": "Seegel",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "steinmuehlenweg",
+   "title": "Steinmühlenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "stettiner_strasse",
+   "title": "Stettiner Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "tambacher_strasse",
+   "title": "Tambacher Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "thingstaette",
+   "title": "Thingstätte",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weimarer_strasse",
+   "title": "Weimarer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weldaer_strasse",
+   "title": "Weldaer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "werrastrasse",
+   "title": "Werrastraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "weserstrasse",
+   "title": "Weserstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "wichmannswiese",
+   "title": "Wichmannswiese",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "wilhelm_leuschner_strasse",
+   "title": "Wilhelm-Leuschner-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_quesselsberg",
+   "title": "Am Quesselsberg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "amselweg",
+   "title": "Amselweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "andreastor",
+   "title": "Andreastor",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bahnhofstrasse",
+   "title": "Bahnhofstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "breslauer_strasse",
+   "title": "Breslauer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "burhaver_strasse",
+   "title": "Burhaver Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "glueck_auf_platz",
+   "title": "Glück-auf-Platz",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "jahnstrasse_feriendorf",
+   "title": "Jahnstraße (Feriendorf)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "knappenstrasse",
+   "title": "Knappenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "koenigsberger_ring",
+   "title": "Königsberger Ring",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "lurloch",
+   "title": "Lurloch",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "muehlbergstrasse",
+   "title": "Mühlbergstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "muehlenweg",
+   "title": "Mühlenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "niedertor",
+   "title": "Niedertor",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "pestalozzistrasse",
+   "title": "Pestalozzistraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schulstrasse",
+   "title": "Schulstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "sonnenhang",
+   "title": "Sonnenhang",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "vimoutiersstrasse",
+   "title": "Vimoutiersstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "weinbergweg",
+   "title": "Weinbergweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "weite_gasse",
+   "title": "Weite Gasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "adam_von_trott_strasse",
+   "title": "Adam-von-Trott-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "baeckergasse",
+   "title": "Bäckergasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "brandstaette",
+   "title": "Brandstätte",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "braugasse",
+   "title": "Braugasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "finstertal",
+   "title": "Finstertal",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "frd_von_baumbach_strasse",
+   "title": "Frd.-von-Baumbach-Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "gerbergasse",
+   "title": "Gerbergasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "giershuette",
+   "title": "Giershütte",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "goethestrasse",
+   "title": "Goethestraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "herrenstrasse",
+   "title": "Herrenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hinter_der_mauer",
+   "title": "Hinter der Mauer",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "hinter_der_wachtmauer",
+   "title": "Hinter der Wachtmauer",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kirchgasse",
+   "title": "Kirchgasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kirchpark",
+   "title": "Kirchpark",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "kirchplatz",
+   "title": "Kirchplatz",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lessingstrasse",
+   "title": "Lessingstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "lindenauer_strasse",
+   "title": "Lindenauer Straße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "marktplatz",
+   "title": "Marktplatz",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "muehlrain",
+   "title": "Mühlrain",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "neues_tor",
+   "title": "Neues Tor",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "neustadt",
+   "title": "Neustadt",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "niederstadt",
+   "title": "Niederstadt",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "pfarrgasse",
+   "title": "Pfarrgasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "rechtebachsgraben",
+   "title": "Rechtebachsgraben",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "roestweg",
+   "title": "Röstweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "rosengasse",
+   "title": "Rosengasse",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schillerstrasse",
+   "title": "Schillerstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "schuetzenweg",
+   "title": "Schützenweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "steinweg",
+   "title": "Steinweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "sudetenstrasse",
+   "title": "Sudetenstraße",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "torweg",
+   "title": "Torweg",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "krauthausen",
+   "title": "Krauthausen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "mitterode",
+   "title": "Mitterode",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "gut_wellingerode",
+   "title": "Gut Wellingerode",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "weissenborn",
+   "title": "Weißenborn",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "wichmannshausen",
+   "title": "Wichmannshausen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "berneburg",
+   "title": "Berneburg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "huebenthal",
+   "title": "Hübenthal",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "diemerode",
+   "title": "Diemerode",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "donnershag",
+   "title": "Donnershag",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "gut_metzlar",
+   "title": "Gut Metzlar",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "industriegebiet_brodberg",
+   "title": "Industriegebiet Brodberg",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "heyerode",
+   "title": "Heyerode",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "hornel",
+   "title": "Hornel",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "stadthosbach",
+   "title": "Stadthosbach",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "thurnhosbach",
+   "title": "Thurnhosbach",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "blankenbach",
+   "title": "Blankenbach",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "breitau",
+   "title": "Breitau",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "husarenpark",
+   "title": "Husarenpark",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "lindenau",
+   "title": "Lindenau",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "ulfen",
+   "title": "Ulfen",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "erdmannshain",
+   "title": "Erdmannshain",
+   "group": null,
+   "plan": "p6"
+  },
+  {
+   "id": "woelfterode",
+   "title": "Wölfterode",
+   "group": null,
+   "plan": "p6"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-05",
+    "Altpapier"
+   ],
+   [
+    "2026-01-05",
+    "Restmüll"
+   ],
+   [
+    "2026-01-12",
+    "Biomüll"
+   ],
+   [
+    "2026-01-12",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-19",
+    "Restmüll"
+   ],
+   [
+    "2026-01-26",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Restmüll"
+   ],
+   [
+    "2026-02-09",
+    "Altpapier"
+   ],
+   [
+    "2026-02-09",
+    "Biomüll"
+   ],
+   [
+    "2026-02-16",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Biomüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-02",
+    "Restmüll"
+   ],
+   [
+    "2026-03-09",
+    "Biomüll"
+   ],
+   [
+    "2026-03-16",
+    "Altpapier"
+   ],
+   [
+    "2026-03-16",
+    "Restmüll"
+   ],
+   [
+    "2026-03-23",
+    "Biomüll"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-30",
+    "Restmüll"
+   ],
+   [
+    "2026-04-07",
+    "Biomüll"
+   ],
+   [
+    "2026-04-13",
+    "Restmüll"
+   ],
+   [
+    "2026-04-20",
+    "Altpapier"
+   ],
+   [
+    "2026-04-20",
+    "Biomüll"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-27",
+    "Restmüll"
+   ],
+   [
+    "2026-05-04",
+    "Biomüll"
+   ],
+   [
+    "2026-05-11",
+    "Restmüll"
+   ],
+   [
+    "2026-05-18",
+    "Altpapier"
+   ],
+   [
+    "2026-05-18",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-26",
+    "Restmüll"
+   ],
+   [
+    "2026-06-01",
+    "Biomüll"
+   ],
+   [
+    "2026-06-08",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Biomüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-22",
+    "Altpapier"
+   ],
+   [
+    "2026-06-22",
+    "Restmüll"
+   ],
+   [
+    "2026-06-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-06",
+    "Restmüll"
+   ],
+   [
+    "2026-07-13",
+    "Altpapier"
+   ],
+   [
+    "2026-07-13",
+    "Biomüll"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-20",
+    "Restmüll"
+   ],
+   [
+    "2026-07-27",
+    "Biomüll"
+   ],
+   [
+    "2026-08-03",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Biomüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-17",
+    "Altpapier"
+   ],
+   [
+    "2026-08-17",
+    "Restmüll"
+   ],
+   [
+    "2026-08-24",
+    "Biomüll"
+   ],
+   [
+    "2026-08-31",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Biomüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-14",
+    "Restmüll"
+   ],
+   [
+    "2026-09-21",
+    "Altpapier"
+   ],
+   [
+    "2026-09-21",
+    "Biomüll"
+   ],
+   [
+    "2026-09-28",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Biomüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-12",
+    "Restmüll"
+   ],
+   [
+    "2026-10-19",
+    "Altpapier"
+   ],
+   [
+    "2026-10-19",
+    "Biomüll"
+   ],
+   [
+    "2026-10-26",
+    "Restmüll"
+   ],
+   [
+    "2026-11-02",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-09",
+    "Restmüll"
+   ],
+   [
+    "2026-11-16",
+    "Biomüll"
+   ],
+   [
+    "2026-11-23",
+    "Altpapier"
+   ],
+   [
+    "2026-11-23",
+    "Restmüll"
+   ],
+   [
+    "2026-11-30",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-07",
+    "Restmüll"
+   ],
+   [
+    "2026-12-14",
+    "Altpapier"
+   ],
+   [
+    "2026-12-14",
+    "Biomüll"
+   ],
+   [
+    "2026-12-21",
+    "Restmüll"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-05",
+    "Restmüll"
+   ],
+   [
+    "2026-01-06",
+    "Altpapier"
+   ],
+   [
+    "2026-01-12",
+    "Biomüll"
+   ],
+   [
+    "2026-01-12",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-19",
+    "Restmüll"
+   ],
+   [
+    "2026-01-26",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Restmüll"
+   ],
+   [
+    "2026-02-09",
+    "Biomüll"
+   ],
+   [
+    "2026-02-10",
+    "Altpapier"
+   ],
+   [
+    "2026-02-16",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Biomüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-02",
+    "Restmüll"
+   ],
+   [
+    "2026-03-09",
+    "Biomüll"
+   ],
+   [
+    "2026-03-16",
+    "Restmüll"
+   ],
+   [
+    "2026-03-17",
+    "Altpapier"
+   ],
+   [
+    "2026-03-23",
+    "Biomüll"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-30",
+    "Restmüll"
+   ],
+   [
+    "2026-04-07",
+    "Biomüll"
+   ],
+   [
+    "2026-04-13",
+    "Restmüll"
+   ],
+   [
+    "2026-04-20",
+    "Biomüll"
+   ],
+   [
+    "2026-04-21",
+    "Altpapier"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-27",
+    "Restmüll"
+   ],
+   [
+    "2026-05-04",
+    "Biomüll"
+   ],
+   [
+    "2026-05-11",
+    "Restmüll"
+   ],
+   [
+    "2026-05-18",
+    "Biomüll"
+   ],
+   [
+    "2026-05-19",
+    "Altpapier"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-26",
+    "Restmüll"
+   ],
+   [
+    "2026-06-01",
+    "Biomüll"
+   ],
+   [
+    "2026-06-08",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Biomüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-22",
+    "Restmüll"
+   ],
+   [
+    "2026-06-23",
+    "Altpapier"
+   ],
+   [
+    "2026-06-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-06",
+    "Restmüll"
+   ],
+   [
+    "2026-07-13",
+    "Biomüll"
+   ],
+   [
+    "2026-07-14",
+    "Altpapier"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-20",
+    "Restmüll"
+   ],
+   [
+    "2026-07-27",
+    "Biomüll"
+   ],
+   [
+    "2026-08-03",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Biomüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-17",
+    "Restmüll"
+   ],
+   [
+    "2026-08-18",
+    "Altpapier"
+   ],
+   [
+    "2026-08-24",
+    "Biomüll"
+   ],
+   [
+    "2026-08-31",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Biomüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-14",
+    "Restmüll"
+   ],
+   [
+    "2026-09-21",
+    "Biomüll"
+   ],
+   [
+    "2026-09-22",
+    "Altpapier"
+   ],
+   [
+    "2026-09-28",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Biomüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-12",
+    "Restmüll"
+   ],
+   [
+    "2026-10-19",
+    "Biomüll"
+   ],
+   [
+    "2026-10-20",
+    "Altpapier"
+   ],
+   [
+    "2026-10-26",
+    "Restmüll"
+   ],
+   [
+    "2026-11-02",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-09",
+    "Restmüll"
+   ],
+   [
+    "2026-11-16",
+    "Biomüll"
+   ],
+   [
+    "2026-11-23",
+    "Restmüll"
+   ],
+   [
+    "2026-11-24",
+    "Altpapier"
+   ],
+   [
+    "2026-11-30",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-07",
+    "Restmüll"
+   ],
+   [
+    "2026-12-14",
+    "Biomüll"
+   ],
+   [
+    "2026-12-15",
+    "Altpapier"
+   ],
+   [
+    "2026-12-21",
+    "Restmüll"
+   ]
+  ],
+  "p3": [
+   [
+    "2026-01-06",
+    "Altpapier"
+   ],
+   [
+    "2026-01-06",
+    "Restmüll"
+   ],
+   [
+    "2026-01-12",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-13",
+    "Biomüll"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-20",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Biomüll"
+   ],
+   [
+    "2026-02-03",
+    "Restmüll"
+   ],
+   [
+    "2026-02-10",
+    "Altpapier"
+   ],
+   [
+    "2026-02-10",
+    "Biomüll"
+   ],
+   [
+    "2026-02-17",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-02-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-03",
+    "Restmüll"
+   ],
+   [
+    "2026-03-10",
+    "Biomüll"
+   ],
+   [
+    "2026-03-17",
+    "Altpapier"
+   ],
+   [
+    "2026-03-17",
+    "Restmüll"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-31",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll"
+   ],
+   [
+    "2026-04-14",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Altpapier"
+   ],
+   [
+    "2026-04-21",
+    "Biomüll"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-28",
+    "Restmüll"
+   ],
+   [
+    "2026-05-05",
+    "Biomüll"
+   ],
+   [
+    "2026-05-12",
+    "Restmüll"
+   ],
+   [
+    "2026-05-19",
+    "Altpapier"
+   ],
+   [
+    "2026-05-19",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-27",
+    "Restmüll"
+   ],
+   [
+    "2026-06-02",
+    "Biomüll"
+   ],
+   [
+    "2026-06-09",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-23",
+    "Altpapier"
+   ],
+   [
+    "2026-06-23",
+    "Restmüll"
+   ],
+   [
+    "2026-06-30",
+    "Biomüll"
+   ],
+   [
+    "2026-07-07",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Altpapier"
+   ],
+   [
+    "2026-07-14",
+    "Biomüll"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-21",
+    "Restmüll"
+   ],
+   [
+    "2026-07-28",
+    "Biomüll"
+   ],
+   [
+    "2026-08-04",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-11",
+    "Biomüll"
+   ],
+   [
+    "2026-08-18",
+    "Altpapier"
+   ],
+   [
+    "2026-08-18",
+    "Restmüll"
+   ],
+   [
+    "2026-08-25",
+    "Biomüll"
+   ],
+   [
+    "2026-09-01",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-08",
+    "Biomüll"
+   ],
+   [
+    "2026-09-15",
+    "Restmüll"
+   ],
+   [
+    "2026-09-22",
+    "Altpapier"
+   ],
+   [
+    "2026-09-22",
+    "Biomüll"
+   ],
+   [
+    "2026-09-29",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-06",
+    "Biomüll"
+   ],
+   [
+    "2026-10-13",
+    "Restmüll"
+   ],
+   [
+    "2026-10-20",
+    "Altpapier"
+   ],
+   [
+    "2026-10-20",
+    "Biomüll"
+   ],
+   [
+    "2026-10-27",
+    "Restmüll"
+   ],
+   [
+    "2026-11-03",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-10",
+    "Restmüll"
+   ],
+   [
+    "2026-11-17",
+    "Biomüll"
+   ],
+   [
+    "2026-11-24",
+    "Altpapier"
+   ],
+   [
+    "2026-11-24",
+    "Restmüll"
+   ],
+   [
+    "2026-12-01",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-08",
+    "Restmüll"
+   ],
+   [
+    "2026-12-15",
+    "Altpapier"
+   ],
+   [
+    "2026-12-15",
+    "Biomüll"
+   ],
+   [
+    "2026-12-22",
+    "Restmüll"
+   ]
+  ],
+  "p4": [
+   [
+    "2026-01-06",
+    "Restmüll"
+   ],
+   [
+    "2026-01-07",
+    "Altpapier"
+   ],
+   [
+    "2026-01-13",
+    "Biomüll"
+   ],
+   [
+    "2026-01-13",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-20",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Biomüll"
+   ],
+   [
+    "2026-02-03",
+    "Restmüll"
+   ],
+   [
+    "2026-02-10",
+    "Biomüll"
+   ],
+   [
+    "2026-02-11",
+    "Altpapier"
+   ],
+   [
+    "2026-02-17",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-02-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-03",
+    "Restmüll"
+   ],
+   [
+    "2026-03-10",
+    "Biomüll"
+   ],
+   [
+    "2026-03-17",
+    "Restmüll"
+   ],
+   [
+    "2026-03-18",
+    "Altpapier"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-31",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll"
+   ],
+   [
+    "2026-04-14",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Biomüll"
+   ],
+   [
+    "2026-04-22",
+    "Altpapier"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-28",
+    "Restmüll"
+   ],
+   [
+    "2026-05-05",
+    "Biomüll"
+   ],
+   [
+    "2026-05-12",
+    "Restmüll"
+   ],
+   [
+    "2026-05-19",
+    "Biomüll"
+   ],
+   [
+    "2026-05-20",
+    "Altpapier"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-27",
+    "Restmüll"
+   ],
+   [
+    "2026-06-02",
+    "Biomüll"
+   ],
+   [
+    "2026-06-09",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-23",
+    "Restmüll"
+   ],
+   [
+    "2026-06-24",
+    "Altpapier"
+   ],
+   [
+    "2026-06-30",
+    "Biomüll"
+   ],
+   [
+    "2026-07-07",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Biomüll"
+   ],
+   [
+    "2026-07-15",
+    "Altpapier"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-21",
+    "Restmüll"
+   ],
+   [
+    "2026-07-28",
+    "Biomüll"
+   ],
+   [
+    "2026-08-04",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-11",
+    "Biomüll"
+   ],
+   [
+    "2026-08-18",
+    "Restmüll"
+   ],
+   [
+    "2026-08-19",
+    "Altpapier"
+   ],
+   [
+    "2026-08-25",
+    "Biomüll"
+   ],
+   [
+    "2026-09-01",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-08",
+    "Biomüll"
+   ],
+   [
+    "2026-09-15",
+    "Restmüll"
+   ],
+   [
+    "2026-09-22",
+    "Biomüll"
+   ],
+   [
+    "2026-09-23",
+    "Altpapier"
+   ],
+   [
+    "2026-09-29",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-06",
+    "Biomüll"
+   ],
+   [
+    "2026-10-13",
+    "Restmüll"
+   ],
+   [
+    "2026-10-20",
+    "Biomüll"
+   ],
+   [
+    "2026-10-21",
+    "Altpapier"
+   ],
+   [
+    "2026-10-27",
+    "Restmüll"
+   ],
+   [
+    "2026-11-03",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-10",
+    "Restmüll"
+   ],
+   [
+    "2026-11-17",
+    "Biomüll"
+   ],
+   [
+    "2026-11-24",
+    "Restmüll"
+   ],
+   [
+    "2026-11-25",
+    "Altpapier"
+   ],
+   [
+    "2026-12-01",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-08",
+    "Restmüll"
+   ],
+   [
+    "2026-12-15",
+    "Biomüll"
+   ],
+   [
+    "2026-12-16",
+    "Altpapier"
+   ],
+   [
+    "2026-12-22",
+    "Restmüll"
+   ]
+  ],
+  "p5": [
+   [
+    "2026-01-07",
+    "Altpapier"
+   ],
+   [
+    "2026-01-07",
+    "Restmüll"
+   ],
+   [
+    "2026-01-13",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-21",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-02-04",
+    "Restmüll"
+   ],
+   [
+    "2026-02-11",
+    "Altpapier"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-18",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-04",
+    "Restmüll"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-18",
+    "Altpapier"
+   ],
+   [
+    "2026-03-18",
+    "Restmüll"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-04-01",
+    "Restmüll"
+   ],
+   [
+    "2026-04-09",
+    "Biomüll"
+   ],
+   [
+    "2026-04-15",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Altpapier"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-29",
+    "Restmüll"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-13",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Altpapier"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-28",
+    "Restmüll"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-10",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-18",
+    "Biomüll"
+   ],
+   [
+    "2026-06-24",
+    "Altpapier"
+   ],
+   [
+    "2026-06-24",
+    "Restmüll"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-08",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Altpapier"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-22",
+    "Restmüll"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-08-05",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-19",
+    "Altpapier"
+   ],
+   [
+    "2026-08-19",
+    "Restmüll"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-09-02",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-16",
+    "Restmüll"
+   ],
+   [
+    "2026-09-23",
+    "Altpapier"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-30",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Restmüll"
+   ],
+   [
+    "2026-10-21",
+    "Altpapier"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-10-28",
+    "Restmüll"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-11",
+    "Restmüll"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-25",
+    "Altpapier"
+   ],
+   [
+    "2026-11-25",
+    "Restmüll"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-09",
+    "Restmüll"
+   ],
+   [
+    "2026-12-16",
+    "Altpapier"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-23",
+    "Restmüll"
+   ]
+  ],
+  "p6": [
+   [
+    "2026-01-07",
+    "Restmüll"
+   ],
+   [
+    "2026-01-08",
+    "Altpapier"
+   ],
+   [
+    "2026-01-13",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-19",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-01-21",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-02-04",
+    "Restmüll"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-12",
+    "Altpapier"
+   ],
+   [
+    "2026-02-18",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-04",
+    "Restmüll"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-18",
+    "Restmüll"
+   ],
+   [
+    "2026-03-19",
+    "Altpapier"
+   ],
+   [
+    "2026-03-23",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-04-01",
+    "Restmüll"
+   ],
+   [
+    "2026-04-09",
+    "Biomüll"
+   ],
+   [
+    "2026-04-15",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-23",
+    "Altpapier"
+   ],
+   [
+    "2026-04-27",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-04-29",
+    "Restmüll"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-13",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-21",
+    "Altpapier"
+   ],
+   [
+    "2026-05-26",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-05-28",
+    "Restmüll"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-10",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-06-18",
+    "Biomüll"
+   ],
+   [
+    "2026-06-24",
+    "Restmüll"
+   ],
+   [
+    "2026-06-25",
+    "Altpapier"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-08",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-16",
+    "Altpapier"
+   ],
+   [
+    "2026-07-20",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-07-22",
+    "Restmüll"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-08-05",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-19",
+    "Restmüll"
+   ],
+   [
+    "2026-08-20",
+    "Altpapier"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-09-02",
+    "Restmüll"
+   ],
+   [
+    "2026-09-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-16",
+    "Restmüll"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-24",
+    "Altpapier"
+   ],
+   [
+    "2026-09-30",
+    "Restmüll"
+   ],
+   [
+    "2026-10-05",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-14",
+    "Restmüll"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-10-22",
+    "Altpapier"
+   ],
+   [
+    "2026-10-28",
+    "Restmüll"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-11-11",
+    "Restmüll"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-25",
+    "Restmüll"
+   ],
+   [
+    "2026-11-26",
+    "Altpapier"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Elektroschrott-Annahme",
+    "Annahme 7–12 Uhr, städtischer Bauhof, Husarenpark 11"
+   ],
+   [
+    "2026-12-09",
+    "Restmüll"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-17",
+    "Altpapier"
+   ],
+   [
+    "2026-12-23",
+    "Restmüll"
+   ]
+  ]
+ }
+}

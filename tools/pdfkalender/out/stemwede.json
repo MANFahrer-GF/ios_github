@@ -1,0 +1,1447 @@
+{
+ "key": "stemwede",
+ "title": "Gemeinde Stemwede",
+ "source": "https://www.stemwede.de/bauen-wirtschaft-klimaschutz/abfall/2026/gemeinde-stemwede-abfallkalender-2026.pdf?cid=5sa",
+ "stand": "2026-10-09",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Ortsteil",
+ "notice": null,
+ "areas": [
+  {
+   "id": "arrenkamp",
+   "title": "Arrenkamp",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "destel",
+   "title": "Destel",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dielingen",
+   "title": "Dielingen",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "drohne",
+   "title": "Drohne",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "haldem",
+   "title": "Haldem",
+   "group": null,
+   "plan": "p3"
+  },
+  {
+   "id": "levern",
+   "title": "Levern",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "niedermehnen",
+   "title": "Niedermehnen",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "oppendorf",
+   "title": "Oppendorf",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "oppenwehe",
+   "title": "Oppenwehe",
+   "group": null,
+   "plan": "p5"
+  },
+  {
+   "id": "sundern",
+   "title": "Sundern",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "twiehausen_nord",
+   "title": "Twiehausen-Nord",
+   "group": null,
+   "plan": "p4"
+  },
+  {
+   "id": "twiehausen_sued",
+   "title": "Twiehausen-Süd",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "wehdem",
+   "title": "Wehdem",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "westrup",
+   "title": "Westrup",
+   "group": null,
+   "plan": "p1"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-05",
+    "Biomüll"
+   ],
+   [
+    "2026-01-12",
+    "Restmüll"
+   ],
+   [
+    "2026-01-19",
+    "Biomüll"
+   ],
+   [
+    "2026-01-26",
+    "Altpapier"
+   ],
+   [
+    "2026-01-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-02",
+    "Biomüll"
+   ],
+   [
+    "2026-02-09",
+    "Restmüll"
+   ],
+   [
+    "2026-02-16",
+    "Biomüll"
+   ],
+   [
+    "2026-02-23",
+    "Altpapier"
+   ],
+   [
+    "2026-02-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-02",
+    "Biomüll"
+   ],
+   [
+    "2026-03-09",
+    "Restmüll"
+   ],
+   [
+    "2026-03-16",
+    "Biomüll"
+   ],
+   [
+    "2026-03-23",
+    "Altpapier"
+   ],
+   [
+    "2026-03-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-28",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-07",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-13",
+    "Biomüll"
+   ],
+   [
+    "2026-04-20",
+    "Altpapier"
+   ],
+   [
+    "2026-04-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-25",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-04",
+    "Restmüll"
+   ],
+   [
+    "2026-05-11",
+    "Biomüll"
+   ],
+   [
+    "2026-05-18",
+    "Altpapier"
+   ],
+   [
+    "2026-05-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-26",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-01",
+    "Restmüll"
+   ],
+   [
+    "2026-06-08",
+    "Biomüll"
+   ],
+   [
+    "2026-06-15",
+    "Altpapier"
+   ],
+   [
+    "2026-06-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-22",
+    "Biomüll"
+   ],
+   [
+    "2026-06-29",
+    "Restmüll"
+   ],
+   [
+    "2026-07-06",
+    "Biomüll"
+   ],
+   [
+    "2026-07-13",
+    "Altpapier"
+   ],
+   [
+    "2026-07-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-20",
+    "Biomüll"
+   ],
+   [
+    "2026-07-27",
+    "Restmüll"
+   ],
+   [
+    "2026-08-03",
+    "Biomüll"
+   ],
+   [
+    "2026-08-10",
+    "Altpapier"
+   ],
+   [
+    "2026-08-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-17",
+    "Biomüll"
+   ],
+   [
+    "2026-08-24",
+    "Restmüll"
+   ],
+   [
+    "2026-08-31",
+    "Biomüll"
+   ],
+   [
+    "2026-09-07",
+    "Altpapier"
+   ],
+   [
+    "2026-09-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-14",
+    "Biomüll"
+   ],
+   [
+    "2026-09-21",
+    "Restmüll"
+   ],
+   [
+    "2026-09-28",
+    "Biomüll"
+   ],
+   [
+    "2026-10-05",
+    "Altpapier"
+   ],
+   [
+    "2026-10-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-12",
+    "Biomüll"
+   ],
+   [
+    "2026-10-19",
+    "Restmüll"
+   ],
+   [
+    "2026-10-26",
+    "Biomüll"
+   ],
+   [
+    "2026-11-02",
+    "Altpapier"
+   ],
+   [
+    "2026-11-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-09",
+    "Biomüll"
+   ],
+   [
+    "2026-11-16",
+    "Restmüll"
+   ],
+   [
+    "2026-11-23",
+    "Biomüll"
+   ],
+   [
+    "2026-11-30",
+    "Altpapier"
+   ],
+   [
+    "2026-11-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-07",
+    "Biomüll"
+   ],
+   [
+    "2026-12-14",
+    "Restmüll"
+   ],
+   [
+    "2026-12-19",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-12-28",
+    "Altpapier"
+   ],
+   [
+    "2026-12-28",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-06",
+    "Biomüll"
+   ],
+   [
+    "2026-01-13",
+    "Restmüll"
+   ],
+   [
+    "2026-01-20",
+    "Biomüll"
+   ],
+   [
+    "2026-01-27",
+    "Altpapier"
+   ],
+   [
+    "2026-01-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-03",
+    "Biomüll"
+   ],
+   [
+    "2026-02-10",
+    "Restmüll"
+   ],
+   [
+    "2026-02-17",
+    "Biomüll"
+   ],
+   [
+    "2026-02-24",
+    "Altpapier"
+   ],
+   [
+    "2026-02-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-03",
+    "Biomüll"
+   ],
+   [
+    "2026-03-10",
+    "Restmüll"
+   ],
+   [
+    "2026-03-17",
+    "Biomüll"
+   ],
+   [
+    "2026-03-24",
+    "Altpapier"
+   ],
+   [
+    "2026-03-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-30",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-08",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-14",
+    "Biomüll"
+   ],
+   [
+    "2026-04-21",
+    "Altpapier"
+   ],
+   [
+    "2026-04-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-27",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-05",
+    "Restmüll"
+   ],
+   [
+    "2026-05-12",
+    "Biomüll"
+   ],
+   [
+    "2026-05-19",
+    "Altpapier"
+   ],
+   [
+    "2026-05-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-27",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-02",
+    "Restmüll"
+   ],
+   [
+    "2026-06-09",
+    "Biomüll"
+   ],
+   [
+    "2026-06-16",
+    "Altpapier"
+   ],
+   [
+    "2026-06-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-23",
+    "Biomüll"
+   ],
+   [
+    "2026-06-30",
+    "Restmüll"
+   ],
+   [
+    "2026-07-07",
+    "Biomüll"
+   ],
+   [
+    "2026-07-14",
+    "Altpapier"
+   ],
+   [
+    "2026-07-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-21",
+    "Biomüll"
+   ],
+   [
+    "2026-07-28",
+    "Restmüll"
+   ],
+   [
+    "2026-08-04",
+    "Biomüll"
+   ],
+   [
+    "2026-08-11",
+    "Altpapier"
+   ],
+   [
+    "2026-08-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-18",
+    "Biomüll"
+   ],
+   [
+    "2026-08-25",
+    "Restmüll"
+   ],
+   [
+    "2026-09-01",
+    "Biomüll"
+   ],
+   [
+    "2026-09-08",
+    "Altpapier"
+   ],
+   [
+    "2026-09-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-15",
+    "Biomüll"
+   ],
+   [
+    "2026-09-22",
+    "Restmüll"
+   ],
+   [
+    "2026-09-29",
+    "Biomüll"
+   ],
+   [
+    "2026-10-06",
+    "Altpapier"
+   ],
+   [
+    "2026-10-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-13",
+    "Biomüll"
+   ],
+   [
+    "2026-10-20",
+    "Restmüll"
+   ],
+   [
+    "2026-10-27",
+    "Biomüll"
+   ],
+   [
+    "2026-11-03",
+    "Altpapier"
+   ],
+   [
+    "2026-11-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-10",
+    "Biomüll"
+   ],
+   [
+    "2026-11-17",
+    "Restmüll"
+   ],
+   [
+    "2026-11-24",
+    "Biomüll"
+   ],
+   [
+    "2026-12-01",
+    "Altpapier"
+   ],
+   [
+    "2026-12-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-08",
+    "Biomüll"
+   ],
+   [
+    "2026-12-15",
+    "Restmüll"
+   ],
+   [
+    "2026-12-21",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-12-29",
+    "Altpapier"
+   ],
+   [
+    "2026-12-29",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p3": [
+   [
+    "2026-01-02",
+    "Altpapier"
+   ],
+   [
+    "2026-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-08",
+    "Biomüll"
+   ],
+   [
+    "2026-01-15",
+    "Restmüll"
+   ],
+   [
+    "2026-01-22",
+    "Biomüll"
+   ],
+   [
+    "2026-01-29",
+    "Altpapier"
+   ],
+   [
+    "2026-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-05",
+    "Biomüll"
+   ],
+   [
+    "2026-02-12",
+    "Restmüll"
+   ],
+   [
+    "2026-02-19",
+    "Biomüll"
+   ],
+   [
+    "2026-02-26",
+    "Altpapier"
+   ],
+   [
+    "2026-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-05",
+    "Biomüll"
+   ],
+   [
+    "2026-03-12",
+    "Restmüll"
+   ],
+   [
+    "2026-03-19",
+    "Biomüll"
+   ],
+   [
+    "2026-03-26",
+    "Altpapier"
+   ],
+   [
+    "2026-03-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-01",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-10",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-16",
+    "Biomüll"
+   ],
+   [
+    "2026-04-23",
+    "Altpapier"
+   ],
+   [
+    "2026-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-29",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-07",
+    "Restmüll"
+   ],
+   [
+    "2026-05-15",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-21",
+    "Altpapier"
+   ],
+   [
+    "2026-05-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-29",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-05",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-11",
+    "Biomüll"
+   ],
+   [
+    "2026-06-18",
+    "Altpapier"
+   ],
+   [
+    "2026-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-25",
+    "Biomüll"
+   ],
+   [
+    "2026-07-02",
+    "Restmüll"
+   ],
+   [
+    "2026-07-09",
+    "Biomüll"
+   ],
+   [
+    "2026-07-16",
+    "Altpapier"
+   ],
+   [
+    "2026-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-23",
+    "Biomüll"
+   ],
+   [
+    "2026-07-30",
+    "Restmüll"
+   ],
+   [
+    "2026-08-06",
+    "Biomüll"
+   ],
+   [
+    "2026-08-13",
+    "Altpapier"
+   ],
+   [
+    "2026-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-20",
+    "Biomüll"
+   ],
+   [
+    "2026-08-27",
+    "Restmüll"
+   ],
+   [
+    "2026-09-03",
+    "Biomüll"
+   ],
+   [
+    "2026-09-10",
+    "Altpapier"
+   ],
+   [
+    "2026-09-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-17",
+    "Biomüll"
+   ],
+   [
+    "2026-09-24",
+    "Restmüll"
+   ],
+   [
+    "2026-10-01",
+    "Biomüll"
+   ],
+   [
+    "2026-10-08",
+    "Altpapier"
+   ],
+   [
+    "2026-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-15",
+    "Biomüll"
+   ],
+   [
+    "2026-10-22",
+    "Restmüll"
+   ],
+   [
+    "2026-10-29",
+    "Biomüll"
+   ],
+   [
+    "2026-11-05",
+    "Altpapier"
+   ],
+   [
+    "2026-11-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-12",
+    "Biomüll"
+   ],
+   [
+    "2026-11-19",
+    "Restmüll"
+   ],
+   [
+    "2026-11-26",
+    "Biomüll"
+   ],
+   [
+    "2026-12-03",
+    "Altpapier"
+   ],
+   [
+    "2026-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-10",
+    "Biomüll"
+   ],
+   [
+    "2026-12-17",
+    "Restmüll"
+   ],
+   [
+    "2026-12-23",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-12-31",
+    "Altpapier"
+   ],
+   [
+    "2026-12-31",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p4": [
+   [
+    "2026-01-03",
+    "Altpapier"
+   ],
+   [
+    "2026-01-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-09",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Restmüll"
+   ],
+   [
+    "2026-01-23",
+    "Biomüll"
+   ],
+   [
+    "2026-01-30",
+    "Altpapier"
+   ],
+   [
+    "2026-01-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-06",
+    "Biomüll"
+   ],
+   [
+    "2026-02-13",
+    "Restmüll"
+   ],
+   [
+    "2026-02-20",
+    "Biomüll"
+   ],
+   [
+    "2026-02-27",
+    "Altpapier"
+   ],
+   [
+    "2026-02-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-06",
+    "Biomüll"
+   ],
+   [
+    "2026-03-13",
+    "Restmüll"
+   ],
+   [
+    "2026-03-20",
+    "Biomüll"
+   ],
+   [
+    "2026-03-27",
+    "Altpapier"
+   ],
+   [
+    "2026-03-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-02",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-11",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-17",
+    "Biomüll"
+   ],
+   [
+    "2026-04-24",
+    "Altpapier"
+   ],
+   [
+    "2026-04-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-30",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-08",
+    "Restmüll"
+   ],
+   [
+    "2026-05-16",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-22",
+    "Altpapier"
+   ],
+   [
+    "2026-05-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-30",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-06",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-12",
+    "Biomüll"
+   ],
+   [
+    "2026-06-19",
+    "Altpapier"
+   ],
+   [
+    "2026-06-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-26",
+    "Biomüll"
+   ],
+   [
+    "2026-07-03",
+    "Restmüll"
+   ],
+   [
+    "2026-07-10",
+    "Biomüll"
+   ],
+   [
+    "2026-07-17",
+    "Altpapier"
+   ],
+   [
+    "2026-07-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-31",
+    "Restmüll"
+   ],
+   [
+    "2026-08-07",
+    "Biomüll"
+   ],
+   [
+    "2026-08-14",
+    "Altpapier"
+   ],
+   [
+    "2026-08-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-21",
+    "Biomüll"
+   ],
+   [
+    "2026-08-28",
+    "Restmüll"
+   ],
+   [
+    "2026-09-04",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Altpapier"
+   ],
+   [
+    "2026-09-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-18",
+    "Biomüll"
+   ],
+   [
+    "2026-09-25",
+    "Restmüll"
+   ],
+   [
+    "2026-10-02",
+    "Biomüll"
+   ],
+   [
+    "2026-10-09",
+    "Altpapier"
+   ],
+   [
+    "2026-10-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-16",
+    "Biomüll"
+   ],
+   [
+    "2026-10-23",
+    "Restmüll"
+   ],
+   [
+    "2026-10-30",
+    "Biomüll"
+   ],
+   [
+    "2026-11-06",
+    "Altpapier"
+   ],
+   [
+    "2026-11-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-13",
+    "Biomüll"
+   ],
+   [
+    "2026-11-20",
+    "Restmüll"
+   ],
+   [
+    "2026-11-27",
+    "Biomüll"
+   ],
+   [
+    "2026-12-04",
+    "Altpapier"
+   ],
+   [
+    "2026-12-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-11",
+    "Biomüll"
+   ],
+   [
+    "2026-12-18",
+    "Restmüll"
+   ],
+   [
+    "2026-12-24",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ]
+  ],
+  "p5": [
+   [
+    "2026-01-07",
+    "Biomüll"
+   ],
+   [
+    "2026-01-14",
+    "Restmüll"
+   ],
+   [
+    "2026-01-21",
+    "Biomüll"
+   ],
+   [
+    "2026-01-28",
+    "Altpapier"
+   ],
+   [
+    "2026-01-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-04",
+    "Biomüll"
+   ],
+   [
+    "2026-02-11",
+    "Restmüll"
+   ],
+   [
+    "2026-02-18",
+    "Biomüll"
+   ],
+   [
+    "2026-02-25",
+    "Altpapier"
+   ],
+   [
+    "2026-02-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-04",
+    "Biomüll"
+   ],
+   [
+    "2026-03-11",
+    "Restmüll"
+   ],
+   [
+    "2026-03-18",
+    "Biomüll"
+   ],
+   [
+    "2026-03-25",
+    "Altpapier"
+   ],
+   [
+    "2026-03-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-31",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-09",
+    "Restmüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-04-15",
+    "Biomüll"
+   ],
+   [
+    "2026-04-22",
+    "Altpapier"
+   ],
+   [
+    "2026-04-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-28",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-05-06",
+    "Restmüll"
+   ],
+   [
+    "2026-05-13",
+    "Biomüll"
+   ],
+   [
+    "2026-05-20",
+    "Altpapier"
+   ],
+   [
+    "2026-05-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-28",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-06-03",
+    "Restmüll"
+   ],
+   [
+    "2026-06-10",
+    "Biomüll"
+   ],
+   [
+    "2026-06-17",
+    "Altpapier"
+   ],
+   [
+    "2026-06-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-24",
+    "Biomüll"
+   ],
+   [
+    "2026-07-01",
+    "Restmüll"
+   ],
+   [
+    "2026-07-08",
+    "Biomüll"
+   ],
+   [
+    "2026-07-15",
+    "Altpapier"
+   ],
+   [
+    "2026-07-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-22",
+    "Biomüll"
+   ],
+   [
+    "2026-07-29",
+    "Restmüll"
+   ],
+   [
+    "2026-08-05",
+    "Biomüll"
+   ],
+   [
+    "2026-08-12",
+    "Altpapier"
+   ],
+   [
+    "2026-08-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-19",
+    "Biomüll"
+   ],
+   [
+    "2026-08-26",
+    "Restmüll"
+   ],
+   [
+    "2026-09-02",
+    "Biomüll"
+   ],
+   [
+    "2026-09-09",
+    "Altpapier"
+   ],
+   [
+    "2026-09-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-16",
+    "Biomüll"
+   ],
+   [
+    "2026-09-23",
+    "Restmüll"
+   ],
+   [
+    "2026-09-30",
+    "Biomüll"
+   ],
+   [
+    "2026-10-07",
+    "Altpapier"
+   ],
+   [
+    "2026-10-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-14",
+    "Biomüll"
+   ],
+   [
+    "2026-10-21",
+    "Restmüll"
+   ],
+   [
+    "2026-10-28",
+    "Biomüll"
+   ],
+   [
+    "2026-11-04",
+    "Altpapier"
+   ],
+   [
+    "2026-11-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-11",
+    "Biomüll"
+   ],
+   [
+    "2026-11-18",
+    "Restmüll"
+   ],
+   [
+    "2026-11-25",
+    "Biomüll"
+   ],
+   [
+    "2026-12-02",
+    "Altpapier"
+   ],
+   [
+    "2026-12-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-09",
+    "Biomüll"
+   ],
+   [
+    "2026-12-16",
+    "Restmüll"
+   ],
+   [
+    "2026-12-22",
+    "Biomüll",
+    "verschobener Termin (im Kalender mit „!“ markiert)"
+   ],
+   [
+    "2026-12-30",
+    "Altpapier"
+   ],
+   [
+    "2026-12-30",
+    "Gelbe Tonne"
+   ]
+  ]
+ }
+}
