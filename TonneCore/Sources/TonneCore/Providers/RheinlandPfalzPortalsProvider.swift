@@ -16,6 +16,8 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsRP
     public let serviceKey: String
     private let client: HTTPClient
+    /// Stichtag für `donnersberg` (Jahr im ICS-Pfad); nil = jetzt. Nur für Tests.
+    var referenceDate: Date?
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service
@@ -800,8 +802,9 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         guard !types.isEmpty else { throw ProviderError.noDataGeneric }
         let query = types.map { "\(HTTPClient.query($0))=on" }.joined(separator: "&")
         // Jahr steht im Pfad; das Folgejahr gibt es erst, wenn der neue Plan veröffentlicht ist (sonst 404).
+        let current = calendar.component(.year, from: referenceDate ?? Date())
         var pickups: [Pickup] = []
-        for year in [thisYear(calendar), thisYear(calendar) + 1] {
+        for year in [current, current + 1] {
             guard let text = try? await client.string("\(Self.donnersbergBase)/\(year)/KIB/\(path)/ics/de?\(query)") else { continue }
             pickups += Self.donnersbergPickups(text, calendar: calendar)
         }

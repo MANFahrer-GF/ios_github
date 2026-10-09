@@ -164,7 +164,8 @@ final class DonnersbergTests: XCTestCase {
 
     /// Ganzer Ablauf mit nachgestellten Antworten: prüft URLs und den Accept-Kopf (ohne `text/html` liefert die Web-App 404).
     func testFlowAgainstStub() async throws {
-        let provider = RheinlandPfalzPortalsProvider(service: "donnersberg", client: HTTPClient(session: DonnersbergStub.session()))
+        var provider = RheinlandPfalzPortalsProvider(service: "donnersberg", client: HTTPClient(session: DonnersbergStub.session()))
+        provider.referenceDate = Days.parse("2026-10-09", calendar: calendar)
 
         let places = try await provider.nextStep(after: [])
         let town = try XCTUnwrap(places?.options.first { $0.title == "Kirchheimbolanden" })
@@ -190,10 +191,9 @@ final class DonnersbergTests: XCTestCase {
         for request in requests where request.url.contains("/web/") {
             XCTAssertTrue(request.accept.contains("text/html"), request.url)
         }
-        let year = calendar.component(.year, from: Date())
         let query = "abfallart_Restabfall=on&abfallart_Bioabfall=on&abfallart_Papier=on&abfallart_GelberSack=on"
-        XCTAssertTrue(requests.contains { $0.url == "\(base)/\(year)/KIB/Kirchheimbolanden/Amtsstrasse/ics/de?\(query)" })
-        XCTAssertTrue(requests.contains { $0.url == "\(base)/\(year + 1)/KIB/Kirchheimbolanden/Amtsstrasse/ics/de?\(query)" })
+        XCTAssertTrue(requests.contains { $0.url == "\(base)/2026/KIB/Kirchheimbolanden/Amtsstrasse/ics/de?\(query)" })
+        XCTAssertTrue(requests.contains { $0.url == "\(base)/2027/KIB/Kirchheimbolanden/Amtsstrasse/ics/de?\(query)" })
     }
 
     func testTownWithStreetsNeedsStreet() async {
@@ -227,7 +227,8 @@ final class DonnersbergTests: XCTestCase {
     }
 }
 
-/// Nachgestellte Web-App für die Tests; antwortet wie das Original ohne `Accept: text/html` mit 404.
+/// Nachgestellte Web-App für die Tests; antwortet wie das Original ohne `Accept: text/html` mit 404,
+/// ICS nur für 2026 (2027 noch nicht veröffentlicht → 404).
 final class DonnersbergStub: URLProtocol {
     struct Seen { let url: String; let accept: String }
     private static let lock = NSLock()
@@ -253,13 +254,12 @@ final class DonnersbergStub: URLProtocol {
         Self.lock.unlock()
 
         let path = request.url?.path ?? ""
-        let thisYear = Calendar(identifier: .gregorian).component(.year, from: Date())
         var body: String?
         if path.hasPrefix("/web/") && !accept.contains("text/html") { body = nil }
         else if path == "/web/KIB/de/kalender" { body = DonnersbergTests.places }
         else if path.hasSuffix("/strassen") { body = DonnersbergTests.streets }
         else if path.hasSuffix("/muellarten") { body = DonnersbergTests.types }
-        else if path.hasPrefix("/\(thisYear)/KIB/") && path.hasSuffix("/ics/de") { body = DonnersbergTests.ics }
+        else if path.hasPrefix("/2026/KIB/") && path.hasSuffix("/ics/de") { body = DonnersbergTests.ics }
         let response = HTTPURLResponse(url: request.url!, statusCode: body == nil ? 404 : 200, httpVersion: "HTTP/1.1",
                                        headerFields: ["Content-Type": "text/html; charset=UTF-8"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
