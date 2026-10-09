@@ -1,0 +1,60 @@
+{
+  "sourceLanguage": "de",
+  "strings": {
+    "NSContactsUsageDescription": {
+      "comment": "Privacy - NSContactsUsageDescription",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne & Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne & Torte reads birthdays from your contacts when you choose to import them."
+          }
+        }
+      }
+    },
+    "NSCalendarsFullAccessUsageDescription": {
+      "comment": "Privacy - NSCalendarsFullAccessUsageDescription",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne & Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonne & Torte adds collection dates and birthdays to your calendar if you want. To keep them up to date, it only reads and changes its own entries."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription": {
+      "comment": "Privacy - NSLocationWhenInUseUsageDescription",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location helps suggest the right waste collection provider for your area."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

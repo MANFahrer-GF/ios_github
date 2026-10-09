@@ -217,7 +217,8 @@ enum PickupWords {
         let weekday = date.formatted(.dateTime.weekday(.abbreviated)).replacingOccurrences(of: ".", with: "")
         let day = date.formatted(.dateTime.day())
         let month = date.formatted(.dateTime.month(.abbreviated)).replacingOccurrences(of: ".", with: "")
-        return "\(weekday) \(day). \(month)".uppercased()
+        // „MO 12. OKT“ – im Englischen ohne Punkt nach dem Tag („MON OCT 12“)
+        return L10n.t("\(weekday) \(day). \(month)", "\(weekday) \(month) \(day)").uppercased()
     }
 
     static func headline(days: Int?, done: Bool) -> String {
