@@ -85,6 +85,13 @@ public struct JahresdatenProvider: WasteProvider {
         return text
     }
 
+    public var restriction: String? {
+        guard let data else { return nil }
+        let years = data.years.map(String.init).joined(separator: "/")
+        let text = L10n.t("Termine aus dem PDF-Kalender \(years), einmal im Jahr eingepflegt.", "Dates from the \(years) PDF calendar, added once a year.")
+        return data.notice.map { text + " " + $0 } ?? text
+    }
+
     private static func sorted(_ options: [SelectionOption]) -> [SelectionOption] {
         options.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }

@@ -155,6 +155,37 @@ final class CoverageTests: XCTestCase {
         }
     }
 
+    /// „Geht mein Ort?“: Gemeinde → Entsorger samt Einschränkung.
+    func testCheckPlace() throws {
+        let soltau = try XCTUnwrap(ProviderCatalog.checkPlace("Soltau").first)
+        XCTAssertEqual(soltau.district, "Landkreis Heidekreis")
+        XCTAssertTrue(soltau.entries.contains { $0.serviceKey == "heidekreis" })
+        XCTAssertNil(ProviderCatalog.restriction(for: try XCTUnwrap(soltau.entries.first { $0.serviceKey == "heidekreis" })))
+
+        // Gemeinde-Einträge nur für ihre Gemeinde: Wehrheims Kalender gehört nicht zu Usingen
+        let usingen = try XCTUnwrap(ProviderCatalog.checkPlace("Usingen").first)
+        XCTAssertTrue(usingen.isCovered)
+        XCTAssertFalse(usingen.entries.contains { $0.title.contains("Wehrheim") })
+
+        let weimar = try XCTUnwrap(ProviderCatalog.checkPlace("Weimar").first { $0.district == "Kreisfreie Stadt Weimar" })
+        let weimarEntry = try XCTUnwrap(weimar.entries.first { $0.serviceKey == "weimar" })
+        XCTAssertEqual(ProviderCatalog.restriction(for: weimarEntry), "Termine berechnet, ohne Verschiebung an Feiertagen.")
+
+        let amberg = try XCTUnwrap(ProviderCatalog.checkPlace("Ensdorf").first { $0.district == "Landkreis Amberg-Sulzbach" })
+        XCTAssertTrue(amberg.entries.contains { ProviderCatalog.restriction(for: $0) == "Nur Restmüll und Altpapier." })
+        let sontra = try XCTUnwrap(ProviderCatalog.checkPlace("Sontra").first)
+        XCTAssertTrue(sontra.entries.contains { ProviderCatalog.restriction(for: $0)?.contains("Gelbe Tonne nicht enthalten") == true }, "Zusatzhinweis der Jahresdaten bleibt erhalten")
+
+        XCTAssertTrue(ProviderCatalog.checkPlace("Oerbke").isEmpty, "Ortsteil, keine Gemeinde – die Seite fällt auf die Entsorgersuche zurück")
+        XCTAssertTrue(ProviderCatalog.checkPlace("So").isEmpty, "zu kurz")
+    }
+
+    func testRestrictedEntries() {
+        let keys = Set(ProviderCatalog.restrictedEntries.map(\.serviceKey))
+        XCTAssertTrue(keys.isSuperset(of: ["weimar", "landkreis_as", "ansbach", "saaleholzland", "sontra"]), "\(keys.sorted())")
+        XCTAssertFalse(keys.contains("heidekreis"))
+    }
+
     func testDisplayNames() {
         XCTAssertEqual(DistrictCoverage.displayName("Landkreis Rems-Murr-Kreis"), "Rems-Murr-Kreis")
         XCTAssertEqual(DistrictCoverage.displayName("Landkreis Peine"), "Landkreis Peine")

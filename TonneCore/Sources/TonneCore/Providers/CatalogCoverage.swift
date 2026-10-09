@@ -83,3 +83,48 @@ enum CoverageIndex {
         .sorted { ($0.state, $0.displayName) < ($1.state, $1.displayName) }
     }()
 }
+
+/// Antwort auf „Geht mein Ort?“: eine Gemeinde mit den Entsorgern, die sie bedienen.
+public struct PlaceCheck: Identifiable, Hashable {
+    public let name: String
+    public let district: String
+    /// Kreisweite Entsorger des Landkreises und eigene Einträge der Gemeinde.
+    public let entries: [CatalogEntry]
+    public var id: String { "\(district)|\(name)" }
+    public var isCovered: Bool { !entries.isEmpty }
+}
+
+public extension ProviderCatalog {
+    /// Gemeinden zur Eingabe mit ihren Entsorgern (leer, wenn die Eingabe keine Gemeinde ist).
+    static func checkPlace(_ query: String) -> [PlaceCheck] {
+        municipalities(matching: query).map { hit in
+            let pair = "\(hit.district)|\(hit.name)"
+            let found = entries.filter { entry in
+                (CatalogRegions.entryDistricts[entry.id] ?? []).contains(hit.district)
+                    || (CatalogRegions.localEntries[entry.id] ?? []).contains(pair)
+            }
+            return PlaceCheck(name: hit.name, district: hit.district, entries: found.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending })
+        }
+    }
+
+    /// Einschränkung eines Entsorgers in einem Satz (PDF-Jahresdaten, berechnete Termine, nur einzelne Müllarten …),
+    /// sonst nil. Stammt aus dem Hinweis des Anbieters, den die App auch beim Standort zeigt.
+    static func restriction(for entry: CatalogEntry) -> String? {
+        RestrictionIndex.lock.lock(); defer { RestrictionIndex.lock.unlock() }
+        if let cached = RestrictionIndex.cache[entry.id] { return cached }
+        let notice = ProviderFactory.make(kind: entry.kind, serviceKey: entry.serviceKey).restriction
+        RestrictionIndex.cache[entry.id] = .some(notice)
+        return notice
+    }
+
+    /// Alle Entsorger mit Einschränkung – für die Übersicht der Sonderfälle.
+    static var restrictedEntries: [CatalogEntry] {
+        entries.filter { restriction(for: $0) != nil }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
+    }
+}
+
+/// Hinweise je Katalogeintrag, einmal ermittelt (Jahresdaten lesen dafür ihre JSON-Daten).
+enum RestrictionIndex {
+    static let lock = NSLock()
+    nonisolated(unsafe) static var cache: [String: String?] = [:]
+}

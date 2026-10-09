@@ -198,10 +198,14 @@ public protocol WasteProvider {
 
     /// Hinweis zur Herkunft der Termine, den die App beim Standort zeigt – z. B. „berechnet, Feiertage beachten“.
     var notice: String? { get }
+
+    /// Kurzfassung der Einschränkung für Listen („Geht mein Ort?“); Standard ist der Hinweis selbst.
+    var restriction: String? { get }
 }
 
 public extension WasteProvider {
     var notice: String? { nil }
+    var restriction: String? { notice }
 
     /// Lesbare Bezeichnung einer Auswahl, z. B. „Gifhorn, Steinstraße 1“.
     func label(for selections: [SelectionOption]) -> String {

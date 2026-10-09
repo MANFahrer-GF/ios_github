@@ -23,6 +23,17 @@ public struct BayernPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsBayern
     public let serviceKey: String
     public var displayName: String { Self.titles[serviceKey] ?? kind.displayName }
+
+    public var restriction: String? {
+        serviceKey == "landkreis_as" ? L10n.t("Nur Restmüll und Altpapier.", "Residual waste and paper only.") : nil
+    }
+
+    /// Das Portal des Landratsamts Amberg-Sulzbach führt nur Restmüll und Altpapier.
+    public var notice: String? {
+        guard serviceKey == "landkreis_as" else { return nil }
+        return L10n.t("Das Portal liefert nur Restmüll und Altpapier. Bio- und Wertstofftermine bitte als Rhythmus bei der Müllart einstellen.",
+                      "The portal only provides residual waste and paper. Please set organic and recycling dates as a schedule on the waste type.")
+    }
     private let client: HTTPClient
     /// Stichtag für Jahr/„heute“ (nil = jetzt); nur Tests setzen ihn, bisher nur `landkreis_as`.
     var referenceDate: Date?

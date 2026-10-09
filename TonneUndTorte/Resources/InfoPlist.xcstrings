@@ -1,60 +1,90 @@
 {
-  "sourceLanguage": "de",
-  "strings": {
-    "NSContactsUsageDescription": {
-      "comment": "Privacy - NSContactsUsageDescription",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte reads birthdays from your contacts when you choose to import them."
+  "sourceLanguage" : "de",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tonne & Torte"
           }
         }
       }
     },
-    "NSCalendarsFullAccessUsageDescription": {
-      "comment": "Privacy - NSCalendarsFullAccessUsageDescription",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte adds collection dates and birthdays to your calendar if you want. To keep them up to date, it only reads and changes its own entries."
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tonne & Torte"
           }
         }
       }
     },
-    "NSLocationWhenInUseUsageDescription": {
-      "comment": "Privacy - NSLocationWhenInUseUsageDescription",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen."
+    "NSCalendarsFullAccessUsageDescription" : {
+      "comment" : "Privacy - NSCalendarsFullAccessUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge."
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your location helps suggest the right waste collection provider for your area."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte adds collection dates and birthdays to your calendar if you want. To keep them up to date, it only reads and changes its own entries."
           }
         }
       }
+    },
+    "NSContactsUsageDescription" : {
+      "comment" : "Privacy - NSContactsUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte reads birthdays from your contacts when you choose to import them."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - NSLocationWhenInUseUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your location helps suggest the right waste collection provider for your area."
+          }
+        }
+      }
+    },
+    "Tonne Torte" : {
+
+    },
+    "Tonne und Torte" : {
+
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

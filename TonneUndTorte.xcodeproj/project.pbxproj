@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		A1B2C3D4E5F600000000002B /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F6000000000029 /* TonneCore */; };
 		A1B2C3D4E5F600000000002C /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600000000002A /* TonneCore */; };
+		A1B2C3D4E5F6000000000033 /* TonneWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000015 /* TonneWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1B2C3D4E5F600000000005D /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600000000005C /* TonneCore */; };
 		A1B2C3D4E5F6000000000072 /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F6000000000071 /* TonneCore */; };
-		A1B2C3D4E5F6000000000033 /* TonneWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000015 /* TonneWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1B2C3D4E5F6000000000079 /* TonneWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000051 /* TonneWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1B2C3D4E5F600000000007D /* TonneWatchWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -79,14 +79,14 @@
 /* Begin PBXFileReference section */
 		A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tonne & Torte.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000015 /* TonneWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1B2C3D4E5F6000000000051 /* TonneWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonneWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F600000000003D /* TonneUndTorte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneUndTorte.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F600000000003E /* TonneWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWidget.entitlements; sourceTree = "<group>"; };
-		A1B2C3D4E5F6000000000082 /* TonneWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWatch.entitlements; sourceTree = "<group>"; };
-		A1B2C3D4E5F6000000000083 /* TonneWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWatchWidget.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F600000000003F /* TonneUndTorte-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneUndTorte-Info.plist"; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000040 /* TonneWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWidget-Info.plist"; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000051 /* TonneWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonneWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F6000000000082 /* TonneWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWatch.entitlements; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000083 /* TonneWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneWatchWidget.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000084 /* TonneWatchWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatchWidget-Info.plist"; sourceTree = "<group>"; };
 		A1B2C3D4E5F60000000000A0 /* TonneWatch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TonneWatch-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +168,17 @@
 			);
 			sourceTree = "<group>";
 		};
+		A1B2C3D4E5F6000000000005 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */,
+				A1B2C3D4E5F6000000000015 /* TonneWidget.appex */,
+				A1B2C3D4E5F6000000000051 /* TonneWatch.app */,
+				A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A1B2C3D4E5F600000000003C /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,17 +192,6 @@
 				A1B2C3D4E5F60000000000A0 /* TonneWatch-Info.plist */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		A1B2C3D4E5F6000000000005 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */,
-				A1B2C3D4E5F6000000000015 /* TonneWidget.appex */,
-				A1B2C3D4E5F6000000000051 /* TonneWatch.app */,
-				A1B2C3D4E5F6000000000065 /* TonneWatchWidget.appex */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,28 +443,28 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -481,6 +481,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -488,15 +490,13 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -507,13 +507,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneUndTorte.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneUndTorte-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Tonne & Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Tonne & Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -523,7 +529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -538,13 +544,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneUndTorte.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneUndTorte-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Tonne & Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Tonne & Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -554,7 +566,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -569,8 +581,8 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
@@ -580,7 +592,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -596,8 +608,8 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
@@ -607,7 +619,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -623,8 +635,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWatch-Info.plist";
@@ -638,7 +650,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -655,8 +667,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWatch-Info.plist";
@@ -670,7 +682,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -686,8 +698,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWatchWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWatchWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
@@ -697,7 +709,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -713,8 +725,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Config/TonneWatchWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9R52F35P9D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/TonneWatchWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tonne & Torte";
@@ -724,7 +736,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -737,20 +749,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1B2C3D4E5F600000000000B /* Build configuration list for PBXProject "TonneUndTorte" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A1B2C3D4E5F600000000000C /* Debug */,
-				A1B2C3D4E5F600000000000D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A1B2C3D4E5F6000000000007 /* Build configuration list for PBXNativeTarget "Tonne & Torte" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1B2C3D4E5F600000000000E /* Debug */,
 				A1B2C3D4E5F600000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F600000000000B /* Build configuration list for PBXProject "TonneUndTorte" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F600000000000C /* Debug */,
+				A1B2C3D4E5F600000000000D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

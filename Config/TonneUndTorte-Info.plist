@@ -2,25 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSSupportsLiveActivities</key>
-	<true/>
-	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
-	<false/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-		<string>fetch</string>
-	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>de.manfahrer.TonneUndTorte.refresh</string>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>Tonne &amp; Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest.</string>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Tonne &amp; Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -45,7 +30,10 @@
 			<string>Tonne Torte</string>
 		</dict>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
 </dict>
 </plist>

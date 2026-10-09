@@ -37,6 +37,10 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
 
     public var displayName: String { Self.names[serviceKey] ?? kind.displayName }
 
+    public var restriction: String? {
+        serviceKey == "weimar" ? L10n.t("Termine berechnet, ohne Verschiebung an Feiertagen.", "Dates calculated, without holiday shifts.") : nil
+    }
+
     /// Weimar veröffentlicht nur Wochentag und gerade/ungerade Kalenderwoche je Straße – die Termine rechnet die App.
     public var notice: String? {
         guard serviceKey == "weimar" else { return nil }

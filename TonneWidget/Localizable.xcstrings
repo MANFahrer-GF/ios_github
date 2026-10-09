@@ -1,2736 +1,3069 @@
 {
-  "sourceLanguage": "de",
-  "strings": {
-    "%lld Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld dates"
+  "sourceLanguage" : "de",
+  "strings" : {
+    "–" : {
+
+    },
+    "· %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· %@"
+          }
+        }
+      }
+    },
+    "· %lld" : {
+
+    },
+    "„%@“ wirklich löschen?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Really delete “%@”?"
+          }
+        }
+      }
+    },
+    "%@" : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ %@: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@: %3$@"
           }
         }
       }
     },
-    "%lld Termine gefunden für %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld dates found for %@."
+    "%@: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
           }
         }
       }
     },
-    "%lld×": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld×"
+    "%lld T." : {
+
+    },
+    "%lld Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dates"
+          }
+        }
+      }
+    },
+    "%lld Termine gefunden für %@." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dates found for %@."
           }
         }
       }
     },
-    "1 Monat vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 month before"
+    "%lld×" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld×"
           }
         }
       }
+    },
+    "+%lld" : {
+
+    },
+    "+%lld weitere" : {
+
     },
-    "1 Tag vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 day before"
+    "✓" : {
+
+    },
+    "✓ steht draußen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ it's out"
           }
         }
       }
     },
-    "1 Woche vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 week before"
+    "🎁 %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎁 %@"
           }
         }
       }
+    },
+    "🎂" : {
+
     },
-    "2 Tage vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "2 days before"
+    "🎂 %@" : {
+
+    },
+    "🎂 %@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🎂 %1$@ · %2$@"
           }
         }
       }
     },
-    "2 Wochen vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "2 weeks before"
+    "🎂 GEBURTSTAGE" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎂 BIRTHDAYS"
           }
         }
       }
     },
-    "3 Tage vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 days before"
+    "🎉 %lld" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 %lld"
           }
         }
       }
     },
-    "ALLES RUHIG": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ALL QUIET"
+    "1 Monat vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 month before"
           }
         }
       }
     },
-    "Abbrechen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancel"
+    "1 Tag vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 day before"
           }
         }
       }
     },
-    "Abfall-ABC": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Waste A–Z"
+    "1 Woche vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 week before"
           }
         }
       }
     },
-    "Abfuhrtermine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collection dates"
+    "2 Tage vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 days before"
           }
         }
       }
     },
-    "Abfuhrtermine direkt vom Entsorger, wöchentlich automatisch abgeglichen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pickup dates straight from your provider, synced automatically every week"
+    "2 Wochen vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 weeks before"
           }
         }
       }
     },
-    "Abgewählte Tonnen bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unchecked bins are kept but won't send reminders. You can change this anytime."
+    "3 Tage vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 days before"
           }
         }
       }
     },
-    "Abholung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collection"
+    "Abbrechen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
           }
         }
       }
     },
-    "Abholungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collections"
+    "Abfall-ABC" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waste A–Z"
           }
         }
       }
     },
-    "Abholungen dieses Jahr": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "collections this year"
+    "Abfuhrtermine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection dates"
           }
         }
       }
     },
-    "Abstand": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Interval"
+    "Abfuhrtermine direkt vom Entsorger, wöchentlich automatisch abgeglichen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pickup dates straight from your provider, synced automatically every week"
           }
         }
       }
     },
-    "Adresse": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Address"
+    "Abgewählte Tonnen bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unchecked bins are kept but won't send reminders. You can change this anytime."
           }
         }
       }
     },
-    "Adresse, Vorlieben …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Address, preferences …"
+    "Abholung" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection"
           }
         }
       }
     },
-    "Aktiv": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Active"
+    "Abholungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collections"
           }
         }
       }
     },
-    "Alle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All"
+    "Abholungen dieses Jahr" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "collections this year"
           }
         }
       }
     },
-    "Alle %lld Wochen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Every %lld weeks"
+    "Abstand" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval"
           }
         }
       }
     },
-    "Alle Daten löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete all data"
+    "Adresse" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address"
           }
         }
       }
     },
-    "Alle Entsorger (%lld)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All providers (%lld)"
+    "Adresse, Vorlieben …" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address, preferences …"
           }
         }
       }
     },
-    "Alle Kontakte freigeben (Einstellungen)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Allow all contacts (Settings)"
+    "Aktiv" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
           }
         }
       }
     },
-    "Alle Standorte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All locations"
+    "Alle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
           }
         }
       }
     },
-    "Alle aktualisieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Refresh all"
+    "Alle %lld Wochen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every %lld weeks"
           }
         }
       }
     },
-    "Alle neuen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All new"
+    "Alle aktualisieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh all"
           }
         }
       }
     },
-    "Alles eingerichtet!": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All set!"
+    "Alle Daten löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all data"
           }
         }
       }
     },
-    "Alles löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete everything"
+    "Alle Entsorger (%lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All providers (%lld)"
           }
         }
       }
     },
-    "Alles steht draußen 👍": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Everything's out 👍"
+    "Alle Kontakte freigeben (Einstellungen)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow all contacts (Settings)"
           }
         }
       }
     },
-    "Als ICS-Datei teilen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Share as ICS file"
+    "Alle neuen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All new"
           }
         }
       }
     },
-    "Alter": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Age"
+    "Alle Standorte" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All locations"
           }
         }
       }
     },
-    "Am Abholtag morgens erinnern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remind in the morning of collection day"
+    "Alles eingerichtet!" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All set!"
           }
         }
       }
     },
-    "Am Tag selbst": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "On the day"
+    "Alles löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete everything"
           }
         }
       }
     },
-    "Am Vorabend erinnern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remind the evening before"
+    "ALLES RUHIG" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALL QUIET"
           }
         }
       }
     },
-    "Anlegen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create"
+    "Alles steht draußen 👍" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything's out 👍"
           }
         }
       }
     },
-    "Art": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Type"
+    "Als ICS-Datei teilen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share as ICS file"
           }
         }
       }
     },
-    "Aus Kontakten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "From Contacts"
+    "Alter" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Age"
           }
         }
       }
     },
-    "Aus Kontakten importieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import from Contacts"
+    "Am Abholtag morgens erinnern" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind in the morning of collection day"
           }
         }
       }
     },
-    "Ausgefallene Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancelled dates"
+    "Am Tag selbst" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the day"
           }
         }
       }
     },
-    "Automatisch aktuell halten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keep up to date automatically"
+    "Am Vorabend erinnern" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind the evening before"
           }
         }
       }
     },
-    "Bereits importierte Personen kannst du erneut auswählen, dann werden Name, Datum und Telefon aus den Kontakten aktualisiert. Geschenkideen und Notizen bleiben erhalten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select already imported people again to update their name, date and phone from Contacts. Gift ideas and notes are kept."
+    "Anlegen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create"
           }
         }
       }
     },
-    "Bisherige Einzeltermine ersetzen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Replace existing single dates"
+    "Art" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type"
           }
         }
       }
     },
-    "Danach": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Up next"
+    "Aus Kontakten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Contacts"
           }
         }
       }
     },
-    "Danke": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Thanks"
+    "Aus Kontakten importieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import from Contacts"
           }
         }
       }
     },
-    "Darstellung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance"
+    "Ausgefallene Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelled dates"
           }
         }
       }
     },
-    "Daten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Data"
+    "Automatisch aktuell halten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep up to date automatically"
           }
         }
       }
     },
-    "Datum": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Date"
+    "Bereits importierte Personen kannst du erneut auswählen, dann werden Name, Datum und Telefon aus den Kontakten aktualisiert. Geschenkideen und Notizen bleiben erhalten." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select already imported people again to update their name, date and phone from Contacts. Gift ideas and notes are kept."
           }
         }
       }
     },
-    "Deine Daten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your data"
+    "Bestätigt, dass die geleerten Tonnen wieder hereingeholt sind." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirms that the emptied bins have been brought back in."
           }
         }
       }
     },
-    "Der Kalender-Export legt einen eigenen Kalender an und enthält die gleichen Alarme wie die App.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The calendar export creates its own calendar with the same alerts as the app."
+    "Bisherige Einzeltermine ersetzen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace existing single dates"
           }
         }
       }
     },
-    "Die App markiert ihre Termine und ändert oder löscht nur diese. Deine eigenen Termine bleiben unberührt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The app marks its events and only changes or deletes those. Your own events stay untouched."
+    "Danach" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up next"
           }
         }
       }
     },
-    "Die Geschichte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The story"
+    "Danke" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thanks"
           }
         }
       }
     },
-    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
+    "Darstellung" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
           }
         }
       }
     },
-    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island, sobald du die App am Vorabend öffnest.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island once you open the app the evening before."
+    "Daten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
           }
         }
       }
     },
-    "Du hast der App nur ausgewählte Kontakte freigegeben.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You only shared selected contacts with the app."
+    "Datum" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
           }
         }
       }
     },
-    "Eigene Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Custom events"
+    "davon bestätigt" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "confirmed"
           }
         }
       }
     },
-    "Eigene wiederkehrende Termine wie TÜV oder Rauchmelder": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your own recurring events such as car inspection or smoke detectors"
+    "Deine Daten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your data"
           }
         }
       }
     },
-    "Eigener Kalender „Tonne & Torte“ in": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Own “Tonne & Torte” calendar in"
+    "Der Kalender-Export legt einen eigenen Kalender an und enthält die gleichen Alarme wie die App." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The calendar export creates its own calendar with the same alerts as the app."
           }
         }
       }
     },
-    "Ein Abholtag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A known collection day"
+    "Die App markiert ihre Termine und ändert oder löscht nur diese. Deine eigenen Termine bleiben unberührt." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app marks its events and only changes or deletes those. Your own events stay untouched."
           }
         }
       }
     },
-    "Einstellungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
+    "Die Geschichte" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The story"
           }
         }
       }
     },
-    "Einzeltermin hinzufügen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add single date"
+    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
           }
         }
       }
     },
-    "Einzeltermine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Single dates"
+    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island, sobald du die App am Vorabend öffnest." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island once you open the app the evening before."
           }
         }
       }
     },
-    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst. Für Google oder Outlook wähle unten einen vorhandenen Kalender.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recommended: the app creates its own calendar that you can show or hide in the Calendar app. For Google or Outlook, choose an existing calendar below."
+    "Du hast der App nur ausgewählte Kontakte freigegeben." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You only shared selected contacts with the app."
           }
         }
       }
     },
-    "Entsorger finden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Find provider"
+    "Eigene Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom events"
           }
         }
       }
     },
-    "Entsorger nicht dabei?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Provider not listed?"
+    "Eigene wiederkehrende Termine wie TÜV oder Rauchmelder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your own recurring events such as car inspection or smoke detectors"
           }
         }
       }
     },
-    "Entsorger oder Adresse ändern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Change provider or address"
+    "Eigener Kalender „Tonne & Torte“ in" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Own “Tonne & Torte” calendar in"
           }
         }
       }
     },
-    "Entsorger verbinden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Connect provider"
+    "Ein Abholtag" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A known collection day"
           }
         }
       }
     },
-    "Erinnern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remind"
+    "Einstellungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
           }
         }
       }
     },
-    "Erinnerung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminder"
+    "Einzeltermin hinzufügen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add single date"
           }
         }
       }
     },
-    "Erinnerung am Vorabend mit „Erledigt“ und „In 1 Stunde nochmal“": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminder the evening before with “Done” and “Remind me in 1 hour”"
+    "Einzeltermine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Single dates"
           }
         }
       }
     },
-    "Erinnerungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminders"
+    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst. Für Google oder Outlook wähle unten einen vorhandenen Kalender." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended: the app creates its own calendar that you can show or hide in the Calendar app. For Google or Outlook, choose an existing calendar below."
           }
         }
       }
     },
-    "Erinnerungen sind aus": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminders are off"
+    "Entsorger finden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find provider"
           }
         }
       }
     },
-    "Erlaube Mitteilungen, damit du keinen Gelben Sack mehr verpasst.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Allow notifications so you never miss a collection again."
+    "Entsorger nicht dabei?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provider not listed?"
           }
         }
       }
     },
-    "Erlauben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Allow"
+    "Entsorger oder Adresse ändern" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change provider or address"
           }
         }
       }
     },
-    "Erledigt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
+    "Entsorger verbinden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect provider"
           }
         }
       }
     },
-    "Erledigt – steht draußen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done – it's out"
+    "Erinnern" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind"
           }
         }
       }
     },
-    "Erster Termin": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "First date"
+    "Erinnerung" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminder"
           }
         }
       }
     },
-    "Es gibt kein Konto und keinen eigenen Server. Standorte, Müllarten und Geburtstage bleiben auf deinem Gerät und werden nur über deine eigene iCloud zwischen iPhone, iPad und Watch abgeglichen. Die App verschickt nichts an Dritte.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "There is no account and no server of our own. Locations, bins and birthdays stay on your device and only sync between iPhone, iPad and Watch through your own iCloud. The app sends nothing to third parties."
+    "Erinnerung am Vorabend mit „Erledigt“ und „In 1 Stunde nochmal“" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminder the evening before with “Done” and “Remind me in 1 hour”"
           }
         }
       }
     },
-    "Export": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Export"
+    "Erinnerungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminders"
           }
         }
       }
     },
-    "Export als ICS, CSV und PDF": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Export as ICS, CSV and PDF"
+    "Erinnerungen sind aus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminders are off"
           }
         }
       }
     },
-    "Farbe": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Color"
+    "Erlaube Mitteilungen, damit du keinen Gelben Sack mehr verpasst." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow notifications so you never miss a collection again."
           }
         }
       }
     },
-    "Farbe & Symbol": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Color & symbol"
+    "Erlauben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow"
           }
         }
       }
     },
-    "Finde deinen Entsorger – die Termine kommen automatisch.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Find your waste provider – dates arrive automatically."
+    "Erledigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         }
       }
     },
-    "Fällt aus": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancelled"
+    "Erledigt – steht draußen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done – it's out"
           }
         }
       }
     },
-    "Gebaut von Thomas Kant": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Built by Thomas Kant"
+    "Erledigt zurücknehmen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo done"
           }
         }
       }
     },
-    "Geburtsjahr bekannt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birth year known"
+    "Erster Termin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First date"
           }
         }
       }
     },
-    "Geburtstag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birthday"
+    "Es gibt kein Konto und keinen eigenen Server. Standorte, Müllarten und Geburtstage bleiben auf deinem Gerät und werden nur über deine eigene iCloud zwischen iPhone, iPad und Watch abgeglichen. Die App verschickt nichts an Dritte." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is no account and no server of our own. Locations, bins and birthdays stay on your device and only sync between iPhone, iPad and Watch through your own iCloud. The app sends nothing to third parties."
           }
         }
       }
     },
-    "Geburtstag bearbeiten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Edit birthday"
+    "Export" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export"
           }
         }
       }
     },
-    "Geburtstag löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete birthday"
+    "Export als ICS, CSV und PDF" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export as ICS, CSV and PDF"
           }
         }
       }
     },
-    "Geburtstag wirklich löschen?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Really delete this birthday?"
+    "Fällt aus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelled"
           }
         }
       }
     },
-    "Geburtstage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birthdays"
+    "Farbe" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
           }
         }
       }
     },
-    "Geburtstage & Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birthdays & events"
+    "Farbe & Symbol" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color & symbol"
           }
         }
       }
     },
-    "Geburtstage & eigene Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birthdays & custom events"
+    "Finde deinen Entsorger – die Termine kommen automatisch." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find your waste provider – dates arrive automatically."
           }
         }
       }
     },
-    "Geburtstage aus deinen Kontakten zeigt iOS schon im Kalender „Geburtstage“. Mit „Nur von Hand angelegte“ wird nichts doppelt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iOS already shows birthdays from your contacts in the “Birthdays” calendar. With “Only added by hand” nothing appears twice."
+    "Gebaut von Thomas Kant" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built by Thomas Kant"
           }
         }
       }
     },
-    "Geburtstage mit Alter, runden Geburtstagen und Geschenkideen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Birthdays with age, milestones and gift ideas"
+    "Geburtsjahr bekannt" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birth year known"
           }
         }
       }
     },
-    "Geplante Erinnerungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Scheduled reminders"
+    "Geburtstag" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthday"
           }
         }
       }
     },
-    "Geschenkideen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gift ideas"
+    "Geburtstag bearbeiten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit birthday"
           }
         }
       }
     },
-    "Gespeicherte Einzeltermine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stored single dates"
+    "Geburtstag löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete birthday"
           }
         }
       }
     },
-    "Glückwunsch per Nachricht senden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send greetings by message"
+    "Geburtstag wirklich löschen?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Really delete this birthday?"
           }
         }
       }
     },
-    "Google-Kalender erscheinen in der Auswahl, sobald dein Google-Konto in den iOS-Einstellungen unter Apps → Kalender → Kalender-Accounts eingerichtet ist.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Google calendars show up here once your Google account is set up in iOS Settings under Apps → Calendar → Calendar Accounts."
+    "Geburtstage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdays"
           }
         }
       }
     },
-    "HEUTE": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TODAY"
+    "Geburtstage & eigene Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdays & custom events"
           }
         }
       }
     },
-    "Heute": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today"
+    "Geburtstage & Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdays & events"
           }
         }
       }
     },
-    "Heute Abend rausstellen!": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Put it out tonight!"
+    "Geburtstage aus deinen Kontakten zeigt iOS schon im Kalender „Geburtstage“. Mit „Nur von Hand angelegte“ wird nichts doppelt." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS already shows birthdays from your contacts in the “Birthdays” calendar. With “Only added by hand” nothing appears twice."
           }
         }
       }
     },
-    "Heute wird abgeholt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collection today"
+    "Geburtstage mit Alter, runden Geburtstagen und Geschenkideen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthdays with age, milestones and gift ideas"
           }
         }
       }
     },
-    "Hinweis": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Note"
+    "Geplante Erinnerungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled reminders"
           }
         }
       }
     },
-    "Hochzeitstag, TÜV, Rauchmelder – alles, was regelmäßig wiederkommt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Anniversary, car inspection, smoke detectors – anything that comes around regularly."
+    "Geschenkideen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gift ideas"
           }
         }
       }
     },
-    "ICS importieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import ICS"
+    "Gespeicherte Einzeltermine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stored single dates"
           }
         }
       }
     },
-    "ICS-Datei importieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import ICS file"
+    "Glückwunsch per Nachricht senden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send greetings by message"
           }
         }
       }
     },
-    "ICS-Link verwenden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use ICS link"
+    "Google-Kalender erscheinen in der Auswahl, sobald dein Google-Konto in den iOS-Einstellungen unter Apps → Kalender → Kalender-Accounts eingerichtet ist." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google calendars show up here once your Google account is set up in iOS Settings under Apps → Calendar → Calendar Accounts."
           }
         }
       }
+    },
+    "heute" : {
+
     },
-    "Idee hinzufügen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add idea"
+    "Heute" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
           }
         }
       }
     },
-    "Ignorieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ignore"
+    "HEUTE" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY"
           }
         }
       }
     },
-    "Importiere sie aus deinen Kontakten oder lege sie von Hand an.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import them from your contacts or add them manually."
+    "Heute Abend rausstellen" : {
+
+    },
+    "Heute Abend rausstellen!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Put it out tonight!"
           }
         }
       }
     },
-    "Importieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import"
+    "Heute wird abgeholt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection today"
           }
         }
       }
     },
-    "Importieren (%lld)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import (%lld)"
+    "Hinweis" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
           }
         }
       }
     },
-    "In %lld Tagen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "In %lld days"
+    "Hochzeitstag, TÜV, Rauchmelder – alles, was regelmäßig wiederkommt." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anniversary, car inspection, smoke detectors – anything that comes around regularly."
           }
         }
       }
     },
-    "In Apple-Kalender eintragen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add to Apple Calendar"
+    "iCloud" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud"
           }
         }
       }
     },
-    "In den Einstellungen erlauben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Allow in Settings"
+    "ICS importieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import ICS"
           }
         }
       }
     },
-    "In den freigegebenen Kontakten ist kein Geburtstag eingetragen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "None of the shared contacts has a birthday."
+    "ICS-Datei importieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import ICS file"
           }
         }
       }
     },
-    "Jede Woche": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Every week"
+    "ICS-Link verwenden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use ICS link"
           }
         }
       }
     },
-    "Jetzt aktualisieren": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Refresh now"
+    "Idee hinzufügen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add idea"
           }
         }
       }
     },
-    "Jetzt eintragen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add now"
+    "Ignorieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ignore"
           }
         }
       }
     },
-    "Kalender": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendar"
+    "Importiere sie aus deinen Kontakten oder lege sie von Hand an." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import them from your contacts or add them manually."
           }
         }
       }
     },
-    "Kalender wählen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choose calendar"
+    "Importieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import"
           }
         }
       }
     },
-    "Kalender-Abgleich": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendar sync"
+    "Importieren (%lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import (%lld)"
           }
         }
       }
     },
-    "Kalender-App": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendar app"
+    "In %lld Tagen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In %lld days"
           }
         }
       }
     },
-    "Kalender-App: iCloud, Google oder Outlook, automatisch aktuell": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendar app: iCloud, Google or Outlook, kept up to date automatically"
+    "In Apple-Kalender eintragen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to Apple Calendar"
           }
         }
       }
     },
-    "Kein Entsorger gefunden. Versuche den Landkreis oder nutze unten einen ICS-Link.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No provider found. Try your district or use an ICS link below."
+    "In den Einstellungen erlauben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow in Settings"
           }
         }
       }
     },
-    "Kein fester Rhythmus": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No fixed schedule"
+    "In den freigegebenen Kontakten ist kein Geburtstag eingetragen." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None of the shared contacts has a birthday."
           }
         }
       }
     },
-    "Keine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "None"
+    "Jede Woche" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every week"
           }
         }
       }
     },
-    "Keine Abholung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No collection"
+    "Jetzt aktualisieren" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh now"
           }
         }
       }
     },
-    "Keine Abholung geplant": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No collection scheduled"
+    "Jetzt eintragen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add now"
           }
         }
       }
     },
-    "Keine Abholungen in den nächsten 60 Tagen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No collections in the next 60 days."
+    "Kalender" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar"
           }
         }
       }
     },
-    "Keine Geburtstage in den nächsten Wochen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No birthdays in the coming weeks"
+    "Kalender wählen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose calendar"
           }
         }
       }
     },
-    "Keine Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No dates"
+    "Kalender-Abgleich" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar sync"
           }
         }
       }
     },
-    "Keine Termine in den nächsten 6 Monaten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No dates in the next 6 months."
+    "Kalender-App" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar app"
           }
         }
       }
     },
-    "Kontakt suchen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Search contacts"
+    "Kalender-App: iCloud, Google oder Outlook, automatisch aktuell" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar app: iCloud, Google or Outlook, kept up to date automatically"
           }
         }
       }
     },
-    "Kontakte werden gelesen …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reading contacts …"
+    "Kein Entsorger gefunden. Versuche den Landkreis oder nutze unten einen ICS-Link." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No provider found. Try your district or use an ICS link below."
           }
         }
       }
     },
-    "Kontaktzugriff ist ausgeschaltet.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contacts access is turned off."
+    "Kein fester Rhythmus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No fixed schedule"
           }
         }
       }
     },
-    "Lade …": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Loading …"
+    "Keine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
           }
         }
       }
     },
-    "Landkreis, Stadt oder Entsorger": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "District, city or provider"
+    "Keine Abholung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No collection"
           }
         }
       }
     },
-    "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add a location under “Waste” – dates arrive automatically."
+    "Keine Abholung geplant" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No collection scheduled"
           }
         }
       }
     },
-    "Letzter Abgleich": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Last sync"
+    "Keine Abholungen in den nächsten 60 Tagen." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No collections in the next 60 days."
           }
         }
       }
     },
-    "Live-Aktivität am Vorabend": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity the evening before"
+    "Keine Geburtstage in den nächsten Wochen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No birthdays in the coming weeks"
           }
         }
       }
     },
-    "Los geht’s": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Let’s go"
+    "Keine Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No dates"
           }
         }
       }
     },
-    "Löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete"
+    "Keine Termine in den nächsten 6 Monaten." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No dates in the next 6 months."
           }
         }
       }
     },
-    "MORGEN": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TOMORROW"
+    "Kontakt suchen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search contacts"
           }
         }
       }
     },
-    "Markiert die nächste Abholung als erledigt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marks the next collection as done."
+    "Kontakte werden gelesen …" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading contacts …"
           }
         }
       }
     },
-    "Mehr": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "More"
+    "Kontaktzugriff ist ausgeschaltet." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacts access is turned off."
           }
         }
       }
     },
-    "Meinen Standort verwenden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use my location"
+    "Lade …" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading …"
           }
         }
       }
     },
-    "Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt\nund keine Torte vergessen wird.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with heart in Gifhorn – so no bin is left behind\nand no birthday cake is forgotten."
+    "Landkreis, Stadt oder Entsorger" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "District, city or provider"
           }
         }
       }
     },
-    "Mit ❤️ aus Gifhorn – gebaut von Thomas Kant.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with ❤️ in Gifhorn – built by Thomas Kant."
+    "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a location under “Waste” – dates arrive automatically."
           }
         }
       }
     },
-    "Mit ❤️ gebaut in Gifhorn": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Made with ❤️ in Gifhorn"
+    "Letzter Abgleich" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last sync"
           }
         }
       }
     },
-    "Mitteilungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications"
+    "Live-Aktivität am Vorabend" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity the evening before"
           }
         }
       }
     },
-    "Müll": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Waste"
+    "Los geht’s" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let’s go"
           }
         }
       }
     },
-    "Müll-Erinnerungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Waste reminders"
+    "Löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
           }
         }
       }
     },
-    "Müllabfuhr": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Waste collection"
+    "Markiert die nächste Abholung als erledigt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marks the next collection as done."
           }
         }
       }
     },
-    "Müllart hinzufügen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add waste type"
+    "Mehr" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More"
           }
         }
       }
     },
-    "Müllart löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete waste type"
+    "Meinen Standort verwenden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use my location"
           }
         }
       }
     },
-    "Müllarten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Waste types"
+    "Mit ❤️ aus Gifhorn – gebaut von Thomas Kant." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made with ❤️ in Gifhorn – built by Thomas Kant."
           }
         }
       }
     },
-    "Nach links wischen: verschieben oder ausfallen lassen (Feiertage).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Swipe left to move or cancel a date (holidays)."
+    "Mit ❤️ gebaut in Gifhorn" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made with ❤️ in Gifhorn"
           }
         }
       }
     },
-    "Name": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Name"
+    "Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt\nund keine Torte vergessen wird." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made with heart in Gifhorn – so no bin is left behind\nand no birthday cake is forgotten."
           }
         }
       }
     },
-    "Name (z. B. Zuhause)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Name (e.g. Home)"
+    "Mitteilungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
           }
         }
       }
+    },
+    "morgen" : {
+
     },
-    "Name des Standorts": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Location name"
+    "MORGEN" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOMORROW"
           }
         }
       }
     },
-    "Neu: %@ (%@)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New: %@ (%@)"
+    "Müll" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waste"
           }
         }
       }
     },
-    "Neue Müllart": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New waste type"
+    "Müll-Erinnerungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waste reminders"
           }
         }
       }
     },
-    "Neue und verschobene Termine landen nach jedem Abgleich von selbst in der Kalender-App. iOS gleicht den gewählten Kalender mit iCloud, Google oder Outlook ab, du musst nichts kopieren.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New and moved dates land in the Calendar app after every sync. iOS syncs the chosen calendar with iCloud, Google or Outlook – nothing to copy."
+    "Müllabfuhr" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waste collection"
           }
         }
       }
     },
-    "Neuer Geburtstag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New birthday"
+    "Müllart hinzufügen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add waste type"
           }
         }
       }
     },
-    "Neuer Standort": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New location"
+    "Müllart löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete waste type"
           }
         }
       }
     },
-    "Neuer Termin": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New event"
+    "Müllarten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waste types"
           }
         }
       }
     },
-    "Nichts gefunden.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nothing found."
+    "Nach links wischen: verschieben oder ausfallen lassen (Feiertage)." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe left to move or cancel a date (holidays)."
           }
         }
       }
     },
-    "Nichts geplant – freier Tag für die Tonne.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nothing planned – a day off for the bin."
+    "Nächste Abholung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next collection"
           }
         }
       }
     },
-    "Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Never miss the yellow bag again.\nNever forget a birthday again."
+    "NÄCHSTE ABHOLUNG" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT COLLECTION"
           }
         }
       }
     },
-    "Nie wieder den Gelben Sack verpassen.\\nNie wieder einen Geburtstag vergessen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Never miss a collection again.\\nNever forget a birthday again."
+    "Nächste Abholungen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming collections"
           }
         }
       }
     },
-    "Noch kein Standort": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No location yet"
+    "Nächste Geburtstage" : {
+
+    },
+    "Nächste Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming dates"
           }
         }
       }
     },
-    "Noch keine Geburtstage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No birthdays yet"
+    "Nächster Geburtstag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next birthday"
           }
         }
       }
     },
-    "Noch keine Müllarten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No waste types yet."
+    "Name" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
           }
         }
       }
     },
-    "Noch keine eigenen Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No custom events yet"
+    "Name (z. B. Zuhause)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name (e.g. Home)"
           }
         }
       }
     },
-    "Nochmal erinnern, falls nicht „Erledigt“": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remind again unless marked “Done”"
+    "Name des Standorts" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location name"
           }
         }
       }
     },
-    "Notizen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notes"
+    "Neu: %@ (%@)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New: %@ (%@)"
           }
         }
       }
     },
-    "Nur Einzeltermine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Single dates only"
+    "Neue Müllart" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New waste type"
           }
         }
       }
     },
-    "Nur am Geburtstag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "On the birthday only"
+    "Neue und verschobene Termine landen nach jedem Abgleich von selbst in der Kalender-App. iOS gleicht den gewählten Kalender mit iCloud, Google oder Outlook ab, du musst nichts kopieren." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New and moved dates land in the Calendar app after every sync. iOS syncs the chosen calendar with iCloud, Google or Outlook – nothing to copy."
           }
         }
       }
     },
-    "NÄCHSTE ABHOLUNG": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NEXT COLLECTION"
+    "Neuer Geburtstag" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New birthday"
           }
         }
       }
     },
-    "Nächste Abholung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next collection"
+    "Neuer Standort" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New location"
           }
         }
       }
     },
-    "Nächste Abholungen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Upcoming collections"
+    "Neuer Termin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New event"
           }
         }
       }
     },
-    "Nächste Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Upcoming dates"
+    "Nichts gefunden." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing found."
           }
         }
       }
     },
-    "OK": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
+    "Nichts geplant – freier Tag für die Tonne." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing planned – a day off for the bin."
           }
         }
       }
     },
-    "Oder in einen vorhandenen Kalender": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Or into an existing calendar"
+    "Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Never miss the yellow bag again.\nNever forget a birthday again."
           }
         }
       }
     },
-    "Ohne Entsorger starten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start without a provider"
+    "Nie wieder den Gelben Sack verpassen.\\nNie wieder einen Geburtstag vergessen." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Never miss a collection again.\\nNever forget a birthday again."
           }
         }
       }
     },
-    "Ohne Standort": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No location"
+    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takes back the “it’s out” mark for a collection day."
           }
         }
       }
     },
-    "Person": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Person"
+    "Noch kein Standort" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No location yet"
           }
         }
       }
     },
-    "Quelle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Source"
+    "Noch keine eigenen Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No custom events yet"
           }
         }
       }
     },
-    "Rhythmus": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Schedule"
+    "Noch keine Geburtstage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No birthdays yet"
           }
         }
       }
     },
-    "Sagt dir, wann die nächste Müllabfuhr kommt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tells you when the next collection is."
+    "Noch keine Müllarten." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No waste types yet."
           }
         }
       }
     },
-    "Sichern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
+    "Nochmal erinnern, falls nicht „Erledigt“" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind again unless marked “Done”"
           }
         }
       }
     },
-    "Standort": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Location"
+    "Notizen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes"
           }
         }
       }
     },
-    "Standort anlegen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create location"
+    "Nur am Geburtstag" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the birthday only"
           }
         }
       }
     },
-    "Standort erlauben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Allow location"
+    "Nur Einzeltermine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Single dates only"
           }
         }
       }
     },
-    "Standort löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete location"
+    "Oder in einen vorhandenen Kalender" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Or into an existing calendar"
           }
         }
       }
     },
-    "Standort manuell anlegen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create location manually"
+    "Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Tonne & Torte on your iPhone and your dates will appear here."
           }
         }
       }
     },
-    "Standort mit Entsorger anlegen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create location with provider"
+    "Ohne Entsorger starten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start without a provider"
           }
         }
       }
     },
-    "Standort und alle Müllarten löschen?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete location and all its waste types?"
+    "Ohne Standort" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No location"
           }
         }
       }
     },
-    "Steht draußen 👍": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "It's out 👍"
+    "OK" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
     },
-    "Suchen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Search"
+    "Person" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Person"
           }
         }
       }
     },
-    "Telefon (für Glückwunsch per Nachricht)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phone (for greetings by message)"
+    "Quelle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
           }
         }
       }
     },
-    "Termin": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Event"
+    "Rhythmus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
           }
         }
       }
     },
-    "Termin bearbeiten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Edit event"
+    "Rückgängig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
           }
         }
       }
     },
-    "Termin löschen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete event"
+    "Sagt dir, wann die nächste Müllabfuhr kommt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tells you when the next collection is."
           }
         }
       }
+    },
+    "Sagt dir, wer als Nächstes Geburtstag hat." : {
+
     },
-    "Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dates"
+    "schon drin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "already added"
           }
         }
       }
     },
-    "Termine in iCloud, Google oder Outlook eintragen und automatisch aktuell halten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add dates to iCloud, Google or Outlook and keep them up to date automatically."
+    "Sichern" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
           }
         }
       }
     },
-    "Termine kommen aus dem Abfuhrkalender des Standorts („%@“).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dates come from the location's collection calendar (“%@”)."
+    "Standort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location"
           }
         }
       }
     },
-    "Termine kommen direkt von den Portalen der Entsorger (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). Angaben ohne Gewähr. Katalog mit %lld Entsorgern.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dates come directly from the providers' portals (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). No guarantee. Catalog with %lld providers."
+    "Standort anlegen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create location"
           }
         }
       }
     },
-    "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dates come straight from the providers’ portals: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender plus BSR Berlin, Cologne, Leipzig and Hannover region. The catalog knows %lld providers. No guarantee – if in doubt, your provider’s calendar applies."
+    "Standort erlauben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow location"
           }
         }
       }
     },
-    "Termine wurden verschoben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dates have changed"
+    "Standort löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete location"
           }
         }
       }
     },
-    "Testmitteilung senden": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send test notification"
+    "Standort manuell anlegen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create location manually"
           }
         }
       }
     },
-    "Titel": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Title"
+    "Standort mit Entsorger anlegen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create location with provider"
           }
         }
       }
     },
-    "Tonne & Torte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte"
+    "Standort und alle Müllarten löschen?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete location and all its waste types?"
           }
         }
       }
     },
-    "Tonne & Torte ist ein Hobbyprojekt aus Gifhorn. Entstanden, weil der Gelbe Sack einmal zu oft stehen geblieben ist und Geburtstage nicht im Kalender standen. Die App ist für mich und meine Familie gedacht und wird nebenbei weiterentwickelt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tonne & Torte is a hobby project from Gifhorn. It started because the yellow bag was left behind once too often and birthdays weren’t in the calendar. The app is made for me and my family and keeps growing on the side."
+    "Steht draußen 👍" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's out 👍"
           }
         }
       }
     },
-    "Tonne steht draußen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bin is out"
+    "Suchen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
           }
         }
       }
     },
-    "Treffer (%lld)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Results (%lld)"
+    "Tag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
           }
         }
       }
     },
-    "Verbindung trennen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Disconnect"
+    "Telefon (für Glückwunsch per Nachricht)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone (for greetings by message)"
           }
         }
       }
     },
-    "Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Connected locations sync their dates automatically every week. If the provider moves a date, you get a notification."
+    "Termin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Event"
           }
         }
       }
     },
-    "Verschieben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Move"
+    "Termin bearbeiten" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit event"
           }
         }
       }
     },
-    "Version": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Version"
+    "Termin löschen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete event"
           }
         }
       }
     },
-    "Version %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Version %@"
+    "Termine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates"
           }
         }
       }
     },
-    "Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Many waste portals offer a “subscribe to calendar” or “iCal export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
+    "Termine in iCloud, Google oder Outlook eintragen und automatisch aktuell halten." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add dates to iCloud, Google or Outlook and keep them up to date automatically."
           }
         }
       }
     },
-    "Von Hand anlegen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add manually"
+    "Termine kommen aus dem Abfuhrkalender des Standorts („%@“)." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates come from the location's collection calendar (“%@”)."
           }
         }
       }
     },
-    "Vorher": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Before"
+    "Termine kommen direkt von den Portalen der Entsorger (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). Angaben ohne Gewähr. Katalog mit %lld Entsorgern." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates come directly from the providers' portals (AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App). No guarantee. Catalog with %lld providers."
           }
         }
       }
     },
-    "Vorlage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Template"
+    "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates come straight from the providers’ portals: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender plus BSR Berlin, Cologne, Leipzig and Hannover region. The catalog knows %lld providers. No guarantee – if in doubt, your provider’s calendar applies."
           }
         }
       }
     },
-    "Vorschläge": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suggestions"
+    "Termine wurden verschoben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates have changed"
           }
         }
       }
     },
-    "Vorschläge für %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suggestions for %@"
+    "Testmitteilung senden" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send test notification"
           }
         }
       }
     },
-    "Was die App kann": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What the app does"
+    "Titel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
           }
         }
       }
     },
-    "Was eintragen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What to add"
+    "Tonne & Torte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte"
           }
         }
       }
     },
-    "Was soll weg? z. B. Pizzakarton": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What needs to go? e.g. pizza box"
+    "Tonne & Torte ist ein Hobbyprojekt aus Gifhorn. Entstanden, weil der Gelbe Sack einmal zu oft stehen geblieben ist und Geburtstage nicht im Kalender standen. Die App ist für mich und meine Familie gedacht und wird nebenbei weiterentwickelt." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte is a hobby project from Gifhorn. It started because the yellow bag was left behind once too often and birthdays weren’t in the calendar. The app is made for me and my family and keeps growing on the side."
           }
         }
       }
     },
-    "Weitere Kontakte freigeben": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Share more contacts"
+    "Tonne ist wieder drin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bin is back in"
           }
         }
       }
     },
-    "Welche Tonne muss raus?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Which bin goes out?"
+    "Tonne steht draußen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bin is out"
           }
         }
       }
     },
-    "Welche Tonne muss raus? Mit „Erledigt“-Knopf.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Which bin goes out? With a “Done” button."
+    "Treffer (%lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results (%lld)"
           }
         }
       }
     },
-    "Welche Tonnen hast du?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Which bins do you have?"
+    "Über" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
           }
         }
       }
     },
-    "Widgets, Sperrbildschirm, Live-Aktivität, Apple Watch und Siri": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Widgets, Lock Screen, Live Activity, Apple Watch and Siri"
+    "Über Tonne & Torte" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Tonne & Torte"
           }
         }
       }
     },
-    "Wiederherstellen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restore"
+    "Übernehmen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
           }
         }
       }
     },
-    "Wiederholung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Repeat"
+    "Übersicht" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overview"
           }
         }
       }
     },
-    "Wiederkehrend": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recurring"
+    "Verbindung trennen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnect"
           }
         }
       }
     },
-    "Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Really delete all locations, waste types, birthdays and events?"
+    "Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected locations sync their dates automatically every week. If the provider moves a date, you get a notification."
           }
         }
       }
     },
-    "Woher die Daten kommen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Where the data comes from"
+    "Verschieben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move"
           }
         }
       }
     },
-    "Zeigt die nächste Abholung – wahlweise für einen Standort.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shows the next collection – optionally for one location."
+    "Version" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
           }
         }
       }
     },
-    "Zeitraum": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Period"
+    "Version %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@"
           }
         }
       }
     },
-    "Ziel": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Target"
+    "Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Many waste portals offer a “subscribe to calendar” or “iCal export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
           }
         }
       }
     },
-    "Zuordnung": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mapping"
+    "Von Hand anlegen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add manually"
           }
         }
       }
     },
-    "Rückgängig": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Undo"
+    "Vorher" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before"
           }
         }
       }
     },
-    "Zusätzlich": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Additionally"
+    "Vorlage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Template"
           }
         }
       }
     },
-    "davon bestätigt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "confirmed"
+    "Vorschläge" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions"
           }
         }
       }
     },
-    "iCloud": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "iCloud"
+    "Vorschläge für %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions for %@"
           }
         }
       }
     },
-    "schon drin": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "already added"
+    "Was die App kann" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What the app does"
           }
         }
       }
     },
-    "· %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "· %@"
+    "Was eintragen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What to add"
           }
         }
       }
     },
-    "Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open Tonne & Torte on your iPhone and your dates will appear here."
+    "Was soll weg? z. B. Pizzakarton" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What needs to go? e.g. pizza box"
           }
         }
       }
     },
-    "Über": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About"
+    "Weitere Kontakte freigeben" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share more contacts"
           }
         }
       }
     },
-    "Über Tonne & Torte": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About Tonne & Torte"
+    "Welche Tonne muss raus?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which bin goes out?"
           }
         }
       }
     },
-    "Übernehmen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apply"
+    "Welche Tonne muss raus? Mit „Erledigt“-Knopf." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which bin goes out? With a “Done” button."
           }
         }
       }
     },
-    "Übersicht": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Overview"
+    "Welche Tonnen hast du?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which bins do you have?"
           }
         }
       }
     },
-    "„%@“ wirklich löschen?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Really delete “%@”?"
+    "Wer hat als Nächstes Geburtstag? Mit Alter und Countdown." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who has a birthday next? With age and countdown."
           }
         }
       }
     },
-    "✓ steht draußen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "✓ it's out"
+    "Widgets, Sperrbildschirm, Live-Aktivität, Apple Watch und Siri" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widgets, Lock Screen, Live Activity, Apple Watch and Siri"
           }
         }
       }
     },
-    "🎁 %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎁 %@"
+    "Wiederherstellen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore"
           }
         }
       }
     },
-    "🎂 GEBURTSTAGE": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎂 BIRTHDAYS"
+    "Wiederholung" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat"
           }
         }
       }
     },
-    "🎉 %lld": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 %lld"
+    "Wiederkehrend" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring"
           }
         }
       }
     },
-    "Nächster Geburtstag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next birthday"
+    "Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Really delete all locations, waste types, birthdays and events?"
           }
         }
       }
     },
-    "Wer hat als Nächstes Geburtstag? Mit Alter und Countdown.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Who has a birthday next? With age and countdown."
+    "Woher die Daten kommen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where the data comes from"
           }
         }
       }
     },
-    "Erledigt zurücknehmen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Undo done"
+    "Zeigt die nächste Abholung – wahlweise für einen Standort." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the next collection – optionally for one location."
           }
         }
       }
     },
-    "Tonne ist wieder drin": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bin is back in"
+    "Zeitraum" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period"
           }
         }
       }
     },
-    "Tag": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day"
+    "Ziel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target"
           }
         }
       }
     },
-    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Takes back the “it’s out” mark for a collection day."
+    "Zuordnung" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapping"
           }
         }
       }
     },
-    "Bestätigt, dass die geleerten Tonnen wieder hereingeholt sind.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Confirms that the emptied bins have been brought back in."
+    "Zusätzlich" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Additionally"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

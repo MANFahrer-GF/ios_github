@@ -124,7 +124,7 @@ struct SourceWizardView: View {
                 }
                 if let message = region.errorMessage { Text(message).font(.caption).foregroundStyle(.secondary) }
                 Button { showCoverage = true } label: {
-                    Label(L10n.t("Welche Landkreise fehlen noch?", "Which districts are missing?"), systemImage: "map")
+                    Label(L10n.t("Geht mein Ort?", "Is my town covered?"), systemImage: "map")
                 }
             }
             if let uncovered { uncoveredSection(uncovered) }
