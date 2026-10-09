@@ -25,7 +25,9 @@ for line in loc.split('\n'):
             if k not in kr: print('UNBEKANNT LOKAL',x)
             lk.setdefault(k,set()).add(g)
 gems={}
-for r in rows: gems.setdefault(r['krs_name'],set()).add(r['gem_name_short'])
+# Gemeindefreie Gebiete (meist unbewohnte Forste) zählen wie in der App nicht mit
+for r in rows:
+    if r['gem_type']!='Gemeindefreies Gebiet': gems.setdefault(r['krs_name'],set()).add(r['gem_name_short'])
 full=[k for k in missing if k in lk and gems[k]<=lk[k]]
 missing=[k for k in missing if k not in full]
 print('voll über Gemeinde-Einträge:', full, '-> fehlend jetzt', len(missing))

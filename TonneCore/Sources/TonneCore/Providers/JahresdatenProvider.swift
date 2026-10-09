@@ -66,13 +66,21 @@ public struct JahresdatenProvider: WasteProvider {
         return pickups
     }
 
+    /// „Stadt Ansbach, Adlerstraße“ – bei einstufiger Auswahl fehlt sonst der Ort; zweistufig („Bürgel, Markt“) wie üblich.
+    public func label(for selections: [SelectionOption]) -> String {
+        guard let data else { return serviceKey }
+        let titles = selections.map(\.title)
+        if data.areas.count == 1 || titles.isEmpty { return data.title }
+        if selections.first?.id.hasPrefix(Self.groupPrefix) == true { return titles.joined(separator: ", ") }
+        return ([data.title] + titles).joined(separator: ", ")
+    }
+
     public var notice: String? {
         guard let data else { return nil }
-        let host = URL(string: data.source)?.host ?? data.source
         let stand = Days.parse(data.stand).map { $0.formatted(.dateTime.day().month(.twoDigits).year()) } ?? data.stand
         let years = data.years.map(String.init).joined(separator: "/")
-        var text = L10n.t("Termine aus dem Abfallkalender \(years) von \(host) (Stand \(stand)). Kurzfristige Änderungen veröffentlicht nur der Entsorger.",
-                          "Dates from the \(years) waste calendar of \(host) (as of \(stand)). Short-notice changes are published only by the operator.")
+        var text = L10n.t("Termine aus dem PDF-Abfallkalender \(years) (\(data.title), Stand \(stand)). Kurzfristige Änderungen veröffentlicht nur der Entsorger.",
+                          "Dates from the \(years) PDF waste calendar (\(data.title), as of \(stand)). Short-notice changes are published only by the operator.")
         if let extra = data.notice { text += " " + extra }
         return text
     }

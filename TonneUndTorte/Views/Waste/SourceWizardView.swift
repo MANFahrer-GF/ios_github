@@ -52,7 +52,7 @@ struct SourceWizardView: View {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                if stage != .done { ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } } }
                 if stage == .steps, !selections.isEmpty {
                     ToolbarItem(placement: .topBarLeading) { Button { goBack() } label: { Image(systemName: "chevron.left") } }
                 }

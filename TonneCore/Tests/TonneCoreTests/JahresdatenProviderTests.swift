@@ -61,6 +61,13 @@ final class JahresdatenProviderTests: XCTestCase {
         XCTAssertEqual(villagePickups.map(\.name), ["Biomüll"])
     }
 
+    func testLabel() {
+        let grouped = provider(Self.grouped)
+        XCTAssertEqual(grouped.label(for: [SelectionOption(id: "gruppe:Bürgel", title: "Bürgel"), SelectionOption(id: "buergel_markt", title: "Markt")]), "Bürgel, Markt")
+        XCTAssertEqual(grouped.label(for: [SelectionOption(id: "albersdorf", title: "Albersdorf")]), "Testkreis, Albersdorf", "einstufig: Ort voran")
+        XCTAssertEqual(provider(Self.single).label(for: []), "Einzelort")
+    }
+
     func testSingleAreaNeedsNoSelection() async throws {
         let provider = provider(Self.single)
         let step = try await provider.nextStep(after: [])
@@ -71,7 +78,7 @@ final class JahresdatenProviderTests: XCTestCase {
 
     func testNotice() {
         let notice = try? XCTUnwrap(provider(Self.grouped).notice)
-        XCTAssertTrue(notice?.contains("www.example.de") == true, notice ?? "")
+        XCTAssertTrue(notice?.contains("Testkreis") == true, notice ?? "")
         XCTAssertTrue(notice?.contains("2026") == true)
         XCTAssertTrue(notice?.contains("Gelbe Tonne nicht enthalten.") == true)
         XCTAssertNil(ICSURLProvider(url: "https://example.org/a.ics").notice, "andere Anbieter ohne Hinweis")

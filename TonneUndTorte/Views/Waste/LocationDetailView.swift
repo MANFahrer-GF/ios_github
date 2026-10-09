@@ -101,7 +101,7 @@ struct LocationDetailView: View {
                     location.source = nil
                     try? context.save()
                 } label: {
-                    Label("Verbindung trennen", systemImage: "link.badge.plus")
+                    Label("Verbindung trennen", systemImage: "xmark.circle")
                 }
             }
             Button {

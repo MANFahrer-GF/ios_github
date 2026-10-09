@@ -114,10 +114,15 @@ final class CoverageTests: XCTestCase {
 
     func testMunicipalityEntriesDoNotCoverWholeDistrict() {
         let byName = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
-        // Hochtaunus: nur Gemeinde-Kalender (Bad Homburg, Oberursel …), kein kreisweiter Entsorger
+        // Fehlt eine Gemeinde, ist der Kreis nur „teilweise“ dabei
+        let partial = DistrictCoverage(district: "Landkreis Test", state: "Test", entryIDs: [], localEntryIDs: ["a"],
+                                       localPlaces: ["A"], municipalityCount: 2, missingPlaces: ["B"])
+        XCTAssertFalse(partial.isCovered)
+        XCTAssertTrue(partial.isPartial)
+        // Hochtaunus: nur Gemeinde-Kalender (Bad Homburg, Oberursel …) – seit Okt. 2026 für alle 13 Gemeinden
         let hochtaunus = byName["Landkreis Hochtaunuskreis"]
-        XCTAssertEqual(hochtaunus?.isCovered, false)
-        XCTAssertEqual(hochtaunus?.isPartial, true)
+        XCTAssertEqual(hochtaunus?.entryIDs.isEmpty, true, "kein kreisweiter Entsorger")
+        XCTAssertEqual(hochtaunus?.isCovered, true)
         XCTAssertTrue(hochtaunus?.localPlaces.contains("Oberursel (Taunus)") == true)
         // Eine kreisfreie Stadt mit eigenem Gemeinde-Kalender gilt als abgedeckt
         XCTAssertEqual(byName["Kreisfreie Stadt Pirmasens"]?.isCovered, true)
@@ -129,20 +134,21 @@ final class CoverageTests: XCTestCase {
         XCTAssertTrue(titles.contains { $0.contains("Unterhaching") })
         XCTAssertFalse(titles.contains { $0.contains("Aschheim") || $0.contains("Planegg") })
         XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Unterhaching").isEmpty)
-        // Soltau (Heidekreis) ist seit Oktober 2026 angebunden; Öhningen (Landkreis Konstanz, nur PDF) noch nicht
+        // Seit Oktober 2026 angebunden: Soltau (Heidekreis), Öhningen (Landkreis Konstanz, PDF-Jahresdaten)
         XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Soltau").isEmpty)
-        XCTAssertFalse(ProviderCatalog.uncoveredMunicipalities(matching: "Öhningen").isEmpty)
-        XCTAssertEqual(ProviderCatalog.coverage.first { $0.district == "Landkreis Konstanz" }?.isPartial, true, "Müllmann bedient nicht alle Gemeinden")
+        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Öhningen").isEmpty)
+        // Konstanz: Müllmann, MZV Hegau, Gemeinde-Kalender und Jahresdaten zusammen – kein kreisweiter Eintrag
+        let konstanz = ProviderCatalog.coverage.first { $0.district == "Landkreis Konstanz" }
+        XCTAssertEqual(konstanz?.entryIDs.isEmpty, true, "Müllmann zählt nur für seine Gemeinden")
+        XCTAssertEqual(konstanz?.isCovered, true)
     }
 
     /// „Teilweise“ nennt die fehlenden Gemeinden; unbewohnte gemeindefreie Gebiete zählen nicht.
     func testMissingPlaces() {
         let byName = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
-        let konstanz = byName["Landkreis Konstanz"]
-        XCTAssertTrue(konstanz?.missingPlaces.contains("Öhningen") == true)
-        XCTAssertFalse(konstanz?.missingPlaces.contains("Konstanz") == true, "über Müllmann angebunden")
         let wmk = byName["Landkreis Werra-Meißner-Kreis"]
         XCTAssertFalse(wmk?.missingPlaces.contains("Gutsbezirk Kaufunger Wald") == true)
+        XCTAssertEqual(wmk?.isCovered, true, "der unbewohnte Gutsbezirk hält den Kreis nicht auf „teilweise“")
         XCTAssertEqual(wmk.map { $0.municipalityCount - $0.missingPlaces.count }, wmk?.localPlaces.filter { $0 != "Gutsbezirk Kaufunger Wald" }.count)
         for item in ProviderCatalog.coverage where item.isCovered && item.entryIDs.isEmpty {
             XCTAssertTrue(item.missingPlaces.isEmpty, item.district)

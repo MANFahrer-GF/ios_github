@@ -49,7 +49,9 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
             do {
                 let placemarks = try await CLGeocoder().reverseGeocodeLocation(location)
                 let place = placemarks.first
-                let terms = [place?.locality, place?.subAdministrativeArea, place?.administrativeArea].compactMap { $0 }
+                // Bundesland nur als Rückfall: „Bayern“ träfe sonst z. B. „Königsberg in Bayern“ (Haßberge) bei jedem bayerischen Ort
+                let local = [place?.locality, place?.subAdministrativeArea].compactMap { $0 }
+                let terms = local.isEmpty ? [place?.administrativeArea].compactMap { $0 } : local
                 self.placeName = terms.first
                 var found: [CatalogEntry] = []
                 for term in terms {
