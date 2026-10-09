@@ -36,6 +36,47 @@ struct BirthdayListView: View {
     @State private var showNew = false
     @State private var showImport = false
 
+    /// Nach Monat des nächsten Geburtstags; das Jahr steht nur dabei, wenn es nicht das laufende ist.
+    private var monthSections: [(title: String, entries: [(person: Person, next: Date, years: Int?)])] {
+        var result: [(title: String, entries: [(person: Person, next: Date, years: Int?)])] = []
+        let thisYear = Calendar.current.component(.year, from: Date())
+        for entry in sorted {
+            let year = Calendar.current.component(.year, from: entry.next)
+            let title = entry.next.formatted(.dateTime.month(.wide)) + (year == thisYear ? "" : " \(year)")
+            if result.last?.title == title { result[result.count - 1].entries.append(entry) } else { result.append((title, [entry])) }
+        }
+        return result
+    }
+
+    /// Oben: wer als Nächstes Geburtstag hat – im Stil der Übersicht.
+    private func nextBirthdayCard(day: Date, entries: [(person: Person, next: Date, years: Int?)]) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(L10n.t("NÄCHSTER GEBURTSTAG · ", "NEXT BIRTHDAY · ") + PickupWords.eyebrow(date: day)).font(KlarStyle.font(12, .heavy)).tracking(0.8).foregroundStyle(.pink)
+                Text(DateText.countdown(day)).font(KlarStyle.font(32, .black)).foregroundStyle(.primary)
+            }
+            ForEach(entries, id: \.person.id) { entry in
+                Button { editing = entry.person } label: {
+                    HStack(spacing: 14) {
+                        PersonAvatar(person: entry.person, initials: entry.person.initials, colorHex: entry.person.colorHex, size: 56)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(entry.person.name).font(KlarStyle.font(19, .heavy)).foregroundStyle(.primary)
+                            Text(([entry.years.flatMap { years in entry.person.knownYear.map { L10n.t("wird \(years) · Jahrgang \($0)", "turns \(years) · born \($0)") } }, entry.person.zodiacLabel] as [String?]).compactMap { $0 }.joined(separator: " · "))
+                                .font(KlarStyle.font(15, .bold)).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.85)
+                        }
+                        Spacer(minLength: 0)
+                        Text(entry.years.map { AnnualDate.isMilestone($0) } == true ? "🎉" : "🎂").font(.title2)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+    }
+
     private var sorted: [(person: Person, next: Date, years: Int?)] {
         people.compactMap { p in p.nextBirthday.map { (p, $0, p.annual.years(on: $0)) } }.sorted { $0.next < $1.next }
     }
@@ -82,23 +123,35 @@ struct BirthdayListView: View {
                     }
                 } else {
                     List {
-                        ForEach(sorted, id: \.person.id) { entry in
-                            Button { editing = entry.person } label: { BirthdayRow(person: entry.person, next: entry.next, years: entry.years) }.buttonStyle(.plain)
-                                .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                    if let url = NotificationManager.greetingURL(name: entry.person.name, phone: entry.person.phone) {
-                                        Button { openURL(url) } label: { Label(L10n.t("Gratulieren", "Send wishes"), systemImage: "message.fill") }.tint(.pink)
-                                    }
-                                    if let phone = entry.person.phone, case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
-                                        Button { openURL(url) } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }.tint(.green)
-                                    }
-                                }
+                        if let next = sorted.first?.next {
+                            Section { nextBirthdayCard(day: next, entries: sorted.filter { $0.next == next }) }
+                                .listRowInsets(EdgeInsets()).listRowBackground(Color.clear)
                         }
-                        .onDelete { offsets in
-                            offsets.forEach { context.delete(sorted[$0].person) }
-                            try? context.save()
-                            Task { await model.refreshAll() }
+                        // Nach Monaten gegliedert; Wischen: gratulieren, anrufen, löschen
+                        ForEach(monthSections, id: \.title) { section in
+                            Section {
+                                ForEach(section.entries, id: \.person.id) { entry in
+                                    Button { editing = entry.person } label: { BirthdayRow(person: entry.person, next: entry.next, years: entry.years) }.buttonStyle(.plain)
+                                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                            if let url = NotificationManager.greetingURL(name: entry.person.name, phone: entry.person.phone) {
+                                                Button { openURL(url) } label: { Label(L10n.t("Gratulieren", "Send wishes"), systemImage: "message.fill") }.tint(.pink)
+                                            }
+                                            if let phone = entry.person.phone, case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
+                                                Button { openURL(url) } label: { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }.tint(.green)
+                                            }
+                                        }
+                                }
+                                .onDelete { offsets in
+                                    offsets.forEach { context.delete(section.entries[$0].person) }
+                                    try? context.save()
+                                    Task { await model.refreshAll() }
+                                }
+                            } header: {
+                                Text(section.title).font(KlarStyle.font(13, .heavy)).tracking(0.6)
+                            }
                         }
                     }
+                    .listStyle(.insetGrouped)
                 }
             }
             .toolbar {
@@ -128,35 +181,51 @@ struct BirthdayRow: View {
     let person: Person
     let next: Date
     let years: Int?
-    private var isToday: Bool { Days.until(next) == 0 }
+    @Environment(\.colorScheme) private var scheme
+    private var daysLeft: Int { Days.until(next) }
+
     var body: some View {
-        HStack(spacing: 12) {
-            PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex)
+        HStack(spacing: 14) {
+            PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex, size: 48)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
-                    Text(person.name).font(.body.weight(.semibold))
-                    if let years, AnnualDate.isMilestone(years) { Text("🎉 \(years)").font(.caption.weight(.bold)).padding(.horizontal, 6).padding(.vertical, 2).background(Color.pink.opacity(0.15), in: Capsule()).foregroundStyle(.pink) }
+                    Text(person.name).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                    if !person.remindersEnabled { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.tertiary) }
                 }
-                Text(subtitle(next: next, years: years, isToday: isToday))
-                    .font(.caption).foregroundStyle(.secondary)
+                Text(detail).font(KlarStyle.font(14, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).minimumScaleFactor(0.85)
             }
-            Spacer()
-            Text(isToday ? "🎉" : DateText.countdown(next)).font(.subheadline.weight(.semibold)).foregroundStyle(isToday ? .pink : .primary)
-            if !person.remindersEnabled { Image(systemName: "bell.slash").font(.caption2).foregroundStyle(.tertiary) }
+            Spacer(minLength: 8)
+            countdown
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 6)
+        .contentShape(Rectangle())
     }
 
-    private func subtitle(next: Date, years: Int?, isToday: Bool) -> String {
-        var text = ""
-        if let years {
-            text = isToday ? L10n.t("wird heute \(years) · ", "turns \(years) today · ") : L10n.t("wird \(years) · ", "turns \(years) · ")
+    /// „Sa 24. Okt · wird 73 · Jahrgang 1953 · 🎁 2“
+    private var detail: String {
+        var parts = [DateText.short(next)]
+        if let years, let year = person.knownYear {
+            parts.append(L10n.t("wird \(years)", "turns \(years)") + (AnnualDate.isMilestone(years) ? " 🎉" : ""))
+            parts.append(L10n.t("Jahrgang \(year)", "born \(year)"))
         }
-        text += DateText.short(next)
-        if !person.giftIdeas.isEmpty {
-            text += " · 🎁 \(person.giftIdeas.count)"
+        parts.append(person.zodiacLabel)
+        if !person.giftIdeas.isEmpty { parts.append("🎁 \(person.giftIdeas.count)") }
+        return parts.joined(separator: " · ")
+    }
+
+    @ViewBuilder
+    private var countdown: some View {
+        switch daysLeft {
+        case 0:
+            Text(L10n.t("Heute 🎉", "Today 🎉")).font(KlarStyle.font(16, .heavy)).foregroundStyle(.pink)
+        case 1:
+            Text(L10n.t("Morgen", "Tomorrow")).font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+        default:
+            VStack(alignment: .trailing, spacing: -2) {
+                Text("\(daysLeft)").font(KlarStyle.font(22, .black)).foregroundStyle(KlarStyle.text(scheme))
+                Text(L10n.t("Tage", "days")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+            }
         }
-        return text
     }
 }
 

@@ -36,5 +36,7 @@ final class Person {
     var annual: AnnualDate { AnnualDate(day: day, month: month, year: knownYear) }
     var initials: String { NameText.initials(name) }
     var nextBirthday: Date? { annual.next() }
+    /// Sternzeichen mit farbigem Emoji (♎️) – das schlichte Textzeichen kennt die App-Schrift nicht, es erscheint dann winzig.
+    var zodiacLabel: String { annual.zodiac.replacingOccurrences(of: "\u{FE0E}", with: "\u{FE0F}") }
     var ageAtNext: Int? { nextBirthday.flatMap { annual.years(on: $0) } }
 }

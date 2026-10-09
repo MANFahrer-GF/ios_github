@@ -293,7 +293,7 @@ struct OverviewView: View {
                             event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title
                         } detail: {
                             // „Zeit zum Gratulieren“ nur am Geburtstag selbst; ohne bekanntes Alter sonst keine zweite Zeile
-                            event.kind == .birthday ? (ageText(event) ?? (Days.until(event.date) == 0 ? L10n.t("Zeit zum Gratulieren", "Time to celebrate") : nil)) : event.subtitle
+                            event.kind == .birthday ? birthdayDetail(event) : event.subtitle
                         } trailing: {
                             if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.title3) }
                         }
@@ -354,8 +354,8 @@ struct OverviewView: View {
                             }
                             Text(event.kind == .birthday ? (event.years.map { L10n.t("\(event.title) wird \($0)", "\(event.title) turns \($0)") } ?? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday")) : event.title)
                                 .font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
-                            if let year = birthYear(event) {
-                                Text(L10n.t("Jahrgang \(year)", "born \(year)")).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            if let detail = [birthYear(event).map { L10n.t("Jahrgang \($0)", "born \($0)") }, person(for: event)?.zodiacLabel].compactMap({ $0 }).joined(separator: " · ").nilIfEmpty {
+                                Text(detail).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                             }
                             if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.subheadline) }
                         }
@@ -379,9 +379,16 @@ struct OverviewView: View {
         event.years.map { Calendar.current.component(.year, from: event.date) - $0 }
     }
 
-    private func ageText(_ event: CalendarEvent) -> String? {
-        guard let years = event.years, let year = birthYear(event) else { return nil }
-        return L10n.t("wird \(years) · Jahrgang \(year)", "turns \(years) · born \(year)")
+    /// „wird 66 · Jahrgang 1960 · ♎︎ Waage“; „Zeit zum Gratulieren“ nur am Geburtstag selbst und ohne bekanntes Alter.
+    private func birthdayDetail(_ event: CalendarEvent) -> String? {
+        var parts: [String] = []
+        if let years = event.years, let year = birthYear(event) {
+            parts += [L10n.t("wird \(years)", "turns \(years)"), L10n.t("Jahrgang \(year)", "born \(year)")]
+        } else if Days.until(event.date) == 0 {
+            parts.append(L10n.t("Zeit zum Gratulieren", "Time to celebrate"))
+        }
+        if let zodiac = person(for: event)?.zodiacLabel { parts.append(zodiac) }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     private func doneButton(day: Date, done: Bool) -> some View {
@@ -423,4 +430,8 @@ struct OverviewView: View {
         }
         .card()
     }
+}
+
+private extension String {
+    var nilIfEmpty: String? { isEmpty ? nil : self }
 }
