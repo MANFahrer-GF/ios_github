@@ -23,8 +23,6 @@ struct OverviewView: View {
     @State private var refreshToken = 0
     /// Geburtstag, Termin oder Müllart, die gerade bearbeitet wird – ein einziges Sheet.
     @State private var editing: EventEditTarget?
-    /// Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
-    private let clock = Timer.publish(every: 300, on: .main, in: .common).autoconnect()
 
     private var days: [(day: Date, events: [CalendarEvent])] {
         _ = refreshToken
@@ -121,7 +119,14 @@ struct OverviewView: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.notificationName)) { _ in refreshToken += 1 }
             .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.broughtInNotification)) { _ in refreshToken += 1 }
-            .onReceive(clock) { _ in refreshToken += 1 }
+            // Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
+            // Schleife statt Timer-Publisher: der als gespeicherte Eigenschaft löst unter Xcode 27 Warnungen aus.
+            .task {
+                while !Task.isCancelled {
+                    try? await Task.sleep(for: .seconds(300))
+                    refreshToken += 1
+                }
+            }
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
             // Geburtstag oder Termin direkt hier öffnen – nicht in einen anderen Tab springen
             .eventEditorSheet($editing)
