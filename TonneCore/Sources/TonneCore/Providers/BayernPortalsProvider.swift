@@ -18,11 +18,14 @@ import FoundationNetworking
 /// - `amberg`: Stadt Amberg (Straßenverzeichnis als JSON, Termine aus der XLSX-Datei des Abfuhrgebiets)
 /// - `nuernberger_land`: Landkreis Nürnberger Land (Ort → Ortsteil → Straße → ggf. Hausnummer, ICS)
 /// - `rhoen_grabfeld`: Landkreis Rhön-Grabfeld (alle Termine als JSON, gefiltert nach Gemeinde/Ortsteil)
+/// - `landkreis_as`: Landkreis Amberg-Sulzbach (Gemeinde → ggf. Ortsteil oder Straße, ICS nach Formular-POST)
 public struct BayernPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsBayern
     public let serviceKey: String
     public var displayName: String { Self.titles[serviceKey] ?? kind.displayName }
     private let client: HTTPClient
+    /// Stichtag für Jahr/„heute“ (nil = jetzt); nur Tests setzen ihn, bisher nur `landkreis_as`.
+    var referenceDate: Date?
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service
@@ -47,6 +50,7 @@ public struct BayernPortalsProvider: WasteProvider {
         "amberg": "Abfallberatung Stadt Amberg",
         "nuernberger_land": "Abfallwirtschaft Nürnberger Land",
         "rhoen_grabfeld": "Abfallwirtschaft Landkreis Rhön-Grabfeld",
+        "landkreis_as": "Abfallwirtschaft Landkreis Amberg-Sulzbach",
     ]
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
@@ -65,6 +69,7 @@ public struct BayernPortalsProvider: WasteProvider {
         case "amberg": return try await ambergStep(selections)
         case "nuernberger_land": return try await nlStep(selections)
         case "rhoen_grabfeld": return try await rhoenStep(selections)
+        case "landkreis_as": return try await asStep(selections)
         default: throw Self.unknown
         }
     }
@@ -87,6 +92,7 @@ public struct BayernPortalsProvider: WasteProvider {
         case "amberg": result = try await ambergPickups(selections, calendar: calendar)
         case "nuernberger_land": result = try await nlPickups(selections, calendar: calendar)
         case "rhoen_grabfeld": result = try await rhoenPickups(selections, calendar: calendar)
+        case "landkreis_as": result = try await asPickups(selections, calendar: calendar)
         default: throw Self.unknown
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -110,6 +116,9 @@ public struct BayernPortalsProvider: WasteProvider {
         case "schweinfurt": return "Schweinfurt, " + titles.joined(separator: ", ")
         case "hof_stadt": return "Hof, " + titles.joined(separator: ", ")
         case "amberg": return "Amberg, " + titles.joined(separator: ", ")
+        case "landkreis_as":
+            // Bei der Straßensuche ist die zweite Auswahl nur der Suchtext.
+            return (selections.count > 2 ? [selections[0], selections[2]] : selections).map(\.title).filter { !$0.isEmpty }.joined(separator: ", ")
         default: return titles.joined(separator: ", ")
         }
     }
@@ -870,6 +879,119 @@ extension BayernPortalsProvider {
             let comment = event.comment?.trimmingCharacters(in: .whitespaces) ?? ""
             return Pickup(date: date, name: renamed[name] ?? name, note: comment.isEmpty ? nil : comment)
         }
+    }
+}
+
+// MARK: - Landkreis Amberg-Sulzbach (landkreis-as.de/abfallwirtschaft)
+
+extension BayernPortalsProvider {
+    private static let asBase = "https://landkreis-as.de/abfallwirtschaft/"
+
+    /// `<option value="21">Ammerthal<option value="5">Auerbach…` – die Optionen haben kein schließendes Tag.
+    static func asOptions(_ name: String, in html: String) -> [SelectionOption] {
+        guard let select = HTMLText.firstMatch(#"<select[^>]*name="\#(name)"[^>]*>([\s\S]*?)</select>"#, in: html, group: 1) else { return [] }
+        return HTMLText.matches(#"<option value="([^"]+)"[^>]*>([^<]*)"#, in: select).compactMap {
+            let title = HTMLText.decodeEntities($0[1]).trimmingCharacters(in: .whitespacesAndNewlines)
+            return $0[0] == "x" || title.isEmpty ? nil : SelectionOption(id: HTMLText.decodeEntities($0[0]), title: title)
+        }
+    }
+
+    /// Formular „Kalenderübersicht anzeigen“: Ziel und versteckte Felder `muell_*`; nil, solange die Adresse unvollständig ist.
+    static func asCalendarForm(_ html: String) -> (action: String, fields: [(String, String)])? {
+        guard let match = HTMLText.matches(#"<form action="(abfuhrtermine_kalender\.php[^"]*)"[^>]*>([\s\S]*?)</form>"#, in: html).first else { return nil }
+        let fields = HTMLText.hiddenInputs(in: match[1]).map { ($0.name, $0.value) }
+        guard !fields.isEmpty else { return nil }
+        return (HTMLText.decodeEntities(match[0]), fields + [("submit_kalender", "Kalenderübersicht anzeigen")])
+    }
+
+    /// Link auf die ICS-Datei, die erst durch das Absenden des Kalender-Formulars entsteht.
+    static func asICSLink(_ html: String) -> String? {
+        HTMLText.firstMatch(#"href="(abfuhrtermine_kalender_\d{4}_[^"]+\.ics)""#, in: html, group: 1)
+    }
+
+    /// „Restmüll  ! vorgefahren ! | Abfuhrkalender - Landkreis Amberg-Sulzbach“ → „Restmüll“ mit Notiz „vorgefahren“.
+    static func asSplit(_ summary: String) -> [(name: String, note: String?)] {
+        var name = summary.components(separatedBy: "|")[0]
+        var note: String?
+        if let range = name.range(of: #"!\s*[^!]+?\s*!"#, options: .regularExpression) {
+            note = name[range].trimmingCharacters(in: CharacterSet(charactersIn: "! "))
+            name.removeSubrange(range)
+        }
+        return [(name.trimmingCharacters(in: .whitespaces), note)]
+    }
+
+    private static func asHasStreetField(_ html: String) -> Bool { html.contains(#"name="abhol_gde_str_suro_bez""#) }
+
+    private func asPost(_ path: String, _ fields: [(String, String)]) async throws -> String {
+        HTTPClient.text(from: try await client.postForm(Self.asBase + path, fields: fields))
+    }
+
+    private func asTownPage(_ town: String, year: Int) async throws -> String {
+        try await asPost("abfuhrtermine.php?jahr=\(year)", [("abhol_gde", town), ("submit_gde", "")])
+    }
+
+    private func asStep(_ s: [SelectionOption]) async throws -> SelectionStep? {
+        let year = Calendar.current.component(.year, from: referenceDate ?? Date())
+        switch s.count {
+        case 0:
+            let html = try await client.string(Self.asBase + "abfuhrtermine.php")
+            return try Self.list(L10n.t("Gemeinde", "Municipality"), Self.asOptions("abhol_gde", in: html))
+        case 1:
+            // Auerbach, Kümmersbruck, Vilseck: Ortsteil; Sulzbach-Rosenberg: Straße; sonst gleich der Kalender.
+            let html = try await asTownPage(s[0].id, year: year)
+            let districts = Self.asOptions("abhol_gde_ot", in: html)
+            if !districts.isEmpty { return try Self.list(SelectionStep.districtTitle, districts) }
+            if Self.asHasStreetField(html) {
+                return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("z. B. Adam-Stegerwald-Straße", "e.g. Adam-Stegerwald-Straße"))
+            }
+            return nil
+        case 2:
+            let html = try await asTownPage(s[0].id, year: year)
+            guard Self.asHasStreetField(html) else { return nil }
+            let text = s[1].title.trimmingCharacters(in: .whitespaces)
+            guard text.count >= 2 else {
+                throw ProviderError.invalidSelection(L10n.t("Bitte mindestens zwei Buchstaben eingeben.", "Please enter at least two letters."))
+            }
+            // Die Suche findet nichts, sobald Bindestrich oder Leerzeichen im Begriff stehen:
+            // mit dem längsten Wort suchen und die übrigen Wörter selbst prüfen.
+            let words = text.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
+            let term = words.max { $0.count < $1.count } ?? text
+            let data = try await client.get(Self.asBase + "abfuhrtermine_ort_autocomplete.php?term=" + HTTPClient.query(term))
+            let found: [String] = (try? HTTPClient.decode(data)) ?? []
+            let streets = found.filter { street in
+                words.allSatisfy { street.range(of: $0, options: [.caseInsensitive, .diacriticInsensitive]) != nil }
+            }
+            guard !streets.isEmpty else {
+                throw ProviderError.invalidSelection(L10n.t("Keine passende Straße gefunden.", "No matching street found."))
+            }
+            return try Self.list(SelectionStep.streetTitle, streets.map { SelectionOption(id: $0, title: $0) })
+        default:
+            return nil
+        }
+    }
+
+    private func asPickups(_ s: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        var pickups = try await asYearPickups(s, year: year, calendar: calendar)
+        // Folgejahr nur, wenn das Portal es schon kennt (sonst leere Datei oder Fehler).
+        if let next = try? await asYearPickups(s, year: year + 1, calendar: calendar) { pickups += next }
+        return pickups
+    }
+
+    private func asYearPickups(_ s: [SelectionOption], year: Int, calendar: Calendar) async throws -> [Pickup] {
+        let town = s[0].id
+        var html = try await asTownPage(town, year: year)
+        if Self.asCalendarForm(html) == nil {
+            let street = Self.asHasStreetField(html)
+            guard s.count > (street ? 2 : 1) else { throw ProviderError.selectAddressFirst }
+            html = try await asPost("abfuhrtermine.php?abhol_gde=\(HTTPClient.query(town))&jahr=\(year)", street
+                ? [("abhol_gde_str_suro_bez", s[2].id), ("abhol_gde", town), ("submit_str", "anzeigen")]
+                : [("abhol_gde_ot", s[1].id), ("abhol_gde", town), ("submit_ot", "anzeigen")])
+        }
+        guard let form = Self.asCalendarForm(html) else { throw ProviderError.noDataGeneric }
+        let result = try await asPost(form.action, form.fields)
+        guard let link = Self.asICSLink(result) else { throw ProviderError.noDataGeneric }
+        return Self.ics(try await client.string(Self.asBase + link), calendar: calendar, split: Self.asSplit)
     }
 }
 
