@@ -99,6 +99,20 @@ struct CoverageView: View {
 
     private static func count(_ value: Int, _ one: String, _ many: String) -> String { "\(value) \(value == 1 ? one : many)" }
 
+    /// Mail mit Ort und PDF-Link an den Entwickler; der Ort kommt bei der Jahrespflege über tools/pdfkalender dazu.
+    private var pdfMail: URL? {
+        let place = query.trimmingCharacters(in: .whitespaces)
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "thomas@kant.ovh"
+        components.queryItems = [
+            URLQueryItem(name: "subject", value: L10n.t("PDF-Abfallkalender", "PDF waste calendar") + (place.isEmpty ? "" : " – \(place)")),
+            URLQueryItem(name: "body", value: L10n.t("Ort / Landkreis: \(place)\nLink zum PDF-Abfallkalender (oder PDF anhängen):\n\n",
+                                                     "Town / district: \(place)\nLink to the PDF waste calendar (or attach the PDF):\n\n")),
+        ]
+        return components.url
+    }
+
     private var workaroundSection: some View {
         Section {
             Label(L10n.t("ICS-Link: Viele Abfallportale bieten „Kalender abonnieren“ oder „iCal-Export“. Den Link beim Anlegen eines Standorts unter „Entsorger nicht dabei?“ einfügen – er wird wöchentlich neu geladen.",
@@ -113,6 +127,14 @@ struct CoverageView: View {
             ShareLink(item: PickupCSVFile(text: PickupCSV.template(), fileName: L10n.t("Abfuhrtermine-Vorlage.csv", "Pickup-template.csv")),
                       preview: SharePreview(L10n.t("CSV-Vorlage", "CSV template"))) {
                 Label(L10n.t("CSV-Vorlage teilen", "Share CSV template"), systemImage: "square.and.arrow.up")
+            }
+            Label(L10n.t("Nur PDF? Schick uns den Abfallkalender deines Orts. Er wird geprüft und mit einem der nächsten Updates eingebaut.",
+                         "Only a PDF? Send us your town’s waste calendar. It will be checked and added in a future update."),
+                  systemImage: "doc.richtext")
+            if let pdfMail {
+                Link(destination: pdfMail) {
+                    Label(L10n.t("PDF-Kalender schicken", "Send PDF calendar"), systemImage: "envelope")
+                }
             }
         } header: {
             Text(L10n.t("So geht es trotzdem", "How to still get your dates"))

@@ -121,6 +121,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case portalsRP
     case portalsSuedwest
     case awmMuenchen
+    case jahresdaten
 
     public var displayName: String {
         switch self {
@@ -152,6 +153,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .portalsSachsen, .portalsMV, .portalsMitte, .portalsBayern, .portalsBrandenburg, .portalsNord, .portalsNRW, .portalsRP, .portalsSuedwest:
             return L10n.t("Portal des Entsorgers", "Operator portal")
         case .awmMuenchen: return "AWM München"
+        case .jahresdaten: return L10n.t("Abfallkalender (PDF)", "Waste calendar (PDF)")
         }
     }
 }
@@ -193,9 +195,14 @@ public protocol WasteProvider {
     /// Lesbare Bezeichnung der Adresse, z. B. „Gifhorn, Steinstraße 1“. Anbieter mit Zusatzschritten
     /// (Tonnengröße, Suchtext) liefern hier nur den Adressteil.
     func label(for selections: [SelectionOption]) -> String
+
+    /// Hinweis zur Herkunft der Termine, den die App beim Standort zeigt – z. B. „berechnet, Feiertage beachten“.
+    var notice: String? { get }
 }
 
 public extension WasteProvider {
+    var notice: String? { nil }
+
     /// Lesbare Bezeichnung einer Auswahl, z. B. „Gifhorn, Steinstraße 1“.
     func label(for selections: [SelectionOption]) -> String {
         let parts = selections.map(\.title).filter { !$0.isEmpty && $0.lowercased() != "alle hausnummern" && $0.lowercased() != "alle straßen" }
@@ -246,6 +253,7 @@ public enum ProviderFactory {
         case .portalsRP: return RheinlandPfalzPortalsProvider(service: serviceKey, client: client)
         case .portalsSuedwest: return SuedwestPortalsProvider(service: serviceKey, client: client)
         case .awmMuenchen: return AWMMuenchenProvider(service: serviceKey, client: client)
+        case .jahresdaten: return JahresdatenProvider(key: serviceKey)
         }
     }
 

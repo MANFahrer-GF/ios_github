@@ -87,6 +87,9 @@ struct LocationDetailView: View {
             if let status = location.lastSyncMessage {
                 Text(status).font(.footnote).foregroundStyle(.secondary)
             }
+            if let notice = location.source.flatMap({ ProviderFactory.make($0).notice }) {
+                Label(notice, systemImage: "info.circle").font(.footnote).foregroundStyle(.secondary)
+            }
             Button {
                 showWizard = true
             } label: {
