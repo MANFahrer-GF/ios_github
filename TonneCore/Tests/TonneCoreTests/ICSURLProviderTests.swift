@@ -35,6 +35,16 @@ final class ICSURLProviderTests: XCTestCase {
         XCTAssertTrue(WasteCategory.isIgnorableTitle("Wertstoffhof geöffnet (WH) – W1"), "Öffnungstage sind keine Abholung")
     }
 
+    /// Gespeicherte Müllarten aus der Zeit vor der Bereinigung finden ihre Termine wieder (keine doppelten Arten).
+    func testFormerTitle() {
+        XCTAssertTrue(ICSURLProvider.formerTitle("Abholung: Biomüll", matches: "Biomüll"))
+        XCTAssertTrue(ICSURLProvider.formerTitle("Abfalltermin (Restmüll)", matches: "Restmüll"))
+        XCTAssertTrue(ICSURLProvider.formerTitle("Abholung: Biomüll, Restmüll", matches: "Biomüll"), "Sammeltermin: erster Teil führt weiter")
+        XCTAssertFalse(ICSURLProvider.formerTitle("Abholung: Biomüll, Restmüll", matches: "Restmüll"), "zweiter Teil wird neue Müllart")
+        XCTAssertFalse(ICSURLProvider.formerTitle("Biomüll", matches: "Biomüll"), "unverändert – normale Zuordnung")
+        XCTAssertFalse(ICSURLProvider.formerTitle("Papier", matches: "Biomüll"))
+    }
+
     /// Steinbach: eine Datei für beide Bezirke – `#ohne=` lässt den anderen Bezirk und Großbehälter weg.
     func testExcludeMarker() async throws {
         ICSStub.body = """

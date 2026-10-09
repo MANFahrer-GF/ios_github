@@ -83,6 +83,13 @@ public struct ICSURLProvider: WasteProvider {
     /// Abfallart(en) aus einem Kalendertitel: „Abholung: Biomüll“ → „Biomüll“, „Abfalltermin (Restmüll)“ → „Restmüll“.
     /// Sammeltermine („Biomüll, Restmüll“, „Restmüll / Gelbe Tonne“) werden aufgeteilt, wenn jeder Teil eine andere
     /// Tonnenart ist – sonst ginge die Erinnerung an die zweite Tonne verloren.
+    /// Gehört ein früher gespeicherter Titel (vor der Bereinigung durch `names`) zu diesem Namen?
+    /// „Abholung: Biomüll“ → „Biomüll“; bei einem früheren Sammeltermin „Biomüll, Restmüll“ nur der erste Teil,
+    /// damit genau eine Müllart die Termine weiterführt und der zweite Teil eine neue bekommt.
+    public static func formerTitle(_ old: String, matches name: String) -> Bool {
+        old != name && names(old).first == name
+    }
+
     static func names(_ summary: String) -> [String] {
         var name = NameCleaner.clean(summary)
             .replacingOccurrences(of: #"^(Abholung|Abfuhr|Leerung)\s*:\s*"#, with: "", options: [.regularExpression, .caseInsensitive])

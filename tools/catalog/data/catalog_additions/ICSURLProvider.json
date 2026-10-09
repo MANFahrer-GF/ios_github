@@ -375,5 +375,18 @@
    "Landkreis Hochtaunuskreis"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://serviceportal.huellhorst.de/documents/d/guest/kalenderimport-abfuhrtermine-hullhorst-{%Y}#ohne=1.1 cbm",
+  "title": "Hüllhorst (Abfallkalender)",
+  "website": "https://serviceportal.huellhorst.de/",
+  "places": [
+   "Hüllhorst"
+  ],
+  "districts": [
+   "Kreis Minden-Lübbecke"
+  ],
+  "onlyDistricts": true
  }
 ]

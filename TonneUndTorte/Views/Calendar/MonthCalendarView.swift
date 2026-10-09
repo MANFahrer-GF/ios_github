@@ -73,7 +73,8 @@ struct MonthCalendarView: View {
     private var calendarGrid: some View {
         VStack(spacing: 6) {
             LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(weekdaySymbols, id: \.self) { Text($0).font(.caption2.weight(.semibold)).foregroundStyle(.secondary) }
+                // Kennung ist die Position: „M“, „D“ und „S“ kommen doppelt vor (Mo/Mi, Di/Do, Sa/So).
+                ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { Text($0.element).font(.caption2.weight(.semibold)).foregroundStyle(.secondary) }
             }
             LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(Array(gridDays.enumerated()), id: \.offset) { _, day in

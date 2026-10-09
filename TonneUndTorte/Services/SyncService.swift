@@ -47,6 +47,10 @@ enum SyncService {
             if let byName = existing.first(where: { $0.name.lowercased() == summary.lowercased() }) {
                 return Mapping(summary: summary, count: count, target: .existing(byName))
             }
+            // Titel, die der ICS-Anbieter seit Okt. 2026 bereinigt („Abholung: Biomüll“ → „Biomüll“): bisherige Müllart weiterführen
+            if let former = existing.first(where: { $0.sourceKey.map { ICSURLProvider.formerTitle($0, matches: summary) } ?? false }) {
+                return Mapping(summary: summary, count: count, target: .existing(former))
+            }
             return Mapping(summary: summary, count: count, target: .new(WasteCategory.classify(summary)))
         }
     }
@@ -74,6 +78,11 @@ enum SyncService {
                 context.insert(type)
                 type.location = location
                 target = type
+            }
+            if let old = target.sourceKey, ICSURLProvider.formerTitle(old, matches: mapping.summary) {
+                // Bereinigter Titel: Schlüssel nachziehen, Namen nur, wenn der Nutzer ihn nicht geändert hat
+                if target.name == old { target.name = mapping.summary }
+                target.sourceKey = mapping.summary
             }
             if target.sourceKey == nil { target.sourceKey = mapping.summary }
             let days = Set(items.map { Days.start(of: $0.date) })

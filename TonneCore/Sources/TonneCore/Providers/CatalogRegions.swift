@@ -931,6 +931,7 @@ Stadtkreis Ulm|Ulm
         "icsURL:https://schlitz.mein-abfallkalender.online:Schlitz (Mein-Abfallkalender)": ["Landkreis Vogelsbergkreis|Schlitz"],
         "icsURL:https://schotten.mein-abfallkalender.online:Schotten (Mein-Abfallkalender)": ["Landkreis Vogelsbergkreis|Schotten"],
         "icsURL:https://schwalmtal-hessen.mein-abfallkalender.online:Schwalmtal (Mein-Abfallkalender)": ["Landkreis Vogelsbergkreis|Schwalmtal"],
+        "icsURL:https://serviceportal.huellhorst.de/documents/d/guest/kalenderimport-abfuhrtermine-hullhorst-{%Y}#ohne=1.1 cbm:Hüllhorst (Abfallkalender)": ["Kreis Minden-Lübbecke|Hüllhorst"],
         "icsURL:https://st-ingbert.mein-abfallkalender.online:St Ingbert (Mein-Abfallkalender)": ["Landkreis Saarpfalz-Kreis|St. Ingbert"],
         "icsURL:https://st-ingbert.mein-abfallkalender.online:St. Ingbert (Mein-Abfallkalender)": ["Landkreis Saarpfalz-Kreis|St. Ingbert"],
         "icsURL:https://stadt-buedingen.mein-abfallkalender.online:Büdingen (Mein-Abfallkalender)": ["Landkreis Wetteraukreis|Büdingen"],
