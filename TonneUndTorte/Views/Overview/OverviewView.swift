@@ -285,7 +285,7 @@ struct OverviewView: View {
                     Button { open(event) } label: {
                         itemCard {
                             if event.kind == .birthday {
-                                InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
+                                PersonAvatar(person: person(for: event), initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
                             } else {
                                 SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: badge)
                             }
@@ -348,7 +348,7 @@ struct OverviewView: View {
                     Button { open(event) } label: {
                         HStack(spacing: 9) {
                             if event.kind == .birthday {
-                                InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 26)
+                                PersonAvatar(person: person(for: event), initials: NameText.initials(event.title), colorHex: event.colorHex, size: 26)
                             } else {
                                 SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 26)
                             }
@@ -368,6 +368,10 @@ struct OverviewView: View {
             Spacer(minLength: 0)
         }
         .padding(.vertical, 12)
+    }
+
+    private func person(for event: CalendarEvent) -> Person? {
+        event.personID.flatMap { id in people.first { $0.id == id } }
     }
 
     /// Geburtsjahr aus Alter und Geburtstag – nur wenn das Jahr bekannt ist.

@@ -18,6 +18,8 @@ final class Person {
     var contactIdentifier: String?
     var phone: String?
     var createdAt: Date = Date()
+    /// Eigenes Foto (ab 2.0.3), verkleinert; liegt außerhalb der Datenbank und geht als Asset zu iCloud.
+    @Attribute(.externalStorage) var photoData: Data?
 
     init(name: String, day: Int, month: Int, year: Int? = nil, colorHex: String = "#EC4899") {
         self.id = UUID()

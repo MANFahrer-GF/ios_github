@@ -77,3 +77,24 @@ enum ContactsImport {
         return Candidate(identifier: contact.identifier, name: name, day: day, month: month, year: year, phone: phone)
     }
 }
+
+/// Kontaktfotos für importierte Personen – nur lesen, wenn die Kontakte schon freigegeben sind, und im Speicher merken.
+@MainActor
+final class ContactPhotoCache {
+    static let shared = ContactPhotoCache()
+    private var images: [String: Data] = [:]
+    private var missing: Set<String> = []
+
+    func cached(_ identifier: String) -> Data? { images[identifier] }
+
+    func load(_ identifier: String) async -> Data? {
+        if let data = images[identifier] { return data }
+        guard !missing.contains(identifier), ContactsImport.access == .full || ContactsImport.access == .limited else { return nil }
+        let data = await Task.detached(priority: .utility) { () -> Data? in
+            let contact = try? CNContactStore().unifiedContact(withIdentifier: identifier, keysToFetch: [CNContactThumbnailImageDataKey as CNKeyDescriptor])
+            return contact?.thumbnailImageData
+        }.value
+        if let data { images[identifier] = data } else { missing.insert(identifier) }
+        return data
+    }
+}

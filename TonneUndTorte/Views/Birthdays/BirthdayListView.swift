@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 import ContactsUI
 import SwiftData
 import UniformTypeIdentifiers
@@ -130,7 +131,7 @@ struct BirthdayRow: View {
     private var isToday: Bool { Days.until(next) == 0 }
     var body: some View {
         HStack(spacing: 12) {
-            InitialsBadge(initials: person.initials, colorHex: person.colorHex)
+            PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
                     Text(person.name).font(.body.weight(.semibold))
@@ -176,12 +177,38 @@ struct BirthdayEditView: View {
     @State private var newGift = ""
     @State private var phone = ""
     @State private var showDeleteConfirm = false
+    @State private var photoData: Data?
+    @State private var photoItem: PhotosPickerItem?
 
     private let options: [(String, Int)] = [("Nur am Geburtstag", 0), ("1 Tag vorher", 1), ("2 Tage vorher", 2), ("3 Tage vorher", 3), ("1 Woche vorher", 7), ("2 Wochen vorher", 14)]
 
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    HStack(spacing: 14) {
+                        PersonAvatar(person: person?.photoData == nil ? person : nil, initials: NameText.initials(name.isEmpty ? "?" : name), colorHex: colorHex, size: 64)
+                            .overlay { if let photoData, let image = UIImage(data: photoData) { Image(uiImage: image).resizable().scaledToFill().frame(width: 64, height: 64).clipShape(Circle()) } }
+                        VStack(alignment: .leading, spacing: 6) {
+                            PhotosPicker(selection: $photoItem, matching: .images) {
+                                Label(photoData == nil ? L10n.t("Foto wählen", "Choose photo") : L10n.t("Anderes Foto", "Change photo"), systemImage: "photo")
+                            }
+                            if photoData != nil {
+                                Button(role: .destructive) { photoData = nil; photoItem = nil } label: { Label(L10n.t("Foto entfernen", "Remove photo"), systemImage: "trash") }
+                            } else if person?.contactIdentifier != nil {
+                                Text(L10n.t("Ohne eigenes Foto wird das Foto aus dem Kontakt gezeigt.", "Without a photo of its own, the contact photo is shown."))
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+                .onChange(of: photoItem) { _, item in
+                    guard let item else { return }
+                    Task {
+                        if let data = try? await item.loadTransferable(type: Data.self) { photoData = Self.downscaled(data) }
+                    }
+                }
                 Section("Person") {
                     TextField("Name", text: $name)
                     DatePicker("Geburtstag", selection: $date, in: ...Date(), displayedComponents: .date)
@@ -246,10 +273,21 @@ struct BirthdayEditView: View {
         NotificationManager.greetingURL(name: person.name, phone: person.phone)
     }
 
+    /// Fotos auf höchstens 600 Pixel verkleinern (JPEG) – reicht für die runden Bilder und hält iCloud klein.
+    static func downscaled(_ data: Data) -> Data? {
+        guard let image = UIImage(data: data) else { return nil }
+        let longest = max(image.size.width, image.size.height)
+        let scale = min(1, 600 / max(longest, 1))
+        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+        let format = UIGraphicsImageRendererFormat.default(); format.scale = 1
+        return UIGraphicsImageRenderer(size: size, format: format).image { _ in image.draw(in: CGRect(origin: .zero, size: size)) }.jpegData(compressionQuality: 0.8)
+    }
+
     private func load() {
         guard let person else { return }
         name = person.name; notes = person.notes; colorHex = person.colorHex; remindersEnabled = person.remindersEnabled
         remindDaysBefore = person.remindDaysBefore; giftIdeas = person.giftIdeas; phone = person.phone ?? ""
+        photoData = person.photoData
         yearKnown = person.knownYear != nil
         date = Days.make(year: person.knownYear ?? 2000, month: person.month, day: person.day) ?? Date()
     }
@@ -261,6 +299,7 @@ struct BirthdayEditView: View {
         target.name = name.trimmingCharacters(in: .whitespaces)
         target.day = c.day ?? 1; target.month = c.month ?? 1; target.year = yearKnown ? c.year : nil
         target.notes = notes; target.colorHex = colorHex; target.remindersEnabled = remindersEnabled
+        if target.photoData != photoData { target.photoData = photoData }
         target.remindDaysBefore = remindDaysBefore; target.giftIdeas = giftIdeas; target.phone = phone.isEmpty ? nil : phone
         try? context.save()
         Task { await model.refreshAll() }

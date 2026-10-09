@@ -78,6 +78,31 @@ struct InitialsBadge: View {
     }
 }
 
+/// Bild einer Person: eigenes Foto, sonst das Foto aus dem Kontakt, sonst Initialen.
+struct PersonAvatar: View {
+    let person: Person?
+    let initials: String
+    let colorHex: String
+    var size: CGFloat = 44
+    @State private var contactPhoto: Data?
+
+    var body: some View {
+        Group {
+            if let data = person?.photoData ?? contactPhoto ?? person?.contactIdentifier.flatMap({ ContactPhotoCache.shared.cached($0) }),
+               let image = UIImage(data: data) {
+                Image(uiImage: image).resizable().scaledToFill()
+                    .frame(width: size, height: size).clipShape(Circle())
+            } else {
+                InitialsBadge(initials: initials, colorHex: colorHex, size: size)
+            }
+        }
+        .task(id: person?.contactIdentifier) {
+            guard person?.photoData == nil, let identifier = person?.contactIdentifier else { return }
+            contactPhoto = await ContactPhotoCache.shared.load(identifier)
+        }
+    }
+}
+
 struct EventChip: View {
     let event: CalendarEvent
     var onLight = false
