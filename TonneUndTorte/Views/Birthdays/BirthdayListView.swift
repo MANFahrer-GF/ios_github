@@ -22,12 +22,16 @@ struct PDFFile: Transferable {
     }
 }
 
+/// Tab „Termine“: Geburtstage und eigene Termine, umschaltbar.
 struct BirthdayListView: View {
+    enum Segment: String { case birthdays, custom }
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Query(sort: \Person.name) private var people: [Person]
     @Environment(\.openURL) private var openURL
+    @SceneStorage("termine.segment") private var segment: Segment = .birthdays
     @State private var editing: Person?
+    @State private var editingEvent: CustomEvent?
     @State private var showNew = false
     @State private var showImport = false
 
@@ -37,6 +41,34 @@ struct BirthdayListView: View {
 
     var body: some View {
         NavigationStack {
+            VStack(spacing: 0) {
+                Picker(L10n.t("Ansicht", "View"), selection: $segment) {
+                    Text(L10n.t("Geburtstage", "Birthdays")).tag(Segment.birthdays)
+                    Text(L10n.t("Eigene Termine", "Custom events")).tag(Segment.custom)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal).padding(.vertical, 8)
+                if segment == .birthdays { birthdays } else { CustomEventsView() }
+            }
+            .background(Color(.systemGroupedBackground))
+            .navigationTitle(L10n.t("Termine", "Events"))
+            .sheet(item: $editingEvent) { CustomEventEditView(event: $0) }
+            .onChange(of: model.personToOpen, initial: true) { _, id in
+                guard let id else { return }
+                model.personToOpen = nil
+                segment = .birthdays
+                if let person = people.first(where: { $0.id == id }) { editing = person }
+            }
+            .onChange(of: model.eventToOpen, initial: true) { _, id in
+                guard let id else { return }
+                model.eventToOpen = nil
+                segment = .custom
+                editingEvent = model.allCustomEvents().first { $0.id == id }
+            }
+        }
+    }
+
+    private var birthdays: some View {
             Group {
                 if people.isEmpty {
                     ContentUnavailableView {
@@ -68,7 +100,6 @@ struct BirthdayListView: View {
                     }
                 }
             }
-            .navigationTitle("Geburtstage")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
@@ -89,12 +120,6 @@ struct BirthdayListView: View {
             .sheet(isPresented: $showNew) { BirthdayEditView(person: nil) }
             .sheet(item: $editing) { BirthdayEditView(person: $0) }
             .sheet(isPresented: $showImport) { ContactsImportView() }
-            .onChange(of: model.personToOpen, initial: true) { _, id in
-                guard let id else { return }
-                model.personToOpen = nil
-                if let person = people.first(where: { $0.id == id }) { editing = person }
-            }
-        }
     }
 }
 

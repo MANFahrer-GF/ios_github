@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import TonneCore
 
-/// Startseite: Was steht an, Erledigt-Knopf, nächste Abholungen, Geburtstage, Streak.
+/// Startseite: die nächsten Tage (Tonnen, Geburtstage, eigene Termine) mit Erledigt-Knopf, Statistik.
 struct OverviewView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
@@ -16,6 +16,8 @@ struct OverviewView: View {
     @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
     @State private var refreshToken = 0
+    @State private var editingPerson: Person?
+    @State private var editingEvent: CustomEvent?
     /// Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
     private let clock = Timer.publish(every: 300, on: .main, in: .common).autoconnect()
 
@@ -58,13 +60,36 @@ struct OverviewView: View {
         return today
     }
 
-    private var otherUpcoming: [CalendarEvent] {
-        days.flatMap(\.events).filter { $0.kind != .waste }
+    /// Ein Tag mit allem, was ansteht: Tonnen (ohne die heute schon erledigte/vorbeie Abholung), Geburtstage, eigene Termine.
+    private struct DayGroup: Identifiable {
+        let day: Date
+        let waste: [CalendarEvent]
+        let other: [CalendarEvent]
+        var id: Date { day }
+        var all: [CalendarEvent] { waste + other }
     }
 
-    /// Geburtstage und eigene Termine von heute – stehen oben in einer eigenen Karte statt unten in der Liste.
-    private var todayOther: [CalendarEvent] { otherUpcoming.filter { Days.until($0.date) == 0 } }
-    private var laterOther: [CalendarEvent] { otherUpcoming.filter { Days.until($0.date) != 0 } }
+    private var groups: [DayGroup] {
+        let active = Set(activeWasteDays.map(\.day))
+        return days.compactMap { entry in
+            let waste = active.contains(entry.day) ? entry.events.filter { $0.kind == .waste } : []
+            let other = entry.events.filter { $0.kind != .waste }
+            return waste.isEmpty && other.isEmpty ? nil : DayGroup(day: entry.day, waste: waste, other: other)
+        }
+    }
+
+    /// Groß gezeigt: alle Tage bis einschließlich der nächsten Abholung (höchstens drei) – so steht die Tonne mit
+    /// „Erledigt“ immer oben, und Geburtstage oder Termine davor gehen nicht unter.
+    private var bigGroups: [DayGroup] {
+        var result: [DayGroup] = []
+        for group in groups.prefix(3) {
+            result.append(group)
+            if !group.waste.isEmpty { break }
+        }
+        return result
+    }
+
+    private var laterGroups: [DayGroup] { Array(groups.dropFirst(bigGroups.count).prefix(5)) }
 
     var body: some View {
         NavigationStack {
@@ -73,10 +98,7 @@ struct OverviewView: View {
                     if !notifications.isAuthorized { permissionBanner }
                     if !model.recentChanges.isEmpty { changesBanner }
                     if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
-                    if !todayOther.isEmpty { todayCard }
-                    heroCard
-                    birthdaysSection
-                    nextPickupsSection
+                    nextDaysCard
                     statsCard
                 }
                 .padding(.horizontal)
@@ -94,6 +116,9 @@ struct OverviewView: View {
             .onReceive(NotificationCenter.default.publisher(for: SnapshotStore.broughtInNotification)) { _ in refreshToken += 1 }
             .onReceive(clock) { _ in refreshToken += 1 }
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
+            // Geburtstag oder Termin direkt hier öffnen – nicht in einen anderen Tab springen
+            .sheet(item: $editingPerson) { BirthdayEditView(person: $0) }
+            .sheet(item: $editingEvent) { CustomEventEditView(event: $0) }
         }
     }
 
@@ -183,188 +208,168 @@ struct OverviewView: View {
         .card()
     }
 
-    // MARK: - Hero
+    // MARK: - Die nächsten Tage
 
-    private var heroCard: some View {
-        let next = activeWasteDays.first
-        let n = next.map { Days.until($0.day) }
-        let allDone = next?.events.allSatisfy(\.done) ?? false
-        let tiles = next?.events.map { BinTileItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex) } ?? []
-        let nextAfter = activeWasteDays.dropFirst().first
-        let subline: String = {
-            if next == nil, let first = activeWasteDays.first { return L10n.t("nächste \(DateText.countdown(first.day))", "next \(DateText.countdown(first.day))") }
-            return PickupWords.subline(days: n, done: allDone)
-        }()
-        let eyebrow: String = {
-            guard let next else { return PickupWords.eyebrow(date: nil) }
-            let single = Set(next.events.compactMap(\.locationName))
-            return PickupWords.eyebrow(date: next.day, location: locations.count > 1 && single.count == 1 ? single.first : nil)
-        }()
-
+    /// Eine Karte für alles, was ansteht: groß die Tage bis zur nächsten Abholung, darunter knapp die folgenden.
+    private var nextDaysCard: some View {
+        let tintHex: String? = bigGroups.lazy.compactMap { group in
+            group.waste.isEmpty ? nil : (group.waste.allSatisfy(\.done) ? "#34C759" : group.waste.first?.colorHex)
+        }.first
         return VStack(alignment: .leading, spacing: 0) {
-            Text(eyebrow).font(KlarStyle.font(12, .heavy)).tracking(0.8)
-                .foregroundStyle(allDone ? KlarStyle.done : (tiles.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? KlarStyle.muted(scheme)))
-                .lineLimit(1)
-            Text(PickupWords.headline(days: n, done: allDone))
-                .font(KlarStyle.font(40, .black)).foregroundStyle(KlarStyle.text(scheme))
-                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 2)
-            Text(subline).font(KlarStyle.font(15, .bold)).foregroundStyle(KlarStyle.muted(scheme)).padding(.top, 1)
-            if let next {
-                HStack(alignment: .bottom, spacing: 10) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(tiles.enumerated()), id: \.offset) { _, tile in
-                            BinLine(name: tile.name, symbolName: tile.symbolName, colorHex: tile.colorHex, dot: 32, fontSize: 18)
-                        }
-                    }
-                    .opacity(allDone ? 0.55 : 1)
-                    Spacer(minLength: 0)
-                    if let n, n <= 1 {
-                        if allDone {
-                            Button {
-                                Haptics.tap()
-                                Task { await model.markUndone(dayKey: Days.iso(next.day)); refreshToken += 1 }
-                            } label: {
-                                Label("Rückgängig", systemImage: "arrow.uturn.backward")
-                                    .font(KlarStyle.font(15, .heavy))
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 14).padding(.vertical, 10)
-                                    .background(KlarStyle.done, in: Capsule())
-                            }
-                            .buttonStyle(.plain)
-                        } else {
-                            Button {
-                                Haptics.success()
-                                Task { await model.markDone(dayKey: Days.iso(next.day)); refreshToken += 1 }
-                            } label: {
-                                Label("Erledigt", systemImage: "checkmark")
-                                    .font(KlarStyle.font(15, .heavy))
-                                    .foregroundStyle(KlarStyle.buttonForeground(scheme))
-                                    .padding(.horizontal, 14).padding(.vertical, 10)
-                                    .background(KlarStyle.buttonBackground(scheme), in: Capsule())
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-                .padding(.top, 18)
-                if let nextAfter {
-                    // Danach: dieselben Tonnen-Symbole wie oben, nur kleiner – nicht bloß ein Farbpunkt
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.t("Danach · \(DateText.countdown(nextAfter.day))", "Then · \(DateText.countdown(nextAfter.day))"))
-                            .font(KlarStyle.font(13, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
-                        FlowLayout(spacing: 14) {
-                            ForEach(nextAfter.events) { BinLine(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, dot: 24, fontSize: 15) }
-                        }
-                    }
-                    .padding(.top, 16)
-                }
+            if groups.isEmpty {
+                Text(locations.isEmpty ? "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch." : L10n.t("In den nächsten 60 Tagen steht nichts an.", "Nothing coming up in the next 60 days."))
+                    .font(KlarStyle.font(15, .semibold)).foregroundStyle(KlarStyle.muted(scheme))
             } else {
-                Text("Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.")
-                    .font(KlarStyle.font(15, .semibold)).foregroundStyle(KlarStyle.muted(scheme)).padding(.top, 12)
+                ForEach(Array(bigGroups.enumerated()), id: \.element.id) { index, group in
+                    if index > 0 { Divider().padding(.vertical, 16) }
+                    bigGroupView(group, primary: index == 0)
+                }
+                if !laterGroups.isEmpty {
+                    Divider().padding(.top, 18).padding(.bottom, 4)
+                    ForEach(Array(laterGroups.enumerated()), id: \.element.id) { index, group in
+                        if index > 0 { Divider().opacity(0.5) }
+                        laterRow(group)
+                    }
+                }
             }
         }
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            KlarSurface(tintHex: allDone ? "#34C759" : tiles.first?.colorHex)
+            KlarSurface(tintHex: tintHex)
                 .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
                 .shadow(color: .black.opacity(scheme == .dark ? 0.35 : 0.08), radius: 16, x: 0, y: 6)
         )
     }
 
-    // MARK: - Listen
-
-    /// Abholungen nach denen, die die große Karte schon zeigt (nächste und „Danach“) – nur ein kurzer Ausblick, der Rest steht im Kalender.
-    private var laterWasteDays: [(day: Date, events: [CalendarEvent])] {
-        Array(activeWasteDays.dropFirst(2).prefix(4))
-    }
-
-    @ViewBuilder
-    private var nextPickupsSection: some View {
-        if wasteDays.isEmpty {
-            VStack(alignment: .leading, spacing: 12) {
-                Label("Nächste Abholungen", systemImage: "trash.fill").font(.headline).padding(.leading, 4)
-                Text("Keine Abholungen in den nächsten 60 Tagen.").font(.subheadline).foregroundStyle(.secondary).card()
-            }
-        } else if !laterWasteDays.isEmpty {
-            VStack(alignment: .leading, spacing: 12) {
-                Label(L10n.t("Weitere Abholungen", "Later collections"), systemImage: "trash.fill").font(.headline).padding(.leading, 4)
-                VStack(spacing: 0) {
-                    ForEach(Array(laterWasteDays.enumerated()), id: \.element.day) { index, entry in
-                        // Alles vom selben Standort: Ort einmal unter dem Datum statt an jeder Tonne
-                        let places = Set(entry.events.compactMap(\.locationName))
-                        let sharedPlace = locations.count > 1 && places.count == 1 ? places.first : nil
-                        HStack(alignment: .top, spacing: 12) {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(DateText.countdown(entry.day)).font(.subheadline.weight(.semibold))
-                                Text(DateText.short(entry.day)).font(.caption).foregroundStyle(.secondary)
-                                if let sharedPlace { Text(sharedPlace).font(.caption).foregroundStyle(.secondary).lineLimit(1) }
+    private func bigGroupView(_ group: DayGroup, primary: Bool) -> some View {
+        let n = Days.until(group.day)
+        let allDone = !group.waste.isEmpty && group.waste.allSatisfy(\.done)
+        let places = Set(group.waste.compactMap(\.locationName))
+        let place = locations.count > 1 && places.count == 1 ? places.first : nil
+        let eyebrowColor: Color = allDone ? KlarStyle.done : (group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink)
+        return VStack(alignment: .leading, spacing: 0) {
+            Text(PickupWords.eyebrow(date: group.day, location: place)).font(KlarStyle.font(12, .heavy)).tracking(0.8)
+                .foregroundStyle(eyebrowColor).lineLimit(1)
+            Text(DateText.countdown(group.day))
+                .font(KlarStyle.font(primary ? 36 : 24, .black)).foregroundStyle(KlarStyle.text(scheme))
+                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 2)
+            if !group.waste.isEmpty {
+                HStack(alignment: .bottom, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(group.waste) { event in
+                            HStack(spacing: 8) {
+                                BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: primary ? 32 : 28, fontSize: primary ? 18 : 16)
+                                if locations.count > 1, place == nil, let location = event.locationName {
+                                    Text(location).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                                }
                             }
-                            .frame(width: 92, alignment: .leading)
-                            FlowLayout(spacing: 6) { ForEach(entry.events) { EventChip(event: $0, onLight: true, showLocation: locations.count > 1 && sharedPlace == nil) } }
-                            Spacer(minLength: 0)
                         }
-                        .padding(.vertical, 10)
-                        if index < laterWasteDays.count - 1 { Divider() }
                     }
+                    .opacity(allDone ? 0.55 : 1)
+                    Spacer(minLength: 0)
+                    if n <= 1 { doneButton(day: group.day, done: allDone) }
                 }
-                .card()
+                .padding(.top, 14)
+            }
+            if !group.other.isEmpty {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(group.other) { event in otherRow(event, badge: primary ? 32 : 28) }
+                }
+                .padding(.top, group.waste.isEmpty ? 14 : 12)
             }
         }
     }
 
-    private var birthdaysSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("Geburtstage & Termine", systemImage: "birthday.cake.fill").font(.headline).padding(.leading, 4)
-            if laterOther.isEmpty {
-                Text(people.isEmpty ? "Noch keine Geburtstage – unter „Geburtstage“ hinzufügen oder aus Kontakten importieren." : "In den nächsten 60 Tagen steht nichts an.")
-                    .font(.subheadline).foregroundStyle(.secondary).card()
-            } else {
-                VStack(spacing: 0) {
-                    ForEach(Array(laterOther.prefix(6).enumerated()), id: \.element.id) { index, event in
-                        HStack(spacing: 12) {
-                            EventRow(event: event)
-                            Text(DateText.countdown(event.date)).font(.subheadline.weight(.semibold))
-                                .foregroundStyle(Days.until(event.date) == 0 ? Color.pink : .secondary)
-                        }
-                        .padding(.vertical, 8)
-                        if index < min(laterOther.count, 6) - 1 { Divider() }
+    /// Geburtstag oder eigener Termin in der großen Karte – Antippen öffnet ihn hier.
+    private func otherRow(_ event: CalendarEvent, badge: CGFloat) -> some View {
+        Button { open(event) } label: {
+            HStack(spacing: badge * 0.36) {
+                if event.kind == .birthday {
+                    InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
+                } else {
+                    SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: badge)
+                }
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title)
+                        .font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
+                    // „Zeit zum Gratulieren“ nur am Geburtstag selbst; ohne bekanntes Alter sonst keine zweite Zeile
+                    if let detail = event.kind == .birthday
+                        ? (event.years.map { L10n.t("wird \($0)", "turns \($0)") } ?? (Days.until(event.date) == 0 ? L10n.t("Zeit zum Gratulieren", "Time to celebrate") : nil))
+                        : event.subtitle {
+                        Text(detail).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                     }
                 }
-                .card()
+                Spacer(minLength: 0)
+                if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂") }
             }
+            .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
     }
 
-    /// „Heute“: Geburtstage und eigene Termine des Tages, gut sichtbar über der Müll-Karte. Antippen öffnet Person bzw. Termin.
-    private var todayCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(L10n.t("HEUTE", "TODAY")).font(KlarStyle.font(12, .heavy)).tracking(0.8).foregroundStyle(.pink)
-            ForEach(todayOther) { event in
-                Button {
-                    if let id = event.personID { model.open(.person(id)) } else if let id = event.eventID { model.open(.event(id)) }
-                } label: {
-                    HStack(spacing: 12) {
-                        if event.kind == .birthday {
-                            InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 44)
-                        } else {
-                            SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 44)
+    /// Ein späterer Tag: links Datum und Abstand wie oben, rechts dieselben Symbole – nur eine Nummer kleiner.
+    private func laterRow(_ group: DayGroup) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            VStack(alignment: .leading, spacing: 1) {
+                Text(PickupWords.eyebrow(date: group.day)).font(KlarStyle.font(11, .heavy)).tracking(0.6)
+                    .foregroundStyle(group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink).lineLimit(1)
+                Text(DateText.countdown(group.day)).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme))
+                    .lineLimit(1).minimumScaleFactor(0.8)
+            }
+            .frame(width: 112, alignment: .leading)
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(group.waste) { event in
+                    HStack(spacing: 8) {
+                        BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
+                        if locations.count > 1, let location = event.locationName {
+                            Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                         }
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title)
-                                .font(.headline).foregroundStyle(.primary)
-                            Text(event.kind == .birthday ? (event.years.map { L10n.t("wird \($0)", "turns \($0)") } ?? L10n.t("Zeit zum Gratulieren", "Time to celebrate")) : event.subtitle)
-                                .font(.subheadline).foregroundStyle(.secondary)
-                        }
-                        Spacer(minLength: 0)
-                        if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.title2) }
-                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
                     }
                 }
-                .buttonStyle(.plain)
+                ForEach(group.other) { event in
+                    Button { open(event) } label: {
+                        HStack(spacing: 9) {
+                            if event.kind == .birthday {
+                                InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 26)
+                            } else {
+                                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 26)
+                            }
+                            Text(event.kind == .birthday ? (event.years.map { L10n.t("\(event.title) wird \($0)", "\(event.title) turns \($0)") } ?? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday")) : event.title)
+                                .font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
+                            if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.subheadline) }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                }
             }
+            .padding(.top, 2)
+            Spacer(minLength: 0)
         }
-        .card()
+        .padding(.vertical, 12)
+    }
+
+    private func doneButton(day: Date, done: Bool) -> some View {
+        Button {
+            if done { Haptics.tap() } else { Haptics.success() }
+            Task {
+                if done { await model.markUndone(dayKey: Days.iso(day)) } else { await model.markDone(dayKey: Days.iso(day)) }
+                refreshToken += 1
+            }
+        } label: {
+            Label(done ? "Rückgängig" : "Erledigt", systemImage: done ? "arrow.uturn.backward" : "checkmark")
+                .font(KlarStyle.font(15, .heavy))
+                .foregroundStyle(done ? .white : KlarStyle.buttonForeground(scheme))
+                .padding(.horizontal, 14).padding(.vertical, 10)
+                .background(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme), in: Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func open(_ event: CalendarEvent) {
+        if let id = event.personID { editingPerson = model.allPeople().first { $0.id == id } }
+        else if let id = event.eventID { editingEvent = model.allCustomEvents().first { $0.id == id } }
     }
 
     private var statsCard: some View {

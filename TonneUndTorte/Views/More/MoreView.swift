@@ -2,12 +2,11 @@ import SwiftUI
 import SwiftData
 import TonneCore
 
-/// Mehr: eigene Termine, Abfall-ABC, Kalender-Export, Einstellungen.
+/// Mehr: Abfall-ABC, Abdeckung, Kalender-Export, Siri, Einstellungen.
 struct MoreView: View {
     @EnvironmentObject private var model: AppModel
 
     @AppStorage(CalendarExport.autoSyncKey) private var calendarAutoSync = false
-    @State private var openedEvent: CustomEvent?
 
     private var syncSubtitle: String {
         guard calendarAutoSync else { return L10n.t("Aus", "Off") }
@@ -19,7 +18,6 @@ struct MoreView: View {
         NavigationStack {
             List {
                 Section {
-                    NavigationLink { CustomEventsView() } label: { Label("Eigene Termine", systemImage: "pin.fill") }
                     NavigationLink { WasteABCView() } label: { Label("Abfall-ABC", systemImage: "book.fill") }
                     NavigationLink { CoverageView() } label: { Label(L10n.t("Geht mein Ort?", "Is my town covered?"), systemImage: "map.fill") }
                 }
@@ -46,12 +44,6 @@ struct MoreView: View {
                 }
             }
             .navigationTitle("Mehr")
-            .sheet(item: $openedEvent) { CustomEventEditView(event: $0) }
-            .onChange(of: model.eventToOpen, initial: true) { _, id in
-                guard let id else { return }
-                model.eventToOpen = nil
-                openedEvent = model.allCustomEvents().first { $0.id == id }
-            }
         }
     }
 
@@ -112,7 +104,6 @@ struct CustomEventsView: View {
                 try? context.save(); Task { await model.refreshAll() }
             }
         }
-        .navigationTitle("Eigene Termine")
         .toolbar { ToolbarItem(placement: .topBarTrailing) { Button { showNew = true } label: { Image(systemName: "plus") } } }
         .sheet(isPresented: $showNew) { CustomEventEditView(event: nil) }
         .sheet(item: $editing) { CustomEventEditView(event: $0) }
