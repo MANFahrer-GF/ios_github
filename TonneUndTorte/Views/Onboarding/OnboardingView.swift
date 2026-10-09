@@ -20,7 +20,7 @@ struct OnboardingView: View {
                         .multilineTextAlignment(.center).font(.title3).opacity(0.9)
                 }
                 VStack(alignment: .leading, spacing: 14) {
-                    feature("antenna.radiowaves.left.and.right", "Termine kommen automatisch vom Entsorger – \(ProviderCatalog.count) Landkreise und Städte.")
+                    feature("antenna.radiowaves.left.and.right", "Termine kommen automatisch vom Entsorger – in \(ProviderCatalog.coverage.filter(\.isCovered).count) von \(ProviderCatalog.coverage.count) Landkreisen und Städten.")
                     feature("bell.badge.fill", "Erinnerung am Vorabend mit „Erledigt“-Knopf, Widget und Sperrbildschirm.")
                     feature("icloud.fill", "Alles in deiner iCloud – auf iPhone und iPad gleich.")
                 }

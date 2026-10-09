@@ -11,11 +11,14 @@ public struct DistrictCoverage: Identifiable, Hashable, Sendable {
     public let localEntryIDs: [String]
     /// Gemeinden, die über solche Einzel-Einträge abgedeckt sind.
     public let localPlaces: [String]
+    /// Bewohnte Gemeinden des Kreises (ohne gemeindefreie Gebiete).
     public let municipalityCount: Int
+    /// Gemeinden ohne Gemeinde-Eintrag – bei „teilweise“ die, die noch fehlen.
+    public let missingPlaces: [String]
 
     public var id: String { district }
     /// Ein Entsorger für den Kreis – oder Gemeinde-Einträge für alle seine Gemeinden (z. B. eine kreisfreie Stadt).
-    public var isCovered: Bool { !entryIDs.isEmpty || (municipalityCount > 0 && localPlaces.count >= municipalityCount) }
+    public var isCovered: Bool { !entryIDs.isEmpty || (municipalityCount > 0 && missingPlaces.isEmpty) }
     /// Kein Kreis-Entsorger, aber einzelne Gemeinden sind dabei.
     public var isPartial: Bool { !isCovered && !localEntryIDs.isEmpty }
     public var allEntryIDs: [String] { entryIDs + localEntryIDs }
@@ -66,13 +69,16 @@ enum CoverageIndex {
                 localNames[parts[0], default: []].insert(parts[1])
             }
         }
-        var counts: [String: Int] = [:]
-        for item in MunicipalityIndex.all { counts[item.district, default: 0] += 1 }
+        var places: [String: [String]] = [:]
+        for item in MunicipalityIndex.all where !CatalogRegions.unincorporated.contains("\(item.district)|\(item.name)") {
+            places[item.district, default: []].append(item.name)
+        }
         return CatalogRegions.districtStates.map { district, state in
             DistrictCoverage(district: district, state: state,
                              entryIDs: (regional[district] ?? []).sorted(),
                              localEntryIDs: (local[district] ?? []).filter { !(regional[district] ?? []).contains($0) }.sorted(),
-                             localPlaces: (localNames[district] ?? []).sorted(), municipalityCount: counts[district] ?? 0)
+                             localPlaces: (localNames[district] ?? []).sorted(), municipalityCount: places[district]?.count ?? 0,
+                             missingPlaces: (places[district] ?? []).filter { !(localNames[district] ?? []).contains($0) }.sorted())
         }
         .sorted { ($0.state, $0.displayName) < ($1.state, $1.displayName) }
     }()

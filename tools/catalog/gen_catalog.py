@@ -388,6 +388,11 @@ for k,v in sorted(mapping.items()):
 out+=['    ]','','    /// Einträge, die nur einzelne Gemeinden bedienen: Eintrag → „Landkreis|Gemeinde“.','    static let localEntries: [String: [String]] = [']
 for k,v in sorted(local.items()):
     out.append(f'        {q(k)}: [{", ".join(q(x) for x in v)}],')
+unincorporated=sorted(f"{r['krs_name']}|{r['gem_name_short']}" for r in rows if r['gem_type']=='Gemeindefreies Gebiet')
+out+=['    ]','','    /// Gemeindefreie Gebiete („Landkreis|Name“, meist unbewohnte Forste und Seen): zählen nicht zur Abdeckung.',
+      '    static let unincorporated: Set<String> = [']
+for x in unincorporated:
+    out.append(f'        {q(x)},')
 out+=['    ]','','    /// Landkreis → Bundesland.','    static let districtStates: [String: String] = [']
 for k in sorted(kreise):
     out.append(f'        {q(k)}: {q(kreis_land[k])},')

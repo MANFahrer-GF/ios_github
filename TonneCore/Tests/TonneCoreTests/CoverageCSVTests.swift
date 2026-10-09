@@ -135,6 +135,20 @@ final class CoverageTests: XCTestCase {
         XCTAssertEqual(ProviderCatalog.coverage.first { $0.district == "Landkreis Konstanz" }?.isPartial, true, "Müllmann bedient nicht alle Gemeinden")
     }
 
+    /// „Teilweise“ nennt die fehlenden Gemeinden; unbewohnte gemeindefreie Gebiete zählen nicht.
+    func testMissingPlaces() {
+        let byName = Dictionary(uniqueKeysWithValues: ProviderCatalog.coverage.map { ($0.district, $0) })
+        let konstanz = byName["Landkreis Konstanz"]
+        XCTAssertTrue(konstanz?.missingPlaces.contains("Öhningen") == true)
+        XCTAssertFalse(konstanz?.missingPlaces.contains("Konstanz") == true, "über Müllmann angebunden")
+        let wmk = byName["Landkreis Werra-Meißner-Kreis"]
+        XCTAssertFalse(wmk?.missingPlaces.contains("Gutsbezirk Kaufunger Wald") == true)
+        XCTAssertEqual(wmk.map { $0.municipalityCount - $0.missingPlaces.count }, wmk?.localPlaces.filter { $0 != "Gutsbezirk Kaufunger Wald" }.count)
+        for item in ProviderCatalog.coverage where item.isCovered && item.entryIDs.isEmpty {
+            XCTAssertTrue(item.missingPlaces.isEmpty, item.district)
+        }
+    }
+
     func testDisplayNames() {
         XCTAssertEqual(DistrictCoverage.displayName("Landkreis Rems-Murr-Kreis"), "Rems-Murr-Kreis")
         XCTAssertEqual(DistrictCoverage.displayName("Landkreis Peine"), "Landkreis Peine")

@@ -47,11 +47,9 @@ struct CoverageView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
             } footer: {
-                Text(L10n.t("\(coveredCount) von \(all.count) Landkreisen und kreisfreien Städten sind angebunden. Halb gefüllter Kreis: nur einzelne Gemeinden sind dabei.",
-                            "\(coveredCount) of \(all.count) districts are connected. Half-filled circle: only some municipalities are covered."))
+                Text(L10n.t("\(coveredCount) von \(all.count) Landkreisen und kreisfreien Städten sind angebunden. Halb gefüllter Kreis: die meisten Gemeinden sind dabei, die genannten fehlen noch. Wie du dort trotzdem zu Terminen kommst, steht unten.",
+                            "\(coveredCount) of \(all.count) districts are connected. Half-filled circle: most municipalities are covered, the ones listed are still missing. How to still get your dates: see below."))
             }
-
-            if tab == .missing { workaroundSection }
 
             ForEach(grouped, id: \.state) { group in
                 Section(group.state) {
@@ -67,6 +65,8 @@ struct CoverageView: View {
             if grouped.isEmpty {
                 Text(L10n.t("Nichts gefunden.", "Nothing found.")).foregroundStyle(.secondary)
             }
+
+            if tab == .missing { workaroundSection }
         }
         .navigationTitle(L10n.t("Abdeckung", "Coverage"))
         .searchable(text: $query, prompt: L10n.t("Landkreis oder Gemeinde", "District or municipality"))
@@ -91,8 +91,9 @@ struct CoverageView: View {
             return "\(Self.count(item.allEntryIDs.count, L10n.t("Entsorger", "operator"), L10n.t("Entsorger", "operators"))) · \(municipalities)"
         }
         if item.isPartial {
-            return L10n.t("Nur einzelne Gemeinden: \(item.localPlaces.joined(separator: ", "))",
-                          "Only some municipalities: \(item.localPlaces.joined(separator: ", "))")
+            let present = item.municipalityCount - item.missingPlaces.count
+            return L10n.t("Es fehlen noch: \(item.missingPlaces.joined(separator: ", ")) · \(present) von \(item.municipalityCount) Gemeinden dabei",
+                          "Still missing: \(item.missingPlaces.joined(separator: ", ")) · \(present) of \(item.municipalityCount) municipalities covered")
         }
         return L10n.t("Noch nicht angebunden · \(municipalities)", "Not connected yet · \(municipalities)")
     }
