@@ -23,6 +23,11 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.customPreMinutes) private var customPreMinutes = 9 * 60
     @AppStorage(SettingsKeys.customLeadMinutes) private var customLeadMinutes = 60
     @AppStorage(SettingsKeys.customDayBefore) private var customDayBefore = false
+    @AppStorage(SettingsKeys.overviewWaste) private var overviewWaste = true
+    @AppStorage(SettingsKeys.overviewBirthdays) private var overviewBirthdays = true
+    @AppStorage(SettingsKeys.overviewCustom) private var overviewCustom = true
+    @AppStorage(SettingsKeys.overviewDays) private var overviewDays = 60
+    @AppStorage(SettingsKeys.overviewStats) private var overviewStats = true
     @AppStorage(SettingsKeys.liveActivities) private var liveActivities = true
     @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
@@ -105,6 +110,20 @@ struct SettingsView: View {
                     Text(L10n.t("„Am Termintag“ gilt für Termine ohne Uhrzeit. Ob und wie viele Tage vorab, stellst du bei jedem Termin ein. „Zusätzlich am Vortag“ erinnert z. B. beim TÜV zwei Wochen vorher und noch einmal am Tag davor. In der Mitteilung kannst du „Erledigt“ oder „In 1 Stunde nochmal“ tippen.",
                                 "“On the day” applies to events without a time. Whether and how many days in advance is set per event. “Also the day before” reminds you e.g. two weeks before the MOT and again the day before. In the notification you can tap “Done” or “Remind me in 1 hour”."))
                 }
+            }
+
+            Section {
+                Toggle(L10n.t("Müll", "Waste"), isOn: $overviewWaste)
+                Toggle(L10n.t("Geburtstage", "Birthdays"), isOn: $overviewBirthdays)
+                Toggle(L10n.t("Eigene Termine", "Custom events"), isOn: $overviewCustom)
+                Picker(L10n.t("Vorschau", "Look ahead"), selection: $overviewDays) {
+                    Text(L10n.t("2 Wochen", "2 weeks")).tag(14)
+                    Text(L10n.t("1 Monat", "1 month")).tag(31)
+                    Text(L10n.t("2 Monate", "2 months")).tag(60)
+                }
+                if overviewWaste { Toggle(L10n.t("Statistik anzeigen", "Show statistics"), isOn: $overviewStats) }
+            } header: { Text(L10n.t("Übersicht", "Overview")) } footer: {
+                Text(L10n.t("Was die Startseite zeigt. Erinnerungen, Widgets und Kalender bleiben davon unberührt.", "What the start page shows. Reminders, widgets and calendar are not affected."))
             }
 
             Section {

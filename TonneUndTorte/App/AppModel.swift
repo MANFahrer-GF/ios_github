@@ -24,6 +24,12 @@ enum SettingsKeys {
     static let customLeadMinutes = "reminder.custom.leadMinutes"
     static let customDayBefore = "reminder.custom.dayBefore"
     static let customDone = "custom.doneOccurrences"
+    // Übersicht anpassen
+    static let overviewWaste = "overview.showWaste"
+    static let overviewBirthdays = "overview.showBirthdays"
+    static let overviewCustom = "overview.showCustom"
+    static let overviewDays = "overview.days"
+    static let overviewStats = "overview.showStats"
 
     /// „Erledigt“ für eigene Termine: je Vorkommen „<id>|<Tag>“. Nur auf diesem Gerät – es unterdrückt Erinnerungen,
     /// damit ist kein neues Feld im iCloud-Schema nötig. Ältere Einträge als 60 Tage fallen beim Speichern heraus.

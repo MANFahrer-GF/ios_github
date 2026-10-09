@@ -15,6 +15,11 @@ struct OverviewView: View {
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
+    @AppStorage(SettingsKeys.overviewWaste) private var showWaste = true
+    @AppStorage(SettingsKeys.overviewBirthdays) private var showBirthdays = true
+    @AppStorage(SettingsKeys.overviewCustom) private var showCustom = true
+    @AppStorage(SettingsKeys.overviewDays) private var previewDays = 60
+    @AppStorage(SettingsKeys.overviewStats) private var showStats = true
     @State private var refreshToken = 0
     @State private var editingPerson: Person?
     @State private var editingEvent: CustomEvent?
@@ -24,11 +29,12 @@ struct OverviewView: View {
     private var days: [(day: Date, events: [CalendarEvent])] {
         _ = refreshToken
         _ = wasteTypes.count + people.count
-        return model.upcomingByDay(days: 60, locationID: LocationFilter.apply(filterID))
+        return model.upcomingByDay(days: previewDays, locationID: LocationFilter.apply(filterID))
     }
 
     private var wasteDays: [(day: Date, events: [CalendarEvent])] {
-        days.compactMap { entry in
+        guard showWaste else { return [] }
+        return days.compactMap { entry in
             let waste = entry.events.filter { $0.kind == .waste }
             return waste.isEmpty ? nil : (day: entry.day, events: waste)
         }
@@ -73,7 +79,7 @@ struct OverviewView: View {
         let active = Set(activeWasteDays.map(\.day))
         return days.compactMap { entry in
             let waste = active.contains(entry.day) ? entry.events.filter { $0.kind == .waste } : []
-            let other = entry.events.filter { $0.kind != .waste }
+            let other = entry.events.filter { ($0.kind == .birthday && showBirthdays) || ($0.kind == .custom && showCustom) }
             return waste.isEmpty && other.isEmpty ? nil : DayGroup(day: entry.day, waste: waste, other: other)
         }
     }
@@ -89,7 +95,8 @@ struct OverviewView: View {
         return result
     }
 
-    private var laterGroups: [DayGroup] { Array(groups.dropFirst(bigGroups.count).prefix(5)) }
+    /// Alles im eingestellten Vorschau-Zeitraum, aber nicht endlos.
+    private var laterGroups: [DayGroup] { Array(groups.dropFirst(bigGroups.count).prefix(6)) }
 
     var body: some View {
         NavigationStack {
@@ -99,7 +106,7 @@ struct OverviewView: View {
                     if !model.recentChanges.isEmpty { changesBanner }
                     if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
                     nextDaysCard
-                    statsCard
+                    if showStats && showWaste { statsCard }
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 24)
@@ -248,64 +255,79 @@ struct OverviewView: View {
         let places = Set(group.waste.compactMap(\.locationName))
         let place = locations.count > 1 && places.count == 1 ? places.first : nil
         let eyebrowColor: Color = allDone ? KlarStyle.done : (group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink)
+        let badge: CGFloat = primary ? 36 : 32
         return VStack(alignment: .leading, spacing: 0) {
-            Text(PickupWords.eyebrow(date: group.day, location: place)).font(KlarStyle.font(12, .heavy)).tracking(0.8)
-                .foregroundStyle(eyebrowColor).lineLimit(1)
-            Text(DateText.countdown(group.day))
-                .font(KlarStyle.font(primary ? 36 : 24, .black)).foregroundStyle(KlarStyle.text(scheme))
-                .lineLimit(1).minimumScaleFactor(0.6).padding(.top, 2)
-            if !group.waste.isEmpty {
-                HStack(alignment: .bottom, spacing: 10) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(group.waste) { event in
-                            HStack(spacing: 8) {
-                                BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: primary ? 32 : 28, fontSize: primary ? 18 : 16)
-                                if locations.count > 1, place == nil, let location = event.locationName {
-                                    Text(location).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
-                                }
-                            }
-                        }
+            HStack(alignment: .bottom, spacing: 10) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(PickupWords.eyebrow(date: group.day, location: place)).font(KlarStyle.font(12, .heavy)).tracking(0.8)
+                        .foregroundStyle(eyebrowColor).lineLimit(1)
+                    Text(DateText.countdown(group.day))
+                        .font(KlarStyle.font(primary ? 36 : 24, .black)).foregroundStyle(KlarStyle.text(scheme))
+                        .lineLimit(1).minimumScaleFactor(0.6)
+                }
+                Spacer(minLength: 0)
+                // „Erledigt“ gilt für alle Tonnen des Tages – darum beim Tag, nicht an einer einzelnen Tonne
+                if !group.waste.isEmpty && n <= 1 { doneButton(day: group.day, done: allDone) }
+            }
+            // Alle Einträge in derselben Form: helle Fläche, Farbstreifen, Symbol, Name
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(group.waste) { event in
+                    itemCard(color: event.color) {
+                        BinDot(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: badge)
+                    } title: {
+                        event.title
+                    } detail: {
+                        locations.count > 1 && place == nil ? event.locationName : nil
                     }
                     .opacity(allDone ? 0.55 : 1)
-                    Spacer(minLength: 0)
-                    if n <= 1 { doneButton(day: group.day, done: allDone) }
                 }
-                .padding(.top, 14)
-            }
-            if !group.other.isEmpty {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(group.other) { event in otherRow(event, badge: primary ? 32 : 28) }
+                ForEach(group.other) { event in
+                    Button { open(event) } label: {
+                        itemCard(color: event.color) {
+                            if event.kind == .birthday {
+                                InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
+                            } else {
+                                SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: badge)
+                            }
+                        } title: {
+                            event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title
+                        } detail: {
+                            // „Zeit zum Gratulieren“ nur am Geburtstag selbst; ohne bekanntes Alter sonst keine zweite Zeile
+                            event.kind == .birthday ? (ageText(event) ?? (Days.until(event.date) == 0 ? L10n.t("Zeit zum Gratulieren", "Time to celebrate") : nil)) : event.subtitle
+                        } trailing: {
+                            if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.title3) }
+                        }
+                    }
+                    .buttonStyle(.plain)
                 }
-                .padding(.top, group.waste.isEmpty ? 14 : 12)
             }
+            .padding(.top, 12)
         }
     }
 
-    /// Geburtstag oder eigener Termin in der großen Karte – Antippen öffnet ihn hier.
-    private func otherRow(_ event: CalendarEvent, badge: CGFloat) -> some View {
-        Button { open(event) } label: {
-            HStack(spacing: badge * 0.36) {
-                if event.kind == .birthday {
-                    InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
-                } else {
-                    SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: badge)
+    /// Eine Zeile der großen Karte: helle Fläche, schmaler Farbstreifen, Symbol, Titel und optional eine zweite Zeile.
+    private func itemCard<Leading: View, Trailing: View>(color: Color, @ViewBuilder leading: () -> Leading, title: () -> String, detail: () -> String?,
+                                                         @ViewBuilder trailing: () -> Trailing = { EmptyView() }) -> some View {
+        let detailText = detail()
+        return HStack(spacing: 12) {
+            leading()
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title()).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
+                if let detailText {
+                    Text(detailText).font(KlarStyle.font(15, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1).minimumScaleFactor(0.85)
                 }
-                VStack(alignment: .leading, spacing: 1) {
-                    Text(event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title)
-                        .font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
-                    // „Zeit zum Gratulieren“ nur am Geburtstag selbst; ohne bekanntes Alter sonst keine zweite Zeile
-                    if let detail = event.kind == .birthday
-                        ? (event.years.map { L10n.t("wird \($0)", "turns \($0)") } ?? (Days.until(event.date) == 0 ? L10n.t("Zeit zum Gratulieren", "Time to celebrate") : nil))
-                        : event.subtitle {
-                        Text(detail).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
-                    }
-                }
-                Spacer(minLength: 0)
-                if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂") }
             }
-            .contentShape(Rectangle())
+            Spacer(minLength: 0)
+            trailing()
         }
-        .buttonStyle(.plain)
+        .padding(.leading, 16).padding(.trailing, 12).padding(.vertical, 9)
+        .background(alignment: .leading) {
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75))
+                Capsule().fill(color).frame(width: 4).padding(.vertical, 9).padding(.leading, 6)
+            }
+        }
+        .contentShape(Rectangle())
     }
 
     /// Ein späterer Tag: links Datum und Abstand wie oben, rechts dieselben Symbole – nur eine Nummer kleiner.
@@ -337,6 +359,9 @@ struct OverviewView: View {
                             }
                             Text(event.kind == .birthday ? (event.years.map { L10n.t("\(event.title) wird \($0)", "\(event.title) turns \($0)") } ?? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday")) : event.title)
                                 .font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.8)
+                            if let year = birthYear(event) {
+                                Text(L10n.t("Jahrgang \(year)", "born \(year)")).font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            }
                             if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.subheadline) }
                         }
                         .contentShape(Rectangle())
@@ -348,6 +373,16 @@ struct OverviewView: View {
             Spacer(minLength: 0)
         }
         .padding(.vertical, 12)
+    }
+
+    /// Geburtsjahr aus Alter und Geburtstag – nur wenn das Jahr bekannt ist.
+    private func birthYear(_ event: CalendarEvent) -> Int? {
+        event.years.map { Calendar.current.component(.year, from: event.date) - $0 }
+    }
+
+    private func ageText(_ event: CalendarEvent) -> String? {
+        guard let years = event.years, let year = birthYear(event) else { return nil }
+        return L10n.t("wird \(years) · Jahrgang \(year)", "turns \(years) · born \(year)")
     }
 
     private func doneButton(day: Date, done: Bool) -> some View {
