@@ -71,16 +71,22 @@ TONNE_SWEEP=1 swift test --filter CatalogSweepTests         # jeden Katalogeintr
 
 ## 4. Abdeckung
 
-Von 400 Kreisen und kreisfreien Städten sind 388 voll abgedeckt, 7 teilweise und 5 fehlen (Stand 9. Okt. nach Heidekreis, Bamberg, Teltow-Fläming). In der App zeigt das der Bereich **Müll → Abdeckung** („Noch nicht dabei“). Für fehlende Orte gibt es Import per ICS-Link oder CSV mit Vorlage.
+**Stand 9. Okt. abends: alle 400 Kreise und kreisfreien Städte abgedeckt** (`cov.py -v` meldet 0 fehlend). In der App zeigt das **Mehr → Abdeckung**; „teilweise“ nennt dort die noch fehlenden Gemeinden. Für fehlende Orte gibt es ICS-/CSV-Import und den Knopf „PDF-Kalender schicken“ (Mail an thomas@kant.ovh).
 
-| Kreis | Status | Grund / nächster Schritt |
-|---|---|---|
-| Konstanz | fehlt | Müllmann-App hinter Cloudflare |
-| Ansbach (Stadt) | fehlt | nur PDF je Straße |
-| Donnersbergkreis | fehlt | nur eigene App ohne offene Schnittstelle |
-| Weimar | fehlt | kein maschinenlesbarer Kalender gefunden |
-| Saale-Holzland-Kreis | fehlt | nur PDF |
-| Hochtaunus, Main-Taunus, Kreis Offenbach, Vogelsberg, Werra-Meißner, Minden-Lübbecke, Amberg-Sulzbach | teilweise | nur einzelne Gemeinden angebunden (`cov.py -v` listet welche) |
+| Neu am 9. Okt. | Weg |
+|---|---|
+| Konstanz | Müllmann-API (`portalsSuedwest/muellmann`, auch Stadt Karlsruhe), MZV Hegau + Tengen/Steißlingen/Eigeltingen (ICS), Volkertshausen (HTML), Gaienhofen/Öhningen/Büsingen (Jahresdaten) |
+| Donnersbergkreis | Web-App Softwareentwicklung Roth (`portalsRP/donnersberg`, braucht `Accept: text/html`) |
+| Amberg-Sulzbach | Portal Landratsamt (`portalsBayern/landkreis_as`, nur Restmüll/Papier) |
+| Werra-Meißner | ZVA (`portalsSuedwest/zvawmk`), Sontra als Jahresdaten (ohne Gelbe Tonne) |
+| Main-Taunus, Hochtaunus | Kelkheim, Flörsheim (Portale), Kriftel, Schwalbach, Wehrheim, Steinbach (ICS), Liederbach (Jahresdaten) |
+| Minden-Lübbecke | Espelkamp (iKISS), Bad Oeynhausen (PreZero), Hille/Hüllhorst (ICS), Rahden/Stemwede (Jahresdaten) |
+| Weimar | Straßentabelle, Termine berechnet (`portalsMitte/weimar`) – ohne Feiertags-/Jahreswechselverschiebung, App zeigt Hinweis |
+| Ansbach (Stadt), Saale-Holzland, Mainhausen | Jahresdaten aus PDF |
+
+**Jahresdaten (PDF-Orte) brauchen jährliche Pflege:** `tools/pdfkalender/README.md` (neue PDFs meist Nov.–Jan., ca. 5–7 h/Jahr). Derzeit nur 2026 enthalten – ab 1.1.2027 melden diese Orte „Kalender 2027 noch nicht eingepflegt“, bis die neuen Daten mit einem App-Update kommen.
+
+**ICS-Links im Katalog** können `{%Y}` (Jahr), `#link=<Text>` (aktuellen Link auf der Gemeindeseite suchen) und `#ohne=<Text>|…` (Termine ausfiltern) enthalten. Der Live-Test `ICSURLProviderTests/testLiveAllDirectCatalogLinks` prüft alle direkten Links.
 
 **Erledigt am 9. Okt. (vom Mac mit deutscher IP live geprüft):** Heidekreis (`portalsNord`/`heidekreis`, alle 23 Gemeinden), Bamberg-Stadt (`bamberg`) und SBAZV (`suedbrandenburg`: Teltow-Fläming komplett plus Nord-Dahme-Spreewald, das KAEV nicht bedient). Heinz Entsorgung (Freising) liefert von Deutschland aus wieder Termine. Die Sperren gelten nur für Rechenzentren außerhalb Deutschlands – Live-Tests dieser Portale also vom Mac oder einem deutschen Server laufen lassen.
 
@@ -97,6 +103,15 @@ Eigenheiten der echten API:
 - Live geprüft: Munster Wagnerstr. 10-18, Bad Fallingbostel Konrad-Zuse-Str. 4, Bispingen Lerchenweg 5.
 
 **Offen beim Nutzer:** In Xcode auf dem iPhone mit einer echten Heidekreis-Adresse testen (z. B. Soltau). Erst danach App-Store-Update.
+
+## 5a. Version 2.0.1 (Build 2) – bereit zum Test, noch nicht im App Store
+
+QS am 9. Okt.: 330 Offline-Tests grün, alle Live-Tests (328) und Katalog-Sweep grün, App- und Watch-Build grün, zwei unabhängige Reviews (Claude + Codex) ohne offene Befunde. Wichtigste Korrekturen neben den neuen Orten:
+- Abgleich: bereinigte ICS-Titel („Abholung: Biomüll“ → „Biomüll“) und aufgeteilte Sammeltermine führen bestehende Müllarten weiter (keine Doppelten); mehrere Titel auf einer Müllart werden vereinigt.
+- Monatskalender zeigte nur 4 von 7 Wochentagsbuchstaben; Siri-Hinweis lud verzögert; viele Texte (Plural, Übersetzung, „Rückgängig“).
+- Bei jedem Update Version erhöhen (alle 8 Stellen in project.pbxproj).
+
+**Offen beim Nutzer:** in Xcode auf dem iPhone testen (Heidekreis/Soltau, Ansbach, Widgets – im Simulator ohne Signatur nur Platzhalter), CloudKit-Schema nach Production, dann App-Store-Update. Berechtigungsdialoge sind nur deutsch (InfoPlist-Übersetzung fehlt). Die alte Arbeitskopie in `~/Documents/ios_github` (iCloud) ist veraltet – in `~/Claude/tonne` arbeiten.
 
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
