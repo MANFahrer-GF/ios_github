@@ -65,7 +65,8 @@ public extension ProviderCatalog {
             let next = item.folded[item.folded.index(item.folded.startIndex, offsetBy: needle.count)]
             return !next.isLetter
         } : exact
-        return Array(hits.prefix(8)).map { (name: $0.name, district: $0.district) }
+        // Gleichnamige Gemeinden vollständig (Neuenkirchen gibt es zehnmal), bloße Anfänge begrenzt
+        return Array(exact.isEmpty ? hits.prefix(8) : hits[...]).map { (name: $0.name, district: $0.district) }
     }
 
     /// Gibt es für diese Gemeinde einen Entsorger – kreisweit oder eigens für die Gemeinde?

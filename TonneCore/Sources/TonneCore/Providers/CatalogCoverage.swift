@@ -88,10 +88,13 @@ enum CoverageIndex {
 public struct PlaceCheck: Identifiable, Hashable {
     public let name: String
     public let district: String
-    /// Kreisweite Entsorger des Landkreises und eigene Einträge der Gemeinde.
+    /// Entsorger für diese Gemeinde: kreisweit, mit der Gemeinde in der Ortsliste oder im Namen, oder eigens für sie.
     public let entries: [CatalogEntry]
+    /// Weitere Einträge desselben Kreises, die erkennbar für andere Gemeinden gelten (z. B. „Gemeinde Gumtow“ bei Perleberg)
+    /// – ein Amt kann trotzdem auch seine Mitgliedsgemeinden bedienen.
+    public let otherEntries: [CatalogEntry]
     public var id: String { "\(district)|\(name)" }
-    public var isCovered: Bool { !entries.isEmpty }
+    public var isCovered: Bool { !entries.isEmpty || !otherEntries.isEmpty }
 }
 
 public extension ProviderCatalog {
@@ -99,12 +102,27 @@ public extension ProviderCatalog {
     static func checkPlace(_ query: String) -> [PlaceCheck] {
         municipalities(matching: query).map { hit in
             let pair = "\(hit.district)|\(hit.name)"
-            let found = entries.filter { entry in
-                (CatalogRegions.entryDistricts[entry.id] ?? []).contains(hit.district)
-                    || (CatalogRegions.localEntries[entry.id] ?? []).contains(pair)
-            }
-            return PlaceCheck(name: hit.name, district: hit.district, entries: found.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending })
+            let local = entries.filter { (CatalogRegions.localEntries[$0.id] ?? []).contains(pair) }
+            let regional = entries.filter { (CatalogRegions.entryDistricts[$0.id] ?? []).contains(hit.district) && !local.contains($0) }
+            let fits = regional.filter { serves($0, municipality: hit.name, district: hit.district) }
+            let others = regional.filter { !fits.contains($0) }
+            let byTitle = { (a: CatalogEntry, b: CatalogEntry) in a.title.localizedStandardCompare(b.title) == .orderedAscending }
+            return PlaceCheck(name: hit.name, district: hit.district, entries: (local + fits).sorted(by: byTitle), otherEntries: others.sorted(by: byTitle))
         }
+    }
+
+    /// Gilt ein kreisweit zugeordneter Eintrag für diese Gemeinde? Ja, wenn er sie (oder den Kreis) in der Ortsliste
+    /// oder im Titel nennt oder ohne Ortsliste nicht nach einer einzelnen Gemeinde benannt ist („Landkreis Ansbach“ ja,
+    /// „Gemeinde Gumtow (Landkreis Prignitz)“ nicht für Perleberg).
+    private static func serves(_ entry: CatalogEntry, municipality: String, district: String) -> Bool {
+        let place = fold(municipality.replacingOccurrences(of: #"\s*\(.*\)$"#, with: "", options: .regularExpression))
+        let county = fold(DistrictCoverage.displayName(district).replacingOccurrences(of: #"^(Landkreis|Kreis) "#, with: "", options: .regularExpression))
+        let names = entry.places.map(fold)
+        if names.contains(where: { $0 == place || $0.hasPrefix(place + " ") || $0.hasPrefix(place + "(") || $0 == county }) { return true }
+        let title = fold(entry.title)
+        if title.range(of: #"(^|[^\p{L}])"# + NSRegularExpression.escapedPattern(for: place) + #"($|[^\p{L}])"#, options: .regularExpression) != nil { return true }
+        let namedForOneTown = ["gemeinde ", "stadt ", "amt ", "markt ", "verbandsgemeinde ", "samtgemeinde ", "ortsgemeinde "].contains { title.hasPrefix($0) }
+        return names.isEmpty && !namedForOneTown
     }
 
     /// Einschränkung eines Entsorgers in einem Satz (PDF-Jahresdaten, berechnete Termine, nur einzelne Müllarten …),

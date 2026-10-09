@@ -8,6 +8,9 @@ struct CoverageView: View {
     var onChoose: ((CatalogEntry) -> Void)? = nil
 
     @State private var query = ""
+    /// Treffer zur Eingabe – nur bei geänderter Eingabe neu berechnet, nicht bei jedem Neuzeichnen.
+    @State private var checks: [PlaceCheck] = []
+    @State private var fallback: [CatalogEntry] = []
 
     private let all = ProviderCatalog.coverage
     /// Einmal ermittelt – Jahresdaten lesen für ihren Hinweis ihre Termindaten.
@@ -23,6 +26,7 @@ struct CoverageView: View {
                 introSection
                 restrictedSection
                 if !missing.isEmpty { missingSection }
+                districtsSection
                 workaroundSection
             } else {
                 resultSections
@@ -31,6 +35,10 @@ struct CoverageView: View {
         .navigationTitle(L10n.t("Geht mein Ort?", "Is my town covered?"))
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always),
                     prompt: L10n.t("Ort eingeben, z. B. Soltau", "Enter a town, e.g. Soltau"))
+        .onChange(of: trimmedQuery) { _, text in
+            checks = text.isEmpty ? [] : ProviderCatalog.checkPlace(text)
+            fallback = text.isEmpty || !checks.isEmpty ? [] : Array(ProviderCatalog.search(text).prefix(20))
+        }
     }
 
     // MARK: Ohne Eingabe
@@ -58,6 +66,17 @@ struct CoverageView: View {
         }
     }
 
+    /// Durch die Kreise blättern – vor allem im Assistenten, wenn der Ort nicht gefunden wird.
+    private var districtsSection: some View {
+        Section {
+            NavigationLink {
+                DistrictListView(onChoose: onChoose)
+            } label: {
+                Label(L10n.t("Alle Landkreise und Städte", "All districts and cities"), systemImage: "list.bullet")
+            }
+        }
+    }
+
     private var missingSection: some View {
         Section(L10n.t("Noch nicht angebunden", "Not connected yet")) {
             ForEach(missing) { item in
@@ -77,10 +96,9 @@ struct CoverageView: View {
 
     @ViewBuilder
     private var resultSections: some View {
-        let checks = ProviderCatalog.checkPlace(trimmedQuery)
         if checks.isEmpty {
             // Keine Gemeinde dieses Namens (Ortsteil, Entsorger- oder Kreisname): normale Entsorgersuche
-            let found = Array(ProviderCatalog.search(trimmedQuery).prefix(20))
+            let found = fallback
             if found.isEmpty {
                 Section {
                     Text(L10n.t("Nichts gefunden. Gesucht wird nach Gemeinden – bei einem Ortsteil bitte die Gemeinde eingeben, zu der er gehört.",
@@ -106,6 +124,16 @@ struct CoverageView: View {
                     }
                 } header: {
                     Text("\(check.name) · \(DistrictCoverage.displayName(check.district))")
+                }
+                if !check.otherEntries.isEmpty {
+                    Section {
+                        ForEach(check.otherEntries) { entryRow($0) }
+                    } header: {
+                        Text(L10n.t("Weitere Entsorger im \(DistrictCoverage.displayName(check.district))", "Other providers in \(DistrictCoverage.displayName(check.district))"))
+                    } footer: {
+                        Text(L10n.t("Gelten für andere Gemeinden des Kreises – ein Amt bedient auch seine Mitgliedsgemeinden.",
+                                    "These serve other municipalities of the district – an Amt also serves its member municipalities."))
+                    }
                 }
             }
             if checks.contains(where: { !$0.isCovered }) { workaroundSection }
@@ -181,5 +209,60 @@ struct CoverageView: View {
             Text(L10n.t("Ort fehlt? So geht es trotzdem", "Town missing? How to still get your dates"))
         }
         .font(.subheadline)
+    }
+}
+
+/// Alle Kreise nach Bundesland; Antippen zeigt die Entsorger des Kreises.
+private struct DistrictListView: View {
+    var onChoose: ((CatalogEntry) -> Void)?
+    @State private var query = ""
+    private let all = ProviderCatalog.coverage
+
+    private var grouped: [(state: String, items: [DistrictCoverage])] {
+        let needle = ProviderCatalog.fold(query)
+        let items = needle.isEmpty ? all : all.filter { ProviderCatalog.fold($0.district).contains(needle) || ProviderCatalog.fold($0.state).contains(needle) }
+        let groups = Dictionary(grouping: items, by: \.state)
+        return groups.keys.sorted().map { ($0, groups[$0] ?? []) }
+    }
+
+    var body: some View {
+        List {
+            ForEach(grouped, id: \.state) { group in
+                Section(group.state) {
+                    ForEach(group.items) { item in
+                        NavigationLink(item.displayName) { DistrictEntriesView(coverage: item, onChoose: onChoose) }
+                    }
+                }
+            }
+        }
+        .navigationTitle(L10n.t("Landkreise", "Districts"))
+        .searchable(text: $query, prompt: L10n.t("Landkreis oder Bundesland", "District or state"))
+    }
+}
+
+/// Die Entsorger eines Kreises.
+private struct DistrictEntriesView: View {
+    let coverage: DistrictCoverage
+    var onChoose: ((CatalogEntry) -> Void)?
+
+    var body: some View {
+        List(ProviderCatalog.entries(inDistrict: coverage.district)) { entry in
+            if let onChoose {
+                Button { onChoose(entry) } label: { content(entry) }
+            } else {
+                content(entry)
+            }
+        }
+        .navigationTitle(coverage.displayName)
+    }
+
+    private func content(_ entry: CatalogEntry) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(entry.title).foregroundStyle(.primary)
+            Text(entry.kind.displayName).font(.caption).foregroundStyle(.secondary)
+            if let restriction = ProviderCatalog.restriction(for: entry) {
+                Text(restriction).font(.caption).foregroundStyle(.secondary)
+            }
+        }
     }
 }

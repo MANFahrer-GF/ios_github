@@ -180,6 +180,23 @@ final class CoverageTests: XCTestCase {
         XCTAssertTrue(ProviderCatalog.checkPlace("So").isEmpty, "zu kurz")
     }
 
+    /// Einträge für andere Gemeinden des Kreises getrennt; gleichnamige Gemeinden vollständig.
+    func testCheckPlaceSeparatesOtherTowns() throws {
+        let perleberg = try XCTUnwrap(ProviderCatalog.checkPlace("Perleberg").first)
+        XCTAssertTrue(perleberg.entries.contains { $0.title.hasPrefix("Stadt Perleberg") }, "\(perleberg.entries.map(\.title))")
+        XCTAssertFalse(perleberg.entries.contains { $0.title.hasPrefix("Gemeinde Gumtow") })
+        XCTAssertTrue(perleberg.otherEntries.contains { $0.title.hasPrefix("Gemeinde Gumtow") })
+        // Kreisweite Einträge bleiben passend
+        let feuchtwangen = try XCTUnwrap(ProviderCatalog.checkPlace("Feuchtwangen").first)
+        XCTAssertTrue(feuchtwangen.entries.contains { $0.title == "Landkreis Ansbach" })
+        let friedrichshafen = try XCTUnwrap(ProviderCatalog.checkPlace("Friedrichshafen").first)
+        XCTAssertTrue(friedrichshafen.entries.contains { $0.title.hasPrefix("Bodenseekreis") })
+        XCTAssertTrue(friedrichshafen.otherEntries.isEmpty || !friedrichshafen.entries.isEmpty)
+        // Zehn Gemeinden heißen Neuenkirchen – alle müssen erscheinen
+        XCTAssertEqual(ProviderCatalog.checkPlace("Neuenkirchen").count, ProviderCatalog.municipalities(matching: "Neuenkirchen").count)
+        XCTAssertGreaterThan(ProviderCatalog.checkPlace("Neuenkirchen").count, 8)
+    }
+
     func testRestrictedEntries() {
         let keys = Set(ProviderCatalog.restrictedEntries.map(\.serviceKey))
         XCTAssertTrue(keys.isSuperset(of: ["weimar", "landkreis_as", "ansbach", "saaleholzland", "sontra"]), "\(keys.sorted())")
