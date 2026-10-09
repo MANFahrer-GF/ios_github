@@ -62,8 +62,8 @@ struct CustomEventsView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.modelContext) private var context
     @Query(sort: \CustomEvent.title) private var events: [CustomEvent]
-    @State private var editing: CustomEvent?
-    @State private var showNew = false
+    /// Öffnen übernimmt der Tab „Termine“ – eine Stelle für alle Fenster, sonst blockiert SwiftUI verschachtelte Sheets.
+    let onOpen: (CustomEvent) -> Void
     private var doneKeys: Set<String> { SettingsKeys.customDoneKeys() }
 
     var body: some View {
@@ -74,7 +74,7 @@ struct CustomEventsView: View {
             ForEach(events.sorted { ($0.nextOccurrence ?? .distantFuture) < ($1.nextOccurrence ?? .distantFuture) }) { event in
                 let next = event.nextOccurrence
                 let isDone = next.map { SettingsKeys.isCustomDone(id: event.id, day: $0, keys: doneKeys) } ?? false
-                Button { editing = event } label: {
+                Button { onOpen(event) } label: {
                     HStack(spacing: 12) {
                         SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 40)
                         VStack(alignment: .leading, spacing: 2) {
@@ -104,9 +104,6 @@ struct CustomEventsView: View {
                 try? context.save(); Task { await model.refreshAll() }
             }
         }
-        .toolbar { ToolbarItem(placement: .topBarTrailing) { Button { showNew = true } label: { Image(systemName: "plus") } } }
-        .sheet(isPresented: $showNew) { CustomEventEditView(event: nil) }
-        .sheet(item: $editing) { CustomEventEditView(event: $0) }
     }
 }
 

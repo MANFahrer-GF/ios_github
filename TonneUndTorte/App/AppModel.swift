@@ -122,8 +122,6 @@ final class AppModel: ObservableObject {
     @Published var recentChanges: [String] = []
     @Published var lastError: String?
     @Published var selectedTab: AppTab = .overview
-    /// Erneutes Antippen eines Tabs setzt ihn auf seine Startseite zurück (zählt hoch → Ansicht wird neu aufgebaut).
-    @Published var tabResets: [AppTab: Int] = [:]
     /// Aus einer Mitteilung angetippt: diese Person bzw. diesen Termin öffnen.
     @Published var personToOpen: UUID?
     @Published var eventToOpen: UUID?

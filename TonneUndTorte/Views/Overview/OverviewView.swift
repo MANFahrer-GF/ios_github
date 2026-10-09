@@ -21,8 +21,17 @@ struct OverviewView: View {
     @AppStorage(SettingsKeys.overviewDays) private var previewDays = 60
     @AppStorage(SettingsKeys.overviewStats) private var showStats = true
     @State private var refreshToken = 0
-    @State private var editingPerson: Person?
-    @State private var editingEvent: CustomEvent?
+    /// Geburtstag oder Termin, der gerade bearbeitet wird – ein einziges Sheet für beides.
+    private enum Editing: Identifiable {
+        case person(Person), event(CustomEvent)
+        var id: String {
+            switch self {
+            case .person(let p): return "person-\(p.id)"
+            case .event(let e): return "event-\(e.id)"
+            }
+        }
+    }
+    @State private var editing: Editing?
     /// Alle fünf Minuten neu auswerten – mittags kommt „wieder reinholen“, um 17 Uhr springt die Abholung weiter.
     private let clock = Timer.publish(every: 300, on: .main, in: .common).autoconnect()
 
@@ -124,8 +133,12 @@ struct OverviewView: View {
             .onReceive(clock) { _ in refreshToken += 1 }
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
             // Geburtstag oder Termin direkt hier öffnen – nicht in einen anderen Tab springen
-            .sheet(item: $editingPerson) { BirthdayEditView(person: $0) }
-            .sheet(item: $editingEvent) { CustomEventEditView(event: $0) }
+            .sheet(item: $editing) { item in
+                switch item {
+                case .person(let person): BirthdayEditView(person: person)
+                case .event(let event): CustomEventEditView(event: event)
+                }
+            }
         }
     }
 
@@ -409,8 +422,8 @@ struct OverviewView: View {
     }
 
     private func open(_ event: CalendarEvent) {
-        if let id = event.personID { editingPerson = model.allPeople().first { $0.id == id } }
-        else if let id = event.eventID { editingEvent = model.allCustomEvents().first { $0.id == id } }
+        if let id = event.personID, let person = model.allPeople().first(where: { $0.id == id }) { editing = .person(person) }
+        else if let id = event.eventID, let custom = model.allCustomEvents().first(where: { $0.id == id }) { editing = .event(custom) }
     }
 
     private var statsCard: some View {

@@ -31,10 +31,20 @@ struct BirthdayListView: View {
     @Query(sort: \Person.name) private var people: [Person]
     @Environment(\.openURL) private var openURL
     @SceneStorage("termine.segment") private var segment: Segment = .birthdays
-    @State private var editing: Person?
-    @State private var editingEvent: CustomEvent?
-    @State private var showNew = false
-    @State private var showImport = false
+    /// Alle Fenster dieses Tabs über eine einzige Stelle – verschachtelte .sheet-Modifier blockieren sich sonst gegenseitig.
+    enum SheetKind: Identifiable {
+        case newPerson, person(Person), importContacts, newEvent, event(CustomEvent)
+        var id: String {
+            switch self {
+            case .newPerson: return "newPerson"
+            case .person(let p): return "person-\(p.id)"
+            case .importContacts: return "import"
+            case .newEvent: return "newEvent"
+            case .event(let e): return "event-\(e.id)"
+            }
+        }
+    }
+    @State private var sheet: SheetKind?
 
     /// Nach Monat des nächsten Geburtstags; das Jahr steht nur dabei, wenn es nicht das laufende ist.
     private var monthSections: [(title: String, entries: [(person: Person, next: Date, years: Int?)])] {
@@ -56,7 +66,7 @@ struct BirthdayListView: View {
                 Text(DateText.countdown(day)).font(KlarStyle.font(32, .black)).foregroundStyle(.primary)
             }
             ForEach(entries, id: \.person.id) { entry in
-                Button { editing = entry.person } label: {
+                Button { sheet = .person(entry.person) } label: {
                     HStack(spacing: 14) {
                         PersonAvatar(person: entry.person, initials: entry.person.initials, colorHex: entry.person.colorHex, size: 56)
                         VStack(alignment: .leading, spacing: 2) {
@@ -90,22 +100,51 @@ struct BirthdayListView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal).padding(.vertical, 8)
-                if segment == .birthdays { birthdays } else { CustomEventsView() }
+                if segment == .birthdays { birthdays } else { CustomEventsView { sheet = .event($0) } }
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle(L10n.t("Termine", "Events"))
-            .sheet(item: $editingEvent) { CustomEventEditView(event: $0) }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if segment == .birthdays {
+                        Menu {
+                            Button { sheet = .newPerson } label: { Label("Neuer Geburtstag", systemImage: "plus") }
+                            Button { sheet = .importContacts } label: { Label("Aus Kontakten importieren", systemImage: "person.crop.circle.badge.plus") }
+                            if !people.isEmpty {
+                                Divider()
+                                ShareLink(item: CSVFile(text: BirthdayExport.csv(people.map(\.exportRow))), preview: SharePreview("Geburtstage.csv")) {
+                                    Label("Als CSV exportieren (Excel)", systemImage: "tablecells")
+                                }
+                                ShareLink(item: PDFFile(data: BirthdayPDF.render(people.map(\.exportRow))), preview: SharePreview("Geburtstage.pdf")) {
+                                    Label("Als PDF exportieren", systemImage: "doc.richtext")
+                                }
+                            }
+                        } label: { Image(systemName: "plus") }
+                    } else {
+                        Button { sheet = .newEvent } label: { Image(systemName: "plus") }
+                    }
+                }
+            }
+            .sheet(item: $sheet) { kind in
+                switch kind {
+                case .newPerson: BirthdayEditView(person: nil)
+                case .person(let person): BirthdayEditView(person: person)
+                case .importContacts: ContactsImportView()
+                case .newEvent: CustomEventEditView(event: nil)
+                case .event(let event): CustomEventEditView(event: event)
+                }
+            }
             .onChange(of: model.personToOpen, initial: true) { _, id in
                 guard let id else { return }
                 model.personToOpen = nil
                 segment = .birthdays
-                if let person = people.first(where: { $0.id == id }) { editing = person }
+                if let person = people.first(where: { $0.id == id }) { sheet = .person(person) }
             }
             .onChange(of: model.eventToOpen, initial: true) { _, id in
                 guard let id else { return }
                 model.eventToOpen = nil
                 segment = .custom
-                editingEvent = model.allCustomEvents().first { $0.id == id }
+                if let event = model.allCustomEvents().first(where: { $0.id == id }) { sheet = .event(event) }
             }
         }
     }
@@ -118,8 +157,8 @@ struct BirthdayListView: View {
                     } description: {
                         Text("Importiere sie aus deinen Kontakten oder lege sie von Hand an.")
                     } actions: {
-                        Button("Aus Kontakten importieren") { showImport = true }.buttonStyle(.borderedProminent)
-                        Button("Von Hand anlegen") { showNew = true }
+                        Button("Aus Kontakten importieren") { sheet = .importContacts }.buttonStyle(.borderedProminent)
+                        Button("Von Hand anlegen") { sheet = .newPerson }
                     }
                 } else {
                     List {
@@ -131,7 +170,7 @@ struct BirthdayListView: View {
                         ForEach(monthSections, id: \.title) { section in
                             Section {
                                 ForEach(section.entries, id: \.person.id) { entry in
-                                    Button { editing = entry.person } label: { BirthdayRow(person: entry.person, next: entry.next, years: entry.years) }.buttonStyle(.plain)
+                                    Button { sheet = .person(entry.person) } label: { BirthdayRow(person: entry.person, next: entry.next, years: entry.years) }.buttonStyle(.plain)
                                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                             if let url = NotificationManager.greetingURL(name: entry.person.name, phone: entry.person.phone) {
                                                 Button { openURL(url) } label: { Label(L10n.t("Gratulieren", "Send wishes"), systemImage: "message.fill") }.tint(.pink)
@@ -154,26 +193,6 @@ struct BirthdayListView: View {
                     .listStyle(.insetGrouped)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Button { showNew = true } label: { Label("Neuer Geburtstag", systemImage: "plus") }
-                        Button { showImport = true } label: { Label("Aus Kontakten importieren", systemImage: "person.crop.circle.badge.plus") }
-                        if !people.isEmpty {
-                            Divider()
-                            ShareLink(item: CSVFile(text: BirthdayExport.csv(people.map(\.exportRow))), preview: SharePreview("Geburtstage.csv")) {
-                                Label("Als CSV exportieren (Excel)", systemImage: "tablecells")
-                            }
-                            ShareLink(item: PDFFile(data: BirthdayPDF.render(people.map(\.exportRow))), preview: SharePreview("Geburtstage.pdf")) {
-                                Label("Als PDF exportieren", systemImage: "doc.richtext")
-                            }
-                        }
-                    } label: { Image(systemName: "plus") }
-                }
-            }
-            .sheet(isPresented: $showNew) { BirthdayEditView(person: nil) }
-            .sheet(item: $editing) { BirthdayEditView(person: $0) }
-            .sheet(isPresented: $showImport) { ContactsImportView() }
     }
 }
 
@@ -309,6 +328,10 @@ struct BirthdayEditView: View {
                     Section {
                         if let url = greetingURL(for: person) {
                             Link(destination: url) { Label("Glückwunsch per Nachricht senden", systemImage: "message.fill") }
+                        }
+                        // Nummer aus dem Feld oben – auch wenn sie gerade erst eingetragen und noch nicht gesichert ist
+                        if case let digits = phone.filter({ "+0123456789".contains($0) }), !digits.isEmpty, let url = URL(string: "tel:\(digits)") {
+                            Link(destination: url) { Label(L10n.t("Anrufen", "Call"), systemImage: "phone.fill") }
                         }
                         Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Geburtstag löschen", systemImage: "trash") }
                     }
