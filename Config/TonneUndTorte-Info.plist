@@ -18,7 +18,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Tonne &amp; Torte liest Geburtstage aus deinen Kontakten, wenn du sie importieren möchtest.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Tonne &amp; Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge.</string>
+	<string>Tonne &amp; Torte trägt Abholtermine und Geburtstage auf Wunsch in deinen Kalender ein. Zum Aktualisieren liest und ändert sie nur ihre eigenen Einträge.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Dein Standort hilft, den passenden Entsorger für deine Region vorzuschlagen.</string>
 	<key>CFBundleURLTypes</key>

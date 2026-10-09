@@ -45,6 +45,23 @@ final class ICSURLProviderTests: XCTestCase {
         XCTAssertFalse(ICSURLProvider.formerTitle("Papier", matches: "Biomüll"))
     }
 
+    /// Abgleich: jede Müllart höchstens einmal, sonst ersetzt ein Titel die Termine des anderen.
+    func testTitleMatchingAssignsEachTypeOnce() {
+        typealias E = WasteTitleMatching.Existing
+        // Früherer Sammeltermin, vom Nutzer in „Restmüll“ umbenannt: „Biomüll“ führt ihn weiter, „Restmüll“ wird neu
+        var result = WasteTitleMatching.assign(["Biomüll", "Restmüll"], to: [E(sourceKey: "Abholung: Biomüll, Restmüll", name: "Restmüll")])
+        XCTAssertEqual(result, ["Biomüll": 0])
+        // Gleicher Quellen-Titel hat Vorrang vor gleichem Namen
+        result = WasteTitleMatching.assign(["Papier"], to: [E(sourceKey: nil, name: "Papier"), E(sourceKey: "Papier", name: "Blaue Tonne")])
+        XCTAssertEqual(result, ["Papier": 1])
+        // Bereinigter Titel findet die alte Müllart, unbekannte Titel bleiben frei
+        result = WasteTitleMatching.assign(["Biomüll", "Sperrmüll"], to: [E(sourceKey: "Abholung: Biomüll", name: "Abholung: Biomüll")])
+        XCTAssertEqual(result, ["Biomüll": 0])
+        // Name ohne Rücksicht auf Groß-/Kleinschreibung
+        result = WasteTitleMatching.assign(["gelber sack"], to: [E(sourceKey: nil, name: "Gelber Sack")])
+        XCTAssertEqual(result, ["gelber sack": 0])
+    }
+
     /// Steinbach: eine Datei für beide Bezirke – `#ohne=` lässt den anderen Bezirk und Großbehälter weg.
     func testExcludeMarker() async throws {
         ICSStub.body = """

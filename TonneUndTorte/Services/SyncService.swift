@@ -36,22 +36,15 @@ enum SyncService {
     static func suggestMappings(for pickups: [Pickup], location: Location?) -> [Mapping] {
         let existing = location?.sortedWasteTypes ?? []
         let grouped = Dictionary(grouping: pickups, by: \.name)
-        return grouped.keys.sorted().map { summary in
+        let summaries = grouped.keys.sorted()
+        let assigned = WasteTitleMatching.assign(summaries.filter { !WasteCategory.isIgnorableTitle($0) },
+                                                 to: existing.map { .init(sourceKey: $0.sourceKey, name: $0.name) })
+        return summaries.map { summary in
             let count = grouped[summary]?.count ?? 0
             if WasteCategory.isIgnorableTitle(summary) {
                 return Mapping(summary: summary, count: count, target: .ignore)
             }
-            if let bySource = existing.first(where: { $0.sourceKey == summary }) {
-                return Mapping(summary: summary, count: count, target: .existing(bySource))
-            }
-            if let byName = existing.first(where: { $0.name.lowercased() == summary.lowercased() }) {
-                return Mapping(summary: summary, count: count, target: .existing(byName))
-            }
-            // Titel, die der ICS-Anbieter seit Okt. 2026 bereinigt („Abholung: Biomüll“ → „Biomüll“): bisherige Müllart weiterführen
-            if let former = existing.first(where: { $0.sourceKey.map { ICSURLProvider.formerTitle($0, matches: summary) } ?? false }) {
-                return Mapping(summary: summary, count: count, target: .existing(former))
-            }
-            return Mapping(summary: summary, count: count, target: .new(WasteCategory.classify(summary)))
+            return Mapping(summary: summary, count: count, target: assigned[summary].map { .existing(existing[$0]) } ?? .new(WasteCategory.classify(summary)))
         }
     }
 

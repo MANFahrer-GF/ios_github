@@ -71,6 +71,10 @@ def check_file(path, keywords, today):
     if not years or not all(isinstance(y, int) for y in years) or years != sorted(set(years)):
         err(f'years ungültig {years}')
     ids, used = set(), set()
+    bad = [a for a in d['areas'] if not isinstance(a, dict)]
+    if bad:
+        err(f'{len(bad)} areas sind keine Objekte')
+        d['areas'] = [a for a in d['areas'] if isinstance(a, dict)]
     grouped = [a.get('group') is not None for a in d['areas']]
     if any(grouped) and not d['groupTitle']:
         err('Areas mit group, aber groupTitle fehlt')

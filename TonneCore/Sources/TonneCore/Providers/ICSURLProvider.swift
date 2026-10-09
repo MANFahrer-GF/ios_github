@@ -101,3 +101,32 @@ public struct ICSURLProvider: WasteProvider {
         return [name.isEmpty ? NameCleaner.clean(summary) : name]
     }
 }
+
+/// Ordnet Termintitel beim Abgleich vorhandenen Müllarten zu. Jede Müllart höchstens einmal – sonst ersetzt
+/// ein zweiter Titel beim Abgleich die Termine des ersten (z. B. früherer Sammeltermin, auf den zweiten Teil umbenannt).
+/// Reihenfolge: gleicher Quellen-Titel, dann früherer Titel vor der Bereinigung (`ICSURLProvider.formerTitle`), dann gleicher Name.
+public enum WasteTitleMatching {
+    public struct Existing {
+        public let sourceKey: String?
+        public let name: String
+        public init(sourceKey: String?, name: String) { self.sourceKey = sourceKey; self.name = name }
+    }
+
+    /// Titel → Index in `existing`; nicht zugeordnete Titel fehlen im Ergebnis.
+    public static func assign(_ summaries: [String], to existing: [Existing]) -> [String: Int] {
+        var result: [String: Int] = [:]
+        var used = Set<Int>()
+        func pass(_ match: (Existing, String) -> Bool) {
+            for summary in summaries where result[summary] == nil {
+                if let index = existing.indices.first(where: { !used.contains($0) && match(existing[$0], summary) }) {
+                    result[summary] = index
+                    used.insert(index)
+                }
+            }
+        }
+        pass { $0.sourceKey == $1 }
+        pass { type, summary in type.sourceKey.map { ICSURLProvider.formerTitle($0, matches: summary) } ?? false }
+        pass { $0.name.lowercased() == $1.lowercased() }
+        return result
+    }
+}

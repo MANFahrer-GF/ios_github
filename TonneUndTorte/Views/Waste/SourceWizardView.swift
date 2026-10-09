@@ -333,7 +333,11 @@ struct SourceWizardView: View {
             pickups = try await provider.pickups(for: selections)
             let found = Set(pickups.map { WasteCategory.classify($0.name) })
             categories = Dictionary(uniqueKeysWithValues: found.map { ($0, [.residual, .organic, .paper, .packaging].contains($0) || found.count <= 4) })
-            if locationName.isEmpty { locationName = selections.first?.title ?? entry?.title ?? L10n.t("Zuhause", "Home") }
+            if locationName.isEmpty {
+                // Lesbare Adresse („Stadt Ansbach, Adlerstraße“) statt nur der ersten Auswahl (bei Straßensuche wäre das der Suchtext)
+                let label = provider.label(for: selections)
+                locationName = !label.isEmpty ? label : selections.first?.title ?? entry?.title ?? L10n.t("Zuhause", "Home")
+            }
             stage = .bins
         } catch {
             errorMessage = error.localizedDescription
