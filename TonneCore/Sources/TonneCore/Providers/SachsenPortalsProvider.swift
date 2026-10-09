@@ -35,7 +35,7 @@ public struct SachsenPortalsProvider: WasteProvider {
         case "kecl": return try await keclStep(after: selections)
         case "lkzwickau": return try await zwickauStep(after: selections)
         case "ekm": return try await ekmStep(after: selections)
-        default: throw ProviderError.notSupported(L10n.t("Unbekannter Entsorger.", "Unknown operator."))
+        default: throw ProviderError.notSupported(L10n.t("Unbekannter Entsorger.", "Unknown provider."))
         }
     }
 
@@ -47,7 +47,7 @@ public struct SachsenPortalsProvider: WasteProvider {
         case "kecl": pickups = try await keclPickups(selections, calendar: calendar)
         case "lkzwickau": pickups = try await zwickauPickups(selections, calendar: calendar)
         case "ekm": pickups = try await ekmPickups(selections, calendar: calendar)
-        default: throw ProviderError.notSupported(L10n.t("Unbekannter Entsorger.", "Unknown operator."))
+        default: throw ProviderError.notSupported(L10n.t("Unbekannter Entsorger.", "Unknown provider."))
         }
         let result = Array(Set(pickups)).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }

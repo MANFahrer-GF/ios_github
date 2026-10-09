@@ -284,9 +284,9 @@ final class AppModel: ObservableObject {
             guard due else { continue }
             do {
                 let result = try await sync(location: location)
-                messages.append("\(location.name): \(result.importedCount) Termine")
+                messages.append("\(location.name): \(L10n.dates(result.importedCount))")
             } catch {
-                location.lastSyncMessage = "Abgleich fehlgeschlagen: \(error.localizedDescription)"
+                location.lastSyncMessage = L10n.t("Abgleich fehlgeschlagen: \(error.localizedDescription)", "Sync failed: \(error.localizedDescription)")
                 messages.append("\(location.name): \(error.localizedDescription)")
             }
         }
@@ -295,7 +295,7 @@ final class AppModel: ObservableObject {
 
     private func notifyChanges(_ changes: [String], location: Location) {
         let content = UNMutableNotificationContent()
-        content.title = "Termine geändert: \(location.name)"
+        content.title = L10n.t("Termine geändert: \(location.name)", "Dates changed: \(location.name)")
         content.body = changes.prefix(3).joined(separator: "\n")
         content.sound = .default
         UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "changes-\(location.id)", content: content, trigger: nil))
@@ -366,7 +366,7 @@ final class AppModel: ObservableObject {
         return wanted.map { event in
             switch event.kind {
             case .waste:
-                return CalendarExport.Item(date: event.date, title: "🗑️ \(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")", notes: "Abholung", alarmMinutesFromMidnight: alarms)
+                return CalendarExport.Item(date: event.date, title: "🗑️ \(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")", notes: L10n.t("Abholung", "Collection"), alarmMinutesFromMidnight: alarms)
             case .birthday:
                 return CalendarExport.Item(date: event.date, title: "🎂 \(event.title)\(event.years.map { " (\($0))" } ?? "")", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
             case .custom:

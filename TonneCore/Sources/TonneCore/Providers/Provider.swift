@@ -138,7 +138,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .ahaHannover: return "aha Region Hannover"
         case .abfallPlusApp: return "AbfallPlus-App"
         case .gemosWasteBox: return "Gemos WasteBox"
-        case .awsh: return L10n.t("Kreis-Abfallkalender (api_v2)", "District waste calendar")
+        case .awsh: return L10n.t("Kreis-Abfallkalender", "District waste calendar")
         case .lobbe: return "Lobbe App"
         case .nerdbridge: return "Nerdbridge"
         case .bsr: return "BSR Berlin"

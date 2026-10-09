@@ -171,7 +171,8 @@ private struct LocationRow: View {
 
     private var updatedText: String? {
         guard let last = location.lastSyncAt else { return nil }
-        return "Aktualisiert \(last.formatted(.relative(presentation: .named)))"
+        let when = last.formatted(.relative(presentation: .named))
+        return L10n.t("Aktualisiert \(when)", "Updated \(when)")
     }
 }
 
@@ -189,8 +190,8 @@ struct WasteTypeRow: View {
         }
     }
     private var subtitle: String {
-        guard type.isActive else { return "Deaktiviert" }
-        guard let next = type.nextPickup else { return type.hasSchedule ? "Keine weiteren Termine" : "Noch keine Termine" }
+        guard type.isActive else { return L10n.t("Deaktiviert", "Disabled") }
+        guard let next = type.nextPickup else { return type.hasSchedule ? L10n.t("Keine weiteren Termine", "No further dates") : L10n.t("Noch keine Termine", "No dates yet") }
         return "\(DateText.countdown(next)) · \(DateText.short(next))"
     }
 }

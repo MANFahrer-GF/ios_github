@@ -39,7 +39,7 @@ final class Location {
     var canSync: Bool { source != nil }
 
     var sourceDescription: String {
-        guard let source else { return "Manuell / ICS-Datei" }
+        guard let source else { return L10n.t("Manuell / ICS-Datei", "Manual / ICS file") }
         return "\(source.providerKind.displayName) · \(source.label)"
     }
 

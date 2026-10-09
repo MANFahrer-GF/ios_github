@@ -22,9 +22,9 @@ struct AboutView: View {
                 card(title: "Was die App kann", symbol: "sparkles") {
                     VStack(alignment: .leading, spacing: 8) {
                         bullet("Abfuhrtermine direkt vom Entsorger, wöchentlich automatisch abgeglichen")
-                        bullet("Erinnerung am Vorabend mit „Erledigt“ und „Später nochmal“")
+                        bullet("Erinnerung am Vorabend mit „Erledigt“ und „In 1 Stunde nochmal“")
                         bullet("Widgets, Sperrbildschirm, Live-Aktivität, Apple Watch und Siri")
-                        bullet("Geburtstage mit Alter, runden Jubiläen und Geschenkideen")
+                        bullet("Geburtstage mit Alter, runden Geburtstagen und Geschenkideen")
                         bullet("Eigene wiederkehrende Termine wie TÜV oder Rauchmelder")
                         bullet("Kalender-App: iCloud, Google oder Outlook, automatisch aktuell")
                         bullet("Export als ICS, CSV und PDF")
@@ -39,7 +39,7 @@ struct AboutView: View {
                         bullet("Kein Tracking, keine Analyse-Tools, keine Werbe-ID")
                         bullet("Kein Konto, kein Abo, keine In-App-Käufe")
                         bullet("Kein eigener Server: Deine Daten bleiben auf deinen Geräten und in deiner eigenen iCloud")
-                        bullet("Nach draußen geht nur deine Adresse an den Entsorger, den du auswählst – damit er dir die Abfuhrtermine schickt")
+                        bullet("Nach außen gehen nur die Adressangaben (und technisch bedingt deine IP-Adresse) an das Portal des Entsorgers, den du auswählst. Die Standortsuche nutzt Apples Kartendienst.")
                     }
                 }
                 card(title: "Danke", symbol: "heart.fill") {

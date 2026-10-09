@@ -101,11 +101,16 @@ struct CalendarSyncView: View {
         do {
             let count = try await CalendarExport.export(items: model.calendarExportItems())
             targetText = CalendarExport.targetDescription()
-            if !silent { message = L10n.t("\(count) Termine in „\(targetText)“ eingetragen.", "\(count) events added to “\(targetText)”.") }
+            if !silent { message = Self.addedText(count, targetText) }
         } catch {
             if autoSync && !CalendarExport.hasFullAccess { autoSync = false }
             message = error.localizedDescription
         }
+    }
+
+    private static func addedText(_ count: Int, _ target: String) -> String {
+        let what = L10n.count(count, "Termin", "Termine", "event", "events")
+        return L10n.t("\(what) in „\(target)“ eingetragen.", "\(what) added to “\(target)”.")
     }
 
     private func move(to target: CalendarExport.Target) async {
@@ -114,7 +119,7 @@ struct CalendarSyncView: View {
         do {
             let count = try await CalendarExport.move(to: target, items: model.calendarExportItems())
             targetText = CalendarExport.targetDescription()
-            message = L10n.t("\(count) Termine in „\(targetText)“ eingetragen.", "\(count) events added to “\(targetText)”.")
+            message = Self.addedText(count, targetText)
         } catch {
             message = error.localizedDescription
         }

@@ -45,7 +45,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
     }
 
     private var unknownService: ProviderError {
-        .invalidSelection(L10n.t("Unbekannter Betreiber: \(serviceKey)", "Unknown operator: \(serviceKey)"))
+        .invalidSelection(L10n.t("Unbekannter Betreiber: \(serviceKey)", "Unknown provider: \(serviceKey)"))
     }
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
@@ -245,7 +245,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
             let entries = all.filter { trim($0.location) == selections[0].id && trim($0.street) == street }
             let options = entries.map { entry -> (String, String) in
                 let number = trim(entry.houseNumbers)
-                return (String(entry.id), number.isEmpty ? L10n.t("übrige Hausnummern", "other numbers") : number)
+                return (String(entry.id), number.isEmpty ? L10n.t("Übrige Hausnummern", "other numbers") : number)
             }
             return SelectionStep(title: SelectionStep.houseNumberTitle, options: Self.sortedOptions(options))
         default:

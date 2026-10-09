@@ -70,7 +70,7 @@ public struct MecklenburgPortalsProvider: WasteProvider {
     static let rhythmPrefix = "rhythm:"
 
     static var unknownService: ProviderError {
-        .notSupported(L10n.t("Dieser Betreiber wird nicht unterstützt.", "This operator is not supported."))
+        .notSupported(L10n.t("Dieser Betreiber wird nicht unterstützt.", "This provider is not supported."))
     }
 
     static func rhythmOption(_ value: String, _ title: String) -> SelectionOption {
@@ -159,7 +159,7 @@ private struct LRO {
             MecklenburgPortalsProvider.rhythmOption("4w|s", L10n.t("Alle 4 Wochen, nur Saison", "Every 4 weeks, season only")),
         ]
         if letters.contains(weekly) { options.insert(MecklenburgPortalsProvider.rhythmOption("w", L10n.t("Wöchentlich", "Weekly")), at: 0) }
-        if letters.contains(twice) { options.insert(MecklenburgPortalsProvider.rhythmOption("zw", L10n.t("2x pro Woche", "Twice a week")), at: 0) }
+        if letters.contains(twice) { options.insert(MecklenburgPortalsProvider.rhythmOption("zw", L10n.t("2× pro Woche", "Twice a week")), at: 0) }
         options.append(MecklenburgPortalsProvider.rhythmOption("none", L10n.t("Keine Tonne", "No bin")))
         return options
     }
@@ -427,7 +427,7 @@ private struct VEVG {
         let boxes = Set(HTMLText.matches(#"type="checkbox" name="(ical_\d+)""#, in: html).map { $0[0] })
         guard boxes.contains("ical_1"), boxes.contains("ical_11") else { return nil }
         return SelectionStep(title: L10n.t("Restmülltonne", "Residual waste bin"), options: [
-            MecklenburgPortalsProvider.rhythmOption("1", L10n.t("14-täglich", "Every 2 weeks")),
+            MecklenburgPortalsProvider.rhythmOption("1", L10n.t("Alle 2 Wochen", "Every 2 weeks")),
             MecklenburgPortalsProvider.rhythmOption("11", L10n.t("Wöchentlich", "Weekly")),
         ], searchable: false)
     }

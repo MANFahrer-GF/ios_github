@@ -105,8 +105,8 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
 
     func sendTest() {
         let content = UNMutableNotificationContent()
-        content.title = "Morgen: Gelber Sack"
-        content.body = "So sieht eine Erinnerung von Tonne & Torte aus. 🎉"
+        content.title = L10n.t("Morgen: Gelber Sack", "Tomorrow: Yellow bag")
+        content.body = L10n.t("So sieht eine Erinnerung von Tonne & Torte aus. 🎉", "This is what a Tonne & Torte reminder looks like. 🎉")
         content.sound = .default
         content.categoryIdentifier = "WASTE"
         content.userInfo = ["dayKey": Days.iso(Days.add(1, to: Days.today())), "category": "WASTE_EVENING"]

@@ -25,7 +25,7 @@ public struct ICSURLProvider: WasteProvider {
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         guard !isDirectLink, selections.isEmpty else { return nil }
         let host = URL(string: serviceKey)?.host ?? serviceKey
-        return .text(title: L10n.t("iCal-Link von \(host)", "iCal link from \(host)"),
+        return .text(title: L10n.t("ICS-Link von \(host)", "ICS link from \(host)"),
                      placeholder: L10n.t("Auf \(host) den Link „iCal / Kalender abonnieren“ kopieren und hier einfügen", "Copy the “iCal / subscribe” link on \(host) and paste it here"))
     }
 

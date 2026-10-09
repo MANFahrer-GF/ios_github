@@ -46,7 +46,7 @@ struct SiriView: View {
             } header: {
                 Label("Geburtstage", systemImage: "birthday.cake.fill")
             } footer: {
-                Text("Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.“")
+                Text("Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Mi., 17. Okt.“")
             }
 
             Section {
@@ -69,7 +69,7 @@ struct SiriView: View {
             }
 
             Section {
-                Text("Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne die Watch-App dafür einmal, und die iPhone-App sollte die Termine schon geschickt haben.")
+                Text("Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne dafür einmal die Watch-App – das iPhone schickt ihr dann die Termine.")
             } header: {
                 Label("Apple Watch", systemImage: "applewatch")
             }

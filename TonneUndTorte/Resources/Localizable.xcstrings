@@ -21,16 +21,6 @@
         }
       }
     },
-    "%lld Termine sind da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld dates loaded. The app reminds you the evening before – and refreshes the dates every week."
-          }
-        }
-      }
-    },
     "%lld×": {
       "localizations": {
         "en": {
@@ -241,16 +231,6 @@
         }
       }
     },
-    "Aktualisiert %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updated %@"
-          }
-        }
-      }
-    },
     "Alle": {
       "localizations": {
         "en": {
@@ -451,7 +431,7 @@
         }
       }
     },
-    "Am Vorabend um %@ erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, die Abend-Erinnerung kommt dann nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.": {
+    "Am Vorabend um %@ erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -511,12 +491,12 @@
         }
       }
     },
-    "Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne die Watch-App dafür einmal, und die iPhone-App sollte die Termine schon geschickt haben.": {
+    "Auf der Uhr funktionieren die Sätze für Müllabfuhr, Geburtstage und „Erledigt“. Öffne dafür einmal die Watch-App – das iPhone schickt ihr dann die Termine.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "On the watch, the phrases for collections, birthdays and “Done” work. Open the watch app once; the iPhone app should already have sent the dates."
+            "value": "On the watch, the phrases for collections, birthdays and “Done” work. Open the watch app once; the iPhone then sends it the dates."
           }
         }
       }
@@ -681,16 +661,6 @@
         }
       }
     },
-    "Deaktiviert": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Disabled"
-          }
-        }
-      }
-    },
     "Deine Daten": {
       "localizations": {
         "en": {
@@ -756,7 +726,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The list of waste services is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
+            "value": "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
           }
         }
       }
@@ -871,12 +841,12 @@
         }
       }
     },
-    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst.": {
+    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst. Für Google oder Outlook wähle unten einen vorhandenen Kalender.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recommended: the app creates its own calendar that you can show or hide in the Calendar app."
+            "value": "Recommended: the app creates its own calendar that you can show or hide in the Calendar app. For Google or Outlook, choose an existing calendar below."
           }
         }
       }
@@ -941,12 +911,12 @@
         }
       }
     },
-    "Erinnerung am Vorabend mit „Erledigt“ und „Später nochmal“": {
+    "Erinnerung am Vorabend mit „Erledigt“ und „In 1 Stunde nochmal“": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reminder the evening before with “Done” and “Remind me later”"
+            "value": "Reminder the evening before with “Done” and “Remind me in 1 hour”"
           }
         }
       }
@@ -1077,16 +1047,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Color & symbol"
-          }
-        }
-      }
-    },
-    "Fertig": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
           }
         }
       }
@@ -1251,7 +1211,7 @@
         }
       }
     },
-    "Geburtstage mit Alter, runden Jubiläen und Geschenkideen": {
+    "Geburtstage mit Alter, runden Geburtstagen und Geschenkideen": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1741,16 +1701,6 @@
         }
       }
     },
-    "Keine weiteren Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No further dates"
-          }
-        }
-      }
-    },
     "Kontakt suchen": {
       "localizations": {
         "en": {
@@ -1861,16 +1811,6 @@
         }
       }
     },
-    "Live-Aktivitäten sind in Tonne & Torte unter Einstellungen ausgeschaltet.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activities are turned off in Tonne & Torte’s settings."
-          }
-        }
-      }
-    },
     "Live-Aktivitäten sind in den iOS-Einstellungen für Tonne & Torte ausgeschaltet: Einstellungen › Apps › Tonne & Torte › Live-Aktivitäten.": {
       "localizations": {
         "en": {
@@ -1881,12 +1821,12 @@
         }
       }
     },
-    "Los geht's": {
+    "Los geht’s": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Let's go"
+            "value": "Let’s go"
           }
         }
       }
@@ -1907,16 +1847,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "TOMORROW"
-          }
-        }
-      }
-    },
-    "Manuell / ICS-Datei": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manual / ICS file"
           }
         }
       }
@@ -1987,26 +1917,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications"
-          }
-        }
-      }
-    },
-    "Mitteilungen abgelehnt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications denied"
-          }
-        }
-      }
-    },
-    "Mitteilungen erlaubt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications allowed"
           }
         }
       }
@@ -2111,12 +2021,12 @@
         }
       }
     },
-    "Nach draußen geht nur deine Adresse an den Entsorger, den du auswählst – damit er dir die Abfuhrtermine schickt": {
+    "Nach außen gehen nur die Adressangaben (und technisch bedingt deine IP-Adresse) an das Portal des Entsorgers, den du auswählst. Die Standortsuche nutzt Apples Kartendienst.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The only thing that leaves your device is your address, sent to the waste service you choose so it can return your collection dates"
+            "value": "Only the address details you choose (and, technically, your IP address) go to the portal of the provider you select. Finding your town uses Apple Maps."
           }
         }
       }
@@ -2291,32 +2201,12 @@
         }
       }
     },
-    "Noch keine Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No dates yet"
-          }
-        }
-      }
-    },
     "Noch keine eigenen Termine": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No custom events yet"
-          }
-        }
-      }
-    },
-    "Noch nicht erlaubt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Not allowed yet"
           }
         }
       }
@@ -2461,12 +2351,12 @@
         }
       }
     },
-    "Ohne Entsorger starten (Rhythmus von Hand)": {
+    "Ohne Entsorger starten": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start without a provider (manual schedule)"
+            "value": "Start without a provider"
           }
         }
       }
@@ -2591,12 +2481,12 @@
         }
       }
     },
-    "Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.“": {
+    "Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Mi., 17. Okt.“": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri says e.g.: “Oma Erika wird morgen 80. Danach: Paul in 9 Tagen.”"
+            "value": "Siri says e.g.: “Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Mi., 17. Okt.”"
           }
         }
       }
@@ -2981,16 +2871,6 @@
         }
       }
     },
-    "Unbekannt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unknown"
-          }
-        }
-      }
-    },
     "Verbindung trennen": {
       "localizations": {
         "en": {
@@ -3041,12 +2921,12 @@
         }
       }
     },
-    "Viele Abfall-Portale bieten einen Link „Sync zu Kalender“ oder „ICS-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
+    "Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Many waste portals offer a “Sync to calendar” or “ICS export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
+            "value": "Many waste portals offer a “subscribe to calendar” or “iCal export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
           }
         }
       }
@@ -3371,7 +3251,7 @@
         }
       }
     },
-    "Zurück": {
+    "Rückgängig": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3577,6 +3457,76 @@
           "stringUnit": {
             "state": "translated",
             "value": "🎉 %lld"
+          }
+        }
+      }
+    },
+    "Nächster Geburtstag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next birthday"
+          }
+        }
+      }
+    },
+    "Wer hat als Nächstes Geburtstag? Mit Alter und Countdown.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who has a birthday next? With age and countdown."
+          }
+        }
+      }
+    },
+    "Erledigt zurücknehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undo done"
+          }
+        }
+      }
+    },
+    "Tonne ist wieder drin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bin is back in"
+          }
+        }
+      }
+    },
+    "Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        }
+      }
+    },
+    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Takes back the “it’s out” mark for a collection day."
+          }
+        }
+      }
+    },
+    "Bestätigt, dass die geleerten Tonnen wieder hereingeholt sind.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirms that the emptied bins have been brought back in."
           }
         }
       }

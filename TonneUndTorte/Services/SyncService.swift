@@ -9,7 +9,7 @@ enum SyncService {
 
         /// Text für Hinweise nach dem Abgleich.
         var summaryText: String {
-            var text = "\(importedCount) Termine übernommen."
+            var text = L10n.t("\(L10n.dates(importedCount)) übernommen.", "\(L10n.dates(importedCount)) imported.")
             if !changes.isEmpty {
                 text += "\n"
                 text += changes.joined(separator: "\n")
@@ -114,7 +114,7 @@ enum SyncService {
         let mappings = suggestMappings(for: pickups, location: location)
         let result = apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: true)
         location.lastSyncAt = Date()
-        location.lastSyncMessage = "\(result.importedCount) Termine übernommen"
+        location.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
         try? context.save()
         return result
     }

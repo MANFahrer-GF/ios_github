@@ -152,7 +152,7 @@ struct PickupWidgetView: View {
                 if let bringInAction {
                     Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringInAction.date))) { KlarCheckButtonLabel(done: false, symbol: "house.fill") }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(L10n.t("\(names(bringInAction, max: 3)) ist wieder drin", "\(names(bringInAction, max: 3)) is back in"))
+                        .accessibilityLabel(L10n.t("\(names(bringInAction, max: 3)) \(bringInAction.items.count == 1 ? "ist" : "sind") wieder drin", "\(names(bringInAction, max: 3)) \(bringInAction.items.count == 1 ? "is" : "are") back in"))
                 } else if let next, showsButton {
                     button(next)
                 }

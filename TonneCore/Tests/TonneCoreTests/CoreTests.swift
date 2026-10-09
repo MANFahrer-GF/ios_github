@@ -76,6 +76,9 @@ final class CoreTests: XCTestCase {
         let two = SpokenSummary.birthdays([item(0, "Paul", nil), item(0, "Lena", 7), item(9, "Tom", 41)])
         XCTAssertTrue(two.hasPrefix(L10n.t("Paul und Lena (7) haben heute Geburtstag.", "Paul and Lena (7) have their birthday today.")), two)
         XCTAssertTrue(two.contains("Tom"))
+        // Weit entfernt: Datum vor der Zahl, Abstand als Nachsatz
+        let far = SpokenSummary.birthdays([item(9, "Paul", 40)])
+        XCTAssertEqual(far, L10n.t("Paul wird am \(DateText.short(Days.add(9, to: today))) 40 – in 9 Tagen.", "Paul turns 40 on \(DateText.short(Days.add(9, to: today))) – in 9 days."))
         // Vergangene zählen nicht
         XCTAssertEqual(SpokenSummary.birthdays([item(-1, "Alt", 3), item(2, "Neu", nil)]), L10n.t("Neu hat übermorgen Geburtstag.", "Neu's birthday is the day after tomorrow."))
     }

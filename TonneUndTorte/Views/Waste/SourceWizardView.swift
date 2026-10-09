@@ -86,10 +86,10 @@ struct SourceWizardView: View {
 
     private var title: String {
         switch stage {
-        case .search: return "Entsorger finden"
-        case .steps: return currentStep?.title ?? entry?.title ?? "Adresse"
-        case .bins: return "Deine Tonnen"
-        case .done: return "Fertig"
+        case .search: return L10n.t("Entsorger finden", "Find provider")
+        case .steps: return currentStep?.title ?? entry?.title ?? L10n.t("Adresse", "Address")
+        case .bins: return L10n.t("Deine Tonnen", "Your bins")
+        case .done: return L10n.t("Fertig", "Done")
         }
     }
 
@@ -157,7 +157,7 @@ struct SourceWizardView: View {
             } header: {
                 Text("Entsorger nicht dabei?")
             } footer: {
-                Text("Viele Abfall-Portale bieten einen Link „Sync zu Kalender“ oder „ICS-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.")
+                Text("Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.")
             }
         }
         .searchable(text: $query, prompt: "Landkreis, Stadt oder Entsorger")
@@ -209,7 +209,7 @@ struct SourceWizardView: View {
                 Label(L10n.t("CSV-Vorlage zum Ausfüllen", "CSV template to fill in"), systemImage: "doc.badge.plus")
             }
         } header: {
-            Text(L10n.t("Noch nicht verfügbar", "Not available yet"))
+            Text(L10n.t("Noch nicht angebunden", "Not connected yet"))
         }
     }
 
@@ -217,7 +217,7 @@ struct SourceWizardView: View {
         do {
             let pickups = try SyncService.readPickupFile(at: result.get())
             guard !pickups.isEmpty else {
-                errorMessage = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Abfallart.",
+                errorMessage = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Müllart.",
                                       "No dates found in the file. CSV files need a date (e.g. 07.10.2026) and a waste type per line.")
                 return
             }
@@ -333,7 +333,7 @@ struct SourceWizardView: View {
             pickups = try await provider.pickups(for: selections)
             let found = Set(pickups.map { WasteCategory.classify($0.name) })
             categories = Dictionary(uniqueKeysWithValues: found.map { ($0, [.residual, .organic, .paper, .packaging].contains($0) || found.count <= 4) })
-            if locationName.isEmpty { locationName = selections.first?.title ?? entry?.title ?? "Zuhause" }
+            if locationName.isEmpty { locationName = selections.first?.title ?? entry?.title ?? L10n.t("Zuhause", "Home") }
             stage = .bins
         } catch {
             errorMessage = error.localizedDescription
@@ -357,7 +357,7 @@ struct SourceWizardView: View {
                 TextField("Name des Standorts", text: $locationName)
             } header: { Text("Standort") } footer: {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("\(pickups.count) Termine gefunden für \(provider?.label(for: selections) ?? entry?.title ?? "").")
+                    Text(L10n.t("\(L10n.dates(pickups.count)) gefunden für \(provider?.label(for: selections) ?? entry?.title ?? "").", "\(L10n.dates(pickups.count)) found for \(provider?.label(for: selections) ?? entry?.title ?? "")."))
                     if let notice = provider?.notice {
                         Label(notice, systemImage: "info.circle")
                     }
@@ -370,7 +370,7 @@ struct SourceWizardView: View {
                             SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36, wasteName: bin.names.first ?? bin.category.name)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(bin.names.joined(separator: ", ")).font(.body.weight(.semibold)).lineLimit(2)
-                                Text("\(bin.count) Termine").font(.caption).foregroundStyle(.secondary)
+                                Text(L10n.dates(bin.count)).font(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -401,7 +401,7 @@ struct SourceWizardView: View {
         let mappings = SyncService.suggestMappings(for: pickups, location: target)
         let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeCategories: active)
         target.lastSyncAt = Date()
-        target.lastSyncMessage = "\(result.importedCount) Termine übernommen"
+        target.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
         try? context.save()
         model.onboardingDone = true
         stage = .done
@@ -413,9 +413,9 @@ struct SourceWizardView: View {
         VStack(spacing: 20) {
             Image(systemName: "checkmark.seal.fill").font(.system(size: 64)).foregroundStyle(.green)
             Text("Alles eingerichtet!").font(.title.weight(.bold))
-            Text("\(pickups.count) Termine sind da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.")
+            Text(L10n.t("\(L10n.dates(pickups.count)) \(pickups.count == 1 ? "ist" : "sind") da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.", "\(L10n.dates(pickups.count)) loaded. The app reminds you the evening before – and refreshes the dates every week."))
                 .multilineTextAlignment(.center).foregroundStyle(.secondary).padding(.horizontal)
-            Button { dismiss() } label: { Text("Los geht's").frame(maxWidth: .infinity) }
+            Button { dismiss() } label: { Text("Los geht’s").frame(maxWidth: .infinity) }
                 .buttonStyle(.borderedProminent).controlSize(.large).padding(.horizontal)
         }
         .padding()

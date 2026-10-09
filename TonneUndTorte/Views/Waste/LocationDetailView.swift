@@ -23,7 +23,7 @@ struct LocationDetailView: View {
     static let importTypes: [UTType] = [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .commaSeparatedText,
                                         UTType(filenameExtension: "csv") ?? .data, .text, .data]
 
-    private var title: String { location.name.isEmpty ? "Standort" : location.name }
+    private var title: String { location.name.isEmpty ? L10n.t("Standort", "Location") : location.name }
 
     private var showMessage: Binding<Bool> {
         Binding(get: { message != nil }, set: { if !$0 { message = nil } })
@@ -122,8 +122,8 @@ struct LocationDetailView: View {
         } header: {
             Text("Abfuhrtermine")
         } footer: {
-            Text(L10n.t("Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung. Ohne Anbindung: Termine in die CSV-Vorlage eintragen (Datum;Abfallart, z. B. in Excel oder Numbers) und hier importieren.",
-                        "Connected locations sync weekly. If the operator moves a date, you get a notification. Without a connection: fill in the CSV template (date;waste type, e.g. in Excel or Numbers) and import it here."))
+            Text(L10n.t("Verbundene Standorte gleichen ihre Termine wöchentlich automatisch ab. Verschiebt der Entsorger einen Termin, bekommst du eine Mitteilung. Ohne Anbindung: Termine in die CSV-Vorlage eintragen (Datum;Müllart, z. B. in Excel oder Numbers) und hier importieren.",
+                        "Connected locations sync weekly. If the provider moves a date, you get a notification. Without a connection: fill in the CSV template (date;waste type, e.g. in Excel or Numbers) and import it here."))
         }
     }
 
@@ -174,8 +174,8 @@ struct LocationDetailView: View {
             do {
                 importPickups = try SyncService.readPickupFile(at: url)
                 if importPickups.isEmpty {
-                    message = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Abfallart.",
-                                     "No dates found in the file. CSV files need a date (e.g. 2026-10-07) and a waste type per line.")
+                    message = L10n.t("In der Datei wurden keine Termine gefunden. CSV-Dateien brauchen je Zeile ein Datum (z. B. 07.10.2026) und eine Müllart.",
+                                     "No dates found in the file. CSV files need a date (e.g. 07.10.2026) and a waste type per line.")
                 } else {
                     showImport = true
                 }
@@ -266,7 +266,7 @@ struct ICSImportView: View {
     private func importNow() {
         let target = location ?? makeLocation?()
         SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: replace)
-        target?.lastSyncMessage = L10n.t("Datei importiert (\(pickups.count) Termine)", "File imported (\(pickups.count) dates)")
+        target?.lastSyncMessage = L10n.t("Datei importiert (\(L10n.dates(pickups.count)))", "File imported (\(L10n.dates(pickups.count)))")
         try? context.save()
         Task { await model.refreshAll() }
         if let onImported { onImported() } else { dismiss() }

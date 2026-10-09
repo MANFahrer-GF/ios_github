@@ -21,16 +21,6 @@
         }
       }
     },
-    "%lld Termine sind da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld dates loaded. The app reminds you the evening before – and refreshes the dates every week."
-          }
-        }
-      }
-    },
     "%lld×": {
       "localizations": {
         "en": {
@@ -227,16 +217,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Active"
-          }
-        }
-      }
-    },
-    "Aktualisiert %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updated %@"
           }
         }
       }
@@ -531,16 +511,6 @@
         }
       }
     },
-    "Deaktiviert": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Disabled"
-          }
-        }
-      }
-    },
     "Deine Daten": {
       "localizations": {
         "en": {
@@ -581,12 +551,12 @@
         }
       }
     },
-    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple.": {
+    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The provider list is based on the open-source project hacs_waste_collection_schedule (MIT license). Symbols: SF Symbols by Apple."
+            "value": "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
           }
         }
       }
@@ -681,12 +651,12 @@
         }
       }
     },
-    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst.": {
+    "Empfohlen: Die App legt einen eigenen Kalender an, den du in der Kalender-App ein- und ausblenden kannst. Für Google oder Outlook wähle unten einen vorhandenen Kalender.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recommended: the app creates its own calendar that you can show or hide in the Calendar app."
+            "value": "Recommended: the app creates its own calendar that you can show or hide in the Calendar app. For Google or Outlook, choose an existing calendar below."
           }
         }
       }
@@ -751,12 +721,12 @@
         }
       }
     },
-    "Erinnerung am Vorabend mit „Erledigt“ und „Später nochmal“": {
+    "Erinnerung am Vorabend mit „Erledigt“ und „In 1 Stunde nochmal“": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reminder the evening before with “Done” and “Remind me later”"
+            "value": "Reminder the evening before with “Done” and “Remind me in 1 hour”"
           }
         }
       }
@@ -881,16 +851,6 @@
         }
       }
     },
-    "Fertig": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        }
-      }
-    },
     "Finde deinen Entsorger – die Termine kommen automatisch.": {
       "localizations": {
         "en": {
@@ -1011,7 +971,7 @@
         }
       }
     },
-    "Geburtstage mit Alter, runden Jubiläen und Geschenkideen": {
+    "Geburtstage mit Alter, runden Geburtstagen und Geschenkideen": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1421,16 +1381,6 @@
         }
       }
     },
-    "Keine weiteren Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No further dates"
-          }
-        }
-      }
-    },
     "Kontakt suchen": {
       "localizations": {
         "en": {
@@ -1511,12 +1461,12 @@
         }
       }
     },
-    "Los geht's": {
+    "Los geht’s": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Let's go"
+            "value": "Let’s go"
           }
         }
       }
@@ -1537,16 +1487,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "TOMORROW"
-          }
-        }
-      }
-    },
-    "Manuell / ICS-Datei": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manual / ICS file"
           }
         }
       }
@@ -1617,26 +1557,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications"
-          }
-        }
-      }
-    },
-    "Mitteilungen abgelehnt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications denied"
-          }
-        }
-      }
-    },
-    "Mitteilungen erlaubt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications allowed"
           }
         }
       }
@@ -1871,32 +1791,12 @@
         }
       }
     },
-    "Noch keine Termine": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No dates yet"
-          }
-        }
-      }
-    },
     "Noch keine eigenen Termine": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No custom events yet"
-          }
-        }
-      }
-    },
-    "Noch nicht erlaubt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Not allowed yet"
           }
         }
       }
@@ -2001,12 +1901,12 @@
         }
       }
     },
-    "Ohne Entsorger starten (Rhythmus von Hand)": {
+    "Ohne Entsorger starten": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start without a provider (manual schedule)"
+            "value": "Start without a provider"
           }
         }
       }
@@ -2321,16 +2221,6 @@
         }
       }
     },
-    "Unbekannt": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unknown"
-          }
-        }
-      }
-    },
     "Verbindung trennen": {
       "localizations": {
         "en": {
@@ -2381,12 +2271,12 @@
         }
       }
     },
-    "Viele Abfall-Portale bieten einen Link „Sync zu Kalender“ oder „ICS-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
+    "Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Many waste portals offer a “Sync to calendar” or “ICS export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
+            "value": "Many waste portals offer a “subscribe to calendar” or “iCal export” link. Paste it here – the app reloads the dates weekly. Alternatively, set up a schedule manually."
           }
         }
       }
@@ -2611,7 +2501,7 @@
         }
       }
     },
-    "Zurück": {
+    "Rückgängig": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2767,6 +2657,76 @@
           "stringUnit": {
             "state": "translated",
             "value": "🎉 %lld"
+          }
+        }
+      }
+    },
+    "Nächster Geburtstag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next birthday"
+          }
+        }
+      }
+    },
+    "Wer hat als Nächstes Geburtstag? Mit Alter und Countdown.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who has a birthday next? With age and countdown."
+          }
+        }
+      }
+    },
+    "Erledigt zurücknehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undo done"
+          }
+        }
+      }
+    },
+    "Tonne ist wieder drin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bin is back in"
+          }
+        }
+      }
+    },
+    "Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        }
+      }
+    },
+    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Takes back the “it’s out” mark for a collection day."
+          }
+        }
+      }
+    },
+    "Bestätigt, dass die geleerten Tonnen wieder hereingeholt sind.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirms that the emptied bins have been brought back in."
           }
         }
       }

@@ -145,7 +145,7 @@ struct OverviewView: View {
                 Text(L10n.t("Ist drin", "It's in"))
             }
             .buttonStyle(.borderedProminent).controlSize(.small)
-            .accessibilityLabel(L10n.t("\(ReminderPlanner.joinNames(bringIn.names)) ist wieder drin", "\(ReminderPlanner.joinNames(bringIn.names)) is back in"))
+            .accessibilityLabel(L10n.t("\(ReminderPlanner.joinNames(bringIn.names)) \(bringIn.names.count == 1 ? "ist" : "sind") wieder drin", "\(ReminderPlanner.joinNames(bringIn.names)) \(bringIn.names.count == 1 ? "is" : "are") back in"))
         }
         .card()
     }
@@ -170,7 +170,7 @@ struct OverviewView: View {
                     refreshToken += 1
                 }
             } label: {
-                Text(done ? L10n.t("Zurück", "Undo") : L10n.t("Erledigt", "Done"))
+                Text(done ? L10n.t("Rückgängig", "Undo") : L10n.t("Erledigt", "Done"))
             }
             .buttonStyle(.bordered).controlSize(.small)
             .accessibilityLabel(done ? L10n.t("\(names): erledigt zurücknehmen", "\(names): undo done") : L10n.t("\(names) als erledigt bestätigen", "Confirm \(names) as done"))
@@ -187,7 +187,7 @@ struct OverviewView: View {
         let tiles = next?.events.map { BinTileItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex) } ?? []
         let nextAfter = activeWasteDays.dropFirst().first
         let subline: String = {
-            if next == nil, let first = activeWasteDays.first { return "nächste \(DateText.countdown(first.day))" }
+            if next == nil, let first = activeWasteDays.first { return L10n.t("nächste \(DateText.countdown(first.day))", "next \(DateText.countdown(first.day))") }
             return PickupWords.subline(days: n, done: allDone)
         }()
         let eyebrow: String = {
@@ -219,7 +219,7 @@ struct OverviewView: View {
                                 Haptics.tap()
                                 Task { await model.markUndone(dayKey: Days.iso(next.day)); refreshToken += 1 }
                             } label: {
-                                Label("Zurück", systemImage: "arrow.uturn.backward")
+                                Label("Rückgängig", systemImage: "arrow.uturn.backward")
                                     .font(KlarStyle.font(15, .heavy))
                                     .foregroundStyle(.white)
                                     .padding(.horizontal, 14).padding(.vertical, 10)

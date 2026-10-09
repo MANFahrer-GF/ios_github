@@ -12,7 +12,7 @@ struct StartPickupLiveActivityIntent: LiveActivityIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         if !SettingsKeys.liveActivitiesEnabled() {
-            return .result(dialog: "Live-Aktivitäten sind in Tonne & Torte unter Einstellungen ausgeschaltet.")
+            return .result(dialog: "Live-Aktivitäten sind für Tonne & Torte in den Einstellungen ausgeschaltet.")
         }
         // Termine stammen aus dem zuletzt gespeicherten Stand der App (reicht 60 Tage voraus);
         // ist der fast aufgebraucht, lieber nichts behaupten.

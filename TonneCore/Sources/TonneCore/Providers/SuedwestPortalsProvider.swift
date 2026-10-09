@@ -378,8 +378,8 @@ public struct SuedwestPortalsProvider: WasteProvider {
             guard entry.calendar_week_rest == "A" else { return nil }
             return SelectionStep(title: L10n.t("Leerung Restabfall", "Residual waste collection"), options: [
                 SelectionOption(id: "A", title: L10n.t("wöchentlich", "weekly")),
-                SelectionOption(id: "G", title: L10n.t("14-täglich (gerade Hausnummer)", "every 2 weeks (even house number)")),
-                SelectionOption(id: "U", title: L10n.t("14-täglich (ungerade Hausnummer)", "every 2 weeks (odd house number)")),
+                SelectionOption(id: "G", title: L10n.t("alle 2 Wochen (gerade Hausnummer)", "every 2 weeks (even house number)")),
+                SelectionOption(id: "U", title: L10n.t("alle 2 Wochen (ungerade Hausnummer)", "every 2 weeks (odd house number)")),
             ], searchable: false)
         default:
             return nil

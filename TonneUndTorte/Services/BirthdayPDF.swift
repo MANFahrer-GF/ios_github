@@ -60,7 +60,7 @@ enum BirthdayPDF {
                 }
                 y += rowHeight
             }
-            let footer = L10n.t("\(sorted.count) Geburtstage · erstellt mit Tonne & Torte", "\(sorted.count) birthdays · created with Tonne & Torte")
+            let footer = L10n.t("\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · erstellt mit Tonne & Torte", "\(L10n.count(sorted.count, "Geburtstag", "Geburtstage", "birthday", "birthdays")) · created with Tonne & Torte")
             footer.draw(at: CGPoint(x: margin, y: pageRect.height - margin + 10), withAttributes: [.font: smallFont, .foregroundColor: UIColor.secondaryLabel])
         }
     }

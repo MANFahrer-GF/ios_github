@@ -206,7 +206,7 @@ public enum ReminderPlanner {
             if birthday.remindDaysBefore > 0,
                let fire = Days.at(minutes: settings.birthdayMinutes, on: Days.add(-birthday.remindDaysBefore, to: day, calendar: calendar), calendar: calendar), fire > now {
                 let when = birthday.remindDaysBefore == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("in \(birthday.remindDaysBefore) Tagen", "in \(birthday.remindDaysBefore) days")
-                let body = birthday.years.map { L10n.t("Wird \($0)\(milestone ? " – runder Geburtstag!" : ""). Noch ein Geschenk besorgen?", "Turns \($0)\(milestone ? " – a big one!" : ""). Need a present?") } ?? L10n.t("Noch ein Geschenk besorgen?", "Need a present?")
+                let body = birthday.years.map { L10n.t("Wird \($0)\(milestone ? " – ein runder Geburtstag!" : "."). Noch ein Geschenk besorgen?", "Turns \($0)\(milestone ? " – a big one!" : "."). Need a present?") } ?? L10n.t("Noch ein Geschenk besorgen?", "Need a present?")
                 result.append(PlannedNotification(identifier: "bday-pre-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: L10n.t("🎁 \(birthday.name) hat \(when) Geburtstag", "🎁 \(birthday.name)'s birthday is \(when)"), body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
             }
         }
