@@ -269,10 +269,10 @@ struct OverviewView: View {
                 // „Erledigt“ gilt für alle Tonnen des Tages – darum beim Tag, nicht an einer einzelnen Tonne
                 if !group.waste.isEmpty && n <= 1 { doneButton(day: group.day, done: allDone) }
             }
-            // Alle Einträge in derselben Form: helle Fläche, Farbstreifen, Symbol, Name
+            // Alle Einträge in derselben Form: helle Fläche, Symbol, Name
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(group.waste) { event in
-                    itemCard(color: event.color) {
+                    itemCard {
                         BinDot(symbolName: event.symbolName, colorHex: event.colorHex, name: event.title, size: badge)
                     } title: {
                         event.title
@@ -283,7 +283,7 @@ struct OverviewView: View {
                 }
                 ForEach(group.other) { event in
                     Button { open(event) } label: {
-                        itemCard(color: event.color) {
+                        itemCard {
                             if event.kind == .birthday {
                                 InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: badge)
                             } else {
@@ -305,8 +305,8 @@ struct OverviewView: View {
         }
     }
 
-    /// Eine Zeile der großen Karte: helle Fläche, schmaler Farbstreifen, Symbol, Titel und optional eine zweite Zeile.
-    private func itemCard<Leading: View, Trailing: View>(color: Color, @ViewBuilder leading: () -> Leading, title: () -> String, detail: () -> String?,
+    /// Eine Zeile der großen Karte: helle Fläche, Symbol, Titel und optional eine zweite Zeile.
+    private func itemCard<Leading: View, Trailing: View>(@ViewBuilder leading: () -> Leading, title: () -> String, detail: () -> String?,
                                                          @ViewBuilder trailing: () -> Trailing = { EmptyView() }) -> some View {
         let detailText = detail()
         return HStack(spacing: 12) {
@@ -320,13 +320,8 @@ struct OverviewView: View {
             Spacer(minLength: 0)
             trailing()
         }
-        .padding(.leading, 16).padding(.trailing, 12).padding(.vertical, 9)
-        .background(alignment: .leading) {
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75))
-                Capsule().fill(color).frame(width: 4).padding(.vertical, 9).padding(.leading, 6)
-            }
-        }
+        .padding(.horizontal, 12).padding(.vertical, 9)
+        .background(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
         .contentShape(Rectangle())
     }
 
