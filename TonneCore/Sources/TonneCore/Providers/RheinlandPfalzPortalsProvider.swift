@@ -11,10 +11,13 @@ import Foundation
 /// - `speyer`: Stadtwerke Speyer (GIPS, ICS je Abfallgebiet)
 /// - `worms`: ebwo Worms (ICS je Straße und Jahr)
 /// - `koblenz`: Servicebetrieb Koblenz (ICS je Stadtteil, nur Wertstoffe/Grünschnitt/Schadstoffe)
+/// - `donnersberg`: Abfall-App Donnersbergkreis (Softwareentwicklung Roth; Ort/Straße als HTML-Liste, ICS je Jahr)
 public struct RheinlandPfalzPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsRP
     public let serviceKey: String
     private let client: HTTPClient
+    /// Stichtag für `donnersberg` (Jahr im ICS-Pfad); nil = jetzt. Nur für Tests.
+    var referenceDate: Date?
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service
@@ -33,6 +36,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "speyer": return "Stadtwerke Speyer"
         case "worms": return "ebwo Worms"
         case "koblenz": return "Servicebetrieb Koblenz"
+        case "donnersberg": return "Donnersbergkreis"
         default: return kind.displayName
         }
     }
@@ -49,6 +53,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "speyer": return try await speyerStep(selections)
         case "worms": return try await wormsStep(selections)
         case "koblenz": return try await koblenzStep(selections)
+        case "donnersberg": return try await donnersbergStep(selections)
         default: throw unknownService
         }
     }
@@ -67,6 +72,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "speyer": result = try await speyerPickups(selections, calendar: calendar)
         case "worms": result = try await wormsPickups(selections, calendar: calendar)
         case "koblenz": result = try await koblenzPickups(selections, calendar: calendar)
+        case "donnersberg": result = try await donnersbergPickups(selections, calendar: calendar)
         default: throw unknownService
         }
         let unique = Array(Set(result)).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
@@ -729,6 +735,78 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         for url in urls.values {
             guard let text = try? await client.string(url) else { continue }
             pickups += Self.icsPickups(text, calendar: calendar)
+        }
+        return pickups
+    }
+
+    // MARK: - Abfall-App Donnersbergkreis (Softwareentwicklung Roth)
+
+    private static let donnersbergBase = "https://abfallapp.softwareentwicklung-roth.de"
+    /// Die Web-App antwortet auf `Accept: */*` (URLSession-Standard) mit 404 – nur HTML-Anfragen werden bedient.
+    private static let donnersbergHTML = ["Accept": "text/html,application/xhtml+xml"]
+    /// Präfix für Orte mit eigener Straßenliste (Eisenberg, Kirchheimbolanden, Rockenhausen, Winnweiler).
+    static let donnersbergStreetPrefix = "orte/"
+
+    /// Ortsliste: `…/kalender/Albisheim/muellarten` (Ort ohne Straßen) oder `…/kalender/orte/Eisenberg/strassen`.
+    /// Die ID ist der Pfad hinter `/kalender/`; Orte mit Straßenliste behalten das Präfix `orte/`.
+    static func donnersbergPlaces(_ html: String) -> [SelectionOption] {
+        var options: [String: SelectionOption] = [:]
+        for link in HTMLText.matches(#"href="/web/KIB/de/kalender/((?:orte/)?[^"]+?)/(?:muellarten|strassen)"[^>]*>([^<]*)</a>"#, in: html) {
+            let title = HTMLText.decodeEntities(link[1]).trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !title.isEmpty else { continue }
+            let id = HTMLText.decodeEntities(link[0])
+            options[id] = SelectionOption(id: id, title: title)
+        }
+        return sortedOptions(Array(options.values))
+    }
+
+    /// Straßenliste eines Orts: `…/kalender/Kirchheimbolanden/Amtsstrasse/muellarten`.
+    static func donnersbergStreets(_ html: String) -> [SelectionOption] {
+        donnersbergPlaces(html).filter { !$0.id.hasPrefix(donnersbergStreetPrefix) }
+    }
+
+    /// Abfallarten-Formular: `name="abfallart_Restabfall"` … → alle ankreuzen.
+    static func donnersbergTypes(_ html: String) -> [String] {
+        var seen = Set<String>()
+        return HTMLText.matches(#"name="(abfallart_[^"]+)""#, in: html).compactMap(\.first).filter { seen.insert($0).inserted }
+    }
+
+    /// „Bioabfall\nVerlegt wg. Weihnachten“ → „Bioabfall“.
+    static func donnersbergPickups(_ ics: String, calendar: Calendar) -> [Pickup] {
+        icsPickups(ics, calendar: calendar) { summary in
+            [summary.replacingOccurrences(of: #"\s+verlegt\b.*$"#, with: "", options: [.regularExpression, .caseInsensitive])]
+        }
+    }
+
+    private func donnersbergStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            let html = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender", headers: Self.donnersbergHTML)
+            let places = Self.donnersbergPlaces(html)
+            guard !places.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: L10n.t("Ort", "Town"), options: places)
+        case 1 where selections[0].id.hasPrefix(Self.donnersbergStreetPrefix):
+            let html = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender/\(selections[0].id)/strassen", headers: Self.donnersbergHTML)
+            let streets = Self.donnersbergStreets(html)
+            guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets)
+        default:
+            return nil
+        }
+    }
+
+    private func donnersbergPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard let path = selections.last?.id, !path.hasPrefix(Self.donnersbergStreetPrefix) else { throw ProviderError.selectAddressFirst }
+        let form = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender/\(path)/muellarten", headers: Self.donnersbergHTML)
+        let types = Self.donnersbergTypes(form)
+        guard !types.isEmpty else { throw ProviderError.noDataGeneric }
+        let query = types.map { "\(HTTPClient.query($0))=on" }.joined(separator: "&")
+        // Jahr steht im Pfad; das Folgejahr gibt es erst, wenn der neue Plan veröffentlicht ist (sonst 404).
+        let current = calendar.component(.year, from: referenceDate ?? Date())
+        var pickups: [Pickup] = []
+        for year in [current, current + 1] {
+            guard let text = try? await client.string("\(Self.donnersbergBase)/\(year)/KIB/\(path)/ics/de?\(query)") else { continue }
+            pickups += Self.donnersbergPickups(text, calendar: calendar)
         }
         return pickups
     }
