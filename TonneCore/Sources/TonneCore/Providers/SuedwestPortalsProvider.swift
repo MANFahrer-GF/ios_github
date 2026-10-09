@@ -9,13 +9,20 @@ import Foundation
 /// - `badenbaden`: Stadtwerke Baden-Baden Umweltkalender – Stadtteil → ggf. Straße → ICS
 /// - `kreiskassel`: Abfallentsorgung Kreis Kassel – Gemeinde → ggf. Gebiet → ICS je Kalender-ID
 /// - `reso`: RESO Odenwaldkreis – Ort → Ortsteil → ICS per POST
+/// - `muellmann`: Müllmann-App (Landkreis Konstanz, Karlsruhe) – Gemeinde → ggf. Straße → ggf. Hausnummernabschnitt (JSON)
+/// - `zvawmk`: ZVA Werra-Meißner-Kreis – Ort → Straße → ICS je Jahresseite
+/// - `kelkheim`: Stadt Kelkheim (Taunus) – Straße + Hausnummer per POST → ICS-Link des Bezirks
+/// - `floersheim`: Flörsheimer Umweltkalender – Straßensuche → ggf. Hausnummer → Bezirk → ICS
 public struct SuedwestPortalsProvider: WasteProvider {
-    public static let services = ["frankfurt", "stuttgart", "wiesbaden", "heidelberg", "heidenheim", "badenbaden", "kreiskassel", "reso"]
+    public static let services = ["frankfurt", "stuttgart", "wiesbaden", "heidelberg", "heidenheim", "badenbaden", "kreiskassel", "reso",
+                                  "muellmann", "zvawmk", "kelkheim", "floersheim"]
 
     public let kind: ProviderKind = .portalsSuedwest
     public let serviceKey: String
     public var displayName: String { kind.displayName }
     private let client: HTTPClient
+    /// Stichtag für Jahresangaben in URLs (nil = heute); Tests setzen ihn auf den Abruftag der Beispielantworten.
+    var referenceDate: Date?
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service
@@ -32,6 +39,10 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "badenbaden": return try await badenBadenStep(selections)
         case "kreiskassel": return try await kasselStep(selections)
         case "reso": return try await resoStep(selections)
+        case "muellmann": return try await muellmannStep(selections)
+        case "zvawmk": return try await zvaStep(selections)
+        case "kelkheim": return try await kelkheimStep(selections)
+        case "floersheim": return try await floersheimStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -47,6 +58,10 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "badenbaden": result = try await badenBadenPickups(selections, calendar: calendar)
         case "kreiskassel": result = try await kasselPickups(selections, calendar: calendar)
         case "reso": result = try await resoPickups(selections, calendar: calendar)
+        case "muellmann": result = try await muellmannPickups(selections, calendar: calendar)
+        case "zvawmk": result = try await zvaPickups(selections, calendar: calendar)
+        case "kelkheim": result = try await kelkheimPickups(selections, calendar: calendar)
+        case "floersheim": result = try await floersheimPickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -77,6 +92,14 @@ public struct SuedwestPortalsProvider: WasteProvider {
             return Self.join([place, part(1)])
         case "kreiskassel": return selections.count > 1 ? part(1) : part(0)
         case "reso": return part(1) == "Kernstadt" || part(1) == "Kerngemeinde" ? part(0) : Self.join([part(0), part(1)])
+        case "muellmann": return Self.join([part(0), selections.count > 2 ? "\(part(1)) \(part(2))" : part(1)])
+        case "zvawmk":
+            // „Wehretal - Reichensachsen“: Ortsteil nur nennen, wenn er nicht wie die Gemeinde heißt.
+            let place = part(0).components(separatedBy: " - ")
+            let town = place.count == 2 && place[0] == place[1] ? place[0] : place.joined(separator: " – ")
+            return Self.join([town, part(1)])
+        case "kelkheim": return Self.join(["Kelkheim (Taunus)", "\(part(0)) \(part(1))".trimmingCharacters(in: .whitespaces)])
+        case "floersheim": return Self.join(["Flörsheim am Main", "\(part(1)) \(part(2))".trimmingCharacters(in: .whitespaces)])
         default: return Self.join(titles)
         }
     }
@@ -612,5 +635,223 @@ public struct SuedwestPortalsProvider: WasteProvider {
             }
         }
         return result
+    }
+
+    // MARK: - Müllmann-App (Landkreis Konstanz, Karlsruhe)
+
+    private static let muellmannBase = "https://muellmann.gering.dev"
+    /// Öffentlicher Schlüssel aus dem Web-Client der App; ohne ihn antwortet die API mit HTTP 401.
+    private static let muellmannHeaders = ["X-API-Key": "fz2LM67Xurs1sXjmHEIAlhssIS1mBlf8"]
+
+    private struct MuellmannItem: Decodable { let key: String; let name: String }
+    private struct MuellmannStreet: Decodable {
+        struct Range: Decodable { let selector: String; let name: String?; let info: String? }
+        let ranges: [Range]
+    }
+    private struct MuellmannEvent: Decodable { let type: String; let date: String }
+
+    private func muellmann<T: Decodable>(_ path: String) async throws -> T {
+        try await client.json(Self.muellmannBase + path, headers: Self.muellmannHeaders)
+    }
+
+    private func muellmannStreet(_ region: String, _ street: String) async throws -> MuellmannStreet {
+        try await muellmann("/\(HTTPClient.query(region))/streets/\(HTTPClient.query(street))")
+    }
+
+    private func muellmannStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            let regions: [MuellmannItem] = try await muellmann("/")
+            let options = regions.map { SelectionOption(id: $0.key, title: $0.name) }
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.cityTitle, options: Self.sortedOptions(options))
+        case 1:
+            // Kleine Gemeinden haben einen Kalender für alle, dann ist die Straßenliste leer.
+            let streets: [MuellmannItem] = try await muellmann("/\(HTTPClient.query(selections[0].id))/streets")
+            guard !streets.isEmpty else { return nil }
+            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(streets.map { SelectionOption(id: $0.key, title: $0.name) }))
+        case 2:
+            // Lange Straßen sind in Hausnummern-Abschnitte geteilt.
+            let street = try await muellmannStreet(selections[0].id, selections[1].id)
+            guard street.ranges.count > 1 else { return nil }
+            let options = street.ranges.map { SelectionOption(id: $0.selector, title: $0.name ?? $0.selector, subtitle: $0.info) }
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: options, searchable: false)
+        default:
+            return nil
+        }
+    }
+
+    private func muellmannPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard let region = selections.first.map({ HTTPClient.query($0.id) }) else { throw ProviderError.selectAddressFirst }
+        var path = "/\(region)/events"
+        if selections.count > 1 {
+            let selector: String
+            if selections.count > 2 {
+                selector = selections[2].id
+            } else {
+                selector = try await muellmannStreet(selections[0].id, selections[1].id).ranges.first?.selector ?? "*"
+            }
+            path += "/\(HTTPClient.query(selections[1].id))/\(HTTPClient.query(selector))"
+        }
+        let headers = Self.muellmannHeaders.merging(["Accept": "application/json"]) { a, _ in a }
+        let events = try await client.get(Self.muellmannBase + path, headers: headers)
+        let types = try await client.get("\(Self.muellmannBase)/\(region)/types", headers: headers)
+        return Self.muellmannPickups(events: events, types: types, calendar: calendar)
+    }
+
+    /// Termine `{"type":"bio","date":"12.10.2026"}` mit den Namen aus der Abfallarten-Liste der Gemeinde.
+    static func muellmannPickups(events: Data, types: Data, calendar: Calendar) -> [Pickup] {
+        guard let events: [MuellmannEvent] = try? HTTPClient.decode(events) else { return [] }
+        let list: [MuellmannItem] = (try? HTTPClient.decode(types)) ?? []
+        let names = Dictionary(list.map { ($0.key, $0.name) }) { a, _ in a }
+        return events.compactMap { event in
+            guard let name = names[event.type], let date = germanDate(event.date, calendar: calendar) else { return nil }
+            return Pickup(date: date, name: NameCleaner.clean(name))
+        }
+    }
+
+    // MARK: - ZVA Werra-Meißner-Kreis
+
+    /// Je Jahr eine eigene Seite; die des Folgejahres gibt es erst gegen Jahresende (vorher HTTP 404).
+    private static func zvaPage(_ year: Int) -> String {
+        "https://www.zva-wmk.de/termine/pers%C3%B6nlicher-terminkalender-\(year)"
+    }
+
+    private func zvaStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        let page = Self.zvaPage(Calendar.current.component(.year, from: referenceDate ?? Date()))
+        // Die Werte im Auswahlfeld sind schon URL-kodiert („WEI%C3%9FENBORN_RAMBACH“) und gehen unverändert zurück.
+        switch selections.count {
+        case 0:
+            let html = try await client.string(page)
+            let options = HTMLText.options(ofSelect: "city", in: html).filter { !$0.value.isEmpty }.map { SelectionOption(id: $0.value, title: $0.label) }
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.cityTitle, options: options)
+        case 1:
+            let html = try await client.string("\(page)?city=\(selections[0].id)")
+            let options = HTMLText.options(ofSelect: "street", in: html).filter { !$0.value.isEmpty }
+                .map { SelectionOption(id: $0.value, title: $0.label.localizedCapitalized) }
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: options)
+        default:
+            return nil
+        }
+    }
+
+    private func zvaPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        var result: [Pickup] = []
+        for target in [year, year + 1] {
+            let url = "\(Self.zvaPage(target))?city=\(selections[0].id)&street=\(selections[1].id)&type=all&link=ical&fullday=1"
+            guard let text = try? await client.string(url) else { continue }
+            result += Self.icsPickups(text, calendar: calendar) { [$0.replacingOccurrences(of: " Und ", with: " und ")] }
+        }
+        return result
+    }
+
+    // MARK: - Kelkheim (Taunus)
+
+    /// Ohne „www“: Die Weiterleitung von www.kelkheim.de würde aus dem POST ein GET ohne Formularfelder machen.
+    private static let kelkheimPage = "https://kelkheim.de/mod_abfallkalender/"
+    /// Abfallarten des Formulars ohne Großcontainer, Annahmestellen und Veranstaltungen (Repair-Café …).
+    private static let kelkheimTypes = [("Restmuell", "Restmüll"), ("Blaue Tonne", "Blaue Tonne"), ("Bio-Tonne", "Bio-Tonne"), ("Gelber Sack", "Gelber Sack"),
+                                        ("Gruenabfuhr", "Grünabfuhr"), ("Sperrmuell", "Sperrmüll"), ("Sondermuell", "Sondermüll")]
+
+    /// Straßenliste aus dem Autocomplete-Skript `var availableTags = ["…", …];`
+    static func kelkheimStreets(_ html: String) -> [SelectionOption] {
+        guard let list = HTMLText.firstMatch(#"availableTags\s*=\s*\[([\s\S]*?)\]"#, in: html, group: 1) else { return [] }
+        let names = HTMLText.matches(#""([^"]+)""#, in: list).compactMap(\.first)
+        return sortedOptions(names.map { SelectionOption(id: $0, title: $0.trimmingCharacters(in: .whitespaces)) })
+    }
+
+    /// „Restmuell Bezirk B-5, S-5 Di“ → „Restmüll“
+    static func kelkheimName(_ summary: String) -> String {
+        let type = summary.replacingOccurrences(of: #"\s+Bezirk\s.*$"#, with: "", options: .regularExpression)
+        return kelkheimTypes.first { $0.0 == type }?.1 ?? type
+    }
+
+    private func kelkheimStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            let options = Self.kelkheimStreets(try await client.string(Self.kelkheimPage))
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: options)
+        case 1:
+            return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 7", "e.g. 7"))
+        default:
+            return nil
+        }
+    }
+
+    private func kelkheimPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+        let number = selections[1].title.trimmingCharacters(in: .whitespaces)
+        // Das Formular leitet auf die Kalenderseite des Bezirks weiter; dort steht der ICS-Link.
+        let fields = [("action", "areas_search"), ("street", selections[0].id), ("number", number)] + Self.kelkheimTypes.map { ("datetype[]", $0.0) }
+        let html = HTTPClient.text(from: try await client.postForm(Self.kelkheimPage, fields: fields))
+        guard let link = HTMLText.firstMatch(#"(https://[^"'<>\s]*mod_abfallkalender/index\.php\?action=ical[^"'<>\s]*)"#, in: html, group: 1) else {
+            throw Self.notFound("\(selections[0].title) \(number)")
+        }
+        let text = try await client.string(HTMLText.decodeEntities(link))
+        return Self.icsPickups(text, calendar: calendar) { [Self.kelkheimName($0)] }
+    }
+
+    // MARK: - Flörsheim am Main (Umweltkalender)
+
+    private static let floersheimBase = "https://www.floersheim-umweltkalender.de/"
+    /// Restmüll, Altpapier, Bio-Tonne, Gelber Sack, Gartenabfall, Sonderabfälle – ohne Großcontainer
+    /// sowie Sperrmüll und E-Schrott, die nur nach Anmeldung abgeholt werden.
+    private static let floersheimTypes = "1_3_7_4_8_6"
+
+    /// Vorschlagsliste der Straßensuche: `<span id="astr0" …>Hauptstraße</span>`
+    static func floersheimStreets(_ html: String) -> [SelectionOption] {
+        let names = HTMLText.matches(#"<span id="astr\d+"[^>]*>([^<]+)</span>"#, in: html).compactMap(\.first).map(HTMLText.decodeEntities)
+        return sortedOptions(names.map { SelectionOption(id: $0, title: $0.trimmingCharacters(in: .whitespaces)) })
+    }
+
+    /// „Sonderabfälle, Flörsheim, Sportanlagen Hauptstraße 8.00-10.00 Uhr“ → „Schadstoffmobil“;
+    /// Termine an der Deponie Wicker sind Annahmezeiten, keine Abholung vor der Tür.
+    static func floersheimNames(_ summary: String) -> [String] {
+        guard !summary.contains("Deponie") else { return [] }
+        let type = summary.components(separatedBy: ",")[0].trimmingCharacters(in: .whitespaces)
+        return [type == "Sonderabfälle" ? "Schadstoffmobil" : type]
+    }
+
+    private func floersheimStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("z. B. Hauptstraße", "e.g. Hauptstraße"))
+        case 1:
+            let query = selections[0].title.trimmingCharacters(in: .whitespaces)
+            guard !query.isEmpty else { throw Self.notFound(query) }
+            let html = HTTPClient.text(from: try await client.postForm("\(Self.floersheimBase)ajaxsearch/ajaxseachstr.html", fields: [("searchstr", query)]))
+            let options = Self.floersheimStreets(html)
+            guard !options.isEmpty else { throw Self.notFound(query) }
+            return SelectionStep(title: SelectionStep.streetTitle, options: options)
+        case 2:
+            // Antwort > 0: Die Straße ist nach Hausnummern auf mehrere Bezirke verteilt.
+            let answer = HTTPClient.text(from: try await client.postForm("\(Self.floersheimBase)ajaxsearch/searchnachnr.html", fields: [("strname", selections[1].id)]))
+            guard (Int(answer.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0) > 0 else { return nil }
+            return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 7", "e.g. 7"))
+        default:
+            return nil
+        }
+    }
+
+    private func floersheimPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+        let street = selections[1].id
+        let number = selections.count > 2 ? selections[2].title.trimmingCharacters(in: .whitespaces) : ""
+        var fields = [("strnamesearch", street), ("checkedarts", Self.floersheimTypes)]
+        if !number.isEmpty { fields.append(("hsnrsearch", number)) }
+        // „1|||<Bezirk>|||<Straßen-ID>|||“ oder „0|||||||||<Fehlermeldung>“
+        let answer = HTTPClient.text(from: try await client.postForm("\(Self.floersheimBase)ajaxsearch/searchnachnrundstr.html", fields: fields))
+        let parts = answer.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: "|||")
+        guard parts.count > 1, parts[0] == "1", !parts[1].isEmpty else {
+            throw Self.notFound("\(selections[1].title) \(number)".trimmingCharacters(in: .whitespaces))
+        }
+        let url = "\(Self.floersheimBase)icalkalender.html?jahr=1&selectedmonat=&selectedwoche=&bezirk=\(HTTPClient.query(parts[1]))"
+            + "&hausnr=\(HTTPClient.query(number))&strasse=\(HTTPClient.query(street))&checkedarts=\(Self.floersheimTypes)"
+        return Self.icsPickups(try await client.string(url), calendar: calendar, clean: Self.floersheimNames)
     }
 }
