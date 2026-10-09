@@ -180,12 +180,23 @@ final class CoverageTests: XCTestCase {
         XCTAssertTrue(ProviderCatalog.checkPlace("So").isEmpty, "zu kurz")
     }
 
+    /// Nur „weitere“ Einträge gelten nicht als angebunden.
+    func testOnlyOtherEntriesIsNotCovered() {
+        let check = PlaceCheck(name: "X", district: "Landkreis Y", entries: [], otherEntries: [CatalogEntry(kind: .icsURL, serviceKey: "https://x", title: "Amt Z")])
+        XCTAssertFalse(check.isCovered)
+    }
+
     /// Einträge für andere Gemeinden des Kreises getrennt; gleichnamige Gemeinden vollständig.
     func testCheckPlaceSeparatesOtherTowns() throws {
         let perleberg = try XCTUnwrap(ProviderCatalog.checkPlace("Perleberg").first)
         XCTAssertTrue(perleberg.entries.contains { $0.title.hasPrefix("Stadt Perleberg") }, "\(perleberg.entries.map(\.title))")
         XCTAssertFalse(perleberg.entries.contains { $0.title.hasPrefix("Gemeinde Gumtow") })
         XCTAssertTrue(perleberg.otherEntries.contains { $0.title.hasPrefix("Gemeinde Gumtow") })
+        // Rühstädt: kreisweit über die Abfall+-App (Prignitz) angebunden; das Amt Bad Wilsnack/Weisen zählt seine Gemeinden
+        // nicht auf und steht als wahrscheinlichster weiterer Kandidat vorn
+        let ruehstaedt = try XCTUnwrap(ProviderCatalog.checkPlace("Rühstädt").first)
+        XCTAssertTrue(ruehstaedt.entries.contains { $0.title.hasPrefix("Abfall+ Wecker") })
+        XCTAssertTrue(ruehstaedt.otherEntries.first?.title.hasPrefix("Amt ") == true, "\(ruehstaedt.otherEntries.map(\.title))")
         // Kreisweite Einträge bleiben passend
         let feuchtwangen = try XCTUnwrap(ProviderCatalog.checkPlace("Feuchtwangen").first)
         XCTAssertTrue(feuchtwangen.entries.contains { $0.title == "Landkreis Ansbach" })

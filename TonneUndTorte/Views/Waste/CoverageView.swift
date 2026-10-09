@@ -116,6 +116,11 @@ struct CoverageView: View {
                 Section {
                     if check.isCovered {
                         ForEach(check.entries) { entryRow($0) }
+                    } else if !check.otherEntries.isEmpty {
+                        Label(L10n.t("Kein Entsorger nennt \(check.name) ausdrücklich. Oft gehört der Ort zu einem Amt oder einer Verbandsgemeinde unten – sonst steht ganz unten, wie du trotzdem zu Terminen kommst.",
+                                     "No provider names \(check.name) explicitly. It often belongs to an Amt or association listed below – otherwise see the bottom of the page for how to still get your dates."),
+                              systemImage: "questionmark.circle.fill")
+                            .foregroundStyle(.orange)
                     } else {
                         Label(L10n.t("Noch nicht angebunden – unten steht, wie du trotzdem zu Terminen kommst.",
                                      "Not connected yet – see below how to still get your dates."),

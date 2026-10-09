@@ -94,7 +94,8 @@ public struct PlaceCheck: Identifiable, Hashable {
     /// – ein Amt kann trotzdem auch seine Mitgliedsgemeinden bedienen.
     public let otherEntries: [CatalogEntry]
     public var id: String { "\(district)|\(name)" }
-    public var isCovered: Bool { !entries.isEmpty || !otherEntries.isEmpty }
+    /// Nur, wenn ein Entsorger die Gemeinde sicher bedient – weitere Einträge des Kreises zählen nicht.
+    public var isCovered: Bool { !entries.isEmpty }
 }
 
 public extension ProviderCatalog {
@@ -107,13 +108,23 @@ public extension ProviderCatalog {
             let fits = regional.filter { serves($0, municipality: hit.name, district: hit.district) }
             let others = regional.filter { !fits.contains($0) }
             let byTitle = { (a: CatalogEntry, b: CatalogEntry) in a.title.localizedStandardCompare(b.title) == .orderedAscending }
-            return PlaceCheck(name: hit.name, district: hit.district, entries: (local + fits).sorted(by: byTitle), otherEntries: others.sorted(by: byTitle))
+            // Ämter/Verbandsgemeinden bedienen mehrere Gemeinden, ohne sie aufzuzählen – als wahrscheinlichste Kandidaten zuerst
+            let groupsFirst = others.sorted { a, b in
+                let ga = servesSeveralTowns(a), gb = servesSeveralTowns(b)
+                return ga != gb ? ga : byTitle(a, b)
+            }
+            return PlaceCheck(name: hit.name, district: hit.district, entries: (local + fits).sorted(by: byTitle), otherEntries: groupsFirst)
         }
     }
 
     /// Gilt ein kreisweit zugeordneter Eintrag für diese Gemeinde? Ja, wenn er sie (oder den Kreis) in der Ortsliste
     /// oder im Titel nennt oder ohne Ortsliste nicht nach einer einzelnen Gemeinde benannt ist („Landkreis Ansbach“ ja,
     /// „Gemeinde Gumtow (Landkreis Prignitz)“ nicht für Perleberg).
+    private static func servesSeveralTowns(_ entry: CatalogEntry) -> Bool {
+        let title = fold(entry.title)
+        return ["amt ", "verbandsgemeinde ", "samtgemeinde ", "verwaltungsgemeinschaft "].contains { title.hasPrefix($0) }
+    }
+
     private static func serves(_ entry: CatalogEntry, municipality: String, district: String) -> Bool {
         let place = fold(municipality.replacingOccurrences(of: #"\s*\(.*\)$"#, with: "", options: .regularExpression))
         let county = fold(DistrictCoverage.displayName(district).replacingOccurrences(of: #"^(Landkreis|Kreis) "#, with: "", options: .regularExpression))
