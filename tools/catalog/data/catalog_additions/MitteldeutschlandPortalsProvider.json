@@ -672,5 +672,18 @@
   "districts": [
    "Landkreis Jerichower Land"
   ]
+ },
+ {
+  "kind": "portalsMitte",
+  "key": "weimar",
+  "title": "Weimar – KS Weimar Entsorgungsplan",
+  "website": "https://ks-weimar.de/entsorgung/entsorgungsplan-fuer-abfallbehaelter/",
+  "places": [
+   "Weimar"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Weimar"
+  ],
+  "onlyDistricts": true
  }
 ]

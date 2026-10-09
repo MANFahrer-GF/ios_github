@@ -12,6 +12,7 @@ import FoundationNetworking
 /// - `kyffhaeuser` – Kyffhäuserkreis: WordPress „The Events Calendar“-API je Ort/Tour
 /// - `sonneberg` – Landkreis Sonneberg: Ort/Ortsteil/Straße per AJAX, ICS per POST
 /// - `ajl` – AJL Jerichower Land: Orts-/Straßenauswahl, Termine aus der HTML-Seite
+/// - `weimar` – KS Weimar: Straßentabelle (Wochentag + gerade/ungerade KW) → berechnete Termine
 public struct MitteldeutschlandPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsMitte
     public let serviceKey: String
@@ -31,6 +32,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         "kyffhaeuser": "Abfallwirtschaft Kyffhäuserkreis",
         "sonneberg": "Abfallwirtschaft Sonneberg",
         "ajl": "AJL Jerichower Land",
+        "weimar": "Kommunalservice Weimar",
     ]
 
     public var displayName: String { Self.names[serviceKey] ?? kind.displayName }
@@ -49,6 +51,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         case "kyffhaeuser": return try await kyffhaeuserStep(selections)
         case "sonneberg": return try await sonnebergStep(selections)
         case "ajl": return try await ajlStep(selections)
+        case "weimar": return try await weimarStep(selections)
         default: throw unknownService
         }
     }
@@ -65,6 +68,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         case "kyffhaeuser": result = try await kyffhaeuserPickups(selections, calendar: calendar)
         case "sonneberg": result = try await sonnebergPickups(selections, calendar: calendar)
         case "ajl": result = try await ajlPickups(selections, calendar: calendar)
+        case "weimar": result = try await weimarPickups(selections, calendar: calendar)
         default: throw unknownService
         }
         let unique = Array(Set(result.filter { !WasteCategory.isIgnorableTitle($0.name) }))
@@ -83,6 +87,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
             // Gewerbe-Auswahl gehört nicht in die Adresse.
             return address("Halle (Saale)", titles.prefix(2)[...])
         case "jena": return address("Jena", titles[...])
+        case "weimar": return address("Weimar", titles.prefix(1)[...])
         case "nordhausen", "awvot":
             guard let city = titles.first else { return "" }
             return address(city, titles.dropFirst())
@@ -530,5 +535,125 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
             }
         }
         return result
+    }
+
+    // MARK: - KS Weimar (Entsorgungsplan)
+
+    static let weimarURL = "https://ks-weimar.de/entsorgung/entsorgungsplan-fuer-abfallbehaelter/"
+
+    /// Eine Zeile des Entsorgungsplans: Tag der Zweirad-Tonnen und – falls vorhanden – Tag der 1100-l-Restmüllbehälter.
+    struct WeimarStreet: Equatable {
+        let name: String
+        let regular: String
+        let large: String
+    }
+
+    /// Tabellenzeilen „Nr. | Straße | Entsorgungstag Zweirad | Entsorgungstag Vierrad 1100 l“.
+    static func weimarPlan(_ html: String) -> [WeimarStreet] {
+        HTMLText.matches(#"<tr[^>]*>([\s\S]*?)</tr>"#, in: html).compactMap { row in
+            let cells = HTMLText.matches(#"<td[^>]*>([\s\S]*?)</td>"#, in: row[0]).map {
+                HTMLText.decodeEntities(HTMLText.stripTags($0[0]))
+                    .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+                    .trimmingCharacters(in: .whitespaces)
+            }
+            guard cells.count >= 4, !cells[1].isEmpty else { return nil }
+            return WeimarStreet(name: cells[1], regular: cells[2], large: cells[3])
+        }
+    }
+
+    /// „Mittwoch ungerade Kalenderwoche“, „Montag gerade und ungerade Kalenderwoche“ oder Kürzel wie „Fr uKw“
+    /// → Wochentag (1 = Sonntag) und Parität der ISO-Kalenderwoche (nil = jede Woche).
+    /// `weekly`: Spalte der 1100-l-Behälter, die laut Kopfzeile wöchentlich geleert werden.
+    static func weimarRule(_ text: String, weekly: Bool = false) -> (weekday: Int, parity: Int?)? {
+        let words = text.lowercased().components(separatedBy: CharacterSet.letters.inverted).filter { !$0.isEmpty }
+        let days = ["mo": 2, "di": 3, "mi": 4, "do": 5, "fr": 6, "sa": 7]
+        guard let first = words.first, let weekday = days[String(first.prefix(2))] else { return nil }
+        if weekly { return (weekday, nil) }
+        let odd = words.contains { ["ungerade", "ukw", "ugkw"].contains($0) }
+        let even = words.contains { ["gerade", "gkw"].contains($0) }
+        switch (odd, even) {
+        case (true, true): return (weekday, nil)
+        case (true, false): return (weekday, 1)
+        case (false, true): return (weekday, 0)
+        default: return nil
+        }
+    }
+
+    static func weimarDates(weekday: Int, parity: Int?, from: Date, to: Date, calendar: Calendar) -> [Date] {
+        var iso = Calendar(identifier: .iso8601)
+        iso.timeZone = calendar.timeZone
+        var dates: [Date] = []
+        var day = calendar.startOfDay(for: from)
+        while day <= to {
+            if calendar.component(.weekday, from: day) == weekday,
+               parity.map({ iso.component(.weekOfYear, from: day) % 2 == $0 }) ?? true {
+                dates.append(day)
+            }
+            day = Days.add(1, to: day, calendar: calendar)
+        }
+        return dates
+    }
+
+    private static func weimarNote(_ rule: (weekday: Int, parity: Int?)) -> String {
+        let de = ["", "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"][rule.weekday]
+        let en = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][rule.weekday]
+        switch rule.parity {
+        case nil: return L10n.t("Jeden \(de)", "Every \(en)")
+        case 1: return L10n.t("\(de) in ungeraden Kalenderwochen", "\(en) in odd calendar weeks")
+        default: return L10n.t("\(de) in geraden Kalenderwochen", "\(en) in even calendar weeks")
+        }
+    }
+
+    /// Rest-, Bio-, Papier- und gelbe Tonne am Tag der Zweirad-Spalte (14-täglich laut Abfallsatzung § 28 Abs. 2,
+    /// Biotonne „alle 2 Wochen“, gelbe Tonne laut KS Weimar am selben Tag). Mit `large` kommt Restmüll stattdessen
+    /// wöchentlich aus der 1100-l-Spalte. Feiertagsverschiebungen gibt der KS Weimar nur einzeln bekannt – sie fehlen hier.
+    static func weimarPickups(_ street: WeimarStreet, large: Bool, from: Date? = nil, calendar: Calendar) -> [Pickup] {
+        let start = from ?? Days.today(calendar: calendar)
+        let end = Days.add(365, to: start, calendar: calendar)
+        var result: [Pickup] = []
+        func add(_ names: [String], _ rule: (weekday: Int, parity: Int?)?) {
+            guard let rule else { return }
+            let note = weimarNote(rule)
+            for date in weimarDates(weekday: rule.weekday, parity: rule.parity, from: start, to: end, calendar: calendar) {
+                result += names.map { Pickup(date: date, name: $0, note: note) }
+            }
+        }
+        let largeRule = large ? weimarRule(street.large, weekly: true) : nil
+        add((largeRule == nil ? ["Restmüll"] : []) + ["Biotonne", "Papier", "Gelbe Tonne"], weimarRule(street.regular))
+        add(["Restmüll"], largeRule)
+        return result
+    }
+
+    private var weimarGone: ProviderError {
+        .invalidSelection(L10n.t("Die Straße steht nicht mehr im Entsorgungsplan.", "The street is no longer listed in the collection plan."))
+    }
+
+    /// Tabelle bei jedem Schritt frisch laden, damit Änderungen des KS Weimar ankommen.
+    private func weimarStreets() async throws -> [WeimarStreet] {
+        let streets = Self.weimarPlan(try await client.string(Self.weimarURL)).filter { Self.weimarRule($0.regular) != nil }
+        guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
+        return streets
+    }
+
+    private func weimarStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            let streets = try await weimarStreets()
+            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(streets.map { ($0.name, $0.name) }))
+        case 1:
+            guard let street = try await weimarStreets().first(where: { $0.name == selections[0].id }) else { throw weimarGone }
+            guard Self.weimarRule(street.large, weekly: true) != nil else { return nil }
+            return SelectionStep(title: L10n.t("Restmüllbehälter", "Residual waste bin"), options: [
+                SelectionOption(id: "zweirad", title: L10n.t("Tonne bis 240 l", "Bin up to 240 l")),
+                SelectionOption(id: "1100", title: L10n.t("1100-l-Behälter, wöchentliche Leerung", "1100 l container, emptied weekly")),
+            ], searchable: false)
+        default:
+            return nil
+        }
+    }
+
+    private func weimarPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard let street = try await weimarStreets().first(where: { $0.name == selections[0].id }) else { throw weimarGone }
+        return Self.weimarPickups(street, large: selections.count > 1 && selections[1].id == "1100", calendar: calendar)
     }
 }
