@@ -129,8 +129,9 @@ final class CoverageTests: XCTestCase {
         XCTAssertTrue(titles.contains { $0.contains("Unterhaching") })
         XCTAssertFalse(titles.contains { $0.contains("Aschheim") || $0.contains("Planegg") })
         XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Unterhaching").isEmpty)
-        // Soltau (Heidekreis) ist nicht angebunden
-        XCTAssertFalse(ProviderCatalog.uncoveredMunicipalities(matching: "Soltau").isEmpty)
+        // Soltau (Heidekreis) ist seit Oktober 2026 angebunden, Konstanz noch nicht
+        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Soltau").isEmpty)
+        XCTAssertFalse(ProviderCatalog.uncoveredMunicipalities(matching: "Konstanz").isEmpty)
     }
 
     func testDisplayNames() {

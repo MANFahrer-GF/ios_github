@@ -329,5 +329,39 @@
   "districts": [
    "Kreisfreie Stadt Delmenhorst"
   ]
+ },
+ {
+  "kind": "portalsNord",
+  "key": "heidekreis",
+  "title": "Abfallwirtschaft Heidekreis",
+  "website": "https://www.ahk-heidekreis.de/",
+  "places": [
+   "Ahlden (Aller)",
+   "Bad Fallingbostel",
+   "Bispingen",
+   "Buchholz (Aller)",
+   "Böhme",
+   "Eickeloh",
+   "Essel",
+   "Frankenfeld",
+   "Gilten",
+   "Grethem",
+   "Hademstorf",
+   "Hodenhagen",
+   "Häuslingen",
+   "Lindwedel",
+   "Munster",
+   "Neuenkirchen",
+   "Osterheide",
+   "Rethem (Aller)",
+   "Schneverdingen",
+   "Schwarmstedt",
+   "Soltau",
+   "Walsrode",
+   "Wietzendorf"
+  ],
+  "districts": [
+   "Landkreis Heidekreis"
+  ]
  }
 ]

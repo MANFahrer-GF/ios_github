@@ -406,5 +406,64 @@
   "districts": [
    "Landkreis Pfaffenhofen a.d.Ilm"
   ]
+ },
+ {
+  "kind": "wasteManagementServlet",
+  "key": "bamberg",
+  "title": "Entsorgungs- und Baubetrieb Bamberg",
+  "website": "https://www.stadt.bamberg.de/",
+  "places": [
+   "Bamberg"
+  ],
+  "districts": [
+   "Kreisfreie Stadt Bamberg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "wasteManagementServlet",
+  "key": "suedbrandenburg",
+  "title": "SBAZV Südbrandenburg",
+  "website": "https://www.sbazv.de/",
+  "places": [
+   "Am Mellensee",
+   "Baruth/Mark",
+   "Bestensee",
+   "Blankenfelde-Mahlow",
+   "Dahme/Mark",
+   "Dahmetal",
+   "Eichwalde",
+   "Groß Köris",
+   "Großbeeren",
+   "Halbe",
+   "Heidesee",
+   "Ihlow",
+   "Jüterbog",
+   "Königs Wusterhausen",
+   "Krausnick-Groß Wasserburg",
+   "Luckenwalde",
+   "Ludwigsfelde",
+   "Märkisch Buchholz",
+   "Mittenwalde",
+   "Münchehofe",
+   "Niederer Fläming",
+   "Niedergörsdorf",
+   "Nuthe-Urstromtal",
+   "Rangsdorf",
+   "Rietzneuendorf-Staakow",
+   "Schönefeld",
+   "Schulzendorf",
+   "Schwerin",
+   "Teupitz",
+   "Trebbin",
+   "Wildau",
+   "Zeuthen",
+   "Zossen"
+  ],
+  "districts": [
+   "Landkreis Teltow-Fläming",
+   "Landkreis Dahme-Spreewald"
+  ],
+  "onlyDistricts": true
  }
 ]

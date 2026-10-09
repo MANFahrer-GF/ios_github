@@ -96,6 +96,8 @@ INSERT_IT=[('Mannheim','Mannheim','https://www.insert-it.de/BmsAbfallkalenderMan
  ('Offenbach','Offenbach am Main (ESO)','https://www.insert-it.de/BmsAbfallkalenderOffenbach',['Offenbach','Offenbach am Main'],['Kreisfreie Stadt Offenbach am Main']),
  ('Hattingen','Hattingen','https://www.insert-it.de/BmsAbfallkalenderHattingen',['Hattingen'],[])]
 MANUAL_EXTRA={}
+# Einträge, deren Kreise ausdrücklich feststehen: keine Zuordnung über gleichnamige Orte oder den Titel
+ONLY_DISTRICTS=set()
 for key,title,web,places,districts in INSERT_IT:
     new.append(('insertIT',key,title,web,places))
     if districts: MANUAL_EXTRA[('insertIT',key)]=districts
@@ -168,6 +170,7 @@ for f in sorted(glob.glob(S+'catalog_additions/*.json')):
     for e in json.load(open(f,encoding='utf-8')):
         new.append((e['kind'],e['key'],e['title'],e.get('website') or '',e.get('places') or []))
         if e.get('districts'): MANUAL_EXTRA[(e['kind'],e['key'])]=list(e['districts'])
+        if e.get('onlyDistricts'): ONLY_DISTRICTS.add((e['kind'],e['key']))
 
 lines=[]
 for kind,key,title,web,places in new:
@@ -288,6 +291,7 @@ for kind,key,title,places in entries:
         for k in uniq: lands[kreis_land[k]]=lands.get(kreis_land[k],0)+1
         keep={l for l,n in lands.items() if n>=max(1,0.2*len(uniq))}
         hits+=[k for k in uniq if kreis_land[k] in keep]
+    if (kind,key) in ONLY_DISTRICTS: hits=MANUAL_EXTRA[(kind,key)]
     if hits: mapping[f"{kind}:{key}:{title}"]=sorted(set(hits))
 # --- Gemeinde-genaue Abdeckung: Einträge, die nur einzelne Gemeinden eines Kreises bedienen
 def norm_name(x): return norm(re.sub(r'\s*\(.*?\)','',x)).strip()

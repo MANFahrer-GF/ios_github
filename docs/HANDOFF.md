@@ -71,13 +71,10 @@ TONNE_SWEEP=1 swift test --filter CatalogSweepTests         # jeden Katalogeintr
 
 ## 4. Abdeckung
 
-Von 400 Kreisen und kreisfreien Städten sind 385 voll abgedeckt, 7 teilweise und 8 fehlen. In der App zeigt das der Bereich **Müll → Abdeckung** („Noch nicht dabei“). Für fehlende Orte gibt es Import per ICS-Link oder CSV mit Vorlage.
+Von 400 Kreisen und kreisfreien Städten sind 388 voll abgedeckt, 7 teilweise und 5 fehlen (Stand 9. Okt. nach Heidekreis, Bamberg, Teltow-Fläming). In der App zeigt das der Bereich **Müll → Abdeckung** („Noch nicht dabei“). Für fehlende Orte gibt es Import per ICS-Link oder CSV mit Vorlage.
 
 | Kreis | Status | Grund / nächster Schritt |
 |---|---|---|
-| **Heidekreis** (NI) | fehlt | **Geoblock**, siehe Abschnitt 5. Anbindung als Patch fertig. |
-| **Bamberg (Stadt)** | fehlt | Anbieter ist gebaut (`wasteManagementServlet`, Schlüssel `bamberg`, `ebbweb.stadt.bamberg.de`), aber vom Cloud-Server nicht erreichbar → **von deutschem Server live testen**, dann Katalogeintrag |
-| **Teltow-Fläming** | fehlt | Ebenso: `wasteManagementServlet`, Schlüssel `suedbrandenburg` (SBAZV, `fahrzeuge.sbazv.de`) → **live testen** |
 | Konstanz | fehlt | Müllmann-App hinter Cloudflare |
 | Ansbach (Stadt) | fehlt | nur PDF je Straße |
 | Donnersbergkreis | fehlt | nur eigene App ohne offene Schnittstelle |
@@ -85,61 +82,21 @@ Von 400 Kreisen und kreisfreien Städten sind 385 voll abgedeckt, 7 teilweise un
 | Saale-Holzland-Kreis | fehlt | nur PDF |
 | Hochtaunus, Main-Taunus, Kreis Offenbach, Vogelsberg, Werra-Meißner, Minden-Lübbecke, Amberg-Sulzbach | teilweise | nur einzelne Gemeinden angebunden (`cov.py -v` listet welche) |
 
-Ein ähnlicher Fall ist **Heinz Entsorgung (LK Freising, `portalsBayern`/`heinz`)**. Er ist im Katalog und wurde früher live geprüft, setzte aber zuletzt die Verbindung vom Cloud-Server zurück. Wenn möglich, von Deutschland aus nochmal prüfen.
+**Erledigt am 9. Okt. (vom Mac mit deutscher IP live geprüft):** Heidekreis (`portalsNord`/`heidekreis`, alle 23 Gemeinden), Bamberg-Stadt (`bamberg`) und SBAZV (`suedbrandenburg`: Teltow-Fläming komplett plus Nord-Dahme-Spreewald, das KAEV nicht bedient). Heinz Entsorgung (Freising) liefert von Deutschland aus wieder Termine. Die Sperren gelten nur für Rechenzentren außerhalb Deutschlands – Live-Tests dieser Portale also vom Mac oder einem deutschen Server laufen lassen.
 
-## 5. Aktuelle Aufgabe: Heidekreis
+Neu im Generator: `"onlyDistricts": true` in `catalog_additions` verhindert, dass ein Eintrag über gleichnamige Orte oder den Titel weiteren Kreisen zugeordnet wird (sonst landete SBAZV über „Schwerin“ in Mecklenburg und Bamberg-Stadt im Landkreis Bamberg).
 
-**Befund:**
-- `www.ahk-heidekreis.de` ist erreichbar.
-- Die Termine liefert das Portal **ahkweb.heidekreis.de** mit der API **ahkwebapi.heidekreis.de**. Beide brechen Verbindungen vom Cloud-Server sofort ab („Connection reset by peer“).
-- Vom iPhone des Nutzers aus lädt `https://ahkweb.heidekreis.de/home`, wenn auch langsam. Das spricht für einen Geoblock bzw. eine Sperre für Rechenzentren und nicht für eine Störung.
+## 5. Heidekreis (erledigt 9. Okt.)
 
-**API** (Bauplan aus Home-Assistant `waste_collection_schedule`, Datei `source/ahk_heidekreis_de.py`):
-- Header immer mitsenden: `Referer: https://ahkweb.heidekreis.de/` und `Origin: https://ahkweb.heidekreis.de`
-- Straßensuche: `GET /api/QMasterData/QStreetByPartialName?PartialName=<Text>`
-  → `[{arStrasse, strassenname, plz, ort, ortOrtsteil}]`
-- Hausnummern: `POST /api/QMasterData/QHouseNrEkal` mit JSON-Body `[<arStrasse>]`
-  → `[{arObjekt, hausNrHausNrZ}]`
-- Abfuhrtage: `GET /api/QDisposalCalendar/QDisposaldays?idObject=<arObjekt>&from=MM/dd/yyyy&to=MM/dd/yyyy`
-  → `[{date: "2026-10-12T00:00:00", idIcon, idDisposalType}]`
-- Namen der Abfallarten:
-  - `GET /api/QDisposalCalendar/QDisposalDayIcons?idObject=…&from=…&to=…` → `[{id, description}]`. `description` ist zum Beispiel „Restabfalltonne 120 L“ und wird über `idIcon` zugeordnet.
-  - Rückfall: `GET /api/QDisposalCalendar/QDisposalTypes` → `[{id, name}]`, zugeordnet über `idDisposalType`.
-- Testadressen:
-  - Munster, Wagnerstr. 10-18 (PLZ 29633)
-  - Bad Fallingbostel, Konrad-Zuse-Str. 4 (PLZ 29683)
+Eingebaut in `NordPortalsProvider.swift` (Betreiber `heidekreis`), Tests in `HeidekreisTests.swift` mit echten API-Antworten.
+Ablauf: Straßensuche (Text) → Straße (Untertitel „PLZ Ort“) → Hausnummer → Termine. Die API (`ahkwebapi.heidekreis.de`) braucht `Referer`/`Origin` von `ahkweb.heidekreis.de` und sperrt Rechenzentren außerhalb Deutschlands.
 
-**Stand des Codes:** Der Patch `docs/handoff/heidekreis-wip.patch` ist **noch nie kompiliert worden**.
-- In `NordPortalsProvider.swift` kommt der Betreiber `heidekreis` dazu. Ablauf: Straßensuche (Text) → Straße (Liste mit Untertitel „PLZ Ort“) → Hausnummer → Termine.
-- Hilfsfunktionen: `ahkStreets`, `ahkHouseNumbers` und `ahkPickups`. Die Behältergröße wird aus dem Namen entfernt.
-- Label: „Munster, Wagnerstr. 10-18“.
-- Dazu `Tests/TonneCoreTests/HeidekreisTests.swift`:
-  - Parser-Tests
-  - kompletter Ablauf gegen einen URLProtocol-Stub (prüft URLs, Header und POST-Body)
-  - Live-Test `testLiveHeidekreis` (nur mit `TONNE_LIVE=1`)
+Eigenheiten der echten API:
+- IDs kommen teils als Kommazahl (`QDisposalTypes`: `2.0`, Strauchschnitt-Tage: `idDisposalType: 13.0`) – werden zu „2“/„13“ normalisiert.
+- Abfallart-Name aus `QDisposalDayIcons` („Bioenergietonne 60 L“ → „Bioenergietonne“). Gewerbe-Container heißen dort kryptisch („AHS RM 1100 L“); ist der Name keiner Tonnenart zuzuordnen, gilt der Name aus `QDisposalTypes` („Restabfall“).
+- Live geprüft: Munster Wagnerstr. 10-18, Bad Fallingbostel Konrad-Zuse-Str. 4, Bispingen Lerchenweg 5.
 
-**Nächste Schritte (auf einem Rechner mit deutscher IP):**
-1. Erst die API roh prüfen. So sieht man die echten Feldnamen und Typen:
-   ```bash
-   H=(-H 'Referer: https://ahkweb.heidekreis.de/' -H 'Origin: https://ahkweb.heidekreis.de' -H 'Accept: application/json')
-   curl -s "${H[@]}" 'https://ahkwebapi.heidekreis.de/api/QMasterData/QStreetByPartialName?PartialName=Wagnerstr' | head -c 600
-   curl -s "${H[@]}" -H 'Content-Type: application/json' -d '[<arStrasse>]' 'https://ahkwebapi.heidekreis.de/api/QMasterData/QHouseNrEkal' | head -c 600
-   curl -s "${H[@]}" 'https://ahkwebapi.heidekreis.de/api/QDisposalCalendar/QDisposaldays?idObject=<arObjekt>&from=10%2F01%2F2026&to=12%2F31%2F2026' | head -c 600
-   curl -s "${H[@]}" 'https://ahkwebapi.heidekreis.de/api/QDisposalCalendar/QDisposalDayIcons?idObject=<arObjekt>&from=10%2F01%2F2026&to=12%2F31%2F2026'
-   curl -s "${H[@]}" 'https://ahkwebapi.heidekreis.de/api/QDisposalCalendar/QDisposalTypes'
-   ```
-2. Patch anwenden, bauen und testen:
-   ```bash
-   git apply docs/handoff/heidekreis-wip.patch
-   cd TonneCore && swift build && swift test --filter HeidekreisTests
-   TONNE_LIVE=1 swift test --filter HeidekreisTests/testLiveHeidekreis
-   ```
-   Weichen die echten Antworten von den Annahmen ab (Feldnamen, Datumsformat, Zahl oder Text), müssen Parser und Testdaten angepasst werden. Am besten echte Antworten als Testdaten übernehmen.
-3. Ortsliste der 23 Gemeinden des Heidekreises (`gemeinden.csv`):
-   Ahlden (Aller), Bad Fallingbostel, Bispingen, Buchholz (Aller), Böhme, Eickeloh, Essel, Frankenfeld, Gilten, Grethem, Hademstorf, Hodenhagen, Häuslingen, Lindwedel, Munster, Neuenkirchen, Osterheide, Rethem (Aller), Schneverdingen, Schwarmstedt, Soltau, Walsrode, Wietzendorf.
-   Prüfen, ob alle über die Straßensuche erreichbar sind. Dann `tools/catalog/data/catalog_additions/NordPortalsProvider.json` anlegen bzw. ergänzen (kind `portalsNord`, key `heidekreis`, districts `["Landkreis Heidekreis"]`), den Generator laufen lassen und `cov.py -v` prüfen.
-4. `swift test` komplett grün, dann committen und pushen. Der Nutzer testet anschließend in Xcode auf dem iPhone mit einer echten Heidekreis-Adresse (z. B. Soltau). **Erst danach** kommt ein App-Store-Update.
-5. Dasselbe für Bamberg (`bamberg`) und Teltow-Fläming (`suedbrandenburg`): live testen, Katalogeintrag anlegen.
+**Offen beim Nutzer:** In Xcode auf dem iPhone mit einer echten Heidekreis-Adresse testen (z. B. Soltau). Erst danach App-Store-Update.
 
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 

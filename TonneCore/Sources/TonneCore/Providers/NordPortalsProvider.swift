@@ -18,6 +18,7 @@ import FoundationNetworking
 /// - `hildesheim`: ZAH Hildesheim – abfuhrkalender.de (ASP.NET), ICS je Straße
 /// - `emden`: BEE Emden – ICS je Bezirk
 /// - `delmenhorst`: Stadt Delmenhorst – ICS je Abfuhrbezirk und Altpapiertour
+/// - `heidekreis`: AHK Heidekreis – JSON-API (Straßensuche → Hausnummer → Abfuhrtage)
 public struct NordPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsNord
     public let serviceKey: String
@@ -38,6 +39,7 @@ public struct NordPortalsProvider: WasteProvider {
         "hildesheim": "ZAH Hildesheim",
         "emden": "BEE Emden",
         "delmenhorst": "Stadt Delmenhorst",
+        "heidekreis": "Abfallwirtschaft Heidekreis",
     ]
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
@@ -60,6 +62,7 @@ public struct NordPortalsProvider: WasteProvider {
         case "hildesheim": return try await hildesheimStep(selections)
         case "emden": return try await emdenStep(selections)
         case "delmenhorst": return try await delmenhorstStep(selections)
+        case "heidekreis": return try await heidekreisStep(selections)
         default: throw Self.unknown
         }
     }
@@ -80,6 +83,7 @@ public struct NordPortalsProvider: WasteProvider {
         case "hildesheim": result = try await hildesheimPickups(selections, calendar: calendar)
         case "emden": result = try await emdenPickups(selections, calendar: calendar)
         case "delmenhorst": result = try await delmenhorstPickups(selections, calendar: calendar)
+        case "heidekreis": result = try await heidekreisPickups(selections, calendar: calendar)
         default: throw Self.unknown
         }
         let unique = Array(Set(result.filter { !WasteCategory.isIgnorableTitle($0.name) })).sorted {
@@ -109,6 +113,10 @@ public struct NordPortalsProvider: WasteProvider {
         case "emden": return joined(["Emden"] + titles)
         case "delmenhorst": return joined(["Delmenhorst"] + titles)
         case "hildesheim" where selections.count >= 3: return joined([titles[0], titles[2]])
+        case "heidekreis" where selections.count >= 3:
+            // Ort steht im Untertitel der Straße („29633 Munster“).
+            let town = (selections[1].subtitle ?? "").replacingOccurrences(of: #"^\d{5}\s*"#, with: "", options: .regularExpression)
+            return joined([town, "\(titles[1]) \(titles[2])"])
         case "harburg", "ammerland", "helmstedt":
             // Zusatzschritte (Rhythmus, Abfuhrgebiet) gehören nicht zur Adresse.
             return joined(selections.filter { !$0.id.hasPrefix("rhythm:") && !$0.id.hasPrefix("vier:") && !$0.id.contains("|") }.map(\.title))
@@ -896,5 +904,118 @@ public struct NordPortalsProvider: WasteProvider {
             }
         }
         return result
+    }
+
+    // MARK: - AHK Heidekreis
+
+    // Das Portal ahkweb.heidekreis.de fragt diese API ab. Sie lässt nur Anfragen mit passendem Referer/Origin zu.
+    static let ahkAPI = "https://ahkwebapi.heidekreis.de/api"
+    static let ahkHeaders = ["Accept": "application/json, text/plain, */*",
+                             "Referer": "https://ahkweb.heidekreis.de/",
+                             "Origin": "https://ahkweb.heidekreis.de"]
+
+    /// Zahl oder Text aus dem JSON als Text („123“ auch, wenn die API eine Zahl liefert).
+    static func ahkString(_ value: Any?) -> String? {
+        switch value {
+        case let text as String: return text.trimmingCharacters(in: .whitespaces)
+        // Die API liefert IDs teils als Kommazahl (`QDisposalTypes`: 2.0), teils ganzzahlig (`idDisposalType`: 2).
+        case let number as NSNumber where number.doubleValue == number.doubleValue.rounded(): return String(number.int64Value)
+        case let number as NSNumber: return number.stringValue
+        default: return nil
+        }
+    }
+
+    /// Straßen aus `QStreetByPartialName`: id = arStrasse, Untertitel „PLZ Ort“ (bzw. Ortsteil).
+    static func ahkStreets(_ data: Data) -> [SelectionOption] {
+        let list = jsonObject(data) as? [[String: Any]] ?? []
+        let options: [SelectionOption] = list.compactMap { entry in
+            guard let id = ahkString(entry["arStrasse"]), let name = ahkString(entry["strassenname"]), !name.isEmpty else { return nil }
+            let place = [ahkString(entry["ortOrtsteil"]), ahkString(entry["ort"])].compactMap { $0 }.first { !$0.isEmpty } ?? ""
+            let subtitle = [ahkString(entry["plz"]) ?? "", place].filter { !$0.isEmpty }.joined(separator: " ")
+            return SelectionOption(id: id, title: name, subtitle: subtitle.isEmpty ? nil : subtitle)
+        }
+        var seen = Set<String>()
+        return options.filter { seen.insert($0.id).inserted }.sorted {
+            let a = "\($0.title) \($0.subtitle ?? "")", b = "\($1.title) \($1.subtitle ?? "")"
+            return a.localizedStandardCompare(b) == .orderedAscending
+        }
+    }
+
+    /// Hausnummern aus `QHouseNrEkal`: id = arObjekt.
+    static func ahkHouseNumbers(_ data: Data) -> [SelectionOption] {
+        let list = jsonObject(data) as? [[String: Any]] ?? []
+        return sorted(list.compactMap { entry in
+            guard let id = ahkString(entry["arObjekt"]), let number = ahkString(entry["hausNrHausNrZ"]) else { return nil }
+            return SelectionOption(id: id, title: number.isEmpty ? L10n.t("ohne Hausnummer", "no house number") : number)
+        })
+    }
+
+    /// Abfuhrtage aus `QDisposaldays`. Name aus `QDisposalDayIcons` (genauer, z. B. „Bioenergietonne 60 L“),
+    /// außer er ist keiner Tonnenart zuzuordnen (Gewerbe-Container „AHS RM 1100 L“) – dann aus `QDisposalTypes`
+    /// („Restabfall“). Die Behältergröße fällt weg, damit gleiche Abfallarten zusammenpassen.
+    static func ahkPickups(days: Data, icons: Data, types: Data, calendar: Calendar) -> [Pickup] {
+        var iconNames: [String: String] = [:]
+        for entry in jsonObject(icons) as? [[String: Any]] ?? [] {
+            if let id = ahkString(entry["id"]), let text = ahkString(entry["description"]), !text.isEmpty { iconNames[id] = text }
+        }
+        var typeNames: [String: String] = [:]
+        for entry in jsonObject(types) as? [[String: Any]] ?? [] {
+            if let id = ahkString(entry["id"]), let text = ahkString(entry["name"]), !text.isEmpty { typeNames[id] = text }
+        }
+        return (jsonObject(days) as? [[String: Any]] ?? []).compactMap { entry in
+            guard let raw = ahkString(entry["date"]), raw.count >= 10,
+                  let date = Days.parse(String(raw.prefix(10)), calendar: calendar) else { return nil }
+            let iconName = ahkString(entry["idIcon"]).flatMap { iconNames[$0] }
+            let typeName = ahkString(entry["idDisposalType"]).flatMap { typeNames[$0] }
+            let iconUnclear = iconName.map { WasteCategory.classify($0) == .other } ?? true
+            guard let name = (iconUnclear ? typeName : nil) ?? iconName ?? typeName else { return nil }
+            let short = name.replacingOccurrences(of: #"\s*\d+([.,]\d+)?\s*(l|ltr\.?|liter|m³|m3|cbm)\.?\s*$"#, with: "",
+                                                  options: [.regularExpression, .caseInsensitive])
+            return Pickup(date: date, name: NameCleaner.clean(short))
+        }
+    }
+
+    private func heidekreisStep(_ s: [SelectionOption]) async throws -> SelectionStep? {
+        switch s.count {
+        case 0:
+            return Self.streetSearchStep
+        case 1:
+            let query = s[0].title.trimmingCharacters(in: .whitespaces)
+            guard query.count >= 3 else {
+                throw ProviderError.invalidSelection(L10n.t("Bitte mindestens drei Buchstaben eingeben.", "Please enter at least three letters."))
+            }
+            let data = try await client.get("\(Self.ahkAPI)/QMasterData/QStreetByPartialName?PartialName=\(HTTPClient.query(query))", headers: Self.ahkHeaders)
+            let streets = Self.ahkStreets(data)
+            guard !streets.isEmpty else { throw Self.streetNotFound }
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets)
+        case 2:
+            guard let street = Int(s[1].id) else { throw ProviderError.selectAddressFirst }
+            let data = try await client.post("\(Self.ahkAPI)/QMasterData/QHouseNrEkal", body: Data("[\(street)]".utf8),
+                                             contentType: "application/json", headers: Self.ahkHeaders)
+            let numbers = Self.ahkHouseNumbers(data)
+            guard !numbers.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers)
+        default:
+            return nil
+        }
+    }
+
+    private func heidekreisPickups(_ s: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard s.count >= 3, Int(s[2].id) != nil else { throw ProviderError.selectAddressFirst }
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = calendar.timeZone
+        formatter.dateFormat = "MM/dd/yyyy"
+        let start = calendar.startOfDay(for: Date())
+        let range = "idObject=\(s[2].id)&from=\(HTTPClient.query(formatter.string(from: start)))&to=\(HTTPClient.query(formatter.string(from: Days.add(365, to: start, calendar: calendar))))"
+        async let days = client.get("\(Self.ahkAPI)/QDisposalCalendar/QDisposaldays?\(range)", headers: Self.ahkHeaders)
+        async let icons = client.get("\(Self.ahkAPI)/QDisposalCalendar/QDisposalDayIcons?\(range)", headers: Self.ahkHeaders)
+        async let types = client.get("\(Self.ahkAPI)/QDisposalCalendar/QDisposalTypes", headers: Self.ahkHeaders)
+        let dayData = try await days
+        // Die Namenslisten sind Beiwerk: fehlt eine, reicht die andere.
+        let iconData = (try? await icons) ?? Data()
+        let typeData = (try? await types) ?? Data()
+        return Self.ahkPickups(days: dayData, icons: iconData, types: typeData, calendar: calendar)
     }
 }
