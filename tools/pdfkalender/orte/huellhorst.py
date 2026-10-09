@@ -1,4 +1,5 @@
-"""Gemeinde Hüllhorst (Kreis Minden-Lübbecke): ein Jahreskalender für die ganze Gemeinde (Serviceportal,
+"""Nur Prüfwerkzeug, keine Jahresdaten (die App nutzt die ICS der Gemeinde live).
+Gemeinde Hüllhorst (Kreis Minden-Lübbecke): ein Jahreskalender für die ganze Gemeinde (Serviceportal,
 „Abfuhrkalender / Sortierhilfe 2026“). Die Abfallart steckt in farbigen Kästchen am rechten Zellrand:
 schwarz R Restabfall, blau P Papier, braun B Biotonne bzw. S Bio- und Sommerbiotonne, gelb G Gelbe Tonne,
 orange C Gelbe Container (1.100 l), grün X Sperrmüll (nach Anmeldung), rot Sondermüll (Wertstoffhof).
@@ -69,7 +70,5 @@ def run(refresh=False):
     pdf = common.fetch(PDF[year], f'huellhorst_{year}.pdf', refresh=refresh)
     events = calendar(pdf, year)
     check_ics(events, common.fetch(ICS[year], f'huellhorst_{year}.ics', refresh=refresh), year)
-    rows = [(d,) + NAMES[code] for d, code in events]
-    print(f'  [huellhorst] {collections.Counter(code for _, code in events)}')
-    common.write_output('huellhorst', 'Gemeinde Hüllhorst', PDF[year], [year],
-                        [('huellhorst', 'Hüllhorst', None, rows)], step_title='Ort')
+    # Keine Jahresdaten-Datei: Hüllhorst läuft live über die ICS der Gemeinde; dieses Skript ist nur die Gegenprobe.
+    print(f'  [huellhorst] {collections.Counter(code for _, code in events)} – keine Ausgabe (ICS wird live genutzt)')

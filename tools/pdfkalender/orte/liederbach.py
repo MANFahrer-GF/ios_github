@@ -50,5 +50,12 @@ def run(refresh=False):
             leftover = ' '.join(t for t in rest if t not in TEXT).lower()
             if leftover and leftover != 'wsh geschlossen' and not any(leftover.startswith(h) for h in HOLIDAYS):
                 raise SystemExit(f'liederbach: {c["date"]}: nicht zugeordnet {leftover!r}')
+    # Die App fasst alle Restmüll-Arten in einer Gruppe zusammen – darum zwei Auswahlpunkte:
+    # Tonnen bis 240 l (14-täglich) bzw. 1,1-m³-Container (zwei Leerungen pro Woche); übrige Arten gleich.
+    container = {k for _, k in RM_COLORS[1:]}
+    tonne = [e for e in events if e[1] not in container]
+    cont = [e for e in events if e[1] != 'Restmüll']
     common.write_output('liederbach', 'Gemeinde Liederbach am Taunus', PDF[max(PDF)], sorted(PDF),
-                        [('liederbach', 'Liederbach am Taunus', None, events)], step_title='Ort')
+                        [('tonnen_bis_240_l', 'Restmüll-Tonne bis 240 l (14-täglich)', None, tonne),
+                         ('container_1_1_m3', 'Restmüll-Container 1,1 m³', None, cont)],
+                        step_title='Restmüllbehälter')

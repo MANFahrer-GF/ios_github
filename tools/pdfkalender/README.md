@@ -43,13 +43,15 @@ Die neuen PDFs erscheinen meist Mitte November bis Januar. Je Ort:
 | `saaleholzland` | saaleholzlandkreis.de/de/abfallkalender.html → Broschüre (48 S.) | Regeln Wochentag + gerade/ungerade KW; Feiertagstabelle S. 23; Seitenzahlen in `orte/saaleholzland.py` prüfen | 1–2 h |
 | `rahden` | rahden.de/wp-content/uploads/Abfall-Entsorgungskalender<Jahr>.pdf | Farbkästchen; Straßenverzeichnis S. 2; Sperrmüll-/Schadstofftermine im Infokasten | 30 min |
 | `stemwede` | stemwede.de/bauen-wirtschaft-klimaschutz/abfall/ | Zellfarbe = Art, Text = Ortsteile | 20 min |
-| `huellhorst` | serviceportal.huellhorst.de → Dienstleistung „Abfuhrkalender“ (PDF + ICS) | Farbkästchen; Gegenprobe gegen die ICS der Gemeinde läuft automatisch | 15 min |
 | `mainhausen` | mainhausen.de/bauen-umwelt-abfall/abfallwirtschaft/abfallkalender | Balkenfarbe (aus dem Bild) + Bezirksnummern; Straßenliste eigene PDF | 30 min |
 | `sontra` | sontra.de → „Bio-, Rest- und Papiermüll“ (verwaltungsportal.de) | Farbflächen + Bezirke; Straßenverzeichnis unten S. 1; ohne Gelbe Tonne | 30 min |
-| `liederbach` | liederbach.eu → „Abfall & Entsorgung“ → „Liederbacher Müllkalender“ | Kürzel; „RM“ nach Kastenfarbe (14-tägl. / 1,1 m³) | 20 min |
+| `liederbach` | liederbach.eu → „Abfall & Entsorgung“ → „Liederbacher Müllkalender“ | Kürzel; „RM“ nach Kastenfarbe (14-tägl. / 1,1 m³) → zwei Auswahlpunkte Tonne / Container | 20 min |
 | `gaienhofen` | gaienhofen.de/de/rathaus/entsorgung-umwelt/abfall | Text in der Zelle | 15 min |
 | `oehningen` | oehningen.de/buergerservice/wohnen/abfall | Text in der Zelle | 15 min |
 | `buesingen` | buesingen.de/de/Rathaus/Abfallentsorgung („Abholtermine“, 2 Halbjahres-PDFs) | Tage × Monate ohne Wochentag | 15 min |
+
+Hüllhorst ist nicht in den Jahresdaten: Die Gemeinde stellt eine ICS-Datei bereit, die App bindet sie live an.
+`orte/huellhorst.py` bleibt als Prüfwerkzeug (liest die PDF und vergleicht sie mit der ICS; 2026: 87 von 87 gleich).
 
 Summe bei unverändertem Layout etwa 5–7 Stunden pro Jahr. Ändert ein Ort Layout oder Farben, kommen
 1–2 Stunden für diesen Ort dazu (Palette/Spalten in `orte/<key>.py` anpassen).

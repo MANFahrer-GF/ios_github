@@ -145,20 +145,6 @@
  },
  {
   "kind": "jahresdaten",
-  "key": "huellhorst",
-  "title": "Gemeinde Hüllhorst",
-  "website": "https://serviceportal.huellhorst.de:443/detail/-/vr-bis-detail/dokument/39157/download?_19_WAR_vrportlet_priv_r_p_action=vr-bis-detail-dienstleistung-show",
-  "places": [
-   "Hüllhorst"
-  ],
-  "districts": [
-   "Kreis Minden-Lübbecke"
-  ],
-  "onlyDistricts": true,
-  "partial": true
- },
- {
-  "kind": "jahresdaten",
   "key": "mainhausen",
   "title": "Gemeinde Mainhausen",
   "website": "https://www.mainhausen.de/fileadmin/Dateien/Cross7/Startseite/Bauen%2C_Umwelt_%26_Abfall/Abfallwirtschaft/Abfallkalender/abfallkalender-2026-web.pdf",
