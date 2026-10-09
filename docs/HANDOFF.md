@@ -1,10 +1,10 @@
 # Übergabe „Tonne & Torte“
 
-Stand: 9. Oktober 2026. Repo `MANFahrer-GF/ios_github` (öffentlich), Branch **`claude/adoring-ride-nxgrwn`**.
-Das ist der einzige Branch und zugleich der Standard-Branch.
+Stand: 9. Oktober 2026. Repo `MANFahrer-GF/ios_github` (öffentlich), Standard-Branch **`main`** (seit 9. Okt.).
+Der frühere Branch `claude/adoring-ride-nxgrwn` ist veraltet (Stand 936b145) und kann gelöscht werden, sobald sicher nichts mehr darauf verweist.
 
-> **Nicht löschen oder umbenennen:** GitHub Pages veröffentlicht aus diesem Branch (Ordner `/docs`) die
-> Datenschutz- und Support-Seite, die in App Store Connect eingetragen sind.
+> **GitHub Pages veröffentlicht aus `main`, Ordner `/docs`** – die Datenschutz- und Support-Seite, die in App Store Connect
+> eingetragen sind. Die Adressen sind unverändert (https://manfahrer-gf.github.io/ios_github/…).
 
 ---
 
