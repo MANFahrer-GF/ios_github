@@ -8,6 +8,8 @@ import Foundation
 /// - `gelsendienste`, `best`: Gelsenkirchen und Bottrop (abisapp) – Straßenliste + Hausnummer, ICS
 /// - `herford`: Kreis Herford – iKISS-Portale der neun Kommunen, vCal-Export je Straße
 /// - `enni`: ENNI Moers – Straßenliste, ICS je Straße
+/// - `espelkamp`: Stadt Espelkamp (Kreis Minden-Lübbecke) – iKISS wie Kreis Herford, ohne Ortswahl
+/// - `prezero`: PreZero Bad Oeynhausen – Straßenliste + Hausnummer, ICS je Jahr
 public struct NRWPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsNRW
     public let serviceKey: String
@@ -23,6 +25,7 @@ public struct NRWPortalsProvider: WasteProvider {
         "awista": "AWISTA Düsseldorf", "mags": "mags Mönchengladbach", "awg": "AWG Wuppertal",
         "rsag": "RSAG Rhein-Sieg", "gelsendienste": "Gelsendienste", "best": "BEST Bottrop",
         "herford": "Kreis Herford","enni": "ENNI Moers",
+        "espelkamp": "Stadt Espelkamp", "prezero": "PreZero Bad Oeynhausen",
     ]
 
     /// abisapp-Portale: Straßenliste im `<select name="street">`, ICS über `format=ical`.
@@ -39,6 +42,12 @@ public struct NRWPortalsProvider: WasteProvider {
         ("Spenge", "393.5", "www.spenge.de"), ("Vlotho", "393.8", "www.vlotho.de"),
     ]
 
+    /// Weitere iKISS-Kommunen mit demselben Export; eine einzelne Kommune braucht keine Ortswahl.
+    static let ikissPlaces: [String: [(name: String, ort: String, host: String)]] = [
+        "herford": herfordPlaces,
+        "espelkamp": [("Espelkamp", "322.4", "www.espelkamp.de")],
+    ]
+
     // MARK: - Assistent
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
@@ -48,8 +57,9 @@ public struct NRWPortalsProvider: WasteProvider {
         case "awg": return try await awgStep(selections)
         case "rsag": return try await rsagStep(selections)
         case "gelsendienste", "best": return try await abisappStep(selections)
-        case "herford": return try await herfordStep(selections)
+        case "herford", "espelkamp": return try await herfordStep(selections)
         case "enni": return try await enniStep(selections)
+        case "prezero": return try await prezeroStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -62,8 +72,9 @@ public struct NRWPortalsProvider: WasteProvider {
         case "awg": result = try await awgPickups(selections, calendar: calendar)
         case "rsag": result = try await rsagPickups(selections, calendar: calendar)
         case "gelsendienste", "best": result = try await abisappPickups(selections, calendar: calendar)
-        case "herford": result = try await herfordPickups(selections, calendar: calendar)
+        case "herford", "espelkamp": result = try await herfordPickups(selections, calendar: calendar)
         case "enni": result = try await enniPickups(selections, calendar: calendar)
+        case "prezero": result = try await prezeroPickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -81,6 +92,8 @@ public struct NRWPortalsProvider: WasteProvider {
         case "awg": return join("Wuppertal", Array(titles.dropFirst().prefix(1)))
         case "gelsendienste", "best": return join(Self.abisapp[serviceKey]?.city ?? "", Array(titles.prefix(2)))
         case "enni": return join("Moers", Array(titles.prefix(1)))
+        case "espelkamp": return join("Espelkamp", Array(titles.prefix(1)))
+        case "prezero": return join("Bad Oeynhausen", Array(titles.prefix(2)))
         default: return titles.filter { !$0.isEmpty }.joined(separator: ", ")
         }
     }
@@ -349,29 +362,44 @@ public struct NRWPortalsProvider: WasteProvider {
 
     // MARK: - Kreis Herford (iKISS)
 
+    /// Gewählte Kommune und Anzahl der Auswahlschritte davor (0, wenn es nur eine Kommune gibt).
+    private func ikissPlace(_ selections: [SelectionOption]) -> (place: (name: String, ort: String, host: String)?, offset: Int) {
+        let places = Self.ikissPlaces[serviceKey] ?? []
+        if places.count == 1 { return (places[0], 0) }
+        return (selections.first.flatMap { selection in places.first { $0.ort == selection.id } }, 1)
+    }
+
     private func herfordStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
-        switch selections.count {
-        case 0:
-            return SelectionStep(title: SelectionStep.cityTitle, options: Self.herfordPlaces.map { SelectionOption(id: $0.ort, title: $0.name) }, searchable: false)
-        case 1:
-            guard let place = Self.herfordPlaces.first(where: { $0.ort == selections[0].id }) else { throw ProviderError.selectAddressFirst }
-            let html = try await client.string("https://\(place.host)/index.php?La=1&ffmod=abf&ort=\(place.ort)&call=sfm")
-            let options = HTMLText.options(ofSelect: "strasse", in: html).filter { !$0.value.isEmpty }
-                .map { SelectionOption(id: $0.value, title: $0.label) }
-            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
-            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
-        default:
-            return nil
+        let (place, offset) = ikissPlace(selections)
+        if offset == 1, selections.isEmpty {
+            let places = Self.ikissPlaces[serviceKey] ?? []
+            return SelectionStep(title: SelectionStep.cityTitle, options: places.map { SelectionOption(id: $0.ort, title: $0.name) }, searchable: false)
         }
+        guard selections.count == offset else { return nil }
+        guard let place else { throw ProviderError.selectAddressFirst }
+        let html = try await client.string("https://\(place.host)/index.php?La=1&ffmod=abf&ort=\(place.ort)&call=sfm")
+        var options = HTMLText.options(ofSelect: "strasse", in: html).filter { !$0.value.isEmpty }
+            .map { SelectionOption(id: $0.value, title: $0.label) }
+        if serviceKey == "espelkamp" { options = Self.withoutSplitStreets(options) }
+        guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+        return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+    }
+
+    /// Espelkamp führt bei aufgeteilten Straßen den alten Gesamteintrag weiter („Fabbenstedter Straße“ neben
+    /// „Fabbenstedter Straße 1-32“ …); der liefert keine oder nur einzelne Termine – nur die Abschnitte anbieten.
+    static func withoutSplitStreets(_ options: [SelectionOption]) -> [SelectionOption] {
+        let titles = options.map(\.title)
+        return options.filter { option in !titles.contains { $0.hasPrefix(option.title + " ") } }
     }
 
     private func herfordPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
-        guard selections.count >= 2, let place = Self.herfordPlaces.first(where: { $0.ort == selections[0].id }) else { throw ProviderError.selectAddressFirst }
+        let (place, offset) = ikissPlace(selections)
+        guard selections.count > offset, let place else { throw ProviderError.selectAddressFirst }
         let year = calendar.component(.year, from: Date())
         let start = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) ?? .distantPast
         var result: [Pickup] = []
         for target in [year, year + 1] {
-            let url = "https://\(place.host)/output/abfall_export.php?csv_export=1&mode=vcal&ort=\(place.ort)&strasse=\(HTTPClient.query(selections[1].id))"
+            let url = "https://\(place.host)/output/abfall_export.php?csv_export=1&mode=vcal&ort=\(place.ort)&strasse=\(HTTPClient.query(selections[offset].id))"
                 + "&vtyp=2&vMo=01&vJ=\(target)&bMo=12"
             guard let text = try? await client.string(url, headers: ["Referer": "https://\(place.host)/"]) else { continue }
             // Vlotho liefert alle Jahre seit 2020 – nur ab dem laufenden Jahr übernehmen.
@@ -396,6 +424,7 @@ public struct NRWPortalsProvider: WasteProvider {
         // Farbige Deckel unterscheiden Restmüll-Touren – die Farbe darf die Sortierung nicht auf Papier/Gelb lenken.
         name = name.replacingOccurrences(of: "blauer Deckel", with: "bl. Deckel").replacingOccurrences(of: "gelber Deckel", with: "ge. Deckel")
         if name == "Leichtstoff" { name = "Leichtstoffverpackungen" }
+        if place == "Espelkamp", name.hasPrefix("Leichtstoffe") { name = "Leichtstoffverpackungen" + name.dropFirst(12) }
         // In Enger ist die grüne Tonne die Verpackungstonne.
         if place == "Enger", name == "Grüne Tonne" { name = "Grüne Tonne (Verpackungen)" }
         guard name.contains("Tonne, ") else { return [NameCleaner.clean(name)] }
@@ -454,5 +483,50 @@ public struct NRWPortalsProvider: WasteProvider {
         return ICS.parse(Self.stripAlarms(text), calendar: calendar).map { event in
             Pickup(date: event.date, name: NameCleaner.clean(event.summary.replacingOccurrences(of: #"^Abholung\s+"#, with: "", options: .regularExpression)))
         }
+    }
+
+    // MARK: - PreZero Bad Oeynhausen
+
+    private static let prezeroURL = "https://abfallkalender.prezero.network/bad-oeynhausen"
+
+    private func prezeroStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            let html = try await client.string(Self.prezeroURL)
+            let options = HTMLText.options(ofSelect: "street", in: html).filter { !$0.value.isEmpty }
+                .map { SelectionOption(id: $0.value, title: $0.label) }
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+        case 1:
+            return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 10", "e.g. 10"))
+        default:
+            return nil
+        }
+    }
+
+    private func prezeroPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+        let number = selections[1].title.trimmingCharacters(in: .whitespaces)
+        // Das Formular leitet auf /calendar/<Straße>/<Nr> weiter; dort steht das Download-Formular je Jahr.
+        let html = HTTPClient.text(from: try await client.postForm(Self.prezeroURL, fields: [("street", selections[0].id), ("houseNo", number)]))
+        guard let path = Self.prezeroDownloadPath(html) else { throw ProviderError.noDataGeneric }
+        let year = calendar.component(.year, from: Date())
+        var result: [Pickup] = []
+        for target in [year, year + 1] {
+            guard let data = try? await client.postForm("https://abfallkalender.prezero.network\(path)/\(target)", fields: []) else { continue }
+            result += Self.prezeroPickups(HTTPClient.text(from: data), calendar: calendar)
+        }
+        return result
+    }
+
+    /// `action="/bad-oeynhausen/download/ical/787/1/2026"` → „/bad-oeynhausen/download/ical/787/1“.
+    static func prezeroDownloadPath(_ html: String) -> String? {
+        HTMLText.firstMatch(#"action="(/[a-z0-9-]+/download/ical/\d+/[^/"]+)/\d{4}""#, in: html, group: 1)
+    }
+
+    /// Termine der Tonnenreinigung sind keine Abfuhr und würden sonst als Biotonne einsortiert.
+    static func prezeroPickups(_ ics: String, calendar: Calendar) -> [Pickup] {
+        ICS.parse(stripAlarms(ics), calendar: calendar).filter { !$0.summary.contains("Reinigung") }
+            .map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary)) }
     }
 }
