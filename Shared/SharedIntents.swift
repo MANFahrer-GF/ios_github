@@ -26,14 +26,16 @@ struct MarkPickupDoneIntent: DoneIntentBase {
         let target = (dayKey?.isEmpty == false) ? dayKey! : (snapshot?.doneTargetDay().map { Days.iso($0.date) } ?? "")
         guard !target.isEmpty else {
             let todayDone = snapshot?.pickupDays.contains { Days.until($0.date) == 0 && $0.done } ?? false
-            return .result(dialog: todayDone ? "Heute ist schon alles erledigt. 👍" : "Heute und morgen steht keine Abholung an.")
+            return .result(dialog: IntentDialog(stringLiteral: todayDone ? L10n.t("Heute ist schon alles erledigt. 👍", "Everything is already done today. 👍") : L10n.t("Heute und morgen steht keine Abholung an.", "No collection today or tomorrow.")))
         }
         SnapshotStore.markDone(dayKey: target)
         #if os(watchOS)
         WatchSync.sendDone(dayKey: target)
         #endif
-        let when = Days.parse(target).map { Days.until($0) == 0 ? "heute" : "morgen" } ?? ""
-        return .result(dialog: "Super, alles für \(when) steht draußen. 👍")
+        let isToday = Days.parse(target).map { Days.until($0) == 0 } ?? false
+        return .result(dialog: IntentDialog(stringLiteral: isToday
+            ? L10n.t("Super, alles für heute steht draußen. 👍", "Great, everything for today is out. 👍")
+            : L10n.t("Super, alles für morgen steht draußen. 👍", "Great, everything for tomorrow is out. 👍")))
     }
 }
 
@@ -51,12 +53,12 @@ struct UndoPickupDoneIntent: DoneIntentBase {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let key = (dayKey?.isEmpty == false) ? dayKey! : (SnapshotStore.load()?.undoTargetDay().map { Days.iso($0.date) } ?? "")
-        guard !key.isEmpty else { return .result(dialog: "Heute und morgen ist nichts als erledigt markiert.") }
+        guard !key.isEmpty else { return .result(dialog: IntentDialog(stringLiteral: L10n.t("Heute und morgen ist nichts als erledigt markiert.", "Nothing is marked as done for today or tomorrow."))) }
         SnapshotStore.markUndone(dayKey: key)
         #if os(watchOS)
         WatchSync.sendUndo(dayKey: key)
         #endif
-        return .result(dialog: "Okay, die Tonne gilt wieder als offen.")
+        return .result(dialog: IntentDialog(stringLiteral: L10n.t("Okay, die Tonne gilt wieder als offen.", "Okay, the bin counts as open again.")))
     }
 }
 
@@ -75,7 +77,7 @@ struct MarkBroughtInIntent: DoneIntentBase {
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let key = (dayKey?.isEmpty == false) ? dayKey! : Days.iso(Days.today())
         SnapshotStore.markBroughtIn(dayKey: key)
-        return .result(dialog: "Prima, alles ist wieder drin.")
+        return .result(dialog: IntentDialog(stringLiteral: L10n.t("Prima, alles ist wieder drin.", "Great, everything is back in.")))
     }
 }
 
@@ -90,23 +92,23 @@ struct NextPickupIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<String> {
         guard let snapshot = SnapshotStore.load() else {
-            return .result(value: "", dialog: "Bitte öffne Tonne & Torte einmal, damit ich deine Termine kenne.")
+            return .result(value: "", dialog: IntentDialog(stringLiteral: L10n.t("Bitte öffne Tonne & Torte einmal, damit ich deine Termine kenne.", "Please open Tonne & Torte once so I know your dates.")))
         }
         let filtered = snapshot.filtered(locationID: location?.id)
         // Heute zählt bis 17 Uhr, auch wenn die Tonne schon draußen steht – das Müllauto kommt ja noch
         guard let next = filtered.nextPickupDay(countDone: true) else {
-            return .result(value: "", dialog: "In den nächsten Wochen steht keine Abholung an.")
+            return .result(value: "", dialog: IntentDialog(stringLiteral: L10n.t("In den nächsten Wochen steht keine Abholung an.", "No collection in the coming weeks.")))
         }
         let names = next.items.map(\.name)
         let list = ReminderPlanner.joinNames(names)
         let when: String
         switch Days.until(next.date) {
-        case 0: when = "heute"
-        case 1: when = "morgen"
-        case 2: when = "übermorgen"
-        case let d: when = "in \(d) Tagen, am \(DateText.short(next.date))"
+        case 0: when = L10n.t("heute", "today")
+        case 1: when = L10n.t("morgen", "tomorrow")
+        case 2: when = L10n.t("übermorgen", "the day after tomorrow")
+        case let d: when = L10n.t("in \(d) Tagen, am \(DateText.short(next.date))", "in \(d) days, on \(DateText.short(next.date))")
         }
-        let text = "\(list) \(names.count == 1 ? "kommt" : "kommen") \(when)."
+        let text = L10n.t("\(list) \(names.count == 1 ? "kommt" : "kommen") \(when).", "\(list) \(names.count == 1 ? "is" : "are") due \(when).")
         return .result(value: text, dialog: IntentDialog(stringLiteral: text))
     }
 }
@@ -119,7 +121,7 @@ struct NextBirthdayIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<String> {
         guard let snapshot = SnapshotStore.load() else {
-            return .result(value: "", dialog: "Bitte öffne Tonne & Torte einmal, damit ich die Geburtstage kenne.")
+            return .result(value: "", dialog: IntentDialog(stringLiteral: L10n.t("Bitte öffne Tonne & Torte einmal, damit ich die Geburtstage kenne.", "Please open Tonne & Torte once so I know the birthdays.")))
         }
         let text = SpokenSummary.birthdays(snapshot.birthdays)
         return .result(value: text, dialog: IntentDialog(stringLiteral: text))

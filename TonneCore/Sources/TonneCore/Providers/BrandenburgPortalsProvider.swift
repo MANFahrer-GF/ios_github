@@ -75,7 +75,7 @@ public struct BrandenburgPortalsProvider: WasteProvider {
     }
 
     private var unknownService: ProviderError {
-        .invalidSelection(L10n.t("Unbekannter Entsorger.", "Unknown waste operator."))
+        .invalidSelection(L10n.t("Unbekannter Entsorger.", "Unknown provider."))
     }
 }
 
@@ -141,9 +141,9 @@ private struct Potsdam {
         switch turnus {
         case 1: return L10n.t("2× pro Woche", "Twice a week")
         case 2: return L10n.t("wöchentlich", "Weekly")
-        case 3: return L10n.t("14-tägig", "Every two weeks")
-        case 4: return L10n.t("4-wöchentlich", "Every four weeks")
-        case 5: return L10n.t("Kombileerung (April–Oktober wöchentlich, sonst 14-tägig)", "Combined (weekly April–October, otherwise every two weeks)")
+        case 3: return L10n.t("alle 2 Wochen", "Every two weeks")
+        case 4: return L10n.t("alle 4 Wochen", "Every four weeks")
+        case 5: return L10n.t("Kombileerung (April–Oktober wöchentlich, sonst alle 2 Wochen)", "Combined (weekly April–October, otherwise every two weeks)")
         default: return L10n.t("keine Tonne", "No bin")
         }
     }

@@ -231,7 +231,7 @@ public enum PickupCSV {
 
     /// CSV mit Semikolon und UTF-8-BOM (Excel öffnet Umlaute dann richtig).
     public static func build(_ rows: [Row], calendar: Calendar = .current) -> String {
-        var lines = [[L10n.t("Datum", "Date"), L10n.t("Abfallart", "Waste type"), L10n.t("Hinweis", "Note")].joined(separator: ";")]
+        var lines = [[L10n.t("Datum", "Date"), L10n.t("Müllart", "Waste type"), L10n.t("Hinweis", "Note")].joined(separator: ";")]
         for row in rows.sorted(by: { ($0.date, $0.name) < ($1.date, $1.name) }) {
             lines.append([germanDate(row.date, calendar: calendar), escape(row.name), escape(row.note ?? "")].joined(separator: ";"))
         }

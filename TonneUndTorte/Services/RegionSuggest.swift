@@ -26,7 +26,7 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
             manager.requestWhenInUseAuthorization()
         case .denied, .restricted:
             isWorking = false
-            errorMessage = "Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben."
+            errorMessage = L10n.t(L10n.t("Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben.", "Location access is turned off – please enter your town manually."), "Location access is turned off – please enter your town manually.")
         default:
             manager.requestLocation()
         }
@@ -38,7 +38,7 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
                 manager.requestLocation()
             } else if [.denied, .restricted].contains(manager.authorizationStatus) {
                 self.isWorking = false
-                self.errorMessage = "Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben."
+                self.errorMessage = L10n.t(L10n.t("Standortzugriff ist deaktiviert – bitte Ort von Hand eingeben.", "Location access is turned off – please enter your town manually."), "Location access is turned off – please enter your town manually.")
             }
         }
     }
@@ -61,9 +61,9 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
                     for entry in ProviderCatalog.search(short) where !found.contains(entry) { found.append(entry) }
                 }
                 self.suggestions = found
-                if found.isEmpty { self.errorMessage = "Für \(self.placeName ?? "deine Region") ist noch kein Entsorger im Katalog – bitte unten suchen oder ICS-Link nutzen." }
+                if found.isEmpty { self.errorMessage = L10n.t(L10n.t("Für \(self.placeName ?? "deine Region") ist noch kein Entsorger im Katalog – bitte unten suchen oder ICS-Link nutzen.", "There is no provider in the catalog for \(self.placeName ?? "your region") yet – please search below or use an ICS link."), "There is no provider in the catalog for \(self.placeName ?? "your region") yet – please search below or use an ICS link.") }
             } catch {
-                self.errorMessage = "Ort konnte nicht bestimmt werden."
+                self.errorMessage = L10n.t(L10n.t("Ort konnte nicht bestimmt werden.", "Could not determine the town."), "Could not determine the town.")
             }
             self.isWorking = false
         }
@@ -72,7 +72,7 @@ final class RegionSuggest: NSObject, ObservableObject, CLLocationManagerDelegate
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Task { @MainActor in
             self.isWorking = false
-            self.errorMessage = "Standort konnte nicht ermittelt werden."
+            self.errorMessage = L10n.t(L10n.t("Standort konnte nicht ermittelt werden.", "Could not determine your location."), "Could not determine your location.")
         }
     }
 }

@@ -114,7 +114,7 @@ public struct NRWPortalsProvider: WasteProvider {
     }
 
     static func notFound(_ what: String) -> ProviderError {
-        .invalidSelection(L10n.t("Keine passende \(what) gefunden – bitte Schreibweise prüfen.", "No matching entry found – please check the spelling."))
+        .invalidSelection(L10n.t("Keine passende \(what) gefunden – bitte Schreibweise prüfen.", "No matching \(what) found – please check the spelling."))
     }
 
     // MARK: - AWISTA Düsseldorf
@@ -223,8 +223,8 @@ public struct NRWPortalsProvider: WasteProvider {
         case 1:
             return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 43 oder 43a", "e.g. 43 or 43a"))
         case 2:
-            let options = [("2", L10n.t("2-wöchentlich", "every 2 weeks")), ("1", L10n.t("wöchentlich", "weekly")), ("4", L10n.t("4-wöchentlich", "every 4 weeks"))]
-            return SelectionStep(title: L10n.t("Leerung Restmüll", "Residual waste interval"),
+            let options = [("2", L10n.t("alle 2 Wochen", "every 2 weeks")), ("1", L10n.t("wöchentlich", "weekly")), ("4", L10n.t("alle 4 Wochen", "every 4 weeks"))]
+            return SelectionStep(title: L10n.t("Leerung Restmüll", "Residual waste collection"),
                                  options: options.map { SelectionOption(id: $0.0, title: $0.1) }, searchable: false)
         default:
             return nil

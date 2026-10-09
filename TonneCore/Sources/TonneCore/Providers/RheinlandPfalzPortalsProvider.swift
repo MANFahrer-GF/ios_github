@@ -106,7 +106,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
     // MARK: - Gemeinsame Hilfen
 
     private var unknownService: ProviderError {
-        .notSupported(L10n.t("Unbekannter Entsorger.", "Unknown operator."))
+        .notSupported(L10n.t("Unbekannter Entsorger.", "Unknown provider."))
     }
 
     private static var berlin: Calendar {

@@ -88,7 +88,7 @@ struct CoverageView: View {
     private func subtitle(_ item: DistrictCoverage) -> String {
         let municipalities = Self.count(item.municipalityCount, L10n.t("Gemeinde", "municipality"), L10n.t("Gemeinden", "municipalities"))
         if item.isCovered {
-            return "\(Self.count(item.allEntryIDs.count, L10n.t("Entsorger", "operator"), L10n.t("Entsorger", "operators"))) · \(municipalities)"
+            return "\(Self.count(item.allEntryIDs.count, L10n.t("Entsorger", "provider"), L10n.t("Entsorger", "providers"))) · \(municipalities)"
         }
         if item.isPartial {
             let present = item.municipalityCount - item.missingPlaces.count
@@ -119,7 +119,7 @@ struct CoverageView: View {
             Label(L10n.t("ICS-Link: Viele Abfallportale bieten „Kalender abonnieren“ oder „iCal-Export“. Den Link beim Anlegen eines Standorts unter „Entsorger nicht dabei?“ einfügen – er wird wöchentlich neu geladen.",
                          "ICS link: many waste portals offer “subscribe to calendar” or “iCal export”. Paste the link under “Operator not listed?” when adding a location – it is reloaded weekly."),
                   systemImage: "link")
-            Label(L10n.t("CSV-Datei: Termine in die Vorlage eintragen (Datum;Abfallart, z. B. in Excel oder Numbers) und beim Standort „ICS- oder CSV-Datei importieren“ wählen.",
+            Label(L10n.t("CSV-Datei: Termine in die Vorlage eintragen (Datum;Müllart, z. B. in Excel oder Numbers) und beim Standort „ICS- oder CSV-Datei importieren“ wählen.",
                          "CSV file: enter the dates in the template (date;waste type, e.g. in Excel or Numbers) and choose “Import ICS or CSV file” in the location."),
                   systemImage: "tablecells")
             Label(L10n.t("Rhythmus: Feste Abfuhr (z. B. alle 2 Wochen dienstags) direkt bei der Müllart einstellen.",

@@ -80,7 +80,7 @@ public struct JahresdatenProvider: WasteProvider {
         let stand = Days.parse(data.stand).map { $0.formatted(.dateTime.day().month(.twoDigits).year()) } ?? data.stand
         let years = data.years.map(String.init).joined(separator: "/")
         var text = L10n.t("Termine aus dem PDF-Abfallkalender \(years) (\(data.title), Stand \(stand)). Kurzfristige Änderungen veröffentlicht nur der Entsorger.",
-                          "Dates from the \(years) PDF waste calendar (\(data.title), as of \(stand)). Short-notice changes are published only by the operator.")
+                          "Dates from the \(years) PDF waste calendar (\(data.title), as of \(stand)). Short-notice changes are published only by the provider.")
         if let extra = data.notice { text += " " + extra }
         return text
     }

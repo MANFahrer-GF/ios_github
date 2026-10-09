@@ -67,7 +67,7 @@ struct PickupLiveActivity: Widget {
                 .buttonStyle(.plain)
             } else {
                 Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) {
-                    Label("Zurück", systemImage: "arrow.uturn.backward").font(.caption.weight(.semibold))
+                    Label("Rückgängig", systemImage: "arrow.uturn.backward").font(.caption.weight(.semibold))
                         .padding(.horizontal, 10).padding(.vertical, 6)
                         .background(.secondary.opacity(0.2), in: Capsule())
                 }

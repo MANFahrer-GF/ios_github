@@ -347,7 +347,7 @@ public struct BSRProvider: WasteProvider {
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
-            return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("Straßenname, z. B. Alexanderstr", "Street name, e.g. Alexanderstr"))
+            return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("Straßenname, z. B. Alexanderstr.", "Street name, e.g. Alexanderstr."))
         case 1:
             let options: [Option] = try await client.json("\(base)/streetNames?searchQuery=\(HTTPClient.query(selections[0].id))")
             guard !options.isEmpty else {

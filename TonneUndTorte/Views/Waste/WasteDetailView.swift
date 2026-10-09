@@ -82,7 +82,7 @@ struct WasteDetailView: View {
             }
             Section { Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Müllart löschen", systemImage: "trash") } }
         }
-        .navigationTitle(type.name.isEmpty ? "Müllart" : type.name)
+        .navigationTitle(type.name.isEmpty ? L10n.t("Müllart", "Waste type") : type.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showAddDate) { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }
         .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) {

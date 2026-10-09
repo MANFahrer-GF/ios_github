@@ -15,4 +15,12 @@ public enum L10n {
     public static func t(_ de: String, _ en: String) -> String {
         isEnglish ? en : de
     }
+
+    /// Zahl mit passender Einzahl/Mehrzahl: `L10n.count(1, "Termin", "Termine", "date", "dates")` → „1 Termin“.
+    public static func count(_ n: Int, _ deOne: String, _ deMany: String, _ enOne: String, _ enMany: String) -> String {
+        "\(n) " + (n == 1 ? t(deOne, enOne) : t(deMany, enMany))
+    }
+
+    /// „1 Termin“ / „5 Termine“ (EN „1 date“ / „5 dates“).
+    public static func dates(_ n: Int) -> String { count(n, "Termin", "Termine", "date", "dates") }
 }

@@ -99,7 +99,7 @@ private struct PickupPage: View {
                 WatchSync.sendUndo(dayKey: key)
                 reload()
             } label: {
-                Label(L10n.t("Zurück", "Undo"), systemImage: "arrow.uturn.backward")
+                Label(L10n.t("Rückgängig", "Undo"), systemImage: "arrow.uturn.backward")
                     .font(KlarStyle.font(16, .heavy))
                     .frame(maxWidth: .infinity)
             }

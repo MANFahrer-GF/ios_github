@@ -32,7 +32,7 @@ struct OnboardingView: View {
                         Text("Entsorger finden").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
                     .buttonStyle(.borderedProminent).tint(.white).foregroundStyle(Color(hex: "#2F6FED")).controlSize(.large)
-                    Button("Ohne Entsorger starten (Rhythmus von Hand)") { showManual = true }.foregroundStyle(.white.opacity(0.9)).font(.subheadline)
+                    Button("Ohne Entsorger starten") { showManual = true }.foregroundStyle(.white.opacity(0.9)).font(.subheadline)
                 }
             }
             .foregroundStyle(.white)

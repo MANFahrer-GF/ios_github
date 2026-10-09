@@ -110,7 +110,7 @@ struct BirthdayRow: View {
     private func subtitle(next: Date, years: Int?, isToday: Bool) -> String {
         var text = ""
         if let years {
-            text = isToday ? "wird heute \(years) · " : "wird \(years) · "
+            text = isToday ? L10n.t("wird heute \(years) · ", "turns \(years) today · ") : L10n.t("wird \(years) · ", "turns \(years) · ")
         }
         text += DateText.short(next)
         if !person.giftIdeas.isEmpty {
@@ -149,7 +149,7 @@ struct BirthdayEditView: View {
                     Toggle("Geburtsjahr bekannt", isOn: $yearKnown)
                     if yearKnown {
                         let annual = AnnualDate(day: Calendar.current.component(.day, from: date), month: Calendar.current.component(.month, from: date), year: Calendar.current.component(.year, from: date))
-                        LabeledContent("Alter", value: "\(annual.years(on: Date()) ?? 0) Jahre · \(annual.zodiac)")
+                        LabeledContent("Alter", value: "\(L10n.count(annual.years(on: Date()) ?? 0, "Jahr", "Jahre", "year", "years")) · \(annual.zodiac)")
                     }
                     TextField("Telefon (für Glückwunsch per Nachricht)", text: $phone).keyboardType(.phonePad)
                 }
@@ -192,7 +192,8 @@ struct BirthdayEditView: View {
     }
 
     private func greetingURL(for person: Person) -> URL? {
-        let text = "Alles Gute zum Geburtstag, \(person.name.split(separator: " ").first.map(String.init) ?? person.name)! 🎂🎉"
+        let first = person.name.split(separator: " ").first.map(String.init) ?? person.name
+        let text = L10n.t("Alles Gute zum Geburtstag, \(first)! 🎂🎉", "Happy birthday, \(first)! 🎂🎉")
         let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         if let phone = person.phone, !phone.isEmpty {
             return URL(string: "sms:\(phone.filter { "+0123456789".contains($0) })&body=\(encoded)")

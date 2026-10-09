@@ -127,7 +127,7 @@ public struct NordPortalsProvider: WasteProvider {
     // MARK: - Gemeinsame Helfer
 
     static var unknown: ProviderError {
-        .notSupported(L10n.t("Dieser Betreiber wird nicht unterstützt.", "This operator is not supported."))
+        .notSupported(L10n.t("Dieser Betreiber wird nicht unterstützt.", "This provider is not supported."))
     }
 
     static var streetNotFound: ProviderError {
@@ -644,8 +644,8 @@ public struct NordPortalsProvider: WasteProvider {
             }
         }
         return SelectionStep(title: L10n.t("Restabfall-Rhythmus", "Residual waste interval"), options: [
-            SelectionOption(id: "vier:0", title: L10n.t("14-täglich", "Every two weeks")),
-            SelectionOption(id: "vier:1", title: L10n.t("4-wöchentlich (auf Antrag)", "Every four weeks (on request)")),
+            SelectionOption(id: "vier:0", title: L10n.t("alle 2 Wochen", "Every 2 weeks")),
+            SelectionOption(id: "vier:1", title: L10n.t("alle 4 Wochen (auf Antrag)", "Every 4 weeks (on request)")),
         ], searchable: false)
     }
 
@@ -792,8 +792,8 @@ public struct NordPortalsProvider: WasteProvider {
             let events = await hildesheimEvents(street: s[2].id, calendar: .current)
             guard events.contains(where: { $0.summary.contains("vierwöchentlich") }) else { return nil }
             return SelectionStep(title: L10n.t("Restabfall-Rhythmus", "Residual waste interval"), options: [
-                SelectionOption(id: "rest:14", title: L10n.t("14-täglich", "Every two weeks")),
-                SelectionOption(id: "rest:4", title: L10n.t("4-wöchentlich", "Every four weeks")),
+                SelectionOption(id: "rest:14", title: L10n.t("alle 2 Wochen", "Every 2 weeks")),
+                SelectionOption(id: "rest:4", title: L10n.t("alle 4 Wochen", "Every 4 weeks")),
             ], searchable: false)
         default: return nil
         }

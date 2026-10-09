@@ -37,18 +37,18 @@ struct SettingsView: View {
                     }
                 }
                 LabeledContent("Geplante Erinnerungen", value: "\(notifications.pendingCount)")
-                Button("Testmitteilung senden") { notifications.sendTest(); info = "Kommt in 3 Sekunden – mit Knöpfen „Erledigt“ und „In 1 Stunde“." }.disabled(!notifications.isAuthorized)
+                Button("Testmitteilung senden") { notifications.sendTest(); info = L10n.t("Kommt in 3 Sekunden – mit den Aktionen „Erledigt“ und „In 1 Stunde nochmal“.", "Arrives in 3 seconds – with the actions “Done” and “Remind me in 1 hour”.") }.disabled(!notifications.isAuthorized)
             } header: { Text("Mitteilungen") }
 
             Section {
                 Toggle("Am Vorabend erinnern", isOn: $eveningEnabled)
                 if eveningEnabled {
-                    TimeOfDayPicker(title: "Uhrzeit", minutes: $eveningMinutes)
+                    TimeOfDayPicker(title: L10n.t("Uhrzeit", "Time"), minutes: $eveningMinutes)
                     Toggle("Nochmal erinnern, falls nicht „Erledigt“", isOn: $escalationEnabled)
-                    if escalationEnabled { TimeOfDayPicker(title: "Zweite Erinnerung", minutes: $escalationMinutes) }
+                    if escalationEnabled { TimeOfDayPicker(title: L10n.t("Zweite Erinnerung", "Second reminder"), minutes: $escalationMinutes) }
                 }
                 Toggle("Am Abholtag morgens erinnern", isOn: $morningEnabled)
-                if morningEnabled { TimeOfDayPicker(title: "Uhrzeit morgens", minutes: $morningMinutes) }
+                if morningEnabled { TimeOfDayPicker(title: L10n.t("Uhrzeit morgens", "Time in the morning"), minutes: $morningMinutes) }
                 Toggle(L10n.t("Tonnen wieder reinholen", "Bring bins back in"), isOn: $bringInEnabled)
                 if bringInEnabled { TimeOfDayPicker(title: L10n.t("Uhrzeit am Abholtag", "Time on collection day"), minutes: $bringInMinutes) }
                 Toggle("Live-Aktivität am Vorabend", isOn: $liveActivities)
@@ -60,20 +60,20 @@ struct SettingsView: View {
             } header: { Text("Müll-Erinnerungen") } footer: {
                 VStack(alignment: .leading, spacing: 6) {
                     if bringInEnabled {
-                        Text(L10n.t("„Wieder reinholen“ gilt nur für Tonnen – Gelbe Säcke, Grünschnitt oder Sperrmüll bleiben draußen. Ob Sack oder Tonne, richtet sich nach dem Symbol der Müllart.",
-                                    "“Bring back in” only applies to bins – yellow bags, garden waste or bulky waste stay out. Bag or bin follows the waste type's icon."))
+                        Text(L10n.t("„Wieder reinholen“ gilt nur für Tonnen – Gelbe Säcke, Grünschnitt oder Sperrmüll bleiben draußen. Ob es ein Sack oder eine Tonne ist, bestimmt das Symbol der Müllart.",
+                                    "“Bring back in” only applies to bins – yellow bags, garden waste or bulky waste stay out. Whether it is a bag or a bin is determined by the waste type's icon."))
                     }
                     liveActivityFooter
                 }
             }
 
             Section("Geburtstage & eigene Termine") {
-                TimeOfDayPicker(title: "Geburtstage", minutes: $birthdayMinutes)
-                TimeOfDayPicker(title: "Eigene Termine", minutes: $customMinutes)
+                TimeOfDayPicker(title: L10n.t("Geburtstage", "Birthdays"), minutes: $birthdayMinutes)
+                TimeOfDayPicker(title: L10n.t("Eigene Termine", "Custom events"), minutes: $customMinutes)
             }
 
             Section {
-                LabeledContent("iCloud", value: "Daten werden über deinen iCloud-Account synchronisiert")
+                LabeledContent("iCloud", value: L10n.t("Abgleich über deinen iCloud-Account", "Synced via your iCloud account"))
                 Button("Alle Daten löschen", role: .destructive) { showResetConfirm = true }
             } header: { Text("Daten") }
 
@@ -140,7 +140,7 @@ struct SettingsView: View {
         } else if !LiveActivityManager.systemAllows {
             Text("Live-Aktivitäten sind in den iOS-Einstellungen für Tonne & Torte ausgeschaltet: Einstellungen › Apps › Tonne & Torte › Live-Aktivitäten.")
         } else if LiveActivityManager.canSchedule {
-            Text("Am Vorabend um \(eveningTimeText) erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, die Abend-Erinnerung kommt dann nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.")
+            Text("Am Vorabend um \(eveningTimeText) erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.")
         } else {
             Text("Auf diesem iPhone (iOS \(UIDevice.current.systemVersion)) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.")
         }
@@ -148,10 +148,10 @@ struct SettingsView: View {
 
     private var statusText: String {
         switch notifications.authorizationStatus {
-        case .authorized, .provisional, .ephemeral: return "Mitteilungen erlaubt"
-        case .denied: return "Mitteilungen abgelehnt"
-        case .notDetermined: return "Noch nicht erlaubt"
-        @unknown default: return "Unbekannt"
+        case .authorized, .provisional, .ephemeral: return L10n.t("Mitteilungen erlaubt", "Notifications allowed")
+        case .denied: return L10n.t("Mitteilungen abgelehnt", "Notifications denied")
+        case .notDetermined: return L10n.t("Noch nicht erlaubt", "Not allowed yet")
+        @unknown default: return L10n.t("Unbekannt", "Unknown")
         }
     }
 
