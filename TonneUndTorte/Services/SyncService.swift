@@ -33,12 +33,14 @@ enum SyncService {
         var id: String { summary }
     }
 
-    static func suggestMappings(for pickups: [Pickup], location: Location?) -> [Mapping] {
+    /// `exclusive`: jede vorhandene Müllart höchstens einem Titel vorschlagen (Abgleich). Beim Datei-Import (`false`)
+    /// dürfen mehrere Titel dieselbe Müllart treffen – ihre Termine werden in `apply` vereinigt.
+    static func suggestMappings(for pickups: [Pickup], location: Location?, exclusive: Bool = true) -> [Mapping] {
         let existing = location?.sortedWasteTypes ?? []
         let grouped = Dictionary(grouping: pickups, by: \.name)
         let summaries = grouped.keys.sorted()
         let assigned = WasteTitleMatching.assign(summaries.filter { !WasteCategory.isIgnorableTitle($0) },
-                                                 to: existing.map { .init(sourceKey: $0.sourceKey, name: $0.name) })
+                                                 to: existing.map { .init(sourceKey: $0.sourceKey, name: $0.name) }, exclusive: exclusive)
         return summaries.map { summary in
             let count = grouped[summary]?.count ?? 0
             if WasteCategory.isIgnorableTitle(summary) {
@@ -55,6 +57,8 @@ enum SyncService {
         var imported = 0
         var changes: [String] = []
         var nextSortOrder = ((location?.wasteTypes ?? []).map(\.sortOrder).max() ?? -1) + 1
+        // Termine je Müllart sammeln: Zeigen mehrere Titel auf dieselbe Müllart, werden sie vereinigt statt nacheinander ersetzt
+        var collected: [(target: WasteType, days: Set<Date>)] = []
 
         for mapping in mappings {
             guard let items = grouped[mapping.summary], !items.isEmpty else { continue }
@@ -79,6 +83,13 @@ enum SyncService {
             }
             if target.sourceKey == nil { target.sourceKey = mapping.summary }
             let days = Set(items.map { Days.start(of: $0.date) })
+            if let index = collected.firstIndex(where: { $0.target === target }) {
+                collected[index].days.formUnion(days)
+            } else {
+                collected.append((target, days))
+            }
+        }
+        for (target, days) in collected {
             if replace {
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(days))
                 if !target.explicitDates.isEmpty {

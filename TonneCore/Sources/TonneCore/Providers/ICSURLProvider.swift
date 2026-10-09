@@ -113,14 +113,15 @@ public enum WasteTitleMatching {
     }
 
     /// Titel → Index in `existing`; nicht zugeordnete Titel fehlen im Ergebnis.
-    public static func assign(_ summaries: [String], to existing: [Existing]) -> [String: Int] {
+    /// `exclusive: false` (Datei-Import): eine Müllart darf mehreren Titeln zugeordnet werden.
+    public static func assign(_ summaries: [String], to existing: [Existing], exclusive: Bool = true) -> [String: Int] {
         var result: [String: Int] = [:]
         var used = Set<Int>()
         func pass(_ match: (Existing, String) -> Bool) {
             for summary in summaries where result[summary] == nil {
                 if let index = existing.indices.first(where: { !used.contains($0) && match(existing[$0], summary) }) {
                     result[summary] = index
-                    used.insert(index)
+                    if exclusive { used.insert(index) }
                 }
             }
         }

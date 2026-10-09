@@ -246,7 +246,7 @@ struct ICSImportView: View {
             }
             .onAppear {
                 guard mappings.isEmpty else { return }
-                mappings = SyncService.suggestMappings(for: pickups, location: location)
+                mappings = SyncService.suggestMappings(for: pickups, location: location, exclusive: false)
                 // Nur ergänzen statt ersetzen, wenn sonst ein fester Rhythmus verloren ginge
                 if replacesRhythm { replace = false }
             }

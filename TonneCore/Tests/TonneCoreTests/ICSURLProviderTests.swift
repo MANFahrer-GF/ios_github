@@ -60,6 +60,9 @@ final class ICSURLProviderTests: XCTestCase {
         // Name ohne Rücksicht auf Groß-/Kleinschreibung
         result = WasteTitleMatching.assign(["gelber sack"], to: [E(sourceKey: nil, name: "Gelber Sack")])
         XCTAssertEqual(result, ["gelber sack": 0])
+        // Datei-Import: dieselbe Müllart darf mehrere Titel bekommen (Termine werden beim Übernehmen vereinigt)
+        result = WasteTitleMatching.assign(["Biomüll", "Restmüll"], to: [E(sourceKey: "Abholung: Biomüll, Restmüll", name: "Restmüll")], exclusive: false)
+        XCTAssertEqual(result, ["Biomüll": 0, "Restmüll": 0])
     }
 
     /// Steinbach: eine Datei für beide Bezirke – `#ohne=` lässt den anderen Bezirk und Großbehälter weg.
