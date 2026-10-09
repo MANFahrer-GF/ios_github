@@ -15,6 +15,8 @@ public struct NRWPortalsProvider: WasteProvider {
     public let serviceKey: String
     public var displayName: String { Self.names[serviceKey] ?? kind.displayName }
     private let client: HTTPClient
+    /// Nur für Tests: festes „heute“ für die Jahreswahl bei Kreis Herford/Espelkamp und PreZero.
+    var referenceDate: Date?
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service
@@ -395,7 +397,7 @@ public struct NRWPortalsProvider: WasteProvider {
     private func herfordPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         let (place, offset) = ikissPlace(selections)
         guard selections.count > offset, let place else { throw ProviderError.selectAddressFirst }
-        let year = calendar.component(.year, from: Date())
+        let year = calendar.component(.year, from: referenceDate ?? Date())
         let start = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) ?? .distantPast
         var result: [Pickup] = []
         for target in [year, year + 1] {
@@ -510,7 +512,7 @@ public struct NRWPortalsProvider: WasteProvider {
         // Das Formular leitet auf /calendar/<Straße>/<Nr> weiter; dort steht das Download-Formular je Jahr.
         let html = HTTPClient.text(from: try await client.postForm(Self.prezeroURL, fields: [("street", selections[0].id), ("houseNo", number)]))
         guard let path = Self.prezeroDownloadPath(html) else { throw ProviderError.noDataGeneric }
-        let year = calendar.component(.year, from: Date())
+        let year = calendar.component(.year, from: referenceDate ?? Date())
         var result: [Pickup] = []
         for target in [year, year + 1] {
             guard let data = try? await client.postForm("https://abfallkalender.prezero.network\(path)/\(target)", fields: []) else { continue }

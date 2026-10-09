@@ -13,6 +13,9 @@ final class MindenLuebbeckeTests: XCTestCase {
         return calendar
     }
 
+    /// Abrufdatum der Fixtures – die Stub-Tests laufen so in jedem Jahr gleich.
+    static let fixtureDay = ISO8601DateFormatter().date(from: "2026-10-09T10:00:00Z")!
+
     // Espelkamp liefert die Straßenliste in ISO-8859-1.
     static let espelkampStreets = """
     <select name="strasse" class="form_ft" style="width:400px" size="1" id="InputStr" onchange="document.SFm.call.value='sfm';document.SFm.submit();">
@@ -119,7 +122,8 @@ final class MindenLuebbeckeTests: XCTestCase {
     }
 
     func testEspelkampFlowAgainstStub() async throws {
-        let provider = NRWPortalsProvider(service: "espelkamp", client: HTTPClient(session: MindenStub.session()))
+        var provider = NRWPortalsProvider(service: "espelkamp", client: HTTPClient(session: MindenStub.session()))
+        provider.referenceDate = Self.fixtureDay
         XCTAssertEqual(provider.displayName, "Stadt Espelkamp")
         let streets = try await provider.nextStep(after: [])
         XCTAssertEqual(streets?.title, SelectionStep.streetTitle, "nur eine Kommune – keine Ortswahl")
@@ -161,7 +165,8 @@ final class MindenLuebbeckeTests: XCTestCase {
     }
 
     func testPrezeroFlowAgainstStub() async throws {
-        let provider = NRWPortalsProvider(service: "prezero", client: HTTPClient(session: MindenStub.session()))
+        var provider = NRWPortalsProvider(service: "prezero", client: HTTPClient(session: MindenStub.session()))
+        provider.referenceDate = Self.fixtureDay
         XCTAssertEqual(provider.displayName, "PreZero Bad Oeynhausen")
         let streets = try await provider.nextStep(after: [])
         XCTAssertEqual(streets?.options.map(\.title), ["Aalstraße", "Ackerstraße", "Adam-Opel-Straße"])
@@ -182,7 +187,7 @@ final class MindenLuebbeckeTests: XCTestCase {
         XCTAssertEqual(form.body, "street=Aalstra%C3%9Fe&houseNo=1")
         XCTAssertEqual(form.headers["Content-Type"], "application/x-www-form-urlencoded; charset=utf-8")
         let downloads = requests.filter { $0.url.contains("/download/ical/") }
-        let year = calendar.component(.year, from: Date())
+        let year = 2026
         XCTAssertEqual(downloads.map(\.url), ["https://abfallkalender.prezero.network/bad-oeynhausen/download/ical/787/1/\(year)",
                                              "https://abfallkalender.prezero.network/bad-oeynhausen/download/ical/787/1/\(year + 1)"])
         XCTAssertEqual(downloads.first?.method, "POST")
@@ -263,7 +268,7 @@ final class MindenStub: URLProtocol {
                               body: body.map { String(decoding: $0, as: UTF8.self) } ?? ""))
         Self.lock.unlock()
 
-        let year = Calendar(identifier: .gregorian).component(.year, from: Date())
+        let year = 2026  // Jahr der Fixtures, passend zu `fixtureDay`
         let data: Data
         if url.contains("ffmod=abf") { data = MindenLuebbeckeTests.espelkampStreets.data(using: .isoLatin1)! }
         else if url.contains("abfall_export.php") {
