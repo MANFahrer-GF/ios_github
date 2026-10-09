@@ -1359,6 +1359,7 @@
       }
     },
     "Geburtstage & eigene Termine" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3261,6 +3262,9 @@
         }
       }
     },
+    "Uhrzeit" : {
+
+    },
     "Verbindung trennen" : {
       "localizations" : {
         "en" : {
@@ -3332,7 +3336,11 @@
         }
       }
     },
+    "Vorab erinnern" : {
+
+    },
     "Vorher" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3665,6 +3673,7 @@
       }
     },
     "Zusätzlich" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

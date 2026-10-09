@@ -62,6 +62,10 @@ struct OverviewView: View {
         days.flatMap(\.events).filter { $0.kind != .waste }
     }
 
+    /// Geburtstage und eigene Termine von heute – stehen oben in einer eigenen Karte statt unten in der Liste.
+    private var todayOther: [CalendarEvent] { otherUpcoming.filter { Days.until($0.date) == 0 } }
+    private var laterOther: [CalendarEvent] { otherUpcoming.filter { Days.until($0.date) != 0 } }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -69,6 +73,7 @@ struct OverviewView: View {
                     if !notifications.isAuthorized { permissionBanner }
                     if !model.recentChanges.isEmpty { changesBanner }
                     if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
+                    if !todayOther.isEmpty { todayCard }
                     heroCard
                     birthdaysSection
                     nextPickupsSection
@@ -243,13 +248,15 @@ struct OverviewView: View {
                 }
                 .padding(.top, 18)
                 if let nextAfter {
-                    HStack(spacing: 8) {
-                        Text("Danach").font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
-                        MiniDots(hexes: nextAfter.events.map(\.colorHex), size: 11)
-                        Text("\(DateText.countdown(nextAfter.day)) · \(nextAfter.events.map(\.title).joined(separator: ", "))")
-                            .font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                    // Danach: dieselben Tonnen-Symbole wie oben, nur kleiner – nicht bloß ein Farbpunkt
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(L10n.t("Danach · \(DateText.countdown(nextAfter.day))", "Then · \(DateText.countdown(nextAfter.day))"))
+                            .font(KlarStyle.font(13, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                        FlowLayout(spacing: 14) {
+                            ForEach(nextAfter.events) { BinLine(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, dot: 24, fontSize: 15) }
+                        }
                     }
-                    .padding(.top, 14)
+                    .padding(.top, 16)
                 }
             } else {
                 Text("Lege unter „Müll“ einen Standort an – die Termine kommen automatisch.")
@@ -309,24 +316,55 @@ struct OverviewView: View {
     private var birthdaysSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Label("Geburtstage & Termine", systemImage: "birthday.cake.fill").font(.headline).padding(.leading, 4)
-            if otherUpcoming.isEmpty {
+            if laterOther.isEmpty {
                 Text(people.isEmpty ? "Noch keine Geburtstage – unter „Geburtstage“ hinzufügen oder aus Kontakten importieren." : "In den nächsten 60 Tagen steht nichts an.")
                     .font(.subheadline).foregroundStyle(.secondary).card()
             } else {
                 VStack(spacing: 0) {
-                    ForEach(Array(otherUpcoming.prefix(6).enumerated()), id: \.element.id) { index, event in
+                    ForEach(Array(laterOther.prefix(6).enumerated()), id: \.element.id) { index, event in
                         HStack(spacing: 12) {
                             EventRow(event: event)
                             Text(DateText.countdown(event.date)).font(.subheadline.weight(.semibold))
                                 .foregroundStyle(Days.until(event.date) == 0 ? Color.pink : .secondary)
                         }
                         .padding(.vertical, 8)
-                        if index < min(otherUpcoming.count, 6) - 1 { Divider() }
+                        if index < min(laterOther.count, 6) - 1 { Divider() }
                     }
                 }
                 .card()
             }
         }
+    }
+
+    /// „Heute“: Geburtstage und eigene Termine des Tages, gut sichtbar über der Müll-Karte. Antippen öffnet Person bzw. Termin.
+    private var todayCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L10n.t("HEUTE", "TODAY")).font(KlarStyle.font(12, .heavy)).tracking(0.8).foregroundStyle(.pink)
+            ForEach(todayOther) { event in
+                Button {
+                    if let id = event.personID { model.open(.person(id)) } else if let id = event.eventID { model.open(.event(id)) }
+                } label: {
+                    HStack(spacing: 12) {
+                        if event.kind == .birthday {
+                            InitialsBadge(initials: NameText.initials(event.title), colorHex: event.colorHex, size: 44)
+                        } else {
+                            SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 44)
+                        }
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(event.kind == .birthday ? L10n.t("\(event.title) hat Geburtstag", "\(event.title)'s birthday") : event.title)
+                                .font(.headline).foregroundStyle(.primary)
+                            Text(event.kind == .birthday ? (event.years.map { L10n.t("wird \($0)", "turns \($0)") } ?? L10n.t("Zeit zum Gratulieren", "Time to celebrate")) : event.subtitle)
+                                .font(.subheadline).foregroundStyle(.secondary)
+                        }
+                        Spacer(minLength: 0)
+                        if event.kind == .birthday { Text(event.isMilestone ? "🎉" : "🎂").font(.title2) }
+                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .card()
     }
 
     private var statsCard: some View {

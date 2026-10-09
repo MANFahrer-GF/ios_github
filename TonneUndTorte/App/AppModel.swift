@@ -99,8 +99,9 @@ struct CalendarEvent: Identifiable, Hashable {
     let locationName: String?
     let years: Int?
     let done: Bool
-    /// Die Person hinter einem Geburtstag.
+    /// Die Person hinter einem Geburtstag bzw. der eigene Termin.
     var personID: UUID? = nil
+    var eventID: UUID? = nil
     var color: Color { Color(hex: colorHex) }
     var isMilestone: Bool { years.map { AnnualDate.isMilestone($0) } ?? false }
 }
@@ -230,7 +231,7 @@ final class AppModel: ObservableObject {
         }
         for event in allCustomEvents() {
             for date in event.occurrences(from: from, to: to) {
-                result.append(CalendarEvent(id: "custom-\(event.id)-\(Days.iso(date))", date: date, kind: .custom, title: event.title, subtitle: (event.timeText.map { "\($0) · " } ?? "") + event.recurrence.label, colorHex: event.colorHex, symbolName: event.symbolName, locationID: nil, locationName: nil, years: nil, done: false))
+                result.append(CalendarEvent(id: "custom-\(event.id)-\(Days.iso(date))", date: date, kind: .custom, title: event.title, subtitle: (event.timeText.map { "\($0) · " } ?? "") + event.recurrence.label, colorHex: event.colorHex, symbolName: event.symbolName, locationID: nil, locationName: nil, years: nil, done: false, eventID: event.id))
             }
         }
         return result.sorted { lhs, rhs in
