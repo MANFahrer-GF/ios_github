@@ -52,5 +52,9 @@
   {"kind": "portalsSuedwest", "key": "floersheim", "title": "Flörsheimer Umweltkalender",
    "website": "https://www.floersheim-umweltkalender.de/abfuhrtermine.html",
    "places": ["Flörsheim am Main"],
-   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true, "partial": true}
+   "districts": ["Landkreis Main-Taunus-Kreis"], "onlyDistricts": true, "partial": true},
+  {"kind": "portalsSuedwest", "key": "volkertshausen", "title": "Gemeinde Volkertshausen",
+   "website": "https://www.volkertshausen.de/leben-wohnen/ver-entsorgung/muelltermine",
+   "places": ["Volkertshausen"],
+   "districts": ["Landkreis Konstanz"], "onlyDistricts": true, "partial": true}
 ]

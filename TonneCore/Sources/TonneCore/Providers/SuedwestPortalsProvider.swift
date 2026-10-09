@@ -13,9 +13,10 @@ import Foundation
 /// - `zvawmk`: ZVA Werra-Meißner-Kreis – Ort → Straße → ICS je Jahresseite
 /// - `kelkheim`: Stadt Kelkheim (Taunus) – Straße + Hausnummer per POST → ICS-Link des Bezirks
 /// - `floersheim`: Flörsheimer Umweltkalender – Straßensuche → ggf. Hausnummer → Bezirk → ICS
+/// - `volkertshausen`: Gemeinde Volkertshausen – Terminliste der Webseite (HTML, gemeindeweit, mehrseitig), ohne Auswahl
 public struct SuedwestPortalsProvider: WasteProvider {
     public static let services = ["frankfurt", "stuttgart", "wiesbaden", "heidelberg", "heidenheim", "badenbaden", "kreiskassel", "reso",
-                                  "muellmann", "zvawmk", "kelkheim", "floersheim"]
+                                  "muellmann", "zvawmk", "kelkheim", "floersheim", "volkertshausen"]
 
     public let kind: ProviderKind = .portalsSuedwest
     public let serviceKey: String
@@ -43,6 +44,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "zvawmk": return try await zvaStep(selections)
         case "kelkheim": return try await kelkheimStep(selections)
         case "floersheim": return try await floersheimStep(selections)
+        case "volkertshausen": return nil
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -62,6 +64,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "zvawmk": result = try await zvaPickups(selections, calendar: calendar)
         case "kelkheim": result = try await kelkheimPickups(selections, calendar: calendar)
         case "floersheim": result = try await floersheimPickups(selections, calendar: calendar)
+        case "volkertshausen": result = try await volkertshausenPickups(calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -100,6 +103,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
             return Self.join([town, part(1)])
         case "kelkheim": return Self.join(["Kelkheim (Taunus)", "\(part(0)) \(part(1))".trimmingCharacters(in: .whitespaces)])
         case "floersheim": return Self.join(["Flörsheim am Main", "\(part(1)) \(part(2))".trimmingCharacters(in: .whitespaces)])
+        case "volkertshausen": return "Volkertshausen"
         default: return Self.join(titles)
         }
     }
@@ -853,5 +857,48 @@ public struct SuedwestPortalsProvider: WasteProvider {
         let url = "\(Self.floersheimBase)icalkalender.html?jahr=1&selectedmonat=&selectedwoche=&bezirk=\(HTTPClient.query(parts[1]))"
             + "&hausnr=\(HTTPClient.query(number))&strasse=\(HTTPClient.query(street))&checkedarts=\(Self.floersheimTypes)"
         return Self.icsPickups(try await client.string(url), calendar: calendar, clean: Self.floersheimNames)
+    }
+
+    // MARK: - Volkertshausen (Gemeinde-Webseite, TYPO3 hw_abfallkalender)
+
+    private static let volkertshausenBase = "https://www.volkertshausen.de"
+    /// Zeigt nur kommende Termine, 15 je Seite; weitere Seiten über den „Seite weiter“-Link (mit cHash).
+    private static let volkertshausenPage = "/leben-wohnen/ver-entsorgung/muelltermine"
+
+    /// Ein Termin je `<div class="hwsabfallkalender_termin record …">`: Datum im `<h4>` („Montag, 12.10.2026“),
+    /// Abfallart als Linktext im Block `hwsabfallkalender_termin_muelltyp`.
+    static func volkertshausenPickups(_ html: String, calendar: Calendar) -> [Pickup] {
+        html.components(separatedBy: "hwsabfallkalender_termin record").dropFirst().compactMap { block in
+            guard let day = HTMLText.firstMatch(#"hwsabfallkalender_datum"[^>]*>[^<]*?(\d{2}\.\d{2}\.\d{4})"#, in: block, group: 1),
+                  let date = germanDate(day, calendar: calendar),
+                  let type = HTMLText.firstMatch(#"hwsabfallkalender_termin_muelltyp[\s\S]*?<a[^>]*>\s*([^<]+?)\s*</a>"#, in: block, group: 1) else { return nil }
+            let name = NameCleaner.clean(volkertshausenName(HTMLText.decodeEntities(type)))
+            return name.isEmpty ? nil : Pickup(date: date, name: name)
+        }
+    }
+
+    /// „Problemmüll“ erkennt `WasteCategory` nicht; gemeint ist die Schadstoffsammlung.
+    static func volkertshausenName(_ type: String) -> String {
+        type == "Problemmüll" ? "Schadstoffsammlung" : type
+    }
+
+    /// Ziel des Links `<li class="next"><a href="…">` oder nil auf der letzten Seite.
+    static func volkertshausenNextPage(_ html: String) -> String? {
+        guard let href = HTMLText.firstMatch(#"<li class="next">\s*<a[^>]*href="([^"]+)""#, in: html, group: 1) else { return nil }
+        let link = HTMLText.decodeEntities(href)
+        return link.hasPrefix("http") ? link : volkertshausenBase + link
+    }
+
+    private func volkertshausenPickups(calendar: Calendar) async throws -> [Pickup] {
+        var url = Self.volkertshausenBase + Self.volkertshausenPage
+        var visited = Set<String>()
+        var result: [Pickup] = []
+        while visited.count < 10, visited.insert(url).inserted {
+            let html = try await client.string(url)
+            result += Self.volkertshausenPickups(html, calendar: calendar)
+            guard let next = Self.volkertshausenNextPage(html) else { break }
+            url = next
+        }
+        return result
     }
 }
