@@ -175,14 +175,13 @@ private struct BirthdayPage: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                // Symbol links: rechts liegen auf der Watch die Seitenpunkte
-                HStack(spacing: 6) {
-                    Text("🎂")
+                HStack {
                     Text(L10n.t("GEBURTSTAGE", "BIRTHDAYS"))
                         .font(KlarStyle.font(11, .heavy)).tracking(1)
                         .foregroundStyle(KlarStyle.birthdayInk(.dark))
+                    Spacer()
+                    Text("🎂")
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 if birthdays.isEmpty {
                     Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet"))
                         .font(KlarStyle.font(14, .bold))
