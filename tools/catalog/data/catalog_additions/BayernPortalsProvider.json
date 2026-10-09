@@ -521,5 +521,44 @@
   "districts": [
    "Landkreis Rhön-Grabfeld"
   ]
+ },
+ {
+  "kind": "portalsBayern",
+  "key": "landkreis_as",
+  "title": "Abfallwirtschaft Landkreis Amberg-Sulzbach",
+  "website": "https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php",
+  "places": [
+   "Ammerthal",
+   "Auerbach i.d.OPf.",
+   "Birgland",
+   "Ebermannsdorf",
+   "Edelsfeld",
+   "Ensdorf",
+   "Etzelwang",
+   "Freihung",
+   "Freudenberg",
+   "Gebenbach",
+   "Hahnbach",
+   "Hirschau",
+   "Hirschbach",
+   "Hohenburg",
+   "Illschwang",
+   "Kastl",
+   "Königstein",
+   "Kümmersbruck",
+   "Neukirchen b.Sulzbach-Rosenberg",
+   "Poppenricht",
+   "Rieden",
+   "Schmidmühlen",
+   "Schnaittenbach",
+   "Sulzbach-Rosenberg",
+   "Ursensollen",
+   "Vilseck",
+   "Weigendorf"
+  ],
+  "districts": [
+   "Landkreis Amberg-Sulzbach"
+  ],
+  "onlyDistricts": true
  }
 ]
