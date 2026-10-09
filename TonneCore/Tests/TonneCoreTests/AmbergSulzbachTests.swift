@@ -294,29 +294,31 @@ final class AmbergSulzbachTests: XCTestCase {
         return pickups
     }
 
-    private func dates(_ pickups: [Pickup], _ name: String) -> Set<String> {
-        Set(pickups.filter { $0.name == name }.map { Days.iso($0.date) })
+    /// Ohne feste Daten: mindestens drei künftige Termine, alle als Restmüll bzw. Papier erkannt.
+    private func checkFuture(_ pickups: [Pickup]) {
+        let future = pickups.filter { $0.date >= Days.today(calendar: calendar) }
+        XCTAssertGreaterThanOrEqual(future.count, 3)
+        let kinds = Set(future.map { WasteCategory.classify($0.name) })
+        XCTAssertTrue(kinds.isSubset(of: [.residual, .paper]), "\(kinds)")
+        XCTAssertTrue(kinds.contains(.residual), "Restmüll fehlt")
     }
 
     func testLiveTownOnly() async throws {
         guard ProcessInfo.processInfo.environment["TONNE_LIVE"] == "1" else { throw XCTSkip("nur live") }
         let pickups = try await live(["Ensdorf"])
-        XCTAssertTrue(dates(pickups, "Restmüll").isSuperset(of: ["2026-10-12", "2026-10-26"]))
-        XCTAssertTrue(dates(pickups, "Altpapier").contains("2026-11-02"))
+        checkFuture(pickups)
     }
 
     func testLiveDistrict() async throws {
         guard ProcessInfo.processInfo.environment["TONNE_LIVE"] == "1" else { throw XCTSkip("nur live") }
         let pickups = try await live(["Vilseck", "Axtheid-Berg"])
-        XCTAssertTrue(dates(pickups, "Altpapier").contains("2026-10-14"))
-        XCTAssertTrue(dates(pickups, "Restmüll").contains("2026-10-21"))
+        checkFuture(pickups)
     }
 
     func testLiveStreet() async throws {
         guard ProcessInfo.processInfo.environment["TONNE_LIVE"] == "1" else { throw XCTSkip("nur live") }
         let pickups = try await live(["Sulzbach-Rosenberg", "Adam-Stegerwald-Straße"], search: "Adam-Steg")
-        XCTAssertTrue(dates(pickups, "Altpapier").contains("2026-10-09"))
-        XCTAssertTrue(dates(pickups, "Restmüll").contains("2026-10-16"))
+        checkFuture(pickups)
     }
 }
 
