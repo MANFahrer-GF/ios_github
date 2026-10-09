@@ -59,6 +59,12 @@ enum SyncService {
         var nextSortOrder = ((location?.wasteTypes ?? []).map(\.sortOrder).max() ?? -1) + 1
         // Termine je Müllart sammeln: Zeigen mehrere Titel auf dieselbe Müllart, werden sie vereinigt statt nacheinander ersetzt
         var collected: [(target: WasteType, days: Set<Date>)] = []
+        // Wie viele Titel zeigen auf eine vorhandene Müllart? Den Quellen-Titel nur nachziehen, wenn es genau einer ist –
+        // sonst beansprucht beim nächsten (exklusiven) Abgleich ein Titel die Müllart allein, der andere würde neu angelegt.
+        var sharedTargets: [ObjectIdentifier: Int] = [:]
+        for mapping in mappings where grouped[mapping.summary]?.isEmpty == false {
+            if case .existing(let type) = mapping.target { sharedTargets[ObjectIdentifier(type), default: 0] += 1 }
+        }
 
         for mapping in mappings {
             guard let items = grouped[mapping.summary], !items.isEmpty else { continue }
@@ -76,7 +82,7 @@ enum SyncService {
                 type.location = location
                 target = type
             }
-            if let old = target.sourceKey, ICSURLProvider.formerTitle(old, matches: mapping.summary) {
+            if let old = target.sourceKey, ICSURLProvider.formerTitle(old, matches: mapping.summary), (sharedTargets[ObjectIdentifier(target)] ?? 1) == 1 {
                 // Bereinigter Titel: Schlüssel nachziehen, Namen nur, wenn der Nutzer ihn nicht geändert hat
                 if target.name == old { target.name = mapping.summary }
                 target.sourceKey = mapping.summary
