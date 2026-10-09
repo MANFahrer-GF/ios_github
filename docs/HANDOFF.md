@@ -104,14 +104,17 @@ Eigenheiten der echten API:
 
 **Offen beim Nutzer:** In Xcode auf dem iPhone mit einer echten Heidekreis-Adresse testen (z. B. Soltau). Erst danach App-Store-Update.
 
-## 5a. Version 2.0.1 (Build 2) – bereit zum Test, noch nicht im App Store
+## 5a. Version 2.0.2 (Build 3) – nächstes App-Store-Update
 
-QS am 9. Okt.: 330 Offline-Tests grün, alle Live-Tests (328) und Katalog-Sweep grün, App- und Watch-Build grün, zwei unabhängige Reviews (Claude + Codex) ohne offene Befunde. Wichtigste Korrekturen neben den neuen Orten:
-- Abgleich: bereinigte ICS-Titel („Abholung: Biomüll“ → „Biomüll“) und aufgeteilte Sammeltermine führen bestehende Müllarten weiter (keine Doppelten); mehrere Titel auf einer Müllart werden vereinigt.
-- Monatskalender zeigte nur 4 von 7 Wochentagsbuchstaben; Siri-Hinweis lud verzögert; viele Texte (Plural, Übersetzung, „Rückgängig“).
+2.0.1 wurde abgebrochen; alles geht zusammen als 2.0.2 raus (Änderungsliste: Notiz „Tonne & Torte 2.0.2 – Änderungen“).
+QS am 9. Okt.: 334 Offline-Tests grün, Live-Tests (328) und Katalog-Sweep grün (Portalcode seitdem unverändert), App-, Watch- und Widget-Build grün, Reviews Claude + Codex ohne offene Befunde. Schwerpunkte:
+- Alle 400 Kreise angebunden (neue Portale, ICS-Links, PDF-Jahresdaten, Weimar berechnet).
+- Abdeckungsseite → „Geht mein Ort?“: Ort eingeben → Entsorger der Gemeinde samt Einschränkung; Einträge anderer Gemeinden des Kreises getrennt; „Alle Landkreise und Städte“ zum Blättern.
+- Abgleich: bereinigte ICS-Titel und aufgeteilte Sammeltermine führen bestehende Müllarten weiter (keine Doppelten, kein Terminverlust).
+- Texte (Plural, „Rückgängig“, Englisch inkl. Berechtigungsdialoge), Monatskalender-Wochentage, Siri-Hinweis.
 - Bei jedem Update Version erhöhen (alle 8 Stellen in project.pbxproj).
 
-**Offen beim Nutzer:** in Xcode auf dem iPhone testen (Heidekreis/Soltau, Ansbach, Widgets – im Simulator ohne Signatur nur Platzhalter), CloudKit-Schema nach Production, dann App-Store-Update. Berechtigungsdialoge sind nur deutsch (InfoPlist-Übersetzung fehlt). Die alte Arbeitskopie in `~/Documents/ios_github` (iCloud) ist veraltet – in `~/Claude/tonne` arbeiten.
+**Offen beim Nutzer:** in Xcode auf dem iPhone testen (Soltau, Perleberg, Neuenkirchen in „Geht mein Ort?“, Ansbach, Widgets), CloudKit-Schema nach Production, dann App-Store-Update 2.0.2. Arbeitskopie: `~/Claude/tonne` (nicht die iCloud-Kopie in `~/Documents`).
 
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
