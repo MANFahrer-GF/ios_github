@@ -1,0 +1,353 @@
+[
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=Engen",
+  "title": "Engen (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Engen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=Gai",
+  "title": "Gailingen am Hochrhein (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Gailingen am Hochrhein"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=GM",
+  "title": "Gottmadingen (Kernort) (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Gottmadingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=GMOT",
+  "title": "Gottmadingen (Ortsteile) (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Gottmadingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=HLZ",
+  "title": "Hilzingen (Kernort) (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Hilzingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=HLZOT",
+  "title": "Hilzingen (Ortsteile) (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Hilzingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&whole_year=1&slug=RW",
+  "title": "Rielasingen-Worblingen (MZV Hegau)",
+  "website": "https://www.mzvhegau.de/",
+  "places": [
+   "Rielasingen-Worblingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.tengen.de/site/Tengen/zmservice/2266403/ical/vevent.ics",
+  "title": "Tengen (Abfallkalender)",
+  "website": "https://www.tengen.de/",
+  "places": [
+   "Tengen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://cms.steisslingen.de/tools/icsAbfalltermine/?datasource=steisslingen",
+  "title": "Steißlingen (Abfallkalender)",
+  "website": "https://www.steisslingen.de/",
+  "places": [
+   "Steißlingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://cms.eigeltingen.de/tools/icsAbfalltermine/?datasource=eigeltingen",
+  "title": "Eigeltingen (Abfallkalender)",
+  "website": "https://www.eigeltingen.de/",
+  "places": [
+   "Eigeltingen"
+  ],
+  "districts": [
+   "Landkreis Konstanz"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Wehrheim 1",
+  "title": "Wehrheim 1 (Abfallkalender)",
+  "website": "https://www.wehrheim.de/",
+  "places": [
+   "Wehrheim"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Wehrheim 2",
+  "title": "Wehrheim 2 (Abfallkalender)",
+  "website": "https://www.wehrheim.de/",
+  "places": [
+   "Wehrheim"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Obernhain",
+  "title": "Wehrheim-Obernhain (Abfallkalender)",
+  "website": "https://www.wehrheim.de/",
+  "places": [
+   "Wehrheim"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Pfaffenwiesbach",
+  "title": "Wehrheim-Pfaffenwiesbach (Abfallkalender)",
+  "website": "https://www.wehrheim.de/",
+  "places": [
+   "Wehrheim"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wehrheim.de/bauen-umwelt/umwelt-abfallwirtschaft/abfallentsorgung/#link=Abfallkalender Friedrichsthal",
+  "title": "Wehrheim-Friedrichsthal (Abfallkalender)",
+  "website": "https://www.wehrheim.de/",
+  "places": [
+   "Wehrheim"
+  ],
+  "districts": [
+   "Landkreis Hochtaunuskreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.kriftel.de/rathaus-politik/verwaltung/abfall/#link=abfallkalender-{%Y}-1-3.ics",
+  "title": "Kriftel Bezirk 1 und 3 (Abfallkalender)",
+  "website": "https://www.kriftel.de/",
+  "places": [
+   "Kriftel"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.kriftel.de/rathaus-politik/verwaltung/abfall/#link=abfallkalender-{%Y}-2.ics",
+  "title": "Kriftel Bezirk 2 (Abfallkalender)",
+  "website": "https://www.kriftel.de/",
+  "places": [
+   "Kriftel"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-1_woechentlich.ics",
+  "title": "Schwalbach am Taunus Bezirk 1, Restmüll wöchentlich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-1_14-taegig.ics",
+  "title": "Schwalbach am Taunus Bezirk 1, Restmüll 14-täglich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-2_woechentlich.ics",
+  "title": "Schwalbach am Taunus Bezirk 2, Restmüll wöchentlich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-2_14-taegig.ics",
+  "title": "Schwalbach am Taunus Bezirk 2, Restmüll 14-täglich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-3_woechentlich.ics",
+  "title": "Schwalbach am Taunus Bezirk 3, Restmüll wöchentlich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-3_14-taegig.ics",
+  "title": "Schwalbach am Taunus Bezirk 3, Restmüll 14-täglich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-4_woechentlich.ics",
+  "title": "Schwalbach am Taunus Bezirk 4, Restmüll wöchentlich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-4_14-taegig.ics",
+  "title": "Schwalbach am Taunus Bezirk 4, Restmüll 14-täglich (Abfallkalender)",
+  "website": "https://www.schwalbach.de/",
+  "places": [
+   "Schwalbach am Taunus"
+  ],
+  "districts": [
+   "Landkreis Main-Taunus-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/#link=Bezirk 1 - Ohne Erinnerung",
+  "title": "Hille Bezirk 1 (Abfallkalender)",
+  "website": "https://www.hille.de/",
+  "places": [
+   "Hille"
+  ],
+  "districts": [
+   "Kreis Minden-Lübbecke"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/#link=Bezirk 2 - Ohne Erinnerung",
+  "title": "Hille Bezirk 2 (Abfallkalender)",
+  "website": "https://www.hille.de/",
+  "places": [
+   "Hille"
+  ],
+  "districts": [
+   "Kreis Minden-Lübbecke"
+  ],
+  "onlyDistricts": true
+ }
+]

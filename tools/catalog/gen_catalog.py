@@ -151,7 +151,7 @@ for key,title,web,extra in [('steinburg','Kreis Steinburg (Itzehoe, Glückstadt 
 MAK_EXTRA=[('Alsfeld','alsfeld'),('Antrifttal','antrifttal'),('Feldatal','feldatal'),('Freiensteinau','freiensteinau'),('Mücke','gemeinde-muecke'),
  ('Gemünden (Felda)','gemuenden-felda'),('Grebenau','grebenau'),('Grebenhain','grebenhain'),('Herbstein','herbstein'),('Homberg (Ohm)','homberg'),
  ('Lauterbach (Hessen)','lauterbach-hessen'),('Lautertal (Vogelsberg)','lautertal-vogelsberg'),('Romrod','romrod'),('Schlitz','schlitz'),('Schotten','schotten'),
- ('Schwalmtal','schwalmtal-hessen'),('Kirtorf','stadt-kirtorf'),('Ulrichstein','ulrichstein'),
+ ('Schwalmtal','schwalmtal-hessen'),('Kirtorf','stadt-kirtorf'),('Ulrichstein','ulrichstein'),('Wartenberg','gemeinde-wartenberg'),
  ('Münzenberg','muenzenberg'),('Reichelsheim (Wetterau)','stadt-reichelsheim'),('Altenstadt','altenstadt'),('Bad Nauheim','bn'),('Büdingen','stadt-buedingen'),
  ('Gedern','gedern'),('Glauburg','glauburg'),('Kefenrod','gemeinde-kefenrod'),('Nidda','nidda'),('Ober-Mörlen','ober-moerlen'),('Ranstadt','ranstadt'),('Butzbach','stadt-butzbach'),
  ('Dreieich','dreieich'),('Neu-Isenburg','neu-isenburg'),
@@ -334,6 +334,8 @@ for (kind,key),(district,name) in {
     ('jumomind','sbm'):('Kreis Minden-Lübbecke','Minden'), ('sitepark','muehlenkreis'):('Kreis Minden-Lübbecke','Preußisch Oldendorf'),
     ('sitepark','neunkirchen-siegerland'):('Kreis Siegen-Wittgenstein','Neunkirchen'),
     ('icsURL',MAK.format('schwalmtal-hessen')):('Landkreis Vogelsbergkreis','Schwalmtal'), ('icsURL',MAK.format('altenstadt')):('Landkreis Wetteraukreis','Altenstadt'),
+    # Oktober 2026 live geprüft: MyMüll führt das hessische Glashütten (Schloßborn, Oberems); Wartenberg über den ZAV Vogelsberg
+    ('jumomind','mymuell'):('Landkreis Hochtaunuskreis','Glashütten'), ('icsURL',MAK.format('gemeinde-wartenberg')):('Landkreis Vogelsbergkreis','Wartenberg'),
 }.items():
     LOCAL_MANUAL.setdefault((kind,key),[]).append((district,name))
 local={}; title_hits=[]

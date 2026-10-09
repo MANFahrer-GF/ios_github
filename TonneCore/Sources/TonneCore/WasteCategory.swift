@@ -95,7 +95,7 @@ public enum WasteCategory: String, CaseIterable, Codable, Hashable {
     /// Titel, die keine Abholung sind (Sprechstunden, Repair-Cafés …).
     public static func isIgnorableTitle(_ title: String) -> Bool {
         let lower = title.lowercased()
-        return ["repair", "café", "cafe", "feiertag", "sprechstunde", "öffnungszeit", "oeffnungszeit"].contains { lower.contains($0) }
+        return ["repair", "café", "cafe", "feiertag", "sprechstunde", "öffnungszeit", "oeffnungszeit", "geöffnet"].contains { lower.contains($0) }
     }
 }
 
