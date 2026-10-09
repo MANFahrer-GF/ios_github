@@ -12,8 +12,24 @@ public struct ReminderSettings: Hashable, Codable {
     /// Am Abholtag: Tonnen wieder hereinholen (nur Tonnen, keine Säcke).
     public var bringInEnabled: Bool = true
     public var bringInMinutes: Int = 17 * 60
+    /// Hauptschalter für alle Geburtstags-Erinnerungen.
+    public var birthdayEnabled: Bool = true
+    /// Am Geburtstag selbst.
     public var birthdayMinutes: Int = 9 * 60
+    /// Vorab-Erinnerungen („morgen“, „in einer Woche“).
+    public var birthdayPreMinutes: Int = 9 * 60
+    /// Zusätzlich eine Woche vorher – zum Geschenk-Besorgen, für alle Personen.
+    public var birthdayWeekBefore: Bool = false
+    /// Hauptschalter für alle Erinnerungen an eigene Termine.
+    public var customEnabled: Bool = true
+    /// Am Termintag – für Termine ohne Uhrzeit.
     public var customMinutes: Int = 9 * 60
+    /// Vorab-Erinnerungen an eigene Termine.
+    public var customPreMinutes: Int = 9 * 60
+    /// Bei Terminen mit Uhrzeit: so viele Minuten vorher erinnern (0 = zur Terminzeit).
+    public var customLeadMinutes: Int = 60
+    /// Zusätzlich am Vortag – für Termine, deren Vorab-Erinnerung früher liegt (z. B. TÜV: 2 Wochen und 1 Tag vorher).
+    public var customDayBefore: Bool = false
 
     public init() {}
 }
@@ -45,9 +61,14 @@ public struct PlannedBirthday: Hashable {
     public var years: Int?
     public var remindDaysBefore: Int
     public var remindersEnabled: Bool
+    /// Kennung der Person – für stabile Mitteilungs-IDs und zum Öffnen aus der Mitteilung.
+    public var id: String
+    public var phone: String?
+    public var giftIdeas: [String]
 
-    public init(date: Date, name: String, years: Int?, remindDaysBefore: Int, remindersEnabled: Bool = true) {
+    public init(date: Date, name: String, years: Int?, remindDaysBefore: Int, remindersEnabled: Bool = true, id: String? = nil, phone: String? = nil, giftIdeas: [String] = []) {
         self.date = date; self.name = name; self.years = years; self.remindDaysBefore = remindDaysBefore; self.remindersEnabled = remindersEnabled
+        self.id = id ?? name; self.phone = phone; self.giftIdeas = giftIdeas
     }
 }
 
@@ -56,15 +77,21 @@ public struct PlannedCustomEvent: Hashable {
     public var title: String
     public var remindDaysBefore: Int
     public var remindersEnabled: Bool
+    public var id: String
+    /// Uhrzeit des Termins in Minuten ab Mitternacht, nil = ganztägig.
+    public var timeMinutes: Int?
+    /// Schon als „Erledigt“ markiert – dann kommt keine Erinnerung mehr.
+    public var done: Bool
 
-    public init(date: Date, title: String, remindDaysBefore: Int, remindersEnabled: Bool = true) {
+    public init(date: Date, title: String, remindDaysBefore: Int, remindersEnabled: Bool = true, id: String? = nil, timeMinutes: Int? = nil, done: Bool = false) {
         self.date = date; self.title = title; self.remindDaysBefore = remindDaysBefore; self.remindersEnabled = remindersEnabled
+        self.id = id ?? title; self.timeMinutes = timeMinutes; self.done = done
     }
 }
 
 /// Eine konkrete Mitteilung mit Zeitpunkt.
 public struct PlannedNotification: Hashable {
-    public enum Category: String { case wasteEvening = "WASTE_EVENING", wasteMorning = "WASTE_MORNING", wasteEscalation = "WASTE_ESCALATION", wasteBringIn = "WASTE_BRINGIN", birthday = "BIRTHDAY", custom = "CUSTOM" }
+    public enum Category: String { case wasteEvening = "WASTE_EVENING", wasteMorning = "WASTE_MORNING", wasteEscalation = "WASTE_ESCALATION", wasteBringIn = "WASTE_BRINGIN", birthday = "BIRTHDAY", birthdayPre = "BIRTHDAY_PRE", custom = "CUSTOM" }
 
     public var identifier: String
     public var fireDate: Date
@@ -74,9 +101,15 @@ public struct PlannedNotification: Hashable {
     public var threadIdentifier: String
     /// Tag der Abholung bzw. des Ereignisses (ISO) für Aktionen wie „Erledigt“.
     public var dayKey: String
+    /// Person bzw. eigener Termin, den ein Tipp auf die Mitteilung öffnet (nil bei mehreren zusammengefassten).
+    public var targetID: String?
+    /// Nur Geburtstag einer einzelnen Person: Name und Telefon für „Anrufen“ und „Glückwunsch schreiben“.
+    public var personName: String?
+    public var phone: String?
 
-    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String) {
+    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String, targetID: String? = nil, personName: String? = nil, phone: String? = nil) {
         self.identifier = identifier; self.fireDate = fireDate; self.title = title; self.body = body; self.category = category; self.threadIdentifier = threadIdentifier; self.dayKey = dayKey
+        self.targetID = targetID; self.personName = personName; self.phone = phone
     }
 }
 
@@ -118,6 +151,49 @@ public enum ReminderPlanner {
         let limit = Swift.max(1, max)
         let shown = names.prefix(limit).joined(separator: ", ")
         return names.count > limit ? shown + " +\(names.count - limit)" : shown
+    }
+
+    /// „morgen“, „in 3 Tagen“, „in einer Woche“, „in zwei Wochen“.
+    public static func whenText(daysBefore: Int) -> String {
+        switch daysBefore {
+        case 1: return L10n.t("morgen", "tomorrow")
+        case 7: return L10n.t("in einer Woche", "in one week")
+        case 14: return L10n.t("in zwei Wochen", "in two weeks")
+        case 30: return L10n.t("in einem Monat", "in one month")
+        default: return L10n.t("in \(daysBefore) Tagen", "in \(daysBefore) days")
+        }
+    }
+
+    /// Mitteilung am Geburtstag – eine Person oder mehrere am selben Tag.
+    public static func birthdayText(_ people: [PlannedBirthday]) -> (title: String, body: String) {
+        if people.count == 1 {
+            let person = people[0]
+            let body: String
+            if let years = person.years {
+                body = AnnualDate.isMilestone(years) ? L10n.t("\(person.name) wird heute \(years) – ein runder Geburtstag! 🎉", "\(person.name) turns \(years) today – a big one! 🎉") : L10n.t("\(person.name) wird heute \(years). Zeit zum Gratulieren!", "\(person.name) turns \(years) today. Time to celebrate!")
+            } else {
+                body = L10n.t("Zeit zum Gratulieren!", "Time to celebrate!")
+            }
+            return (L10n.t("🎂 \(person.name) hat heute Geburtstag", "🎂 It's \(person.name)'s birthday today"), body)
+        }
+        let ages = people.compactMap { person in person.years.map { L10n.t("\(person.name) wird \($0)", "\(person.name) turns \($0)") + (AnnualDate.isMilestone($0) ? " 🎉" : "") } }
+        let body = (ages.isEmpty ? "" : ages.joined(separator: ", ") + ". ") + L10n.t("Zeit zum Gratulieren!", "Time to celebrate!")
+        return (L10n.t("🎂 Heute haben \(joinNames(people.map(\.name))) Geburtstag", "🎂 Birthdays today: \(joinNames(people.map(\.name)))"), body)
+    }
+
+    /// Vorab-Erinnerung – bei einer Person mit ihren Geschenkideen.
+    public static func birthdayPreText(_ people: [PlannedBirthday], daysBefore: Int) -> (title: String, body: String) {
+        let when = whenText(daysBefore: daysBefore)
+        if people.count == 1 {
+            let person = people[0]
+            var parts: [String] = []
+            if let years = person.years { parts.append(L10n.t("Wird \(years)", "Turns \(years)") + (AnnualDate.isMilestone(years) ? L10n.t(" – ein runder Geburtstag!", " – a big one!") : ".")) }
+            let ideas = person.giftIdeas.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+            parts.append(ideas.isEmpty ? L10n.t("Noch ein Geschenk besorgen?", "Need a present?") : L10n.t("Deine Geschenkideen: ", "Your gift ideas: ") + ideas.joined(separator: ", "))
+            return (L10n.t("🎁 \(person.name) hat \(when) Geburtstag", "🎁 \(person.name)'s birthday is \(when)"), parts.joined(separator: " "))
+        }
+        return (L10n.t("🎁 \(joinNames(people.map(\.name))) haben \(when) Geburtstag", "🎁 Birthdays \(when): \(joinNames(people.map(\.name)))"),
+                L10n.t("Noch Geschenke besorgen?", "Need presents?"))
     }
 
     public static func plan(
@@ -188,40 +264,65 @@ public enum ReminderPlanner {
             }
         }
 
-        // --- Geburtstage ---
-        for birthday in birthdays where birthday.remindersEnabled {
-            let day = calendar.startOfDay(for: birthday.date)
-            guard day >= today && day <= horizon else { continue }
-            let key = Days.iso(day, calendar: calendar)
-            let milestone = birthday.years.map { AnnualDate.isMilestone($0) } ?? false
-            if let fire = Days.at(minutes: settings.birthdayMinutes, on: day, calendar: calendar), fire > now {
-                let body: String
-                if let years = birthday.years {
-                    body = milestone ? L10n.t("\(birthday.name) wird heute \(years) – ein runder Geburtstag! 🎉", "\(birthday.name) turns \(years) today – a big one! 🎉") : L10n.t("\(birthday.name) wird heute \(years). Zeit zum Gratulieren!", "\(birthday.name) turns \(years) today. Time to celebrate!")
-                } else {
-                    body = L10n.t("Zeit zum Gratulieren!", "Time to celebrate!")
-                }
-                result.append(PlannedNotification(identifier: "bday-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: L10n.t("🎂 \(birthday.name) hat heute Geburtstag", "🎂 It's \(birthday.name)'s birthday today"), body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
+        // --- Geburtstage: pro Tag zusammenfassen ---
+        if settings.birthdayEnabled {
+            var onDay: [Date: [PlannedBirthday]] = [:]
+            var before: [Int: [Date: [PlannedBirthday]]] = [:]
+            for birthday in birthdays where birthday.remindersEnabled {
+                let day = calendar.startOfDay(for: birthday.date)
+                // Vorab-Erinnerungen dürfen für Geburtstage knapp hinter dem Horizont schon fällig sein
+                guard day >= today && day <= Days.add(14, to: horizon, calendar: calendar) else { continue }
+                if day <= horizon { onDay[day, default: []].append(birthday) }
+                var stages = Set<Int>()
+                if birthday.remindDaysBefore > 0 { stages.insert(birthday.remindDaysBefore) }
+                if settings.birthdayWeekBefore { stages.insert(7) }
+                for days in stages { before[days, default: [:]][day, default: []].append(birthday) }
             }
-            if birthday.remindDaysBefore > 0,
-               let fire = Days.at(minutes: settings.birthdayMinutes, on: Days.add(-birthday.remindDaysBefore, to: day, calendar: calendar), calendar: calendar), fire > now {
-                let when = birthday.remindDaysBefore == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("in \(birthday.remindDaysBefore) Tagen", "in \(birthday.remindDaysBefore) days")
-                let body = birthday.years.map { L10n.t("Wird \($0)\(milestone ? " – ein runder Geburtstag!" : "."). Noch ein Geschenk besorgen?", "Turns \($0)\(milestone ? " – a big one!" : "."). Need a present?") } ?? L10n.t("Noch ein Geschenk besorgen?", "Need a present?")
-                result.append(PlannedNotification(identifier: "bday-pre-\(key)-\(birthday.name.hashValue)", fireDate: fire, title: L10n.t("🎁 \(birthday.name) hat \(when) Geburtstag", "🎁 \(birthday.name)'s birthday is \(when)"), body: body, category: .birthday, threadIdentifier: "birthday", dayKey: key))
+            for (day, people) in onDay {
+                guard let fire = Days.at(minutes: settings.birthdayMinutes, on: day, calendar: calendar), fire > now else { continue }
+                let key = Days.iso(day, calendar: calendar)
+                let text = birthdayText(people)
+                let single = people.count == 1 ? people[0] : nil
+                result.append(PlannedNotification(identifier: "bday-\(key)" + (single.map { "-\($0.id)" } ?? ""), fireDate: fire, title: text.title, body: text.body,
+                                                  category: .birthday, threadIdentifier: "birthday", dayKey: key,
+                                                  targetID: single?.id, personName: single?.name, phone: single?.phone.flatMap { $0.isEmpty ? nil : $0 }))
+            }
+            for (days, byDay) in before {
+                for (day, people) in byDay {
+                    guard let fire = Days.at(minutes: settings.birthdayPreMinutes, on: Days.add(-days, to: day, calendar: calendar), calendar: calendar), fire > now else { continue }
+                    let key = Days.iso(day, calendar: calendar)
+                    let text = birthdayPreText(people, daysBefore: days)
+                    let single = people.count == 1 ? people[0] : nil
+                    result.append(PlannedNotification(identifier: "bday-pre\(days)-\(key)" + (single.map { "-\($0.id)" } ?? ""), fireDate: fire, title: text.title, body: text.body,
+                                                      category: .birthdayPre, threadIdentifier: "birthday", dayKey: key, targetID: single?.id, personName: single?.name))
+                }
             }
         }
 
         // --- Eigene Termine ---
-        for event in customEvents where event.remindersEnabled {
-            let day = calendar.startOfDay(for: event.date)
-            guard day >= today && day <= horizon else { continue }
-            let key = Days.iso(day, calendar: calendar)
-            if let fire = Days.at(minutes: settings.customMinutes, on: day, calendar: calendar), fire > now {
-                result.append(PlannedNotification(identifier: "custom-\(key)-\(event.title.hashValue)", fireDate: fire, title: L10n.t("📌 Heute: \(event.title)", "📌 Today: \(event.title)"), body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
-            }
-            if event.remindDaysBefore > 0, let fire = Days.at(minutes: settings.customMinutes, on: Days.add(-event.remindDaysBefore, to: day, calendar: calendar), calendar: calendar), fire > now {
-                let when = event.remindDaysBefore == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("in \(event.remindDaysBefore) Tagen", "in \(event.remindDaysBefore) days")
-                result.append(PlannedNotification(identifier: "custom-pre-\(key)-\(event.title.hashValue)", fireDate: fire, title: L10n.t("📌 \(event.title) \(when)", "📌 \(event.title) \(when)"), body: DateText.long(day), category: .custom, threadIdentifier: "custom", dayKey: key))
+        if settings.customEnabled {
+            for event in customEvents where event.remindersEnabled && !event.done {
+                let day = calendar.startOfDay(for: event.date)
+                guard day >= today && day <= Days.add(31, to: horizon, calendar: calendar) else { continue }
+                let key = Days.iso(day, calendar: calendar)
+                let time = event.timeMinutes.map { String(format: "%02d:%02d", $0 / 60, $0 % 60) }
+                // Mit Uhrzeit: die eingestellte Vorlaufzeit vorher, frühestens um Mitternacht. Ohne: zur Tageszeit aus den Einstellungen.
+                let dayMinutes = event.timeMinutes.map { max(0, $0 - settings.customLeadMinutes) } ?? settings.customMinutes
+                if day <= horizon, let fire = Days.at(minutes: dayMinutes, on: day, calendar: calendar), fire > now {
+                    let title = time.map { L10n.t("📌 Heute um \($0): \(event.title)", "📌 Today at \($0): \(event.title)") } ?? L10n.t("📌 Heute: \(event.title)", "📌 Today: \(event.title)")
+                    result.append(PlannedNotification(identifier: "custom-\(key)-\(event.id)", fireDate: fire, title: title, body: DateText.long(day),
+                                                      category: .custom, threadIdentifier: "custom", dayKey: key, targetID: event.id))
+                }
+                var stages = Set<Int>()
+                if event.remindDaysBefore > 0 { stages.insert(event.remindDaysBefore) }
+                if settings.customDayBefore && event.remindDaysBefore > 1 { stages.insert(1) }
+                for days in stages {
+                    guard let fire = Days.at(minutes: settings.customPreMinutes, on: Days.add(-days, to: day, calendar: calendar), calendar: calendar), fire > now else { continue }
+                    let when = Self.whenText(daysBefore: days)
+                    let title = time.map { L10n.t("📌 \(event.title) \(when) um \($0)", "📌 \(event.title) \(when) at \($0)") } ?? L10n.t("📌 \(event.title) \(when)", "📌 \(event.title) \(when)")
+                    result.append(PlannedNotification(identifier: "custom-pre\(days)-\(key)-\(event.id)", fireDate: fire, title: title, body: DateText.long(day),
+                                                      category: .custom, threadIdentifier: "custom", dayKey: key, targetID: event.id))
+                }
             }
         }
 

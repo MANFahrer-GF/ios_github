@@ -80,6 +80,11 @@ struct BirthdayListView: View {
             .sheet(isPresented: $showNew) { BirthdayEditView(person: nil) }
             .sheet(item: $editing) { BirthdayEditView(person: $0) }
             .sheet(isPresented: $showImport) { ContactsImportView() }
+            .onChange(of: model.personToOpen, initial: true) { _, id in
+                guard let id else { return }
+                model.personToOpen = nil
+                if let person = people.first(where: { $0.id == id }) { editing = person }
+            }
         }
     }
 }
@@ -153,12 +158,12 @@ struct BirthdayEditView: View {
                     }
                     TextField("Telefon (für Glückwunsch per Nachricht)", text: $phone).keyboardType(.phonePad)
                 }
-                Section("Erinnerung") {
+                Section {
                     Toggle("Erinnern", isOn: $remindersEnabled)
                     if remindersEnabled {
-                        Picker("Zusätzlich", selection: $remindDaysBefore) { ForEach(options, id: \.1) { Text($0.0).tag($0.1) } }
+                        Picker("Vorab erinnern", selection: $remindDaysBefore) { ForEach(options, id: \.1) { Text($0.0).tag($0.1) } }
                     }
-                }
+                } header: { Text("Erinnerung") } footer: { Text(reminderFooter) }
                 Section("Geschenkideen") {
                     ForEach(giftIdeas, id: \.self) { idea in Text("🎁 \(idea)") }
                         .onDelete { giftIdeas.remove(atOffsets: $0) }
@@ -191,14 +196,20 @@ struct BirthdayEditView: View {
         }
     }
 
+    /// Sagt, wann genau erinnert wird – die Uhrzeiten gelten für alle und stehen in den Einstellungen.
+    private var reminderFooter: String {
+        let settings = SettingsKeys.reminderSettings()
+        guard settings.birthdayEnabled else { return L10n.t("Geburtstags-Erinnerungen sind unter Mehr › Einstellungen ausgeschaltet.", "Birthday reminders are turned off in More › Settings.") }
+        guard remindersEnabled else { return L10n.t("Für diese Person kommt keine Erinnerung.", "No reminders for this person.") }
+        func time(_ minutes: Int) -> String { String(format: "%02d:%02d", minutes / 60, minutes % 60) }
+        var text = L10n.t("Am Geburtstag um \(time(settings.birthdayMinutes))", "On the birthday at \(time(settings.birthdayMinutes))")
+        if remindDaysBefore > 0 || settings.birthdayWeekBefore { text += L10n.t(", vorab um \(time(settings.birthdayPreMinutes))", ", in advance at \(time(settings.birthdayPreMinutes))") }
+        if settings.birthdayWeekBefore && remindDaysBefore != 7 { text += L10n.t(" – zusätzlich eine Woche vorher", " – plus one week before") }
+        return text + L10n.t(". Die Uhrzeiten stellst du unter Mehr › Einstellungen ein.", ". Times can be changed in More › Settings.")
+    }
+
     private func greetingURL(for person: Person) -> URL? {
-        let first = person.name.split(separator: " ").first.map(String.init) ?? person.name
-        let text = L10n.t("Alles Gute zum Geburtstag, \(first)! 🎂🎉", "Happy birthday, \(first)! 🎂🎉")
-        let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        if let phone = person.phone, !phone.isEmpty {
-            return URL(string: "sms:\(phone.filter { "+0123456789".contains($0) })&body=\(encoded)")
-        }
-        return URL(string: "sms:&body=\(encoded)")
+        NotificationManager.greetingURL(name: person.name, phone: person.phone)
     }
 
     private func load() {

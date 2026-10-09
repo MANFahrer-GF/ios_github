@@ -260,6 +260,26 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(Recurrence.yearly.next(start: day("2020-06-20"), from: day("2026-10-07"), calendar: calendar), day("2027-06-20"))
     }
 
+    func testRecurrenceMonthlyWeekday() {
+        // Mo 05.10.2026 = 1. Montag im Oktober
+        let rule = Recurrence.monthlyWeekday(matching: day("2026-10-05"), calendar: calendar)
+        XCTAssertEqual(rule, .monthlyWeekday(ordinal: 1, weekday: 2))
+        XCTAssertEqual(rule.label, "Jeden 1. Montag im Monat")
+        let dates = rule.occurrences(start: day("2026-10-05"), from: day("2026-10-01"), to: day("2027-01-31"), calendar: calendar).map { Days.iso($0, calendar: calendar) }
+        XCTAssertEqual(dates, ["2026-10-05", "2026-11-02", "2026-12-07", "2027-01-04"])
+
+        // Fr 30.10.2026 ist der 5. Freitag → „letzter Freitag“, auch in Monaten mit nur vier Freitagen
+        let last = Recurrence.monthlyWeekday(matching: day("2026-10-30"), calendar: calendar)
+        XCTAssertEqual(last, .monthlyWeekday(ordinal: -1, weekday: 6))
+        XCTAssertEqual(last.label, "Jeden letzten Freitag im Monat")
+        let lastDates = last.occurrences(start: day("2026-10-30"), from: day("2026-10-01"), to: day("2027-02-28"), calendar: calendar).map { Days.iso($0, calendar: calendar) }
+        XCTAssertEqual(lastDates, ["2026-10-30", "2026-11-27", "2026-12-25", "2027-01-29", "2027-02-26"])
+
+        // Gespeichert und wieder gelesen (so liegt es in recurrenceJSON)
+        let data = try! JSONEncoder().encode(rule)
+        XCTAssertEqual(try? JSONDecoder().decode(Recurrence.self, from: data), rule)
+    }
+
     func testCategoryClassification() {
         XCTAssertEqual(WasteCategory.classify("Grünrückstände"), .green)
         XCTAssertEqual(WasteCategory.classify("Biotonne"), .organic)
@@ -332,6 +352,115 @@ final class CoreTests: XCTestCase {
         let bday = plan.first { $0.category == .birthday && $0.identifier.hasPrefix("bday-2026") }!
         XCTAssertTrue(bday.body.contains("runder Geburtstag"))
         XCTAssertEqual(plan, plan.sorted { $0.fireDate < $1.fireDate })
+    }
+
+    func testBirthdayReminders() {
+        var settings = ReminderSettings()
+        settings.birthdayMinutes = 9 * 60
+        settings.birthdayPreMinutes = 19 * 60
+        let now = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day("2026-10-01"))!
+        let birthdays = [
+            PlannedBirthday(date: day("2026-10-08"), name: "Oma Erika", years: 80, remindDaysBefore: 1, id: "p1", phone: "0171 123", giftIdeas: ["Buch", " ", "Gutschein"]),
+            PlannedBirthday(date: day("2026-10-10"), name: "Max", years: 30, remindDaysBefore: 7, id: "p2"),
+            PlannedBirthday(date: day("2026-10-10"), name: "Lea", years: nil, remindDaysBefore: 7, id: "p3"),
+            PlannedBirthday(date: day("2026-10-12"), name: "Stumm", years: 40, remindDaysBefore: 1, remindersEnabled: false, id: "p4"),
+        ]
+        var plan = ReminderPlanner.plan(pickups: [], birthdays: birthdays, settings: settings, now: now, calendar: calendar)
+        let ids = Set(plan.map(\.identifier))
+
+        // Einzelner Geburtstag: eigene Uhrzeit für Vorab, Person zum Öffnen, Telefon für „Anrufen“, Geschenkideen im Text
+        let oma = plan.first { $0.identifier == "bday-2026-10-08-p1" }!
+        XCTAssertEqual(calendar.component(.hour, from: oma.fireDate), 9)
+        XCTAssertEqual(oma.targetID, "p1")
+        XCTAssertEqual(oma.phone, "0171 123")
+        XCTAssertEqual(oma.personName, "Oma Erika")
+        let omaPre = plan.first { $0.identifier == "bday-pre1-2026-10-08-p1" }!
+        XCTAssertEqual(calendar.component(.hour, from: omaPre.fireDate), 19)
+        XCTAssertEqual(Days.iso(omaPre.fireDate, calendar: calendar), "2026-10-07")
+        XCTAssertEqual(omaPre.category, .birthdayPre)
+        XCTAssertEqual(omaPre.title, "🎁 Oma Erika hat morgen Geburtstag")
+        XCTAssertTrue(omaPre.body.hasSuffix("Deine Geschenkideen: Buch, Gutschein"), omaPre.body)
+
+        // Zwei am selben Tag: eine Mitteilung, ohne Person und ohne Telefon
+        let both = plan.first { $0.identifier == "bday-2026-10-10" }!
+        XCTAssertEqual(both.title, "🎂 Heute haben Max und Lea Geburtstag")
+        XCTAssertTrue(both.body.hasPrefix("Max wird 30 🎉. Zeit"), both.body)
+        XCTAssertNil(both.targetID)
+        XCTAssertNil(both.phone)
+        XCTAssertFalse(ids.contains("bday-2026-10-10-p2"))
+        // Vorab eine Woche: liegt am 03.10. nach „jetzt“ und wird ebenfalls gebündelt
+        let bothPre = plan.first { $0.identifier == "bday-pre7-2026-10-10" }!
+        XCTAssertEqual(bothPre.title, "🎁 Max und Lea haben in einer Woche Geburtstag")
+        XCTAssertEqual(Days.iso(bothPre.fireDate, calendar: calendar), "2026-10-03")
+
+        XCTAssertFalse(ids.contains { $0.contains("p4") }, "Abgeschaltete Person bekommt nichts")
+
+        // Zusätzlich eine Woche vorher: kommt dazu, doppelt sich aber nicht mit „1 Woche vorher“ der Person
+        settings.birthdayWeekBefore = true
+        plan = ReminderPlanner.plan(pickups: [], birthdays: birthdays, settings: settings, now: now, calendar: calendar)
+        XCTAssertTrue(plan.contains { $0.identifier == "bday-pre7-2026-10-08-p1" })
+        XCTAssertEqual(plan.filter { $0.identifier.hasPrefix("bday-pre7-2026-10-10") }.count, 1)
+
+        // Hauptschalter aus: keine einzige Geburtstags-Mitteilung
+        settings.birthdayEnabled = false
+        plan = ReminderPlanner.plan(pickups: [], birthdays: birthdays, settings: settings, now: now, calendar: calendar)
+        XCTAssertTrue(plan.isEmpty)
+    }
+
+    func testBirthdayPreReminderBeyondHorizon() {
+        let now = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day("2026-10-01"))!
+        // Geburtstag 95 Tage voraus, Vorab-Erinnerung zwei Wochen vorher = Tag 81 → muss schon geplant sein
+        let birthdays = [PlannedBirthday(date: Days.add(95, to: day("2026-10-01"), calendar: calendar), name: "Fern", years: nil, remindDaysBefore: 14, id: "f")]
+        let plan = ReminderPlanner.plan(pickups: [], birthdays: birthdays, settings: ReminderSettings(), now: now, calendar: calendar)
+        XCTAssertEqual(plan.map(\.category), [.birthdayPre])
+    }
+
+    func testCustomEventReminders() {
+        var settings = ReminderSettings()
+        settings.customMinutes = 8 * 60
+        settings.customPreMinutes = 20 * 60
+        settings.customLeadMinutes = 90
+        let now = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day("2026-10-01"))!
+        let events = [
+            PlannedCustomEvent(date: day("2026-10-05"), title: "Zahnarzt", remindDaysBefore: 1, id: "e1", timeMinutes: 14 * 60 + 30),
+            PlannedCustomEvent(date: day("2026-10-06"), title: "TÜV", remindDaysBefore: 3, id: "e2"),
+            PlannedCustomEvent(date: day("2026-10-07"), title: "Früh", remindDaysBefore: 0, id: "e3", timeMinutes: 30),
+        ]
+        var plan = ReminderPlanner.plan(pickups: [], birthdays: [], customEvents: events, settings: settings, now: now, calendar: calendar)
+
+        let dentist = plan.first { $0.identifier == "custom-2026-10-05-e1" }!
+        XCTAssertEqual(dentist.title, "📌 Heute um 14:30: Zahnarzt")
+        XCTAssertEqual(calendar.dateComponents([.hour, .minute], from: dentist.fireDate), DateComponents(hour: 13, minute: 0))
+        XCTAssertEqual(dentist.targetID, "e1")
+        let dentistPre = plan.first { $0.identifier == "custom-pre1-2026-10-05-e1" }!
+        XCTAssertEqual(dentistPre.title, "📌 Zahnarzt morgen um 14:30")
+        XCTAssertEqual(calendar.component(.hour, from: dentistPre.fireDate), 20)
+
+        let tuev = plan.first { $0.identifier == "custom-2026-10-06-e2" }!
+        XCTAssertEqual(tuev.title, "📌 Heute: TÜV")
+        XCTAssertEqual(calendar.component(.hour, from: tuev.fireDate), 8)
+        XCTAssertEqual(plan.first { $0.identifier == "custom-pre3-2026-10-06-e2" }?.title, "📌 TÜV in 3 Tagen")
+
+        // Vorlauf über Mitternacht hinaus: bleibt am Termintag um 0:00
+        let early = plan.first { $0.identifier == "custom-2026-10-07-e3" }!
+        XCTAssertEqual(Days.iso(early.fireDate, calendar: calendar), "2026-10-07")
+        XCTAssertEqual(calendar.component(.hour, from: early.fireDate), 0)
+
+        // Zusätzlich am Vortag: nur, wo die Vorab-Erinnerung früher liegt (TÜV 3 Tage), nicht doppelt beim Zahnarzt (1 Tag)
+        settings.customDayBefore = true
+        plan = ReminderPlanner.plan(pickups: [], birthdays: [], customEvents: events, settings: settings, now: now, calendar: calendar)
+        XCTAssertEqual(plan.first { $0.identifier == "custom-pre1-2026-10-06-e2" }?.title, "📌 TÜV morgen")
+        XCTAssertEqual(plan.filter { $0.identifier.hasPrefix("custom-pre") && $0.identifier.hasSuffix("e1") }.count, 1)
+
+        // Erledigt: keine Erinnerung mehr für dieses Vorkommen
+        var doneEvents = events
+        doneEvents[1].done = true
+        plan = ReminderPlanner.plan(pickups: [], birthdays: [], customEvents: doneEvents, settings: settings, now: now, calendar: calendar)
+        XCTAssertFalse(plan.contains { $0.identifier.hasSuffix("e2") })
+
+        settings.customEnabled = false
+        plan = ReminderPlanner.plan(pickups: [], birthdays: [], customEvents: events, settings: settings, now: now, calendar: calendar)
+        XCTAssertTrue(plan.isEmpty)
     }
 
     func testProviderLabels() {

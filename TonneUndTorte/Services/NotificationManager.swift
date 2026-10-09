@@ -17,10 +17,27 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     static let doneAction = "PICKUP_DONE"
     static let snoozeAction = "PICKUP_SNOOZE"
     static let giftAction = "BIRTHDAY_GIFT"
+    static let callAction = "BIRTHDAY_CALL"
+    static let messageAction = "BIRTHDAY_MESSAGE"
     static let bringInAction = "PICKUP_BROUGHT_IN"
+    static let customDoneAction = "CUSTOM_DONE"
+
+    /// Was ein Tipp auf eine Geburtstags- oder Termin-Mitteilung öffnet.
+    enum OpenTarget { case birthdays, person(UUID), event(UUID) }
 
     /// Wird aufgerufen, wenn der Nutzer in einer Mitteilung „Erledigt“ tippt (dayKey).
     var onPickupDone: ((String) -> Void)?
+    /// „Erledigt“ bei einem eigenen Termin (Termin-ID, Tag).
+    var onCustomDone: ((UUID, String) -> Void)?
+    /// Kann beim Kaltstart aus einer Mitteilung erst nach dem Tipp gesetzt werden – das Ziel wird dann nachgereicht.
+    var onOpen: ((OpenTarget) -> Void)? {
+        didSet { if let target = pendingOpen, let onOpen { pendingOpen = nil; onOpen(target) } }
+    }
+    private var pendingOpen: OpenTarget?
+
+    private func open(_ target: OpenTarget) {
+        if let onOpen { onOpen(target) } else { pendingOpen = target }
+    }
 
     private override init() {
         super.init()
@@ -34,9 +51,18 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let inside = UNNotificationAction(identifier: NotificationManager.bringInAction, title: L10n.t("✅ Ist drin", "✅ It's in"), options: [])
         let later = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let bringIn = UNNotificationCategory(identifier: "WASTE_BRINGIN", actions: [inside, later], intentIdentifiers: [], options: [])
-        let birthday = UNNotificationCategory(identifier: "BIRTHDAY", actions: [], intentIdentifiers: [], options: [])
-        let custom = UNNotificationCategory(identifier: "CUSTOM", actions: [], intentIdentifiers: [], options: [])
-        center.setNotificationCategories([waste, bringIn, birthday, custom])
+        // Geburtstag: „Anrufen“ nur, wenn eine Nummer hinterlegt ist; mehrere Personen in einer Mitteilung bekommen keine Knöpfe
+        let call = UNNotificationAction(identifier: NotificationManager.callAction, title: L10n.t("📞 Anrufen", "📞 Call"), options: [.foreground])
+        let message = UNNotificationAction(identifier: NotificationManager.messageAction, title: L10n.t("💬 Glückwunsch schreiben", "💬 Send wishes"), options: [.foreground])
+        let gift = UNNotificationAction(identifier: NotificationManager.giftAction, title: L10n.t("🎁 Geschenkideen ansehen", "🎁 View gift ideas"), options: [.foreground])
+        let birthdayPhone = UNNotificationCategory(identifier: "BIRTHDAY_PHONE", actions: [call, message], intentIdentifiers: [], options: [])
+        let birthday = UNNotificationCategory(identifier: "BIRTHDAY", actions: [message], intentIdentifiers: [], options: [])
+        let birthdayPre = UNNotificationCategory(identifier: "BIRTHDAY_PRE", actions: [gift], intentIdentifiers: [], options: [])
+        let birthdayGroup = UNNotificationCategory(identifier: "BIRTHDAY_MULTI", actions: [], intentIdentifiers: [], options: [])
+        let customDone = UNNotificationAction(identifier: NotificationManager.customDoneAction, title: L10n.t("✅ Erledigt", "✅ Done"), options: [])
+        let customLater = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
+        let custom = UNNotificationCategory(identifier: "CUSTOM", actions: [customDone, customLater], intentIdentifiers: [], options: [])
+        center.setNotificationCategories([waste, bringIn, birthdayPhone, birthday, birthdayPre, birthdayGroup, custom])
     }
 
     func refreshStatus() async {
@@ -78,7 +104,11 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             content.body = item.body
             content.sound = .default
             content.threadIdentifier = item.threadIdentifier
-            content.userInfo = ["dayKey": item.dayKey, "category": item.category.rawValue]
+            var info: [String: String] = ["dayKey": item.dayKey, "category": item.category.rawValue]
+            info["targetID"] = item.targetID
+            info["name"] = item.personName
+            info["phone"] = item.phone
+            content.userInfo = info
             switch item.category {
             case .wasteEvening, .wasteMorning, .wasteEscalation:
                 content.categoryIdentifier = "WASTE"
@@ -86,7 +116,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             case .wasteBringIn:
                 content.categoryIdentifier = "WASTE_BRINGIN"
             case .birthday:
-                content.categoryIdentifier = "BIRTHDAY"
+                content.categoryIdentifier = item.targetID == nil ? "BIRTHDAY_MULTI" : (item.phone == nil ? "BIRTHDAY" : "BIRTHDAY_PHONE")
+            case .birthdayPre:
+                content.categoryIdentifier = item.targetID == nil ? "BIRTHDAY_MULTI" : "BIRTHDAY_PRE"
             case .custom:
                 content.categoryIdentifier = "CUSTOM"
             }
@@ -101,6 +133,17 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     func cancelWasteReminders(dayKey: String) {
         center.removePendingNotificationRequests(withIdentifiers: ["waste-evening-\(dayKey)", "waste-escalation-\(dayKey)", "waste-morning-\(dayKey)", "waste-snooze-\(dayKey)"])
         center.removeDeliveredNotifications(withIdentifiers: ["waste-evening-\(dayKey)", "waste-escalation-\(dayKey)", "waste-morning-\(dayKey)", "waste-snooze-\(dayKey)"])
+    }
+
+    /// Nachrichten-App mit vorbereitetem Glückwunsch – mit Empfänger, wenn eine Nummer bekannt ist.
+    nonisolated static func greetingURL(name: String, phone: String?) -> URL? {
+        let first = name.split(separator: " ").first.map(String.init) ?? name
+        let text = L10n.t("Alles Gute zum Geburtstag, \(first)! 🎂🎉", "Happy birthday, \(first)! 🎂🎉")
+        let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let phone, !phone.isEmpty {
+            return URL(string: "sms:\(phone.filter { "+0123456789".contains($0) })&body=\(encoded)")
+        }
+        return URL(string: "sms:&body=\(encoded)")
     }
 
     func sendTest() {
@@ -125,7 +168,24 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let dayKey = userInfo["dayKey"] as? String ?? ""
         let title = response.notification.request.content.title
         let body = response.notification.request.content.body
+        let category = userInfo["category"] as? String ?? ""
+        let targetID = (userInfo["targetID"] as? String).flatMap(UUID.init(uuidString:))
         switch response.actionIdentifier {
+        case NotificationManager.callAction:
+            let digits = (userInfo["phone"] as? String ?? "").filter { "+0123456789".contains($0) }
+            if let url = URL(string: "tel:\(digits)") { await MainActor.run { UIApplication.shared.open(url) } }
+        case NotificationManager.messageAction:
+            if let url = NotificationManager.greetingURL(name: userInfo["name"] as? String ?? "", phone: userInfo["phone"] as? String) {
+                await MainActor.run { UIApplication.shared.open(url) }
+            }
+        case NotificationManager.giftAction:
+            if let targetID { await MainActor.run { self.open(.person(targetID)) } }
+        case UNNotificationDefaultActionIdentifier where category == PlannedNotification.Category.birthday.rawValue || category == PlannedNotification.Category.birthdayPre.rawValue:
+            await MainActor.run { self.open(targetID.map { .person($0) } ?? .birthdays) }
+        case UNNotificationDefaultActionIdentifier where category == PlannedNotification.Category.custom.rawValue:
+            if let targetID { await MainActor.run { self.open(.event(targetID)) } }
+        case NotificationManager.customDoneAction:
+            if let targetID { await MainActor.run { self.onCustomDone?(targetID, dayKey) } }
         case NotificationManager.doneAction:
             await MainActor.run {
                 SnapshotStore.markDone(dayKey: dayKey)
@@ -138,10 +198,15 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             content.title = title
             content.body = body
             content.sound = .default
-            let isBringIn = response.notification.request.content.categoryIdentifier == "WASTE_BRINGIN"
-            content.categoryIdentifier = isBringIn ? "WASTE_BRINGIN" : "WASTE"
+            let originalCategory = response.notification.request.content.categoryIdentifier
+            content.categoryIdentifier = originalCategory
             content.userInfo = userInfo
-            let identifier = isBringIn ? "waste-bringin-snooze-\(dayKey)" : "waste-snooze-\(dayKey)"
+            let identifier: String
+            switch originalCategory {
+            case "WASTE_BRINGIN": identifier = "waste-bringin-snooze-\(dayKey)"
+            case "CUSTOM": identifier = "custom-snooze-\(dayKey)-\(targetID?.uuidString ?? "")"
+            default: identifier = "waste-snooze-\(dayKey)"
+            }
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: false))
             try? await center.add(request)
         default:

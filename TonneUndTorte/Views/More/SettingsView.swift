@@ -14,8 +14,15 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.escalationMinutes) private var escalationMinutes = 21 * 60
     @AppStorage(SettingsKeys.morningEnabled) private var morningEnabled = false
     @AppStorage(SettingsKeys.morningMinutes) private var morningMinutes = 7 * 60
+    @AppStorage(SettingsKeys.birthdayEnabled) private var birthdayEnabled = true
     @AppStorage(SettingsKeys.birthdayMinutes) private var birthdayMinutes = 9 * 60
+    @AppStorage(SettingsKeys.birthdayPreMinutes) private var birthdayPreMinutes = 9 * 60
+    @AppStorage(SettingsKeys.birthdayWeekBefore) private var birthdayWeekBefore = false
+    @AppStorage(SettingsKeys.customEnabled) private var customEnabled = true
     @AppStorage(SettingsKeys.customMinutes) private var customMinutes = 9 * 60
+    @AppStorage(SettingsKeys.customPreMinutes) private var customPreMinutes = 9 * 60
+    @AppStorage(SettingsKeys.customLeadMinutes) private var customLeadMinutes = 60
+    @AppStorage(SettingsKeys.customDayBefore) private var customDayBefore = false
     @AppStorage(SettingsKeys.liveActivities) private var liveActivities = true
     @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
@@ -67,9 +74,37 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Geburtstage & eigene Termine") {
-                TimeOfDayPicker(title: L10n.t("Geburtstage", "Birthdays"), minutes: $birthdayMinutes)
-                TimeOfDayPicker(title: L10n.t("Eigene Termine", "Custom events"), minutes: $customMinutes)
+            Section {
+                Toggle(L10n.t("An Geburtstage erinnern", "Remind me of birthdays"), isOn: $birthdayEnabled)
+                if birthdayEnabled {
+                    TimeOfDayPicker(title: L10n.t("Am Geburtstag", "On the birthday"), minutes: $birthdayMinutes)
+                    TimeOfDayPicker(title: L10n.t("Vorab-Erinnerung", "Advance reminder"), minutes: $birthdayPreMinutes)
+                    Toggle(L10n.t("Zusätzlich eine Woche vorher", "Also one week before"), isOn: $birthdayWeekBefore)
+                }
+            } header: { Text("Geburtstage") } footer: {
+                if birthdayEnabled {
+                    Text(L10n.t("Wie viele Tage vorab, stellst du bei jeder Person ein. „Eine Woche vorher“ gilt für alle – zum Geschenk-Besorgen. Am Geburtstag kannst du direkt aus der Mitteilung anrufen oder gratulieren.",
+                                "How many days in advance is set per person. “One week before” applies to everyone – time to get a present. On the day you can call or send wishes right from the notification."))
+                }
+            }
+
+            Section {
+                Toggle(L10n.t("An eigene Termine erinnern", "Remind me of custom events"), isOn: $customEnabled)
+                if customEnabled {
+                    TimeOfDayPicker(title: L10n.t("Am Termintag", "On the day"), minutes: $customMinutes)
+                    Picker(L10n.t("Bei Termin mit Uhrzeit", "Event with a time"), selection: $customLeadMinutes) {
+                        ForEach([0, 15, 30, 60, 120, 180], id: \.self) { minutes in
+                            Text(minutes == 0 ? L10n.t("zur Terminzeit", "at the event time") : L10n.t("\(Self.leadText(minutes)) vorher", "\(Self.leadText(minutes)) before")).tag(minutes)
+                        }
+                    }
+                    TimeOfDayPicker(title: L10n.t("Vorab-Erinnerung", "Advance reminder"), minutes: $customPreMinutes)
+                    Toggle(L10n.t("Zusätzlich am Vortag", "Also the day before"), isOn: $customDayBefore)
+                }
+            } header: { Text("Eigene Termine") } footer: {
+                if customEnabled {
+                    Text(L10n.t("„Am Termintag“ gilt für Termine ohne Uhrzeit. Ob und wie viele Tage vorab, stellst du bei jedem Termin ein. „Zusätzlich am Vortag“ erinnert z. B. beim TÜV zwei Wochen vorher und noch einmal am Tag davor. In der Mitteilung kannst du „Erledigt“ oder „In 1 Stunde nochmal“ tippen.",
+                                "“On the day” applies to events without a time. Whether and how many days in advance is set per event. “Also the day before” reminds you e.g. two weeks before the MOT and again the day before. In the notification you can tap “Done” or “Remind me in 1 hour”."))
+                }
             }
 
             Section {
@@ -95,8 +130,15 @@ struct SettingsView: View {
         .onChange(of: escalationMinutes) { _, _ in refresh() }
         .onChange(of: morningEnabled) { _, _ in refresh() }
         .onChange(of: morningMinutes) { _, _ in refresh() }
+        .onChange(of: birthdayEnabled) { _, _ in refresh() }
         .onChange(of: birthdayMinutes) { _, _ in refresh() }
+        .onChange(of: birthdayPreMinutes) { _, _ in refresh() }
+        .onChange(of: birthdayWeekBefore) { _, _ in refresh() }
+        .onChange(of: customEnabled) { _, _ in refresh() }
         .onChange(of: customMinutes) { _, _ in refresh() }
+        .onChange(of: customPreMinutes) { _, _ in refresh() }
+        .onChange(of: customLeadMinutes) { _, _ in refresh() }
+        .onChange(of: customDayBefore) { _, _ in refresh() }
         .onChange(of: liveActivities) { _, _ in refresh() }
         .onChange(of: bringInEnabled) { _, _ in refresh() }
         .onChange(of: bringInMinutes) { _, _ in refresh() }
@@ -144,6 +186,11 @@ struct SettingsView: View {
         } else {
             Text("Auf diesem iPhone (iOS \(UIDevice.current.systemVersion)) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.")
         }
+    }
+
+    /// „15 Min.“, „1 Std.“, „2 Std.“
+    static func leadText(_ minutes: Int) -> String {
+        minutes < 60 ? L10n.t("\(minutes) Min.", "\(minutes) min") : L10n.t("\(minutes / 60) Std.", "\(minutes / 60) h")
     }
 
     private var statusText: String {

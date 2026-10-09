@@ -14,8 +14,30 @@ enum SettingsKeys {
     static let morningMinutes = "reminder.morning.minutes"
     static let escalationEnabled = "reminder.escalation.enabled"
     static let escalationMinutes = "reminder.escalation.minutes"
+    static let birthdayEnabled = "reminder.birthday.enabled"
     static let birthdayMinutes = "reminder.birthday.minutes"
+    static let birthdayPreMinutes = "reminder.birthday.preMinutes"
+    static let birthdayWeekBefore = "reminder.birthday.weekBefore"
+    static let customEnabled = "reminder.custom.enabled"
     static let customMinutes = "reminder.custom.minutes"
+    static let customPreMinutes = "reminder.custom.preMinutes"
+    static let customLeadMinutes = "reminder.custom.leadMinutes"
+    static let customDayBefore = "reminder.custom.dayBefore"
+    static let customDone = "custom.doneOccurrences"
+
+    /// „Erledigt“ für eigene Termine: je Vorkommen „<id>|<Tag>“. Nur auf diesem Gerät – es unterdrückt Erinnerungen,
+    /// damit ist kein neues Feld im iCloud-Schema nötig. Ältere Einträge als 60 Tage fallen beim Speichern heraus.
+    static func customDoneKeys(_ defaults: UserDefaults = .standard) -> Set<String> {
+        Set(defaults.stringArray(forKey: customDone) ?? [])
+    }
+    static func setCustomDone(_ done: Bool, id: UUID, dayKey: String, defaults: UserDefaults = .standard) {
+        var keys = customDoneKeys(defaults)
+        let key = "\(id.uuidString)|\(dayKey)"
+        if done { keys.insert(key) } else { keys.remove(key) }
+        let cutoff = Days.iso(Days.add(-60, to: Days.today()))
+        defaults.set(keys.filter { $0.split(separator: "|").last.map { String($0) >= cutoff } ?? false }.sorted(), forKey: customDone)
+    }
+    static func isCustomDone(id: UUID, day: Date, keys: Set<String>) -> Bool { keys.contains("\(id.uuidString)|\(Days.iso(day))") }
     static let bringInEnabled = "reminder.bringIn.enabled"
     static let bringInMinutes = "reminder.bringIn.minutes"
     static let locationFilter = "filter.locationID"
@@ -36,13 +58,32 @@ enum SettingsKeys {
         settings.morningMinutes = int(morningMinutes, 7 * 60)
         settings.escalationEnabled = bool(escalationEnabled, true)
         settings.escalationMinutes = int(escalationMinutes, 21 * 60)
+        settings.birthdayEnabled = bool(birthdayEnabled, true)
         settings.birthdayMinutes = int(birthdayMinutes, 9 * 60)
+        settings.birthdayPreMinutes = int(birthdayPreMinutes, 9 * 60)
+        settings.birthdayWeekBefore = bool(birthdayWeekBefore, false)
+        settings.customEnabled = bool(customEnabled, true)
         settings.customMinutes = int(customMinutes, 9 * 60)
+        settings.customPreMinutes = int(customPreMinutes, 9 * 60)
+        settings.customLeadMinutes = int(customLeadMinutes, 60)
+        settings.customDayBefore = bool(customDayBefore, false)
         settings.bringInEnabled = bool(bringInEnabled, true)
         settings.bringInMinutes = int(bringInMinutes, 17 * 60)
         return settings
     }
+
+    /// Bis 2.0.2 kamen Vorab-Erinnerungen zur selben Uhrzeit wie am Tag selbst. Wer die Uhrzeit geändert hatte,
+    /// behält sie darum auch für die neue, getrennte Vorab-Uhrzeit.
+    static func migrate(_ defaults: UserDefaults = .standard) {
+        for (day, pre) in [(birthdayMinutes, birthdayPreMinutes), (customMinutes, customPreMinutes)]
+        where defaults.object(forKey: pre) == nil && defaults.object(forKey: day) != nil {
+            defaults.set(defaults.integer(forKey: day), forKey: pre)
+        }
+    }
 }
+
+/// Die Tabs der App – damit eine Mitteilung den passenden öffnen kann.
+enum AppTab: Hashable { case overview, calendar, waste, birthdays, more }
 
 /// Ein Termin für die Anzeige – Abholung, Geburtstag oder eigener Termin.
 struct CalendarEvent: Identifiable, Hashable {
@@ -73,6 +114,10 @@ final class AppModel: ObservableObject {
     @Published var isSyncing = false
     @Published var recentChanges: [String] = []
     @Published var lastError: String?
+    @Published var selectedTab: AppTab = .overview
+    /// Aus einer Mitteilung angetippt: diese Person bzw. diesen Termin öffnen.
+    @Published var personToOpen: UUID?
+    @Published var eventToOpen: UUID?
     @Published var onboardingDone: Bool = UserDefaults.standard.bool(forKey: SettingsKeys.onboardingDone) {
         didSet { UserDefaults.standard.set(onboardingDone, forKey: SettingsKeys.onboardingDone) }
     }
@@ -84,6 +129,11 @@ final class AppModel: ObservableObject {
         self.container = container
         // Muss vor dem Ende des App-Starts passieren, sonst wirft BGTaskScheduler eine Exception.
         registerBackgroundTask()
+        SettingsKeys.migrate()
+        notifications.onOpen = { [weak self] target in self?.open(target) }
+        notifications.onCustomDone = { [weak self] id, dayKey in
+            Task { await self?.setCustomDone(true, id: id, dayKey: dayKey) }
+        }
         notifications.onPickupDone = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
         }
@@ -179,7 +229,7 @@ final class AppModel: ObservableObject {
         }
         for event in allCustomEvents() {
             for date in event.occurrences(from: from, to: to) {
-                result.append(CalendarEvent(id: "custom-\(event.id)-\(Days.iso(date))", date: date, kind: .custom, title: event.title, subtitle: event.recurrence.label, colorHex: event.colorHex, symbolName: event.symbolName, locationID: nil, locationName: nil, years: nil, done: false))
+                result.append(CalendarEvent(id: "custom-\(event.id)-\(Days.iso(date))", date: date, kind: .custom, title: event.title, subtitle: (event.timeText.map { "\($0) · " } ?? "") + event.recurrence.label, colorHex: event.colorHex, symbolName: event.symbolName, locationID: nil, locationName: nil, years: nil, done: false))
             }
         }
         return result.sorted { lhs, rhs in
@@ -213,14 +263,42 @@ final class AppModel: ObservableObject {
     private func plannedBirthdays() -> [PlannedBirthday] {
         allPeople().compactMap { person in
             guard let next = person.nextBirthday else { return nil }
-            return PlannedBirthday(date: next, name: person.name, years: person.annual.years(on: next), remindDaysBefore: person.remindDaysBefore, remindersEnabled: person.remindersEnabled)
+            return PlannedBirthday(date: next, name: person.name, years: person.annual.years(on: next), remindDaysBefore: person.remindDaysBefore, remindersEnabled: person.remindersEnabled,
+                                   id: person.id.uuidString, phone: person.phone, giftIdeas: person.giftIdeas)
         }
     }
 
+    /// Die nächsten zwei Vorkommen: Ist das heutige schon vorbei, steht die Vorab-Erinnerung fürs nächste trotzdem.
     private func plannedCustomEvents() -> [PlannedCustomEvent] {
-        allCustomEvents().compactMap { event in
-            guard let next = event.nextOccurrence else { return nil }
-            return PlannedCustomEvent(date: next, title: event.title, remindDaysBefore: event.remindDaysBefore, remindersEnabled: event.remindersEnabled)
+        let today = Days.today()
+        let done = SettingsKeys.customDoneKeys()
+        return allCustomEvents().flatMap { event in
+            event.occurrences(from: today, to: Days.add(121, to: today)).prefix(2).map {
+                PlannedCustomEvent(date: $0, title: event.title, remindDaysBefore: event.remindDaysBefore, remindersEnabled: event.remindersEnabled,
+                                   id: event.id.uuidString, timeMinutes: event.timeMinutes, done: SettingsKeys.isCustomDone(id: event.id, day: $0, keys: done))
+            }
+        }
+    }
+
+    /// Eigenen Termin für ein Vorkommen als erledigt markieren (oder zurücknehmen); die Erinnerungen dafür entfallen.
+    func setCustomDone(_ done: Bool, id: UUID, dayKey: String) async {
+        SettingsKeys.setCustomDone(done, id: id, dayKey: dayKey)
+        if done { UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["custom-snooze-\(dayKey)-\(id.uuidString)"]) }
+        objectWillChange.send()
+        await refreshAll()
+    }
+
+    /// Ziel einer angetippten Mitteilung öffnen.
+    func open(_ target: NotificationManager.OpenTarget) {
+        switch target {
+        case .birthdays:
+            selectedTab = .birthdays
+        case .person(let id):
+            selectedTab = .birthdays
+            personToOpen = id
+        case .event(let id):
+            selectedTab = .more
+            eventToOpen = id
         }
     }
 
@@ -350,6 +428,11 @@ final class AppModel: ObservableObject {
         let multi = allLocations().count > 1
         let options = CalendarSyncOptions.current
         let fromContacts = Set(allPeople().filter { $0.contactIdentifier != nil }.map(\.id))
+        var customTimes: [String: Int] = [:]
+        for event in allCustomEvents() {
+            guard let time = event.timeMinutes else { continue }
+            for date in event.occurrences(from: today, to: Days.add(400, to: today)) { customTimes["custom-\(event.id)-\(Days.iso(date))"] = time }
+        }
         let wanted = events(from: today, to: Days.add(400, to: today)).filter { event in
             guard applyingSyncOptions else { return true }
             switch event.kind {
@@ -370,7 +453,11 @@ final class AppModel: ObservableObject {
             case .birthday:
                 return CalendarExport.Item(date: event.date, title: "🎂 \(event.title)\(event.years.map { " (\($0))" } ?? "")", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
             case .custom:
-                return CalendarExport.Item(date: event.date, title: "📌 \(event.title)", notes: nil, alarmMinutesFromMidnight: [settings.customMinutes])
+                // Ganztägiger Eintrag; bei Terminen mit Uhrzeit steht sie im Titel und der Alarm kommt mit dem eingestellten Vorlauf
+                let time = customTimes[event.id]
+                let alarm = time.map { max(0, $0 - settings.customLeadMinutes) } ?? settings.customMinutes
+                let timeText = time.map { String(format: "%02d:%02d ", $0 / 60, $0 % 60) } ?? ""
+                return CalendarExport.Item(date: event.date, title: "📌 \(timeText)\(event.title)", notes: nil, alarmMinutesFromMidnight: [alarm])
             }
         }
     }

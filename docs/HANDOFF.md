@@ -116,6 +116,22 @@ QS am 9. Okt.: 334 Offline-Tests grün, Live-Tests (328) und Katalog-Sweep grün
 
 **Offen beim Nutzer:** in Xcode auf dem iPhone testen (Soltau, Perleberg, Neuenkirchen in „Geht mein Ort?“, Ansbach, Widgets), CloudKit-Schema nach Production, dann App-Store-Update 2.0.2. Arbeitskopie: `~/Claude/tonne` (nicht die iCloud-Kopie in `~/Documents`).
 
+## 5b. Version 2.0.3 (Build 4) – Erinnerungen für Geburtstage und eigene Termine
+
+2.0.2 liegt bei Apple. 2.0.3 ist gebaut (Simulator), 338 Offline-Tests grün, aber noch nicht auf dem iPhone getestet und nicht eingereicht.
+- Einstellungen: eigene Bereiche „Geburtstage“ und „Eigene Termine“, je mit Hauptschalter, Uhrzeit am Tag und getrennter Vorab-Uhrzeit;
+  Geburtstage „Zusätzlich eine Woche vorher“, Termine „Zusätzlich am Vortag“ und Vorlauf für Termine mit Uhrzeit (0–3 Std.).
+  Wer vor 2.0.3 die Tageszeit geändert hatte, behält sie auch für die Vorab-Uhrzeit (`SettingsKeys.migrate`).
+- Geburtstags-Mitteilungen: „📞 Anrufen“ (nur mit Nummer), „💬 Glückwunsch schreiben“, vorab „🎁 Geschenkideen ansehen“; Geschenkideen im Text;
+  mehrere Geburtstage an einem Tag in einer Mitteilung. Tippen öffnet Person bzw. Termin (auch beim Kaltstart, `NotificationManager.pendingOpen`).
+- Eigene Termine: Uhrzeit pro Termin, gespeichert als Tageszeit in `startDate` (0:00:00 = ganztägig) – **bewusst kein neues Feld**, damit kein
+  CloudKit-Schema-Deploy nötig wird. „Erledigt“ (Mitteilung oder Wischen in der Liste) liegt nur lokal in UserDefaults (`custom.doneOccurrences`).
+  „In 1 Stunde nochmal“, neue Wiederholung „jeden n-ten/letzten Wochentag im Monat“ (`Recurrence.monthlyWeekday`; ältere App-Versionen zeigen solche
+  Termine als „Jedes Jahr“), Vorab-Auswahl nur noch kürzer als der Abstand, 73 Symbole nach Themen auf eigener Seite.
+- Übersicht: „Weitere Abholungen“ beginnt nach den beiden Terminen der großen Karte, höchstens 4 Tage, Ort einmal je Zeile; „Geburtstage & Termine“ steht darüber.
+
+**Offen beim Nutzer:** auf dem iPhone testen – vor allem die Knöpfe in den Mitteilungen (im Simulator ohne Mitteilungs-Erlaubnis nicht auslösbar).
+
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
 - **„Tonne wieder reinholen“:**

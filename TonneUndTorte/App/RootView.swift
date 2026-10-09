@@ -15,13 +15,14 @@ struct RootView: View {
 }
 
 struct MainTabView: View {
+    @EnvironmentObject private var model: AppModel
     var body: some View {
-        TabView {
-            OverviewView().tabItem { Label("Übersicht", systemImage: "house.fill") }
-            MonthCalendarView().tabItem { Label("Kalender", systemImage: "calendar") }
-            WasteListView().tabItem { Label("Müll", systemImage: "trash.fill") }
-            BirthdayListView().tabItem { Label("Geburtstage", systemImage: "birthday.cake.fill") }
-            MoreView().tabItem { Label("Mehr", systemImage: "ellipsis.circle.fill") }
+        TabView(selection: $model.selectedTab) {
+            OverviewView().tabItem { Label("Übersicht", systemImage: "house.fill") }.tag(AppTab.overview)
+            MonthCalendarView().tabItem { Label("Kalender", systemImage: "calendar") }.tag(AppTab.calendar)
+            WasteListView().tabItem { Label("Müll", systemImage: "trash.fill") }.tag(AppTab.waste)
+            BirthdayListView().tabItem { Label("Geburtstage", systemImage: "birthday.cake.fill") }.tag(AppTab.birthdays)
+            MoreView().tabItem { Label("Mehr", systemImage: "ellipsis.circle.fill") }.tag(AppTab.more)
         }
     }
 }

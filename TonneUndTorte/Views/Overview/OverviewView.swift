@@ -70,8 +70,8 @@ struct OverviewView: View {
                     if !model.recentChanges.isEmpty { changesBanner }
                     if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
                     heroCard
-                    nextPickupsSection
                     birthdaysSection
+                    nextPickupsSection
                     statsCard
                 }
                 .padding(.horizontal)
@@ -267,25 +267,38 @@ struct OverviewView: View {
 
     // MARK: - Listen
 
+    /// Abholungen nach denen, die die große Karte schon zeigt (nächste und „Danach“) – nur ein kurzer Ausblick, der Rest steht im Kalender.
+    private var laterWasteDays: [(day: Date, events: [CalendarEvent])] {
+        Array(activeWasteDays.dropFirst(2).prefix(4))
+    }
+
+    @ViewBuilder
     private var nextPickupsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("Nächste Abholungen", systemImage: "trash.fill").font(.headline).padding(.leading, 4)
-            if wasteDays.isEmpty {
+        if wasteDays.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                Label("Nächste Abholungen", systemImage: "trash.fill").font(.headline).padding(.leading, 4)
                 Text("Keine Abholungen in den nächsten 60 Tagen.").font(.subheadline).foregroundStyle(.secondary).card()
-            } else {
+            }
+        } else if !laterWasteDays.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                Label(L10n.t("Weitere Abholungen", "Later collections"), systemImage: "trash.fill").font(.headline).padding(.leading, 4)
                 VStack(spacing: 0) {
-                    ForEach(Array(wasteDays.prefix(8).enumerated()), id: \.element.day) { index, entry in
+                    ForEach(Array(laterWasteDays.enumerated()), id: \.element.day) { index, entry in
+                        // Alles vom selben Standort: Ort einmal unter dem Datum statt an jeder Tonne
+                        let places = Set(entry.events.compactMap(\.locationName))
+                        let sharedPlace = locations.count > 1 && places.count == 1 ? places.first : nil
                         HStack(alignment: .top, spacing: 12) {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(DateText.countdown(entry.day)).font(.subheadline.weight(.semibold))
                                 Text(DateText.short(entry.day)).font(.caption).foregroundStyle(.secondary)
+                                if let sharedPlace { Text(sharedPlace).font(.caption).foregroundStyle(.secondary).lineLimit(1) }
                             }
                             .frame(width: 92, alignment: .leading)
-                            FlowLayout(spacing: 6) { ForEach(entry.events) { EventChip(event: $0, onLight: true, showLocation: locations.count > 1) } }
+                            FlowLayout(spacing: 6) { ForEach(entry.events) { EventChip(event: $0, onLight: true, showLocation: locations.count > 1 && sharedPlace == nil) } }
                             Spacer(minLength: 0)
                         }
                         .padding(.vertical, 10)
-                        if index < min(wasteDays.count, 8) - 1 { Divider() }
+                        if index < laterWasteDays.count - 1 { Divider() }
                     }
                 }
                 .card()

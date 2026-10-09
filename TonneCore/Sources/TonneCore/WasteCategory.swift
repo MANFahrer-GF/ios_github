@@ -113,7 +113,18 @@ public enum Palette {
     public static let homeSymbols: [String] = [
         "house.fill", "house.and.flag.fill", "building.2.fill", "tent.fill", "tree.fill", "car.fill", "building.columns.fill", "leaf.fill", "sailboat.fill", "mountain.2.fill",
     ]
-    public static let eventSymbols: [String] = [
-        "heart.fill", "car.fill", "flame.fill", "wrench.and.screwdriver.fill", "stethoscope", "creditcard.fill", "pawprint.fill", "drop.fill", "bolt.fill", "key.fill", "bell.fill", "star.fill",
-    ]
+    /// Symbole für eigene Termine, nach Themen – alle ab iOS 17 vorhanden.
+    public static var eventSymbolGroups: [(title: String, symbols: [String])] {
+        [
+            (L10n.t("Familie & Feiern", "Family & celebrations"), ["heart.fill", "gift.fill", "party.popper.fill", "balloon.2.fill", "birthday.cake.fill", "person.2.fill", "figure.2.and.child.holdinghands", "graduationcap.fill"]),
+            (L10n.t("Gesundheit & Sport", "Health & sport"), ["stethoscope", "cross.case.fill", "pills.fill", "syringe.fill", "mouth.fill", "eye.fill", "figure.run", "dumbbell.fill"]),
+            (L10n.t("Haus & Garten", "Home & garden"), ["house.fill", "wrench.and.screwdriver.fill", "hammer.fill", "flame.fill", "drop.fill", "bolt.fill", "lightbulb.fill", "key.fill", "washer.fill", "refrigerator.fill", "fan.fill", "heater.vertical.fill", "sparkles", "leaf.fill", "tree.fill"]),
+            (L10n.t("Auto & Reisen", "Car & travel"), ["car.fill", "fuelpump.fill", "bicycle", "airplane", "tram.fill", "suitcase.fill", "tent.fill", "map.fill"]),
+            (L10n.t("Geld & Papierkram", "Money & paperwork"), ["creditcard.fill", "eurosign.circle.fill", "banknote.fill", "doc.text.fill", "envelope.fill", "signature", "briefcase.fill", "building.columns.fill"]),
+            (L10n.t("Tiere", "Pets"), ["pawprint.fill", "dog.fill", "cat.fill", "bird.fill", "fish.fill", "carrot.fill"]),
+            (L10n.t("Freizeit", "Leisure"), ["music.note", "ticket.fill", "film.fill", "gamecontroller.fill", "book.fill", "sportscourt.fill", "fork.knife", "cup.and.saucer.fill", "scissors", "tshirt.fill", "camera.fill", "phone.fill"]),
+            (L10n.t("Allgemein", "General"), ["star.fill", "bell.fill", "calendar", "clock.fill", "flag.fill", "pin.fill", "checkmark.seal.fill", "exclamationmark.triangle.fill"]),
+        ]
+    }
+    public static var eventSymbols: [String] { eventSymbolGroups.flatMap(\.symbols) }
 }

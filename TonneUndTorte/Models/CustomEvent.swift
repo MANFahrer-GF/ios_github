@@ -39,6 +39,24 @@ final class CustomEvent {
 
     var nextOccurrence: Date? { recurrence.next(start: startDate) }
 
+    /// Uhrzeit des Termins (Minuten ab Mitternacht), nil = ganztägig. Sie steckt in der Tageszeit von `startDate`,
+    /// damit kein neues Feld ins iCloud-Schema muss; die Wiederholung rechnet ohnehin nur mit dem Tag.
+    /// Genau 0:00:00 heißt „ganztägig“ – wer 0:00 Uhr wählt, bekommt darum eine Sekunde dazu.
+    var timeMinutes: Int? {
+        get {
+            let c = Calendar.current.dateComponents([.hour, .minute, .second], from: startDate)
+            let minutes = (c.hour ?? 0) * 60 + (c.minute ?? 0)
+            return minutes == 0 && (c.second ?? 0) == 0 ? nil : minutes
+        }
+        set {
+            let day = Days.start(of: startDate)
+            guard let newValue, let date = Days.at(minutes: newValue, on: day) else { startDate = day; return }
+            startDate = newValue == 0 ? date.addingTimeInterval(1) : date
+        }
+    }
+
+    var timeText: String? { timeMinutes.map { String(format: "%02d:%02d", $0 / 60, $0 % 60) } }
+
     func occurrences(from: Date, to: Date) -> [Date] {
         recurrence.occurrences(start: startDate, from: from, to: to)
     }
