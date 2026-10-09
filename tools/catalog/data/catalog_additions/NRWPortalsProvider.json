@@ -15,5 +15,9 @@
   {"kind": "portalsNRW", "key": "herford", "title": "Abfallkalender Kreis Herford (SWK Herford und Kommunen)", "website": "https://swk.herford.de/Entsorgung/Abfallkalender/",
    "places": ["Bünde", "Enger", "Herford", "Hiddenhausen", "Kirchlengern", "Löhne", "Rödinghausen", "Spenge", "Vlotho"], "districts": ["Kreis Herford"]},
   {"kind": "portalsNRW", "key": "enni", "title": "ENNI Moers", "website": "https://abfallkalender.enni.de/",
-   "places": ["Moers"], "districts": ["Kreis Wesel"]}
+   "places": ["Moers"], "districts": ["Kreis Wesel"]},
+  {"kind": "portalsNRW", "key": "espelkamp", "title": "Abfallkalender Stadt Espelkamp", "website": "https://www.espelkamp.de/index.php?La=1&ffmod=abf&ort=322.4&call=sfm",
+   "places": ["Espelkamp"], "districts": ["Kreis Minden-Lübbecke"], "onlyDistricts": true},
+  {"kind": "portalsNRW", "key": "prezero", "title": "PreZero Abfallkalender Bad Oeynhausen", "website": "https://abfallkalender.prezero.network/bad-oeynhausen",
+   "places": ["Bad Oeynhausen"], "districts": ["Kreis Minden-Lübbecke"], "onlyDistricts": true}
 ]
