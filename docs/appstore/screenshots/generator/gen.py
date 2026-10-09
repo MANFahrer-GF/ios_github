@@ -403,16 +403,27 @@ def watch_page(kind, w, h):
 
 # ---------------------------------------------------------------- Marketing-Rahmen
 SLIDES = [
-    ("overview", "Nie wieder die Tonne vergessen", "Alle Abfuhrtermine auf einen Blick", YELLOW, REST),
+    ("overview", "Tonne und Torte auf einen Blick", "Abfuhr, Geburtstage und Termine der nächsten Tage", YELLOW, REST),
     ("lock", "Erinnert dich am Vorabend", "„Erledigt“ direkt aus der Mitteilung", PAPER, YELLOW),
     ("coverage", "Über 380 Landkreise", "Termine direkt vom Entsorger", DONE, PAPER),
-    ("birthdays", "Geburtstage gleich mit", "Mit Alter und runden Geburtstagen", "#FF5FA2", "#FF9A4A"),
+    ("birthdays", "Geburtstage mit allem", "Alter, Jahrgang, Sternzeichen – und direkt gratulieren", "#FF5FA2", "#FF9A4A"),
 ]
 SCREENS = {"overview": overview, "coverage": coverage, "birthdays": birthdays, "lock": lockscreen}
 
 
+# Echte Screenshots aus dem Simulator (testMarketingScreenshots mit -demoData), sonst der HTML-Nachbau
+SHOTS = os.path.join(HERE, "shots")
+
+
+def real_shot(kind, ipad):
+    path = os.path.join(SHOTS, f"{'ipad' if ipad else 'iphone'}_{kind}.png")
+    return path if os.path.exists(path) else None
+
+
 def marketing(kind, title, sub, c1, c2, W, H, sw, sh, ipad):
-    screen = SCREENS[kind](sw, sh, ipad)
+    shot = real_shot(kind, ipad)
+    screen = (f'<img src="file://{shot}" style="width:{sw}px;height:{sh}px;object-fit:cover;object-position:top;display:block">'
+              if shot else SCREENS[kind](sw, sh, ipad))
     k = (W * (0.80 if ipad else 0.80)) / sw
     radius = 40 if ipad else 56
     bezel = 14 if ipad else 12

@@ -14,7 +14,7 @@ struct TonneUndTorteApp: App {
             SettingsKeys.store.set(true, forKey: SettingsKeys.onboardingDone)
         }
         let container = TonneUndTorteApp.makeContainer()
-        if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
+        if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
         _model = StateObject(wrappedValue: AppModel(container: container))
         NotificationManager.shared.configure()
     }
@@ -66,6 +66,46 @@ struct TonneUndTorteApp: App {
         #else
         false
         #endif
+    }
+
+    /// Beispieldaten für die App-Store-Bilder (nur im Testmodus, Startschalter -demoData).
+    static var isDemo: Bool { isUITesting && ProcessInfo.processInfo.arguments.contains("-demoData") }
+
+    /// Schöne Beispieldaten für die App-Store-Bilder: heute ein runder Geburtstag, morgen zwei Tonnen, danach gemischt.
+    @MainActor
+    static func seedDemo(_ container: ModelContainer) {
+        let context = container.mainContext
+        func dayMonth(_ offset: Int) -> (Int, Int) {
+            let c = Calendar.current.dateComponents([.day, .month], from: Days.add(offset, to: Days.today()))
+            return (c.day ?? 1, c.month ?? 1)
+        }
+        let people: [(String, Int, Int?, String, String?)] = [
+            ("Oma Erika", 0, 1946, "#EC4899", "0171 2345678"), ("Paul", 6, 1991, "#2F6FED", nil),
+            ("Lena", 13, 1998, "#16A34A", nil), ("Jonas", 21, nil, "#F97316", nil), ("Tante Gabi", 34, 1966, "#7C3AED", nil),
+        ]
+        for (name, offset, year, color, phone) in people {
+            let (d, m) = dayMonth(offset)
+            let person = Person(name: name, day: d, month: m, year: year, colorHex: color)
+            person.phone = phone
+            if name == "Paul" { person.giftIdeas = ["Kochbuch", "Konzertkarten"] }
+            context.insert(person)
+        }
+        let location = Location(name: "Gifhorn")
+        context.insert(location)
+        let bins: [(String, WasteCategory, Int, Int)] = [("Gelber Sack", .packaging, 1, 2), ("Restmüll", .residual, 1, 2),
+                                                         ("Papier", .paper, 4, 4), ("Biotonne", .organic, 8, 2)]
+        for (index, (name, category, first, every)) in bins.enumerated() {
+            let type = WasteType(name: name, category: category, sortOrder: index)
+            type.intervalWeeks = every
+            type.anchorDate = Days.add(first, to: Days.today())
+            type.location = location
+            context.insert(type)
+        }
+        let tuev = CustomEvent(title: "TÜV / Hauptuntersuchung", symbolName: "car.fill", colorHex: "#2F6FED", startDate: Days.add(10, to: Days.today()), recurrence: .everyMonths(24))
+        tuev.timeMinutes = 9 * 60 + 30
+        context.insert(tuev)
+        context.insert(CustomEvent(title: "Rauchmelder testen", symbolName: "flame.fill", colorHex: "#DC2626", startDate: Days.add(17, to: Days.today()), recurrence: .everyMonths(6)))
+        try? context.save()
     }
 
     /// Testdaten für die Oberflächen-Tests: Geburtstag in drei Tagen (mit Jahr und Telefon), eigener Termin heute mit Uhrzeit, Papiertonne.

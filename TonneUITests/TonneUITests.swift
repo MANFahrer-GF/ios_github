@@ -8,6 +8,16 @@ final class TonneUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
+        // App-Store-Bilder: nur auf Wunsch (TEST_RUNNER_TONNE_MARKETING=1), mit Beispieldaten statt Testdaten
+        if name.contains("Marketing") {
+            guard ProcessInfo.processInfo.environment["TONNE_MARKETING"] == "1" else { throw XCTSkip("nur für App-Store-Bilder") }
+            app.launchArguments = ["-uiTesting", "-demoData", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+            app.launchEnvironment["TONNE_UITESTING"] = "1"
+            app.terminate(); app.launch()
+            if !app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 8) { app.terminate(); app.launch() }
+            XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10), "App läuft nicht mit den Beispieldaten")
+            return
+        }
         app.launchArguments = ["-uiTesting", "-uiTestingSeed", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
         app.launchEnvironment["TONNE_UITESTING"] = "1"
         app.terminate()
@@ -89,6 +99,12 @@ final class TonneUITests: XCTestCase {
         app.swipeUp(); sleep(1); snap("15-einstellungen-2")
         app.swipeUp(); sleep(1); snap("16-einstellungen-3")
         app.swipeUp(); sleep(1); snap("17-einstellungen-4")
+    }
+
+    /// Bilder für App Store Connect: Übersicht und Geburtstage, ohne Wischen/Öffnen – genau so, wie die App startet.
+    func testMarketingScreenshots() {
+        tab("Übersicht"); sleep(2); snap("marketing-overview")
+        tab("Termine"); app.buttons["Geburtstage"].firstMatch.tap(); sleep(2); snap("marketing-birthdays")
     }
 
     // MARK: - Übersicht

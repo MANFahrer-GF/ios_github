@@ -5,6 +5,7 @@
 
     },
     "· %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -78,6 +79,9 @@
         }
       }
     },
+    "%lld." : {
+
+    },
     "%lld.%lld.%@" : {
       "localizations" : {
         "de" : {
@@ -125,9 +129,6 @@
         }
       }
     },
-    "🎂" : {
-
-    },
     "🎂 GEBURTSTAGE" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -139,10 +140,8 @@
         }
       }
     },
-    "🎉" : {
-
-    },
     "🎉 %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -753,6 +752,7 @@
       }
     },
     "Danach" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1319,6 +1319,7 @@
       }
     },
     "Geburtstag bearbeiten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1370,6 +1371,7 @@
       }
     },
     "Geburtstage & Termine" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1699,9 +1701,6 @@
         }
       }
     },
-    "In den nächsten 60 Tagen steht nichts an." : {
-
-    },
     "iOS schützt dein Adressbuch: Du hast der App den Zugriff auf deine Kontakte nicht erlaubt. Deshalb kann Tonne & Torte von sich aus keine Geburtstage lesen." : {
       "localizations" : {
         "en" : {
@@ -1895,6 +1894,7 @@
       }
     },
     "Keine Abholungen in den nächsten 60 Tagen." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1998,6 +1998,7 @@
       }
     },
     "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2320,6 +2321,7 @@
       }
     },
     "Nächste Abholungen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2551,9 +2553,6 @@
           }
         }
       }
-    },
-    "Noch keine Geburtstage – unter „Geburtstage“ hinzufügen oder aus Kontakten importieren." : {
-
     },
     "Noch keine Müllarten." : {
       "localizations" : {
@@ -2963,6 +2962,7 @@
       }
     },
     "Termin bearbeiten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

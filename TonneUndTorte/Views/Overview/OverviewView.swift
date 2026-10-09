@@ -100,7 +100,8 @@ struct OverviewView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    if !notifications.isAuthorized { permissionBanner }
+                    // Für die App-Store-Bilder ohne den Hinweis „Erinnerungen sind aus“
+                    if !notifications.isAuthorized && !TonneUndTorteApp.isDemo { permissionBanner }
                     if !model.recentChanges.isEmpty { changesBanner }
                     if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
                     nextDaysCard
