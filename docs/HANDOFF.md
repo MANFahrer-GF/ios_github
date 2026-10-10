@@ -143,7 +143,7 @@ Bekannte Grenzen: 2.0.2 zeigt „n-ter Wochentag“ als „Jeden Monat“ (am Da
 bleibt in 2.0.3 die Wochentag-Regel. „Erledigt“ für eigene Termine gilt nur auf dem Gerät. Eigene Termine (`startDate`) verschieben sich beim Wechsel
 der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
 
-## 5c. Nachgezogen am 9. Okt. abends (noch 2.0.3, Build 4)
+## 5c. Nachgezogen am 9. Okt. abends – geht als 2.0.4 (Build 5) raus (2.0.3 wurde mit falschem Stand hochgeladen)
 
 - Übersicht „Die nächsten Tage“: eine Karte, groß bis zur nächsten Abholung, darunter bis 6 weitere Tage; gemeinsame Zeile `EventItemCard`
   (Helpers.swift) für Übersicht und Kalender: Foto/Initialen, Name, Angaben als Schildchen (`InfoTags`), am Geburtstag selbst „Anrufen“
