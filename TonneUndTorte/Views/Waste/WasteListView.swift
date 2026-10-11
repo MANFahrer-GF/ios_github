@@ -115,7 +115,7 @@ struct WasteListView: View {
 
     private func delete(_ types: [WasteType]) {
         types.forEach { context.delete($0) }
-        try? context.save()
+        model.save()
         Task { await model.refreshAll() }
     }
 
@@ -242,7 +242,7 @@ struct NewWasteTypeSheet: View {
                         type.anchorDate = intervalWeeks > 0 ? Days.start(of: anchorDate) : nil
                         context.insert(type)
                         type.location = location
-                        try? context.save()
+                        guard model.save() else { return }
                         Task { await model.refreshAll() }
                         dismiss()
                     }
@@ -282,7 +282,7 @@ struct NewLocationSheet: View {
                     Button("Anlegen") {
                         let location = Location(name: name.trimmingCharacters(in: .whitespaces), address: address, symbolName: symbolName, colorHex: colorHex, sortOrder: model.allLocations().count)
                         context.insert(location)
-                        try? context.save()
+                        guard model.save() else { return }
                         model.onboardingDone = true
                         dismiss()
                         onCreate(location)

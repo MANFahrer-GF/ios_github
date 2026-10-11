@@ -218,7 +218,7 @@ struct BirthdayListView: View {
                                 }
                                 .onDelete { offsets in
                                     offsets.forEach { context.delete(section.entries[$0].person) }
-                                    try? context.save()
+                                    model.save()
                                     Task { await model.refreshAll() }
                                 }
                             } header: {
@@ -472,7 +472,7 @@ struct BirthdayEditView: View {
         target.notes = notes; target.colorHex = colorHex; target.remindersEnabled = remindersEnabled
         if target.photoData != photoData { target.photoData = photoData }
         target.remindDaysBefore = remindDaysBefore; target.giftIdeas = giftIdeas; target.phone = phone.isEmpty ? nil : phone
-        try? context.save()
+        guard model.save() else { return }   // nicht gespeichert: Fenster bleibt offen, Meldung erscheint
         Task { await model.refreshAll() }
         dismiss()
     }
@@ -762,7 +762,7 @@ struct ContactsImportView: View {
             }
             if let phone = candidate.phone { person.phone = phone }
         }
-        try? context.save()
+        guard model.save() else { return }
         Task { await model.refreshAll() }
         dismiss()
     }

@@ -7,11 +7,27 @@ struct RootView: View {
     @Query private var locations: [Location]
 
     var body: some View {
-        if model.onboardingDone || !locations.isEmpty {
-            MainTabView()
-        } else {
-            OnboardingView()
+        Group {
+            if TonneUndTorteApp.storeUnavailable {
+                // Datenbank gerade nicht lesbar – nichts Leeres zum Bearbeiten anbieten, sondern erklären und neu versuchen
+                ContentUnavailableView {
+                    Label(L10n.t("Daten werden geöffnet …", "Opening your data …"), systemImage: "lock.circle")
+                } description: {
+                    Text(L10n.t("Deine Termine sind gerade nicht lesbar – meist direkt nach einem Neustart, bevor das iPhone entsperrt wurde.",
+                                "Your data can't be read right now – usually right after a restart, before the iPhone was unlocked."))
+                } actions: {
+                    Button(L10n.t("Erneut versuchen", "Try again")) { NotificationCenter.default.post(name: TonneUndTorteApp.retryStoreNotification, object: nil) }
+                        .buttonStyle(.borderedProminent)
+                }
+            } else if model.onboardingDone || !locations.isEmpty {
+                MainTabView()
+            } else {
+                OnboardingView()
+            }
         }
+        .alert(L10n.t("Nicht gespeichert", "Not saved"), isPresented: Binding(get: { model.lastError != nil }, set: { if !$0 { model.lastError = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: { Text(model.lastError ?? "") }
     }
 }
 

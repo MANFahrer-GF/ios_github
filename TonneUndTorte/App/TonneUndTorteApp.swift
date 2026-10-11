@@ -2,10 +2,28 @@ import SwiftUI
 import SwiftData
 import TonneCore
 
+/// Hält das App-Modell – damit es nach dem Entsperren gegen eines mit der echten Datenbank getauscht werden kann.
+@MainActor
+final class ModelHolder: ObservableObject {
+    @Published var model: AppModel
+    init(_ model: AppModel) { self.model = model }
+
+    /// War beim Start die Datenbank gesperrt (Hintergrundstart vor dem ersten Entsperren), jetzt erneut öffnen.
+    func reopenIfNeeded() async {
+        guard TonneUndTorteApp.storeUnavailable else { return }
+        TonneUndTorteApp.storeUnavailable = false
+        let container = TonneUndTorteApp.makeContainer()
+        guard !TonneUndTorteApp.storeUnavailable else { return }   // weiterhin nicht lesbar – Hinweis bleibt
+        model = AppModel(container: container)
+        await model.start()
+    }
+}
+
 @main
 struct TonneUndTorteApp: App {
-    @StateObject private var model: AppModel
+    @StateObject private var holder: ModelHolder
     @Environment(\.scenePhase) private var scenePhase
+    private var model: AppModel { holder.model }
 
     init() {
         // Oberflächen-Tests: eigene Einstellungs-Ablage, jedes Mal auf Werkszustand – die echten Einstellungen bleiben unberührt
@@ -15,7 +33,7 @@ struct TonneUndTorteApp: App {
         }
         let container = TonneUndTorteApp.makeContainer()
         if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
-        _model = StateObject(wrappedValue: AppModel(container: container))
+        _holder = StateObject(wrappedValue: ModelHolder(AppModel(container: container)))
         NotificationManager.shared.configure()
     }
 
@@ -25,16 +43,26 @@ struct TonneUndTorteApp: App {
                 .defaultAppStorage(SettingsKeys.store)
                 .environmentObject(model)
                 .modelContainer(model.container)
+                .id(ObjectIdentifier(model))   // neues Modell (nach dem Entsperren) = Oberfläche neu aufbauen
                 .task { await model.start() }
                 .onChange(of: scenePhase) { _, phase in
-                    if phase == .active { Task { await model.becameActive() } }
+                    if phase == .active {
+                        Task {
+                            await holder.reopenIfNeeded()
+                            await model.becameActive()
+                        }
+                    }
                     if phase == .background { model.scheduleBackgroundRefresh() }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: TonneUndTorteApp.retryStoreNotification)) { _ in
+                    Task { await holder.reopenIfNeeded() }
                 }
                 .onOpenURL { url in model.handle(url: url) }
         }
     }
 
     /// SwiftData-Container mit iCloud-Sync; fällt ohne iCloud-Berechtigung auf lokalen Speicher zurück.
+    @MainActor
     static func makeContainer() -> ModelContainer {
         let schema = Schema([Location.self, WasteType.self, Person.self, CustomEvent.self])
         // Oberflächen-Tests: leere Datenbank nur im Speicher, kein iCloud – echte Daten bleiben unberührt.
@@ -46,17 +74,31 @@ struct TonneUndTorteApp: App {
                 fatalError("Testdatenbank konnte nicht angelegt werden: \(error)")
             }
         }
-        let cloud = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .automatic)
-        if let container = try? ModelContainer(for: schema, configurations: [cloud]) {
-            return container
+        #if DEBUG
+        let simulateFailure = ProcessInfo.processInfo.arguments.contains("-simulateStoreFailure")
+        #else
+        let simulateFailure = false
+        #endif
+        if !simulateFailure {
+            let cloud = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .automatic)
+            if let container = try? ModelContainer(for: schema, configurations: [cloud]) {
+                return container
+            }
+            let local = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .none)
+            if let container = try? ModelContainer(for: schema, configurations: [local]) {
+                return container
+            }
         }
-        let local = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .none)
-        do {
-            return try ModelContainer(for: schema, configurations: [local])
-        } catch {
-            fatalError("Datenbank konnte nicht geöffnet werden: \(error)")
-        }
+        // Datenbank nicht lesbar – typisch: iCloud weckt die App nach einem Neustart im Hintergrund, bevor das iPhone
+        // entsperrt wurde; dann sind die App-Daten noch verschlüsselt. Nicht abstürzen (2.0.4-Absturzberichte), sondern
+        // leer im Speicher weiterlaufen und nichts nach außen schreiben (`storeUnavailable`). Der nächste Start öffnet sie normal.
+        storeUnavailable = true
+        return try! ModelContainer(for: schema, configurations: [ModelConfiguration("Notfall", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)])
     }
+
+    /// Echte Datenbank war beim Start nicht lesbar – dann keine Widgets, Erinnerungen, Abgleiche oder Kalender anfassen.
+    @MainActor static var storeUnavailable = false
+    static let retryStoreNotification = Notification.Name("TonneUndTorte.retryStore")
 
     /// Oberflächen-Test läuft (Startschalter oder Umgebungsvariable aus TonneUITests).
     /// Nur in Entwickler-Builds – eine App-Store-Version kennt den Testmodus nicht.

@@ -57,7 +57,7 @@ struct LocationDetailView: View {
         .onChange(of: location.lastSyncAt) { _, _ in updateExport() }
         .onChange(of: location.lastSyncMessage) { _, _ in updateExport() }
         .onDisappear {
-            try? context.save()
+            model.save()
             Task { await model.refreshAll() }
         }
     }
@@ -99,7 +99,7 @@ struct LocationDetailView: View {
                 syncButton
                 Button(role: .destructive) {
                     location.source = nil
-                    try? context.save()
+                    model.save()
                 } label: {
                     Label("Verbindung trennen", systemImage: "xmark.circle")
                 }
@@ -267,7 +267,7 @@ struct ICSImportView: View {
         let target = location ?? makeLocation?()
         SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: replace)
         target?.lastSyncMessage = L10n.t("Datei importiert (\(L10n.dates(pickups.count)))", "File imported (\(L10n.dates(pickups.count)))")
-        try? context.save()
+        guard model.save() else { return }
         Task { await model.refreshAll() }
         if let onImported { onImported() } else { dismiss() }
     }

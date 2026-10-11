@@ -751,7 +751,8 @@ extension BayernPortalsProvider {
         let columns = ["F": "Restmüll", "G": "Biomüll", "H": "Papiertonne", "I": "Gelber Sack"]
         guard let epoch = Days.make(year: 1899, month: 12, day: 30, calendar: calendar) else { return [] }
         return rows.flatMap { row -> [Pickup] in
-            guard row["C"] == letter, let serial = Double(row["A"] ?? ""), serial > 0 else { return [] }
+            // Excel-Tageszahl plausibel (1900–2200) – „1e999“ o. Ä. aus einer kaputten Datei würde beim Umrechnen abstürzen
+            guard row["C"] == letter, let serial = Double(row["A"] ?? ""), serial.isFinite, serial > 0, serial < 110_000 else { return [] }
             let date = Days.add(Int(serial), to: epoch, calendar: calendar)
             return columns.compactMap { column, name in
                 guard let value = row[column], value.contains(number) else { return nil }
@@ -1032,7 +1033,7 @@ extension BayernPortalsProvider {
                 var cells: [String: String] = [:]
                 for cell in HTMLText.matches(#"<c r="([A-Z]+)\d+"([^>]*?)(?:/>|>([\s\S]*?)</c>)"#, in: row[0]) {
                     guard let value = HTMLText.firstMatch(#"<v>([^<]*)</v>"#, in: cell[2], group: 1) else { continue }
-                    if cell[1].contains(#"t="s""#), let index = Int(value), index < shared.count {
+                    if cell[1].contains(#"t="s""#), let index = Int(value), shared.indices.contains(index) {
                         cells[cell[0]] = shared[index]
                     } else {
                         cells[cell[0]] = HTMLText.decodeEntities(value)
@@ -1143,6 +1144,9 @@ extension BayernPortalsProvider {
         private static let distanceExtra = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13]
         private static let codeOrder = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]
 
+        /// Entpackt höchstens 50 MB – eine Jahrestabelle hat wenige hundert KB; mehr deutet auf eine kaputte Datei („ZIP-Bombe“).
+        static let maxOutput = 50_000_000
+
         static func decompress(_ input: [UInt8]) throws -> [UInt8] {
             var bits = Bits(bytes: input)
             var output: [UInt8] = []
@@ -1159,6 +1163,7 @@ extension BayernPortalsProvider {
                     bits.position += 4
                     guard bits.position + length <= input.count else { throw Failure() }
                     output += input[bits.position..<(bits.position + length)]
+                    guard output.count <= maxOutput else { throw Failure() }
                     bits.position += length
                 case 1:
                     let literal = Huffman([Int](repeating: 8, count: 144) + [Int](repeating: 9, count: 112) + [Int](repeating: 7, count: 24) + [Int](repeating: 8, count: 8))
@@ -1194,6 +1199,7 @@ extension BayernPortalsProvider {
                 let symbol = try literal.decode(&bits)
                 if symbol < 256 {
                     output.append(UInt8(symbol))
+                    guard output.count <= maxOutput else { throw Failure() }
                 } else if symbol == 256 {
                     return
                 } else {
@@ -1206,6 +1212,7 @@ extension BayernPortalsProvider {
                     guard back <= output.count else { throw Failure() }
                     let start = output.count - back
                     for offset in 0..<length { output.append(output[start + offset]) }
+                    guard output.count <= maxOutput else { throw Failure() }
                 }
             }
         }

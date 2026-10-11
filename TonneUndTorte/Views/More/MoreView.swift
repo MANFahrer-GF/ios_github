@@ -102,7 +102,7 @@ struct CustomEventsView: View {
             .onDelete { offsets in
                 let sorted = events.sorted { ($0.nextOccurrence ?? .distantFuture) < ($1.nextOccurrence ?? .distantFuture) }
                 offsets.forEach { context.delete(sorted[$0]) }
-                try? context.save(); Task { await model.refreshAll() }
+                model.save(); Task { await model.refreshAll() }
             }
         }
     }
@@ -235,7 +235,7 @@ struct CustomEventEditView: View {
         target.title = title.trimmingCharacters(in: .whitespaces); target.symbolName = symbolName; target.colorHex = colorHex
         target.startDate = Days.start(of: startDate); target.timeMinutes = hasTime ? timeMinutes : nil; target.recurrence = recurrences[recurrenceIndex]
         target.remindDaysBefore = remindDaysBefore; target.remindersEnabled = remindersEnabled; target.notes = notes
-        try? context.save()
+        guard model.save() else { return }
         Task { await model.refreshAll() }
         dismiss()
     }

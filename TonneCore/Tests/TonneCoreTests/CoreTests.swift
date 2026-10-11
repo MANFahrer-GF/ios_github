@@ -38,7 +38,8 @@ final class CoreTests: XCTestCase {
     func testLiveActivityPlanner() {
         let cal = Calendar.current
         let today = Days.today()
-        func at(_ dayOffset: Int, _ hour: Int) -> Date { cal.date(byAdding: .hour, value: hour, to: Days.add(dayOffset, to: today))! }
+        // Wanduhrzeit wie in der App – nicht „Tagesanfang + Stunden“, das liegt am Tag der Zeitumstellung eine Stunde daneben
+        func at(_ dayOffset: Int, _ hour: Int) -> Date { Days.at(minutes: hour * 60, on: Days.add(dayOffset, to: today), calendar: cal)! }
         let item = WidgetSnapshot.PickupItem(name: "Restmüll", symbolName: "trash.fill", colorHex: "#5B6470")
         let days = [
             WidgetSnapshot.PickupDay(date: Days.add(1, to: today), items: [item]),
@@ -573,6 +574,26 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(csv.hasPrefix("\u{FEFF}Termin;Wiederholung;"))
         XCTAssertTrue(lines[1].hasPrefix("\"TÜV; Gifhorn\";Alle 24 Monate;2025-03-01;14:30;2027-03-01;143;ja;7;Zeile1 Zeile2"), lines[1])
         XCTAssertTrue(lines[2].hasPrefix("Hochzeitstag;Jedes Jahr;2010-06-12;;2027-06-12;"), lines[2])
+    }
+
+    /// Kaputte oder bösartige Daten von Entsorgern dürfen die App nicht abstürzen lassen (QS 11. Okt.).
+    func testHostileInputDoesNotCrash() {
+        // ICS: Riesen-Intervall lief bei „7 × Intervall“ über
+        let huge = "BEGIN:VCALENDAR\nBEGIN:VEVENT\nDTSTART;VALUE=DATE:20261012\nRRULE:FREQ=WEEKLY;INTERVAL=9223372036854775807\nSUMMARY:Restmüll\nEND:VEVENT\nEND:VCALENDAR"
+        XCTAssertEqual(ICS.parse(huge, calendar: calendar).first.map { Days.iso($0.date, calendar: calendar) }, "2026-10-12")
+        // ICS: 31. Februar und 25 Uhr werden abgelehnt statt auf andere Tage verschoben
+        XCTAssertNil(ICS.parseDate("20260231", calendar: calendar))
+        XCTAssertNil(ICS.parseDate("20261012T250000", calendar: calendar))
+        XCTAssertEqual(ICS.parseDate("20240229", calendar: calendar).map { Days.iso($0, calendar: calendar) }, "2024-02-29")
+        // Amberg-Excel: „unendliche“ Tageszahl wird übersprungen
+        let rows: [[String: String]] = [["A": "1e999", "C": "A", "F": "1"], ["A": "46307", "C": "A", "F": "1"]]
+        XCTAssertEqual(BayernPortalsProvider.ambergParse(rows, zone: "A1", calendar: calendar).count, 1)
+    }
+
+    func testCSVNoteAppliesToAllWasteTypesOfRow() {
+        let pickups = PickupCSV.parse("07.10.2026;Restmüll;Biotonne;verschoben auf Samstag", calendar: calendar)
+        XCTAssertEqual(pickups.count, 2)
+        XCTAssertTrue(pickups.allSatisfy { $0.note == "verschoben auf Samstag" }, "\(pickups.map(\.note))")
     }
 
     func testWasteABC() {

@@ -17,6 +17,9 @@ public struct ICSEvent: Hashable, Codable {
 /// einfache RRULEs (FREQ=DAILY/WEEKLY mit INTERVAL, COUNT, UNTIL) und ein Generator für Feeds.
 public enum ICS {
 
+    /// Obergrenze für Termine aus einer Datei – ein Jahreskalender hat einige hundert.
+    static let maxEvents = 20_000
+
     public static func parse(_ text: String, calendar: Calendar = .current) -> [ICSEvent] {
         var events: [ICSEvent] = []
         var inEvent = false
@@ -33,9 +36,11 @@ public enum ICS {
             if line.hasPrefix("END:VEVENT") {
                 if inEvent, let start = dtstart {
                     let name = summary.isEmpty ? "Unbenannt" : summary
-                    for date in expand(start: start, rrule: rrule, calendar: calendar) {
+                    for date in expand(start: start, rrule: rrule, calendar: calendar) where events.count < maxEvents {
                         events.append(ICSEvent(summary: name, date: date, location: location))
                     }
+                    // Schutz vor riesigen oder kaputten Feeds: mehr Abholungen braucht kein Kalender
+                    if events.count >= maxEvents { break }
                 }
                 inEvent = false
                 continue
@@ -98,6 +103,8 @@ public enum ICS {
               let month = Int(trimmed.dropFirst(4).prefix(2)),
               let day = Int(trimmed.dropFirst(6).prefix(2)) else { return nil }
 
+        // Ungültige Werte (31.02., 25 Uhr) ablehnen – der Kalender würde sie sonst still auf einen anderen Tag verschieben
+        guard (1...12).contains(month), (1...31).contains(day) else { return nil }
         var components = DateComponents(year: year, month: month, day: day)
         let isUTC = trimmed.hasSuffix("Z")
         if trimmed.count >= 15, trimmed[trimmed.index(trimmed.startIndex, offsetBy: 8)] == "T" {
@@ -105,6 +112,7 @@ public enum ICS {
             components.hour = Int(time.prefix(2))
             components.minute = Int(time.dropFirst(2).prefix(2))
             components.second = Int(time.dropFirst(4).prefix(2))
+            guard (0...23).contains(components.hour ?? 0), (0...59).contains(components.minute ?? 0), (0...60).contains(components.second ?? 0) else { return nil }
         } else {
             components.hour = 12
         }
@@ -114,7 +122,7 @@ public enum ICS {
         } else if let tzid = params["TZID"], let tz = TimeZone(identifier: tzid) {
             cal.timeZone = tz
         }
-        guard let date = cal.date(from: components) else { return nil }
+        guard let date = cal.date(from: components), cal.component(.day, from: date) == day, cal.component(.month, from: date) == month else { return nil }
         return calendar.startOfDay(for: date)
     }
 
@@ -125,7 +133,8 @@ public enum ICS {
             let kv = part.components(separatedBy: "=")
             if kv.count == 2 { fields[kv[0].uppercased()] = kv[1] }
         }
-        let interval = max(1, Int(fields["INTERVAL"] ?? "1") ?? 1)
+        // Begrenzt: ein Riesenwert aus einer fremden Datei liefe bei „7 × Intervall“ über und brächte die App zum Absturz
+        let interval = min(max(1, Int(fields["INTERVAL"] ?? "1") ?? 1), 366)
         let stepDays: Int
         switch fields["FREQ"]?.uppercased() {
         case "DAILY": stepDays = interval

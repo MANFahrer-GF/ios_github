@@ -103,13 +103,15 @@ public enum PickupCSV {
                 .map(\.element)
             guard let first = candidates.first else { continue }
             var notes: [String] = []
+            let rowStart = result.count
             add(day, first, nil)
             for extra in candidates.dropFirst() {
                 if WasteCategory.classify(extra) != .other { add(day, extra, nil) } else { notes.append(extra) }
             }
             let joined = ([note].compactMap { $0 } + notes).filter { !$0.isEmpty }.joined(separator: " · ")
-            if !joined.isEmpty, let last = result.indices.last, Days.iso(result[last].date, calendar: calendar) == Days.iso(day, calendar: calendar) {
-                result[last].note = joined
+            // Hinweis gilt für alle Abfallarten dieser Zeile, nicht nur die zuletzt erkannte
+            if !joined.isEmpty, rowStart < result.count {
+                for index in rowStart..<result.count { result[index].note = joined }
             }
         }
         return result.sorted { ($0.date, $0.name) < ($1.date, $1.name) }

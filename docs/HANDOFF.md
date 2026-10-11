@@ -158,6 +158,19 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
   Widgets/Watch/Mitteilungen/Kalender. `testScreenshotsAllPages` legt Screenshots jeder Seite ins Testergebnis (Layout-Prüfung).
 - Codex-Review dieses Stands: 3 Befunde (Testmodus-Seiteneffekte, 29. Februar beim Einschalten des Jahres, Sternzeichen nur deutsch) behoben.
 
+## 5d. 2.0.4 (Build 6) – Absturz behoben, Gesamt-QS 11. Okt.
+
+- **Absturz 2.0.4 (5)** (TestFlight, `makeContainer` → fatalError, `Role: Non UI`, PID ~300): iCloud weckt die App nach einem Neustart
+  im Hintergrund, bevor das iPhone entsperrt ist → Datenbank verschlüsselt. Jetzt: In-Memory-Notfall (`storeUnavailable`), keine
+  Seiteneffekte, `ModelHolder.reopenIfNeeded()` öffnet beim Aktivwerden neu, RootView zeigt „Daten werden geöffnet …“. BGTask nur einmal
+  registriert (`AppModel.current`). Testbar mit Debug-Startschalter `-simulateStoreFailure`.
+- **Gesamt-QS** (Claude + Codex, 4 Runden, ~24.000 Zeilen in 3 Teilen): ICS (Intervall-Überlauf, ungültige Daten, Obergrenze), Amberg-XLSX
+  (negativer Index, ∞-Datum, Entpacklimit), Potsdam (ungültige Tage), AWIDO (ad optional – live geprüft: Feiertage haben fr=nil),
+  `{%Y}`-Kalender ab November mit Folgejahr, AbfallPlus (Zeitlimit, Abbruch; Abstand zählt ab ENDE der Anfrage – sonst Platzhalter!),
+  HTTPClient lädt auf die Platte, max. 30 MB; Speichern mit Rückmeldung (`AppModel.save()`, Alert), Abgleich robust gegen gelöschte
+  Standorte, Mitteilungen ohne Verlust, Datei-Sperre für Widget/Watch-Markierungen, CSV-Hinweis für alle Müllarten.
+- Tests: 341 Logik-Tests, 8 Oberflächen-Tests, alle Live-Tests grün. Zwei veraltete Tests korrigiert (Zeitumstellung, Espelkamp-Datum).
+
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
 - **„Tonne wieder reinholen“:**

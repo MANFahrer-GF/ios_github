@@ -33,8 +33,21 @@ public struct ICSURLProvider: WasteProvider {
         var link = isDirectLink ? serviceKey : (selections.last?.id ?? "")
         guard !link.isEmpty else { throw ProviderError.selectAddressFirst }
         if link.lowercased().hasPrefix("webcal://") { link = "https://" + link.dropFirst("webcal://".count) }
+        let template = link
         let year = calendar.component(.year, from: Date())
-        link = link.replacingOccurrences(of: "{%Y}", with: String(year))
+        var pickups = try await load(template, year: year, calendar: calendar)
+        // Kalender je Jahr ({%Y}): ab November auch die Datei fürs Folgejahr – sonst fehlen dessen Termine bis Neujahr.
+        // Gibt es sie noch nicht, bleibt es still beim laufenden Jahr.
+        if template.contains("{%Y}"), calendar.component(.month, from: Date()) >= 11,
+           let next = try? await load(template, year: year + 1, calendar: calendar) {
+            pickups += next
+        }
+        return Array(Set(pickups)).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
+    }
+
+    /// Abfuhrtermine aus dem Kalender eines Jahres.
+    private func load(_ template: String, year: Int, calendar: Calendar) async throws -> [Pickup] {
+        var link = template.replacingOccurrences(of: "{%Y}", with: String(year))
         var excluded: [String] = []
         if let marker = link.range(of: Self.excludeMarker) {
             // Eine Datei für mehrere Bezirke: Termine mit diesen Texten im Titel gehören nicht zur Auswahl.

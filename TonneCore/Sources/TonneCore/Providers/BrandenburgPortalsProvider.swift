@@ -250,7 +250,7 @@ private struct Potsdam {
             /// „dd.MM.yyyy“
             init?(german: String) {
                 let parts = german.split(separator: ".").compactMap { Int($0) }
-                guard parts.count == 3 else { return nil }
+                guard parts.count == 3, Day.isValid(year: parts[2], month: parts[1], day: parts[0]) else { return nil }
                 self.init(year: parts[2], month: parts[1], day: parts[0])
             }
 
@@ -258,8 +258,15 @@ private struct Potsdam {
             init?(iso text: String?) {
                 guard let text, text.count >= 10 else { return nil }
                 let parts = text.prefix(10).split(separator: "-").compactMap { Int($0) }
-                guard parts.count == 3 else { return nil }
+                guard parts.count == 3, Day.isValid(year: parts[0], month: parts[1], day: parts[2]) else { return nil }
                 self.init(year: parts[0], month: parts[1], day: parts[2])
+            }
+
+            /// Nur echte Kalendertage vom Server annehmen – „31.02.“ würde sonst später in `date` zum Absturz führen.
+            static func isValid(year: Int, month: Int, day: Int) -> Bool {
+                guard (1900...2200).contains(year), (1...12).contains(month), (1...31).contains(day),
+                      let date = Rules.utc.date(from: DateComponents(year: year, month: month, day: day, hour: 12)) else { return false }
+                return Rules.utc.component(.day, from: date) == day && Rules.utc.component(.month, from: date) == month
             }
 
             init(year: Int, month: Int, day: Int) {

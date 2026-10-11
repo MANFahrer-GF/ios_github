@@ -128,16 +128,36 @@ public struct HTTPClient {
         for (key, value) in headers { request.setValue(value, forHTTPHeaderField: key) }
         let data: Data
         let response: URLResponse
+        let tooLarge = HTTPError.transport(L10n.t("Antwort von \(request.url?.host ?? "Server") ist zu groß.", "Response from \(request.url?.host ?? "server") is too large."))
         do {
+            #if canImport(FoundationNetworking)
             (data, response) = try await session.data(for: request)
+            #else
+            // Auf die Platte laden statt in den Speicher – eine riesige Antwort belastet so nicht den Arbeitsspeicher.
+            // Erst Statuscode, dann Größe prüfen, dann einlesen.
+            let (file, head) = try await session.download(for: request)
+            defer { try? FileManager.default.removeItem(at: file) }
+            if let http = head as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+                throw HTTPError.status(http.statusCode, request.url?.host ?? "Server")
+            }
+            // Größe unbekannt = nicht einlesen (sonst würde eine riesige Datei doch ganz in den Speicher geladen)
+            guard let size = try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize, size <= HTTPClient.maxResponseBytes else { throw tooLarge }
+            (data, response) = (try Data(contentsOf: file), head)
+            #endif
+        } catch let error as HTTPError {
+            throw error
         } catch {
             throw HTTPError.transport(error.localizedDescription)
         }
         if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
             throw HTTPError.status(http.statusCode, request.url?.host ?? "Server")
         }
+        // Ein Jahreskalender hat höchstens einige MB; riesige Antworten (Fehlkonfiguration) nicht weiterverarbeiten
+        guard data.count <= HTTPClient.maxResponseBytes else { throw tooLarge }
         return data
     }
+
+    static let maxResponseBytes = 30_000_000
 }
 
 /// Kleine HTML-Helfer für Portale ohne JSON-Schnittstelle.

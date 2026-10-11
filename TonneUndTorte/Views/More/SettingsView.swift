@@ -165,7 +165,7 @@ struct SettingsView: View {
             Button("Alles löschen", role: .destructive) {
                 try? context.delete(model: WasteType.self); try? context.delete(model: Location.self)
                 try? context.delete(model: Person.self); try? context.delete(model: CustomEvent.self)
-                try? context.save()
+                guard model.save() else { return }
                 model.onboardingDone = false
                 refresh()
             }

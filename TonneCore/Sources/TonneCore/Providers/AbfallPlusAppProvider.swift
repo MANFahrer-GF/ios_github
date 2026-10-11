@@ -68,6 +68,8 @@ public struct AbfallPlusAppProvider: WasteProvider {
             config.httpCookieAcceptPolicy = .always
             config.httpShouldSetCookies = true
             config.timeoutIntervalForRequest = 30
+            // Gesamtzeit je Anfrage begrenzen – ein halb antwortender Server darf den Hintergrundabgleich nicht aufhalten
+            config.timeoutIntervalForResource = 60
             urlSession = URLSession(configuration: config)
         }
 
@@ -121,16 +123,31 @@ public struct AbfallPlusAppProvider: WasteProvider {
         /// Automatenzugriff und liefert dann Platzhalter statt Terminen – deshalb wie die echte App
         /// mindestens gut eine Sekunde Abstand halten.
         private var lastRequest: Date?
+        private let gapLock = NSLock()
         static let minimumGap: TimeInterval = 1.15
 
+        /// Reserviert den nächsten freien Zeitpunkt – auch bei zwei gleichzeitigen Aufrufen bleibt der Abstand gewahrt.
+        private func reserveSlot() -> TimeInterval {
+            gapLock.lock(); defer { gapLock.unlock() }
+            let now = Date()
+            let slot = max(now, lastRequest.map { $0.addingTimeInterval(Session.minimumGap) } ?? now)
+            lastRequest = slot
+            return slot.timeIntervalSince(now)
+        }
+
+        /// Abstand zählt ab dem ENDE der letzten Anfrage (wie vorher) – sonst liefert der Server Platzhalter statt Terminen.
+        private func finished() {
+            gapLock.lock(); defer { gapLock.unlock() }
+            lastRequest = max(lastRequest ?? .distantPast, Date())
+        }
+
         private func perform(_ request: URLRequest) async throws -> Data {
-            if let lastRequest {
-                let wait = Session.minimumGap - Date().timeIntervalSince(lastRequest)
-                if wait > 0 { try? await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000)) }
-            }
-            defer { lastRequest = Date() }
+            let wait = reserveSlot()
+            if wait > 0 { try await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000)) }
+            defer { finished() }
             var lastError: Error = HTTPError.transport("–")
             for attempt in 0..<3 {
+                try Task.checkCancellation()
                 do {
                     let (data, response) = try await urlSession.data(for: request)
                     if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
@@ -139,9 +156,13 @@ public struct AbfallPlusAppProvider: WasteProvider {
                     return data
                 } catch let error as HTTPError {
                     throw error
+                } catch is CancellationError {
+                    throw CancellationError()
+                } catch let error as URLError where error.code == .cancelled {
+                    throw CancellationError()
                 } catch {
                     lastError = HTTPError.transport(error.localizedDescription)
-                    if attempt < 2 { try? await Task.sleep(nanoseconds: 700_000_000) }
+                    if attempt < 2 { try await Task.sleep(nanoseconds: 700_000_000) }
                 }
             }
             throw lastError

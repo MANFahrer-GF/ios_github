@@ -45,7 +45,8 @@ public struct AwidoProvider: WasteProvider {
         for fraction in payload.fracts { names[fraction.snm] = NameCleaner.clean(fraction.nm) }
         var result: [Pickup] = []
         for item in payload.calendar {
-            guard let codes = item.fr, item.ad != nil, let date = ICS.parseDate(item.dt, calendar: calendar) else { continue }
+            // Feiertage haben keine Müllart (fr = nil) und fallen hier heraus; das Notizfeld (ad) ist optional
+            guard let codes = item.fr, let date = ICS.parseDate(item.dt, calendar: calendar) else { continue }
             for (index, code) in codes.enumerated() {
                 let note = item.ad?.indices.contains(index) == true ? item.ad?[index] : nil
                 result.append(Pickup(date: date, name: names[code] ?? code, note: note))

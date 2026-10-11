@@ -203,8 +203,10 @@ final class MindenLuebbeckeTests: XCTestCase {
         XCTAssertFalse(streets?.options.contains { $0.title == "Fabbenstedter Straße" } ?? true)
         let street = try XCTUnwrap(streets?.options.first { $0.title == "Adolf-Kolping-Straße" })
         let pickups = try await provider.pickups(for: [street], calendar: calendar)
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-09" && WasteCategory.classify($0.name) == .residual })
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-16" && WasteCategory.classify($0.name) == .organic })
+        // Ohne festes Datum – das Portal liefert nur kommende Termine, ein fester Tag veraltet nach einer Woche
+        let today = Days.today()
+        XCTAssertTrue(pickups.contains { $0.date >= today && WasteCategory.classify($0.name) == .residual })
+        XCTAssertTrue(pickups.contains { $0.date >= today && WasteCategory.classify($0.name) == .organic })
         XCTAssertEqual(Set(pickups.map { WasteCategory.classify($0.name) }), [.residual, .organic, .paper, .packaging])
         let split = try XCTUnwrap(streets?.options.first { $0.title == "Fabbenstedter Straße 1-32" })
         let splitPickups = try await provider.pickups(for: [split], calendar: calendar)

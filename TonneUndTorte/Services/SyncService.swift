@@ -111,7 +111,7 @@ enum SyncService {
             }
             imported += days.count
         }
-        try? context.save()
+        // Gespeichert wird beim Aufrufer – erst zusammen mit Abgleichszeit/Meldung, damit nichts halb gesichert ist
         return Result(importedCount: imported, changes: changes)
     }
 
@@ -121,11 +121,19 @@ enum SyncService {
         guard let config = location.source else { return Result(importedCount: 0, changes: []) }
         let provider = ProviderFactory.make(config)
         let pickups = try await provider.pickups(for: config.selections)
+        // Während des Abrufs gelöscht (iCloud, anderes Fenster): Zugriff auf das Objekt wäre ein Absturz
+        guard location.modelContext != nil, !location.isDeleted else { throw CancellationError() }
         let mappings = suggestMappings(for: pickups, location: location)
         let result = apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: true)
         location.lastSyncAt = Date()
         location.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            // Nicht gespeichert: auch keine Abgleichszeit behalten, sonst gälte der Standort 7 Tage als aktuell
+            context.rollback()
+            throw error
+        }
         return result
     }
 

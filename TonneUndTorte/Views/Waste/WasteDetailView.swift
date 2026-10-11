@@ -113,7 +113,7 @@ struct WasteDetailView: View {
     }
 
     private func save() {
-        try? context.save()
+        model.save()
         Task { await model.refreshAll() }
     }
 }

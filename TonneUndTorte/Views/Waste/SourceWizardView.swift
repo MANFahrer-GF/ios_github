@@ -298,6 +298,7 @@ struct SourceWizardView: View {
     }
 
     private func goBack() {
+        guard !selections.isEmpty else { return }   // schneller Doppeltipp auf „Zurück“
         selections.removeLast()
         Task { await loadNextStep() }
     }
@@ -308,8 +309,8 @@ struct SourceWizardView: View {
         defer { isLoading = false }
         do {
             if let step = try await provider.nextStep(after: selections) {
-                // Einzige Option automatisch wählen (z. B. „Alle Hausnummern“)
-                if step.options.count == 1 {
+                // Einzige Option automatisch wählen (z. B. „Alle Hausnummern“) – begrenzt, falls ein Portal sich im Kreis dreht
+                if step.options.count == 1, selections.count < 12 {
                     selections.append(step.options[0])
                     await loadNextStep()
                     return
@@ -406,7 +407,7 @@ struct SourceWizardView: View {
         let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeCategories: active)
         target.lastSyncAt = Date()
         target.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
-        try? context.save()
+        guard model.save() else { return }
         model.onboardingDone = true
         stage = .done
         Task { await model.refreshAll() }

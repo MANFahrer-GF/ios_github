@@ -138,8 +138,10 @@ final class AppModel: ObservableObject {
 
     init(container: ModelContainer) {
         self.container = container
-        // Muss vor dem Ende des App-Starts passieren, sonst wirft BGTaskScheduler eine Exception.
-        registerBackgroundTask()
+        // Muss vor dem Ende des App-Starts passieren, sonst wirft BGTaskScheduler eine Exception – und nur EINMAL je Prozess,
+        // auch wenn nach dem Entsperren ein neues Modell mit der echten Datenbank entsteht (sonst Absturz beim zweiten Anmelden).
+        AppModel.current = self
+        if !AppModel.backgroundTaskRegistered { AppModel.registerBackgroundTask() }
         SettingsKeys.migrate()
         notifications.onOpen = { [weak self] target in self?.open(target) }
         // Gespeichert hat die Mitteilung schon selbst – hier nur neu planen und Ansichten auffrischen
@@ -187,7 +189,7 @@ final class AppModel: ObservableObject {
     /// Erinnerungen, Widget-Snapshot und Live-Aktivität neu aufbauen.
     func refreshAll() async {
         // Oberflächen-Test: keine Widgets, Watch, Live-Aktivität, Mitteilungen oder Kalender anfassen
-        guard !TonneUndTorteApp.isUITesting else { return }
+        guard !TonneUndTorteApp.isUITesting, !TonneUndTorteApp.storeUnavailable else { return }
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)
@@ -326,7 +328,8 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive && type.pickupDates(from: day, to: day).contains(day) {
             type.markDone(on: day)
         }
-        try? context.save()
+        // Nicht gespeichert: Markierung aus Widget/Watch liegen lassen, beim nächsten Mal erneut versuchen
+        guard save() else { return }
         notifications.cancelWasteReminders(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
         await refreshAll()
@@ -338,7 +341,7 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isDone(on: day) {
             type.unmarkDone(on: day)
         }
-        try? context.save()
+        guard save() else { return }
         SnapshotStore.clearDoneTime(dayKey: dayKey)
         SnapshotStore.clearUndo(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
@@ -347,6 +350,8 @@ final class AppModel: ObservableObject {
 
     /// „Erledigt“-Markierungen (und Rücknahmen) aus Widget/Live-Aktivität/Watch in die Datenbank übernehmen.
     func applyPendingDoneMarkers() async {
+        // Ohne echte Datenbank liegen lassen – sonst wären die Häkchen aus Widget/Watch verbraucht, aber nicht gespeichert
+        guard !TonneUndTorteApp.storeUnavailable else { return }
         let undo = SnapshotStore.undoDays()
         for key in undo { await markUndone(dayKey: key) }
         let pending = SnapshotStore.doneDays()
@@ -370,16 +375,22 @@ final class AppModel: ObservableObject {
     /// Wöchentlicher Abgleich aller Standorte mit Online-Quelle (force = sofort).
     @discardableResult
     func syncAll(force: Bool) async -> [String] {
+        guard !TonneUndTorteApp.storeUnavailable else { return [] }
         var messages: [String] = []
         for location in allLocations() where location.canSync {
             let due = force || location.lastSyncAt.map { Date().timeIntervalSince($0) > 7 * 24 * 3600 } ?? true
             guard due else { continue }
+            let name = location.name
             do {
                 let result = try await sync(location: location)
-                messages.append("\(location.name): \(L10n.dates(result.importedCount))")
+                messages.append("\(name): \(L10n.dates(result.importedCount))")
             } catch {
-                location.lastSyncMessage = L10n.t("Abgleich fehlgeschlagen: \(error.localizedDescription)", "Sync failed: \(error.localizedDescription)")
-                messages.append("\(location.name): \(error.localizedDescription)")
+                // Während des Abrufs gelöscht (z. B. per iCloud von einem anderen Gerät): nicht mehr anfassen
+                if location.modelContext != nil, !location.isDeleted {
+                    location.lastSyncMessage = L10n.t("Abgleich fehlgeschlagen: \(error.localizedDescription)", "Sync failed: \(error.localizedDescription)")
+                    save()
+                }
+                messages.append("\(name): \(error.localizedDescription)")
             }
         }
         return messages
@@ -485,9 +496,14 @@ final class AppModel: ObservableObject {
 
     // MARK: - Hintergrund
 
-    private func registerBackgroundTask() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: SettingsKeys.backgroundRefreshID, using: nil) { [weak self] task in
-            guard let self else { task.setTaskCompleted(success: false); return }
+    /// Das gerade aktive Modell – Ziel der einmal angemeldeten Hintergrund-Aufgabe.
+    static weak var current: AppModel?
+    private static var backgroundTaskRegistered = false
+
+    private static func registerBackgroundTask() {
+        backgroundTaskRegistered = true
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: SettingsKeys.backgroundRefreshID, using: nil) { task in
+            guard let self = AppModel.current else { task.setTaskCompleted(success: false); return }
             let work = Task { @MainActor in
                 await self.syncAll(force: false)
                 await self.refreshAll()
@@ -510,13 +526,28 @@ final class AppModel: ObservableObject {
         try? BGTaskScheduler.shared.submit(request)
     }
 
+    /// Speichert; bei einem Fehler Änderungen verwerfen und eine Meldung zeigen (RootView). `false` = nicht gespeichert –
+    /// dann bleibt ein Bearbeiten-Fenster offen, statt so zu tun, als wäre alles gesichert.
+    @discardableResult
+    func save() -> Bool {
+        guard context.hasChanges else { return true }
+        do {
+            try context.save()
+            return true
+        } catch {
+            context.rollback()
+            lastError = L10n.t("Konnte nicht gespeichert werden: \(error.localizedDescription)", "Could not be saved: \(error.localizedDescription)")
+            return false
+        }
+    }
+
     /// Löscht ein Objekt erst, nachdem die Detailansicht geschlossen wurde (sonst greift SwiftUI auf ein
     /// ungültiges Model zu).
     func deleteLater(_ object: any PersistentModel) {
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(400))
             self.context.delete(object)
-            try? self.context.save()
+            self.save()
             await self.refreshAll()
         }
     }

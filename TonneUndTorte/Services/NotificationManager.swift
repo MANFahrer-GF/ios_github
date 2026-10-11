@@ -95,12 +95,16 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     // MARK: - Planung
 
     func apply(_ plan: [PlannedNotification]) async {
-        // Alles Geplante ersetzen – nur „In 1 Stunde nochmal“ bleibt, das ist eine Bitte des Nutzers
+        // „In 1 Stunde nochmal“ bleibt immer stehen – das war eine Bitte des Nutzers.
         let pending = await center.pendingNotificationRequests().map(\.identifier)
-        center.removePendingNotificationRequests(withIdentifiers: pending.filter { !$0.contains("-snooze-") })
         // Die bleibenden „In 1 Stunde nochmal“ zählen beim iOS-Limit (64) mit
         let snoozed = pending.filter { $0.contains("-snooze-") }.count
-        for item in plan.prefix(max(0, maxRequests - snoozed)) {
+        let chosen = Array(plan.prefix(max(0, maxRequests - snoozed)))
+        let keep = Set(chosen.map(\.identifier))
+        // Zuerst nur entfernen, was im neuen Plan nicht mehr vorkommt (macht Platz im iOS-Limit von 64). Alles andere bleibt
+        // stehen und wird durch die gleichnamige neue Anfrage ersetzt – scheitert das Anlegen, gilt die alte weiter.
+        center.removePendingNotificationRequests(withIdentifiers: pending.filter { !$0.contains("-snooze-") && !keep.contains($0) })
+        for item in chosen {
             let content = UNMutableNotificationContent()
             content.title = item.title
             content.body = item.body
@@ -128,6 +132,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
             try? await center.add(UNNotificationRequest(identifier: item.identifier, content: content, trigger: trigger))
         }
+
         await refreshStatus()
     }
 
