@@ -106,36 +106,26 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1B2C3D4E5F6000000000002 /* TonneUndTorte */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = TonneUndTorte;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000016 /* TonneWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = TonneWidget;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000052 /* TonneWatch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = TonneWatch;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000066 /* TonneWatchWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = TonneWatchWidget;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F6000000000070 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
@@ -198,7 +188,6 @@
 			children = (
 				8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */,
 			);
-			name = TonneUITests;
 			path = TonneUITests;
 			sourceTree = "<group>";
 		};
@@ -537,10 +526,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.UITests;
+				PRODUCT_NAME = TonneUITests;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				PRODUCT_NAME = TonneUITests;
 				TEST_TARGET_NAME = "Tonne & Torte";
 			};
 			name = Debug;
@@ -554,10 +543,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.UITests;
+				PRODUCT_NAME = TonneUITests;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				PRODUCT_NAME = TonneUITests;
 				TEST_TARGET_NAME = "Tonne & Torte";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -662,7 +651,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -699,7 +688,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -725,7 +714,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -752,7 +741,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -783,7 +772,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -815,7 +804,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -842,7 +831,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -869,7 +858,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

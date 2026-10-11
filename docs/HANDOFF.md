@@ -158,7 +158,7 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
   Widgets/Watch/Mitteilungen/Kalender. `testScreenshotsAllPages` legt Screenshots jeder Seite ins Testergebnis (Layout-Prüfung).
 - Codex-Review dieses Stands: 3 Befunde (Testmodus-Seiteneffekte, 29. Februar beim Einschalten des Jahres, Sternzeichen nur deutsch) behoben.
 
-## 5d. 2.0.4 (Build 6) – Absturz behoben, Gesamt-QS 11. Okt.
+## 5d. 2.0.5 (Build 6) – Absturz behoben, Gesamt-QS 11. Okt. (2.0.4 mit Build 5 ist seit 11. Okt. im Store und hat den Absturz)
 
 - **Absturz 2.0.4 (5)** (TestFlight, `makeContainer` → fatalError, `Role: Non UI`, PID ~300): iCloud weckt die App nach einem Neustart
   im Hintergrund, bevor das iPhone entsperrt ist → Datenbank verschlüsselt. Jetzt: In-Memory-Notfall (`storeUnavailable`), keine
