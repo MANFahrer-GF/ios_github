@@ -216,8 +216,8 @@ final class BringInTests: XCTestCase {
 
     func testWidgetHintOnMixedDayMentionsDropOff() {
         let mixed = PickupWording([.init(name: "Biotonne", handling: .bin), .init(name: "Schadstoffmobil", handling: .bringTo)])
-        XCTAssertEqual(mixed.hint(daysUntil: 1, done: false), "rausstellen und hinbringen")
-        XCTAssertEqual(mixed.hint(daysUntil: 0, done: false), "Abfuhr und hinbringen")
+        XCTAssertEqual(mixed.hint(daysUntil: 1, done: false), "rausstellen + hinbringen")
+        XCTAssertEqual(mixed.hint(daysUntil: 0, done: false), "Abfuhr + hinbringen")
         XCTAssertEqual(mixed.hint(daysUntil: 1, done: true), "erledigt 👍")
         let bins = PickupWording([.init(name: "Biotonne", handling: .bin), .init(name: "Gelber Sack", handling: .setOut)])
         XCTAssertEqual(bins.hint(daysUntil: 1, done: false), "abends rausstellen")

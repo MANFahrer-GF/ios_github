@@ -109,8 +109,8 @@ public struct PickupWording {
         let mixed = !onlyBringTo && !bringNames.isEmpty
         if done { return onlyBringTo || mixed ? L10n.t("erledigt 👍", "done 👍") : L10n.t("steht draußen 👍", "already out 👍") }
         switch daysUntil {
-        case 0: return onlyBringTo ? L10n.t("heute hinbringen", "drop off today") : mixed ? L10n.t("Abfuhr und hinbringen", "pickup and drop-off") : L10n.t("wird heute abgeholt", "collected today")
-        case 1: return onlyBringTo ? L10n.t("morgen hinbringen", "drop off tomorrow") : mixed ? L10n.t("rausstellen und hinbringen", "put out and drop off") : L10n.t("abends rausstellen", "put out tonight")
+        case 0: return onlyBringTo ? L10n.t("heute hinbringen", "drop off today") : mixed ? L10n.t("Abfuhr + hinbringen", "pickup + drop-off") : L10n.t("wird heute abgeholt", "collected today")
+        case 1: return onlyBringTo ? L10n.t("morgen hinbringen", "drop off tomorrow") : mixed ? L10n.t("rausstellen + hinbringen", "put out + drop off") : L10n.t("abends rausstellen", "put out tonight")
         default: return onlyBringTo ? L10n.t("nächster Termin", "next date") : L10n.t("nächste Abholung", "next pickup")
         }
     }
