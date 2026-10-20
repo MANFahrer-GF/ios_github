@@ -10,7 +10,7 @@ typealias DoneIntentBase = AppIntent
 #endif
 
 struct MarkPickupDoneIntent: DoneIntentBase {
-    static var title: LocalizedStringResource = "Tonne steht draußen"
+    static var title: LocalizedStringResource = "Abholung erledigt"
     static var description = IntentDescription("Markiert die nächste Abholung als erledigt.")
     static var openAppWhenRun = false
 
@@ -33,6 +33,11 @@ struct MarkPickupDoneIntent: DoneIntentBase {
         WatchSync.sendDone(dayKey: target)
         #endif
         let isToday = Days.parse(target).map { Days.until($0) == 0 } ?? false
+        // Beim Schadstoffmobil steht nichts draußen – dann nur „erledigt“
+        let day = snapshot?.pickupDays.first { Days.iso($0.date) == target }
+        if !PickupWording(day: day).bringNames.isEmpty {
+            return .result(dialog: IntentDialog(stringLiteral: isToday ? L10n.t("Super, für heute erledigt. 👍", "Great, done for today. 👍") : L10n.t("Super, für morgen erledigt. 👍", "Great, done for tomorrow. 👍")))
+        }
         return .result(dialog: IntentDialog(stringLiteral: isToday
             ? L10n.t("Super, alles für heute steht draußen. 👍", "Great, everything for today is out. 👍")
             : L10n.t("Super, alles für morgen steht draußen. 👍", "Great, everything for tomorrow is out. 👍")))
@@ -42,7 +47,7 @@ struct MarkPickupDoneIntent: DoneIntentBase {
 /// „Erledigt“ zurücknehmen, falls man versehentlich getippt hat.
 struct UndoPickupDoneIntent: DoneIntentBase {
     static var title: LocalizedStringResource = "Erledigt zurücknehmen"
-    static var description = IntentDescription("Nimmt die Markierung „steht draußen“ für einen Abholtag zurück.")
+    static var description = IntentDescription("Nimmt „erledigt“ für einen Abholtag zurück.")
     static var openAppWhenRun = false
 
     @Parameter(title: "Tag")
@@ -58,7 +63,7 @@ struct UndoPickupDoneIntent: DoneIntentBase {
         #if os(watchOS)
         WatchSync.sendUndo(dayKey: key)
         #endif
-        return .result(dialog: IntentDialog(stringLiteral: L10n.t("Okay, die Tonne gilt wieder als offen.", "Okay, the bin counts as open again.")))
+        return .result(dialog: IntentDialog(stringLiteral: L10n.t("Okay, das gilt wieder als offen.", "Okay, that counts as open again.")))
     }
 }
 

@@ -34,7 +34,7 @@ struct TonneWatchShortcuts: AppShortcutsProvider {
                 "Müll ist erledigt in \(.applicationName)",
                 "\(.applicationName) erledigt",
             ],
-            shortTitle: "Tonne steht draußen",
+            shortTitle: "Abholung erledigt",
             systemImageName: "checkmark.circle.fill"
         )
     }

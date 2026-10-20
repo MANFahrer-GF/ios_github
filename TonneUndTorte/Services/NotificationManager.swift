@@ -48,6 +48,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let done = UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Erledigt – steht draußen", "✅ Done – it's out"), options: [])
         let snooze = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let waste = UNNotificationCategory(identifier: "WASTE", actions: [done, snooze], intentIdentifiers: [], options: [])
+        // Schadstoffmobil & Co.: nichts steht draußen – nur „Erledigt“
+        let dropOffDone = UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Erledigt", "✅ Done"), options: [])
+        let dropOff = UNNotificationCategory(identifier: "WASTE_BRING", actions: [dropOffDone, snooze], intentIdentifiers: [], options: [])
         let inside = UNNotificationAction(identifier: NotificationManager.bringInAction, title: L10n.t("✅ Ist drin", "✅ It's in"), options: [])
         let later = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let bringIn = UNNotificationCategory(identifier: "WASTE_BRINGIN", actions: [inside, later], intentIdentifiers: [], options: [])
@@ -62,7 +65,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let customDone = UNNotificationAction(identifier: NotificationManager.customDoneAction, title: L10n.t("✅ Erledigt", "✅ Done"), options: [])
         let customLater = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let custom = UNNotificationCategory(identifier: "CUSTOM", actions: [customDone, customLater], intentIdentifiers: [], options: [])
-        center.setNotificationCategories([waste, bringIn, birthdayPhone, birthday, birthdayPre, birthdayGroup, custom])
+        center.setNotificationCategories([waste, dropOff, bringIn, birthdayPhone, birthday, birthdayPre, birthdayGroup, custom])
     }
 
     func refreshStatus() async {
@@ -117,7 +120,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             content.userInfo = info
             switch item.category {
             case .wasteEvening, .wasteMorning, .wasteEscalation:
-                content.categoryIdentifier = "WASTE"
+                content.categoryIdentifier = item.bringOnly ? "WASTE_BRING" : "WASTE"
                 content.interruptionLevel = item.category == .wasteEscalation ? .timeSensitive : .active
             case .wasteBringIn:
                 content.categoryIdentifier = "WASTE_BRINGIN"

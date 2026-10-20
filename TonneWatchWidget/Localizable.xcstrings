@@ -2133,12 +2133,12 @@
         }
       }
     },
-    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück." : {
+    "Nimmt „erledigt“ für einen Abholtag zurück." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Takes back the “it’s out” mark for a collection day."
+            "value" : "Marks a collection day as not done."
           }
         }
       }
@@ -2637,12 +2637,12 @@
         }
       }
     },
-    "Tonne steht draußen" : {
+    "Abholung erledigt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bin is out"
+            "value" : "Collection done"
           }
         }
       }
@@ -2867,12 +2867,12 @@
         }
       }
     },
-    "Welche Tonne muss raus?" : {
+    "Was wird als Nächstes abgeholt?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Which bin goes out?"
+            "value" : "What’s collected next?"
           }
         }
       }

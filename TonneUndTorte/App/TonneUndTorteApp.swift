@@ -185,6 +185,13 @@ struct TonneUndTorteApp: App {
         paper.explicitDates = [Days.add(5, to: Days.today()), Days.add(12, to: Days.today())]
         paper.location = location
         context.insert(paper)
+        // Schadstoffmobil: keine Tonne, mit Zeit und Ort vom Entsorger
+        let hazardous = WasteType(name: "Schadstoffmobil", category: .hazardous)
+        let hazardousDay = Days.add(2, to: Days.today())
+        hazardous.explicitDates = [hazardousDay]
+        hazardous.dayNotes = [Days.iso(hazardousDay): "Rathausplatz Gifhorn (09:00 - 11:00)"]
+        hazardous.location = location
+        context.insert(hazardous)
         try? context.save()
     }
 }

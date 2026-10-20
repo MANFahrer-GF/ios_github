@@ -60,6 +60,7 @@ struct SiriView: View {
             }
 
             Section {
+                phrase("Abhol-Erinnerung starten in Tonne und Torte")
                 phrase("Tonnen-Erinnerung starten in Tonne und Torte")
                 phrase("Zeig die Tonnen auf dem Sperrbildschirm mit Tonne und Torte")
             } header: {

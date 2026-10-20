@@ -31,6 +31,91 @@ public enum WasteReturn {
     }
 }
 
+/// Wie man mit einer Abfuhr umgeht – bestimmt die Worte in Erinnerungen, Widgets, Live-Aktivität und Siri.
+public enum WasteHandling: Equatable {
+    /// Tonne: rausstellen, steht draußen, nach der Abfuhr wieder reinholen.
+    case bin
+    /// Kein Behälter, der zurückkommt – Sack, Sperrmüll, Grünschnitt, Weihnachtsbaum: bereitstellen.
+    case setOut
+    /// Nichts rausstellen, sondern hinbringen – Schadstoffmobil, Problemmüll, Annahmestellen.
+    case bringTo
+
+    /// Art einer Müllart. „Tonne“ entscheidet `WasteReturn.isBin` (eine Quelle für beides, damit Wortwahl und
+    /// „wieder reinholen“ nie auseinanderlaufen).
+    /// `category`: die gespeicherte Kategorie der Müllart – zählt vor dem Namen (umbenanntes „Schadstoffmobil“ bleibt Hinbringen).
+    public static func of(name: String, symbol: String? = nil, category: WasteCategory? = nil) -> WasteHandling {
+        let lower = name.lowercased()
+        if category == .hazardous || WasteCategory.classify(name) == .hazardous || bringToWords.contains(where: { lower.contains($0) }) || isAcceptance(lower) { return .bringTo }
+        return WasteReturn.isBin(name: name, symbol: symbol) ? .bin : .setOut
+    }
+
+    private static let bringToWords = ["schadstoff", "problemmüll", "problemmuell", "problemabfall", "problemstoff", "sondermüll",
+                                       "sondermuell", "sonderabfall", "giftmobil", "umweltmobil", "wertstoffhof", "recyclinghof",
+                                       "annahmestelle", "sammelstelle", "sammelplatz"]
+
+    /// „Grüngut-Annahme“, „Elektroschrottannahme“, „Annahme“ – nicht „Annahmeschluss“, „Annahmetonne“ oder „Sperrmüll nach Annahme“.
+    private static func isAcceptance(_ lower: String) -> Bool {
+        guard !lower.contains("tonne"), !lower.contains("nach annahme") else { return false }
+        return lower.split(whereSeparator: { !$0.isLetter }).contains { $0.hasSuffix("annahme") }
+    }
+}
+
+/// Worte für einen Abholtag mit gemischten Müllarten – dieselben Sätze in Mitteilungen, Widgets und Live-Aktivität.
+public struct PickupWording {
+    public struct Item {
+        public var name: String
+        public var handling: WasteHandling
+        /// Hinweis des Entsorgers, z. B. „08:00–12:00, Am Grauen Stein 6“ – nur beim Hinbringen gezeigt.
+        public var note: String?
+        public init(name: String, handling: WasteHandling, note: String? = nil) {
+            self.name = name; self.handling = handling
+            self.note = handling == .bringTo ? note.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0.trimmingCharacters(in: .whitespacesAndNewlines) } : nil
+        }
+    }
+
+    /// Müllarten des Tages, in der Reihenfolge der Anzeige.
+    public let items: [Item]
+
+    public init(_ items: [Item]) { self.items = items }
+
+    /// Aus dem Widget-Schnappschuss – mit der von der App bestimmten Art, sonst aus dem Namen.
+    public init(day: WidgetSnapshot.PickupDay?) {
+        items = (day?.items ?? []).map { item in
+            let byName = WasteHandling.of(name: item.name, symbol: item.displaySymbol)
+            switch item.dropOff {
+            case true?: return Item(name: item.name, handling: .bringTo)
+            case false?: return Item(name: item.name, handling: byName == .bringTo ? .setOut : byName)
+            case nil: return Item(name: item.name, handling: byName)   // älterer Schnappschuss
+            }
+        }
+    }
+
+    /// Aus Namen und Symbolen (Live-Aktivität).
+    public init(names: [String], symbols: [String?]) {
+        items = names.enumerated().map { index, name in Item(name: name, handling: WasteHandling.of(name: name, symbol: index < symbols.count ? symbols[index] : nil)) }
+    }
+
+    /// Was rausgestellt wird (Tonnen und Bereitzustellendes) und was hingebracht wird – Letzteres mit Zeit/Ort, falls bekannt.
+    public var outNames: [String] { items.filter { $0.handling != .bringTo }.map(\.name) }
+    public var bringNames: [String] { items.filter { $0.handling == .bringTo }.map { item in item.note.map { "\(item.name) (\($0))" } ?? item.name } }
+    /// Zeit/Ort des einzigen Hinbringens, falls bekannt.
+    public var bringNote: String? { items.filter { $0.handling == .bringTo }.count == 1 ? items.first { $0.handling == .bringTo }?.note : nil }
+    public var allBins: Bool { !items.isEmpty && items.allSatisfy { $0.handling == .bin } }
+    /// Nur Hinbringen – dann gibt es nichts rauszustellen (keine Spät-Erinnerung, keine Live-Aktivität).
+    public var onlyBringTo: Bool { !items.isEmpty && outNames.isEmpty }
+
+    /// Kurzer Hinweis für den Vorabend („abends rausstellen“) bzw. den Abholtag.
+    public func hint(daysUntil: Int, done: Bool) -> String {
+        let mixed = !onlyBringTo && !bringNames.isEmpty
+        if done { return onlyBringTo || mixed ? L10n.t("erledigt 👍", "done 👍") : L10n.t("steht draußen 👍", "already out 👍") }
+        switch daysUntil {
+        case 0: return onlyBringTo ? L10n.t("heute hinbringen", "drop off today") : mixed ? L10n.t("Abfuhr und hinbringen", "pickup and drop-off") : L10n.t("wird heute abgeholt", "collected today")
+        case 1: return onlyBringTo ? L10n.t("morgen hinbringen", "drop off tomorrow") : mixed ? L10n.t("rausstellen und hinbringen", "put out and drop off") : L10n.t("abends rausstellen", "put out tonight")
+        default: return onlyBringTo ? L10n.t("nächster Termin", "next date") : L10n.t("nächste Abholung", "next pickup")
+        }
+    }
+}
+
 /// Zeitpunkte rund um den Abholtag – gemeinsam für App, Widget und Watch.
 public enum PickupTiming {
     /// Ab dann gilt die heutige Abfuhr als vorbei: Widget und Übersicht zeigen die nächste.
@@ -69,7 +154,7 @@ public enum PickupTiming {
 
 public extension WidgetSnapshot.PickupItem {
     /// Wird nach der Abfuhr wieder hereingeholt (Tonne, nicht Sack).
-    var isBin: Bool { WasteReturn.isBin(name: name, symbol: displaySymbol) }
+    var isBin: Bool { dropOff != true && WasteReturn.isBin(name: name, symbol: displaySymbol) }
 }
 
 public extension WidgetSnapshot {

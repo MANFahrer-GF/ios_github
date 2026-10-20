@@ -88,7 +88,7 @@ struct SourceWizardView: View {
         switch stage {
         case .search: return L10n.t("Entsorger finden", "Find provider")
         case .steps: return currentStep?.title ?? entry?.title ?? L10n.t("Adresse", "Address")
-        case .bins: return L10n.t("Deine Tonnen", "Your bins")
+        case .bins: return L10n.t("Deine Müllarten", "Your waste types")
         case .done: return L10n.t("Fertig", "Done")
         }
     }
@@ -380,8 +380,8 @@ struct SourceWizardView: View {
                         }
                     }
                 }
-            } header: { Text("Welche Tonnen hast du?") } footer: {
-                Text("Abgewählte Tonnen bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern.")
+            } header: { Text("Welche Müllarten hast du?") } footer: {
+                Text("Abgewählte Müllarten bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern.")
             }
             Section {
                 Button { finish() } label: { Label("Standort anlegen", systemImage: "checkmark.circle.fill").frame(maxWidth: .infinity) }

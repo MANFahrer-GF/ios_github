@@ -38,16 +38,17 @@ struct TonneShortcuts: AppShortcutsProvider {
                 "Müll ist erledigt in \(.applicationName)",
                 "\(.applicationName) erledigt",
             ],
-            shortTitle: "Tonne steht draußen",
+            shortTitle: "Abholung erledigt",
             systemImageName: "checkmark.circle.fill"
         )
         AppShortcut(
             intent: StartPickupLiveActivityIntent(),
             phrases: [
+                "Abhol-Erinnerung starten in \(.applicationName)",
                 "Tonnen-Erinnerung starten in \(.applicationName)",
                 "Zeig die Tonnen auf dem Sperrbildschirm mit \(.applicationName)",
             ],
-            shortTitle: "Tonnen-Erinnerung starten",
+            shortTitle: "Abhol-Erinnerung starten",
             systemImageName: "bell.badge.fill"
         )
     }

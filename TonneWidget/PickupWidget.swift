@@ -79,7 +79,7 @@ struct PickupWidget: Widget {
             PickupWidgetView(entry: entry)
         }
         .configurationDisplayName("Nächste Abholung")
-        .description("Welche Tonne muss raus? Mit „Erledigt“-Knopf.")
+        .description("Was wird als Nächstes abgeholt? Mit „Erledigt“-Knopf.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular, .accessoryCircular, .accessoryInline])
     }
 }
@@ -125,7 +125,7 @@ struct PickupWidgetView: View {
         if next == nil, let first = entry.snapshot.pickupDays.first {
             return L10n.t("nächste \(DateText.countdown(first.date))", "next \(DateText.countdown(first.date))")
         }
-        return PickupWords.subline(days: days, done: done)
+        return PickupWords.subline(days: days, done: done, day: next)
     }
 
     private func bringInText(_ day: WidgetSnapshot.PickupDay) -> String {
@@ -170,7 +170,7 @@ struct PickupWidgetView: View {
                     .accessibilityLabel(L10n.t("Erledigt zurücknehmen", "Undo done"))
             } else {
                 Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: false) }
-                    .accessibilityLabel(L10n.t("\(names(day, max: 3)) steht draußen", "\(names(day, max: 3)) is out"))
+                    .accessibilityLabel(L10n.t("\(names(day, max: 3)) erledigt", "\(names(day, max: 3)) done"))
             }
         }
         .buttonStyle(.plain)

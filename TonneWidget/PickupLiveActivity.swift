@@ -22,8 +22,8 @@ struct PickupLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 2) {
-                        Text(context.state.done ? "Steht draußen 👍" : (Days.until(context.attributes.pickupDate) == 0 ? "Heute wird abgeholt" : "Heute Abend rausstellen")).font(.headline)
-                        Text(ReminderPlanner.joinNames(context.state.names)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                        Text(headline(context)).font(.headline)
+                        Text(ReminderPlanner.joinNames(shownNames(context))).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                     }
                 }
             } compactLeading: {
@@ -40,6 +40,21 @@ struct PickupLiveActivity: Widget {
         }
     }
 
+    /// Unter „rausstellen“ nur, was rausgestellt wird – das Schadstoffmobil kommt per Morgen-Erinnerung.
+    private func shownNames(_ context: ActivityViewContext<PickupActivityAttributes>) -> [String] {
+        let wording = PickupWording(names: context.state.names, symbols: context.state.symbolNames)
+        return wording.onlyBringTo ? wording.items.map(\.name) : wording.outNames
+    }
+
+    /// „Heute Abend rausstellen“ – beim Sack „bereitstellen“, beim Schadstoffmobil „hinbringen“, nie „Tonne“ ohne Tonne.
+    private func headline(_ context: ActivityViewContext<PickupActivityAttributes>) -> String {
+        let wording = PickupWording(names: context.state.names, symbols: context.state.symbolNames)
+        if context.state.done { return wording.onlyBringTo ? L10n.t("Erledigt 👍", "Done 👍") : L10n.t("Steht draußen 👍", "It's out 👍") }
+        let today = Days.until(context.attributes.pickupDate) == 0
+        if wording.onlyBringTo { return today ? L10n.t("Heute hinbringen", "Drop off today") : L10n.t("Morgen hinbringen", "Drop off tomorrow") }
+        return today ? L10n.t("Heute wird abgeholt", "Collected today") : L10n.t("Heute Abend rausstellen", "Put out tonight")
+    }
+
     private func bins(_ context: ActivityViewContext<PickupActivityAttributes>) -> [BinRef] {
         context.state.symbolNames.indices.compactMap { index in
             guard index < context.state.colorHexes.count else { return nil }
@@ -50,11 +65,11 @@ struct PickupLiveActivity: Widget {
 
     private func lockScreen(_ context: ActivityViewContext<PickupActivityAttributes>) -> some View {
         let color = HeroPalette.tint(for: context.state.colorHexes) ?? Color(hex: HeroPalette.neutralTop)
-        let subtitle = ReminderPlanner.joinNames(context.state.names) + (context.attributes.locationName.map { " · \($0)" } ?? "")
+        let subtitle = ReminderPlanner.joinNames(shownNames(context)) + (context.attributes.locationName.map { " · \($0)" } ?? "")
         return HStack(spacing: 14) {
             BinStack(bins: bins(context), size: 40)
             VStack(alignment: .leading, spacing: 3) {
-                Text(context.state.done ? "Alles steht draußen 👍" : (Days.until(context.attributes.pickupDate) == 0 ? "Heute wird abgeholt" : "Heute Abend rausstellen!")).font(.headline)
+                Text(headline(context)).font(.headline)
                 Text(subtitle).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
             }
             Spacer()

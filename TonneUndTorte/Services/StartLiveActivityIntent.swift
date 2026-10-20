@@ -5,7 +5,7 @@ import TonneCore
 /// iOS erlaubt das Starten im Hintergrund nur über eine LiveActivityIntent – z. B. aus einer
 /// Kurzbefehle-Automation („Jeden Tag um 18 Uhr“), per Siri oder über die Aktionstaste.
 struct StartPickupLiveActivityIntent: LiveActivityIntent {
-    static var title: LocalizedStringResource = "Tonnen-Erinnerung starten"
+    static var title: LocalizedStringResource = "Abhol-Erinnerung starten"
     static var description = IntentDescription("Zeigt am Vorabend der Abholung die Live-Aktivität auf dem Sperrbildschirm – ohne die App zu öffnen.")
     static var openAppWhenRun = false
 
@@ -26,7 +26,7 @@ struct StartPickupLiveActivityIntent: LiveActivityIntent {
         case .nothingDue:
             return .result(dialog: "Morgen wird nichts abgeholt.")
         case .alreadyDone:
-            return .result(dialog: "Ist schon erledigt – alles steht draußen.")
+            return .result(dialog: "Ist schon erledigt. 👍")
         case .disabled:
             return .result(dialog: "Live-Aktivitäten sind für Tonne & Torte in den Einstellungen ausgeschaltet.")
         case .failed:

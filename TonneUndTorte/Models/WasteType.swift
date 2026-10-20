@@ -25,6 +25,9 @@ final class WasteType {
     /// Schlüssel in der Online-Quelle (Titel der Fraktion), damit ein Abgleich die Termine ersetzt.
     var sourceKey: String?
     var createdAt: Date = Date()
+    /// Hinweise des Entsorgers je Termin („2026-10-22“ → „Am Grauen Stein 6 (08:00 - 12:00)“), als JSON (ab 2.0.5).
+    /// Nur für Müllarten zum Hinbringen (Schadstoffmobil) gespeichert – bei Tonnen steht dort meist nur die Straße.
+    var dayNotesJSON: String = ""
 
     var location: Location?
 
@@ -63,6 +66,20 @@ final class WasteType {
     private var hasStaleGlyph: Bool {
         guard let glyphName else { return false }
         return WasteGlyph.sfFallback(for: glyphName) != symbolName
+    }
+
+    /// Wie mit dieser Müllart umgegangen wird (Tonne / bereitstellen / hinbringen).
+    var handling: WasteHandling { WasteHandling.of(name: name, symbol: displaySymbol, category: category) }
+
+    var dayNotes: [String: String] {
+        get { (try? JSONDecoder().decode([String: String].self, from: Data(dayNotesJSON.utf8))) ?? [:] }
+        set { dayNotesJSON = newValue.isEmpty ? "" : (String(data: (try? JSONEncoder().encode(newValue)) ?? Data(), encoding: .utf8) ?? "") }
+    }
+
+    /// Zeit/Ort zu einem Termin, nur beim Hinbringen.
+    func note(on day: Date) -> String? {
+        guard handling == .bringTo, !dayNotesJSON.isEmpty else { return nil }
+        return dayNotes[Days.iso(day)]
     }
 
     var category: WasteCategory {

@@ -46,13 +46,21 @@ public struct PlannedPickup: Hashable {
     public var done: Bool
     /// Nach der Abfuhr schon wieder hereingeholt („Ist drin“).
     public var broughtIn: Bool
+    /// Hinweis des Entsorgers zu diesem Termin (Zeit/Ort beim Schadstoffmobil).
+    public var note: String?
+    /// Art aus der gespeicherten Kategorie (App); nil = aus dem Namen bestimmen.
+    public var handling: WasteHandling?
+    /// Wann „Erledigt“ getippt wurde – am Vorabend heißt beim Hinbringen: morgen trotzdem erinnern.
+    public var doneAt: Date?
 
-    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false) {
+    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false, note: String? = nil, handling: WasteHandling? = nil, doneAt: Date? = nil) {
         self.date = date; self.name = name; self.locationName = locationName; self.colorHex = colorHex; self.symbolName = symbolName; self.remindersEnabled = remindersEnabled; self.done = done; self.broughtIn = broughtIn
+        self.note = note; self.handling = handling; self.doneAt = doneAt
     }
 
     /// Eine Tonne, die nach der Abfuhr wieder hereingeholt wird.
-    public var isBin: Bool { WasteReturn.isBin(name: name, symbol: symbolName) }
+    /// Hinbringen (auch umbenannt, über die gespeicherte Kategorie) ist nie eine Tonne zum Reinholen.
+    public var isBin: Bool { handling != .bringTo && WasteReturn.isBin(name: name, symbol: symbolName) }
 }
 
 public struct PlannedBirthday: Hashable {
@@ -106,10 +114,12 @@ public struct PlannedNotification: Hashable {
     /// Nur Geburtstag einer einzelnen Person: Name und Telefon für „Anrufen“ und „Glückwunsch schreiben“.
     public var personName: String?
     public var phone: String?
+    /// Abholtag mit Hinbringen (Schadstoffmobil, auch gemischt) – Knopf „Erledigt“ ohne „steht draußen“.
+    public var bringOnly: Bool
 
-    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String, targetID: String? = nil, personName: String? = nil, phone: String? = nil) {
+    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String, targetID: String? = nil, personName: String? = nil, phone: String? = nil, bringOnly: Bool = false) {
         self.identifier = identifier; self.fireDate = fireDate; self.title = title; self.body = body; self.category = category; self.threadIdentifier = threadIdentifier; self.dayKey = dayKey
-        self.targetID = targetID; self.personName = personName; self.phone = phone
+        self.targetID = targetID; self.personName = personName; self.phone = phone; self.bringOnly = bringOnly
     }
 }
 
@@ -125,14 +135,68 @@ public enum ReminderPlanner {
     }
 
     /// Text der Abend-Erinnerung – auch für den Hinweis, mit dem sich die geplante Live-Aktivität meldet.
-    public static func eveningText(names: [String]) -> (title: String, body: String) {
-        if names.count == 1 {
-            return (L10n.t("Morgen: \(names[0])", "Tomorrow: \(names[0])"),
-                    L10n.t("Heute Abend rausstellen – morgen kommt die Abfuhr.", "Put it out tonight – collection is tomorrow."))
+    /// Tonne: rausstellen; Sack, Sperrmüll, Weihnachtsbaum: bereitstellen; Schadstoffmobil: hinbringen (nie „Tonne“).
+    public static func eveningText(_ wording: PickupWording) -> (title: String, body: String) {
+        let items = wording.items, out = wording.outNames, bring = wording.bringNames
+        if items.count == 1 {
+            let name = items[0].name
+            let body: String
+            switch items[0].handling {
+            case .bin: body = L10n.t("Heute Abend rausstellen – morgen kommt die Abfuhr.", "Put it out tonight – collection is tomorrow.")
+            case .setOut: body = L10n.t("Heute Abend bereitstellen – morgen wird abgeholt.", "Put it out tonight – collection is tomorrow.")
+            case .bringTo:
+                body = items[0].note.map { L10n.t("Abfälle bereitlegen und morgen hinbringen: \($0)", "Get your items ready and drop them off tomorrow: \($0)") }
+                    ?? L10n.t("Abfälle bereitlegen und morgen hinbringen.", "Get your items ready and drop them off tomorrow.")
+            }
+            return (L10n.t("Morgen: \(name)", "Tomorrow: \(name)"), body)
         }
-        let list = joinNames(names)
-        return (L10n.t("Morgen wird abgeholt", "Collection tomorrow"),
-                L10n.t("\(list) – heute Abend rausstellen.", "\(list) – put them out tonight."))
+        let list = joinNames(items.map(\.name))
+        if bring.isEmpty {
+            return (L10n.t("Morgen wird abgeholt", "Collection tomorrow"), L10n.t("\(list) – heute Abend rausstellen.", "\(list) – put them out tonight."))
+        }
+        if out.isEmpty {
+            return (L10n.t("Morgen: \(list)", "Tomorrow: \(list)"), L10n.t("Morgen hinbringen: \(joinNames(bring)).", "Drop off tomorrow: \(joinNames(bring))."))
+        }
+        return (L10n.t("Morgen: \(list)", "Tomorrow: \(list)"),
+                L10n.t("\(joinNames(out)) heute Abend rausstellen, \(joinNames(bring)) morgen hinbringen.",
+                       "Put out \(joinNames(out)) tonight, drop off \(joinNames(bring)) tomorrow."))
+    }
+
+    /// Kurzform mit reinen Namen (ältere Aufrufer): Art wird aus dem Namen bestimmt.
+    public static func eveningText(names: [String]) -> (title: String, body: String) {
+        eveningText(PickupWording(names: names, symbols: []))
+    }
+
+    /// Später Nachhak-Abend (nur, wenn etwas rausgestellt wird) und Morgen des Abholtags.
+    static func escalationText(_ wording: PickupWording) -> (title: String, body: String) {
+        let out = wording.items.filter { $0.handling != .bringTo }
+        let title: String
+        if out.count == 1 {
+            title = out[0].handling == .bin ? L10n.t("Steht die Tonne schon draußen?", "Is the bin out yet?") : L10n.t("Schon rausgestellt?", "Put out yet?")
+        } else {
+            title = L10n.t("Steht alles draußen?", "Is everything out yet?")
+        }
+        return (title, L10n.t("\(joinNames(out.map(\.name))) – morgen früh ist die Abfuhr. Tippe „Erledigt“, wenn alles draußen ist.",
+                              "\(joinNames(out.map(\.name))) – collection is tomorrow morning. Tap “Done” once \(out.count == 1 ? "it's" : "they're") out."))
+    }
+
+    static func morningText(_ wording: PickupWording) -> (title: String, body: String) {
+        let items = wording.items, out = wording.outNames, bring = wording.bringNames
+        if items.count == 1 {
+            let body: String
+            switch items[0].handling {
+            case .bin: body = L10n.t("Steht die Tonne schon draußen?", "Is the bin out yet?")
+            case .setOut: body = L10n.t("Ist alles bereitgestellt?", "Is everything out?")
+            case .bringTo:
+                body = items[0].note.map { L10n.t("Heute hinbringen: \($0)", "Drop off today: \($0)") } ?? L10n.t("Heute hinbringen – nicht verpassen.", "Drop off today – don't miss it.")
+            }
+            return (L10n.t("Heute: \(items[0].name)", "Today: \(items[0].name)"), body)
+        }
+        let list = joinNames(items.map(\.name))
+        if bring.isEmpty { return (L10n.t("Heute wird abgeholt", "Collection today"), L10n.t("\(list) – steht alles draußen?", "\(list) – is everything out?")) }
+        if out.isEmpty { return (L10n.t("Heute: \(list)", "Today: \(list)"), L10n.t("Heute hinbringen: \(joinNames(bring)).", "Drop off today: \(joinNames(bring)).")) }
+        return (L10n.t("Heute: \(list)", "Today: \(list)"),
+                L10n.t("\(joinNames(out)) rausstellen, \(joinNames(bring)) heute hinbringen.", "Put out \(joinNames(out)), drop off \(joinNames(bring)) today."))
     }
 
     /// Kurzform für Widgets (wenig Platz, darum Kommas statt „und“): „A, B“ bzw. „A, B +2“.
@@ -211,36 +275,51 @@ public enum ReminderPlanner {
         let multiLocation = Set(pickups.compactMap(\.locationName)).count > 1
 
         // --- Müll: pro Tag zusammenfassen ---
+        func handling(_ item: PlannedPickup) -> WasteHandling { item.handling ?? WasteHandling.of(name: item.name, symbol: item.symbolName) }
+        func wordingItem(_ item: PlannedPickup) -> PickupWording.Item {
+            PickupWording.Item(name: multiLocation && item.locationName != nil ? "\(item.name) (\(item.locationName!))" : item.name,
+                               handling: handling(item), note: item.note)
+        }
         var byDay: [Date: [PlannedPickup]] = [:]
-        for pickup in pickups where pickup.remindersEnabled && !pickup.done {
+        // Morgen-Erinnerung: offene Müllarten plus Hinbringen, auch wenn der Tag am Vorabend schon „erledigt“ ist –
+        // wer abends die Tonne rausstellt und „Erledigt“ tippt, muss morgens trotzdem noch zum Schadstoffmobil.
+        var morningByDay: [Date: [PlannedPickup]] = [:]
+        for pickup in pickups where pickup.remindersEnabled {
             let day = calendar.startOfDay(for: pickup.date)
             guard day >= today && day <= horizon else { continue }
-            byDay[day, default: []].append(pickup)
+            if !pickup.done { byDay[day, default: []].append(pickup) }
+            // Hinbringen bleibt in der Morgen-Erinnerung, wenn vor dem Abholtag abgehakt (oder Zeitpunkt unbekannt);
+            // am Abholtag selbst abgehakt heißt: schon hingebracht
+            let doneBeforeDay = pickup.doneAt.map { $0 < day } ?? true
+            if !pickup.done || (handling(pickup) == .bringTo && doneBeforeDay) { morningByDay[day, default: []].append(pickup) }
+        }
+        for (day, items) in morningByDay {
+            let key = Days.iso(day, calendar: calendar)
+            let wording = PickupWording(items.map(wordingItem))
+            if settings.morningEnabled, let fire = Days.at(minutes: settings.morningMinutes, on: day, calendar: calendar), fire > now {
+                let text = morningText(wording)
+                result.append(PlannedNotification(
+                    identifier: "waste-morning-\(key)", fireDate: fire, title: text.title, body: text.body,
+                    category: .wasteMorning, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty))
+            }
         }
         for (day, items) in byDay {
-            let names = items.map { multiLocation && $0.locationName != nil ? "\($0.name) (\($0.locationName!))" : $0.name }
-            let list = joinNames(names)
+            // Art je Müllart: bestimmt die Worte (Tonne / bereitstellen / hinbringen)
+            let wording = PickupWording(items.map(wordingItem))
             let key = Days.iso(day, calendar: calendar)
             if settings.eveningEnabled, let fire = Days.at(minutes: settings.eveningMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
-                let text = eveningText(names: names)
+                let text = eveningText(wording)
                 result.append(PlannedNotification(
                     identifier: "waste-evening-\(key)", fireDate: fire, title: text.title, body: text.body,
-                    category: .wasteEvening, threadIdentifier: "waste", dayKey: key))
+                    category: .wasteEvening, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty))
             }
-            if settings.eveningEnabled, settings.escalationEnabled, settings.escalationMinutes > settings.eveningMinutes,
+            // Nachhaken „Steht … draußen?“ nur, wenn überhaupt etwas rausgestellt wird
+            if settings.eveningEnabled, settings.escalationEnabled, settings.escalationMinutes > settings.eveningMinutes, !wording.onlyBringTo,
                let fire = Days.at(minutes: settings.escalationMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
+                let text = escalationText(wording)
                 result.append(PlannedNotification(
-                    identifier: "waste-escalation-\(key)", fireDate: fire,
-                    title: L10n.t("Steht \(names.count == 1 ? "die Tonne" : "alles") schon draußen?", names.count == 1 ? "Is the bin out yet?" : "Is everything out yet?"),
-                    body: L10n.t("\(list) – morgen früh ist die Abfuhr. Tippe „Erledigt“, wenn alles steht.", "\(list) – collection is tomorrow morning. Tap “Done” once it's out."),
+                    identifier: "waste-escalation-\(key)", fireDate: fire, title: text.title, body: text.body,
                     category: .wasteEscalation, threadIdentifier: "waste", dayKey: key))
-            }
-            if settings.morningEnabled, let fire = Days.at(minutes: settings.morningMinutes, on: day, calendar: calendar), fire > now {
-                result.append(PlannedNotification(
-                    identifier: "waste-morning-\(key)", fireDate: fire,
-                    title: names.count == 1 ? L10n.t("Heute: \(names[0])", "Today: \(names[0])") : L10n.t("Heute wird abgeholt", "Collection today"),
-                    body: names.count == 1 ? L10n.t("Steht die Tonne schon draußen?", "Is the bin out yet?") : L10n.t("\(list) – steht alles draußen?", "\(list) – is everything out?"),
-                    category: .wasteMorning, threadIdentifier: "waste", dayKey: key))
             }
         }
 

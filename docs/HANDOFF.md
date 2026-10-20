@@ -171,6 +171,20 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
   Standorte, Mitteilungen ohne Verlust, Datei-Sperre für Widget/Watch-Markierungen, CSV-Hinweis für alle Müllarten.
 - Tests: 341 Logik-Tests, 8 Oberflächen-Tests, alle Live-Tests grün. Zwei veraltete Tests korrigiert (Zeitumstellung, Espelkamp-Datum).
 
+## 5e. Keine „Tonne“ bei Nicht-Tonnen + Ort/Zeit beim Schadstoffmobil (20. Okt., noch in 2.0.5)
+
+- Rückmeldung eines Nutzers: Schadstoffmobil, Sperrmüll, Weihnachtsbäume, Gelber Sack bekamen „Tonne rausstellen / steht draußen“.
+- Drei Arten (`WasteHandling` in `BringIn.swift`): `.bin` (Tonne), `.setOut` (Sack, Sperrmüll, Baum – „rausstellen/bereitstellen“,
+  nie „Tonne“), `.bringTo` (Schadstoffmobil, Wertstoffhof, Annahmestelle – „hinbringen“, kein Nachhaken, keine Live-Aktivität,
+  nie „wieder reinholen“). Gespeicherte Kategorie `.hazardous` gewinnt auch bei umbenannten Arten. Alle Texte über `PickupWording`.
+- Gemischter Tag (Tonne + Schadstoffmobil): Abend „X rausstellen, Y (Ort/Zeit) morgen hinbringen“, Knopf nur „Erledigt“; am Vorabend
+  abgehakt → Morgen-Erinnerung fürs Hinbringen bleibt (`doneAt` < Abholtag; `SnapshotStore.markDone` lässt `waste-morning` stehen).
+- Ort/Uhrzeit: Hinweis des Anbieters wird nur für `.bringTo` gespeichert (`WasteType.dayNotesJSON`, **neues CloudKit-Feld
+  `CD_dayNotesJSON` → vor Release Schema nach Production deployen**). Anzeige in Übersicht, Terminkarte, Mitteilungen.
+- Neutral umbenannt: Intent „Abholung erledigt“, „Abhol-Erinnerung starten“, Widget-Beschreibung, Einrichtung „Müllarten“.
+  Gesprochene Siri-Sätze mit „Tonne“ bleiben zusätzlich erhalten (eingeübte Befehle).
+- QS: Claude + Codex 7 Runden auf die eigenen Korrekturen, 354 Logik-Tests (neue Tests per Gegenprobe rot ohne Korrektur).
+
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
 - **„Tonne wieder reinholen“:**

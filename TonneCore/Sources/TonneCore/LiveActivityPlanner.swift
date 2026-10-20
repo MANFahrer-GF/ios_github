@@ -33,6 +33,8 @@ public enum LiveActivityPlanner {
         var shownNow = false
         var scheduled = 0
         for day in pickupDays.sorted(by: { $0.date < $1.date }) where !day.done {
+            // Nur Hinbringen (Schadstoffmobil): nichts rauszustellen – keine „Rausstellen“-Aktivität auf dem Sperrbildschirm
+            if PickupWording(day: day).onlyBringTo { continue }
             let start = calendar.startOfDay(for: day.date)
             guard start >= today else { continue }
             let key = Days.iso(start, calendar: calendar)

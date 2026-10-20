@@ -58,7 +58,7 @@ enum SyncService {
         var changes: [String] = []
         var nextSortOrder = ((location?.wasteTypes ?? []).map(\.sortOrder).max() ?? -1) + 1
         // Termine je Müllart sammeln: Zeigen mehrere Titel auf dieselbe Müllart, werden sie vereinigt statt nacheinander ersetzt
-        var collected: [(target: WasteType, days: Set<Date>)] = []
+        var collected: [(target: WasteType, days: Set<Date>, notes: [String: String])] = []
         // Wie viele Titel zeigen auf eine vorhandene Müllart? Den Quellen-Titel nur nachziehen, wenn es genau einer ist –
         // sonst beansprucht beim nächsten (exklusiven) Abgleich ein Titel die Müllart allein, der andere würde neu angelegt.
         var sharedTargets: [ObjectIdentifier: Int] = [:]
@@ -89,13 +89,23 @@ enum SyncService {
             }
             if target.sourceKey == nil, (sharedTargets[ObjectIdentifier(target)] ?? 1) == 1 { target.sourceKey = mapping.summary }
             let days = Set(items.map { Days.start(of: $0.date) })
+            // Hinweise des Entsorgers je Tag (Zeit/Ort beim Schadstoffmobil)
+            var notes: [String: String] = [:]
+            for item in items { if let note = item.note?.trimmingCharacters(in: .whitespacesAndNewlines), !note.isEmpty { notes[Days.iso(item.date)] = String(note.prefix(160)) } }
             if let index = collected.firstIndex(where: { $0.target === target }) {
                 collected[index].days.formUnion(days)
+                collected[index].notes.merge(notes) { first, _ in first }
             } else {
-                collected.append((target, days))
+                collected.append((target, days, notes))
             }
         }
-        for (target, days) in collected {
+        for (target, days, notes) in collected {
+            // Nur beim Hinbringen merken; bei Tonnen wäre es meist nur der Straßenname
+            if target.handling == .bringTo {
+                target.dayNotes = replace ? notes : target.dayNotes.merging(notes) { _, new in new }
+            } else if replace, !target.dayNotesJSON.isEmpty {
+                target.dayNotes = [:]
+            }
             if replace {
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(days))
                 if !target.explicitDates.isEmpty {

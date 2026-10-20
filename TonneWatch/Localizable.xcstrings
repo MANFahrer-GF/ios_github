@@ -2110,12 +2110,12 @@
         }
       }
     },
-    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück." : {
+    "Nimmt „erledigt“ für einen Abholtag zurück." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Takes back the “it’s out” mark for a collection day."
+            "value" : "Marks a collection day as not done."
           }
         }
       }
@@ -2613,12 +2613,12 @@
         }
       }
     },
-    "Tonne steht draußen" : {
+    "Abholung erledigt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bin is out"
+            "value" : "Collection done"
           }
         }
       }

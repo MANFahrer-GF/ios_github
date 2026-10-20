@@ -260,12 +260,12 @@
         }
       }
     },
-    "Abgewählte Tonnen bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern." : {
+    "Abgewählte Müllarten bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unchecked bins are kept but won't send reminders. You can change this anytime."
+            "value" : "Unchecked waste types are kept but won't send reminders. You can change this anytime."
           }
         }
       }
@@ -569,12 +569,12 @@
         }
       }
     },
-    "Am Vorabend um %@ erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu." : {
+    "Am Vorabend um %@ erscheint „Rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "At %@ the evening before, “Put the bin out” appears on the Lock Screen and in the Dynamic Island by itself – even when the app is closed. It announces itself with an alert, so the evening reminder isn’t sent twice. The next two collections are always planned ahead; just open the app now and then."
+            "value" : "At %@ the evening before, “Put out” appears on the Lock Screen and in the Dynamic Island by itself – even when the app is closed. It announces itself with an alert, so the evening reminder isn’t sent twice. The next two collections are always planned ahead; just open the app now and then."
           }
         }
       }
@@ -639,12 +639,12 @@
         }
       }
     },
-    "Auf diesem iPhone (iOS %@) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App." : {
+    "Auf diesem iPhone (iOS %@) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Abhol-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On this iPhone (iOS %@) the Live Activity appears when you open the app the evening before – from iOS 26 on it appears by itself. Without opening the app, use the shortcut “Start bin reminder”, e.g. as an automation in the Shortcuts app."
+            "value" : "On this iPhone (iOS %@) the Live Activity appears when you open the app the evening before – from iOS 26 on it appears by itself. Without opening the app, use the shortcut “Start pickup reminder”, e.g. as an automation in the Shortcuts app."
           }
         }
       }
@@ -894,12 +894,12 @@
         }
       }
     },
-    "Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island." : {
+    "Die Live-Aktivität zeigt „Rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Live Activity shows “Put the bin out” on the Lock Screen and in the Dynamic Island."
+            "value" : "The Live Activity shows “Put out” on the Lock Screen and in the Dynamic Island."
           }
         }
       }
@@ -2514,12 +2514,12 @@
         }
       }
     },
-    "Nimmt die Markierung „steht draußen“ für einen Abholtag zurück." : {
+    "Nimmt „erledigt“ für einen Abholtag zurück." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Takes back the “it’s out” mark for a collection day."
+            "value" : "Marks a collection day as not done."
           }
         }
       }
@@ -3141,12 +3141,12 @@
         }
       }
     },
-    "Tonne steht draußen" : {
+    "Abholung erledigt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bin is out"
+            "value" : "Collection done"
           }
         }
       }
@@ -3191,12 +3191,12 @@
         }
       }
     },
-    "Tonnen-Erinnerung starten" : {
+    "Abhol-Erinnerung starten" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start bin reminder"
+            "value" : "Start pickup reminder"
           }
         }
       }
@@ -3494,12 +3494,12 @@
         }
       }
     },
-    "Welche Tonnen hast du?" : {
+    "Welche Müllarten hast du?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Which bins do you have?"
+            "value" : "Which waste types do you have?"
           }
         }
       }

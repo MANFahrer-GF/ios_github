@@ -59,7 +59,7 @@ private struct PickupPage: View {
                     .font(KlarStyle.font(30, .black))
                     .foregroundStyle(KlarStyle.text(.dark))
                     .lineLimit(1).minimumScaleFactor(0.6)
-                Text(PickupWords.subline(days: days, done: done))
+                Text(PickupWords.subline(days: days, done: done, day: next))
                     .font(KlarStyle.font(13, .bold))
                     .foregroundStyle(KlarStyle.muted(.dark))
                     .lineLimit(1).minimumScaleFactor(0.8)

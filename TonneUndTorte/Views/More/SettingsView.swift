@@ -197,13 +197,13 @@ struct SettingsView: View {
     @ViewBuilder
     private var liveActivityFooter: some View {
         if !liveActivities {
-            Text("Die Live-Aktivität zeigt „Tonne rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island.")
+            Text("Die Live-Aktivität zeigt „Rausstellen“ auf dem Sperrbildschirm und in der Dynamic Island.")
         } else if !LiveActivityManager.systemAllows {
             Text("Live-Aktivitäten sind in den iOS-Einstellungen für Tonne & Torte ausgeschaltet: Einstellungen › Apps › Tonne & Torte › Live-Aktivitäten.")
         } else if LiveActivityManager.canSchedule {
-            Text("Am Vorabend um \(eveningTimeText) erscheint „Tonne rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.")
+            Text("Am Vorabend um \(eveningTimeText) erscheint „Rausstellen“ von selbst auf dem Sperrbildschirm und in der Dynamic Island – auch wenn die App geschlossen ist. Sie meldet sich mit einem Hinweis, deshalb kommt die Abend-Erinnerung nicht doppelt. Geplant werden immer die nächsten zwei Abholungen; öffne die App dafür ab und zu.")
         } else {
-            Text("Auf diesem iPhone (iOS \(UIDevice.current.systemVersion)) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Tonnen-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.")
+            Text("Auf diesem iPhone (iOS \(UIDevice.current.systemVersion)) erscheint die Live-Aktivität, sobald du die App am Vorabend öffnest – erst ab iOS 26 kommt sie von selbst. Ohne Öffnen geht es mit dem Kurzbefehl „Abhol-Erinnerung starten“, z. B. als Automation in der Kurzbefehle-App.")
         }
     }
 

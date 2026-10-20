@@ -52,10 +52,13 @@ enum LiveActivityManager {
         }
 
         for entry in entries {
+            // Nur, was rausgestellt wird – das Schadstoffmobil kommt per Morgen-Erinnerung (Text und Symbole)
+            let outItems = entry.day.items.filter { $0.dropOff != true }
+            let items = outItems.isEmpty ? entry.day.items : outItems
             let state = PickupActivityAttributes.ContentState(
-                names: entry.day.items.map(\.name),
-                symbolNames: entry.day.items.map(\.displaySymbol),
-                colorHexes: entry.day.items.map(\.colorHex),
+                names: items.map(\.name),
+                symbolNames: items.map(\.displaySymbol),
+                colorHexes: items.map(\.colorHex),
                 done: false
             )
             let end = Days.at(minutes: 12 * 60, on: entry.day.date) ?? entry.day.date.addingTimeInterval(12 * 3600)
@@ -97,7 +100,7 @@ enum LiveActivityManager {
         if #available(iOS 26.0, *) {
             let attributes = PickupActivityAttributes(dayKey: entry.dayKey, pickupDate: entry.day.date,
                                                       locationName: entry.day.items.first?.locationName, scheduledStart: start)
-            let text = ReminderPlanner.eveningText(names: entry.day.items.map(\.name))
+            let text = ReminderPlanner.eveningText(PickupWording(day: entry.day))
             let alert = AlertConfiguration(title: LocalizedStringResource(stringLiteral: text.title),
                                            body: LocalizedStringResource(stringLiteral: text.body), sound: .default)
             do {

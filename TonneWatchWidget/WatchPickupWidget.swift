@@ -42,7 +42,7 @@ struct WatchPickupWidget: Widget {
             WatchPickupView(entry: entry)
         }
         .configurationDisplayName("Nächste Abholung")
-        .description("Welche Tonne muss raus?")
+        .description("Was wird als Nächstes abgeholt?")
         .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline, .accessoryCorner])
     }
 }

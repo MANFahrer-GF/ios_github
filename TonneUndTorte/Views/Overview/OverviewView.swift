@@ -52,7 +52,7 @@ struct OverviewView: View {
         guard bringInEnabled, let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
               PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now,
                                         fromMinutes: min(PickupTiming.bringInHintMinutes, bringInMinutes)) else { return nil }
-        let names = today.events.filter { WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
+        let names = today.events.filter { $0.handling != .bringTo && WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
         return names.isEmpty ? nil : (day: today.day, names: names)
     }
 
@@ -201,7 +201,8 @@ struct OverviewView: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(L10n.t("Heute: \(names)", "Today: \(names)")).font(.subheadline.weight(.semibold)).lineLimit(2)
-                Text(done ? L10n.t("Erledigt – stand draußen.", "Done – it was out.") : L10n.t("Nicht als erledigt bestätigt.", "Not confirmed as done."))
+                Text(done ? (today.events.contains { $0.handling == .bringTo } ? L10n.t("Erledigt.", "Done.") : L10n.t("Erledigt – stand draußen.", "Done – it was out."))
+                          : L10n.t("Nicht als erledigt bestätigt.", "Not confirmed as done."))
                     .font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
@@ -297,10 +298,16 @@ struct OverviewView: View {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(group.waste) { event in
                     Button { open(event) } label: {
-                        HStack(spacing: 8) {
-                            BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
-                            if locations.count > 1, let location = event.locationName {
-                                Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack(spacing: 8) {
+                                BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
+                                if locations.count > 1, let location = event.locationName {
+                                    Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                                }
+                            }
+                            if let note = event.note {
+                                Text(note).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                                    .lineLimit(2).fixedSize(horizontal: false, vertical: true).padding(.leading, 34)
                             }
                         }
                         .contentShape(Rectangle())

@@ -82,8 +82,11 @@ enum SnapshotStore {
             let at = recordDoneTime(dayKey: dayKey, at: date, overwrite: !wasDone)
             clearUndo(dayKey: dayKey)
             #if os(iOS)
-            // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft
-            let ids = ["evening", "escalation", "morning", "snooze"].map { "waste-\($0)-\(dayKey)" }
+            // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft.
+            // Ist am Vorabend etwas hinzubringen (Schadstoffmobil), bleibt die Morgen-Erinnerung.
+            let pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
+            let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty && date < Calendar.current.startOfDay(for: $0.date) } ?? false
+            let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
             #endif

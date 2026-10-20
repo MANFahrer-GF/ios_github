@@ -112,6 +112,10 @@ struct CalendarEvent: Identifiable, Hashable {
     var personID: UUID? = nil
     var eventID: UUID? = nil
     var wasteTypeID: UUID? = nil
+    /// Zeit/Ort beim Hinbringen (Schadstoffmobil), falls der Entsorger sie liefert.
+    var note: String? = nil
+    /// Tonne / bereitstellen / hinbringen – bestimmt Worte und ob es „draußen“ heißt.
+    var handling: WasteHandling? = nil
     var color: Color { Color(hex: colorHex) }
     var isMilestone: Bool { years.map { AnnualDate.isMilestone($0) } ?? false }
 }
@@ -234,7 +238,8 @@ final class AppModel: ObservableObject {
             for date in type.pickupDates(from: from, to: to) {
                 // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
                 // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
-                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id))
+                result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id,
+                                            note: type.note(on: date), handling: type.handling))
             }
         }
         for person in allPeople() {
@@ -268,10 +273,11 @@ final class AppModel: ObservableObject {
         let today = Days.today()
         let horizon = Days.add(90, to: today)
         let broughtIn = SnapshotStore.broughtInDays()
+        let doneTimes = SnapshotStore.doneTimes()
         return allWasteTypes().filter(\.isActive).flatMap { type in
             type.pickupDates(from: today, to: horizon).map {
                 PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol,
-                              remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)))
+                              remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)), note: type.note(on: $0), handling: type.handling, doneAt: doneTimes[Days.iso($0)])
             }
         }
     }
@@ -415,7 +421,7 @@ final class AppModel: ObservableObject {
             let items = entry.events.filter { $0.kind == .waste }
             guard !items.isEmpty else { return nil }
             let key = Days.iso(entry.day), done = items.allSatisfy(\.done)
-            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName) },
+            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName, dropOff: $0.handling == .bringTo) },
                                             done: done, broughtIn: broughtIn.contains(key), doneAt: done ? doneTimes[key] : nil)
         }
         let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {

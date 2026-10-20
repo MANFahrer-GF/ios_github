@@ -232,14 +232,10 @@ enum PickupWords {
         }
     }
 
-    static func subline(days: Int?, done: Bool) -> String {
+    /// Kurzer Hinweis unter der Überschrift – beim Schadstoffmobil „morgen hinbringen“ statt „abends rausstellen“.
+    static func subline(days: Int?, done: Bool, day: WidgetSnapshot.PickupDay? = nil) -> String {
         guard let days else { return L10n.t("keine Abholung geplant", "no pickup planned") }
-        if done { return L10n.t("steht draußen 👍", "already out 👍") }
-        switch days {
-        case 0: return L10n.t("wird heute abgeholt", "collected today")
-        case 1: return L10n.t("abends rausstellen", "put out tonight")
-        default: return L10n.t("nächste Abholung", "next pickup")
-        }
+        return PickupWording(day: day).hint(daysUntil: days, done: done)
     }
 
     static func birthdaySubline(years: Int?, date: Date) -> String {

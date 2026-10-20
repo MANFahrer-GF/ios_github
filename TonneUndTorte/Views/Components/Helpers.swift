@@ -352,7 +352,9 @@ enum EventText {
         case .custom:
             return event.subtitle.components(separatedBy: " · ")
         case .waste:
-            return showLocation ? [event.locationName].compactMap { $0 } : []
+            var tags = showLocation ? [event.locationName].compactMap { $0 } : []
+            if event.handling == .bringTo { tags.insert(L10n.t("hinbringen", "drop off"), at: 0) }
+            return tags
         }
     }
 }
@@ -406,6 +408,11 @@ struct EventItemCard: View {
                         Text(EventText.title(event)).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
                             .lineLimit(2).fixedSize(horizontal: false, vertical: true)
                         InfoTags(tags: EventText.tags(event, person: person, showLocation: showLocation))
+                        // Zeit/Ort beim Schadstoffmobil – ganzer Satz, darf umbrechen
+                        if let note = event.note {
+                            Label(note, systemImage: "mappin.and.ellipse").font(KlarStyle.font(14, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                                .lineLimit(3).fixedSize(horizontal: false, vertical: true)
+                        }
                     }
                     Spacer(minLength: 0)
                 }
