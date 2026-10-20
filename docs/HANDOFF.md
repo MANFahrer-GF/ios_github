@@ -171,7 +171,7 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
   Standorte, Mitteilungen ohne Verlust, Datei-Sperre für Widget/Watch-Markierungen, CSV-Hinweis für alle Müllarten.
 - Tests: 341 Logik-Tests, 8 Oberflächen-Tests, alle Live-Tests grün. Zwei veraltete Tests korrigiert (Zeitumstellung, Espelkamp-Datum).
 
-## 5e. Keine „Tonne“ bei Nicht-Tonnen + Ort/Zeit beim Schadstoffmobil (20. Okt., noch in 2.0.5)
+## 5e. Keine „Tonne“ bei Nicht-Tonnen + Ort/Zeit beim Schadstoffmobil – 2.0.6 (Build 7), 20. Okt. (2.0.5 mit Build 6 ist hochgeladen)
 
 - Rückmeldung eines Nutzers: Schadstoffmobil, Sperrmüll, Weihnachtsbäume, Gelber Sack bekamen „Tonne rausstellen / steht draußen“.
 - Drei Arten (`WasteHandling` in `BringIn.swift`): `.bin` (Tonne), `.setOut` (Sack, Sperrmüll, Baum – „rausstellen/bereitstellen“,
