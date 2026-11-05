@@ -151,7 +151,9 @@ struct MonthCalendarView: View {
                 VStack(spacing: 8) {
                     ForEach(events) { event in
                         EventItemCard(event: event, person: event.personID.flatMap { id in people.first { $0.id == id } },
-                                      size: 40, showLocation: locations.count > 1) {
+                                      size: 40, showLocation: locations.count > 1,
+                                      // Auslassen auch hier zurücknehmbar – nur für heute und später
+                                      onToggleNotPutOut: event.kind == .waste && event.date >= Days.today() ? { toggleNotPutOut(event) } : nil) {
                             editing = EventEditTarget.target(for: event, model: model)
                         }
                     }
@@ -166,6 +168,11 @@ struct MonthCalendarView: View {
             monthStart = MonthCalendarView.firstOfMonth(next)
             if !calendar.isDate(selectedDay, equalTo: monthStart, toGranularity: .month) { selectedDay = monthStart }
         }
+    }
+
+    private func toggleNotPutOut(_ event: CalendarEvent) {
+        guard let id = event.wasteTypeID else { return }
+        Task { await model.setNotPutOut(!event.notPutOut, wasteTypeID: id, dayKey: Days.iso(event.date)) }
     }
 
     private func goToToday() {

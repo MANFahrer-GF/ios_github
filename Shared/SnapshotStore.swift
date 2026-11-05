@@ -127,7 +127,11 @@ enum SnapshotStore {
             days.insert(dayKey)
             defaults.set(Array(days).sorted(), forKey: skipKey)
             #if os(iOS)
-            let ids = ["evening", "escalation", "morning", "snooze", "bringin", "bringin-snooze"].map { "waste-\($0)-\(dayKey)" }
+            // Nur was sicher wegfällt: „Reinholen“ braucht evtl. eine schon rausgestellte Tonne desselben Tags, und
+            // Hinbringen wird nicht ausgelassen (Morgen-Erinnerung bleibt). Das Neuplanen im Modell erledigt den Rest.
+            let pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
+            let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty } ?? false
+            let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
             #endif

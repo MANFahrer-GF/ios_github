@@ -375,10 +375,11 @@ final class AppModel: ObservableObject {
         await refreshAll()
     }
 
-    /// Aus der Mitteilung: alles, was an dem Tag noch offen ist, bleibt diesmal drin.
+    /// Aus der Mitteilung: alle Tonnen, die an dem Tag noch offen sind, bleiben diesmal drin.
+    /// Hinbringen (Schadstoffmobil) ist nicht „rausstellen“ – das bleibt stehen, samt Morgen-Erinnerung.
     func skipOpen(dayKey: String) async {
         guard let day = Days.parse(dayKey) else { return }
-        for type in allWasteTypes() where type.isActive && !type.isDone(on: day) && type.pickupDates(from: day, to: day).contains(day) {
+        for type in allWasteTypes() where type.isActive && type.handling != .bringTo && !type.isDone(on: day) && type.pickupDates(from: day, to: day).contains(day) {
             type.setNotPutOut(true, on: day)
         }
         // Nicht gespeichert: Markierung liegen lassen, beim nächsten Mal erneut versuchen

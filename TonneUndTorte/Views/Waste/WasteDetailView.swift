@@ -56,12 +56,22 @@ struct WasteDetailView: View {
                     HStack {
                         Text(DateText.short(date))
                         if type.isDone(on: date) { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green) }
+                        if type.isNotPutOut(on: date) {
+                            Text(type.handling == .bringTo ? "Ausgelassen" : "Bleibt drin").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                        }
                         Spacer()
                         Text(DateText.countdown(date)).font(.subheadline).foregroundStyle(.secondary)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) { type.skip(date); save() } label: { Label("Fällt aus", systemImage: "xmark.circle") }
                         Button { moveSource = date; pickDate = date } label: { Label("Verschieben", systemImage: "arrow.right.circle") }.tint(.orange)
+                        // Über das Modell: plant die Erinnerungen des Tages neu
+                        if !type.isDone(on: date) {
+                            let notOut = type.isNotPutOut(on: date)
+                            Button { Task { await model.setNotPutOut(!notOut, wasteTypeID: type.id, dayKey: Days.iso(date)) } } label: {
+                                Label(notOut ? "Doch raus" : "Bleibt drin", systemImage: notOut ? "arrow.uturn.backward.circle" : "house")
+                            }.tint(.gray)
+                        }
                     }
                 }
             } header: { Text("Nächste Termine") } footer: { Text("Nach links wischen: verschieben oder ausfallen lassen (Feiertage).") }

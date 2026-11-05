@@ -102,7 +102,8 @@ struct OverviewView: View {
         NavigationStack {
             ScrollView {
                 Group {
-                    if let sideWidth {
+                    // Ohne spätere Tage keine leere rechte Spalte – dann einspaltig wie schmal
+                    if let sideWidth, !laterGroups.isEmpty {
                         // Breit (Duo aufgeklappt quer, iPhone quer, iPad): links die nächste Abholung, rechts schmaler die Tage danach
                         HStack(alignment: .top, spacing: WideLayout.spacing) {
                             VStack(spacing: 20) {
@@ -112,10 +113,8 @@ struct OverviewView: View {
                                 if showStats && showWaste { statsCard }
                             }
                             .frame(maxWidth: .infinity, alignment: .top)
-                            VStack(spacing: 20) {
-                                if !laterGroups.isEmpty { daysCard(big: [], later: laterGroups, stacked: true) }
-                            }
-                            .frame(width: sideWidth, alignment: .top)
+                            daysCard(big: [], later: laterGroups, stacked: true)
+                                .frame(width: sideWidth, alignment: .top)
                         }
                         .limitedWidth(WideLayout.twoColumns)
                     } else {
@@ -225,13 +224,16 @@ struct OverviewView: View {
         // Bewusst drin gelassen gehört nicht in „Heute: …“ – außer es blieb alles drin
         let shown = today.events.filter { !$0.notPutOut }
         let names = ReminderPlanner.joinNames((shown.isEmpty ? today.events : shown).map(\.title))
+        // Alles bewusst drin gelassen: nicht „stand draußen“ behaupten, und „Rückgängig“ muss den Auslass zurücknehmen
+        let allNotOut = shown.isEmpty
         return HStack(spacing: 12) {
             Image(systemName: done ? "checkmark.circle.fill" : "clock.badge.questionmark")
                 .font(.title2).foregroundStyle(done ? KlarStyle.done : .orange)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(L10n.t("Heute: \(names)", "Today: \(names)")).font(.subheadline.weight(.semibold)).lineLimit(2)
-                Text(done ? (today.events.contains { $0.handling == .bringTo } ? L10n.t("Erledigt.", "Done.") : L10n.t("Erledigt – stand draußen.", "Done – it was out."))
+                Text(allNotOut ? L10n.t("Bleibt diesmal drin.", "Staying in this time.")
+                          : done ? (today.events.contains { $0.handling == .bringTo } ? L10n.t("Erledigt.", "Done.") : L10n.t("Erledigt – stand draußen.", "Done – it was out."))
                           : L10n.t("Nicht als erledigt bestätigt.", "Not confirmed as done."))
                     .font(.caption).foregroundStyle(.secondary)
             }
@@ -239,14 +241,19 @@ struct OverviewView: View {
             Button {
                 Haptics.tap()
                 Task {
-                    if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await model.markDone(dayKey: Days.iso(today.day)) }
+                    if allNotOut {
+                        for event in today.events where event.notPutOut {
+                            if let id = event.wasteTypeID { await model.setNotPutOut(false, wasteTypeID: id, dayKey: Days.iso(today.day)) }
+                        }
+                    } else if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await model.markDone(dayKey: Days.iso(today.day)) }
                     refreshToken += 1
                 }
             } label: {
-                Text(done ? L10n.t("Rückgängig", "Undo") : L10n.t("Erledigt", "Done"))
+                Text(allNotOut ? L10n.t("Doch raus", "Put out after all") : done ? L10n.t("Rückgängig", "Undo") : L10n.t("Erledigt", "Done"))
             }
             .buttonStyle(.bordered).controlSize(.small)
-            .accessibilityLabel(done ? L10n.t("\(names): erledigt zurücknehmen", "\(names): undo done") : L10n.t("\(names) als erledigt bestätigen", "Confirm \(names) as done"))
+            .accessibilityLabel(allNotOut ? L10n.t("\(names) doch rausstellen", "Put \(names) out after all")
+                                : done ? L10n.t("\(names): erledigt zurücknehmen", "\(names): undo done") : L10n.t("\(names) als erledigt bestätigen", "Confirm \(names) as done"))
         }
         .card()
     }
