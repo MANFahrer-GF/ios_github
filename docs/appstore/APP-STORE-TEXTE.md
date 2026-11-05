@@ -60,8 +60,10 @@ Kleinere Verbesserungen
 ### Werbetext (optional, max. 170 Zeichen)
 
 ```
-Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, „Tonne wieder reinholen“ – und Geburtstage gleich mit. Ohne Werbung, ohne Tracking.
+Neu: „Diesmal nicht rausstellen“ – und gemacht fürs iPhone Duo. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.
 ```
+
+(164 Zeichen, seit 2.0.7. Vorher: „Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, „Tonne wieder reinholen“ – und Geburtstage gleich mit. Ohne Werbung, ohne Tracking.“ Der Werbetext lässt sich jederzeit ohne neue Version ändern.)
 
 ### Schlüsselwörter (Pflicht, max. 100 Zeichen, ohne Leerzeichen nach Kommas)
 
