@@ -17,7 +17,9 @@ struct MonthCalendarView: View {
     /// Breite der rechten Spalte, wenn zwei Spalten passen (siehe `WideLayout.sideColumn`), sonst nil.
     @State private var sideWidth: CGFloat?
     /// Breit heißt meist quer mit wenig Höhe – dann passt der ganze Monat mit etwas niedrigeren Zeilen auf den Schirm.
-    private var cellHeight: CGFloat { sideWidth == nil ? 52 : 44 }
+    private var cellHeight: CGFloat { sideWidth == nil || tall ? 52 : 44 }
+    /// Höher als breit (Duo aufgeklappt hochkant, iPad hochkant): Tag unter den Monat statt daneben – sonst bleibt unten die halbe Fläche leer
+    @State private var tall = false
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
@@ -49,7 +51,7 @@ struct MonthCalendarView: View {
         NavigationStack {
             ScrollView {
                 Group {
-                    if let sideWidth {
+                    if let sideWidth, !tall {
                         // Breit (Duo aufgeklappt quer, iPhone quer, iPad): links der Monat, rechts gleich der gewählte Tag
                         HStack(alignment: .top, spacing: WideLayout.spacing) {
                             VStack(spacing: 12) {
@@ -75,6 +77,7 @@ struct MonthCalendarView: View {
                 .padding(.horizontal).padding(.bottom, 24)
             }
             .background(Color(.systemGroupedBackground))
+            .onGeometryChange(for: Bool.self) { $0.size.height > $0.size.width } action: { tall = $0 }
             .navigationTitle("Kalender")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { Button("Heute") { goToToday() } }
