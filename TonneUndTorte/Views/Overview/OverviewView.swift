@@ -42,7 +42,7 @@ struct OverviewView: View {
     private var activeWasteDays: [(day: Date, events: [CalendarEvent])] {
         let now = Date()
         let doneTimes = SnapshotStore.doneTimes()
-        return wasteDays.filter { !PickupTiming.isFinished(day: $0.day, done: $0.events.allSatisfy(\.done), doneAt: doneTimes[Days.iso($0.day)], now: now) }
+        return wasteDays.filter { !PickupTiming.isFinished(day: $0.day, done: $0.events.allSatisfy(\.settled), doneAt: doneTimes[Days.iso($0.day)], now: now) }
     }
 
     /// Heute geleerte Tonnen, die wieder herein müssen (ab mittags, bis „Ist drin“). Säcke und Grünschnitt zählen nicht.
@@ -52,7 +52,7 @@ struct OverviewView: View {
         guard bringInEnabled, let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
               PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now,
                                         fromMinutes: min(PickupTiming.bringInHintMinutes, bringInMinutes)) else { return nil }
-        let names = today.events.filter { $0.handling != .bringTo && WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
+        let names = today.events.filter { !$0.notPutOut && $0.handling != .bringTo && WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
         return names.isEmpty ? nil : (day: today.day, names: names)
     }
 
@@ -193,8 +193,10 @@ struct OverviewView: View {
     }
 
     private func todayRecapCard(_ today: (day: Date, events: [CalendarEvent])) -> some View {
-        let done = today.events.allSatisfy(\.done)
-        let names = ReminderPlanner.joinNames(today.events.map(\.title))
+        let done = today.events.allSatisfy(\.settled)
+        // Bewusst drin gelassen gehört nicht in „Heute: …“ – außer es blieb alles drin
+        let shown = today.events.filter { !$0.notPutOut }
+        let names = ReminderPlanner.joinNames((shown.isEmpty ? today.events : shown).map(\.title))
         return HStack(spacing: 12) {
             Image(systemName: done ? "checkmark.circle.fill" : "clock.badge.questionmark")
                 .font(.title2).foregroundStyle(done ? KlarStyle.done : .orange)
@@ -226,7 +228,7 @@ struct OverviewView: View {
     /// Eine Karte für alles, was ansteht: groß die Tage bis zur nächsten Abholung, darunter knapp die folgenden.
     private var nextDaysCard: some View {
         let tintHex: String? = bigGroups.lazy.compactMap { group in
-            group.waste.isEmpty ? nil : (group.waste.allSatisfy(\.done) ? "#34C759" : group.waste.first?.colorHex)
+            group.waste.isEmpty ? nil : (group.waste.allSatisfy(\.settled) ? "#34C759" : group.waste.first { !$0.notPutOut }?.colorHex)
         }.first
         return VStack(alignment: .leading, spacing: 0) {
             if groups.isEmpty {
@@ -257,7 +259,9 @@ struct OverviewView: View {
 
     private func bigGroupView(_ group: DayGroup, primary: Bool) -> some View {
         let n = Days.until(group.day)
-        let allDone = !group.waste.isEmpty && group.waste.allSatisfy(\.done)
+        // Bewusst drin gelassene Müllarten brauchen kein „Erledigt“ – nur der Rest zählt
+        let allDone = !group.waste.isEmpty && group.waste.allSatisfy(\.settled)
+        let allNotOut = !group.waste.isEmpty && group.waste.allSatisfy(\.notPutOut)
         let places = Set(group.waste.compactMap(\.locationName))
         let place = locations.count > 1 && places.count == 1 ? places.first : nil
         let eyebrowColor: Color = allDone ? KlarStyle.done : (group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink)
@@ -273,12 +277,13 @@ struct OverviewView: View {
                 }
                 Spacer(minLength: 0)
                 // „Erledigt“ gilt für alle Tonnen des Tages – darum beim Tag, nicht an einer einzelnen Tonne
-                if !group.waste.isEmpty && n <= 1 { doneButton(day: group.day, done: allDone) }
+                if !group.waste.isEmpty && n <= 1 && !allNotOut { doneButton(day: group.day, done: allDone) }
             }
             // Alle Einträge in derselben Form (gemeinsame Zeile mit dem Kalender)
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(group.waste + group.other) { event in
-                    EventItemCard(event: event, person: person(for: event), size: badge, showLocation: locations.count > 1 && place == nil) { open(event) }
+                    EventItemCard(event: event, person: person(for: event), size: badge, showLocation: locations.count > 1 && place == nil,
+                                  onToggleNotPutOut: event.kind == .waste && n <= 1 ? { toggleNotPutOut(event) } : nil) { open(event) }
                 }
             }
             .padding(.top, 12)
@@ -361,6 +366,14 @@ struct OverviewView: View {
                 .background(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme), in: Capsule())
         }
         .buttonStyle(.plain)
+    }
+
+    private func toggleNotPutOut(_ event: CalendarEvent) {
+        guard let id = event.wasteTypeID else { return }
+        Task {
+            await model.setNotPutOut(!event.notPutOut, wasteTypeID: id, dayKey: Days.iso(event.date))
+            refreshToken += 1
+        }
     }
 
     private func open(_ event: CalendarEvent) { editing = EventEditTarget.target(for: event, model: model) }

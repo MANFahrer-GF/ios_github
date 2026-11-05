@@ -390,10 +390,14 @@ struct EventItemCard: View {
     var person: Person? = nil
     var size: CGFloat = 36
     var showLocation = false
+    /// Müll heute/morgen: „Bleibt drin“ (diesmal nicht rausstellen) bzw. „Doch raus“ – nil = kein Knopf.
+    var onToggleNotPutOut: (() -> Void)? = nil
     let onOpen: () -> Void
     @Environment(\.colorScheme) private var scheme
     @Environment(\.openURL) private var openURL
     @State private var confirmCall = false
+
+    private var dropOff: Bool { event.handling == .bringTo }
 
     private var callURL: URL? { CallLink.url(person?.phone) }
     private var messageURL: URL? { NotificationManager.greetingURL(name: person?.name ?? event.title, phone: person?.phone) }
@@ -401,12 +405,19 @@ struct EventItemCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
             Button(action: onOpen) {
                 HStack(spacing: 12) {
                     leading
                     VStack(alignment: .leading, spacing: 4) {
                         Text(EventText.title(event)).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                            .strikethrough(event.notPutOut)
                             .lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                        if event.notPutOut {
+                            Label(dropOff ? L10n.t("Diesmal nicht hinbringen", "Skipping this time") : L10n.t("Bleibt diesmal drin", "Staying in this time"),
+                                  systemImage: "hand.raised.fill")
+                                .font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                        }
                         InfoTags(tags: EventText.tags(event, person: person, showLocation: showLocation))
                         // Zeit/Ort beim Schadstoffmobil – ganzer Satz, darf umbrechen
                         if let note = event.note {
@@ -419,6 +430,22 @@ struct EventItemCard: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            // Nur der Eintrag wird blass – „Doch raus“ bleibt gut lesbar
+            .opacity(event.kind == .waste && (event.done || event.notPutOut) ? 0.55 : 1)
+                if let onToggleNotPutOut, event.kind == .waste, !event.done {
+                    Button {
+                        Haptics.tap()
+                        onToggleNotPutOut()
+                    } label: {
+                        Text(event.notPutOut ? (dropOff ? L10n.t("Doch hin", "Go after all") : L10n.t("Doch raus", "Put out after all"))
+                                             : (dropOff ? L10n.t("Auslassen", "Skip") : L10n.t("Bleibt drin", "Keep in")))
+                            .font(KlarStyle.font(13, .heavy))
+                    }
+                    .buttonStyle(.bordered).buttonBorderShape(.capsule).controlSize(.small)
+                    .accessibilityLabel(event.notPutOut ? L10n.t("\(event.title) doch rausstellen", "Put \(event.title) out after all")
+                                                        : L10n.t("\(event.title) diesmal nicht rausstellen", "Don't put \(event.title) out this time"))
+                }
+            }
             // Eigene Reihe über die volle Breite – nimmt Name und Angaben keinen Platz weg
             if showsActions {
                 HStack(spacing: 8) {
@@ -434,7 +461,6 @@ struct EventItemCard: View {
         }
         .padding(.horizontal, 12).padding(.vertical, 10)
         .background(Color(.secondarySystemGroupedBackground).opacity(scheme == .dark ? 0.6 : 0.75), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .opacity(event.kind == .waste && event.done ? 0.55 : 1)
     }
 
     @ViewBuilder

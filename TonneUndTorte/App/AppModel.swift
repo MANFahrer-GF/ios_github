@@ -116,6 +116,10 @@ struct CalendarEvent: Identifiable, Hashable {
     var note: String? = nil
     /// Tonne / bereitstellen / hinbringen – bestimmt Worte und ob es „draußen“ heißt.
     var handling: WasteHandling? = nil
+    /// „Diesmal nicht rausstellen“ – die Abfuhr kommt, diese Müllart bleibt aber drin.
+    var notPutOut: Bool = false
+    /// Nichts mehr zu tun: erledigt oder bewusst drin gelassen.
+    var settled: Bool { done || notPutOut }
     var color: Color { Color(hex: colorHex) }
     var isMilestone: Bool { years.map { AnnualDate.isMilestone($0) } ?? false }
 }
@@ -154,6 +158,9 @@ final class AppModel: ObservableObject {
         }
         notifications.onPickupDone = { [weak self] dayKey in
             Task { await self?.markDone(dayKey: dayKey) }
+        }
+        notifications.onPickupSkip = { [weak self] dayKey in
+            Task { await self?.skipOpen(dayKey: dayKey) }
         }
         // Apple Watch: Snapshot hinschicken, „Erledigt“ entgegennehmen
         WatchSync.shared.activate()
@@ -239,7 +246,7 @@ final class AppModel: ObservableObject {
                 // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
                 // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
                 result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id,
-                                            note: type.note(on: date), handling: type.handling))
+                                            note: type.note(on: date), handling: type.handling, notPutOut: type.isNotPutOut(on: date)))
             }
         }
         for person in allPeople() {
@@ -277,7 +284,8 @@ final class AppModel: ObservableObject {
         return allWasteTypes().filter(\.isActive).flatMap { type in
             type.pickupDates(from: today, to: horizon).map {
                 PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol,
-                              remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)), note: type.note(on: $0), handling: type.handling, doneAt: doneTimes[Days.iso($0)])
+                              remindersEnabled: type.remindersEnabled, done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)), note: type.note(on: $0), handling: type.handling, doneAt: doneTimes[Days.iso($0)],
+                              skipped: type.isNotPutOut(on: $0))
             }
         }
     }
@@ -331,7 +339,7 @@ final class AppModel: ObservableObject {
         // Zeitpunkt: aus dem Widget/der Watch schon gemerkt (ausstehende Markierung) – sonst jetzt
         let pendingFromWidget = SnapshotStore.doneDays().contains(dayKey)
         SnapshotStore.recordDoneTime(dayKey: dayKey, overwrite: !pendingFromWidget)
-        for type in allWasteTypes() where type.isActive && type.pickupDates(from: day, to: day).contains(day) {
+        for type in allWasteTypes() where type.isActive && !type.isNotPutOut(on: day) && type.pickupDates(from: day, to: day).contains(day) {
             type.markDone(on: day)
         }
         // Nicht gespeichert: Markierung aus Widget/Watch liegen lassen, beim nächsten Mal erneut versuchen
@@ -354,6 +362,32 @@ final class AppModel: ObservableObject {
         await refreshAll()
     }
 
+    // MARK: - Diesmal nicht rausstellen
+
+    /// Eine Müllart an diesem Tag diesmal nicht rausstellen (oder es zurücknehmen). Die Erinnerungen werden neu geplant –
+    /// sie nennen danach nur noch, was wirklich rausgeht.
+    func setNotPutOut(_ notOut: Bool, wasteTypeID: UUID, dayKey: String) async {
+        guard let day = Days.parse(dayKey), let type = allWasteTypes().first(where: { $0.id == wasteTypeID }) else { return }
+        type.setNotPutOut(notOut, on: day)
+        guard save() else { return }
+        // Neu planen ersetzt die Erinnerungen des Tages durch Fassungen ohne diese Müllart (oder streicht sie ganz)
+        objectWillChange.send()
+        await refreshAll()
+    }
+
+    /// Aus der Mitteilung: alles, was an dem Tag noch offen ist, bleibt diesmal drin.
+    func skipOpen(dayKey: String) async {
+        guard let day = Days.parse(dayKey) else { return }
+        for type in allWasteTypes() where type.isActive && !type.isDone(on: day) && type.pickupDates(from: day, to: day).contains(day) {
+            type.setNotPutOut(true, on: day)
+        }
+        // Nicht gespeichert: Markierung liegen lassen, beim nächsten Mal erneut versuchen
+        guard save() else { return }
+        SnapshotStore.clearSkipped(dayKey: dayKey)
+        objectWillChange.send()
+        await refreshAll()
+    }
+
     /// „Erledigt“-Markierungen (und Rücknahmen) aus Widget/Live-Aktivität/Watch in die Datenbank übernehmen.
     func applyPendingDoneMarkers() async {
         // Ohne echte Datenbank liegen lassen – sonst wären die Häkchen aus Widget/Watch verbraucht, aber nicht gespeichert
@@ -362,6 +396,7 @@ final class AppModel: ObservableObject {
         for key in undo { await markUndone(dayKey: key) }
         let pending = SnapshotStore.doneDays()
         for key in pending { await markDone(dayKey: key) }
+        for key in SnapshotStore.skipDays() { await skipOpen(dayKey: key) }
     }
 
     // MARK: - Abgleich
@@ -418,7 +453,8 @@ final class AppModel: ObservableObject {
         let broughtIn = SnapshotStore.broughtInDays()
         let doneTimes = SnapshotStore.doneTimes()
         let pickupDays: [WidgetSnapshot.PickupDay] = days.compactMap { entry in
-            let items = entry.events.filter { $0.kind == .waste }
+            // Diesmal nicht rausgestellt: gehört nicht ins Widget, auf die Watch oder in die Live-Aktivität
+            let items = entry.events.filter { $0.kind == .waste && !$0.notPutOut }
             guard !items.isEmpty else { return nil }
             let key = Days.iso(entry.day), done = items.allSatisfy(\.done)
             return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName, dropOff: $0.handling == .bringTo) },
@@ -440,7 +476,8 @@ final class AppModel: ObservableObject {
         var total = 0
         var confirmed = 0
         for type in allWasteTypes() where type.isActive {
-            let dates = type.pickupDates(from: start, to: today)
+            // Bewusst nicht rausgestellt zählt weder als erledigt noch als verpasst
+            let dates = type.pickupDates(from: start, to: today).filter { !type.isNotPutOut(on: $0) }
             total += dates.count
             confirmed += dates.filter { type.isDone(on: $0) }.count
         }

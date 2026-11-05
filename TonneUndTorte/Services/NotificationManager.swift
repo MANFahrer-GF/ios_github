@@ -21,12 +21,15 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     static let messageAction = "BIRTHDAY_MESSAGE"
     static let bringInAction = "PICKUP_BROUGHT_IN"
     static let customDoneAction = "CUSTOM_DONE"
+    static let skipAction = "PICKUP_SKIP"
 
     /// Was ein Tipp auf eine Geburtstags- oder Termin-Mitteilung öffnet.
     enum OpenTarget { case birthdays, person(UUID), event(UUID) }
 
     /// Wird aufgerufen, wenn der Nutzer in einer Mitteilung „Erledigt“ tippt (dayKey).
     var onPickupDone: ((String) -> Void)?
+    /// „Diesmal nicht rausstellen“ in der Mitteilung (dayKey) – gilt für alles, was an dem Tag noch offen ist.
+    var onPickupSkip: ((String) -> Void)?
     /// „Erledigt“ bei einem eigenen Termin (Termin-ID, Tag).
     var onCustomDone: ((UUID, String) -> Void)?
     /// Kann beim Kaltstart aus einer Mitteilung erst nach dem Tipp gesetzt werden – das Ziel wird dann nachgereicht.
@@ -47,7 +50,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         center.delegate = self
         let done = UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Erledigt – steht draußen", "✅ Done – it's out"), options: [])
         let snooze = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
-        let waste = UNNotificationCategory(identifier: "WASTE", actions: [done, snooze], intentIdentifiers: [], options: [])
+        // Z. B. nach dem Urlaub: Sack noch leer – dann diesmal gar nicht rausstellen, keine weitere Erinnerung
+        let skip = UNNotificationAction(identifier: NotificationManager.skipAction, title: L10n.t("🚫 Diesmal nicht rausstellen", "🚫 Not this time"), options: [])
+        let waste = UNNotificationCategory(identifier: "WASTE", actions: [done, snooze, skip], intentIdentifiers: [], options: [])
         // Schadstoffmobil & Co.: nichts steht draußen – nur „Erledigt“
         let dropOffDone = UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Erledigt", "✅ Done"), options: [])
         let dropOff = UNNotificationCategory(identifier: "WASTE_BRING", actions: [dropOffDone, snooze], intentIdentifiers: [], options: [])
@@ -207,6 +212,12 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             await MainActor.run {
                 SnapshotStore.markDone(dayKey: dayKey)
                 self.onPickupDone?(dayKey)
+            }
+        case NotificationManager.skipAction:
+            // Wie „Erledigt“: erst sicher ablegen (die App läuft evtl. nur im Hintergrund), dann übernimmt das Modell
+            await MainActor.run {
+                SnapshotStore.markSkipped(dayKey: dayKey)
+                self.onPickupSkip?(dayKey)
             }
         case NotificationManager.bringInAction:
             await MainActor.run { SnapshotStore.markBroughtIn(dayKey: dayKey) }

@@ -22,6 +22,8 @@ final class WasteType {
     var skippedDates: [Date] = []
     /// Tage, an denen „Erledigt“ bestätigt wurde.
     var doneDates: [Date] = []
+    /// Tage, an denen diese Müllart „diesmal nicht rausgestellt“ wird – die Abfuhr kommt, aber ohne Erinnerung (ab 2.0.7).
+    var notPutOutDates: [Date] = []
     /// Schlüssel in der Online-Quelle (Titel der Fraktion), damit ein Abgleich die Termine ersetzt.
     var sourceKey: String?
     var createdAt: Date = Date()
@@ -137,11 +139,24 @@ final class WasteType {
         doneDates.removeAll { Days.start(of: $0) == day }
     }
 
+    func isNotPutOut(on date: Date) -> Bool {
+        let day = Days.start(of: date)
+        return notPutOutDates.contains { Days.start(of: $0) == day }
+    }
+
+    /// „Diesmal nicht rausstellen“ setzen oder zurücknehmen. Hebt ein „Erledigt“ für den Tag auf – beides zugleich gibt es nicht.
+    func setNotPutOut(_ notOut: Bool, on date: Date) {
+        let day = Days.start(of: date)
+        notPutOutDates.removeAll { Days.start(of: $0) == day }
+        if notOut { notPutOutDates.append(day); unmarkDone(on: day) }
+    }
+
     /// Entfernt Einzeltermine und Markierungen, die älter als ein Jahr sind.
     func prune() {
         let cutoff = Days.add(-400, to: Days.today())
         explicitDates.removeAll { $0 < cutoff }
         skippedDates.removeAll { $0 < cutoff }
         doneDates.removeAll { $0 < cutoff }
+        notPutOutDates.removeAll { $0 < cutoff }
     }
 }

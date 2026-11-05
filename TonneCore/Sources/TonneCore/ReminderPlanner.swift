@@ -52,10 +52,13 @@ public struct PlannedPickup: Hashable {
     public var handling: WasteHandling?
     /// Wann „Erledigt“ getippt wurde – am Vorabend heißt beim Hinbringen: morgen trotzdem erinnern.
     public var doneAt: Date?
+    /// „Diesmal nicht rausstellen“ – die Abfuhr kommt, aber diese Müllart bleibt drin (z. B. Sack nach dem Urlaub leer).
+    /// Keine Erinnerung, kein Nachhaken, kein „wieder reinholen“.
+    public var skipped: Bool
 
-    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false, note: String? = nil, handling: WasteHandling? = nil, doneAt: Date? = nil) {
+    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false, note: String? = nil, handling: WasteHandling? = nil, doneAt: Date? = nil, skipped: Bool = false) {
         self.date = date; self.name = name; self.locationName = locationName; self.colorHex = colorHex; self.symbolName = symbolName; self.remindersEnabled = remindersEnabled; self.done = done; self.broughtIn = broughtIn
-        self.note = note; self.handling = handling; self.doneAt = doneAt
+        self.note = note; self.handling = handling; self.doneAt = doneAt; self.skipped = skipped
     }
 
     /// Eine Tonne, die nach der Abfuhr wieder hereingeholt wird.
@@ -284,7 +287,7 @@ public enum ReminderPlanner {
         // Morgen-Erinnerung: offene Müllarten plus Hinbringen, auch wenn der Tag am Vorabend schon „erledigt“ ist –
         // wer abends die Tonne rausstellt und „Erledigt“ tippt, muss morgens trotzdem noch zum Schadstoffmobil.
         var morningByDay: [Date: [PlannedPickup]] = [:]
-        for pickup in pickups where pickup.remindersEnabled {
+        for pickup in pickups where pickup.remindersEnabled && !pickup.skipped {
             let day = calendar.startOfDay(for: pickup.date)
             guard day >= today && day <= horizon else { continue }
             if !pickup.done { byDay[day, default: []].append(pickup) }
@@ -328,7 +331,7 @@ public enum ReminderPlanner {
             var binsByDay: [Date: [PlannedPickup]] = [:]
             // Nur zwei Wochen im Voraus – iOS erlaubt nur 64 geplante Mitteilungen, die Abend-Erinnerungen gehen vor
             let bringInHorizon = Days.add(14, to: today, calendar: calendar)
-            for pickup in pickups where pickup.remindersEnabled && !pickup.broughtIn && pickup.isBin {
+            for pickup in pickups where pickup.remindersEnabled && !pickup.skipped && !pickup.broughtIn && pickup.isBin {
                 let day = calendar.startOfDay(for: pickup.date)
                 guard day >= today && day <= min(horizon, bringInHorizon) else { continue }
                 binsByDay[day, default: []].append(pickup)

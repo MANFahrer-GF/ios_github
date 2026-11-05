@@ -110,6 +110,39 @@ enum SnapshotStore {
         }
     }
 
+    // MARK: - „Diesmal nicht rausstellen“ aus der Mitteilung (Tag als ISO-String)
+
+    static let skipKey = "pickup.skipDays"
+
+    /// Noch nicht in die Datenbank übernommene „Diesmal nicht rausstellen“-Tage.
+    static func skipDays() -> Set<String> {
+        Set(defaults.stringArray(forKey: skipKey) ?? [])
+    }
+
+    /// Alles, was an diesem Tag noch offen ist, bleibt diesmal drin. Die App übernimmt es in die Datenbank und plant neu;
+    /// die Erinnerungen des Tages verschwinden aber sofort – auch wenn die App gerade nicht läuft.
+    static func markSkipped(dayKey: String) {
+        locked {
+            var days = skipDays()
+            days.insert(dayKey)
+            defaults.set(Array(days).sorted(), forKey: skipKey)
+            #if os(iOS)
+            let ids = ["evening", "escalation", "morning", "snooze", "bringin", "bringin-snooze"].map { "waste-\($0)-\(dayKey)" }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            #endif
+            DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
+        }
+    }
+
+    static func clearSkipped(dayKey: String) {
+        locked {
+            var days = skipDays()
+            days.remove(dayKey)
+            defaults.set(Array(days).sorted(), forKey: skipKey)
+        }
+    }
+
     // MARK: - „Erledigt“ zurücknehmen (versehentlich getippt)
 
     static let undoKey = "pickup.undoDays"
