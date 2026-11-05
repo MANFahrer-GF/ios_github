@@ -40,6 +40,23 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
 
+### Neu in dieser Version – 2.0.7
+
+```
+Diesmal nicht rausstellen
+Die Tonne ist noch halb leer? Ein Tipp auf „Bleibt drin“ – und die Erinnerung nennt nur noch, was wirklich raus muss. Geht auch direkt aus der Mitteilung am Vorabend. Mit „Doch raus“ nimmst du es jederzeit zurück, auch im Kalender und unter Müll.
+
+Gemacht für das iPhone Duo
+Aufgeklappt zeigt die Übersicht zwei Spalten: links die nächste Abholung, rechts die Tage danach. Der Kalender legt den gewählten Tag neben oder unter den Monat – je nachdem, wie du das Gerät hältst. Beim Zu- und Aufklappen geht nichts verloren.
+
+Mehr Platz auf iPad und iPhone quer
+Auch hier nutzen Übersicht und Kalender jetzt die ganze Breite.
+
+Kleinere Verbesserungen
+• Die Begrüßung lässt sich auf kleinen und quer gehaltenen Bildschirmen vollständig scrollen
+• Die Statistik bricht nicht mehr unschön um
+```
+
 ### Werbetext (optional, max. 170 Zeichen)
 
 ```
@@ -134,6 +151,7 @@ Liegen in `docs/appstore/screenshots/` – je Gerätegröße ein Ordner, Reihenf
 
 | App Store Connect | Ordner | Pixel |
 |---|---|---|
+| iPhone Duo (innen, aufgeklappt) | `iPhone-Duo-innen` | 2007 × 2853 |
 | iPhone 6,9" | `iPhone-6.9` | 1320 × 2868 |
 | iPhone 6,7"/6,5" | `iPhone-6.7` | 1290 × 2796 |
 | iPhone 6,3" (Dynamic Island, mittel) | `iPhone-6.3` | 1206 × 2622 |
