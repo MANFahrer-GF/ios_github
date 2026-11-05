@@ -227,8 +227,8 @@ struct OverviewView: View {
         // Alles bewusst drin gelassen: nicht „stand draußen“ behaupten, und „Rückgängig“ muss den Auslass zurücknehmen
         let allNotOut = shown.isEmpty
         return HStack(spacing: 12) {
-            Image(systemName: done ? "checkmark.circle.fill" : "clock.badge.questionmark")
-                .font(.title2).foregroundStyle(done ? KlarStyle.done : .orange)
+            Image(systemName: allNotOut ? "hand.raised.fill" : done ? "checkmark.circle.fill" : "clock.badge.questionmark")
+                .font(.title2).foregroundStyle(allNotOut ? Color.secondary : done ? KlarStyle.done : .orange)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(L10n.t("Heute: \(names)", "Today: \(names)")).font(.subheadline.weight(.semibold)).lineLimit(2)
