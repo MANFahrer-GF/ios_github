@@ -23,6 +23,8 @@ struct OverviewView: View {
     @State private var refreshToken = 0
     /// Geburtstag, Termin oder Müllart, die gerade bearbeitet wird – ein einziges Sheet.
     @State private var editing: EventEditTarget?
+    /// Breite der rechten Spalte, wenn zwei Spalten passen (siehe `WideLayout.sideColumn`), sonst nil.
+    @State private var sideWidth: CGFloat?
 
     private var days: [(day: Date, events: [CalendarEvent])] {
         _ = refreshToken
@@ -99,14 +101,32 @@ struct OverviewView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    // Für die App-Store-Bilder ohne den Hinweis „Erinnerungen sind aus“
-                    if !notifications.isAuthorized && !TonneUndTorteApp.isDemo { permissionBanner }
-                    if !model.recentChanges.isEmpty { changesBanner }
-                    if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
-                    nextDaysCard
-                    if showStats && showWaste { statsCard }
+                Group {
+                    if let sideWidth {
+                        // Breit (Duo aufgeklappt quer, iPhone quer, iPad): links die nächste Abholung, rechts schmaler die Tage danach
+                        HStack(alignment: .top, spacing: WideLayout.spacing) {
+                            VStack(spacing: 20) {
+                                topCards
+                                daysCard(big: bigGroups, later: [])
+                            }
+                            .frame(maxWidth: .infinity, alignment: .top)
+                            VStack(spacing: 20) {
+                                if !laterGroups.isEmpty { daysCard(big: [], later: laterGroups, stacked: true) }
+                                if showStats && showWaste { statsCard }
+                            }
+                            .frame(width: sideWidth, alignment: .top)
+                        }
+                        .limitedWidth(WideLayout.twoColumns)
+                    } else {
+                        VStack(spacing: 20) {
+                            topCards
+                            daysCard(big: bigGroups, later: laterGroups)
+                            if showStats && showWaste { statsCard }
+                        }
+                        .limitedWidth()
+                    }
                 }
+                .trackSideColumn($sideWidth, fraction: 0.42)
                 .padding(.horizontal)
                 .padding(.bottom, 24)
             }
@@ -135,6 +155,13 @@ struct OverviewView: View {
     }
 
     // MARK: - Banner
+
+    @ViewBuilder private var topCards: some View {
+        // Für die App-Store-Bilder ohne den Hinweis „Erinnerungen sind aus“
+        if !notifications.isAuthorized && !TonneUndTorteApp.isDemo { permissionBanner }
+        if !model.recentChanges.isEmpty { changesBanner }
+        if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
+    }
 
     private var permissionBanner: some View {
         HStack(spacing: 12) {
@@ -226,24 +253,26 @@ struct OverviewView: View {
     // MARK: - Die nächsten Tage
 
     /// Eine Karte für alles, was ansteht: groß die Tage bis zur nächsten Abholung, darunter knapp die folgenden.
-    private var nextDaysCard: some View {
-        let tintHex: String? = bigGroups.lazy.compactMap { group in
+    /// Breit geteilt: links nur die großen, rechts nur die späteren Tage.
+    /// `stacked`: schmale Spalte – Datum über den Einträgen statt daneben.
+    private func daysCard(big: [DayGroup], later: [DayGroup], stacked: Bool = false) -> some View {
+        let tintHex: String? = big.lazy.compactMap { group in
             group.waste.isEmpty ? nil : (group.waste.allSatisfy(\.settled) ? "#34C759" : group.waste.first { !$0.notPutOut }?.colorHex)
         }.first
         return VStack(alignment: .leading, spacing: 0) {
-            if groups.isEmpty {
+            if big.isEmpty && later.isEmpty {
                 Text(locations.isEmpty ? "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch." : L10n.t("In den nächsten 60 Tagen steht nichts an.", "Nothing coming up in the next 60 days."))
                     .font(KlarStyle.font(15, .semibold)).foregroundStyle(KlarStyle.muted(scheme))
             } else {
-                ForEach(Array(bigGroups.enumerated()), id: \.element.id) { index, group in
+                ForEach(Array(big.enumerated()), id: \.element.id) { index, group in
                     if index > 0 { Divider().padding(.vertical, 16) }
                     bigGroupView(group, primary: index == 0)
                 }
-                if !laterGroups.isEmpty {
-                    Divider().padding(.top, 18).padding(.bottom, 4)
-                    ForEach(Array(laterGroups.enumerated()), id: \.element.id) { index, group in
+                if !later.isEmpty {
+                    if !big.isEmpty { Divider().padding(.top, 18).padding(.bottom, 4) }
+                    ForEach(Array(later.enumerated()), id: \.element.id) { index, group in
                         if index > 0 { Divider().opacity(0.5) }
-                        laterRow(group)
+                        laterRow(group, stacked: stacked)
                     }
                 }
             }
@@ -291,15 +320,19 @@ struct OverviewView: View {
     }
 
     /// Ein späterer Tag: links Datum und Abstand wie oben, rechts dieselben Symbole – nur eine Nummer kleiner.
-    private func laterRow(_ group: DayGroup) -> some View {
-        HStack(alignment: .top, spacing: 14) {
+    /// `stacked` (schmale Spalte): Datum über den Einträgen, damit die Namen nicht in eine Restspalte gequetscht werden.
+    private func laterRow(_ group: DayGroup, stacked: Bool = false) -> some View {
+        let layout = stacked ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8)) : AnyLayout(HStackLayout(alignment: .top, spacing: 14))
+        return layout {
             VStack(alignment: .leading, spacing: 1) {
                 Text(PickupWords.eyebrow(date: group.day)).font(KlarStyle.font(11, .heavy)).tracking(0.6)
                     .foregroundStyle(group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink).lineLimit(1)
                 Text(DateText.countdown(group.day)).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme))
                     .lineLimit(1).minimumScaleFactor(0.8)
             }
-            .frame(width: 112, alignment: .leading)
+            .frame(width: stacked ? nil : 112, alignment: .leading)
+            // Gestapelt die natürliche Breite – sonst schrumpft „in 6 Tagen“ je nach Nachbarzeile unterschiedlich
+            .fixedSize(horizontal: stacked, vertical: false)
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(group.waste) { event in
                     Button { open(event) } label: {
@@ -341,9 +374,10 @@ struct OverviewView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .padding(.top, 2)
-            Spacer(minLength: 0)
+            .padding(.top, stacked ? 0 : 2)
+            if !stacked { Spacer(minLength: 0) }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 12)
     }
 

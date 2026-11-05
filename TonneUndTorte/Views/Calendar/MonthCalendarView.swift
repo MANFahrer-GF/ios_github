@@ -14,6 +14,10 @@ struct MonthCalendarView: View {
     @State private var monthStart = MonthCalendarView.firstOfMonth(Date())
     @State private var selectedDay = Days.today()
     @State private var editing: EventEditTarget?
+    /// Breite der rechten Spalte, wenn zwei Spalten passen (siehe `WideLayout.sideColumn`), sonst nil.
+    @State private var sideWidth: CGFloat?
+    /// Breit heißt meist quer mit wenig Höhe – dann passt der ganze Monat mit etwas niedrigeren Zeilen auf den Schirm.
+    private var cellHeight: CGFloat { sideWidth == nil ? 52 : 44 }
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
@@ -44,11 +48,30 @@ struct MonthCalendarView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 16) {
-                    monthHeader
-                    calendarGrid.card(padding: 12)
-                    selectedDaySection
+                Group {
+                    if let sideWidth {
+                        // Breit (Duo aufgeklappt quer, iPhone quer, iPad): links der Monat, rechts gleich der gewählte Tag
+                        HStack(alignment: .top, spacing: WideLayout.spacing) {
+                            VStack(spacing: 12) {
+                                monthHeader
+                                calendarGrid.card(padding: 12)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .top)
+                            selectedDaySection
+                                .padding(.top, 12)
+                                .frame(width: sideWidth, alignment: .top)
+                        }
+                        .limitedWidth(WideLayout.twoColumns)
+                    } else {
+                        VStack(spacing: 16) {
+                            monthHeader
+                            calendarGrid.card(padding: 12)
+                            selectedDaySection
+                        }
+                        .limitedWidth()
+                    }
                 }
+                .trackSideColumn($sideWidth, fraction: 0.5)
                 .padding(.horizontal).padding(.bottom, 24)
             }
             .background(Color(.systemGroupedBackground))
@@ -80,7 +103,7 @@ struct MonthCalendarView: View {
             }
             LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(Array(gridDays.enumerated()), id: \.offset) { _, day in
-                    if let day { dayCell(day) } else { Color.clear.frame(height: 52) }
+                    if let day { dayCell(day) } else { Color.clear.frame(height: cellHeight) }
                 }
             }
         }
@@ -107,7 +130,7 @@ struct MonthCalendarView: View {
             }
             .frame(height: 10)
         }
-        .frame(maxWidth: .infinity).frame(height: 52)
+        .frame(maxWidth: .infinity).frame(height: cellHeight)
         .contentShape(Rectangle())
         .onTapGesture { withAnimation(.snappy) { selectedDay = day } }
     }

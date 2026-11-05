@@ -11,41 +11,54 @@ struct OnboardingView: View {
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color(hex: "#2F6FED"), Color(hex: "#2E9E6B")], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-            VStack(spacing: 28) {
-                Spacer()
-                VStack(spacing: 10) {
-                    Text("🗑️🎂").font(.system(size: 72))
-                    Text("Tonne & Torte").font(.largeTitle.weight(.bold))
-                    Text("Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen.")
-                        .multilineTextAlignment(.center).font(.title3).opacity(0.9)
+            // Wenig Höhe (quer, iPhone Duo): rollen statt Texte mit „…“ abschneiden; sonst füllen die Spacer die Höhe wie bisher
+            GeometryReader { geo in
+                ScrollView {
+                    content
+                        .frame(maxWidth: 520)
+                        .frame(maxWidth: .infinity, minHeight: geo.size.height)
                 }
-                VStack(alignment: .leading, spacing: 14) {
-                    feature("antenna.radiowaves.left.and.right", "Termine kommen automatisch vom Entsorger – in \(ProviderCatalog.coverage.filter(\.isCovered).count) von \(ProviderCatalog.coverage.count) Landkreisen und Städten.")
-                    feature("bell.badge.fill", "Erinnerung am Vorabend mit „Erledigt“-Knopf, Widget und Sperrbildschirm.")
-                    feature("icloud.fill", "Alles in deiner iCloud – auf iPhone und iPad gleich.")
-                }
-                .padding(20)
-                .background(.white.opacity(0.15), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
-                Spacer()
-                VStack(spacing: 12) {
-                    Button { showWizard = true } label: {
-                        Text("Entsorger finden").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
-                    }
-                    .buttonStyle(.borderedProminent).tint(.white).foregroundStyle(Color(hex: "#2F6FED")).controlSize(.large)
-                    Button("Ohne Entsorger starten") { showManual = true }.foregroundStyle(.white.opacity(0.9)).font(.subheadline)
-                }
+                .scrollBounceBehavior(.basedOnSize)
             }
-            .foregroundStyle(.white)
-            .padding(24)
         }
         .sheet(isPresented: $showWizard, onDismiss: requestNotifications) { SourceWizardView(location: nil).environmentObject(model) }
         .sheet(isPresented: $showManual, onDismiss: requestNotifications) { NewLocationSheet { _ in }.environmentObject(model) }
     }
 
+    private var content: some View {
+        VStack(spacing: 28) {
+            Spacer()
+            VStack(spacing: 10) {
+                Text("🗑️🎂").font(.system(size: 72))
+                Text("Tonne & Torte").font(.largeTitle.weight(.bold))
+                Text("Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen.")
+                    .multilineTextAlignment(.center).font(.title3).opacity(0.9)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            VStack(alignment: .leading, spacing: 14) {
+                feature("antenna.radiowaves.left.and.right", "Termine kommen automatisch vom Entsorger – in \(ProviderCatalog.coverage.filter(\.isCovered).count) von \(ProviderCatalog.coverage.count) Landkreisen und Städten.")
+                feature("bell.badge.fill", "Erinnerung am Vorabend mit „Erledigt“-Knopf, Widget und Sperrbildschirm.")
+                feature("icloud.fill", "Alles in deiner iCloud – auf iPhone und iPad gleich.")
+            }
+            .padding(20)
+            .background(.white.opacity(0.15), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            Spacer()
+            VStack(spacing: 12) {
+                Button { showWizard = true } label: {
+                    Text("Entsorger finden").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                }
+                .buttonStyle(.borderedProminent).tint(.white).foregroundStyle(Color(hex: "#2F6FED")).controlSize(.large)
+                Button("Ohne Entsorger starten") { showManual = true }.foregroundStyle(.white.opacity(0.9)).font(.subheadline)
+            }
+        }
+        .foregroundStyle(.white)
+        .padding(24)
+    }
+
     private func feature(_ symbol: String, _ text: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: symbol).font(.title3).frame(width: 28)
-            Text(text).font(.subheadline)
+            Text(text).font(.subheadline).fixedSize(horizontal: false, vertical: true)
         }
     }
 

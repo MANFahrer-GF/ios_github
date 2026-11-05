@@ -48,6 +48,35 @@ extension View {
     func card(padding: CGFloat = 16) -> some View { modifier(CardModifier(padding: padding)) }
 }
 
+// MARK: - Breite Fenster (iPhone Duo aufgeklappt, iPad, iPhone quer)
+
+enum WideLayout {
+    /// Einspaltig: nicht breiter als eine gut lesbare Spalte – auf normalen iPhones (bis 440 pt) greift das nie.
+    static let readable: CGFloat = 660
+    /// Zweispaltig: beide Spalten zusammen.
+    static let twoColumns: CGFloat = 1040
+    static let spacing: CGFloat = 20
+    /// Breite der rechten Spalte, sobald die nutzbare Inhaltsbreite für zwei Karten reicht (Duo aufgeklappt quer ≈ 545 pt,
+    /// iPhone quer, iPad) – sonst nil = eine Spalte. Gemessen wird ohne Seitenleiste und Rand, darum kein Gerätemodell nötig.
+    static func sideColumn(contentWidth: CGFloat, fraction: CGFloat) -> CGFloat? {
+        guard contentWidth >= 520 else { return nil }
+        return ((min(contentWidth, twoColumns) - spacing) * fraction).rounded(.down)
+    }
+}
+
+extension View {
+    /// Inhalt mittig mit begrenzter Breite statt randvoll.
+    func limitedWidth(_ maxWidth: CGFloat = WideLayout.readable) -> some View {
+        frame(maxWidth: maxWidth).frame(maxWidth: .infinity)
+    }
+
+    /// Misst die nutzbare Breite und meldet die Breite der rechten Spalte (siehe `WideLayout.sideColumn`).
+    /// Vor `.padding(.horizontal)` anbringen, auf einem Inhalt, der die volle Breite nimmt.
+    func trackSideColumn(_ side: Binding<CGFloat?>, fraction: CGFloat) -> some View {
+        onGeometryChange(for: CGFloat?.self) { WideLayout.sideColumn(contentWidth: $0.size.width, fraction: fraction) } action: { side.wrappedValue = $0 }
+    }
+}
+
 struct SymbolBadge: View {
     let symbolName: String
     let colorHex: String
