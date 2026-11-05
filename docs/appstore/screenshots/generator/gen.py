@@ -415,13 +415,13 @@ SCREENS = {"overview": overview, "coverage": coverage, "birthdays": birthdays, "
 SHOTS = os.path.join(HERE, "shots")
 
 
-def real_shot(kind, ipad):
-    path = os.path.join(SHOTS, f"{'ipad' if ipad else 'iphone'}_{kind}.png")
+def real_shot(kind, ipad, prefix=None):
+    path = os.path.join(SHOTS, f"{prefix or ('ipad' if ipad else 'iphone')}_{kind}.png")
     return path if os.path.exists(path) else None
 
 
-def marketing(kind, title, sub, c1, c2, W, H, sw, sh, ipad):
-    shot = real_shot(kind, ipad)
+def marketing(kind, title, sub, c1, c2, W, H, sw, sh, ipad, prefix=None):
+    shot = real_shot(kind, ipad, prefix)
     screen = (f'<img src="file://{shot}" style="width:{sw}px;height:{sh}px;object-fit:cover;object-position:top;display:block">'
               if shot else SCREENS[kind](sw, sh, ipad))
     k = (W * (0.80 if ipad else 0.80)) / sw
@@ -467,6 +467,17 @@ for dev, (pw, ph, scale, (sw, sh), ipad) in DEVICES.items():
         name = f"{dev}_{i}_{kind}"
         open(os.path.join(OUT, name + ".html"), "w").write(page(marketing(kind, title, sub, c1, c2, W, H, sw, sh, ipad), W, H))
         jobs.append(dict(name=name, dev=dev, w=W, h=H, scale=scale))
+# iPhone Duo, innerer (aufgeklappter) Bildschirm: nur echte Simulator-Bilder (shots/duo-innen_*.png, Statusleiste 9:41, -demoData)
+DUO_SLIDES = [
+    ("overview", "Alles auf einen Blick", "Aufgeklappt: links die nächste Abholung, rechts der Rest", YELLOW, REST),
+    ("skip", "Diesmal nicht rausstellen", "Ein Tipp – die Erinnerung nennt nur, was wirklich raus muss", PAPER, YELLOW),
+    ("birthdays", "Geburtstage mit allem", "Alter, Jahrgang, Sternzeichen – und direkt gratulieren", "#FF5FA2", "#FF9A4A"),
+]
+for i, (kind, title, sub, c1, c2) in enumerate(DUO_SLIDES, 1):
+    dev, W, H = "iPhone-Duo-innen", 669, 951
+    name = f"{dev}_{i}_{kind}"
+    open(os.path.join(OUT, name + ".html"), "w").write(page(marketing(kind, title, sub, c1, c2, W, H, W, H, True, "duo-innen"), W, H))  # Seitenverhältnis wie iPad → iPad-Rahmenmaße
+    jobs.append(dict(name=name, dev=dev, w=W, h=H, scale=3))
 for dev, (pw, ph) in WATCHES.items():
     W, H = pw / 2, ph / 2
     for i, kind in enumerate(["pickup", "upcoming", "birthdays"], 1):
