@@ -108,11 +108,12 @@ struct OverviewView: View {
                             VStack(spacing: 20) {
                                 topCards
                                 daysCard(big: bigGroups, later: [])
+                                // Links statt rechts: in der schmalen Spalte brachen die Beschriftungen dreizeilig um
+                                if showStats && showWaste { statsCard }
                             }
                             .frame(maxWidth: .infinity, alignment: .top)
                             VStack(spacing: 20) {
                                 if !laterGroups.isEmpty { daysCard(big: [], later: laterGroups, stacked: true) }
-                                if showStats && showWaste { statsCard }
                             }
                             .frame(width: sideWidth, alignment: .top)
                         }
