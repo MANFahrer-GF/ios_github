@@ -284,7 +284,7 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.lkruelzen", title: "Kreis Uelzen", website: "https://www.abfallplus.de/", places: ["Kreis Uelzen"]),
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.abfallzak", title: "Zollernalbkreis", website: "https://www.abfallplus.de/", places: ["Zollernalbkreis"]),
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.abfallappno", title: "Neckar-Odenwald-Kreis", website: "https://www.abfallplus.de/", places: ["Neckar-Odenwald-Kreis"]),
-        CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.udb", title: "Burgenland (Landkreis)", website: "https://www.abfallplus.de/", places: ["Burgenland (Landkreis)"]),
+        CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.udb", title: "Burgenland (Österreich)", website: "https://www.abfallplus.de/", places: ["Burgenland (Österreich)"]),
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.abfallappsig", title: "Kreis Sigmaringen", website: "https://www.abfallplus.de/", places: ["Kreis Sigmaringen"]),
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.k4systems.asf", title: "Freiburg im Breisgau", website: "https://www.abfallplus.de/", places: ["Freiburg im Breisgau"]),
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.drekopf.abfallplaner", title: "Drekopf", website: "https://www.abfallplus.de/", places: ["Drekopf", "Hamminkeln"]),

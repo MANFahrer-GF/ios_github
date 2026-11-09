@@ -53,7 +53,8 @@ for line in open(S+'gapres/ap_places.txt',encoding='utf-8'):
     if m: AP_LIVE[m.group(1)]=[x for x in ast.literal_eval(m.group(2)) if len(x)>2]
 AP_NAMES={'de.remondis.rheinland':'Remondis','de.k4systems.muellalarm':'Schönmackers Müllalarm','de.drekopf.abfallplaner':'Drekopf',
           'de.enzkreis.app':'Enzkreis','de.abfallplus.bodenseekreis':'Bodenseekreis','de.k4systems.abfallhr':'ALF Lahn-Fulda / Schwalm-Eder-Kreis',
-          'de.k4systems.abfallappol':'Oldenburg (Stadt)','de.edg.abfallapp':'Dortmund (EDG)'}
+          'de.k4systems.abfallappol':'Oldenburg (Stadt)','de.edg.abfallapp':'Dortmund (EDG)',
+          'de.k4systems.udb':'Burgenland (Österreich)'}
 for app in ('de.enzkreis.app','de.abfallplus.bodenseekreis'):
     svc.setdefault(app,[AP_NAMES[app]])
 for app,regions in svc.items():

@@ -38,6 +38,11 @@ final class StreetStepSweepTests: XCTestCase {
                 break
             }
             guard let step else {
+                // Die Termine einer AbfallPlus-App gibt es erst nach einer echten Anmeldung samt Datenschutz-Zustimmung.
+                if entry.kind == .abfallPlusApp, ProcessInfo.processInfo.environment["TONNE_STREET_SWEEP_ABFALLPLUS"] == nil {
+                    lines.append("\(head)|\(depth)|ENDE|termine=nicht-abgerufen")
+                    break
+                }
                 do {
                     let pickups = try await provider.pickups(for: selections, calendar: .current)
                     lines.append("\(head)|\(depth)|ENDE|termine=\(pickups.count)")

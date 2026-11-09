@@ -131,9 +131,16 @@ final class CoreTests: XCTestCase {
     }
 
     func testSearchFindsHeimatInfo() {
-        for query in ["Salgen", "Gründau", "Aschheim", "Mainburg", "Feucht"] {
+        for query in ["Salgen", "Gründau", "Aschheim", "Oberelsbach", "Feucht"] {
             XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .heimatInfo }, query)
         }
+    }
+
+    /// Heimat-Info führt für Mainburg nur den Bezirk „Test“ ohne Termine; zuständig ist der Landkreis Kelheim.
+    func testMainburgFuehrtZumLandkreisStattZuHeimatInfo() {
+        let hits = ProviderCatalog.search("Mainburg")
+        XCTAssertFalse(hits.contains { $0.kind == .heimatInfo })
+        XCTAssertTrue(hits.contains { $0.kind == .awido && $0.serviceKey == "kelheim" })
     }
 
     func testSearchFindsNewOctoberEntries() {

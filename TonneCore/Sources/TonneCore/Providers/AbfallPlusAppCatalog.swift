@@ -88,7 +88,7 @@ enum AbfallPlusAppCatalog {
         ("de.k4systems.lkruelzen", ["Kreis Uelzen"]),
         ("de.k4systems.abfallzak", ["Zollernalbkreis"]),
         ("de.k4systems.abfallappno", ["Neckar-Odenwald-Kreis"]),
-        ("de.k4systems.udb", ["Burgenland (Landkreis)"]),
+        ("de.k4systems.udb", ["Burgenland (Österreich)"]),
         ("de.k4systems.abfallappsig", ["Kreis Sigmaringen"]),
         ("de.k4systems.asf", ["Freiburg im Breisgau"]),
         ("de.drekopf.abfallplaner", ["Drekopf"]),

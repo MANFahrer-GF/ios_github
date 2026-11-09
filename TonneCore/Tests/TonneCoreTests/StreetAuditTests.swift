@@ -194,6 +194,126 @@ final class StreetAuditTests: XCTestCase {
         let step = try await provider.nextStep(after: [])
         XCTAssertEqual(step?.options.map(\.title), ["Amt Creuzburg"])
     }
+
+    // MARK: - Landkreis Nordhausen
+
+    private func nordhausen() -> MitteldeutschlandPortalsProvider {
+        StreetAuditStub.handler = { url in
+            if url.hasSuffix("/addresses") {
+                return (200, #"[{"id":7,"location":"Appenrode","street":"","houseNumbers":""},{"id":8,"location":"Bleicherode","street":"Hauptstraße","houseNumbers":""},{"id":9,"location":"Bleicherode","street":"Ringstraße","houseNumbers":""}]"#)
+            }
+            if url.contains("/calendar/ics?addressid=7") {
+                return (200, "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20270105\r\nSUMMARY:Restabfall wird abgeholt\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n")
+            }
+            return (500, "")
+        }
+        return MitteldeutschlandPortalsProvider(service: "nordhausen", client: HTTPClient(session: StreetAuditStub.session()))
+    }
+
+    func testNordhausenOrtOhneStrasseFuehrtDirektZuDenTerminen() async throws {
+        let provider = nordhausen()
+        let places = try await provider.nextStep(after: [])
+        let appenrode = try XCTUnwrap(places?.options.first { $0.title == "Appenrode" })
+        XCTAssertEqual(appenrode.id, "7")
+        let next = try await provider.nextStep(after: [appenrode])
+        XCTAssertNil(next, "ohne Straße folgt keine weitere Auswahl")
+        let pickups = try await provider.pickups(for: [appenrode], calendar: .current)
+        XCTAssertEqual(pickups.map(\.name), ["Restabfall"])
+    }
+
+    func testNordhausenOrtMitStrassenFragtWeiterDieStrasseAb() async throws {
+        let provider = nordhausen()
+        let places = try await provider.nextStep(after: [])
+        let bleicherode = try XCTUnwrap(places?.options.first { $0.title == "Bleicherode" })
+        XCTAssertEqual(bleicherode.id, "Bleicherode")
+        let streets = try await provider.nextStep(after: [bleicherode])
+        XCTAssertEqual(streets?.options.map(\.title), ["Hauptstraße", "Ringstraße"])
+    }
+
+    // MARK: - Auswahllisten im HTML
+
+    func testAuswahllisteEndetAuchOhneSchliessendesSelect() {
+        let html = #"<select name="ort"><option value="1">Bad Saarow</option><option value="2">Beeskow</option><select name="strasse"><option value="leer">Alte Eichen</option></select>"#
+        XCTAssertEqual(HTMLText.options(ofSelect: "ort", in: html).map(\.label), ["Bad Saarow", "Beeskow"])
+        XCTAssertEqual(HTMLText.options(ofSelect: "strasse", in: html).map(\.label), ["Alte Eichen"])
+    }
+
+    func testAuswahllisteMitSchliessendemSelectUnveraendert() {
+        let html = #"<select name="ort"><option value="1">Bad Saarow</option></select><option value="9">außerhalb</option>"#
+        XCTAssertEqual(HTMLText.options(ofSelect: "ort", in: html).map(\.value), ["1"])
+    }
+
+    // MARK: - Kreiszuordnung im Katalog
+
+    private func districts(of entryPrefix: String, file: StaticString = #filePath, line: UInt = #line) -> [String] {
+        let hits = CatalogRegions.entryDistricts.filter { $0.key.hasPrefix(entryPrefix + ":") }
+        XCTAssertEqual(hits.count, 1, "Eintrag \(entryPrefix)", file: file, line: line)
+        return hits.first?.value ?? []
+    }
+
+    func testEintraegeBleibenInEinemBundesland() {
+        // Wirklich länderübergreifende Dienste; alles andere wäre eine Zuordnung über einen gleichnamigen Ort.
+        let multiState = ["abfallPlusApp:de.abfallwecker:", "abfallPlusApp:de.albagroup.app:", "abfallPlusApp:de.remondis.rheinland:", "jumomind:mymuell:", "lobbe:lobbe:"]
+        XCTAssertGreaterThan(CatalogRegions.entryDistricts.count, 300)
+        for (id, districts) in CatalogRegions.entryDistricts where !multiState.contains(where: id.hasPrefix) {
+            let states = Set(districts.map { CatalogRegions.districtStates[$0] ?? "unbekannt: \($0)" })
+            XCTAssertEqual(states.count, 1, "\(id): \(states.sorted())")
+        }
+    }
+
+    func testKreiszuordnungHaengtNichtAmGleichnamigenOrt() {
+        let wrong: [(String, String)] = [
+            ("portalsRP:art", "Kreisfreie Stadt Hamm"), ("portalsRP:art", "Landkreis Esslingen"), ("portalsRP:art", "Landkreis Neunkirchen"),
+            ("portalsRP:kreuznach", "Landkreis Roth"), ("portalsRP:rheinlahn", "Landkreis Roth"),
+            ("hausmuellInfo:wesel", "Landkreis Wittenberg"), ("portalsBayern:eva", "Kreisfreie Stadt Oberhausen"),
+            ("portalsMitte:ajl", "Kreisfreie Stadt Hagen"), ("wasteManagementServlet:hameln", "Kreisfreie Stadt Hagen"),
+            ("portalsNord:bremerhaven", "Landkreis Cuxhaven"),
+        ]
+        for (entry, district) in wrong {
+            XCTAssertFalse(districts(of: entry).contains(district), "\(entry) → \(district)")
+        }
+        XCTAssertTrue(districts(of: "portalsRP:art").contains("Kreisfreie Stadt Trier"), "der echte Bereich bleibt")
+        XCTAssertTrue(districts(of: "portalsRP:kreuznach").contains("Landkreis Bad Kreuznach"))
+    }
+
+    func testNichtBedienteKreiseBleibenDraussen() {
+        let notServed: [(String, String)] = [
+            ("awmMuenchen:muenchen", "Landkreis München"), ("leipzig:leipzig", "Landkreis Leipzig"), ("portalsMV:rostock", "Landkreis Rostock"),
+            ("portalsNord:osnabrueck", "Landkreis Osnabrück"), ("portalsBayern:coburg", "Landkreis Coburg"), ("muellmax:Ask", "Landkreis Kaiserslautern"),
+            ("abfallPlusApp:de.k4systems.abfallappla", "Landkreis Landshut"), ("abfallPlusApp:de.k4systems.awa", "Landkreis Augsburg"), ("abfallPlusApp:de.k4systems.wuerzburg", "Landkreis Würzburg"),
+            ("awido:lra-regensburg", "Kreisfreie Stadt Regensburg"), ("abfallPlusApp:abfallH.ucom.de", "Stadtkreis Heilbronn"), ("abfallPlusApp:de.remondis.rheinland", "Landkreis Traunstein"),
+            ("jumomind:mymuell", "Landkreis Biberach"), ("jumomind:mymuell", "Landkreis Main-Kinzig-Kreis"), ("jumomind:mymuell", "Landkreis Aschaffenburg"),
+        ]
+        for (entry, district) in notServed {
+            XCTAssertFalse(districts(of: entry).contains(district), "\(entry) → \(district)")
+        }
+        // Gegenprobe: echte Bereiche und Mehrkreis-Dienste bleiben erhalten.
+        XCTAssertTrue(districts(of: "awido:lra-regensburg").contains("Landkreis Regensburg"))
+        XCTAssertTrue(districts(of: "abfallPlusApp:abfallH.ucom.de").contains("Landkreis Heilbronn"))
+        XCTAssertTrue(districts(of: "abfallPlusApp:de.k4systems.zawdw").contains("Landkreis Passau"))
+    }
+
+    /// A.R.T. bedient die Gemeinde Hamm im Eifelkreis, aber nicht die Stadt Hamm in Westfalen.
+    func testSucheHammFindetStadtUndEifelgemeinde() throws {
+        let hits = ProviderCatalog.search("Hamm")
+        XCTAssertTrue(hits.contains { $0.title == "Stadt Hamm" })
+        let art = try XCTUnwrap(hits.first { $0.serviceKey == "art" })
+        XCTAssertTrue(art.places.contains("Hamm"))
+        XCTAssertFalse(CatalogRegions.entryDistricts[art.id]?.contains("Kreisfreie Stadt Hamm") ?? true)
+    }
+
+    func testBurgenlandIstOesterreichUndNichtDerBurgenlandkreis() throws {
+        let app = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "de.k4systems.udb" })
+        XCTAssertEqual(app.title, "Burgenland (Österreich)")
+        XCTAssertFalse(ProviderCatalog.search("Naumburg").contains { $0.serviceKey == "de.k4systems.udb" })
+        XCTAssertNil(CatalogRegions.entryDistricts[app.id])
+        XCTAssertFalse(ProviderCatalog.search("Burgenlandkreis").contains { $0.serviceKey == "de.k4systems.udb" })
+    }
+
+    func testKreiszuordnungVerweistNurAufVorhandeneEintraege() {
+        let known = Set(ProviderCatalog.entries.map(\.id))
+        XCTAssertEqual(Set(CatalogRegions.entryDistricts.keys).subtracting(known).sorted(), [])
+    }
 }
 
 /// Nachgestelltes Portal: Antwort je aufgerufener Adresse.
