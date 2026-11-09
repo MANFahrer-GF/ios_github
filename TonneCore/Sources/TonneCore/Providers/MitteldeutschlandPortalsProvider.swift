@@ -253,9 +253,14 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         let trim = { (s: String?) in (s ?? "").trimmingCharacters(in: .whitespaces) }
         switch selections.count {
         case 0:
-            let places = all.map { (trim($0.location), trim($0.location)) }.filter { !$0.0.isEmpty }
+            // Kleine Orte stehen ohne Straße in der Liste: Ihre Adress-ID führt direkt zu den Terminen.
+            let places = Dictionary(grouping: all.filter { !trim($0.location).isEmpty }) { trim($0.location) }.map { place, entries in
+                (entries.count == 1 && trim(entries[0].street).isEmpty ? String(entries[0].id) : place, place)
+            }
             guard !places.isEmpty else { throw ProviderError.noDataGeneric }
             return SelectionStep(title: SelectionStep.cityTitle, options: Self.sortedOptions(places))
+        case 1 where Int(selections[0].id) != nil:
+            return nil
         case 1:
             let inPlace = all.filter { trim($0.location) == selections[0].id && !trim($0.street).isEmpty }
             let groups = Dictionary(grouping: inPlace) { trim($0.street) }

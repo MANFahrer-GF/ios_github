@@ -165,7 +165,7 @@ public enum HTMLText {
     /// Alle `<option value="…">Text</option>` eines `<select name="…">`.
     public static func options(ofSelect name: String, in html: String) -> [(value: String, label: String)] {
         let escaped = NSRegularExpression.escapedPattern(for: name)
-        guard let select = firstMatch(#"<select[^>]*(?:name|id)=["']\#(escaped)["'][^>]*>([\s\S]*?)</select>"#, in: html, group: 1) else { return [] }
+        guard let select = firstMatch(#"<select[^>]*(?:name|id)=["']\#(escaped)["'][^>]*>([\s\S]*?)(?:</select>|<select)"#, in: html, group: 1) else { return [] }
         return matches(#"<option[^>]*value=(?:"([^"]*)"|'([^']*)')[^>]*>([\s\S]*?)</option>"#, in: select).map { groups in
             let value = groups[0].isEmpty ? groups[1] : groups[0]
             return (value: decodeEntities(value), label: decodeEntities(stripTags(groups[2])).trimmingCharacters(in: .whitespacesAndNewlines))

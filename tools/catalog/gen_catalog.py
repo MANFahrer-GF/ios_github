@@ -196,6 +196,13 @@ for r in rows:
 MUNI_KINDS={'abfallPlusApp','icsURL','heimatInfo','insertIT'}
 # Gleichnamige Orte: hier stimmt die eindeutige Zuordnung nicht
 NO_GENERIC={('icsURL','https://langen.mein-abfallkalender.online')}
+MULTI_CITY_APPS={('jumomind','mymuell')}
+# Live geprüft (November 2026): gleichnamiger oder kaum abgedeckter Kreis, den der Eintrag nicht bedient
+NOT_SERVED={('awmMuenchen','muenchen'):['Landkreis München'],('leipzig','leipzig'):['Landkreis Leipzig'],('portalsMV','rostock'):['Landkreis Rostock'],
+ ('portalsNord','osnabrueck'):['Landkreis Osnabrück'],('portalsBayern','coburg'):['Landkreis Coburg'],('muellmax','Ask'):['Landkreis Kaiserslautern'],
+ ('abfallPlusApp','de.k4systems.abfallappla'):['Landkreis Landshut'],('abfallPlusApp','de.k4systems.awa'):['Landkreis Augsburg'],('abfallPlusApp','de.k4systems.wuerzburg'):['Landkreis Würzburg'],
+ ('awido','lra-regensburg'):['Kreisfreie Stadt Regensburg'],('abfallPlusApp','abfallH.ucom.de'):['Stadtkreis Heilbronn'],('abfallPlusApp','de.remondis.rheinland'):['Landkreis Traunstein'],
+ ('jumomind','mymuell'):['Landkreis Biberach','Landkreis Main-Kinzig-Kreis','Landkreis Aschaffenburg']}
 kreis_land={r['krs_name']:r['lan_name'] for r in rows}
 def short(k):
     for p in ['Kreisfreie Stadt ','Landkreis ','Stadtkreis ','Regionalverband ','Städteregion ','Kreis ','Region ']:
@@ -213,6 +220,7 @@ for kind,key,title,places in entries:
     exact=({norm(x).strip() for x in pl} | {norm(strip_pre(x)).strip() for x in pl}) if kind not in ('lobbe','icsURL','sitepark','insertIT','muellabfuhrDeutschland','heimatInfo','buergerportal','magdeburg') else set()
     if kind=='abfallPlusApp' and key in AP_NAMES: exact=set()   # Gemeindelisten, keine Kreisnamen
     hits=[]
+    name_only=set()
     for k in kreise:
         sh,prefix=short(k)
         n=norm(sh)
@@ -223,6 +231,8 @@ for kind,key,title,places in entries:
             if prefix=='Kreisfreie Stadt' and ('landkreis' in t or 'kreis ' in t or t.startswith('lk')) and 'stadt' not in t: continue
             if prefix in ('Landkreis','Kreis') and ('stadt ' in t and 'landkreis' not in t and 'kreis' not in t.replace('landkreis','')): continue
             hits.append(k)
+            # Nur ein Ort der Liste heißt wie der Kreis (Ortsteil „Hamm“ bei A.R.T. Trier ≠ Stadt Hamm)
+            if n not in text and norm(k).strip() not in exact: name_only.add(k)
     if kind=='lobbe':
         allowed={'Hessen','Nordrhein-Westfalen'}
         for r in rows:
@@ -245,7 +255,6 @@ for kind,key,title,places in entries:
         ('abfallPlusApp','de.zawsr'): ['Landkreis Straubing-Bogen','Kreisfreie Stadt Straubing'],
         ('awido','awv-nordschwaben'): ['Landkreis Dillingen a.d.Donau','Landkreis Donau-Ries'],
         ('awido','awv-isar-inn'): ['Landkreis Rottal-Inn','Landkreis Dingolfing-Landau'],
-        ('abfallPlusApp','de.k4systems.udb'): ['Landkreis Burgenlandkreis'],
         ('awido','zaso'): ['Landkreis Saale-Orla-Kreis','Landkreis Saalfeld-Rudolstadt'],
         ('abfallPlusApp','de.k4systems.aevapp'): ['Landkreis Elbe-Elster','Landkreis Oberspreewald-Lausitz'],
         ('awido','awhas'): ['Landkreis Haßberge'],
@@ -285,6 +294,9 @@ for kind,key,title,places in entries:
         ('icsURL','https://langen.mein-abfallkalender.online'): ['Landkreis Offenbach'],
     }
     hits+=MANUAL.get((kind,key),[])+MANUAL_EXTRA.get((kind,key),[])
+    # Gleichnamiger Ort in einem anderen Bundesland: kein Gebiet dieses Entsorgers
+    anchors={kreis_land[k] for k in hits if k not in name_only} or {kreis_land[k] for k in name_only}
+    if (kind,key) not in MULTI_CITY_APPS: hits=[k for k in hits if k not in name_only or kreis_land[k] in anchors]
     # Orte, die in ganz Deutschland nur einmal vorkommen, eindeutig ihrem Kreis zuordnen
     if kind in MUNI_KINDS and (kind,key) not in NO_GENERIC:
         uniq=[]
@@ -296,6 +308,7 @@ for kind,key,title,places in entries:
         for k in uniq: lands[kreis_land[k]]=lands.get(kreis_land[k],0)+1
         keep={l for l,n in lands.items() if n>=max(1,0.2*len(uniq))}
         hits+=[k for k in uniq if kreis_land[k] in keep]
+    hits=[k for k in hits if k not in NOT_SERVED.get((kind,key),())]
     if (kind,key) in ONLY_DISTRICTS: hits=MANUAL_EXTRA[(kind,key)]
     if hits: mapping[f"{kind}:{key}:{title}"]=sorted(set(hits))
 # --- Gemeinde-genaue Abdeckung: Einträge, die nur einzelne Gemeinden eines Kreises bedienen
@@ -320,7 +333,6 @@ def lookup(name):
     if '(' not in name and len(short_index.get(norm_name(name),()))>1: return None
     return full_unique.get(norm(name).strip()) or (short_unique(norm_name(name)) if '(' not in name else None)
 LOCAL_KINDS=('heimatInfo','icsURL')
-MULTI_CITY_APPS={('jumomind','mymuell')}
 # Einzelne Städte mit eigener Kennung, deren Titel nicht eindeutig ist
 LOCAL_MANUAL={('jumomind','hom'):[('Landkreis Hochtaunuskreis','Bad Homburg v.d.Höhe')],
               ('jumomind','kbl'):[('Landkreis Offenbach','Langen (Hessen)')]}
