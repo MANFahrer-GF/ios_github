@@ -57,7 +57,12 @@ public struct SiteparkProvider: WasteProvider {
         case 1:
             let streets = try await streets(tenant, place: selections[0])
             guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
-            return SelectionStep(title: SelectionStep.streetTitle, options: streets)
+            var step = SelectionStep(title: SelectionStep.streetTitle, options: streets)
+            if streets.contains(where: { $0.subtitle != nil }) {
+                step.noMatchHint = L10n.t("Nicht jede Straße ist hier einzeln aufgeführt. Such stattdessen nach deinem Stadt- oder Ortsteil. Sie stehen ganz oben in der Liste.",
+                                          "Not every street is listed individually. Search for your district instead. Districts are at the top of the list.")
+            }
+            return step
         default:
             return nil
         }
@@ -98,14 +103,29 @@ public struct SiteparkProvider: WasteProvider {
         } else {
             entries = try await autocomplete(tenant, refid: tenant.refid).filter { Self.split($0.label).place == place.id }
         }
-        return entries
+        return Self.streetOptions(entries)
+    }
+
+    /// Sammeleinträge wie „Stadtteil - Georgenberg“ gelten für alle Straßen dieses Viertels, die das Portal
+    /// nicht einzeln führt. Sie stehen deshalb unter ihrem Namen ganz oben (wie auf dem Portal), mit Untertitel.
+    static func streetOptions(_ entries: [(pois: String, label: String)]) -> [SelectionOption] {
+        entries
             .map { entry -> SelectionOption in
-                let street = Self.split(entry.label).street
+                let street = split(entry.label).street
                 // „Broistedt - alle Straßen“ → „Alle Straßen“ (der Ort steht schon in der Auswahl davor)
                 if street.lowercased().contains("alle straßen") { return SelectionOption(id: entry.pois, title: L10n.t("Alle Straßen", "All streets")) }
+                if street.hasPrefix("Stadtteil - ") {
+                    return SelectionOption(id: entry.pois, title: String(street.dropFirst("Stadtteil - ".count)), subtitle: L10n.t("Ganzer Stadtteil", "Entire district"))
+                }
+                if street.hasPrefix("Ortsteil - ") {
+                    return SelectionOption(id: entry.pois, title: String(street.dropFirst("Ortsteil - ".count)), subtitle: L10n.t("Ganzer Ortsteil", "Entire district"))
+                }
                 return SelectionOption(id: entry.pois, title: street.isEmpty ? entry.label : street)
             }
-            .sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+            .sorted { first, second in
+                if (first.subtitle != nil) != (second.subtitle != nil) { return first.subtitle != nil }
+                return first.title.localizedCaseInsensitiveCompare(second.title) == .orderedAscending
+            }
     }
 
     /// `/output/autocomplete.php` liefert `[[pois, "Straße (Ort)"], …]` oder `null`.
@@ -117,7 +137,8 @@ public struct SiteparkProvider: WasteProvider {
         return rows.compactMap { row in
             guard row.count >= 2, let label = row[1] as? String else { return nil }
             let pois = (row[0] as? String) ?? (row[0] as? NSNumber)?.stringValue
-            return pois.map { ($0, label.trimmingCharacters(in: .whitespaces)) }
+            // Das Portal hat vereinzelt weiche Trennzeichen im Namen („Bäringer\u{AD}straße“).
+            return pois.map { ($0, label.replacingOccurrences(of: "\u{AD}", with: "").trimmingCharacters(in: .whitespaces)) }
         }
     }
 

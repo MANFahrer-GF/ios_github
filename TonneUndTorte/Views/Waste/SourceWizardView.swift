@@ -277,7 +277,10 @@ struct SourceWizardView: View {
                             }
                         }
                     }
-                    if filtered.isEmpty { Text("Nichts gefunden.").foregroundStyle(.secondary) }
+                    if filtered.isEmpty {
+                        Text("Nichts gefunden.").foregroundStyle(.secondary)
+                        if let hint = step.noMatchHint { Text(hint).font(.footnote).foregroundStyle(.secondary) }
+                    }
                 }
             }
         }

@@ -24,6 +24,8 @@ public struct SelectionStep: Hashable {
     public var searchable: Bool
     public var input: Input
     public var placeholder: String?
+    /// Zusatzhinweis, wenn die Suche in diesem Schritt nichts findet.
+    public var noMatchHint: String?
 
     public init(title: String, options: [SelectionOption], searchable: Bool = true) {
         self.title = title

@@ -89,6 +89,23 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(SiteparkProvider.split("Am Bahnhof (Bahnhof) (Neustrelitz)") == ("Am Bahnhof (Bahnhof)", "Neustrelitz"))
         XCTAssertTrue(SiteparkProvider.split(" Ortsteil - Adenhausen (Seesen)") == ("Ortsteil - Adenhausen", "Seesen"))
         XCTAssertTrue(SiteparkProvider.split("Broistedt - alle Straßen") == ("Broistedt - alle Straßen", ""))
+        XCTAssertTrue(SiteparkProvider.split(" Stadtteil - Jürgenohl (außer Görgweg und Grauhöfer Landwehr) (Goslar)") == ("Stadtteil - Jürgenohl (außer Görgweg und Grauhöfer Landwehr)", "Goslar"))
+    }
+
+    /// Goslar: Die Straßen der Außenbezirke stehen auf dem Portal nur als Sammeleintrag des Stadtteils.
+    func testSiteparkStadtteileStehenObenUnterIhremNamen() {
+        let options = SiteparkProvider.streetOptions([
+            (pois: "1", label: "Abzuchtstraße (Goslar)"),
+            (pois: "2", label: " Stadtteil - Georgenberg (Goslar)"),
+            (pois: "3", label: "Zwingerwall (Goslar)"),
+            (pois: "4", label: " Ortsteil - Hahndorf (Goslar)"),
+            (pois: "5", label: " Stadtteil - Jürgenohl (außer Görgweg und Grauhöfer Landwehr) (Goslar)"),
+        ])
+        XCTAssertEqual(options.map(\.title), ["Georgenberg", "Hahndorf", "Jürgenohl (außer Görgweg und Grauhöfer Landwehr)", "Abzuchtstraße", "Zwingerwall"])
+        XCTAssertEqual(options.map(\.id), ["2", "4", "5", "1", "3"])
+        XCTAssertNotNil(options[0].subtitle)
+        XCTAssertNotNil(options[1].subtitle)
+        XCTAssertNil(options[3].subtitle)
     }
 
     func testSiteparkNamesClassify() {
