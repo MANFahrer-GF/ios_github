@@ -67,7 +67,7 @@ public struct HausmuellInfoProvider: WasteProvider {
         "erfurt": Operator(title: "Stadtwerke Erfurt (SWE)", base: "https://abfallkalender.stadtwerke-erfurt.de/", proxy: false, levels: [.str, .hnr]),
         "asc": Operator(title: "ASR Chemnitz", base: "https://asc.hausmuell.info/", proxy: true, levels: [.str, .hnr, .objekt], textLevel: .str),
         "boerde": Operator(title: "Kommunalservice Landkreis Börde", base: "https://boerde.hausmuell.info/", proxy: false, levels: [.ort, .str, .hnr]),
-        "azv": Operator(title: "AZV Wartburgkreis", base: "https://azv.hausmuell.info/", proxy: true, levels: [.ort, .ortsteil, .str, .hnr]),
+        "azv": Operator(title: "AZV Wartburgkreis", base: "https://azv.hausmuell.info/", proxy: false, levels: [.ort, .ortsteil, .str, .hnr]),
         "schmalkalden-meiningen": Operator(title: "Kreiswerke Schmalkalden-Meiningen", base: "https://schmalkalden-meiningen.hausmuell.info/", proxy: false, levels: [.ort, .ortsteil, .str, .hnr]),
         "ew": Operator(title: "Eichsfeldwerke", base: "https://ew.hausmuell.info/", proxy: false, levels: [.ort, .ortsteil, .str, .hnr]),
         "ebkds": Operator(title: "EB KDS Suhl", base: "https://ebkds.hausmuell.info/", proxy: false, levels: [.ort, .str, .hnr]),

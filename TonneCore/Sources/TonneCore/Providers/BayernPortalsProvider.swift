@@ -197,10 +197,15 @@ public struct BayernPortalsProvider: WasteProvider {
 extension BayernPortalsProvider {
     private static let chamBase = "https://pwa.entsorgung-cham.de/php/"
 
-    /// `complete = [{ label: '93474 Arrach', value: '2' }, …]`
-    private static func chamCompletes(_ html: String) -> [(label: String, value: String)] {
-        HTMLText.matches(#"label:\s*'((?:[^'\\]|\\.)*)',\s*value:\s*'([^']*)'"#, in: html).map {
-            (HTMLText.decodeEntities($0[0].replacingOccurrences(of: "\\'", with: "'")), $0[1])
+    /// `complete = [{"label":"93474 Arrach","value":"2"}, …]`, früher `{ label: '93474 Arrach', value: '2' }`.
+    static func chamCompletes(_ html: String) -> [(label: String, value: String)] {
+        let pattern = #""?label"?\s*:\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)')\s*,\s*"?value"?\s*:\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)')"#
+        return HTMLText.matches(pattern, in: html).map { groups in
+            let unescape = { (double: String, single: String) -> String in
+                if !single.isEmpty { return single.replacingOccurrences(of: "\\'", with: "'") }
+                return (try? JSONDecoder().decode(String.self, from: Data("\"\(double)\"".utf8))) ?? double
+            }
+            return (HTMLText.decodeEntities(unescape(groups[0], groups[1])), unescape(groups[2], groups[3]))
         }
     }
 
