@@ -11,13 +11,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Linux statt macOS: TonneCore läuft auf beiden, Linux-Minuten sind deutlich günstiger.
+  # macOS statt Linux: TonneCore nutzt CryptoKit und URLSession, das Paket kompiliert auf Linux nicht.
   core-tests:
     name: TonneCore-Tests
-    runs-on: ubuntu-latest
-    container: swift:6.1
+    runs-on: xcode-27
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Xcode wählen
+        run: |
+          XCODE="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -1)"
+          sudo xcode-select -s "${XCODE:-/Applications/Xcode.app}"
+          xcodebuild -version
       - name: Tests
         working-directory: TonneCore
         run: swift test
