@@ -34,6 +34,8 @@ struct SettingsView: View {
     @State private var activityStatus: LiveActivityManager.Status = .none
     @State private var showResetConfirm = false
     @State private var info: String?
+    @EnvironmentObject private var crashReports: CrashReportCenter
+    @State private var sendingCrashReport: CrashReport?
 
     var body: some View {
         Form {
@@ -132,6 +134,25 @@ struct SettingsView: View {
             } header: { Text("Daten") }
 
             Section {
+                if crashReports.reports.isEmpty {
+                    Text(L10n.t("Keine Absturzberichte vorhanden", "No crash reports")).foregroundStyle(.secondary)
+                } else {
+                    ForEach(crashReports.reports) { report in
+                        Button { sendingCrashReport = report } label: {
+                            LabeledContent(L10n.t("Bericht senden", "Send report"),
+                                           value: report.reportDate.formatted(date: .abbreviated, time: .shortened))
+                        }
+                    }
+                    Button(L10n.t("Berichte löschen", "Delete reports"), role: .destructive) { crashReports.removeAll() }
+                }
+            } header: {
+                Text(L10n.t("Absturzberichte", "Crash reports"))
+            } footer: {
+                Text(L10n.t("Nach einem Absturz legt iOS hier einen technischen Bericht ab. Verschickt wird er nur, wenn du die Mail selbst absendest.",
+                            "After a crash, iOS leaves a technical report here. It is only sent if you send the email yourself."))
+            }
+
+            Section {
                 NavigationLink { AboutView() } label: {
                     Label("Über Tonne & Torte", systemImage: "info.circle.fill")
                 }
@@ -143,6 +164,7 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Einstellungen")
+        .sheet(item: $sendingCrashReport) { CrashReportSendSheet(report: $0) }
         .onChange(of: eveningEnabled) { _, _ in refresh() }
         .onChange(of: eveningMinutes) { _, _ in refresh() }
         .onChange(of: escalationEnabled) { _, _ in refresh() }
@@ -166,6 +188,7 @@ struct SettingsView: View {
                 try? context.delete(model: WasteType.self); try? context.delete(model: Location.self)
                 try? context.delete(model: Person.self); try? context.delete(model: CustomEvent.self)
                 guard model.save() else { return }
+                crashReports.removeAll()
                 model.onboardingDone = false
                 refresh()
             }

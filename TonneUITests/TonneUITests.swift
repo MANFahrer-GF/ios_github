@@ -205,6 +205,8 @@ final class TonneUITests: XCTestCase {
         app.buttons["Neuer Termin"].firstMatch.tap()
         XCTAssertTrue(app.navigationBars["Neuer Termin"].waitForExistence(timeout: 5), "„+“ öffnet keinen neuen Termin")
         app.buttons["Rauchmelder testen"].firstMatch.tap()
+        // Auf dem iPad ist das Sheet kleiner: die Zeile liegt erst nach dem Scrollen im Bild
+        for _ in 0..<4 where !app.switches["Uhrzeit"].exists { app.swipeUp() }
         flip("Uhrzeit")
         app.swipeUp()
         app.buttons["Symbol"].firstMatch.tap()
@@ -274,5 +276,66 @@ final class TonneUITests: XCTestCase {
         }
         XCTAssertGreaterThanOrEqual(flipped.count, 10, "zu wenige Schalter gefunden: \(flipped)")
         XCTAssertEqual(app.state, .runningForeground)
+    }
+
+    // MARK: - Absturzbericht
+
+    private func openCrashReports() {
+        tab("Mehr")
+        app.buttons["Einstellungen"].tap()
+        for _ in 0..<12 where !app.staticTexts["ABSTURZBERICHTE"].isHittable && !app.staticTexts["Absturzberichte"].isHittable {
+            app.swipeUp()
+        }
+    }
+
+    func testNoCrashReportMeansNoPromptAndAnEmptyList() {
+        XCTAssertFalse(app.buttons["Ansehen und senden"].waitForExistence(timeout: 2), "Hinweis ohne Absturzbericht")
+        openCrashReports()
+        XCTAssertTrue(text("Keine Absturzberichte vorhanden").exists)
+    }
+
+    func testSwipedAwayOfferStaysGoneAfterRestart() {
+        app.terminate()
+        app.launchArguments.append("-simulateCrashReport")
+        app.launch()
+        XCTAssertTrue(app.buttons["Ansehen und senden"].waitForExistence(timeout: 10), "Hinweis auf den Absturz fehlt")
+        let bar = app.navigationBars["Tonne & Torte ist abgestürzt"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        bar.press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98)))
+        XCTAssertTrue(app.buttons["Ansehen und senden"].waitForNonExistence(timeout: 5), "Hinweis ließ sich nicht wegwischen")
+
+        app.terminate()
+        app.launchArguments.removeAll { $0 == "-simulateCrashReport" }
+        app.launchArguments.append("-keepCrashReports")
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["Ansehen und senden"].waitForExistence(timeout: 3), "Hinweis kam nach dem Neustart wieder")
+        openCrashReports()
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Bericht senden")).firstMatch.exists,
+                      "Bericht ging beim Neustart verloren")
+    }
+
+    func testCrashReportIsOfferedOnceAndCanBeSentAndDeleted() {
+        app.terminate()
+        app.launchArguments.append("-simulateCrashReport")
+        app.launch()
+
+        XCTAssertTrue(app.buttons["Ansehen und senden"].waitForExistence(timeout: 10), "Hinweis auf den Absturz fehlt")
+        app.buttons["Ansehen und senden"].tap()
+
+        // Simulator hat keine Mail-App: es bleibt das Teilen
+        XCTAssertTrue(app.buttons["Bericht teilen"].waitForExistence(timeout: 5), "Teilen fehlt ohne Mail-App")
+        app.buttons["Schließen"].tap()
+        XCTAssertTrue(app.buttons["Bericht teilen"].waitForNonExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Ansehen und senden"].waitForExistence(timeout: 2), "Hinweis kam ein zweites Mal")
+
+        openCrashReports()
+        let send = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Bericht senden")).firstMatch
+        XCTAssertTrue(send.exists, "Bericht fehlt in den Einstellungen")
+        send.tap()
+        XCTAssertTrue(app.buttons["Bericht teilen"].waitForExistence(timeout: 5))
+        app.buttons["Schließen"].tap()
+        XCTAssertTrue(app.buttons["Berichte löschen"].waitForExistence(timeout: 5))
+        app.buttons["Berichte löschen"].tap()
+        XCTAssertTrue(text("Keine Absturzberichte vorhanden").waitForExistence(timeout: 5), "Bericht wurde nicht gelöscht")
     }
 }
