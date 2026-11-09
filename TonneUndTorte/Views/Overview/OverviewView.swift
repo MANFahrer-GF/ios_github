@@ -54,7 +54,7 @@ struct OverviewView: View {
         guard bringInEnabled, let today = wasteDays.first(where: { Calendar.current.isDate($0.day, inSameDayAs: now) }),
               PickupTiming.showsBringIn(day: today.day, broughtIn: SnapshotStore.broughtInDays().contains(Days.iso(today.day)), now: now,
                                         fromMinutes: min(PickupTiming.bringInHintMinutes, bringInMinutes)) else { return nil }
-        let names = today.events.filter { !$0.notPutOut && $0.handling != .bringTo && WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
+        let names = today.events.filter { !$0.notPutOut && !$0.offDuty && $0.handling != .bringTo && WasteReturn.isBin(name: $0.title, symbol: $0.symbolName) }.map(\.title)
         return names.isEmpty ? nil : (day: today.day, names: names)
     }
 
@@ -63,7 +63,9 @@ struct OverviewView: View {
     private var todayRecap: (day: Date, events: [CalendarEvent])? {
         guard let today = wasteDays.first(where: { Calendar.current.isDateInToday($0.day) }),
               !activeWasteDays.contains(where: { $0.day == today.day }) else { return nil }
-        return today
+        // Wer nicht dran ist, hat heute nichts zu bestätigen
+        let own = today.events.filter { !$0.offDuty }
+        return own.isEmpty ? nil : (day: today.day, events: own)
     }
 
     /// Ein Tag mit allem, was ansteht: Tonnen (ohne die heute schon erledigte/vorbeie Abholung), Geburtstage, eigene Termine.
@@ -265,7 +267,7 @@ struct OverviewView: View {
     /// `stacked`: schmale Spalte – Datum über den Einträgen statt daneben.
     private func daysCard(big: [DayGroup], later: [DayGroup], stacked: Bool = false) -> some View {
         let tintHex: String? = big.lazy.compactMap { group in
-            group.waste.isEmpty ? nil : (group.waste.allSatisfy(\.settled) ? "#34C759" : group.waste.first { !$0.notPutOut }?.colorHex)
+            group.waste.isEmpty || group.waste.allSatisfy(\.offDuty) ? nil : (group.waste.allSatisfy(\.settled) ? "#34C759" : group.waste.first { !$0.notPutOut && !$0.offDuty }?.colorHex)
         }.first
         return VStack(alignment: .leading, spacing: 0) {
             if big.isEmpty && later.isEmpty {
@@ -297,11 +299,12 @@ struct OverviewView: View {
     private func bigGroupView(_ group: DayGroup, primary: Bool) -> some View {
         let n = Days.until(group.day)
         // Bewusst drin gelassene Müllarten brauchen kein „Erledigt“ – nur der Rest zählt
-        let allDone = !group.waste.isEmpty && group.waste.allSatisfy(\.settled)
-        let allNotOut = !group.waste.isEmpty && group.waste.allSatisfy(\.notPutOut)
+        let allOffDuty = !group.waste.isEmpty && group.waste.allSatisfy(\.offDuty)
+        let allDone = !group.waste.isEmpty && group.waste.allSatisfy(\.settled) && !allOffDuty
+        let allNotOut = !group.waste.isEmpty && group.waste.allSatisfy { $0.notPutOut || $0.offDuty }
         let places = Set(group.waste.compactMap(\.locationName))
         let place = locations.count > 1 && places.count == 1 ? places.first : nil
-        let eyebrowColor: Color = allDone ? KlarStyle.done : (group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink)
+        let eyebrowColor: Color = allDone ? KlarStyle.done : allOffDuty ? KlarStyle.muted(scheme) : (group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink)
         let badge: CGFloat = primary ? 36 : 32
         return VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .bottom, spacing: 10) {
@@ -334,7 +337,7 @@ struct OverviewView: View {
         return layout {
             VStack(alignment: .leading, spacing: 1) {
                 Text(PickupWords.eyebrow(date: group.day)).font(KlarStyle.font(11, .heavy)).tracking(0.6)
-                    .foregroundStyle(group.waste.first.map { KlarStyle.ink($0.colorHex, scheme) } ?? .pink).lineLimit(1)
+                    .foregroundStyle(group.waste.first.map { $0.offDuty ? KlarStyle.muted(scheme) : KlarStyle.ink($0.colorHex, scheme) } ?? .pink).lineLimit(1)
                 Text(DateText.countdown(group.day)).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme))
                     .lineLimit(1).minimumScaleFactor(0.8)
             }
@@ -356,6 +359,8 @@ struct OverviewView: View {
                                     .lineLimit(2).fixedSize(horizontal: false, vertical: true).padding(.leading, 34)
                             }
                         }
+                        .opacity(event.offDuty ? 0.45 : 1)
+                        .accessibilityValue(event.offDuty ? L10n.t("Du bist nicht dran", "Not your turn") : "")
                         .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)

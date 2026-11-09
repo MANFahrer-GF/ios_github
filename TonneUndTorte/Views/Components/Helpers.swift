@@ -446,6 +446,9 @@ struct EventItemCard: View {
                             Label(dropOff ? L10n.t("Diesmal nicht hinbringen", "Skipping this time") : L10n.t("Bleibt diesmal drin", "Staying in this time"),
                                   systemImage: "hand.raised.fill")
                                 .font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                        } else if event.offDuty {
+                            Label(L10n.t("Du bist nicht dran", "Not your turn"), systemImage: "person.2.fill")
+                                .font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme))
                         }
                         InfoTags(tags: EventText.tags(event, person: person, showLocation: showLocation))
                         // Zeit/Ort beim Schadstoffmobil – ganzer Satz, darf umbrechen
@@ -460,8 +463,8 @@ struct EventItemCard: View {
             }
             .buttonStyle(.plain)
             // Nur der Eintrag wird blass – „Doch raus“ bleibt gut lesbar
-            .opacity(event.kind == .waste && (event.done || event.notPutOut) ? 0.55 : 1)
-                if let onToggleNotPutOut, event.kind == .waste, !event.done {
+            .opacity(event.kind == .waste && event.settled ? 0.55 : 1)
+                if let onToggleNotPutOut, event.kind == .waste, !event.done, !event.offDuty {
                     Button {
                         Haptics.tap()
                         onToggleNotPutOut()

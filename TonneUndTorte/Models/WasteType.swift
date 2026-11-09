@@ -139,6 +139,11 @@ final class WasteType {
         doneDates.removeAll { Days.start(of: $0) == day }
     }
 
+    /// Tonnendienst des Standorts: Außerhalb der eingetragenen Zeiträume ist jemand anderes dran.
+    var dutyPeriods: [DutyPeriod] { location?.dutyPeriods ?? [] }
+
+    func isOnDuty(on date: Date) -> Bool { DutySchedule.isOnDuty(on: date, periods: dutyPeriods) }
+
     func isNotPutOut(on date: Date) -> Bool {
         let day = Days.start(of: date)
         return notPutOutDates.contains { Days.start(of: $0) == day }

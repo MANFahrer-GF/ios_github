@@ -119,7 +119,7 @@ struct MonthCalendarView: View {
         let events = eventsByDay[day] ?? []
         let isSelected = day == selectedDay
         let isToday = calendar.isDateInToday(day)
-        let wasteColors = events.filter { $0.kind == .waste }.map(\.color)
+        let wasteColors = events.filter { $0.kind == .waste }.map { $0.offDuty ? $0.color.opacity(0.3) : $0.color }
         return VStack(spacing: 4) {
             Text("\(calendar.component(.day, from: day))")
                 .font(.subheadline.weight(isToday ? .bold : .regular))
