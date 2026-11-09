@@ -27,7 +27,7 @@ public struct BuergerportalProvider: WasteProvider {
 
     private struct List<T: Decodable>: Decodable { let d: [T] }
     private struct Place: Decodable { let OrteId: Int; let Ortsname: String; let Ortsteilname: String? }
-    private struct Street: Decodable { let StrassenId: Int; let Name: String }
+    private struct Street: Decodable { let StrassenId: Int; let Name: String; var Plz: String? }
     private struct Item: Decodable { let Termin: String; let Abfuhrplan: Plan }
     private struct Plan: Decodable { let GefaesstarifArt: Tariff }
     private struct Tariff: Decodable { let Abfallart: Kind }
@@ -49,7 +49,9 @@ public struct BuergerportalProvider: WasteProvider {
             let filter = "Ort/OrteId eq \(placeID) and OrtsteilName eq \(districtFilter)"
             let streets: List<Street> = try await client.json("\(api)/Strassen?$filter=\(HTTPClient.query(filter))&$orderby=\(HTTPClient.query("Name asc"))")
             guard !streets.d.isEmpty else { throw ProviderError.noDataGeneric }
-            return SelectionStep(title: SelectionStep.streetTitle, options: streets.d.map { SelectionOption(id: String($0.StrassenId), title: $0.Name) })
+            // Altdatensätze ohne Postleitzahl (Cochem-Zell: Kirchstraße mit nur einem Termin) neben dem echten Eintrag ausblenden.
+            let withZip = Set(streets.d.filter { $0.Plz != nil }.map(\.Name))
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.d.filter { $0.Plz != nil || !withZip.contains($0.Name) }.map { SelectionOption(id: String($0.StrassenId), title: $0.Name) })
         case 2:
             return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 3", "e.g. 3"))
         default:

@@ -22,7 +22,7 @@ public struct AbfallnaviProvider: WasteProvider {
         return AbfallnaviProvider.sharedDomainServices.contains(serviceKey) ? [shared, own] : [own, shared]
     }
 
-    private struct Named: Decodable { let id: FlexibleID; let name: String }
+    private struct Named: Decodable { let id: FlexibleID; let name: String; var ortsteilName: String? }
     private struct StreetDetail: Decodable { struct Number: Decodable { let id: FlexibleID; let nr: String }; let hausNrList: [Number]? }
     private struct Termin: Decodable { struct Bezirk: Decodable { let fraktionId: FlexibleID }; let datum: String; let bezirk: Bezirk }
 
@@ -43,7 +43,11 @@ public struct AbfallnaviProvider: WasteProvider {
             let cityID = selections[0].id.replacingOccurrences(of: "city:", with: "")
             let streets: [Named] = try await fetch("orte/\(cityID)/strassen")
             if streets.isEmpty { return nil }
-            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id.value)", title: $0.name) })
+            // Gleichnamige Straßen (Cottbus: 49) unterscheidet nur der Ortsteil.
+            let counts = Dictionary(streets.map { ($0.name, 1) }, uniquingKeysWith: +)
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map {
+                SelectionOption(id: "street:\($0.id.value)", title: $0.name, subtitle: (counts[$0.name] ?? 0) > 1 ? $0.ortsteilName : nil)
+            })
         case 2:
             let streetID = selections[1].id.replacingOccurrences(of: "street:", with: "")
             let detail: StreetDetail = try await fetch("strassen/\(streetID)")

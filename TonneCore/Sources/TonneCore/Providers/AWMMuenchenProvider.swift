@@ -199,8 +199,10 @@ public struct AWMMuenchenProvider: WasteProvider {
         var seen = Set<String>()
         return HTMLText.matches(#"<span class="aostrasse">([^<]*)</span>"#, in: html)
             .map { HTMLText.decodeEntities($0[0]).trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty && seen.insert($0).inserted }
+            .filter { !$0.isEmpty }
             .map { SelectionOption(id: $0, title: expandStreet($0)) }
+            // „Maria-Nindl-Pl.“ und „Maria-Nindl-Platz“ führen im Portal zu denselben Adressen.
+            .filter { seen.insert($0.title).inserted }
             .sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
 

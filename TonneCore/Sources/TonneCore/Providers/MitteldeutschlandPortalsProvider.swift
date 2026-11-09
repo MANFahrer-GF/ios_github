@@ -198,11 +198,19 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
             let html = try await client.string(Self.jenaBase + "/getMainSelectMenus?lang=de")
             let streets = HTMLText.options(ofSelect: "comboboxStreet", in: html).map { ($0.value, $0.label) }
             guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
-            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(streets))
+            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(Self.jenaMerged(streets)))
         case 1:
-            let html = try await client.string(Self.jenaBase + "/getMainSelectMenus?lang=de&street=\(HTTPClient.query(selections[0].id))")
-            // Der erste Eintrag „Hausnummer“ ist nur Platzhalter.
-            let numbers = HTMLText.options(ofSelect: "hnummer", in: html).filter { $0.label != "Hausnummer" }.map { ($0.value, $0.label) }
+            // Doppelt geführte Straße: die Hausnummern liegen auf beide Einträge verteilt.
+            let streetIDs = selections[0].id.components(separatedBy: Self.jenaSeparator)
+            var numbers: [(id: String, title: String)] = []
+            var seen = Set<String>()
+            for streetID in streetIDs {
+                let html = try await client.string(Self.jenaBase + "/getMainSelectMenus?lang=de&street=\(HTTPClient.query(streetID))")
+                // Der erste Eintrag „Hausnummer“ ist nur Platzhalter.
+                for number in HTMLText.options(ofSelect: "hnummer", in: html) where number.label != "Hausnummer" && seen.insert(number.label).inserted {
+                    numbers.append((streetIDs.count > 1 ? streetID + Self.jenaSeparator + number.value : number.value, number.label))
+                }
+            }
             guard !numbers.isEmpty else { return nil }
             return SelectionStep(title: SelectionStep.houseNumberTitle, options: Self.sortedOptions(numbers))
         default:
@@ -210,9 +218,20 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         }
     }
 
+    /// Trennt die Kennungen einer doppelt geführten Straße; einfache Straßen behalten ihre Portal-Kennung.
+    private static let jenaSeparator = "\u{1F}"
+
+    private static func jenaMerged(_ streets: [(id: String, title: String)]) -> [(id: String, title: String)] {
+        var ids: [String: [String]] = [:]
+        for street in streets { ids[street.title, default: []].append(street.id) }
+        return ids.map { ($0.value.joined(separator: jenaSeparator), $0.key) }
+    }
+
     private func jenaPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
-        let number = selections.count > 1 ? selections[1].id : ""
-        let text = try await client.string(Self.jenaBase + "/makeICSAll?x=true&street=\(HTTPClient.query(selections[0].id))&hnummer=\(HTTPClient.query(number))")
+        let parts = (selections.count > 1 ? selections[1].id : "").components(separatedBy: Self.jenaSeparator)
+        let street = parts.count == 2 ? parts[0] : (selections[0].id.components(separatedBy: Self.jenaSeparator).first ?? "")
+        let number = parts.last ?? ""
+        let text = try await client.string(Self.jenaBase + "/makeICSAll?x=true&street=\(HTTPClient.query(street))&hnummer=\(HTTPClient.query(number))")
         // „Restabfall4R“ → „Restabfall“ (Rhythmus-Kürzel abschneiden)
         return Self.icsPickups(text, calendar: calendar) { $0.replacingOccurrences(of: #"\d+[A-Z]?$"#, with: "", options: .regularExpression) }
     }
@@ -433,7 +452,10 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
             guard let partner = Self.kyffMerge[venue.id], present.contains(partner) else { return venue }
             return (venue.id + "," + partner, venue.title)
         }
-        return SelectionStep(title: L10n.t("Ort / Tour", "Town / tour"), options: Self.sortedOptions(venues))
+        // Gleichnamige Orte zusammenfassen: Die Liste enthält veraltete Kennungen neben der gültigen.
+        var ids: [String: [String]] = [:]
+        for venue in venues { ids[venue.title, default: []].append(venue.id) }
+        return SelectionStep(title: L10n.t("Ort / Tour", "Town / tour"), options: Self.sortedOptions(ids.map { ($0.value.joined(separator: ","), $0.key) }))
     }
 
     private func kyffhaeuserPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
@@ -444,7 +466,12 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         for id in ids {
             var page = 1
             while page <= 20 {
-                let response: KyffEvents = try await client.json(Self.kyffBase + "/wp-json/tribe/events/v1/events?venue=\(id)&\(range)&per_page=50&page=\(page)")
+                let response: KyffEvents
+                do {
+                    response = try await client.json(Self.kyffBase + "/wp-json/tribe/events/v1/events?venue=\(id)&\(range)&per_page=50&page=\(page)")
+                } catch HTTPError.status(400, _) where ids.count > 1 {
+                    break   // veraltete Kennung neben einer gültigen
+                }
                 for event in response.events ?? [] {
                     guard let date = Days.parse(String(event.start_date.prefix(10)), calendar: calendar) else { continue }
                     result.append(Pickup(date: date, name: NameCleaner.clean(HTMLText.decodeEntities(event.title))))

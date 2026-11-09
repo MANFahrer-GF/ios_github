@@ -98,6 +98,71 @@ final class StreetAuditTests: XCTestCase {
         XCTAssertNil(step?.noMatchHint)
     }
 
+    // MARK: - Gleichnamige Einträge
+
+    func testAbfallnaviZeigtOrtsteilNurBeiGleichenNamen() async throws {
+        StreetAuditStub.handler = { _ in (200, #"[{"id":1,"name":"Ackerstraße","ortsteilName":"Gallinchen"},{"id":2,"name":"Ackerstraße","ortsteilName":"Mitte"},{"id":3,"name":"Birkenweg","ortsteilName":"Sielow"}]"#) }
+        let provider = AbfallnaviProvider(service: "cottbus", client: HTTPClient(session: StreetAuditStub.session()))
+        let step = try await provider.nextStep(after: [SelectionOption(id: "city:7", title: "Cottbus")])
+        XCTAssertEqual(step?.options.map(\.subtitle), ["Gallinchen", "Mitte", nil])
+    }
+
+    func testMuenchenFasstGleicheAdressenZusammen() {
+        let html = #"<span class="aostrasse">Maria-Nindl-Pl.</span><span class="aostrasse">Maria-Nindl-Platz</span><span class="aostrasse">Bellinzonastr.</span>"#
+        XCTAssertEqual(AWMMuenchenProvider.streets(in: html).map(\.title), ["Bellinzonastraße", "Maria-Nindl-Platz"])
+    }
+
+    func testBuergerportalBlendetAltdatensatzOhnePLZAus() async throws {
+        StreetAuditStub.handler = { _ in (200, #"{"d":[{"StrassenId":365,"Name":"Kirchstraße","Plz":"56818"},{"StrassenId":2130,"Name":"Kirchstraße","Plz":null},{"StrassenId":9,"Name":"Moselweg","Plz":null}]}"#) }
+        let provider = BuergerportalProvider(operator: "cochem_zell", client: HTTPClient(session: StreetAuditStub.session()))
+        let step = try await provider.nextStep(after: [SelectionOption(id: "14|Klotten", title: "Klotten")])
+        XCTAssertEqual(step?.options.map(\.id), ["365", "9"])
+    }
+
+    func testJenaFuehrtDoppelteStrasseZusammenUndFragtDieRichtigeAb() async throws {
+        let select = { (name: String, values: [String]) in "<select name=\"\(name)\">" + values.map { "<option value=\"\($0)\">\($0)</option>" }.joined() + "</select>" }
+        nonisolated(unsafe) var calendarURL = ""
+        StreetAuditStub.handler = { url in
+            if url.contains("makeICSAll") { calendarURL = url; return (200, "BEGIN:VCALENDAR\nEND:VCALENDAR") }
+            if url.contains("street=Lange%20Gasse%20") || url.contains("street=Lange+Gasse+") { return (200, select("hnummer", ["Hausnummer", "55", "60"])) }
+            if url.contains("street=Lange") { return (200, select("hnummer", ["Hausnummer", "37", "60"])) }
+            return (200, select("comboboxStreet", ["Lange Gasse", "Lange Gasse ", "Weg"]))
+        }
+        let provider = MitteldeutschlandPortalsProvider(service: "jena", client: HTTPClient(session: StreetAuditStub.session()))
+        let streets = try await provider.nextStep(after: [])
+        XCTAssertEqual(streets?.options.map(\.title), ["Lange Gasse", "Weg"])
+        let street = try XCTUnwrap(streets?.options.first)
+        let numbers = try await provider.nextStep(after: [street])
+        XCTAssertEqual(numbers?.options.map(\.title).sorted(), ["37", "55", "60"])
+        let number = try XCTUnwrap(numbers?.options.first { $0.title == "55" })
+        _ = try? await provider.pickups(for: [street, number], calendar: .current)
+        XCTAssertTrue(calendarURL.contains("hnummer=55"), calendarURL)
+        XCTAssertTrue(calendarURL.contains("Gasse%20&") || calendarURL.contains("Gasse+&"), calendarURL)
+    }
+
+    func testKyffhaeuserFasstOrteZusammenUndUeberspringtVeralteteKennung() async throws {
+        let page = #"x "tribe_venues[]","options":[{"text":"Ebeleben","id":"105","value":"105"},{"text":"Ebeleben","id":"1433","value":"1433"},{"text":"Holzthaleben","id":"7","value":"7"}] y"#
+        let events = #"{"events":[{"title":"Papier","start_date":"2030-01-02 00:00:00"}],"total_pages":1}"#
+        StreetAuditStub.handler = { url in
+            if url.contains("/kalender/") { return (200, page) }
+            return url.contains("venue=105") ? (400, "{}") : (200, events)
+        }
+        let provider = MitteldeutschlandPortalsProvider(service: "kyffhaeuser", client: HTTPClient(session: StreetAuditStub.session()))
+        let step = try await provider.nextStep(after: [])
+        XCTAssertEqual(step?.options.map(\.title), ["Ebeleben", "Holzthaleben"])
+        let ebeleben = try XCTUnwrap(step?.options.first)
+        let pickups = try await provider.pickups(for: [ebeleben], calendar: .current)
+        XCTAssertEqual(Set(pickups.map(\.name)).count, 1)
+    }
+
+    func testNaechsteTermineJeAbfallart() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let day = { (m: Int, d: Int) in calendar.date(from: DateComponents(year: 2026, month: m, day: d))! }
+        let pickups = [Pickup(date: day(12, 3), name: "Papier"), Pickup(date: day(11, 12), name: "Restabfall"), Pickup(date: day(11, 26), name: "Restabfall")]
+        XCTAssertEqual(AbfallIOGraphQLProvider.nextDates(pickups, calendar: calendar), "Papier 03.12. · Restabfall 12.11.")
+    }
+
     // MARK: - Landkreis Cham
 
     func testChamCompletesLiestJSONForm() {

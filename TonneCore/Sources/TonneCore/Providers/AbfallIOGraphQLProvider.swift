@@ -72,10 +72,38 @@ public struct AbfallIOGraphQLProvider: WasteProvider {
             let numbers = data.street?.houseNumbers ?? []
             if numbers.isEmpty { return nil }
             if numbers.count == 1 { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) }, searchable: false) }
-            return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) })
+            let options = numbers.map { SelectionOption(id: "house:\($0.id)", title: $0.name) }
+            guard Set(numbers.map(\.name)).count < numbers.count else {
+                return SelectionStep(title: SelectionStep.houseNumberTitle, options: options)
+            }
+            // Gleichnamige Einträge mit verschiedenen Terminen (ASG Nordsachsen: viermal „Alle Hausnummern“),
+            // das Portal liefert kein Unterscheidungsmerkmal: nächste Termine zeigen.
+            var labelled: [SelectionOption] = []
+            for option in options {
+                var option = option
+                if let pickups = try? await self.pickups(for: selections + [option], calendar: .current) {
+                    option.subtitle = Self.nextDates(pickups, calendar: .current)
+                }
+                labelled.append(option)
+            }
+            var step = SelectionStep(title: SelectionStep.houseNumberTitle, options: labelled)
+            step.hint = L10n.t("Das Portal führt mehrere gleichnamige Einträge mit verschiedenen Terminen. Bitte den Eintrag wählen, dessen Termine zu den bisherigen Abfuhrtagen passen.",
+                               "The portal lists several entries with the same name and different dates. Choose the one that matches your past collection days.")
+            return step
         default:
             return nil
         }
+    }
+
+    /// „Papier 03.12. · Restabfall 12.11.“: nächster Termin je Abfallart.
+    static func nextDates(_ pickups: [Pickup], calendar: Calendar) -> String {
+        var first: [String: Date] = [:]
+        for pickup in pickups { first[pickup.name] = min(first[pickup.name] ?? pickup.date, pickup.date) }
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.dateFormat = "dd.MM."
+        return first.sorted { $0.key < $1.key }.map { "\($0.key) \(formatter.string(from: $0.value))" }.joined(separator: " · ")
     }
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
