@@ -26,11 +26,19 @@ struct TonneUndTorteApp: App {
     private var model: AppModel { holder.model }
 
     init() {
+        CrashReportCollector.shared.start()   // vor allem anderen, damit auch Abstürze beim Start berichtet werden
         // Oberflächen-Tests: eigene Einstellungs-Ablage, jedes Mal auf Werkszustand – die echten Einstellungen bleiben unberührt
         if TonneUndTorteApp.isUITesting {
             SettingsKeys.store.removePersistentDomain(forName: SettingsKeys.uiTestSuite)
             SettingsKeys.store.set(true, forKey: SettingsKeys.onboardingDone)
+            #if DEBUG
+            CrashReportCollector.seedForUITests()
+            CrashReportCenter.shared.reload()
+            #endif
         }
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-simulateCrash") { fatalError("Absichtlicher Testabsturz (-simulateCrash)") }
+        #endif
         let container = TonneUndTorteApp.makeContainer()
         if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
         _holder = StateObject(wrappedValue: ModelHolder(AppModel(container: container)))
@@ -42,6 +50,7 @@ struct TonneUndTorteApp: App {
             RootView()
                 .defaultAppStorage(SettingsKeys.store)
                 .environmentObject(model)
+                .environmentObject(CrashReportCenter.shared)
                 .modelContainer(model.container)
                 .id(ObjectIdentifier(model))   // neues Modell (nach dem Entsperren) = Oberfläche neu aufbauen
                 .task { await model.start() }

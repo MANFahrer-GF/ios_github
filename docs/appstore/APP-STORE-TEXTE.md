@@ -128,6 +128,7 @@ Begründung (für dich, falls Apple nachfragt):
 - Standort wird nur auf Wunsch einmalig auf dem Gerät genutzt, um den Landkreis vorzuschlagen.
 - Für die Termine fragt die App direkt beim Portal des Entsorgers an (Straße/Ort). Das dient nur der Beantwortung dieser Anfrage in Echtzeit – nach Apples Definition ist das keine „Erfassung“.
 - Kontakte: nur ausgewählte Geburtstage werden lokal übernommen.
+- Absturzberichte: gehen nur als Mail raus, die der Nutzer im Einzelfall selbst absendet. Optional, selten, nicht Kernfunktion: fällt unter Apples „Optional Disclosure“, Angabe bleibt „keine Daten erfasst“.
 
 ### Tracking
 

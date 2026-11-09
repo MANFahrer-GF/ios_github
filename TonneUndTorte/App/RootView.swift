@@ -28,6 +28,7 @@ struct RootView: View {
         .alert(L10n.t("Nicht gespeichert", "Not saved"), isPresented: Binding(get: { model.lastError != nil }, set: { if !$0 { model.lastError = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(model.lastError ?? "") }
+        .background { CrashReportPrompt() }
     }
 }
 
