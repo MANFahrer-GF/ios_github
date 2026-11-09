@@ -34,8 +34,8 @@ public struct AbfallAppNetProvider: WasteProvider {
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
-            // Einträge ohne Ortsteile sind Karteileichen des Portals
-            let list = try await cities().filter { !$0.districts.isEmpty }
+            // Einträge ohne Ortsteile sind Karteileichen des Portals, „Test“ ein Probeeintrag des Betreibers (Salzwedel)
+            let list = try await cities().filter { !$0.districts.isEmpty && $0.name.caseInsensitiveCompare("Test") != .orderedSame }
             // Orte mit genau einem Ortsteil ohne Straßen direkt als Bezirk anbieten
             return SelectionStep(title: SelectionStep.cityTitle, options: list.map { city in
                 if city.districts.count == 1, (city.districts[0].streets ?? []).isEmpty {

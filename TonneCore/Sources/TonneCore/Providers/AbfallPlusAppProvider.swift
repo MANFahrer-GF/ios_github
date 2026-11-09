@@ -405,11 +405,21 @@ public struct AbfallPlusAppProvider: WasteProvider {
     // MARK: - Termine
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        // Kreis Nordfriesland (153 Abfallarten): Mit allen Schaltern lehnt der Server die Sitzung nach dem Abschluss ab.
+        try await Self.retryingAfter401 {
+            try await pickups(for: selections, calendar: calendar, onlyPreselected: false)
+        } retry: {
+            try await pickups(for: selections, calendar: calendar, onlyPreselected: true)
+        }
+    }
+
+    /// Scheitert auch der zweite Versuch, bleibt die 401-Meldung des ersten stehen.
+    static func retryingAfter401<T>(_ first: () async throws -> T, retry: () async throws -> T) async throws -> T {
         do {
-            return try await pickups(for: selections, calendar: calendar, onlyPreselected: false)
-        } catch HTTPError.status(401, _) {
-            // Kreis Nordfriesland (153 Abfallarten): Mit allen Schaltern lehnt der Server die Sitzung nach dem Abschluss ab.
-            return try await pickups(for: selections, calendar: calendar, onlyPreselected: true)
+            return try await first()
+        } catch let original as HTTPError {
+            guard case .status(401, _) = original else { throw original }
+            do { return try await retry() } catch { throw original }
         }
     }
 

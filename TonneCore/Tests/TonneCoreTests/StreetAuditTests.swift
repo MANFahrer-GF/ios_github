@@ -119,6 +119,57 @@ final class StreetAuditTests: XCTestCase {
         XCTAssertEqual(step?.options.map(\.id), ["365", "9"])
     }
 
+    /// Holzheim (Lkr. Neu-Ulm): Die Straßen des Hauptorts stehen mit leerem Ortsteil im Portal, nur eine Altzeile ohne.
+    func testBuergerportalFindetStrassenMitLeeremOrtsteil() async throws {
+        nonisolated(unsafe) var seen = ""
+        StreetAuditStub.handler = { url in
+            seen = (url.removingPercentEncoding ?? url).replacingOccurrences(of: "+", with: " ")
+            guard seen.contains("OrtsteilName eq ''") else { return (200, #"{"d":[]}"#) }
+            return (200, #"{"d":[{"StrassenId":2738,"Name":"Ahornstraße","Plz":"89291"}]}"#)
+        }
+        let provider = BuergerportalProvider(operator: "neu_ulm", client: HTTPClient(session: StreetAuditStub.session()))
+        let main = try await provider.nextStep(after: [SelectionOption(id: "8|", title: "Holzheim")])
+        XCTAssertEqual(main?.options.map(\.id), ["2738"])
+        XCTAssertTrue(seen.contains("OrtsteilName eq null"), seen)
+        StreetAuditStub.handler = { url in
+            seen = (url.removingPercentEncoding ?? url).replacingOccurrences(of: "+", with: " ")
+            return (200, #"{"d":[{"StrassenId":2797,"Name":"Am Zwinger","Plz":"89291"}]}"#)
+        }
+        _ = try await provider.nextStep(after: [SelectionOption(id: "8|Neuhausen", title: "Holzheim – Neuhausen")])
+        XCTAssertTrue(seen.contains("OrtsteilName eq 'Neuhausen'"), seen)
+        XCTAssertFalse(seen.contains("eq null"), seen)
+    }
+
+    func testAbfallPlus401ZweiterVersuchLiefertTermine() async throws {
+        let result = try await AbfallPlusAppProvider.retryingAfter401 { () async throws -> Int in throw HTTPError.status(401, "") } retry: { 18 }
+        XCTAssertEqual(result, 18)
+    }
+
+    func testAbfallPlus401BleibtWennZweiterVersuchScheitert() async {
+        do {
+            _ = try await AbfallPlusAppProvider.retryingAfter401 { () async throws -> Int in throw HTTPError.status(401, "") } retry: { throw ProviderError.noDataGeneric }
+            XCTFail("Es hätte ein Fehler kommen müssen")
+        } catch HTTPError.status(401, _) {
+        } catch {
+            XCTFail("Falscher Fehler: \(error)")
+        }
+    }
+
+    func testAbfallPlusAndererFehlerOhneZweitenVersuch() async {
+        nonisolated(unsafe) var retried = false
+        _ = try? await AbfallPlusAppProvider.retryingAfter401 { () async throws -> Int in throw HTTPError.status(500, "") } retry: { retried = true; return 1 }
+        XCTAssertFalse(retried)
+    }
+
+    func testAbfallAppNetBlendetProbeeintragAus() async throws {
+        let city = { (id: Int, name: String) in "{&quot;id&quot;:\(id),&quot;name&quot;:&quot;\(name)&quot;,&quot;districts&quot;:[{&quot;id&quot;:\(id),&quot;name&quot;:&quot;\(name)&quot;,&quot;streets&quot;:[]}]}" }
+        let page = "<div :cities=\"[\(city(1, "Salzwedel")),\(city(2, "Test"))]\"></div>"
+        StreetAuditStub.handler = { _ in (200, page) }
+        let provider = AbfallAppNetProvider(tenant: "altmarkkreis-salzwedel", client: HTTPClient(session: StreetAuditStub.session()))
+        let step = try await provider.nextStep(after: [])
+        XCTAssertEqual(step?.options.map(\.title), ["Salzwedel"])
+    }
+
     func testJenaFuehrtDoppelteStrasseZusammenUndFragtDieRichtigeAb() async throws {
         let select = { (name: String, values: [String]) in "<select name=\"\(name)\">" + values.map { "<option value=\"\($0)\">\($0)</option>" }.joined() + "</select>" }
         nonisolated(unsafe) var calendarURL = ""

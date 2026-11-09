@@ -45,8 +45,11 @@ public struct BuergerportalProvider: WasteProvider {
             return SelectionStep(title: SelectionStep.cityTitle, options: options.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
         case 1:
             let (placeID, district) = Self.split(selections[0].id)
-            let districtFilter = district.isEmpty ? "null" : "'\(district.replacingOccurrences(of: "'", with: "''"))'"
-            let filter = "Ort/OrteId eq \(placeID) and OrtsteilName eq \(districtFilter)"
+            // Straßen des Hauptorts tragen je nach Datensatz keinen oder einen leeren Ortsteil (Holzheim: 1 ohne, 36 mit leerem).
+            let districtFilter = district.isEmpty
+                ? "(OrtsteilName eq null or OrtsteilName eq '')"
+                : "OrtsteilName eq '\(district.replacingOccurrences(of: "'", with: "''"))'"
+            let filter = "Ort/OrteId eq \(placeID) and \(districtFilter)"
             let streets: List<Street> = try await client.json("\(api)/Strassen?$filter=\(HTTPClient.query(filter))&$orderby=\(HTTPClient.query("Name asc"))")
             guard !streets.d.isEmpty else { throw ProviderError.noDataGeneric }
             // Altdatensätze ohne Postleitzahl (Cochem-Zell: Kirchstraße mit nur einem Termin) neben dem echten Eintrag ausblenden.
