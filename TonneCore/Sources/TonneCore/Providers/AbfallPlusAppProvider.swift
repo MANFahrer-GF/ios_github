@@ -405,6 +405,25 @@ public struct AbfallPlusAppProvider: WasteProvider {
     // MARK: - Termine
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        do {
+            return try await pickups(for: selections, calendar: calendar, onlyPreselected: false)
+        } catch HTTPError.status(401, _) {
+            // Kreis Nordfriesland (153 Abfallarten): Mit allen Schaltern lehnt der Server die Sitzung nach dem Abschluss ab.
+            return try await pickups(for: selections, calendar: calendar, onlyPreselected: true)
+        }
+    }
+
+    /// Standardmäßig auch die vorab ausgeschalteten Abfallarten: Dazu gehört je nach App die Biotonne (Leverkusen) oder der Sperrmüll (Ortenaukreis).
+    static func typeIDs(in html: String, onlyPreselected: Bool) -> [String] {
+        let ids = HTMLText.matches(#"name="f_id_abfallart\[\]"[^>]*>"#, in: html, wholeMatch: true).compactMap { tag -> String? in
+            let value = HTMLText.firstMatch(#"value="([^"]*)""#, in: tag[0], group: 1) ?? ""
+            if value != "0", !value.isEmpty { return value }
+            return onlyPreselected ? nil : HTMLText.firstMatch(#"id="f_id_abfallart_([^"]+)""#, in: tag[0], group: 1)
+        }
+        return Array(Set(ids))
+    }
+
+    func pickups(for selections: [SelectionOption], calendar: Calendar, onlyPreselected: Bool) async throws -> [Pickup] {
         let (session, state, _) = try await replay(selections)
         guard !state.strasseForm.isEmpty || !state.bezirk.isEmpty else { throw ProviderError.selectAddressFirst }
 
@@ -418,12 +437,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
             ("f_kdnr", ""),
         ]
         let typesHTML = try await session.assistant("abfallarten/", [("f_id_region", state.region)] + address)
-        var typeIDs = HTMLText.matches(#"name="f_id_abfallart\[\]"[^>]*>"#, in: typesHTML, wholeMatch: true).compactMap { tag -> String? in
-            let value = HTMLText.firstMatch(#"value="([^"]*)""#, in: tag[0], group: 1) ?? ""
-            if value != "0", !value.isEmpty { return value }
-            return HTMLText.firstMatch(#"id="f_id_abfallart_([^"]+)""#, in: tag[0], group: 1)
-        }
-        typeIDs = Array(Set(typeIDs))
+        let typeIDs = Self.typeIDs(in: typesHTML, onlyPreselected: onlyPreselected)
         guard !typeIDs.isEmpty else { throw ProviderError.noDataGeneric }
 
         var finish = address + typeIDs.map { ("f_id_abfallart[]", $0) } + [

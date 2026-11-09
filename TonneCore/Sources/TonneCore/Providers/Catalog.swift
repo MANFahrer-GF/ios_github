@@ -53,7 +53,7 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .awido, serviceKey: "aic-fdb", title: "Landratsamt Aichach-Friedberg", website: "https://lra-aic-fdb.de/"),
         CatalogEntry(kind: .awido, serviceKey: "wgv", title: "WGV Recycling GmbH", website: "https://wgv-quarzbichl.de/"),
         CatalogEntry(kind: .awido, serviceKey: "neustadt", title: "Neustadt a.d. Waldnaab", website: "https://www.neustadt.de/"),
-        CatalogEntry(kind: .awido, serviceKey: "kelheim", title: "Landkreis Kelheim", website: "https://www.landkreis-kelheim.de/"),
+        CatalogEntry(kind: .awido, serviceKey: "kelheim", title: "Landkreis Kelheim", website: "https://www.landkreis-kelheim.de/", places: ["Weltenburg"]),
         CatalogEntry(kind: .awido, serviceKey: "kaw-guenzburg", title: "Landkreis Günzburg", website: "https://kaw.landkreis-guenzburg.de/"),
         CatalogEntry(kind: .awido, serviceKey: "memmingen", title: "Stadt Memmingen", website: "https://umwelt.memmingen.de/"),
         CatalogEntry(kind: .awido, serviceKey: "eww-suew", title: "Landkreis Südliche Weinstraße", website: "https://www.suedliche-weinstrasse.de/"),

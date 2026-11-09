@@ -274,7 +274,8 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(next.waitForExistence(timeout: 5))
         next.tap(); sleep(1)
         app.buttons.matching(NSPredicate(format: "label CONTAINS ' 15. '")).firstMatch.tap(); sleep(1)
-        app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap(); sleep(1)
+        // Datumswähler schließen: auf die Titelzeile, denn neben dem Fenster würde das iPad das ganze Fenster schließen
+        app.navigationBars["Neuer Zeitraum"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap(); sleep(1)
         snap("04-zeitraum-gewaehlt")
         app.buttons["Sichern"].firstMatch.tap()
         XCTAssertTrue(app.navigationBars["Neuer Zeitraum"].waitForNonExistence(timeout: 5))

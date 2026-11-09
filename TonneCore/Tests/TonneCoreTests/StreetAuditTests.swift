@@ -243,6 +243,22 @@ final class StreetAuditTests: XCTestCase {
         XCTAssertEqual(HTMLText.options(ofSelect: "ort", in: html).map(\.value), ["1"])
     }
 
+    // MARK: - AbfallPlus: Abfallarten
+
+    private let abfallartenHTML = #"""
+    <input type="hidden" name="f_id_abfallart[]" id="f_id_abfallart_1141" value="0" class="awk-standort-auswahl-value" />
+    <input type="hidden" name="f_id_abfallart[]" id="f_id_abfallart_1142" value="1142" class="awk-standort-auswahl-value" />
+    <input type="hidden" name="f_id_abfallart[]" id="f_id_abfallart_66" value="66" class="awk-standort-auswahl-value" />
+    """#
+
+    func testAbfallartenStandardmaessigAlleSchalter() {
+        XCTAssertEqual(AbfallPlusAppProvider.typeIDs(in: abfallartenHTML, onlyPreselected: false).sorted(), ["1141", "1142", "66"])
+    }
+
+    func testAbfallartenNachAblehnungNurDieEingeschalteten() {
+        XCTAssertEqual(AbfallPlusAppProvider.typeIDs(in: abfallartenHTML, onlyPreselected: true).sorted(), ["1142", "66"])
+    }
+
     // MARK: - Kreiszuordnung im Katalog
 
     private func districts(of entryPrefix: String, file: StaticString = #filePath, line: UInt = #line) -> [String] {

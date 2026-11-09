@@ -143,6 +143,11 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(hits.contains { $0.kind == .awido && $0.serviceKey == "kelheim" })
     }
 
+    /// Weltenburg ist ein Ortsteil von Kelheim und steht im Portal unter „Stadt Kelheim“.
+    func testWeltenburgFuehrtZumLandkreisKelheim() {
+        XCTAssertTrue(ProviderCatalog.search("Weltenburg").contains { $0.kind == .awido && $0.serviceKey == "kelheim" })
+    }
+
     func testSearchFindsNewOctoberEntries() {
         let expected: [(String, ProviderKind)] = [
             ("Magdeburg", .magdeburg), ("Ehingen", .buergerportal), ("Cochem", .buergerportal), ("Illertissen", .buergerportal),
