@@ -102,9 +102,12 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
 
     // MARK: - Planung
 
-    func apply(_ plan: [PlannedNotification]) async {
-        // „In 1 Stunde nochmal“ bleibt immer stehen – das war eine Bitte des Nutzers.
-        let pending = await center.pendingNotificationRequests().map(\.identifier)
+    func apply(_ plan: [PlannedNotification], offDutyDays: Set<String>) async {
+        // „In 1 Stunde nochmal“ bleibt stehen – das war eine Bitte des Nutzers. Nur wenn er an dem Tag nicht mehr dran ist, entfällt sie.
+        var pending = await center.pendingNotificationRequests().map(\.identifier)
+        let outsideDuty = DutySchedule.snoozesOutsideDuty(pending, offDutyDays: offDutyDays)
+        center.removePendingNotificationRequests(withIdentifiers: outsideDuty)
+        pending.removeAll(where: outsideDuty.contains)
         // Die bleibenden „In 1 Stunde nochmal“ zählen beim iOS-Limit (64) mit
         let snoozed = pending.filter { $0.contains("-snooze-") }.count
         let chosen = Array(plan.prefix(max(0, maxRequests - snoozed)))

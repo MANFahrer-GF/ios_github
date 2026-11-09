@@ -99,4 +99,39 @@ final class DutyPeriodTests: XCTestCase {
         XCTAssertEqual(wasteCount([off]), 0)
         XCTAssertGreaterThan(wasteCount([on]), 0)
     }
+
+    // MARK: - Vertagte Erinnerungen
+
+    func testVertagteErinnerungEntfaelltAusserhalbDesDienstes() {
+        let pending = ["waste-snooze-2027-01-12", "waste-bringin-snooze-2027-01-12", "waste-snooze-2027-01-14", "custom-snooze-2027-01-12-ABC", "waste-morning-2027-01-12"]
+        XCTAssertEqual(DutySchedule.snoozesOutsideDuty(pending, offDutyDays: ["2027-01-12"]), ["waste-snooze-2027-01-12", "waste-bringin-snooze-2027-01-12"])
+        XCTAssertEqual(DutySchedule.snoozesOutsideDuty(pending, offDutyDays: []), [])
+    }
+
+    // MARK: - Verschobene Termine
+
+    private var januar: [DutyPeriod] { [DutyPeriod(startKey: "2027-01-10", endKey: "2027-01-20", yearly: false)] }
+    private func moves(_ old: String, _ new: String?) -> [(old: Date, new: Date?)] {
+        ScheduleEngine.dutyRelevantMoves(removed: [day(old)], added: new.map { [day($0)] } ?? [], isOnDuty: { DutySchedule.isOnDuty(on: $0, periods: self.januar, calendar: self.calendar) }, calendar: calendar)
+    }
+
+    func testVerschiebungInDenDienstHineinWirdGemeldet() {
+        let result = moves("2027-01-08", "2027-01-12")
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first?.new, day("2027-01-12"))
+    }
+
+    func testVerschiebungAusDemDienstHerausWirdGemeldet() {
+        XCTAssertEqual(moves("2027-01-18", "2027-01-22").count, 1)
+    }
+
+    func testVerschiebungGanzAusserhalbBleibtStill() {
+        XCTAssertTrue(moves("2027-01-02", "2027-01-05").isEmpty)
+    }
+
+    func testEntfallenderTerminZaehltNurImDienst() {
+        XCTAssertNil(moves("2027-01-12", nil).first?.new)
+        XCTAssertEqual(moves("2027-01-12", nil).count, 1)
+        XCTAssertTrue(moves("2027-01-02", nil).isEmpty)
+    }
 }

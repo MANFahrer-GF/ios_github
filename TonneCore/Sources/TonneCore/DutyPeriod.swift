@@ -53,6 +53,16 @@ public enum DutySchedule {
         return .ended
     }
 
+    /// Vertagte Müll-Erinnerungen („In 1 Stunde nochmal“) für Tage, an denen man nicht mehr dran ist.
+    /// Andere vertagte Erinnerungen, etwa zu eigenen Terminen, bleiben unberührt.
+    public static func snoozesOutsideDuty(_ identifiers: [String], offDutyDays: Set<String>) -> [String] {
+        identifiers.filter { identifier in
+            ["waste-snooze-", "waste-bringin-snooze-"].contains { prefix in
+                identifier.hasPrefix(prefix) && offDutyDays.contains(String(identifier.dropFirst(prefix.count)))
+            }
+        }
+    }
+
     /// Die konkreten Von-bis-Tage rund um `day`: das Jahr davor (für Zeiträume über Silvester), dieses und das nächste.
     private static func intervals(of periods: [DutyPeriod], around day: Date, calendar: Calendar) -> [(start: Date, end: Date)] {
         let year = calendar.component(.year, from: day)

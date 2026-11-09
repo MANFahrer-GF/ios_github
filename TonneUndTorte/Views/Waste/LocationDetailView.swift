@@ -124,11 +124,13 @@ struct LocationDetailView: View {
         periods.append(period)
         location.dutyPeriods = periods.sorted { $0.startKey < $1.startKey }
         model.save()
+        Task { await model.refreshAll() }
     }
 
     private func deleteDuty(_ period: DutyPeriod) {
         location.dutyPeriods = location.dutyPeriods.filter { $0.id != period.id }
         model.save()
+        Task { await model.refreshAll() }
     }
 
     private var appearanceSection: some View {

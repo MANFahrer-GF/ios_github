@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 import SwiftData
 import SwiftUI
 import BackgroundTasks
@@ -145,6 +146,8 @@ final class AppModel: ObservableObject {
 
     private let notifications = NotificationManager.shared
     private var started = false
+    private var plannedDuty: [String] = []
+    private var dutyRecheck: Task<Void, Never>?
 
     init(container: ModelContainer) {
         self.container = container
@@ -178,6 +181,10 @@ final class AppModel: ObservableObject {
         NotificationCenter.default.addObserver(forName: SnapshotStore.notificationName, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.applyPendingDoneMarkers() }
         }
+        // Auf einem anderen Gerät geänderter Tonnendienst: sonst gälten die alten Mitteilungen bis zum nächsten Öffnen
+        NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: .main) { [weak self] _ in
+            Task { self?.recheckDutyAfterImport() }
+        }
         // „Ist drin“ aus Widget oder Mitteilung: Hinweis und Erinnerung für heute entfallen
         NotificationCenter.default.addObserver(forName: SnapshotStore.broughtInNotification, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.refreshAll() }
@@ -203,6 +210,7 @@ final class AppModel: ObservableObject {
     func refreshAll() async {
         // Oberflächen-Test: keine Widgets, Watch, Live-Aktivität, Mitteilungen oder Kalender anfassen
         guard !TonneUndTorteApp.isUITesting, !TonneUndTorteApp.storeUnavailable else { return }
+        plannedDuty = dutyFingerprint()
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
         WatchSync.shared.send(snapshot)
@@ -217,8 +225,36 @@ final class AppModel: ObservableObject {
         }
         let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: settings)
             .filter { !($0.category == .wasteEvening && scheduledDays.contains($0.dayKey)) }
-        await notifications.apply(plan)
+        await notifications.apply(plan, offDutyDays: offDutyDayKeys())
         await CalendarExport.autoSyncIfEnabled(items: calendarExportItems())
+    }
+
+    /// Stand der Tonnendienste, nach dem zuletzt geplant wurde.
+    private func dutyFingerprint() -> [String] {
+        allLocations().map { "\($0.id)|\($0.dutyPeriodsJSON)" }.sorted()
+    }
+
+    /// iCloud liefert in Schüben: Erst nach kurzer Ruhe prüfen und nur bei geänderten Zeiträumen neu planen.
+    private func recheckDutyAfterImport() {
+        dutyRecheck?.cancel()
+        dutyRecheck = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            guard !Task.isCancelled, let self, self.dutyFingerprint() != self.plannedDuty else { return }
+            await self.refreshAll()
+        }
+    }
+
+    /// Tage mit Abholung, an denen niemand an einem Standort Dienst hat.
+    private func offDutyDayKeys() -> Set<String> {
+        let today = Days.today()
+        let horizon = Days.add(90, to: today)
+        var onDuty = Set<String>(), offDuty = Set<String>()
+        for type in allWasteTypes() where type.isActive {
+            for date in type.pickupDates(from: today, to: horizon) {
+                if type.isOnDuty(on: date) { onDuty.insert(Days.iso(date)) } else { offDuty.insert(Days.iso(date)) }
+            }
+        }
+        return offDuty.subtracting(onDuty)
     }
 
     // MARK: - Daten

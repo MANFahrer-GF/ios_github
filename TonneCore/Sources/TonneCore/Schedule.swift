@@ -62,4 +62,13 @@ public enum ScheduleEngine {
         let newSet = Set(new.map { calendar.startOfDay(for: $0) }.filter { $0 >= today })
         return (newSet.subtracting(oldSet).sorted(), oldSet.subtracting(newSet).sorted())
     }
+
+    /// Weggefallene Termine samt Ersatz (höchstens 7 Tage daneben), die den eigenen Dienst berühren:
+    /// Der alte oder der neue Termin liegt darin. Sonst betrifft die Verschiebung einen nicht.
+    public static func dutyRelevantMoves(removed: [Date], added: [Date], isOnDuty: (Date) -> Bool, calendar: Calendar = .current) -> [(old: Date, new: Date?)] {
+        removed.compactMap { old in
+            let new = added.first { abs(Days.between(old, $0, calendar: calendar)) <= 7 }
+            return isOnDuty(old) || new.map(isOnDuty) == true ? (old, new) : nil
+        }
+    }
 }

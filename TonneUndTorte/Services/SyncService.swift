@@ -109,10 +109,9 @@ enum SyncService {
             if replace {
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(days))
                 if !target.explicitDates.isEmpty {
-                    // Verschobene Termine außerhalb des eigenen Tonnendienstes sind keine Mitteilung wert
-                    for removed in diff.removed.filter({ target.isOnDuty(on: $0) }).prefix(3) {
-                        let replacement = diff.added.first { abs(Days.between(removed, $0)) <= 7 }
-                        changes.append(replacement.map { "\(target.name): \(DateText.short(removed)) → \(DateText.short($0))" } ?? "\(target.name): \(DateText.short(removed)) entfällt")
+                    // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert
+                    for move in ScheduleEngine.dutyRelevantMoves(removed: diff.removed, added: diff.added, isOnDuty: target.isOnDuty(on:)).prefix(3) {
+                        changes.append(move.new.map { "\(target.name): \(DateText.short(move.old)) → \(DateText.short($0))" } ?? "\(target.name): \(DateText.short(move.old)) entfällt")
                     }
                 }
                 target.intervalWeeks = 0
