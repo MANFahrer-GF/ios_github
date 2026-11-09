@@ -24,6 +24,7 @@ struct SourceWizardView: View {
     @State private var selections: [SelectionOption] = []
     @State private var currentStep: SelectionStep?
     @State private var stepSearch = ""
+    @State private var stepIndex = OptionSearch([])
     @State private var textInput = ""
     @State private var pickups: [Pickup] = []
     @State private var categories: [WasteCategory: Bool] = [:]
@@ -263,9 +264,12 @@ struct SourceWizardView: View {
                         .disabled(textInput.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             } else if let step = currentStep {
-                let filtered = stepSearch.isEmpty ? step.options : step.options.filter { $0.title.localizedCaseInsensitiveContains(stepSearch) }
+                let filtered = stepSearch.isEmpty ? step.options : stepIndex.filter(query: stepSearch)
+                if let hint = step.hint {
+                    Section { Text(hint).font(.footnote).foregroundStyle(.secondary) }
+                }
                 Section(step.title) {
-                    ForEach(filtered.prefix(400)) { option in
+                    ForEach(filtered) { option in
                         Button { select(option) } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -318,6 +322,7 @@ struct SourceWizardView: View {
                     await loadNextStep()
                     return
                 }
+                stepIndex = OptionSearch(step.options)
                 currentStep = step
                 stage = .steps
             } else {

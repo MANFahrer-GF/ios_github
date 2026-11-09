@@ -172,9 +172,12 @@ public struct NordPortalsProvider: WasteProvider {
     private struct SRHStreet: Decodable { let asId: Int; let name: String; let hnIds: [SRHNumber] }
     private struct SRHNumber: Decodable { let hnId: Int; let name: String }
 
-    /// Adresssuche des Abfuhrkalenders (Präfixsuche, höchstens 50 Straßen).
+    /// Das Portal liefert höchstens 50 Treffer; ein höheres Limit beantwortet es mit einer leeren Liste.
+    private static let srhLimit = 50
+
+    /// Adresssuche des Abfuhrkalenders (Präfixsuche).
     private func srhStreets(_ query: String) async throws -> [SRHStreet] {
-        let data = try await client.postForm(Self.srhSearch, fields: [("tx_srh_pickups[street]", query), ("tx_srh_pickups[limit]", "50")])
+        let data = try await client.postForm(Self.srhSearch, fields: [("tx_srh_pickups[street]", query), ("tx_srh_pickups[limit]", String(Self.srhLimit))])
         return try HTTPClient.decode(data)
     }
 
@@ -189,8 +192,13 @@ public struct NordPortalsProvider: WasteProvider {
             }
             let streets = try await srhStreets(query)
             guard !streets.isEmpty else { throw Self.streetNotFound }
-            return SelectionStep(title: SelectionStep.streetTitle,
-                                 options: Self.sorted(streets.map { SelectionOption(id: String($0.asId), title: $0.name) }))
+            var step = SelectionStep(title: SelectionStep.streetTitle,
+                                     options: Self.sorted(streets.map { SelectionOption(id: String($0.asId), title: $0.name) }))
+            if streets.count >= Self.srhLimit {
+                step.hint = L10n.t("Das Portal zeigt höchstens \(Self.srhLimit) Straßen. Fehlt die gesuchte Straße, bitte zurückgehen und mehr Buchstaben eingeben.",
+                                   "The portal shows at most \(Self.srhLimit) streets. If yours is missing, go back and enter more letters.")
+            }
+            return step
         case 2:
             let street = try await srhStreets(s[1].title).first { String($0.asId) == s[1].id }
             let numbers = (street?.hnIds ?? []).map { SelectionOption(id: String($0.hnId), title: $0.name) }

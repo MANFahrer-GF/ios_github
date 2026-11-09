@@ -186,11 +186,21 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case 2:
             let entries = try await artEntries().filter { $0.verbandsgemeinde == selections[0].id && $0.ort == selections[1].id }
             guard entries.count > 1 else { return nil }
-            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(entries.map { entry in
-                let title = entry.strasse ?? entry.ortsteil ?? L10n.t("Übrige Straßen", "Other streets")
+            // Ein Eintrag ohne Straße und Ortsteil gilt für alle Straßen des Orts, die das Portal nicht einzeln führt.
+            let isRest: (ARTEntry) -> Bool = { $0.strasse == nil && $0.ortsteil == nil }
+            let restTitle = L10n.t("Übrige Straßen", "Other streets")
+            let rest = entries.filter(isRest).map {
+                SelectionOption(id: $0.key, title: restTitle, subtitle: L10n.t("Alle nicht einzeln genannten Straßen", "All streets not listed individually"))
+            }
+            var step = SelectionStep(title: SelectionStep.streetTitle, options: rest + Self.sortedOptions(entries.filter { !isRest($0) }.map { entry in
+                let title = entry.strasse ?? entry.ortsteil ?? restTitle
                 let subtitle = entry.strasse != nil && entry.ortsteil != nil && entry.ortsteil != entry.ort ? entry.ortsteil : nil
                 return SelectionOption(id: entry.key, title: title, subtitle: subtitle)
             }))
+            if !rest.isEmpty {
+                step.noMatchHint = L10n.t("Nicht einzeln genannte Straßen liegen unter „Übrige Straßen“.", "Streets not listed individually are under “Other streets”.")
+            }
+            return step
         default:
             return nil
         }

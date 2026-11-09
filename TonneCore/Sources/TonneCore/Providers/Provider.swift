@@ -26,6 +26,8 @@ public struct SelectionStep: Hashable {
     public var placeholder: String?
     /// Zusatzhinweis, wenn die Suche in diesem Schritt nichts findet.
     public var noMatchHint: String?
+    /// Hinweis, der immer über der Liste steht (z. B. wenn das Portal die Trefferzahl begrenzt).
+    public var hint: String?
 
     public init(title: String, options: [SelectionOption], searchable: Bool = true) {
         self.title = title
