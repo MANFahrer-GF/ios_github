@@ -17,6 +17,8 @@ final class Location {
     var lastSyncAt: Date?
     var lastSyncMessage: String?
     var createdAt: Date = Date()
+    /// Tonnendienst: kodierte `DutyPeriod`-Liste; leer = bei jeder Abfuhr zuständig.
+    var dutyPeriodsJSON: String = ""
 
     @Relationship(deleteRule: .cascade, inverse: \WasteType.location)
     var wasteTypes: [WasteType]?
@@ -34,6 +36,11 @@ final class Location {
     var source: SourceConfiguration? {
         get { SourceConfiguration.decode(sourceConfigJSON) }
         set { sourceConfigJSON = newValue?.encoded() }
+    }
+
+    var dutyPeriods: [DutyPeriod] {
+        get { DutySchedule.decode(dutyPeriodsJSON) }
+        set { dutyPeriodsJSON = DutySchedule.encode(newValue) }
     }
 
     var canSync: Bool { source != nil }

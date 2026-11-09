@@ -247,6 +247,48 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
     }
 
+    /// Tonnendienst: Zeitraum anlegen, der erst nächsten Monat beginnt – die nächsten Abfuhren heißen dann „Du bist nicht dran“.
+    func testDutyPeriods() {
+        app.terminate()
+        app.launchArguments = ["-uiTesting", "-demoData", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10))
+        sleep(1); snap("01-uebersicht-vorher")
+
+        tab("Müll")
+        XCTAssertTrue(text("Gifhorn").waitForExistence(timeout: 5))
+        text("Gifhorn").tap()
+        let add = app.buttons["Zeitraum hinzufügen"].firstMatch
+        XCTAssertTrue(add.waitForExistence(timeout: 5))
+        sleep(1); snap("02-standort-ohne-zeitraum")
+
+        add.tap()
+        XCTAssertTrue(app.navigationBars["Neuer Zeitraum"].waitForExistence(timeout: 5))
+        sleep(1); snap("03-neuer-zeitraum")
+
+        // „Von“ auf den 15. des nächsten Monats: Die nächsten Abfuhren liegen dann außerhalb
+        app.datePickers.firstMatch.buttons.firstMatch.tap()
+        let next = app.buttons["Nächster Monat"].firstMatch
+        XCTAssertTrue(next.waitForExistence(timeout: 5))
+        next.tap(); sleep(1)
+        app.buttons.matching(NSPredicate(format: "label CONTAINS ' 15. '")).firstMatch.tap(); sleep(1)
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap(); sleep(1)
+        snap("04-zeitraum-gewaehlt")
+        app.buttons["Sichern"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Neuer Zeitraum"].waitForNonExistence(timeout: 5))
+        let status = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Nächster Dienst ab'")).firstMatch
+        XCTAssertTrue(status.waitForExistence(timeout: 5), "Statuszeile fehlt")
+        sleep(1); snap("05-standort-mit-zeitraum")
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        tab("Übersicht")
+        XCTAssertTrue(text("Du bist nicht dran").waitForExistence(timeout: 5), "Übersicht zeigt den Tonnendienst nicht")
+        XCTAssertFalse(app.buttons["Bleibt drin"].exists, "„Bleibt drin“ ergibt ohne Dienst keinen Sinn")
+        sleep(1); snap("06-uebersicht-nicht-dran")
+
+        tab("Kalender"); sleep(1); snap("07-kalender")
+    }
+
     // MARK: - Mehr und Einstellungen
 
     func testMoreAndSettings() {

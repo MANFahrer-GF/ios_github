@@ -18,6 +18,8 @@ struct LocationDetailView: View {
     @State private var showDeleteConfirm = false
     /// CSV der Termine – nur beim Öffnen und nach einem Abgleich berechnet, nicht bei jedem Tastendruck.
     @State private var exportCSV: String?
+    /// Tonnendienst: Zeitraum, der gerade bearbeitet oder neu angelegt wird.
+    @State private var editingDuty: DutyPeriod?
 
     /// ICS und CSV (Excel/Numbers-Export); das Format wird beim Lesen am Inhalt erkannt.
     static let importTypes: [UTType] = [UTType(filenameExtension: "ics") ?? .data, .calendarEvent, .commaSeparatedText,
@@ -32,6 +34,7 @@ struct LocationDetailView: View {
     var body: some View {
         Form {
             nameSection
+            dutySection
             appearanceSection
             sourceSection
             wasteTypesSection
@@ -39,6 +42,9 @@ struct LocationDetailView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $editingDuty) { period in
+            DutyPeriodEditor(period: period, isNew: !location.dutyPeriods.contains { $0.id == period.id }, onSave: saveDuty, onDelete: deleteDuty)
+        }
         .sheet(isPresented: $showWizard) { SourceWizardView(location: location).environmentObject(model) }
         .sheet(isPresented: $showImport) { ICSImportView(pickups: importPickups, location: location) }
         .fileImporter(isPresented: $showFileImporter, allowedContentTypes: Self.importTypes, onCompletion: handleFile)
@@ -69,6 +75,60 @@ struct LocationDetailView: View {
             TextField("Name", text: $location.name)
             TextField("Adresse", text: $location.address)
         }
+    }
+
+    private var dutySection: some View {
+        Section {
+            if let status = dutyStatusLine {
+                Label(status.text, systemImage: status.symbol)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(status.warning ? Color.orange : Color.secondary)
+            }
+            ForEach(location.dutyPeriods) { period in
+                Button { editingDuty = period } label: {
+                    LabeledContent {
+                        Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+                    } label: {
+                        Text(DutyPeriodEditor.title(period)).foregroundStyle(.primary)
+                        if period.yearly { Text(L10n.t("Jedes Jahr", "Every year")) }
+                    }
+                }
+                .tint(.primary)
+            }
+            Button {
+                let today = Days.today()
+                let end = Days.add(-1, to: Calendar.current.date(byAdding: .month, value: 2, to: today) ?? today)
+                editingDuty = DutyPeriod(startKey: Days.iso(today), endKey: Days.iso(end), yearly: true)
+            } label: {
+                Label(L10n.t("Zeitraum hinzufügen", "Add period"), systemImage: "calendar.badge.plus")
+            }
+        } header: {
+            Text(L10n.t("Mein Tonnendienst", "My bin duty"))
+        } footer: {
+            Text(L10n.t("Wechselt ihr euch im Haus ab? Trage deine Zeiträume ein, dann erinnert die App nur dort. Die übrigen Termine bleiben im Kalender sichtbar. Ohne Zeitraum kommt jede Erinnerung.",
+                        "Taking turns in your building? Add your periods and the app only reminds you then. Other dates stay visible in the calendar. Without a period you get every reminder."))
+        }
+    }
+
+    private var dutyStatusLine: (text: String, symbol: String, warning: Bool)? {
+        switch DutySchedule.status(of: location.dutyPeriods, today: Days.today()) {
+        case .always: return nil
+        case .onDuty(let until): return (L10n.t("Du bist dran bis \(DateText.short(until))", "Your turn until \(DateText.short(until))"), "bell.fill", false)
+        case .upcoming(let from): return (L10n.t("Nächster Dienst ab \(DateText.short(from)), bis dahin keine Erinnerungen", "Next turn from \(DateText.short(from)), no reminders until then"), "bell.slash.fill", false)
+        case .ended: return (L10n.t("Keine kommenden Zeiträume, du wirst nicht mehr erinnert", "No upcoming periods, you won't be reminded"), "exclamationmark.triangle.fill", true)
+        }
+    }
+
+    private func saveDuty(_ period: DutyPeriod) {
+        var periods = location.dutyPeriods.filter { $0.id != period.id }
+        periods.append(period)
+        location.dutyPeriods = periods.sorted { $0.startKey < $1.startKey }
+        model.save()
+    }
+
+    private func deleteDuty(_ period: DutyPeriod) {
+        location.dutyPeriods = location.dutyPeriods.filter { $0.id != period.id }
+        model.save()
     }
 
     private var appearanceSection: some View {
@@ -322,5 +382,66 @@ struct PickupCSVFile: Transferable {
     private var safeFileName: String {
         let cleaned = fileName.replacingOccurrences(of: "/", with: "-").replacingOccurrences(of: ":", with: "-")
         return cleaned.isEmpty ? "Abfuhrtermine.csv" : cleaned
+    }
+}
+
+/// Einen Zeitraum des Tonnendienstes anlegen oder ändern.
+private struct DutyPeriodEditor: View {
+    let period: DutyPeriod
+    let isNew: Bool
+    let onSave: (DutyPeriod) -> Void
+    let onDelete: (DutyPeriod) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var start = Date()
+    @State private var end = Date()
+    @State private var yearly = true
+
+    static func title(_ period: DutyPeriod) -> String {
+        guard let start = Days.parse(period.startKey), let end = Days.parse(period.endKey) else { return "" }
+        // Jährlich ohne Wochentag und Jahr: Beides stimmt im nächsten Jahr nicht mehr
+        let style = period.yearly ? Date.FormatStyle.dateTime.day().month(.abbreviated) : Date.FormatStyle.dateTime.day().month(.abbreviated).year()
+        return "\(start.formatted(style)) – \(end.formatted(style))"
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    DatePicker(L10n.t("Von", "From"), selection: $start, displayedComponents: .date)
+                    DatePicker(L10n.t("Bis", "To"), selection: $end, in: start..., displayedComponents: .date)
+                    Toggle(L10n.t("Jedes Jahr wiederholen", "Repeat every year"), isOn: $yearly)
+                } footer: {
+                    Text(L10n.t("Es zählt der Abholtag: Liegt er im Zeitraum, kommen alle Erinnerungen, auch die am Vorabend.",
+                                "The pickup day counts: if it falls in the period, you get all reminders, including the evening before."))
+                }
+                if !isNew {
+                    Section {
+                        Button(L10n.t("Zeitraum löschen", "Delete period"), role: .destructive) {
+                            onDelete(period)
+                            dismiss()
+                        }
+                    }
+                }
+            }
+            .navigationTitle(isNew ? L10n.t("Neuer Zeitraum", "New period") : L10n.t("Zeitraum", "Period"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.t("Abbrechen", "Cancel")) { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(L10n.t("Sichern", "Save")) {
+                        onSave(DutyPeriod(id: period.id, startKey: Days.iso(start), endKey: Days.iso(end), yearly: yearly))
+                        dismiss()
+                    }
+                }
+            }
+            .onAppear {
+                start = Days.parse(period.startKey) ?? Date()
+                end = Days.parse(period.endKey) ?? start
+                yearly = period.yearly
+            }
+            .onChange(of: start) { _, newStart in
+                if end < newStart { end = newStart }
+            }
+        }
     }
 }
