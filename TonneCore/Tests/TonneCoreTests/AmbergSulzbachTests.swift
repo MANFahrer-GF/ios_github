@@ -204,7 +204,7 @@ final class AmbergSulzbachTests: XCTestCase {
 
         let pickups = try await provider.pickups(for: [town], calendar: calendar)
         XCTAssertEqual(pickups.map(\.name), ["Restmüll", "Restmüll", "Altpapier", "Restmüll"])
-        XCTAssertEqual(pickups.map { Days.iso($0.date) }, ["2026-10-12", "2026-10-26", "2026-11-02", "2026-12-19"])
+        XCTAssertEqual(pickups.map { Days.iso($0.date, calendar: calendar) }, ["2026-10-12", "2026-10-26", "2026-11-02", "2026-12-19"])
         XCTAssertEqual(pickups.last?.note, "vorgefahren")
         XCTAssertEqual(WasteCategory.classify(pickups[0].name), .residual)
         XCTAssertEqual(WasteCategory.classify(pickups[2].name), .paper)
@@ -290,7 +290,7 @@ final class AmbergSulzbachTests: XCTestCase {
         let done = try await provider.nextStep(after: chosen)
         XCTAssertNil(done)
         let pickups = try await provider.pickups(for: chosen, calendar: calendar)
-        print("Amberg-Sulzbach \(provider.label(for: chosen)):", pickups.filter { $0.date >= Days.today(calendar: calendar) }.prefix(6).map { "\(Days.iso($0.date)) \($0.name)" })
+        print("Amberg-Sulzbach \(provider.label(for: chosen)):", pickups.filter { $0.date >= Days.today(calendar: calendar) }.prefix(6).map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
         return pickups
     }
 

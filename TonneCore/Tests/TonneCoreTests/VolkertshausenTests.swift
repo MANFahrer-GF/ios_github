@@ -13,7 +13,7 @@ final class VolkertshausenTests: XCTestCase {
         return calendar
     }
 
-    private func names(_ pickups: [Pickup]) -> [String] { pickups.map { "\(Days.iso($0.date)) \($0.name)" } }
+    private func names(_ pickups: [Pickup]) -> [String] { pickups.map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" } }
 
     static let pageURL = "https://www.volkertshausen.de/leben-wohnen/ver-entsorgung/muelltermine"
     static let page2URL = "https://www.volkertshausen.de/leben-wohnen/ver-entsorgung/muelltermine?tx_hwabfallkalender_hwabfallkalenderfe%5B%40widget_0%5D%5BcurrentPage%5D=2&tx_hwabfallkalender_hwabfallkalenderfe%5B%40widget_0%5D%5Bsearch%5D=nope&cHash=3ce952b855d9c146daad698a8073eb53"
@@ -177,6 +177,6 @@ final class VolkertshausenTests: XCTestCase {
         let upcoming = pickups.filter { $0.date >= calendar.startOfDay(for: Date()) }
         XCTAssertGreaterThanOrEqual(upcoming.count, 3)
         XCTAssertTrue(upcoming.allSatisfy { WasteCategory.classify($0.name) != .other }, "\(upcoming.map(\.name))")
-        print("Volkertshausen:", pickups.count, pickups.map { "\(Days.iso($0.date)) \($0.name)" })
+        print("Volkertshausen:", pickups.count, pickups.map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
     }
 }

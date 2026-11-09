@@ -54,7 +54,7 @@ final class WeimarTests: XCTestCase {
         let pickups = MitteldeutschlandPortalsProvider.weimarPickups(street, large: false, from: start, calendar: calendar)
         let dates = Array(Set(pickups.map(\.date))).sorted()
         // 07.10. (KW 41) liegt vor dem Start, 14.10. ist KW 42 (gerade) → erster Termin 21.10. (KW 43).
-        XCTAssertEqual(dates.prefix(3).map { Days.iso($0) }, ["2026-10-21", "2026-11-04", "2026-11-18"])
+        XCTAssertEqual(dates.prefix(3).map { Days.iso($0, calendar: calendar) }, ["2026-10-21", "2026-11-04", "2026-11-18"])
         XCTAssertEqual(Set(pickups.filter { $0.date == dates[0] }.map(\.name)), ["Restmüll", "Biotonne", "Papier", "Gelbe Tonne"])
         XCTAssertEqual(Set(pickups.map { WasteCategory.classify($0.name) }), [.residual, .organic, .paper, .packaging])
         XCTAssertEqual(pickups.first?.note, L10n.t("Mittwoch in ungeraden Kalenderwochen", "Wednesday in odd calendar weeks"))
@@ -68,20 +68,20 @@ final class WeimarTests: XCTestCase {
 
         let friday = try XCTUnwrap(plan.first { $0.name == "Hämeenlinnaer Straße" })
         let fridays = MitteldeutschlandPortalsProvider.weimarPickups(friday, large: false, from: start, calendar: calendar)
-        XCTAssertEqual(fridays.map(\.date).min().map { Days.iso($0) }, "2026-10-09", "Starttag zählt mit")
+        XCTAssertEqual(fridays.map(\.date).min().map { Days.iso($0, calendar: calendar) }, "2026-10-09", "Starttag zählt mit")
         let even = try XCTUnwrap(plan.first { $0.name == "Ahornallee" })
         XCTAssertEqual(MitteldeutschlandPortalsProvider.weimarPickups(even, large: false, from: start, calendar: calendar)
-            .map(\.date).min().map { Days.iso($0) }, "2026-10-13")
+            .map(\.date).min().map { Days.iso($0, calendar: calendar) }, "2026-10-13")
     }
 
     func testPickupsLargeContainer() throws {
         let street = try XCTUnwrap(MitteldeutschlandPortalsProvider.weimarPlan(Self.page).first { $0.name == "Abraham-Lincoln-Straße" })
         let pickups = MitteldeutschlandPortalsProvider.weimarPickups(street, large: true, from: day("2026-10-09"), calendar: calendar)
         let residual = pickups.filter { $0.name == "Restmüll" }.map(\.date).sorted()
-        XCTAssertEqual(residual.prefix(3).map { Days.iso($0) }, ["2026-10-12", "2026-10-19", "2026-10-26"], "1100 l: jeden Montag")
+        XCTAssertEqual(residual.prefix(3).map { Days.iso($0, calendar: calendar) }, ["2026-10-12", "2026-10-19", "2026-10-26"], "1100 l: jeden Montag")
         XCTAssertEqual(residual.first.flatMap { d in pickups.first { $0.date == d }?.note }, L10n.t("Jeden Montag", "Every Monday"))
         let bio = pickups.filter { $0.name == "Biotonne" }.map(\.date).sorted()
-        XCTAssertEqual(bio.prefix(2).map { Days.iso($0) }, ["2026-10-22", "2026-11-05"], "übrige Tonnen bleiben am Donnerstag ungerade KW")
+        XCTAssertEqual(bio.prefix(2).map { Days.iso($0, calendar: calendar) }, ["2026-10-22", "2026-11-05"], "übrige Tonnen bleiben am Donnerstag ungerade KW")
         XCTAssertFalse(pickups.contains { $0.name == "Restmüll" && calendar.component(.weekday, from: $0.date) == 5 })
     }
 
@@ -138,13 +138,13 @@ final class WeimarTests: XCTestCase {
         let pickups = try await provider.pickups(for: [ackerwand], calendar: calendar)
         XCTAssertEqual(Set(pickups.map(\.name)), ["Restmüll", "Biotonne", "Papier", "Gelbe Tonne"])
         XCTAssertGreaterThanOrEqual(pickups.first.map(\.date) ?? .distantPast, Days.today(calendar: calendar))
-        print("Weimar Ackerwand:", pickups.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+        print("Weimar Ackerwand:", pickups.prefix(8).map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
 
         let lincoln = try XCTUnwrap(streets?.options.first { $0.title == "Abraham-Lincoln-Straße" })
         let bins = try await provider.nextStep(after: [lincoln])
         let large = try XCTUnwrap(bins?.options.first { $0.id == "1100" })
         let weekly = try await provider.pickups(for: [lincoln, large], calendar: calendar)
-        print("Weimar Abraham-Lincoln-Straße 1100 l:", weekly.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+        print("Weimar Abraham-Lincoln-Straße 1100 l:", weekly.prefix(8).map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
         XCTAssertTrue(weekly.contains { $0.name == "Restmüll" })
     }
 }

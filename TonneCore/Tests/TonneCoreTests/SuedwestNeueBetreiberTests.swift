@@ -14,7 +14,7 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         return calendar
     }
 
-    private func names(_ pickups: [Pickup]) -> [String] { pickups.map { "\(Days.iso($0.date)) \($0.name)" } }
+    private func names(_ pickups: [Pickup]) -> [String] { pickups.map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" } }
 
     // MARK: Müllmann
 
@@ -394,7 +394,7 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         let today = calendar.startOfDay(for: Date())
         let upcoming = pickups.filter { $0.date >= today }
         XCTAssertGreaterThanOrEqual(upcoming.count, min, label)
-        print("\(label):", upcoming.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+        print("\(label):", upcoming.prefix(8).map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
     }
 
     func testLiveMuellmann() async throws {
@@ -408,15 +408,15 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         XCTAssertNil(none)
         let pickups = try await provider.pickups(for: [konstanz, street], calendar: calendar)
         checkUpcoming(pickups, "Konstanz Abendbergweg")
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-12" && $0.name == "Biomüll" })
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-14" && $0.name == "Gelber Sack" })
+        XCTAssertTrue(pickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-12" && $0.name == "Biomüll" })
+        XCTAssertTrue(pickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-14" && $0.name == "Gelber Sack" })
 
         let aach = try XCTUnwrap(regions?.options.first { $0.id == "aach" })
         let aachNext = try await provider.nextStep(after: [aach])
         XCTAssertNil(aachNext)
         let aachPickups = try await provider.pickups(for: [aach], calendar: calendar)
         checkUpcoming(aachPickups, "Aach")
-        XCTAssertTrue(aachPickups.contains { Days.iso($0.date) == "2026-10-12" && $0.name == "Biomüll" })
+        XCTAssertTrue(aachPickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-12" && $0.name == "Biomüll" })
 
         let karlsruhe = try XCTUnwrap(regions?.options.first { $0.id == "karlsruhe" })
         let ksStreets = try await provider.nextStep(after: [karlsruhe])
@@ -436,7 +436,7 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         let street = try XCTUnwrap(streets?.options.first { $0.id == "AM+BAHNHOF" })
         let pickups = try await provider.pickups(for: [city, street], calendar: calendar)
         checkUpcoming(pickups, "Wehretal-Reichensachsen Am Bahnhof")
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-12" && $0.name == "Biomüll" })
+        XCTAssertTrue(pickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-12" && $0.name == "Biomüll" })
     }
 
     func testLiveKelkheim() async throws {
@@ -447,8 +447,8 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         let number = SelectionOption(id: "10", title: "10")
         let pickups = try await provider.pickups(for: [street, number], calendar: calendar)
         checkUpcoming(pickups, "Kelkheim Frankfurter Straße 10")
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-14" && $0.name == "Bio-Tonne" })
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-16" && $0.name == "Gelber Sack" })
+        XCTAssertTrue(pickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-14" && $0.name == "Bio-Tonne" })
+        XCTAssertTrue(pickups.contains { Days.iso($0.date, calendar: calendar) == "2026-10-16" && $0.name == "Gelber Sack" })
     }
 
     func testLiveFloersheim() async throws {
