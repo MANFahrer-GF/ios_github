@@ -270,6 +270,19 @@
         }
       }
     },
+    "Abhol-Erinnerung starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start pickup reminder"
+          }
+        }
+      }
+    },
+    "Abhol-Erinnerung starten in Tonne und Torte" : {
+
+    },
     "Abholung" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -277,6 +290,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Collection"
+          }
+        }
+      }
+    },
+    "Abholung erledigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection done"
           }
         }
       }
@@ -679,6 +702,9 @@
         }
       }
     },
+    "Ausgelassen" : {
+
+    },
     "Automatisch aktuell halten" : {
       "localizations" : {
         "en" : {
@@ -740,6 +766,9 @@
           }
         }
       }
+    },
+    "Bleibt drin" : {
+
     },
     "Clean. Ohne Mist." : {
       "localizations" : {
@@ -903,6 +932,9 @@
           }
         }
       }
+    },
+    "Doch raus" : {
+
     },
     "doppelt?" : {
       "localizations" : {
@@ -1722,6 +1754,7 @@
       }
     },
     "Ist schon erledigt – alles steht draußen." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1730,6 +1763,9 @@
           }
         }
       }
+    },
+    "Ist schon erledigt. 👍" : {
+
     },
     "Jede Woche" : {
       "localizations" : {
@@ -3141,16 +3177,6 @@
         }
       }
     },
-    "Abholung erledigt" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Collection done"
-          }
-        }
-      }
-    },
     "Tonne steht draußen in Tonne und Torte" : {
       "localizations" : {
         "en" : {
@@ -3187,16 +3213,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tonne und Torte Müll"
-          }
-        }
-      }
-    },
-    "Abhol-Erinnerung starten" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start pickup reminder"
           }
         }
       }
@@ -3462,6 +3478,16 @@
         }
       }
     },
+    "Welche Müllarten hast du?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which waste types do you have?"
+          }
+        }
+      }
+    },
     "Welche Tonne muss raus in Tonne und Torte?" : {
       "localizations" : {
         "en" : {
@@ -3490,16 +3516,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Which bin goes out? With a “Done” button."
-          }
-        }
-      }
-    },
-    "Welche Müllarten hast du?" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Which waste types do you have?"
           }
         }
       }

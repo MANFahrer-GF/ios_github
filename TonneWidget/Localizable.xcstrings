@@ -299,6 +299,16 @@
         }
       }
     },
+    "Abholung erledigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection done"
+          }
+        }
+      }
+    },
     "Abholungen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -487,6 +497,7 @@
       }
     },
     "Alles steht draußen 👍" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1321,10 +1332,8 @@
         }
       }
     },
-    "Heute Abend rausstellen" : {
-
-    },
     "Heute Abend rausstellen!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1335,6 +1344,7 @@
       }
     },
     "Heute wird abgeholt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2479,6 +2489,7 @@
       }
     },
     "Steht draußen 👍" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2668,16 +2679,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bin is back in"
-          }
-        }
-      }
-    },
-    "Abholung erledigt" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Collection done"
           }
         }
       }
@@ -2891,6 +2892,16 @@
         }
       }
     },
+    "Was wird als Nächstes abgeholt? Mit „Erledigt“-Knopf." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s collected next? With a “Done” button."
+          }
+        }
+      }
+    },
     "Weitere Kontakte freigeben" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2909,16 +2920,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Which bin goes out?"
-          }
-        }
-      }
-    },
-    "Was wird als Nächstes abgeholt? Mit „Erledigt“-Knopf." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What’s collected next? With a “Done” button."
           }
         }
       }
