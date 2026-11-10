@@ -336,6 +336,8 @@ def lookup(name):
 LOCAL_KINDS=('heimatInfo','icsURL')
 # Einzelne Städte mit eigener Kennung, deren Titel nicht eindeutig ist
 LOCAL_MANUAL={('jumomind','hom'):[('Landkreis Hochtaunuskreis','Bad Homburg v.d.Höhe')],
+              ('calendarPortal','awl_neuss'):[('Kreis Rhein-Kreis Neuss','Neuss')],
+              ('portalsNRW','frechen'):[('Kreis Rhein-Erft-Kreis','Frechen')],
               ('jumomind','kbl'):[('Landkreis Offenbach','Langen (Hessen)')]}
 # Gemeinde-Einträge mit mehrdeutigem Namen – per PLZ (Heimat-Info) bzw. Seitentitel (Mein-Abfallkalender) geprüft
 MAK='https://{}.mein-abfallkalender.online'

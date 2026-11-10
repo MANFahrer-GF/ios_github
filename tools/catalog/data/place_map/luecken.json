@@ -1,0 +1,3425 @@
+{
+ "010515178045": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hellschen-Heringsand-Unterschaar",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Dithmarschen"
+ },
+ "010530129129": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Wentorf bei Hamburg",
+  "grund": "mehrdeutig",
+  "kreis": "Kreis Herzogtum Lauenburg"
+ },
+ "010535308075": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Krummesse",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Herzogtum Lauenburg"
+ },
+ "010535308094": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Niendorf bei Berkenthin",
+  "grund": "mehrdeutig",
+  "kreis": "Kreis Herzogtum Lauenburg"
+ },
+ "010545459039": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gröde",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Nordfriesland"
+ },
+ "010545459074": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Langeneß",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Nordfriesland"
+ },
+ "010545489034": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Friedrich-Wilhelm-Lübke-Koog",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Nordfriesland"
+ },
+ "010545492026": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Elisabeth-Sophien-Koog",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Nordfriesland"
+ },
+ "010545492043": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hattstedtermarsch",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Nordfriesland"
+ },
+ "010560025025": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Helgoland",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Pinneberg"
+ },
+ "031540013013": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Königslutter am Elm",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545401015": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Mariental",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545401016": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Querenhorst",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545401018": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rennau",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545402002": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Beierstedt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545402006": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gevensleben",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545402012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Jerxheim",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545402027": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Söllingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Frellstedt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403017": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Räbke",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403021": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Süpplingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403022": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Süpplingenburg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403025": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Warberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545403026": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wolsdorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545404001": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bahrdorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545404004": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Danndorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545404007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Grafhorst",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031545404009": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Groß Twülpstedt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Helmstedt"
+ },
+ "031590016016": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Göttingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Göttingen"
+ },
+ "033525404024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hollnseth",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Cuxhaven"
+ },
+ "033580002002": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bispingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bad Fallingbostel",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580016016": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Munster",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580017017": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Neuenkirchen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580019019": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Schneverdingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580021021": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Soltau",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033580024024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Walsrode",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585401001": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ahlden (Aller)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585401006": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Eickeloh",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585401011": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Grethem",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585401012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hademstorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585401014": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hodenhagen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585402009": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Frankenfeld",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585402013": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Häuslingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585402018": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rethem (Aller)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585403005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Buchholz (Aller)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585403007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Essel",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585403010": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gilten",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585403015": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Lindwedel",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "033585403020": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Schwarmstedt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Heidekreis"
+ },
+ "034620007007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Langeoog",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wittmund"
+ },
+ "034620014014": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Spiekeroog",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wittmund"
+ },
+ "034625401003": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Esens",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wittmund"
+ },
+ "034625402009": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Nenndorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wittmund"
+ },
+ "034625402018": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Westerholt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wittmund"
+ },
+ "040110000000": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bremen",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreisfreie Stadt Bremen"
+ },
+ "051540040040": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kranenburg",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Kleve"
+ },
+ "051540060060": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wachtendonk",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Kleve"
+ },
+ "051580026026": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Monheim am Rhein",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Mettmann"
+ },
+ "051580032032": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Velbert",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Mettmann"
+ },
+ "051700024024": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Moers",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Wesel"
+ },
+ "051700032032": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Rheinberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Wesel"
+ },
+ "051700036036": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Schermbeck",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Wesel"
+ },
+ "053140000000": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bonn",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreisfreie Stadt Bonn"
+ },
+ "053580008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Düren",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Düren"
+ },
+ "053580024024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Jülich",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Düren"
+ },
+ "053580028028": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kreuzau",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Düren"
+ },
+ "053580056056": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Titz",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Düren"
+ },
+ "053620012012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Brühl",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Rhein-Erft-Kreis"
+ },
+ "053620016016": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Elsdorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Rhein-Erft-Kreis"
+ },
+ "053620028028": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hürth",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Rhein-Erft-Kreis"
+ },
+ "053740004004": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bergneustadt",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053740012012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gummersbach",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053740024024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Marienheide",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053740044044": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Waldbröl",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053740048048": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wiehl",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053740052052": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wipperfürth",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Oberbergischer Kreis"
+ },
+ "053780028028": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rösrath",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Rheinisch-Bergischer Kreis"
+ },
+ "055620004004": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Castrop-Rauxel",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Datteln",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620014014": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gladbeck",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620020020": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Herten",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620024024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Marl",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620028028": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Oer-Erkenschwick",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "055620036036": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Waltrop",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Recklinghausen"
+ },
+ "057540044044": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Verl",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Gütersloh"
+ },
+ "057660020020": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Detmold",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreis Lippe"
+ },
+ "059130000000": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Dortmund",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreisfreie Stadt Dortmund"
+ },
+ "059540004004": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Breckerfeld",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540008008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Ennepetal",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540012012": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Gevelsberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540016016": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hattingen",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540020020": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Herdecke",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540024024": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Schwelm",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540028028": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Sprockhövel",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059540036036": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Witten",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Ennepe-Ruhr-Kreis"
+ },
+ "059580008008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bestwig",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580012012": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Brilon",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580020020": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hallenberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580024024": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Marsberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580028028": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Medebach",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580036036": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Olsberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059580048048": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Winterberg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Hochsauerlandkreis"
+ },
+ "059620004004": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Altena",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620008008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Balve",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620016016": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hemer",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620024024": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Iserlohn",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620028028": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Kierspe",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620032032": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Lüdenscheid",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620036036": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Meinerzhagen",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620040040": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Menden (Sauerland)",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620044044": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Nachrodt-Wiblingwerde",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620056056": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Schalksmühle",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059620060060": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Werdohl",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Märkischer Kreis"
+ },
+ "059700004004": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bad Berleburg",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "059700008008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Burbach",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "059700012012": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Erndtebrück",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "059700028028": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bad Laasphe",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "059700032032": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Netphen",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "059700040040": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Siegen",
+  "grund": "ungeprueft",
+  "kreis": "Kreis Siegen-Wittgenstein"
+ },
+ "064310012012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hirschhorn (Neckar)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Bergstraße"
+ },
+ "064330002002": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bischofsheim",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064330005005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ginsheim-Gustavsburg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064330007007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kelsterbach",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064330008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Mörfelden-Walldorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064330010010": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Raunheim",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064330012012": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rüsselsheim am Main",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Groß-Gerau"
+ },
+ "064350001001": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bad Orb",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064350002002": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bad Soden-Salmünster",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064350005005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Brachttal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064350007007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Erlensee",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064350015015": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hasselroth",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064350020020": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Neuberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Main-Kinzig-Kreis"
+ },
+ "064390001001": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Aarbergen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390002002": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bad Schwalbach",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390005005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Heidenrod",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390006006": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hohenstein",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390007007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hünstetten",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Idstein",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390011011": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Niedernhausen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390014014": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Schlangenbad",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390015015": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Taunusstein",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064390016016": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Waldems",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rheingau-Taunus-Kreis"
+ },
+ "064400006006": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Echzell",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400007007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Florstadt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Friedberg (Hessen)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400011011": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hirzenhain",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400014014": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Limeshain",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400017017": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Niddatal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400019019": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ortenberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400022022": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rockenberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400023023": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rosbach v.d.Höhe",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400024024": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wölfersheim",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "064400025025": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wöllstadt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Wetteraukreis"
+ },
+ "065310005005": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gießen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Gießen"
+ },
+ "065320023023": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wetzlar",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Lahn-Dill-Kreis"
+ },
+ "065340008008": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ebsdorfergrund",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Marburg-Biedenkopf"
+ },
+ "065340011011": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kirchhain",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Marburg-Biedenkopf"
+ },
+ "065340017017": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rauschenberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Marburg-Biedenkopf"
+ },
+ "065340018018": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Stadtallendorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Marburg-Biedenkopf"
+ },
+ "065340020020": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Weimar (Lahn)",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Marburg-Biedenkopf"
+ },
+ "066320003003": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bebra",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Hersfeld-Rotenburg"
+ },
+ "066320017017": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ronshausen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Hersfeld-Rotenburg"
+ },
+ "066320018018": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rotenburg a.d.Fulda",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Hersfeld-Rotenburg"
+ },
+ "066350001001": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Allendorf (Eder)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350003003": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bad Wildungen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350004004": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Battenberg (Eder)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350006006": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Burgwald",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350007007": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Diemelsee",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350008008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Diemelstadt",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350009009": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Edertal",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350010010": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Frankenau",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350011011": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Frankenberg (Eder)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350012012": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Gemünden (Wohra)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350013013": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Haina (Kloster)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350014014": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hatzfeld (Eder)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350015015": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Korbach",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350016016": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Lichtenfels",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350017017": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Rosenthal",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350018018": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Twistetal",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350019019": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Vöhl",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350021021": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Waldeck",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "066350022022": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Willingen (Upland)",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Waldeck-Frankenberg"
+ },
+ "071335006074": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Oberhausen an der Nahe",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Bad Kreuznach"
+ },
+ "071335009010": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Becherbach bei Kirn",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Bad Kreuznach"
+ },
+ "071335009073": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Oberhausen bei Kirn",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Bad Kreuznach"
+ },
+ "071345001008": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Berschweiler bei Baumholder",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Birkenfeld"
+ },
+ "071345005009": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Berschweiler bei Kirn",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Birkenfeld"
+ },
+ "071405004105": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Nieder Kostenz",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rhein-Hunsrück-Kreis"
+ },
+ "071405004111": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ober Kostenz",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rhein-Hunsrück-Kreis"
+ },
+ "071410075075": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lahnstein",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003002": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Altendiez",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003005": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Aull",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003014": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Birlenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003021": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Charlottenberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003022": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Cramberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003029": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Diez",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003030": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dörnberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003038": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Eppenrod",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003045": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Geilnau",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003049": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Gückingen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003052": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hambach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003053": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Heistenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003057": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hirschberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003059": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Holzappel",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003061": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Holzheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003062": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Horhausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003064": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Isselbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003076": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Langenscheid",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003077": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Laurenburg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003124": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Scheidt",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003130": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Steinsberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003133": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Wasenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415003503": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Balduinstein",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007009": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Berg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007012": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Bettendorf",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007015": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Bogel",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007019": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Buch",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007035": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Ehr",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007037": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Endlichhofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007040": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Eschbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007047": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Gemmerich",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007055": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Himmighofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007060": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Holzhausen an der Haide",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007063": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hunzel",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007067": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kasdorf",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007070": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kehlbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007078": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lautert",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007080": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lipporn",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007084": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Marienfels",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007085": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Miehlen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007092": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Nastätten",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007094": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Niederbachheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007097": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Niederwallmenach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007100": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oberbachheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007104": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Obertiefenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007105": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oberwallmenach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007107": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oelsberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007110": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hainau",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007116": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Rettershain",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007120": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Ruppertshofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007131": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Strüth",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007134": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Weidenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007137": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Welterod",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007140": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Winterwerb",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415007502": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Diethardt",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009004": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Auel",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009016": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Bornich",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009023": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dachsenhausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009024": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dahlheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009031": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dörscheid",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009042": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Filsen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009066": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kamp-Bornhofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009069": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kaub",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009072": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kestert",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009079": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lierschied",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009083": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lykershausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009099": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Nochern",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009108": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Osterspai",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009109": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Patersberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009112": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Prath",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009114": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Reichenberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009115": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Reitzenhain",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009121": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Sankt Goarshausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009122": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Sauerthal",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009136": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Weisel",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009138": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Weyer",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415009501": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Braubach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010003": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Attenhausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010006": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Bad Ems",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010008": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Becheln",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010025": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dausenau",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010026": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dessighofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010027": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dienethal",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010033": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dornholzhausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010041": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Fachbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010044": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Frücht",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010046": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Geisig",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010058": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hömberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010071": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kemmenau",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010082": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lollschied",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010086": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Miellen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010087": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Misselberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010091": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Nassau",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010098": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Nievern",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010103": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Obernhof",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010106": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oberwies",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010111": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Pohl",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010127": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Schweighausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010128": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Seelbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010129": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Singhofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010132": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Sulzbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010135": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Weinähr",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010139": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Winden",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010141": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Zimmerschied",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415010201": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Arzbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011001": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Allendorf",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011010": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Berghausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011011": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Berndroth",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011013": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Biebrich",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011018": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Bremberg",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011020": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Burgschwalbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011032": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Dörsdorf",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011034": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Ebertshausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011036": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Eisighofen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011039": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Ergeshausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011043": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Flacht",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011050": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Gutenacker",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011051": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Hahnstätten",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011054": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Herold",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011065": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kaltenholzhausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011068": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Katzenelnbogen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011073": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Klingelbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011074": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Kördorf",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011081": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Lohrheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011088": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Mittelfischbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011089": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Mudershausen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011093": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Netzbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011095": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Niederneisen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011096": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Niedertiefenbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011101": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oberfischbach",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011102": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Oberneisen",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011113": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Reckenroth",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011117": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Rettert",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011118": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Roth",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011125": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Schiesheim",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "071415011126": {
+  "art": "nicht_holbar",
+  "beleg": "https://www.rhein-lahn-kreis-abfallwirtschaft.de/ am 10.11.2026: „Website vorübergehend nicht verfügbar. Aufgrund eines aktuellen Sicherheitsvorfalls haben wir unsere Website … vorsorglich deaktiviert.“ Ortsliste /html/cs_6615.html antwortet 404; Kreisverwaltung bietet nur PDF-Listen.",
+  "gemeinde": "Schönborn",
+  "grund": "portal_abgeschaltet",
+  "kreis": "Landkreis Rhein-Lahn-Kreis"
+ },
+ "072315008021": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Dierfeld",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Bernkastel-Wittlich"
+ },
+ "072315008114": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Schladt",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Bernkastel-Wittlich"
+ },
+ "073335007202": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Reichsthal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Donnersbergkreis"
+ },
+ "073335007203": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Seelen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Donnersbergkreis"
+ },
+ "073355001003": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Bruchmühlbach-Miesau",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355001011": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Gerhardsbrunn",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355001201": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Lambsborn",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355001202": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Langwieden",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355001203": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Martinshöhe",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002004": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Enkenbach-Alsenborn",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002007": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Fischbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002010": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Frankenstein",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002015": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Hochspeyer",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002026": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Mehlingen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002028": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Neuhemsbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002048": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Waldleiningen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355002205": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Sembach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355008016": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Hütschenhausen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355008020": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Kottweiler-Schwanden",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355008030": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Niedermohr",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355008038": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Ramstein-Miesenbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355008044": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Steinwenden",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009005": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Erzenhausen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009006": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Eulenbis",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009019": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Kollweiler",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009024": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Mackenbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009040": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Rodenbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009043": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Schwedelbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009049": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Weilerbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355009501": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Reichenbach-Steegen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010009": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Frankelbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010013": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Heiligenmoschel",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010014": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Hirschhorn/Pfalz",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010017": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Katzweiler",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010025": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Mehlbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010029": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Niederkirchen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010033": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Olsbrücken",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010034": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Otterbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010035": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Otterberg",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010041": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Schallodenbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010042": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Schneckenhausen",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355010046": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Sulzbachtal",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011002": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Bann",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011012": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Hauptstuhl",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011018": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Kindsbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011021": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Krickenbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011022": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Landstuhl",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011023": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Linden",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011027": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Mittelbrunn",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011031": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Oberarnbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011037": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Queidersbach",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011045": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Stelzenberg",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011047": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Trippstadt",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073355011204": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Schopp",
+  "grund": "kein_eintrag",
+  "kreis": "Landkreis Kaiserslautern"
+ },
+ "073365008090": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Rutsweiler an der Lauter",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Kusel"
+ },
+ "073365010089": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Rutsweiler am Glan",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Kusel"
+ },
+ "073385008001": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Altrip",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Rhein-Pfalz-Kreis"
+ },
+ "081175009060": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Zell unter Aichelberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Göppingen"
+ },
+ "081210000000": {
+  "art": "offen",
+  "beleg": "Für den Kreis gibt es keinen Katalogeintrag.",
+  "gemeinde": "Heilbronn",
+  "grund": "kein_eintrag",
+  "kreis": "Stadtkreis Heilbronn"
+ },
+ "083275001004": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bärenthal",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001008": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Buchheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001016": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Fridingen an der Donau",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001027": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Irndorf",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001030": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Kolbingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001036": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Mühlheim an der Donau",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275001041": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Renquishausen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002007": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Bubsheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002009": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Deilingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002013": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Egesheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002019": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Gosheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002029": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Königsheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002040": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Reichenbach am Heuberg",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275002051": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Wehingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275003018": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Geisingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275003025": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Immendingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004002": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Aldingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004005": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Balgheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004006": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Böttingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004010": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Denkingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004011": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Dürbheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004017": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Frittlingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004023": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hausen ob Verena",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004033": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Mahlstetten",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275004046": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Spaichingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275005012": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Durchhausen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275005020": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Gunningen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275005048": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Talheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275005049": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Trossingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006038": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Neuhausen ob Eck",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006050": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Tuttlingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006054": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Wurmlingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006055": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Seitingen-Oberflacht",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006056": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Rietheim-Weilheim",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "083275006057": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Emmingen-Liptingen",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Tuttlingen"
+ },
+ "084175006071": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Weilen unter den Rinnen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Zollernalbkreis"
+ },
+ "091740147147": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hilgertshausen-Tandern",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Dachau"
+ },
+ "091800117117": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Garmisch-Partenkirchen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Garmisch-Partenkirchen"
+ },
+ "091840113113": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Baierbrunn",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840118118": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Feldkirchen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840119119": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Garching b.München",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840121121": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Grasbrunn",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840122122": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Grünwald",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840123123": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Haar",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840130130": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ismaning",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840131131": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kirchheim b.München",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840132132": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Neuried",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840134134": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Oberhaching",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840135135": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Oberschleißheim",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840136136": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Ottobrunn",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840139139": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Pullach i.Isartal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840141141": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Sauerlach",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840144144": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Straßlach-Dingharting",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840145145": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Taufkirchen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "091840147147": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Unterföhring",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis München"
+ },
+ "092720143143": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Sankt Oswald-Riedlhütte",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Freyung-Grafenau"
+ },
+ "092735219113": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Aiglsbach",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Kelheim"
+ },
+ "092750111111": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Aicha vorm Wald",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Passau"
+ },
+ "092750135135": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Neukirchen vorm Wald",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Passau"
+ },
+ "092760115115": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bayerisch Eisenstein",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Regen"
+ },
+ "093740139139": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Neustadt a.d.Waldnaab",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Neustadt a.d.Waldnaab"
+ },
+ "094640000000": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Hof",
+  "grund": "ungeprueft",
+  "kreis": "Kreisfreie Stadt Hof"
+ },
+ "095710193193": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rothenburg ob der Tauber",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ansbach"
+ },
+ "096720114114": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Bad Kissingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Bad Kissingen"
+ },
+ "097610000000": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Augsburg",
+  "grund": "nicht_in_liste",
+  "kreis": "Kreisfreie Stadt Augsburg"
+ },
+ "097750134134": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Nersingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neu-Ulm"
+ },
+ "097750139139": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Elchingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neu-Ulm"
+ },
+ "097750152152": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Senden",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neu-Ulm"
+ },
+ "097750162162": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Vöhringen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neu-Ulm"
+ },
+ "097775749164": {
+  "art": "offen",
+  "beleg": "Liste führt nur den Grundnamen, den im Kreis mehrere Gemeinden tragen.",
+  "gemeinde": "Rieden",
+  "grund": "mehrdeutig",
+  "kreis": "Landkreis Ostallgäu"
+ },
+ "100410100100": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Saarbrücken",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Regionalverband Saarbrücken"
+ },
+ "100410519519": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Völklingen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Regionalverband Saarbrücken"
+ },
+ "100430111111": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Eppelborn",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neunkirchen"
+ },
+ "100430114114": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Neunkirchen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Neunkirchen"
+ },
+ "100440112112": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Lebach",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Saarlouis"
+ },
+ "100460117117": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "St. Wendel",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis St. Wendel"
+ },
+ "120605003192": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Rüdnitz",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605006100": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Joachimsthal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011036": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Britz",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011092": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Hohenfinow",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011128": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Liepe",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011149": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Lunow-Stolzenhagen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011172": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Niederfinow",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120605011176": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Oderberg",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Barnim"
+ },
+ "120685807072": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Dabergotz",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ostprignitz-Ruppin"
+ },
+ "120685807306": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Märkisch Linden",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ostprignitz-Ruppin"
+ },
+ "120685807413": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Storbeck-Frankendorf",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ostprignitz-Ruppin"
+ },
+ "120685807425": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Temnitzquell",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ostprignitz-Ruppin"
+ },
+ "120685807426": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Temnitztal",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ostprignitz-Ruppin"
+ },
+ "130715158173": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Kuckssee",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Mecklenburgische Seenplatte"
+ },
+ "130735362040": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Insel Hiddensee",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Vorpommern-Rügen"
+ },
+ "130740087087": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Wismar",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Nordwestmecklenburg"
+ },
+ "130745455064": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Pokrent",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Nordwestmecklenburg"
+ },
+ "130765668007": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Barnin",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ludwigslust-Parchim"
+ },
+ "130765668044": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Gneven",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ludwigslust-Parchim"
+ },
+ "130765668112": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Pinnow",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Ludwigslust-Parchim"
+ },
+ "147300110110": {
+  "art": "offen",
+  "beleg": "Erste Auswahl des Eintrags ist keine Ortsliste; zweite Ebene noch nicht geprüft.",
+  "gemeinde": "Eilenburg",
+  "grund": "ungeprueft",
+  "kreis": "Landkreis Nordsachsen"
+ },
+ "150835053275": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Harbke",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Börde"
+ },
+ "160715051022": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Großheringen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Weimarer Land"
+ },
+ "160715051083": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Schmiedehausen",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Weimarer Land"
+ },
+ "160755004063": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Löhma",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Saale-Orla-Kreis"
+ },
+ "160755005056": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Lausnitz b.Neustadt an der Orla",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Saale-Orla-Kreis"
+ },
+ "160765004043": {
+  "art": "offen",
+  "beleg": "Kein Eintrag des Kreises führt die Gemeinde in seiner Ortsliste (Abgleich 10.11.2026).",
+  "gemeinde": "Linda b.Weida",
+  "grund": "nicht_in_liste",
+  "kreis": "Landkreis Greiz"
+ }
+}

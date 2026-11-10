@@ -32,8 +32,13 @@ public extension ProviderCatalog {
         let weak = ranked.filter { (ranks[$0.id] ?? 2) >= 2 }
         // Kreisweite Entsorger des Kreises – Gemeinde-Einträge (z. B. Mein-Abfallkalender einer Stadt) nur für genau diese Gemeinde.
         let pairs = Set(hits.map { "\($0.district)|\($0.name)" })
+        // Gemeinden mit belegter Zuordnung zeigen nur die Einträge, die sie führen (Neuss → AWL Neuss, nicht jeden
+        // Entsorger des Rhein-Kreises). Nur wo die Zuordnung keinen kennt, bleiben die Einträge des Kreises als Kandidaten.
+        let proven = Set(pairs.flatMap { PlaceMapIndex.entryIDs[$0] ?? [] })
+        let openDistricts = Set(hits.filter { PlaceMapIndex.entryIDs["\($0.district)|\($0.name)"] == nil }.map(\.district))
         let inDistrict = { (entry: CatalogEntry) in
-            (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains)
+            proven.contains(entry.id)
+                || (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: openDistricts.contains)
                 || (CatalogRegions.localEntries[entry.id] ?? []).contains(where: pairs.contains)
         }
         let known = Set(strong.map(\.id))

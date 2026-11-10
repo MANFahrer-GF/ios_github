@@ -100,6 +100,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case muellmax
     case awbKoeln
     case leipzig
+    case calendarPortal
     case ahaHannover
     case abfallPlusApp
     case gemosWasteBox
@@ -139,6 +140,7 @@ public enum ProviderKind: String, Codable, CaseIterable, Hashable {
         case .muellmax: return "Müllmax"
         case .awbKoeln: return "AWB Köln"
         case .leipzig: return "Stadtreinigung Leipzig"
+        case .calendarPortal: return L10n.t("Bürgerportal", "Citizen portal")
         case .ahaHannover: return "aha Region Hannover"
         case .abfallPlusApp: return "AbfallPlus-App"
         case .gemosWasteBox: return "Gemos WasteBox"
@@ -236,6 +238,7 @@ public enum ProviderFactory {
         case .muellmax: return MuellmaxProvider(service: serviceKey, client: client)
         case .awbKoeln: return AWBKoelnProvider(client: client)
         case .leipzig: return LeipzigProvider(client: client)
+        case .calendarPortal: return CalendarPortalProvider(operator: serviceKey, client: client)
         case .ahaHannover: return AhaHannoverProvider(client: client)
         case .abfallPlusApp: return AbfallPlusAppProvider(appID: serviceKey)
         case .gemosWasteBox: return GemosWasteBoxProvider(customer: serviceKey, client: client)

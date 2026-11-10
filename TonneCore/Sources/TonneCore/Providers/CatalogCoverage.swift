@@ -13,14 +13,14 @@ public struct DistrictCoverage: Identifiable, Hashable, Sendable {
     public let localPlaces: [String]
     /// Bewohnte Gemeinden des Kreises (ohne gemeindefreie Gebiete).
     public let municipalityCount: Int
-    /// Gemeinden ohne Gemeinde-Eintrag – bei „teilweise“ die, die noch fehlen.
+    /// Gemeinden, die kein Eintrag belegt führt (laut erzeugter Zuordnung Gemeinde → Einträge).
     public let missingPlaces: [String]
 
     public var id: String { district }
-    /// Ein Entsorger für den Kreis – oder Gemeinde-Einträge für alle seine Gemeinden (z. B. eine kreisfreie Stadt).
-    public var isCovered: Bool { !entryIDs.isEmpty || (municipalityCount > 0 && missingPlaces.isEmpty) }
-    /// Kein Kreis-Entsorger, aber einzelne Gemeinden sind dabei.
-    public var isPartial: Bool { !isCovered && !localEntryIDs.isEmpty }
+    /// Abgedeckt ist ein Kreis nur, wenn jede seiner Gemeinden einen Eintrag hat, der sie belegt führt.
+    public var isCovered: Bool { municipalityCount > 0 && missingPlaces.isEmpty }
+    /// Ein Teil der Gemeinden ist dabei, andere fehlen noch.
+    public var isPartial: Bool { !isCovered && !allEntryIDs.isEmpty }
     public var allEntryIDs: [String] { entryIDs + localEntryIDs }
     public var displayName: String { DistrictCoverage.displayName(district) }
 
@@ -78,7 +78,7 @@ enum CoverageIndex {
                              entryIDs: (regional[district] ?? []).sorted(),
                              localEntryIDs: (local[district] ?? []).filter { !(regional[district] ?? []).contains($0) }.sorted(),
                              localPlaces: (localNames[district] ?? []).sorted(), municipalityCount: places[district]?.count ?? 0,
-                             missingPlaces: (places[district] ?? []).filter { !(localNames[district] ?? []).contains($0) }.sorted())
+                             missingPlaces: (places[district] ?? []).filter { PlaceMapIndex.entryIDs["\(district)|\($0)"] == nil }.sorted())
         }
         .sorted { ($0.state, $0.displayName) < ($1.state, $1.displayName) }
     }()
@@ -93,9 +93,66 @@ public struct PlaceCheck: Identifiable, Hashable {
     /// Weitere Einträge desselben Kreises, die erkennbar für andere Gemeinden gelten (z. B. „Gemeinde Gumtow“ bei Perleberg)
     /// – ein Amt kann trotzdem auch seine Mitgliedsgemeinden bedienen.
     public let otherEntries: [CatalogEntry]
+    /// Warum kein Entsorger belegt ist (ausdrückliche Lücke der Zuordnung), sonst nil.
+    public let gapNote: String?
+    /// Nachweislich kein abrufbarer Online-Kalender (z. B. Portal des Entsorgers abgeschaltet).
+    public let isUnavailable: Bool
+
+    public init(name: String, district: String, entries: [CatalogEntry], otherEntries: [CatalogEntry],
+                gapNote: String? = nil, isUnavailable: Bool = false) {
+        self.name = name
+        self.district = district
+        self.entries = entries
+        self.otherEntries = otherEntries
+        self.gapNote = gapNote
+        self.isUnavailable = isUnavailable
+    }
+
     public var id: String { "\(district)|\(name)" }
-    /// Nur, wenn ein Entsorger die Gemeinde sicher bedient – weitere Einträge des Kreises zählen nicht.
+    /// Nur, wenn ein Entsorger die Gemeinde belegt führt – weitere Einträge des Kreises zählen nicht.
     public var isCovered: Bool { !entries.isEmpty }
+}
+
+/// Die erzeugte Zuordnung Gemeinde → Einträge (`CatalogPlaceMap`), einmal gelesen. Schlüssel: „Landkreis|Gemeinde“.
+enum PlaceMapIndex {
+    static let entryIDs: [String: [String]] = {
+        var out: [String: [String]] = [:]
+        for line in CatalogPlaceMap.places.split(separator: "\n") {
+            guard let cut = line.lastIndex(of: "=") else { continue }
+            out[String(line[..<cut])] = line[line.index(after: cut)...].split(separator: ",")
+                .compactMap { Int($0) }.filter { CatalogPlaceMap.entryIDs.indices.contains($0) }.map { CatalogPlaceMap.entryIDs[$0] }
+        }
+        return out
+    }()
+
+    /// Ausdrückliche Lücken: Gemeinde → (nachweislich nicht holbar, Grund-Kürzel).
+    static let gaps: [String: (unavailable: Bool, reason: String)] = {
+        var out: [String: (unavailable: Bool, reason: String)] = [:]
+        for line in CatalogPlaceMap.gaps.split(separator: "\n") {
+            guard let cut = line.lastIndex(of: "=") else { continue }
+            let parts = line[line.index(after: cut)...].split(separator: ",")
+            guard parts.count == 2, let index = Int(parts[1]), CatalogPlaceMap.gapReasons.indices.contains(index) else { continue }
+            out[String(line[..<cut])] = (parts[0] == "n", CatalogPlaceMap.gapReasons[index])
+        }
+        return out
+    }()
+
+    static func note(_ reason: String) -> String {
+        switch reason {
+        case "portal_abgeschaltet":
+            return L10n.t("Das Portal des Entsorgers ist derzeit abgeschaltet – es gibt keinen abrufbaren Online-Kalender.",
+                          "The provider's portal is currently offline – there is no online calendar to fetch.")
+        case "kein_eintrag":
+            return L10n.t("Für diesen Kreis gibt es noch keinen Entsorger im Katalog.",
+                          "There is no provider for this district in the catalogue yet.")
+        case "nicht_in_liste":
+            return L10n.t("Kein Entsorger im Katalog führt diese Gemeinde in seiner Ortsliste.",
+                          "No provider in the catalogue lists this municipality.")
+        default:
+            return L10n.t("Für diese Gemeinde ist noch nicht belegt, welcher Entsorger sie führt.",
+                          "It is not yet verified which provider covers this municipality.")
+        }
+    }
 }
 
 public extension ProviderCatalog {
@@ -103,37 +160,29 @@ public extension ProviderCatalog {
     static func checkPlace(_ query: String) -> [PlaceCheck] {
         municipalities(matching: query).map { hit in
             let pair = "\(hit.district)|\(hit.name)"
-            let local = entries.filter { (CatalogRegions.localEntries[$0.id] ?? []).contains(pair) }
-            let regional = entries.filter { (CatalogRegions.entryDistricts[$0.id] ?? []).contains(hit.district) && !local.contains($0) }
-            let fits = regional.filter { serves($0, municipality: hit.name, district: hit.district) }
-            let others = regional.filter { !fits.contains($0) }
+            // Belegt ist nur, was die erzeugte Zuordnung führt (Abgleich der echten Ortslisten) – keine Vermutung aus dem Kreis.
+            let proven = Set(PlaceMapIndex.entryIDs[pair] ?? [])
+            let fits = entries.filter { proven.contains($0.id) }
+            let others = entries.filter { !proven.contains($0.id) && (CatalogRegions.entryDistricts[$0.id] ?? []).contains(hit.district) }
+            let gap = PlaceMapIndex.gaps[pair]
             let byTitle = { (a: CatalogEntry, b: CatalogEntry) in a.title.localizedStandardCompare(b.title) == .orderedAscending }
             // Ämter/Verbandsgemeinden bedienen mehrere Gemeinden, ohne sie aufzuzählen – als wahrscheinlichste Kandidaten zuerst
             let groupsFirst = others.sorted { a, b in
                 let ga = servesSeveralTowns(a), gb = servesSeveralTowns(b)
                 return ga != gb ? ga : byTitle(a, b)
             }
-            return PlaceCheck(name: hit.name, district: hit.district, entries: (local + fits).sorted(by: byTitle), otherEntries: groupsFirst)
+            return PlaceCheck(name: hit.name, district: hit.district, entries: fits.sorted(by: byTitle), otherEntries: groupsFirst,
+                              gapNote: fits.isEmpty ? PlaceMapIndex.note(gap?.reason ?? "") : nil,
+                              isUnavailable: fits.isEmpty && gap?.unavailable == true)
         }
     }
 
-    /// Gilt ein kreisweit zugeordneter Eintrag für diese Gemeinde? Ja, wenn er sie (oder den Kreis) in der Ortsliste
-    /// oder im Titel nennt oder ohne Ortsliste nicht nach einer einzelnen Gemeinde benannt ist („Landkreis Ansbach“ ja,
-    /// „Gemeinde Gumtow (Landkreis Prignitz)“ nicht für Perleberg).
+    /// Einträge, die eine Gemeinde belegt führen („Landkreis|Gemeinde“); nil, wenn die Zuordnung keinen kennt.
+    static func provenEntryIDs(forPlace pair: String) -> [String]? { PlaceMapIndex.entryIDs[pair] }
+
     private static func servesSeveralTowns(_ entry: CatalogEntry) -> Bool {
         let title = fold(entry.title)
         return ["amt ", "verbandsgemeinde ", "samtgemeinde ", "verwaltungsgemeinschaft "].contains { title.hasPrefix($0) }
-    }
-
-    private static func serves(_ entry: CatalogEntry, municipality: String, district: String) -> Bool {
-        let place = fold(municipality.replacingOccurrences(of: #"\s*\(.*\)$"#, with: "", options: .regularExpression))
-        let county = fold(DistrictCoverage.displayName(district).replacingOccurrences(of: #"^(Landkreis|Kreis) "#, with: "", options: .regularExpression))
-        let names = entry.places.map(fold)
-        if names.contains(where: { $0 == place || $0.hasPrefix(place + " ") || $0.hasPrefix(place + "(") || $0 == county }) { return true }
-        let title = fold(entry.title)
-        if title.range(of: #"(^|[^\p{L}])"# + NSRegularExpression.escapedPattern(for: place) + #"($|[^\p{L}])"#, options: .regularExpression) != nil { return true }
-        let namedForOneTown = ["gemeinde ", "stadt ", "amt ", "markt ", "verbandsgemeinde ", "samtgemeinde ", "ortsgemeinde "].contains { title.hasPrefix($0) }
-        return names.isEmpty && !namedForOneTown
     }
 
     /// Einschränkung eines Entsorgers in einem Satz (PDF-Jahresdaten, berechnete Termine, nur einzelne Müllarten …),

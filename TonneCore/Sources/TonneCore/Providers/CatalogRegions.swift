@@ -816,6 +816,7 @@ Stadtkreis Ulm|Ulm
         "cTrace:arnsberg-abfallkalender:Stadt Arnsberg": ["Kreis Hochsauerlandkreis|Arnsberg"],
         "cTrace:dietzenbach:Kreisstadt Dietzenbach": ["Landkreis Offenbach|Dietzenbach"],
         "cTrace:oberursel:Oberursel (Taunus)": ["Landkreis Hochtaunuskreis|Oberursel (Taunus)"],
+        "calendarPortal:awl_neuss:AWL Neuss": ["Kreis Rhein-Kreis Neuss|Neuss"],
         "heimatInfo:altenstadt-an-der-waldnaab:Altenstadt an der Waldnaab (Heimat-Info)": ["Landkreis Neustadt a.d.Waldnaab|Altenstadt a.d.Waldnaab"],
         "heimatInfo:ammerthal:Ammerthal (Heimat-Info)": ["Landkreis Amberg-Sulzbach|Ammerthal"],
         "heimatInfo:aschheim:Aschheim (Heimat-Info)": ["Landkreis München|Aschheim"],

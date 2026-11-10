@@ -198,6 +198,8 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .muellmax, serviceKey: "Efb", title: "Kreisstadt Friedberg (Hessen)", website: "https://www.friedberg-hessen.de/", places: ["Friedberg"]),
         CatalogEntry(kind: .awbKoeln, serviceKey: "koeln", title: "AWB Köln", website: "https://www.awbkoeln.de/", places: ["Köln", "Cologne"]),
         CatalogEntry(kind: .leipzig, serviceKey: "leipzig", title: "Stadtreinigung Leipzig", website: "https://stadtreinigung-leipzig.de/", places: ["Leipzig"]),
+        CatalogEntry(kind: .portalsNRW, serviceKey: "frechen", title: "Stadtbetrieb Frechen", website: "https://www.stadtbetrieb-frechen.de/service/abfallkalender", places: ["Frechen"]),
+        CatalogEntry(kind: .calendarPortal, serviceKey: "awl_neuss", title: "AWL Neuss", website: "https://buergerportal.awl-neuss.de/calendar", places: ["Neuss"]),
         CatalogEntry(kind: .ahaHannover, serviceKey: "hannover", title: "aha Region Hannover", website: "https://www.aha-region.de/", places: ["Hannover", "Laatzen", "Langenhagen", "Garbsen", "Lehrte", "Burgdorf", "Wunstorf", "Springe", "Neustadt am Rübenberge", "Seelze", "Barsinghausen", "Isernhagen", "Hemmingen", "Ronnenberg", "Gehrden", "Pattensen", "Sehnde", "Uetze", "Wedemark", "Wennigsen", "Burgwedel"]),
         // GENERATED-START
         CatalogEntry(kind: .abfallPlusApp, serviceKey: "de.albagroup.app", title: "ALBA (Berlin, Braunschweig, Havelland …)", website: "https://www.abfallplus.de/", places: ["Berlin", "Braunschweig", "Havelland", "Oberhavel", "Ostprignitz-Ruppin", "Tübingen"]),
@@ -572,7 +574,6 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .portalsNRW, serviceKey: "enni", title: "ENNI Moers", website: "https://abfallkalender.enni.de/", places: ["Moers"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "espelkamp", title: "Abfallkalender Stadt Espelkamp", website: "https://www.espelkamp.de/index.php?La=1&ffmod=abf&ort=322.4&call=sfm", places: ["Espelkamp"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "prezero", title: "PreZero Abfallkalender Bad Oeynhausen", website: "https://abfallkalender.prezero.network/bad-oeynhausen", places: ["Bad Oeynhausen"]),
-        CatalogEntry(kind: .portalsNRW, serviceKey: "frechen", title: "Stadtbetrieb Frechen", website: "https://www.stadtbetrieb-frechen.de/service/abfallkalender", places: ["Frechen"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "hamburg", title: "Stadtreinigung Hamburg", website: "https://www.stadtreinigung.hamburg/abfuhrkalender/", places: ["Hamburg", "Altona", "Bergedorf", "Eimsbüttel", "Hamburg-Mitte", "Hamburg-Nord", "Wandsbek", "Hamburg-Harburg"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "bremerhaven", title: "BEG Bremerhaven (Bremerhavener Entsorgungsgesellschaft)", website: "https://beg-bhv.de/", places: ["Bremerhaven", "Cuxhaven"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "kiel", title: "ABK Kiel (Abfallwirtschaftsbetrieb Kiel)", website: "https://abki.de/", places: ["Kiel"]),

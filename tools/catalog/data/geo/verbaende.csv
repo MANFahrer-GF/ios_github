@@ -1,0 +1,4584 @@
+verband_code;verband_name
+010010000;Flensburg, Stadt
+010020000;Kiel, Landeshauptstadt
+010030000;Lübeck, Hansestadt
+010040000;Neumünster, Stadt
+010510011;Brunsbüttel, Stadt
+010510044;Heide, Stadt
+010515163;Burg-St. Michaelisdonn
+010515166;Marne-Nordsee
+010515169;Eider
+010515172;Heider Umland
+010515175;Mitteldithmarschen
+010515178;Büsum-Wesselburen
+010530032;Geesthacht, Stadt
+010530083;Lauenburg/ Elbe, Stadt
+010530090;Mölln, Stadt
+010530100;Ratzeburg, Stadt
+010530116;Schwarzenbek, Stadt
+010530129;Wentorf bei Hamburg
+010535308;Berkenthin
+010535313;Breitenfelde
+010535318;Büchen
+010535323;Hohe Elbgeest
+010535343;Lütau
+010535358;Lauenburgische Seen
+010535373;Schwarzenbek-Land
+010535391;Sandesneben-Nusse
+010540033;Friedrichstadt, Stadt
+010540056;Husum, Stadt
+010540108;Reußenköge
+010540138;Tönning, Stadt
+010540168;Sylt
+010545417;Eiderstedt
+010545439;Landschaft Sylt
+010545453;Viöl
+010545459;Pellworm
+010545488;Föhr-Amrum
+010545489;Südtondern
+010545492;Nordsee-Treene
+010545494;Mittleres Nordfriesland
+010550001;Ahrensbök
+010550004;Bad Schwartau, Stadt
+010550007;Bosau
+010550010;Dahme
+010550012;Eutin, Stadt
+010550016;Grömitz
+010550018;Grube
+010550021;Heiligenhafen, Stadt
+010550025;Kellenhusen (Ostsee)
+010550028;Malente
+010550032;Neustadt in Holstein, Stadt
+010550033;Oldenburg in Holstein, Stadt
+010550035;Ratekau
+010550040;Stockelsdorf
+010550041;Süsel
+010550042;Timmendorfer Strand
+010550044;Scharbeutz
+010550046;Fehmarn, Stadt
+010555543;Oldenburg-Land
+010555546;Lensahn
+010555591;Ostholstein-Mitte
+010560002;Barmstedt, Stadt
+010560005;Bönningstedt
+010560015;Elmshorn, Stadt
+010560018;Halstenbek
+010560021;Hasloh
+010560025;Helgoland
+010560039;Pinneberg, Stadt
+010560041;Quickborn, Stadt
+010560043;Rellingen
+010560044;Schenefeld, Stadt
+010560048;Tornesch, Stadt
+010560049;Uetersen, Stadt
+010560050;Wedel, Stadt
+010565616;Elmshorn-Land
+010565636;Hörnerkirchen
+010565660;Rantzau
+010565687;Pinnau
+010565690;Geest und Marsch Südholstein
+010570001;Ascheberg (Holstein)
+010570009;Bösdorf
+010570057;Plön, Stadt
+010570062;Preetz, Stadt
+010570091;Schwentinental, Stadt
+010575727;Amt Lütjenburg
+010575739;Großer Plöner See
+010575747;Preetz-Land
+010575755;Probstei
+010575775;Selent/ Schlesen
+010575782;Schrevenborn
+010575785;Bokhorst-Wankendorf
+010580005;Altenholz
+010580034;Büdelsdorf, Stadt
+010580043;Eckernförde, Stadt
+010580092;Kronshagen
+010580135;Rendsburg, Stadt
+010580169;Wasbek
+010585803;Achterwehr
+010585822;Dänischenhagen
+010585824;Dänischer Wohld
+010585833;Fockbek
+010585847;Hohner Harde
+010585853;Jevenstedt
+010585864;Nortorfer  Land
+010585888;Eiderkanal
+010585889;Bordesholm
+010585890;Hüttener Berge
+010585893;Schlei-Ostsee
+010585895;Mittelholstein
+010585896;Eidertal
+010590045;Kappeln, Stadt
+010590075;Schleswig, Stadt
+010590113;Glücksburg (Ostsee), Stadt
+010590120;Harrislee
+010590183;Handewitt
+010595912;Eggebek
+010595915;Haddeby
+010595919;Hürup
+010595920;Kappeln-Land
+010595937;Langballig
+010595940;Oeversee
+010595949;Amt Mittelangeln
+010595952;Schafflund
+010595974;Süderbrarup
+010595987;Südangeln
+010595990;Geltinger Bucht
+010595993;Arensharde
+010595996;Kropp-Stapelholm
+010600004;Bad Bramstedt, Stadt
+010600005;Bad Segeberg, Stadt
+010600019;Ellerau
+010600039;Henstedt-Ulzburg
+010600044;Kaltenkirchen, Stadt
+010600063;Norderstedt, Stadt
+010600092;Wahlstedt, Stadt
+010605005;Bad Bramstedt-Land
+010605024;Bornhöved
+010605034;Itzstedt
+010605043;Auenland Südholstein
+010605048;Kisdorf
+010605053;Leezen
+010605063;Boostedt-Rickling
+010605086;Trave-Land
+010610029;Glückstadt, Stadt
+010610046;Itzehoe, Stadt
+010610113;Wilster, Stadt
+010615104;Breitenburg
+010615134;Horst-Herzhorn
+010615138;Itzehoe-Land
+010615153;Krempermarsch
+010615168;Schenefeld
+010615179;Wilstermarsch
+010615189;Kellinghusen
+010620001;Ahrensburg, Stadt
+010620004;Bad Oldesloe, Stadt
+010620006;Bargteheide, Stadt
+010620009;Barsbüttel
+010620018;Glinde, Stadt
+010620023;Großhansdorf
+010620053;Oststeinbek
+010620060;Reinbek, Stadt
+010620061;Reinfeld (Holstein), Stadt
+010620076;Tangstedt
+010620090;Ammersbek
+010625207;Bad Oldesloe-Land
+010625218;Bargteheide-Land
+010625244;Nordstormarn
+010625262;Siek
+010625270;Trittau
+020000000;Hamburg, Freie und Hansestadt
+031010000;Braunschweig, Stadt
+031020000;Salzgitter, Stadt
+031030000;Wolfsburg, Stadt
+031510009;Gifhorn, Stadt
+031510025;Sassenburg
+031510040;Wittingen, Stadt
+031515401;Boldecker Land
+031515402;Brome
+031515403;Hankensbüttel
+031515404;Isenbüttel
+031515405;Meinersen
+031515406;Papenteich
+031515407;Wesendorf
+031519501;Giebel, gemfr. Gebiet
+031530002;Bad Harzburg, Stadt
+031530008;Liebenburg
+031530012;Seesen, Stadt
+031530016;Braunlage, Stadt
+031530017;Goslar, Stadt
+031530018;Clausthal-Zellerfeld, Berg- und Universitätsstadt
+031530019;Langelsheim, Stadt
+031539504;Harz (Landkreis Goslar), gemfr. Gebiet
+031540013;Königslutter am Elm, Stadt
+031540014;Lehre
+031540019;Schöningen, Stadt
+031540028;Helmstedt, Stadt
+031545401;Grasleben
+031545402;Heeseberg
+031545403;Nord-Elm
+031545404;Velpke
+031549501;Brunsleberfeld, gemfr. Gebiet
+031549502;Helmstedt, gemfr. Gebiet
+031549503;Königslutter, gemfr. Gebiet
+031549504;Mariental, gemfr. Gebiet
+031549506;Schöningen, gemfr. Gebiet
+031550001;Bad Gandersheim, Stadt
+031550002;Bodenfelde, Flecken
+031550003;Dassel, Stadt
+031550005;Hardegsen, Stadt
+031550006;Kalefeld
+031550007;Katlenburg-Lindau
+031550009;Moringen, Stadt
+031550010;Nörten-Hardenberg, Flecken
+031550011;Northeim, Stadt
+031550012;Uslar, Stadt
+031550013;Einbeck, Stadt
+031559501;Solling (Landkreis Northeim), gemfr. Geb.
+031570001;Edemissen
+031570002;Hohenhameln
+031570005;Lengede
+031570006;Peine, Stadt
+031570007;Vechelde
+031570008;Wendeburg
+031570009;Ilsede
+031580006;Cremlingen
+031580037;Wolfenbüttel, Stadt
+031580039;Schladen-Werla
+031585402;Baddeckenstedt
+031585403;Oderwald
+031585406;Sickte
+031585407;Elm-Asse
+031589501;Am Großen Rhode, gemfr. Gebiet
+031589502;Barnstorf-Warle, gemfr. Gebiet
+031589503;Voigtsdahlum, gemfr. Gebiet
+031590001;Adelebsen, Flecken
+031590002;Bad Grund (Harz)
+031590003;Bad Lauterberg im Harz, Stadt
+031590004;Bad Sachsa, Stadt
+031590007;Bovenden, Flecken
+031590010;Duderstadt, Stadt
+031590013;Friedland
+031590015;Gleichen
+031590016;Göttingen, Stadt
+031590017;Hann. Münden, Stadt
+031590019;Herzberg am Harz, Stadt
+031590026;Osterode am Harz, Stadt
+031590029;Rosdorf
+031590034;Staufenberg
+031590036;Walkenried
+031595401;Dransfeld
+031595402;Gieboldehausen
+031595403;Hattorf am Harz
+031595404;Radolfshausen
+031599501;Harz (Landkreis Göttingen), gemfr. Geb.
+032410001;Hannover, Landeshauptstadt
+032410002;Barsinghausen, Stadt
+032410003;Burgdorf, Stadt
+032410004;Burgwedel, Stadt
+032410005;Garbsen, Stadt
+032410006;Gehrden, Stadt
+032410007;Hemmingen, Stadt
+032410008;Isernhagen
+032410009;Laatzen, Stadt
+032410010;Langenhagen, Stadt
+032410011;Lehrte, Stadt
+032410012;Neustadt am Rübenberge, Stadt
+032410013;Pattensen, Stadt
+032410014;Ronnenberg, Stadt
+032410015;Seelze, Stadt
+032410016;Sehnde, Stadt
+032410017;Springe, Stadt
+032410018;Uetze
+032410019;Wedemark
+032410020;Wennigsen (Deister)
+032410021;Wunstorf, Stadt
+032510007;Bassum, Stadt
+032510012;Diepholz, Stadt
+032510037;Stuhr
+032510040;Sulingen, Stadt
+032510041;Syke, Stadt
+032510042;Twistringen, Stadt
+032510044;Wagenfeld
+032510047;Weyhe
+032515401;Altes Amt Lemförde
+032515402;Barnstorf
+032515403;Bruchhausen-Vilsen
+032515404;Kirchdorf
+032515405;Rehden
+032515406;Schwaförden
+032515407;Siedenburg
+032520001;Aerzen, Flecken
+032520002;Bad Münder am Deister, Stadt
+032520003;Bad Pyrmont, Stadt
+032520004;Coppenbrügge, Flecken
+032520005;Emmerthal
+032520006;Hameln, Stadt
+032520007;Hessisch Oldendorf, Stadt
+032520008;Salzhemmendorf, Flecken
+032540002;Alfeld (Leine), Stadt
+032540003;Algermissen
+032540005;Bad Salzdetfurth, Stadt
+032540008;Bockenem, Stadt
+032540011;Diekholzen
+032540014;Elze, Stadt
+032540017;Giesen
+032540020;Harsum
+032540021;Hildesheim, Stadt
+032540022;Holle
+032540026;Nordstemmen
+032540028;Sarstedt, Stadt
+032540029;Schellerten
+032540032;Söhlde
+032540042;Freden (Leine)
+032540044;Lamspringe
+032540045;Sibbesse
+032545406;Leinebergland
+032550008;Delligsen, Flecken
+032550023;Holzminden, Stadt
+032555401;Bevern
+032555403;Boffzen
+032555408;Bodenwerder-Polle
+032555409;Eschershausen-Stadtoldendorf
+032559501;Boffzen, gemfr. Gebiet
+032559502;Eimen, gemfr. Gebiet
+032559503;Eschershausen, gemfr. Gebiet
+032559504;Grünenplan, gemfr. Gebiet
+032559505;Holzminden, gemfr. Gebiet
+032559506;Merxhausen, gemfr. Gebiet
+032559508;Wenzen, gemfr. Gebiet
+032560022;Nienburg (Weser), Stadt
+032560025;Rehburg-Loccum, Stadt
+032560030;Steyerberg, Flecken
+032565402;Heemsen
+032565407;Steimbke
+032565408;Uchte
+032565409;Grafschaft Hoya
+032565410;Mittelweser
+032565411;Weser-Aue
+032570003;Auetal
+032570009;Bückeburg, Stadt
+032570028;Obernkirchen, Stadt
+032570031;Rinteln, Stadt
+032570035;Stadthagen, Stadt
+032575401;Eilsen
+032575402;Lindhorst
+032575403;Nenndorf
+032575404;Niedernwöhren
+032575405;Nienstädt
+032575406;Rodenberg
+032575407;Sachsenhagen
+033510004;Bergen, Stadt
+033510006;Celle, Stadt
+033510010;Faßberg
+033510012;Hambühren
+033510023;Wietze
+033510024;Winsen (Aller)
+033510025;Eschede
+033510026;Südheide
+033515402;Flotwedel
+033515403;Lachendorf
+033515404;Wathlingen
+033519501;Lohheide, gemfr. Bezirk
+033520011;Cuxhaven, Stadt
+033520032;Loxstedt
+033520050;Schiffdorf
+033520059;Beverstedt
+033520060;Hagen im Bremischen
+033520061;Wurster Nordseeküste
+033520062;Geestland, Stadt
+033525404;Börde Lamstedt
+033525407;Hemmoor
+033525411;Land Hadeln
+033530005;Buchholz in der Nordheide, Stadt
+033530026;Neu Wulmstorf
+033530029;Rosengarten
+033530031;Seevetal
+033530032;Stelle
+033530040;Winsen (Luhe), Stadt
+033535401;Elbmarsch
+033535402;Hanstedt
+033535403;Hollenstedt
+033535404;Jesteburg
+033535405;Salzhausen
+033535406;Tostedt
+033545403;Gartow
+033545406;Elbtalaue
+033545407;Lüchow (Wendland)
+033549501;Gartow, gemfr. Gebiet
+033549502;Göhrde, gemfr. Gebiet
+033550001;Adendorf
+033550009;Bleckede, Stadt
+033550022;Lüneburg, Hansestadt
+033550049;Amt Neuhaus
+033555401;Amelinghausen
+033555402;Bardowick
+033555403;Dahlenburg
+033555404;Gellersen
+033555405;Ilmenau
+033555406;Ostheide
+033555407;Scharnebeck
+033560002;Grasberg
+033560005;Lilienthal
+033560007;Osterholz-Scharmbeck, Stadt
+033560008;Ritterhude
+033560009;Schwanewede
+033560011;Worpswede
+033565401;Hambergen
+033570008;Bremervörde, Stadt
+033570016;Gnarrenburg
+033570039;Rotenburg (Wümme), Stadt
+033570041;Scheeßel
+033570051;Visselhövede, Stadt
+033575401;Bothel
+033575402;Fintel
+033575403;Geestequelle
+033575404;Selsingen
+033575405;Sittensen
+033575406;Sottrum
+033575407;Tarmstedt
+033575408;Zeven
+033580002;Bispingen
+033580008;Bad Fallingbostel, Stadt
+033580016;Munster, Stadt
+033580017;Neuenkirchen
+033580019;Schneverdingen, Stadt
+033580021;Soltau, Stadt
+033580023;Wietzendorf
+033580024;Walsrode, Stadt
+033585401;Ahlden
+033585402;Rethem (Aller), Stadt
+033585403;Schwarmstedt
+033589501;Osterheide, gemfr. Bezirk
+033590010;Buxtehude, Stadt
+033590013;Drochtersen
+033590028;Jork
+033590038;Stade, Hansestadt
+033595401;Apensen
+033595402;Fredenbeck
+033595403;Harsefeld
+033595405;Horneburg
+033595406;Lühe
+033595407;Nordkehdingen
+033595409;Oldendorf-Himmelpforten
+033600004;Bienenbüttel
+033600025;Uelzen, Hansestadt
+033605404;Rosche
+033605405;Suderburg
+033605407;Bevensen-Ebstorf
+033605408;Aue
+033610001;Achim, Stadt
+033610003;Dörverden
+033610005;Kirchlinteln
+033610006;Langwedel, Flecken
+033610008;Ottersberg, Flecken
+033610009;Oyten
+033610012;Verden (Aller), Stadt
+033615401;Thedinghausen
+034010000;Delmenhorst, Stadt
+034020000;Emden, Stadt
+034030000;Oldenburg (Oldb), Stadt
+034040000;Osnabrück, Stadt
+034050000;Wilhelmshaven, Stadt
+034510001;Apen
+034510002;Bad Zwischenahn
+034510004;Edewecht
+034510005;Rastede
+034510007;Westerstede, Stadt
+034510008;Wiefelstede
+034520001;Aurich, Stadt
+034520002;Baltrum
+034520006;Großefehn
+034520007;Großheide
+034520011;Hinte
+034520012;Ihlow
+034520013;Juist, Inselgemeinde
+034520014;Krummhörn
+034520019;Norden, Stadt
+034520020;Norderney, Stadt
+034520023;Südbrookmerland
+034520025;Wiesmoor, Stadt
+034520027;Dornum
+034525401;Brookmerland
+034525403;Hage
+034529501;Nordseeinsel Memmert, gemfr. Gebiet
+034530001;Barßel
+034530002;Bösel
+034530003;Cappeln (Oldenburg)
+034530004;Cloppenburg, Stadt
+034530005;Emstek
+034530006;Essen (Oldenburg)
+034530007;Friesoythe, Stadt
+034530008;Garrel
+034530009;Lastrup
+034530010;Lindern (Oldenburg)
+034530011;Löningen, Stadt
+034530012;Molbergen
+034530013;Saterland
+034540010;Emsbüren
+034540014;Geeste
+034540018;Haren (Ems), Stadt
+034540019;Haselünne, Stadt
+034540032;Lingen (Ems), Stadt
+034540035;Meppen, Stadt
+034540041;Papenburg, Stadt
+034540044;Rhede (Ems)
+034540045;Salzbergen
+034540054;Twist
+034545401;Dörpen
+034545402;Freren
+034545403;Herzlake
+034545404;Lathen
+034545405;Lengerich
+034545406;Nordhümmling
+034545407;Sögel
+034545408;Spelle
+034545409;Werlte
+034550007;Jever, Stadt
+034550014;Sande
+034550015;Schortens, Stadt
+034550020;Wangerland
+034550021;Wangerooge, Nordseebad
+034550025;Bockhorn
+034550026;Varel, Stadt
+034550027;Zetel
+034560001;Bad Bentheim, Stadt
+034560015;Nordhorn, Stadt
+034560025;Wietmarschen
+034565401;Emlichheim
+034565402;Neuenhaus
+034565403;Schüttorf
+034565404;Uelsen
+034570002;Borkum, Stadt
+034570012;Jemgum
+034570013;Leer (Ostfriesland), Stadt
+034570014;Moormerland
+034570017;Ostrhauderfehn
+034570018;Rhauderfehn
+034570020;Uplengen
+034570021;Weener, Stadt
+034570022;Westoverledingen
+034570024;Bunde
+034575402;Hesel
+034575403;Jümme
+034579501;Insel Lütje Hörn, gemfr. Gebiet
+034580003;Dötlingen
+034580005;Ganderkesee
+034580007;Großenkneten
+034580009;Hatten
+034580010;Hude (Oldenburg)
+034580013;Wardenburg
+034580014;Wildeshausen, Stadt
+034585401;Harpstedt
+034590003;Bad Essen
+034590004;Bad Iburg, Stadt
+034590005;Bad Laer
+034590006;Bad Rothenfelde
+034590008;Belm
+034590012;Bissendorf
+034590013;Bohmte
+034590014;Bramsche, Stadt
+034590015;Dissen am Teutoburger Wald, Stadt
+034590019;Georgsmarienhütte, Stadt
+034590020;Hagen am Teutoburger Wald
+034590021;Hasbergen
+034590022;Hilter am Teutoburger Wald
+034590024;Melle, Stadt
+034590029;Ostercappeln
+034590033;Wallenhorst
+034590034;Glandorf
+034595401;Artland
+034595402;Bersenbrück
+034595403;Fürstenau
+034595404;Neuenkirchen
+034600001;Bakum
+034600002;Damme, Stadt
+034600003;Dinklage, Stadt
+034600004;Goldenstedt
+034600005;Holdorf
+034600006;Lohne (Oldenburg), Stadt
+034600007;Neuenkirchen-Vörden
+034600008;Steinfeld (Oldenburg)
+034600009;Vechta, Stadt
+034600010;Visbek
+034610001;Berne
+034610002;Brake (Unterweser), Stadt
+034610003;Butjadingen
+034610004;Elsfleth, Stadt
+034610005;Jade
+034610006;Lemwerder
+034610007;Nordenham, Stadt
+034610008;Ovelgönne
+034610009;Stadland
+034620005;Friedeburg
+034620007;Langeoog
+034620014;Spiekeroog
+034620019;Wittmund, Stadt
+034625401;Esens
+034625402;Holtriem
+040110000;Bremen, Stadt
+040120000;Bremerhaven, Stadt
+051110000;Düsseldorf, Stadt
+051120000;Duisburg, Stadt
+051130000;Essen, Stadt
+051140000;Krefeld, Stadt
+051160000;Mönchengladbach, Stadt
+051170000;Mülheim an der Ruhr, Stadt
+051190000;Oberhausen, Stadt
+051200000;Remscheid, Stadt
+051220000;Solingen, Klingenstadt
+051240000;Wuppertal, Stadt
+051540004;Bedburg-Hau
+051540008;Emmerich am Rhein, Stadt
+051540012;Geldern, Stadt
+051540016;Goch, Stadt
+051540020;Issum
+051540024;Kalkar, Stadt
+051540028;Kerken
+051540032;Kevelaer, Stadt
+051540036;Kleve, Stadt
+051540040;Kranenburg
+051540044;Rees, Stadt
+051540048;Rheurdt
+051540052;Straelen, Stadt
+051540056;Uedem
+051540060;Wachtendonk
+051540064;Weeze
+051580004;Erkrath, Fundort des Neanderthalers, Stadt
+051580008;Haan, Stadt
+051580012;Heiligenhaus, Stadt
+051580016;Hilden, Stadt
+051580020;Langenfeld (Rheinland), Stadt
+051580024;Mettmann, Stadt
+051580026;Monheim am Rhein, Stadt
+051580028;Ratingen, Stadt
+051580032;Velbert, Stadt
+051580036;Wülfrath, Stadt
+051620004;Dormagen, Stadt
+051620008;Grevenbroich, Stadt
+051620012;Jüchen, Stadt
+051620016;Kaarst, Stadt
+051620020;Korschenbroich, Stadt
+051620022;Meerbusch, Stadt
+051620024;Neuss, Stadt
+051620028;Rommerskirchen
+051660004;Brüggen, Burggemeinde
+051660008;Grefrath, Sport- und Freizeitgemeinde
+051660012;Kempen, Stadt
+051660016;Nettetal, Stadt
+051660020;Niederkrüchten
+051660024;Schwalmtal
+051660028;Tönisvorst, Stadt
+051660032;Viersen, Stadt
+051660036;Willich, Stadt
+051700004;Alpen
+051700008;Dinslaken, Stadt
+051700012;Hamminkeln, Stadt
+051700016;Hünxe
+051700020;Kamp-Lintfort, Stadt
+051700024;Moers, Stadt
+051700028;Neukirchen-Vluyn, Stadt
+051700032;Rheinberg, Stadt
+051700036;Schermbeck
+051700040;Sonsbeck
+051700044;Voerde (Niederrhein), Stadt
+051700048;Wesel, Stadt
+051700052;Xanten, Stadt
+053140000;Bonn, Stadt
+053150000;Köln, Stadt
+053160000;Leverkusen, Stadt
+053340002;Aachen, Stadt
+053340004;Alsdorf, Stadt
+053340008;Baesweiler, Stadt
+053340012;Eschweiler, Stadt
+053340016;Herzogenrath, Stadt
+053340020;Monschau, Stadt
+053340024;Roetgen, Tor zur Eifel
+053340028;Simmerath
+053340032;Stolberg (Rhld.), Kupferstadt
+053340036;Würselen, Stadt
+053580004;Aldenhoven
+053580008;Düren, Stadt
+053580012;Heimbach, Stadt
+053580016;Hürtgenwald
+053580020;Inden
+053580024;Jülich, Stadt
+053580028;Kreuzau
+053580032;Langerwehe
+053580036;Linnich, Stadt
+053580040;Merzenich
+053580044;Nideggen, Stadt
+053580048;Niederzier
+053580052;Nörvenich
+053580056;Titz
+053580060;Vettweiß
+053620004;Bedburg, Stadt
+053620008;Bergheim, Stadt
+053620012;Brühl, Stadt
+053620016;Elsdorf, Stadt
+053620020;Erftstadt, Stadt
+053620024;Frechen, Stadt
+053620028;Hürth, Stadt
+053620032;Kerpen, Kolpingstadt
+053620036;Pulheim, Stadt
+053620040;Wesseling, Stadt
+053660004;Bad Münstereifel, Stadt
+053660008;Blankenheim
+053660012;Dahlem
+053660016;Euskirchen, Stadt
+053660020;Hellenthal
+053660024;Kall
+053660028;Mechernich, Stadt
+053660032;Nettersheim
+053660036;Schleiden, Stadt
+053660040;Weilerswist
+053660044;Zülpich, Stadt
+053700004;Erkelenz, Stadt
+053700008;Gangelt
+053700012;Geilenkirchen, Stadt
+053700016;Heinsberg, Stadt
+053700020;Hückelhoven, Stadt
+053700024;Selfkant
+053700028;Übach-Palenberg, Stadt
+053700032;Waldfeucht
+053700036;Wassenberg, Stadt
+053700040;Wegberg, Stadt
+053740004;Bergneustadt, Stadt
+053740008;Engelskirchen
+053740012;Gummersbach, Stadt
+053740016;Hückeswagen, Schloss-Stadt
+053740020;Lindlar
+053740024;Marienheide
+053740028;Morsbach
+053740032;Nümbrecht
+053740036;Radevormwald, Stadt auf der Höhe
+053740040;Reichshof
+053740044;Waldbröl, Stadt
+053740048;Wiehl, Stadt
+053740052;Wipperfürth, Hansestadt
+053780004;Bergisch Gladbach, Stadt
+053780008;Burscheid, Stadt
+053780012;Kürten
+053780016;Leichlingen (Rheinland), Blütenstadt
+053780020;Odenthal
+053780024;Overath, Stadt
+053780028;Rösrath, Stadt
+053780032;Wermelskirchen, Stadt
+053820004;Alfter
+053820008;Bad Honnef, Stadt
+053820012;Bornheim, Stadt
+053820016;Eitorf
+053820020;Hennef (Sieg), Stadt
+053820024;Königswinter, Stadt
+053820028;Lohmar, Stadt
+053820032;Meckenheim, Stadt
+053820036;Much
+053820040;Neunkirchen-Seelscheid
+053820044;Niederkassel, Stadt
+053820048;Rheinbach, Stadt
+053820052;Ruppichteroth
+053820056;Sankt Augustin, Stadt
+053820060;Siegburg, Stadt
+053820064;Swisttal
+053820068;Troisdorf, Stadt
+053820072;Wachtberg
+053820076;Windeck
+055120000;Bottrop, Stadt
+055130000;Gelsenkirchen, Stadt
+055150000;Münster, Stadt
+055540004;Ahaus, Stadt
+055540008;Bocholt, Stadt
+055540012;Borken, Stadt
+055540016;Gescher, Glockenstadt
+055540020;Gronau (Westf.), Stadt
+055540024;Heek
+055540028;Heiden
+055540032;Isselburg, Stadt
+055540036;Legden
+055540040;Raesfeld
+055540044;Reken
+055540048;Rhede, Stadt
+055540052;Schöppingen
+055540056;Stadtlohn, Stadt
+055540060;Südlohn
+055540064;Velen, Stadt
+055540068;Vreden, Stadt
+055580004;Ascheberg
+055580008;Billerbeck, Stadt
+055580012;Coesfeld, Stadt
+055580016;Dülmen, Stadt
+055580020;Havixbeck
+055580024;Lüdinghausen, Stadt
+055580028;Nordkirchen
+055580032;Nottuln
+055580036;Olfen, Stadt
+055580040;Rosendahl
+055580044;Senden
+055620004;Castrop-Rauxel, Stadt
+055620008;Datteln, Stadt
+055620012;Dorsten, Stadt
+055620014;Gladbeck, Stadt
+055620016;Haltern am See, Stadt
+055620020;Herten, Stadt
+055620024;Marl, Stadt
+055620028;Oer-Erkenschwick, Stadt
+055620032;Recklinghausen, Stadt
+055620036;Waltrop, Stadt
+055660004;Altenberge
+055660008;Emsdetten, Stadt
+055660012;Greven, Stadt
+055660016;Hörstel, Stadt
+055660020;Hopsten
+055660024;Horstmar, Stadt der Burgmannshöfe
+055660028;Ibbenbüren, Stadt
+055660032;Ladbergen
+055660036;Laer
+055660040;Lengerich, Stadt
+055660044;Lienen
+055660048;Lotte
+055660052;Metelen
+055660056;Mettingen
+055660060;Neuenkirchen
+055660064;Nordwalde
+055660068;Ochtrup, Stadt
+055660072;Recke
+055660076;Rheine, Stadt
+055660080;Saerbeck, NRW-Klimakommune
+055660084;Steinfurt, Stadt
+055660088;Tecklenburg, Stadt
+055660092;Westerkappeln
+055660096;Wettringen
+055700004;Ahlen, Stadt
+055700008;Beckum, Stadt
+055700012;Beelen
+055700016;Drensteinfurt, Stadt
+055700020;Ennigerloh, Stadt
+055700024;Everswinkel
+055700028;Oelde, Stadt
+055700032;Ostbevern
+055700036;Sassenberg, Stadt
+055700040;Sendenhorst, Stadt
+055700044;Telgte, Stadt
+055700048;Wadersloh
+055700052;Warendorf, Stadt
+057110000;Bielefeld, Stadt
+057540004;Borgholzhausen, Stadt
+057540008;Gütersloh, Stadt
+057540012;Halle (Westf.), Stadt
+057540016;Harsewinkel, Die Mähdrescherstadt
+057540020;Herzebrock-Clarholz
+057540024;Langenberg
+057540028;Rheda-Wiedenbrück, Stadt
+057540032;Rietberg, Stadt
+057540036;Schloß Holte-Stukenbrock, Stadt
+057540040;Steinhagen
+057540044;Verl, Stadt
+057540048;Versmold, Stadt
+057540052;Werther (Westf.), Stadt
+057580004;Bünde, Stadt
+057580008;Enger, Widukindstadt
+057580012;Herford, Hansestadt
+057580016;Hiddenhausen
+057580020;Kirchlengern
+057580024;Löhne, Stadt
+057580028;Rödinghausen
+057580032;Spenge, Stadt
+057580036;Vlotho, Stadt
+057620004;Bad Driburg, Stadt
+057620008;Beverungen, Stadt
+057620012;Borgentreich, Orgelstadt
+057620016;Brakel, Stadt
+057620020;Höxter, Stadt
+057620024;Marienmünster, Stadt
+057620028;Nieheim, Stadt
+057620032;Steinheim, Stadt
+057620036;Warburg, Hansestadt
+057620040;Willebadessen, Stadt
+057660004;Augustdorf
+057660008;Bad Salzuflen, Stadt
+057660012;Barntrup, Stadt
+057660016;Blomberg, Stadt
+057660020;Detmold, Stadt
+057660024;Dörentrup
+057660028;Extertal
+057660032;Horn-Bad Meinberg, Stadt
+057660036;Kalletal
+057660040;Lage, Stadt
+057660044;Lemgo, Stadt
+057660048;Leopoldshöhe
+057660052;Lügde, Stadt der Osterräder
+057660056;Oerlinghausen, Stadt
+057660060;Schieder-Schwalenberg, Stadt
+057660064;Schlangen
+057700004;Bad Oeynhausen, Stadt
+057700008;Espelkamp, Stadt
+057700012;Hille
+057700016;Hüllhorst
+057700020;Lübbecke, Stadt
+057700024;Minden, Stadt
+057700028;Petershagen, Stadt
+057700032;Porta Westfalica, Stadt
+057700036;Preußisch Oldendorf, Stadt
+057700040;Rahden, Stadt
+057700044;Stemwede
+057740004;Altenbeken
+057740008;Bad Lippspringe, Stadt
+057740012;Borchen
+057740016;Büren, Stadt
+057740020;Delbrück, Stadt
+057740024;Hövelhof, Sennegemeinde
+057740028;Lichtenau, Stadt
+057740032;Paderborn, Stadt
+057740036;Salzkotten, Stadt
+057740040;Bad Wünnenberg, Stadt
+059110000;Bochum, Stadt
+059130000;Dortmund, Stadt
+059140000;Hagen, Stadt der FernUniversität
+059150000;Hamm, Stadt
+059160000;Herne, Stadt
+059540004;Breckerfeld, Hansestadt
+059540008;Ennepetal, Stadt der Kluterthöhle
+059540012;Gevelsberg, Stadt
+059540016;Hattingen, Stadt
+059540020;Herdecke, Stadt
+059540024;Schwelm, Stadt
+059540028;Sprockhövel, Stadt
+059540032;Wetter (Ruhr), Stadt
+059540036;Witten, Stadt
+059580004;Arnsberg, Stadt
+059580008;Bestwig
+059580012;Brilon, Stadt
+059580016;Eslohe (Sauerland)
+059580020;Hallenberg, Stadt
+059580024;Marsberg, Stadt
+059580028;Medebach, Hansestadt
+059580032;Meschede, Kreis- und Hochschulstadt
+059580036;Olsberg, Stadt
+059580040;Schmallenberg, Stadt
+059580044;Sundern (Sauerland), Stadt
+059580048;Winterberg, Stadt
+059620004;Altena, Stadt
+059620008;Balve, Stadt
+059620012;Halver, Stadt
+059620016;Hemer, Stadt
+059620020;Herscheid
+059620024;Iserlohn, Stadt
+059620028;Kierspe, Stadt
+059620032;Lüdenscheid, Stadt
+059620036;Meinerzhagen, Stadt
+059620040;Menden (Sauerland), Stadt
+059620044;Nachrodt-Wiblingwerde
+059620048;Neuenrade, Stadt
+059620052;Plettenberg, Stadt
+059620056;Schalksmühle
+059620060;Werdohl, Stadt
+059660004;Attendorn, Hansestadt
+059660008;Drolshagen, Stadt
+059660012;Finnentrop
+059660016;Kirchhundem
+059660020;Lennestadt, Stadt
+059660024;Olpe, Stadt
+059660028;Wenden
+059700004;Bad Berleburg, Stadt
+059700008;Burbach
+059700012;Erndtebrück
+059700016;Freudenberg, Stadt
+059700020;Hilchenbach, Stadt
+059700024;Kreuztal, Stadt
+059700028;Bad Laasphe, Stadt
+059700032;Netphen, Stadt
+059700036;Neunkirchen
+059700040;Siegen, Universitätsstadt
+059700044;Wilnsdorf
+059740004;Anröchte
+059740008;Bad Sassendorf
+059740012;Ense
+059740016;Erwitte, Stadt
+059740020;Geseke, Stadt
+059740024;Lippetal
+059740028;Lippstadt, Stadt
+059740032;Möhnesee
+059740036;Rüthen, Stadt
+059740040;Soest, Stadt
+059740044;Warstein, Stadt
+059740048;Welver
+059740052;Werl, Stadt
+059740056;Wickede (Ruhr)
+059780004;Bergkamen, Stadt
+059780008;Bönen
+059780012;Fröndenberg/Ruhr, Stadt
+059780016;Holzwickede
+059780020;Kamen, Stadt
+059780024;Lünen, Stadt
+059780028;Schwerte, Hansestadt an der Ruhr
+059780032;Selm, Stadt
+059780036;Unna, Stadt
+059780040;Werne, Stadt
+064110000;Darmstadt, Wissenschaftsstadt
+064120000;Frankfurt am Main, Stadt
+064130000;Offenbach am Main, Stadt
+064140000;Wiesbaden, Landeshauptstadt
+064150000;Hanau, Brüder-Grimm-Stadt
+064310001;Abtsteinach
+064310002;Bensheim, Stadt
+064310003;Biblis
+064310004;Birkenau
+064310005;Bürstadt, Stadt
+064310006;Einhausen
+064310007;Fürth
+064310008;Gorxheimertal
+064310009;Grasellenbach
+064310010;Groß-Rohrheim
+064310011;Heppenheim (Bergstraße), Kreisstadt
+064310012;Hirschhorn (Neckar), Stadt
+064310013;Lampertheim, Stadt
+064310014;Lautertal (Odenwald)
+064310015;Lindenfels, Stadt
+064310016;Lorsch, Karolingerstadt
+064310017;Mörlenbach
+064310018;Neckarsteinach, Stadt
+064310019;Rimbach
+064310020;Viernheim, Stadt
+064310021;Wald-Michelbach
+064310022;Zwingenberg, Stadt
+064319200;Michelbuch, gemfr. Gebiet
+064320001;Alsbach-Hähnlein
+064320002;Babenhausen, Stadt
+064320003;Bickenbach
+064320004;Dieburg, Stadt
+064320005;Eppertshausen
+064320006;Erzhausen
+064320007;Fischbachtal
+064320008;Griesheim, Stadt
+064320009;Groß-Bieberau, Stadt
+064320010;Groß-Umstadt, Stadt
+064320011;Groß-Zimmern
+064320012;Messel
+064320013;Modautal
+064320014;Mühltal
+064320015;Münster (Hessen)
+064320016;Ober-Ramstadt, Stadt
+064320017;Otzberg
+064320018;Pfungstadt, Stadt
+064320019;Reinheim, Stadt
+064320020;Roßdorf
+064320021;Schaafheim
+064320022;Seeheim-Jugenheim
+064320023;Weiterstadt, Stadt
+064330001;Biebesheim am Rhein
+064330002;Bischofsheim
+064330003;Büttelborn
+064330004;Gernsheim, Schöfferstadt
+064330005;Ginsheim-Gustavsburg, Stadt
+064330006;Groß-Gerau, Stadt
+064330007;Kelsterbach, Stadt
+064330008;Mörfelden-Walldorf, Stadt
+064330009;Nauheim
+064330010;Raunheim, Stadt
+064330011;Riedstadt, Büchnerstadt
+064330012;Rüsselsheim am Main, Stadt
+064330013;Stockstadt am Rhein
+064330014;Trebur
+064340001;Bad Homburg v. d. Höhe, Stadt, Kurstadt
+064340002;Friedrichsdorf, Philipp-Reis-Stadt
+064340003;Glashütten
+064340004;Grävenwiesbach
+064340005;Königstein im Taunus, Stadt, Kurort
+064340006;Kronberg im Taunus, Stadt
+064340007;Neu-Anspach, Stadt
+064340008;Oberursel (Taunus), Stadt
+064340009;Schmitten im Taunus
+064340010;Steinbach (Taunus), Stadt
+064340011;Usingen, Stadt
+064340012;Wehrheim
+064340013;Weilrod
+064350001;Bad Orb, Stadt, Heilbad
+064350002;Bad Soden-Salmünster, Stadt, Kurstadt
+064350003;Biebergemünd
+064350004;Birstein
+064350005;Brachttal
+064350006;Bruchköbel, Stadt
+064350007;Erlensee, Stadt
+064350008;Flörsbachtal
+064350009;Freigericht
+064350010;Gelnhausen, Barbarossastadt, Kreisstadt
+064350011;Großkrotzenburg
+064350012;Gründau
+064350013;Hammersbach
+064350015;Hasselroth
+064350016;Jossgrund
+064350017;Langenselbold, Stadt
+064350018;Linsengericht
+064350019;Maintal, Stadt
+064350020;Neuberg
+064350021;Nidderau, Stadt
+064350022;Niederdorfelden
+064350023;Rodenbach
+064350024;Ronneburg
+064350025;Schlüchtern, Stadt
+064350026;Schöneck
+064350027;Sinntal
+064350028;Steinau an der Straße, Brüder-Grimm-Stadt
+064350029;Wächtersbach, Stadt
+064359200;Gutsbezirk Spessart, gemfr. Gebiet
+064360001;Bad Soden am Taunus, Stadt
+064360002;Eppstein, Stadt
+064360003;Eschborn, Stadt
+064360004;Flörsheim am Main, Stadt
+064360005;Hattersheim am Main, Stadt
+064360006;Hochheim am Main, Stadt
+064360007;Hofheim am Taunus, Kreisstadt
+064360008;Kelkheim (Taunus), Stadt
+064360009;Kriftel
+064360010;Liederbach am Taunus
+064360011;Schwalbach am Taunus, Stadt
+064360012;Sulzbach (Taunus)
+064370001;Bad König, Stadt, Heilbad
+064370003;Brensbach
+064370004;Breuberg, Stadt
+064370005;Brombachtal
+064370006;Erbach, Kreisstadt
+064370007;Fränkisch-Crumbach
+064370009;Höchst i. Odw.
+064370010;Lützelbach
+064370011;Michelstadt, Stadt
+064370012;Mossautal
+064370013;Reichelsheim (Odenwald)
+064370016;Oberzent, Stadt
+064380001;Dietzenbach, Kreisstadt
+064380002;Dreieich, Stadt
+064380003;Egelsbach
+064380004;Hainburg
+064380005;Heusenstamm, Stadt
+064380006;Langen (Hessen), Stadt
+064380007;Mainhausen
+064380008;Mühlheim am Main, Stadt
+064380009;Neu-Isenburg, Hugenotten- und Waldenserstadt
+064380010;Obertshausen, Stadt
+064380011;Rodgau, Stadt
+064380012;Rödermark, Stadt
+064380013;Seligenstadt, Einhardstadt
+064390001;Aarbergen
+064390002;Bad Schwalbach, Kreisstadt, Heilbad
+064390003;Eltville am Rhein, Stadt
+064390004;Geisenheim, Hochschulstadt
+064390005;Heidenrod
+064390006;Hohenstein
+064390007;Hünstetten
+064390008;Idstein, Hochschulstadt
+064390009;Kiedrich
+064390010;Lorch, Stadt
+064390011;Niedernhausen
+064390012;Oestrich-Winkel, Hochschulstadt
+064390013;Rüdesheim am Rhein, Stadt
+064390014;Schlangenbad
+064390015;Taunusstein, Stadt
+064390016;Waldems
+064390017;Walluf
+064400001;Altenstadt
+064400002;Bad Nauheim, Stadt, Kurstadt
+064400003;Bad Vilbel, Stadt
+064400004;Büdingen, Stadt
+064400005;Butzbach, Friedrich-Ludwig-Weidig-Stadt
+064400006;Echzell
+064400007;Florstadt, Stadt
+064400008;Friedberg (Hessen), Kreisstadt
+064400009;Gedern, Stadt
+064400010;Glauburg
+064400011;Hirzenhain
+064400012;Karben, Stadt
+064400013;Kefenrod
+064400014;Limeshain
+064400015;Münzenberg, Stadt
+064400016;Nidda, Johannes-Pistorius-Stadt
+064400017;Niddatal, Stadt
+064400018;Ober-Mörlen
+064400019;Ortenberg, Stadt
+064400020;Ranstadt
+064400021;Reichelsheim (Wetterau), Stadt
+064400022;Rockenberg
+064400023;Rosbach v. d. Höhe, Stadt
+064400024;Wölfersheim
+064400025;Wöllstadt
+065310001;Allendorf (Lumda), Stadt
+065310002;Biebertal
+065310003;Buseck
+065310004;Fernwald
+065310005;Gießen, Universitätsstadt
+065310006;Grünberg, Stadt
+065310007;Heuchelheim a. d. Lahn
+065310008;Hungen, Stadt
+065310009;Langgöns
+065310010;Laubach, Stadt
+065310011;Lich, Stadt
+065310012;Linden, Stadt
+065310013;Lollar, Stadt
+065310014;Pohlheim, Stadt
+065310015;Rabenau
+065310016;Reiskirchen
+065310017;Staufenberg, Stadt
+065310018;Wettenberg
+065320001;Aßlar, Stadt
+065320002;Bischoffen
+065320003;Braunfels, Stadt
+065320004;Breitscheid
+065320005;Dietzhölztal, Hochschulgemeinde
+065320006;Dillenburg, Oranienstadt
+065320007;Driedorf
+065320008;Ehringshausen
+065320009;Eschenburg
+065320010;Greifenstein
+065320011;Haiger, Stadt
+065320012;Herborn, Stadt
+065320013;Hohenahr
+065320014;Hüttenberg
+065320015;Lahnau
+065320016;Leun, Stadt
+065320017;Mittenaar
+065320018;Schöffengrund
+065320019;Siegbach
+065320020;Sinn
+065320021;Solms, Stadt
+065320022;Waldsolms
+065320023;Wetzlar, Stadt
+065330001;Beselich
+065330002;Brechen
+065330003;Bad Camberg, Stadt, Kurstadt
+065330004;Dornburg
+065330005;Elbtal
+065330006;Elz
+065330007;Hadamar, Stadt
+065330008;Hünfelden
+065330009;Limburg a. d. Lahn, Kreisstadt
+065330010;Löhnberg
+065330011;Mengerskirchen, Marktflecken
+065330012;Merenberg, Marktflecken
+065330013;Runkel, Stadt
+065330014;Selters (Taunus)
+065330015;Villmar, Marktflecken
+065330016;Waldbrunn (Westerwald)
+065330017;Weilburg, Stadt
+065330018;Weilmünster, Marktflecken
+065330019;Weinbach
+065340001;Amöneburg, Stadt
+065340002;Angelburg
+065340003;Bad Endbach
+065340004;Biedenkopf, Stadt
+065340005;Breidenbach
+065340006;Cölbe
+065340007;Dautphetal
+065340008;Ebsdorfergrund
+065340009;Fronhausen
+065340010;Gladenbach, Stadt
+065340011;Kirchhain, Stadt
+065340012;Lahntal
+065340013;Lohra
+065340014;Marburg, Universitätsstadt
+065340015;Münchhausen
+065340016;Neustadt (Hessen), Stadt
+065340017;Rauschenberg, Stadt
+065340018;Stadtallendorf, Stadt
+065340019;Steffenberg
+065340020;Weimar (Lahn)
+065340021;Wetter (Hessen), Stadt
+065340022;Wohratal
+065350001;Alsfeld, Stadt
+065350002;Antrifttal
+065350003;Feldatal
+065350004;Freiensteinau
+065350005;Gemünden (Felda)
+065350006;Grebenau, Stadt
+065350007;Grebenhain
+065350008;Herbstein, Stadt, Heilbad
+065350009;Homberg (Ohm), Stadt
+065350010;Kirtorf, Stadt
+065350011;Lauterbach (Hessen), Kreisstadt
+065350012;Lautertal (Vogelsberg)
+065350013;Mücke
+065350014;Romrod, Stadt
+065350015;Schlitz, Stadt
+065350016;Schotten, Stadt
+065350017;Schwalmtal
+065350018;Ulrichstein, Stadt
+065350019;Wartenberg
+066110000;Kassel, documenta-Stadt
+066310001;Bad Salzschlirf, Heilbad
+066310002;Burghaun, Marktgemeinde
+066310003;Dipperz
+066310004;Ebersburg
+066310005;Ehrenberg (Rhön)
+066310006;Eichenzell
+066310007;Eiterfeld, Marktgemeinde
+066310008;Flieden
+066310009;Fulda, Stadt
+066310010;Gersfeld (Rhön), Stadt
+066310011;Großenlüder
+066310012;Hilders, Marktgemeinde
+066310013;Hofbieber
+066310014;Hosenfeld
+066310015;Hünfeld, Konrad-Zuse-Stadt
+066310016;Kalbach
+066310017;Künzell
+066310018;Neuhof
+066310019;Nüsttal
+066310020;Petersberg
+066310021;Poppenhausen (Wasserkuppe)
+066310022;Rasdorf, Point-Alpha-Gemeinde
+066310023;Tann (Rhön), Stadt
+066320001;Alheim
+066320002;Bad Hersfeld, Kreisstadt, Kurstadt
+066320003;Bebra, Stadt
+066320004;Breitenbach a. Herzberg
+066320005;Cornberg
+066320006;Friedewald
+066320007;Hauneck
+066320008;Haunetal, Marktgemeinde
+066320009;Heringen (Werra), Stadt
+066320010;Hohenroda
+066320011;Kirchheim
+066320012;Ludwigsau
+066320013;Nentershausen
+066320014;Neuenstein
+066320015;Niederaula, Marktgemeinde
+066320016;Philippsthal (Werra), Marktgemeinde
+066320017;Ronshausen
+066320018;Rotenburg a. d. Fulda, Stadt
+066320019;Schenklengsfeld
+066320020;Wildeck
+066330001;Ahnatal
+066330002;Bad Karlshafen, Stadt
+066330003;Baunatal, Stadt
+066330004;Breuna
+066330005;Calden
+066330006;Bad Emstal, Kurort
+066330007;Espenau
+066330008;Fuldabrück
+066330009;Fuldatal
+066330010;Grebenstein, Stadt
+066330011;Habichtswald
+066330012;Helsa
+066330013;Hofgeismar, Stadt
+066330014;Immenhausen, Stadt
+066330015;Kaufungen, Kunigundengemeinde
+066330016;Liebenau, Stadt
+066330017;Lohfelden
+066330018;Naumburg, Stadt
+066330019;Nieste
+066330020;Niestetal
+066330022;Reinhardshagen
+066330023;Schauenburg
+066330024;Söhrewald
+066330025;Trendelburg, Stadt
+066330026;Vellmar, Stadt
+066330028;Wolfhagen, Hans-Staden-Stadt
+066330029;Zierenberg, Stadt
+066330030;Wesertal
+066339200;Gutsbezirk Reinhardswald, gemfr. Gebiet
+066340001;Borken (Hessen), Stadt
+066340002;Edermünde
+066340003;Felsberg, Stadt
+066340004;Frielendorf, Marktflecken
+066340005;Fritzlar, Dom- und Kaiserstadt
+066340006;Gilserberg
+066340007;Gudensberg, Stadt
+066340008;Guxhagen
+066340009;Homberg (Efze), Reformationsstadt, Kreisstadt
+066340010;Jesberg
+066340011;Knüllwald
+066340012;Körle
+066340013;Malsfeld
+066340014;Melsungen, Stadt
+066340015;Morschen
+066340016;Neuental
+066340017;Neukirchen, Stadt, Kurort
+066340018;Niedenstein, Stadt
+066340019;Oberaula
+066340020;Ottrau
+066340021;Schrecksbach
+066340022;Schwalmstadt, Konfirmationsstadt
+066340023;Schwarzenborn, Stadt
+066340024;Spangenberg, Liebenbachstadt
+066340025;Wabern
+066340026;Willingshausen
+066340027;Bad Zwesten, Kurort
+066350001;Allendorf (Eder)
+066350002;Bad Arolsen, Stadt, Heilbad
+066350003;Bad Wildungen, Stadt
+066350004;Battenberg (Eder), Stadt
+066350006;Burgwald
+066350007;Diemelsee
+066350008;Diemelstadt, Stadt
+066350009;Edertal, Nationalparkgemeinde
+066350010;Frankenau, Nationalparkstadt
+066350011;Frankenberg (Eder), Philipp-Soldan-Stadt
+066350012;Gemünden (Wohra), Stadt
+066350013;Haina (Kloster)
+066350014;Hatzfeld (Eder), Stadt
+066350015;Korbach, Hansestadt, Kreisstadt
+066350016;Lichtenfels, Stadt
+066350017;Rosenthal, Stadt
+066350018;Twistetal
+066350019;Vöhl, Nationalparkgemeinde
+066350020;Volkmarsen, Stadt
+066350021;Waldeck, Nationalparkstadt
+066350022;Willingen (Upland)
+066360001;Bad Sooden-Allendorf, Stadt, Heilbad
+066360002;Berkatal
+066360003;Eschwege, Kreisstadt
+066360004;Großalmerode, Stadt
+066360005;Herleshausen
+066360006;Hessisch Lichtenau, Stadt
+066360007;Meinhard
+066360008;Meißner
+066360009;Neu-Eichenberg
+066360010;Ringgau
+066360011;Sontra, Stadt
+066360012;Waldkappel, Stadt
+066360013;Wanfried, Stadt
+066360014;Wehretal
+066360015;Weißenborn
+066360016;Witzenhausen, Stadt
+066369200;Gutsbezirk Kaufunger Wald, gemfr. Gebiet
+070009999;Gemeinsames deutsch-luxemburgisches Hoheitsgebiet
+071110000;Koblenz, Stadt
+071310007;Bad Neuenahr-Ahrweiler, Stadt
+071310070;Remagen, Stadt
+071310077;Sinzig, Stadt
+071310090;Grafschaft
+071315001;Adenau
+071315002;Altenahr
+071315003;Bad Breisig
+071315004;Brohltal
+071325003;Daaden-Herdorf
+071325006;Hamm (Sieg)
+071325007;Kirchen (Sieg)
+071325008;Wissen
+071325009;Betzdorf-Gebhardshain
+071325010;Altenkirchen-Flammersfeld
+071330006;Bad Kreuznach, Stadt
+071335001;Bad Kreuznach
+071335006;Rüdesheim
+071335009;Kirner Land
+071335010;Nahe-Glan
+071335011;Langenlonsheim-Stromberg
+071340045;Idar-Oberstein, Stadt
+071345001;Baumholder
+071345002;Birkenfeld
+071345005;Herrstein-Rhaunen
+071355001;Cochem
+071355002;Kaisersesch
+071355003;Ulmen
+071355005;Zell (Mosel)
+071370003;Andernach, Stadt
+071370068;Mayen, Stadt
+071370203;Bendorf, Stadt
+071375001;Pellenz
+071375002;Maifeld
+071375003;Vordereifel
+071375004;Mendig
+071375007;Vallendar
+071375008;Weißenthurm
+071375009;Rhein-Mosel
+071380045;Neuwied, Stadt
+071385001;Asbach
+071385002;Bad Hönningen
+071385003;Dierdorf
+071385004;Linz am Rhein
+071385005;Puderbach
+071385007;Unkel
+071385009;Rengsdorf-Waldbreitbach
+071400501;Boppard, Stadt
+071405003;Kastellaun
+071405004;Kirchberg (Hunsrück)
+071405008;Simmern-Rheinböllen
+071405009;Hunsrück-Mittelrhein
+071410075;Lahnstein, Stadt
+071415003;Diez
+071415007;Nastätten
+071415009;Loreley
+071415010;Bad Ems-Nassau
+071415011;Aar-Einrich
+071435001;Bad Marienberg (Westerwald)
+071435002;Hachenburg
+071435003;Höhr-Grenzhausen
+071435004;Montabaur
+071435005;Ransbach-Baumbach
+071435006;Rennerod
+071435007;Selters (Westerwald)
+071435008;Wallmerod
+071435009;Westerburg
+071435010;Wirges
+072110000;Trier, Stadt
+072310134;Wittlich, Stadt
+072310502;Morbach
+072315001;Bernkastel-Kues
+072315006;Thalfang am Erbeskopf
+072315008;Wittlich-Land
+072315009;Traben-Trarbach
+072320018;Bitburg, Stadt
+072325001;Arzfeld
+072325005;Südeifel
+072325006;Prüm
+072325007;Speicher
+072325008;Bitburger Land
+072335001;Daun
+072335004;Kelberg
+072335006;Gerolstein
+072355001;Hermeskeil
+072355003;Konz
+072355004;Ruwer
+072355006;Schweich an der Römischen Weinstraße
+072355007;Trier-Land
+072355008;Saarburg-Kell
+073110000;Frankenthal (Pfalz), Stadt
+073120000;Kaiserslautern, Stadt
+073130000;Landau in der Pfalz, Stadt
+073140000;Ludwigshafen am Rhein, Stadt
+073150000;Mainz, Stadt
+073160000;Neustadt an der Weinstraße, Stadt
+073170000;Pirmasens, Stadt
+073180000;Speyer, Stadt
+073190000;Worms, Stadt
+073200000;Zweibrücken, Stadt
+073310003;Alzey, Stadt
+073315001;Alzey-Land
+073315002;Eich
+073315003;Monsheim
+073315005;Wöllstein
+073315006;Wörrstadt
+073315007;Wonnegau
+073320002;Bad Dürkheim, Stadt
+073320024;Grünstadt, Stadt
+073320025;Haßloch
+073325001;Deidesheim
+073325002;Freinsheim
+073325005;Lambrecht (Pfalz)
+073325006;Wachenheim an der Weinstraße
+073325007;Leiningerland
+073335002;Eisenberg (Pfalz)
+073335003;Göllheim
+073335004;Kirchheimbolanden
+073335006;Winnweiler
+073335007;Nordpfälzer Land
+073340007;Germersheim, Stadt
+073340501;Wörth am Rhein, Stadt
+073345001;Bellheim
+073345002;Hagenbach
+073345003;Jockgrim
+073345004;Kandel
+073345005;Lingenfeld
+073345006;Rülzheim
+073355001;Bruchmühlbach-Miesau
+073355002;Enkenbach-Alsenborn
+073355008;Ramstein-Miesenbach
+073355009;Weilerbach
+073355010;Otterbach-Otterberg
+073355011;Landstuhl
+073365008;Lauterecken-Wolfstein
+073365009;Oberes Glantal
+073365010;Kusel-Altenglan
+073375001;Annweiler am Trifels
+073375002;Bad Bergzabern
+073375003;Edenkoben
+073375004;Herxheim
+073375005;Landau-Land
+073375006;Maikammer
+073375007;Offenbach an der Queich
+073380004;Bobenheim-Roxheim
+073380005;Böhl-Iggelheim
+073380017;Limburgerhof
+073380019;Mutterstadt
+073380025;Schifferstadt, Stadt
+073385001;Dannstadt-Schauernheim
+073385004;Maxdorf
+073385006;Lambsheim-Heßheim
+073385007;Römerberg-Dudenhofen
+073385008;Rheinauen
+073390005;Bingen am Rhein, Stadt
+073390009;Budenheim
+073390030;Ingelheim am Rhein, Stadt
+073395001;Rhein-Nahe
+073395002;Bodenheim
+073395003;Gau-Algesheim
+073395006;Nieder-Olm
+073395007;Rhein-Selz
+073395008;Sprendlingen-Gensingen
+073405001;Dahner Felsenland
+073405002;Hauenstein
+073405003;Pirmasens-Land
+073405004;Rodalben
+073405006;Waldfischbach-Burgalben
+073405008;Zweibrücken-Land
+073405009;Thaleischweiler-Wallhalben
+081110000;Stuttgart, Landeshauptstadt
+081150003;Böblingen, Stadt
+081150028;Leonberg, Stadt
+081150029;Magstadt
+081150041;Renningen, Stadt
+081150042;Rutesheim, Stadt
+081150044;Schönaich
+081150045;Sindelfingen, Stadt
+081150050;Weil der Stadt, Stadt
+081150051;Weil im Schönbuch
+081150052;Weissach
+081155001;GVV Aidlingen/Grafenau
+081155002;GVV Gärtringen/Ehningen
+081155003;VVG der Stadt Herrenberg
+081155004;GVV Holzgerlingen
+081155005;GVV Oberes Gäu
+081155006;GVV Waldenbuch/Steinenbronn
+081160015;Denkendorf
+081160019;Esslingen am Neckar, Stadt
+081160047;Neuhausen auf den Fildern
+081160072;Wernau (Neckar), Stadt
+081160076;Aichwald
+081160077;Filderstadt, Stadt
+081160078;Leinfelden-Echterdingen, Stadt
+081160080;Ostfildern, Stadt
+081160081;Aichtal, Stadt
+081165001;VVG der Stadt Kirchheim unter Teck
+081165002;GVV Lenningen
+081165003;GVV Neckartenzlingen
+081165004;VVG der Stadt Neuffen
+081165005;VVG der Stadt Nürtingen
+081165006;GVV Plochingen
+081165007;GVV Reichenbach an der Fils
+081165008;VVG der Stadt Weilheim an der Teck
+081165009;GVV Wendlingen am Neckar
+081170010;Böhmenkirch
+081175001;VVG der Gemeinde Deggingen
+081175002;VVG der Stadt Ebersbach an der Fils
+081175003;GVV Eislingen-Ottenbach-Salach
+081175004;VVG der Stadt Geislingen an der Steige
+081175005;VVG der Stadt Göppingen
+081175006;GVV Mittlere Fils-Lautertal
+081175007;GVV Oberes Filstal
+081175008;GVV Östlicher Schurwald
+081175009;GVV Raum Bad Boll
+081175010;VVG der Stadt Uhingen
+081175011;GVV Voralb
+081180003;Asperg, Stadt
+081180011;Ditzingen, Stadt
+081180019;Gerlingen, Stadt
+081180021;Großbottwar, Stadt
+081180046;Kornwestheim, Stadt
+081180048;Ludwigsburg, Stadt
+081180050;Markgröningen, Stadt
+081180051;Möglingen
+081180060;Oberstenfeld
+081180076;Sachsenheim, Stadt
+081180080;Korntal-Münchingen, Stadt
+081180081;Remseck am Neckar, Stadt
+081185001;GVV Besigheim
+081185002;VVG der Stadt Bietigheim-Bissingen
+081185003;GVV Bönnigheim
+081185004;VVG der Stadt Freiberg am Neckar
+081185005;GVV Marbach am Neckar
+081185006;GVV Schwieberdingen-Hemmingen
+081185007;GVV Steinheim-Murr
+081185008;VVG der Stadt Vaihingen an der Enz
+081190001;Alfdorf
+081190020;Fellbach, Stadt
+081190041;Korb
+081190044;Murrhardt, Stadt
+081190061;Rudersberg
+081190079;Waiblingen, Stadt
+081190089;Berglen
+081190090;Remshalden
+081190091;Weinstadt, Stadt
+081190093;Kernen im Remstal
+081195001;VVG der Stadt Backnang
+081195002;GVV Plüderhausen-Urbach
+081195003;VVG der Stadt Schorndorf
+081195004;GVV Sulzbach
+081195005;VVG der Stadt Welzheim
+081195006;GVV Winnenden
+081210000;Heilbronn, Universitätsstadt
+081250007;Bad Wimpfen, Stadt
+081250039;Gundelsheim, Stadt
+081250058;Leingarten
+081250068;Neudenau, Stadt
+081250107;Wüstenrot
+081255001;VVG der Stadt Bad Friedrichshall
+081255002;VVG der Stadt Bad Rappenau
+081255003;VVG der Stadt Brackenheim
+081255004;VVG der Stadt Eppingen
+081255005;GVV Flein-Talheim
+081255006;VVG der Stadt Lauffen am Neckar
+081255007;VVG der Stadt Möckmühl
+081255008;VVG der Stadt Neckarsulm
+081255009;VVG der Stadt Neuenstadt am Kocher
+081255010;GVV Oberes Zabergäu
+081255011;VVG der Gemeinde Obersulm
+081255012;GVV Schozach-Bottwartal
+081255013;VVG der Stadt Schwaigern
+081255014;GVV Raum Weinsberg
+081260011;Bretzfeld
+081260072;Schöntal
+081265001;GVV Hohenloher Ebene
+081265002;GVV Krautheim
+081265003;VVG der Stadt Künzelsau
+081265004;GVV Mittleres Kochertal
+081265005;VVG der Stadt Öhringen
+081270008;Blaufelden
+081270052;Mainhardt
+081270075;Schrozberg, Stadt
+081275001;GVV Braunsbach-Untermünkheim
+081275002;VVG der Stadt Crailsheim
+081275003;GVV Fichtenau
+081275004;VVG der Stadt Gerabronn
+081275005;GVV Ilshofen-Vellberg
+081275006;GVV Limpurger Land
+081275007;GVV Oberes Bühlertal
+081275008;GVV Brettach/Jagst
+081275009;VVG der Stadt Schwäbisch Hall
+081280020;Creglingen, Stadt
+081280039;Freudenberg, Stadt
+081280064;Külsheim, Stadt
+081280082;Niederstetten, Stadt
+081280126;Weikersheim, Stadt
+081280131;Wertheim, Stadt
+081280139;Lauda-Königshofen, Stadt
+081285001;VVG der Stadt Bad Mergentheim
+081285002;VVG der Stadt Boxberg
+081285003;VVG der Stadt Grünsfeld
+081285004;VVG der Stadt Tauberbischofsheim
+081350010;Dischingen
+081350015;Gerstetten
+081350020;Herbrechtingen, Stadt
+081350025;Königsbronn
+081350032;Steinheim am Albuch
+081355001;VVG der Stadt Giengen an der Brenz
+081355002;VVG der Stadt Heidenheim an der Brenz
+081355003;GVV Sontheim-Niederstotzingen
+081360002;Abtsgmünd
+081360027;Gschwend
+081360042;Lorch, Stadt
+081360045;Neresheim, Stadt
+081360050;Oberkochen, Stadt
+081365001;VVG der Stadt Aalen
+081365002;VVG der Stadt Bopfingen
+081365003;VVG der Stadt Ellwangen (Jagst)
+081365004;GVV Kapfenburg
+081365005;GVV Leintal-Frickenhofer Höhe
+081365006;GVV Rosenstein
+081365007;VVG der Stadt Schwäbisch Gmünd
+081365008;GVV Schwäbischer Wald
+081365009;GVV Tannhausen
+082110000;Baden-Baden, Stadt
+082120000;Karlsruhe, Stadt
+082150017;Ettlingen, Stadt
+082150046;Malsch
+082150047;Marxzell
+082150064;Östringen, Stadt
+082150084;Ubstadt-Weiher
+082150089;Walzbachtal
+082150090;Weingarten (Baden)
+082150096;Karlsbad
+082150097;Kraichtal, Stadt
+082150101;Pfinztal
+082150102;Eggenstein-Leopoldshafen
+082150105;Linkenheim-Hochstetten
+082150106;Waghäusel, Stadt
+082150108;Rheinstetten, Stadt
+082150109;Stutensee, Stadt
+082150110;Waldbronn
+082155001;VVG der Gemeinde Bad Schönborn
+082155002;VVG der Stadt Bretten
+082155003;VVG der Stadt Bruchsal
+082155004;VVG der Gemeinde Graben-Neudorf
+082155005;VVG der Stadt Oberderdingen
+082155006;GVV Philippsburg
+082155007;VVG der Gemeinde Sulzfeld
+082160008;Bühlertal
+082160013;Forbach
+082160015;Gaggenau, Stadt
+082165001;GVV Nachbarschaftsverband Bischweier-Kuppenheim
+082165002;VVG der Stadt Bühl
+082165003;GVV Durmersheim
+082165004;VVG der Stadt Gernsbach
+082165005;VVG der Stadt Rastatt
+082165006;GVV Rheinmünster-Lichtenau
+082165007;VVG der Gemeinde Sinzheim
+082210000;Heidelberg, Stadt
+082220000;Mannheim, Universitätsstadt
+082250014;Buchen (Odenwald), Stadt
+082250060;Mudau
+082255001;GVV Hardheim-Walldürn
+082255002;VVG der Gemeinde Haßmersheim
+082255003;GVV Kleiner Odenwald
+082255004;VVG der Gemeinde Limbach
+082255005;VVG der Stadt Mosbach
+082255006;GVV Neckargerach-Waldbrunn
+082255007;GVV Osterburken
+082255008;GVV Schefflenztal
+082255009;GVV Seckachtal
+082260009;Brühl
+082260012;Dossenheim
+082260018;Eppelheim, Stadt
+082260028;Heddesheim
+082260036;Ilvesheim
+082260037;Ketsch
+082260038;Ladenburg, Stadt
+082260041;Leimen, Stadt
+082260060;Nußloch
+082260062;Oftersheim
+082260063;Plankstadt
+082260076;Sandhausen
+082260082;Schriesheim, Stadt
+082260084;Schwetzingen, Stadt
+082260095;Walldorf, Stadt
+082260096;Weinheim, Stadt
+082260103;St. Leon-Rot
+082260105;Edingen-Neckarhausen
+082260107;Hirschberg an der Bergstraße
+082265001;VVG der Stadt Eberbach
+082265002;GVV Elsenztal
+082265003;VVG der Stadt Hemsbach
+082265004;VVG der Stadt Hockenheim
+082265005;GVV Neckargemünd
+082265006;GVV Rauenberg
+082265007;GVV Schönau
+082265008;VVG der Stadt Sinsheim
+082265009;GVV Waibstadt
+082265010;VVG der Stadt Wiesloch
+082310000;Pforzheim, Stadt
+082350065;Schömberg
+082350080;Wildberg, Stadt
+082355001;VVG der Stadt Altensteig
+082355002;GVV Althengstett
+082355003;VVG der Stadt Bad Herrenalb
+082355004;VVG der Stadt Bad Liebenzell
+082355005;GVV Teinachtal
+082355006;VVG der Stadt Calw
+082355007;VVG der Stadt Nagold
+082355008;VVG der Stadt Bad Wildbad
+082360004;Birkenfeld
+082360028;Illingen
+082360030;Ispringen
+082360033;Knittlingen, Stadt
+082360046;Niefern-Öschelbronn
+082360070;Keltern
+082360071;Remchingen
+082360072;Straubenhardt
+082365001;GVV Heckengäu
+082365002;GVV Kämpfelbachtal
+082365003;VVG der Stadt Maulbronn
+082365004;VVG der Stadt Mühlacker
+082365005;VVG der Stadt Neuenbürg
+082365006;GVV Neulingen
+082365007;GVV Tiefenbronn
+082370002;Alpirsbach, Stadt
+082370004;Baiersbronn
+082370045;Loßburg
+082375001;GVV Dornstetten
+082375002;VVG der Stadt Freudenstadt
+082375003;VVG der Stadt Horb am Neckar
+082375005;VVG der Gemeinde Pfalzgrafenweiler
+083110000;Freiburg im Breisgau, Stadt
+083150068;Lenzkirch
+083150076;Neuenburg am Rhein, Stadt
+083150133;Vogtsburg im Kaiserstuhl, Stadt
+083155001;VVG der Stadt Bad Krozingen
+083155002;VVG der Stadt Breisach am Rhein
+083155003;GVV Dreisamtal
+083155004;VVG der Gemeinde Ehrenkirchen
+083155005;VVG der Gemeinde Gundelfingen
+083155006;VVG der Stadt Heitersheim
+083155007;GVV Hexental
+083155008;VVG der Gemeinde Hinterzarten
+083155009;GVV Kaiserstuhl-Tuniberg
+083155010;VVG der Stadt Löffingen
+083155011;GVV March-Umkirch
+083155012;GVV Müllheim-Badenweiler
+083155013;GVV St. Peter
+083155014;VVG der Gemeinde Schallstadt
+083155015;VVG der Gemeinde Schluchsee
+083155016;GVV Staufen-Münstertal
+083155017;VVG der Stadt Titisee-Neustadt
+083165001;GVV Denzlingen-Vörstetten-Reute
+083165002;GVV Elzach
+083165003;VVG der Stadt Emmendingen
+083165004;GVV Kenzingen-Herbolzheim
+083165005;GVV Nördlicher Kaiserstuhl
+083165006;VVG der Stadt Waldkirch
+083170005;Appenweier
+083170031;Friesenheim
+083170051;Hornberg, Stadt
+083170057;Kehl, Stadt
+083170141;Willstätt
+083170151;Neuried
+083170153;Rheinau, Stadt
+083175001;VVG der Stadt Achern
+083175002;VVG der Stadt Ettenheim
+083175003;VVG der Stadt Gengenbach
+083175004;VVG der Stadt Haslach im Kinzigtal
+083175005;VVG der Stadt Hausach
+083175006;GVV Kappelrodeck
+083175007;VVG der Stadt Lahr/Schwarzwald
+083175008;GVV Oberes Renchtal
+083175009;VVG der Stadt Oberkirch
+083175010;VVG der Stadt Offenburg
+083175011;VVG der Gemeinde Seelbach
+083175012;VVG der Gemeinde Schwanau
+083175013;VVG der Stadt Wolfach
+083175014;VVG der Stadt Zell am Harmersbach
+083179971;Rheinau, gemeindefreies Gebiet
+083250012;Dornhan, Stadt
+083255001;VVG der Gemeinde Dunningen
+083255002;VVG der Stadt Oberndorf am Neckar
+083255003;VVG der Stadt Rottweil
+083255004;VVG der Stadt Schiltach
+083255005;VVG der Stadt Schramberg
+083255006;VVG der Stadt Sulz am Neckar
+083255007;GVV Villingendorf
+083260003;Bad Dürrheim, Stadt
+083260005;Blumberg, Stadt
+083260031;Königsfeld im Schwarzwald
+083260052;St. Georgen im Schwarzwald, Stadt
+083260068;Vöhrenbach, Stadt
+083265001;GVV Donaueschingen
+083265002;VVG der Stadt Furtwangen im Schwarzwald
+083265003;GVV Raumschaft Triberg
+083265004;VVG der Stadt Villingen-Schwenningen
+083275001;GVV Donau-Heuberg
+083275002;GVV Heuberg
+083275003;GVV Immendingen-Geisingen
+083275004;VVG der Stadt Spaichingen
+083275005;VVG der Stadt Trossingen
+083275006;VVG der Stadt Tuttlingen
+083350035;Hilzingen
+083350063;Radolfzell am Bodensee, Stadt
+083350080;Tengen, Stadt
+083355001;VVG der Stadt Engen
+083355002;VVG der Gemeinde Gottmadingen
+083355003;GVV Höri
+083355004;VVG der Stadt Konstanz
+083355005;VVG der Stadt Singen (Hohentwiel)
+083355006;VVG der Stadt Stockach
+083360014;Efringen-Kirchen
+083360084;Steinen
+083360087;Todtnau, Stadt
+083360091;Weil am Rhein, Stadt
+083360105;Grenzach-Wyhlen
+083360107;Kleines Wiesental
+083365001;VVG der Stadt Kandern
+083365003;VVG der Stadt Lörrach
+083365004;VVG der Stadt Rheinfelden (Baden)
+083365005;VVG der Gemeinde Schliengen
+083365006;GVV Schönau im Schwarzwald
+083365007;VVG der Stadt Schopfheim
+083365008;GVV Vorderes Kandertal
+083365009;VVG der Stadt Zell im Wiesental
+083370002;Albbruck
+083370038;Görwihl
+083370062;Klettgau
+083370066;Laufenburg (Baden), Stadt
+083370106;Stühlingen, Stadt
+083370116;Wehr, Stadt
+083375001;VVG der Stadt Bonndorf im Schwarzwald
+083375002;GVV Jestetten
+083375003;GVV Küssaberg
+083375004;GVV Oberes Schlüchttal
+083375005;VVG der Stadt Bad Säckingen
+083375006;GVV St. Blasien
+083375007;VVG der Stadt Waldshut-Tiengen
+083375008;VVG der Gemeinde Wutöschingen
+084150014;Dettingen an der Erms
+084150019;Eningen unter Achalm
+084150059;Pfullingen, Stadt
+084150061;Reutlingen, Stadt
+084150073;Trochtelfingen, Stadt
+084150080;Wannweil
+084150091;Sonnenbühl
+084150092;Lichtenstein
+084150093;St. Johann
+084155001;VVG der Gemeinde Engstingen
+084155002;VVG der Stadt Metzingen
+084155003;VVG der Stadt Münsingen
+084155004;VVG der Gemeinde Pliezhausen
+084155005;VVG der Stadt Bad Urach
+084155006;GVV Zwiefalten-Hayingen
+084159971;Gutsbezirk Münsingen, gemeindefreies Gebiet
+084160009;Dettenhausen
+084160022;Kirchentellinsfurt
+084160023;Kusterdingen
+084160041;Tübingen, Universitätsstadt
+084160048;Ammerbuch
+084165001;GVV Steinlach-Wiesaz
+084165002;VVG der Stadt Mössingen
+084165003;VVG der Stadt Rottenburg am Neckar
+084170013;Burladingen, Stadt
+084170025;Haigerloch, Stadt
+084170054;Rosenfeld, Stadt
+084175001;VVG der Stadt Albstadt
+084175002;VVG der Stadt Balingen
+084175003;VVG der Gemeinde Bisingen
+084175004;VVG der Stadt Hechingen
+084175005;VVG der Stadt Meßstetten
+084175006;GVV Oberes Schlichemtal
+084175007;VVG der Gemeinde Winterlingen
+084210000;Ulm, Universitätsstadt
+084250039;Erbach, Stadt
+084250108;Schelklingen, Stadt
+084250141;Blaustein, Stadt
+084255001;VVG der Gemeinde Allmendingen
+084255002;VVG der Stadt Blaubeuren
+084255003;GVV Dietenheim
+084255004;VVG der Gemeinde Dornstadt
+084255005;VVG der Stadt Ehingen (Donau)
+084255006;GVV Kirchberg-Weihungstal
+084255007;GVV Laichinger Alb
+084255008;GVV Langenau
+084255009;GVV Lonsee-Amstetten
+084255010;GVV Verwaltungsgemeinschaft Munderkingen
+084260134;Schemmerhofen
+084265001;GVV Bad Buchau
+084265002;VVG der Stadt Bad Schussenried
+084265003;VVG der Stadt Biberach an der Riß
+084265004;GVV Illertal
+084265005;VVG der Stadt Laupheim
+084265006;VVG der Stadt Ochsenhausen
+084265007;VVG der Stadt Riedlingen
+084265008;GVV Rot-Tannheim
+084265009;VVG der Gemeinde Schwendi
+084350035;Meckenbeuren
+084355001;GVV Eriskirch-Kressbronn am Bodensee-Langenargen
+084355002;VVG der Stadt Friedrichshafen
+084355003;GVV Markdorf
+084355004;GVV Meersburg
+084355005;GVV Salem
+084355006;VVG der Stadt Tettnang
+084355007;VVG der Stadt Überlingen
+084360008;Aulendorf, Stadt
+084360010;Bad Wurzach, Stadt
+084360049;Isny im Allgäu, Stadt
+084360052;Kißlegg
+084360094;Argenbühl
+084365001;GVV Altshausen
+084365002;VVG der Stadt Bad Waldsee
+084365003;GVV Gullen
+084365004;VVG der Stadt Leutkirch im Allgäu
+084365005;GVV Mittleres Schussental
+084365006;VVG der Gemeinde Vogt
+084365007;VVG der Stadt Wangen im Allgäu
+084365008;VVG der Gemeinde Wilhelmsdorf
+084365009;GVV Fronreute-Wolpertswende
+084370086;Ostrach
+084375001;GVV Laucherttal
+084375002;GVV Mengen
+084375003;VVG der Stadt Meßkirch
+084375004;VVG der Stadt Pfullendorf
+084375005;VVG der Stadt Bad Saulgau
+084375006;GVV Sigmaringen
+084375007;VVG der Gemeinde Stetten am kalten Markt
+091610000;Ingolstadt
+091620000;München, Landeshauptstadt
+091630000;Rosenheim
+091710111;Altötting, St
+091710112;Burghausen, St
+091710113;Burgkirchen a.d.Alz
+091710117;Garching a.d.Alz
+091710118;Haiming
+091710125;Neuötting, St
+091710127;Pleiskirchen
+091710131;Teising
+091710132;Töging a.Inn, St
+091710133;Tüßling, M
+091710137;Winhöring
+091715101;Emmerting (VGem)
+091715102;Kirchweidach (VGem)
+091715103;Marktl (VGem)
+091715104;Reischach (VGem)
+091715106;Unterneukirchen (VGem)
+091720111;Ainring
+091720112;Anger
+091720114;Bad Reichenhall, GKSt
+091720115;Bayerisch Gmain
+091720116;Berchtesgaden, M
+091720117;Bischofswiesen
+091720118;Freilassing, St
+091720122;Laufen, St
+091720124;Marktschellenberg, M
+091720128;Piding
+091720129;Ramsau b.Berchtesgaden
+091720130;Saaldorf-Surheim
+091720131;Schneizlreuth
+091720132;Schönau a.Königssee
+091720134;Teisendorf, M
+091729452;Eck
+091729454;Schellenberger Forst
+091730111;Bad Heilbrunn
+091730112;Bad Tölz, St
+091730118;Dietramszell
+091730120;Egling
+091730123;Eurasburg
+091730124;Gaißach
+091730126;Geretsried, St
+091730130;Icking
+091730131;Jachenau
+091730134;Königsdorf
+091730135;Lenggries
+091730137;Münsing
+091730145;Wackersberg
+091730147;Wolfratshausen, St
+091735107;Benediktbeuern (VGem)
+091735108;Kochel a.See (VGem)
+091735109;Reichersbeuern (VGem)
+091739451;Pupplinger Au
+091739452;Wolfratshauser Forst
+091740111;Altomünster, M
+091740113;Bergkirchen
+091740115;Dachau, GKSt
+091740118;Erdweg
+091740121;Haimhausen
+091740122;Hebertshausen
+091740126;Karlsfeld
+091740131;Markt Indersdorf, M
+091740135;Odelzhausen
+091740136;Petershausen
+091740137;Pfaffenhofen a.d.Glonn
+091740141;Röhrmoos
+091740143;Schwabhausen
+091740146;Sulzemoos
+091740147;Hilgertshausen-Tandern
+091740150;Vierkirchen
+091740151;Weichs
+091750111;Anzing
+091750115;Ebersberg, St
+091750118;Forstinning
+091750122;Grafing b.München, St
+091750123;Hohenlinden
+091750124;Kirchseeon, M
+091750127;Markt Schwaben, M
+091750132;Vaterstetten
+091750133;Pliening
+091750135;Poing
+091750137;Steinhöring
+091750139;Zorneding
+091755112;Aßling (VGem)
+091755114;Glonn (VGem)
+091759451;Anzinger Forst
+091759452;Ebersberger Forst
+091759453;Eglhartinger Forst
+091760112;Altmannstein, M
+091760114;Beilngries, St
+091760118;Buxheim
+091760120;Denkendorf
+091760121;Dollnstein, M
+091760123;Eichstätt, GKSt
+091760126;Gaimersheim, M
+091760129;Großmehring
+091760131;Hepberg
+091760132;Hitzhofen
+091760137;Kinding, M
+091760138;Kipfenberg, M
+091760139;Kösching, M
+091760143;Lenting
+091760148;Mörnsheim, M
+091760161;Stammham
+091760164;Titting, M
+091760166;Wellheim, M
+091760167;Wettstetten
+091765115;Eichstätt (VGem)
+091765116;Eitensheim (VGem)
+091765118;Nassenfels (VGem)
+091765119;Pförring (VGem)
+091769451;Haunstetter Forst
+091770113;Bockhorn
+091770115;Dorfen, St
+091770117;Erding, St
+091770118;Finsing
+091770119;Forstern
+091770120;Fraunberg
+091770123;Isen, M
+091770127;Lengdorf
+091770130;Moosinning
+091770137;Sankt Wolfgang
+091770139;Taufkirchen (Vils)
+091775120;Pastetten (VGem)
+091775121;Hörlkofen (VGem)
+091775123;Oberding (VGem)
+091775124;Oberneuching (VGem)
+091775125;Steinkirchen (VGem)
+091775126;Wartenberg (VGem)
+091780116;Au i.d.Hallertau, M
+091780120;Eching
+091780122;Rudelzhausen
+091780123;Fahrenzhausen
+091780124;Freising, GKSt
+091780130;Hallbergmoos
+091780133;Hohenkammer
+091780136;Kirchdorf a.d.Amper
+091780137;Kranzberg
+091780138;Langenbach
+091780140;Marzling
+091780143;Moosburg a.d.Isar, St
+091780144;Nandlstadt, M
+091780145;Neufahrn b.Freising
+091785127;Allershausen (VGem)
+091785129;Mauern (VGem)
+091785130;Zolling (VGem)
+091790113;Alling
+091790117;Egenhofen
+091790118;Eichenau
+091790119;Emmering
+091790121;Fürstenfeldbruck, GKSt
+091790123;Germering, GKSt
+091790126;Gröbenzell
+091790134;Maisach
+091790138;Moorenweis
+091790142;Olching
+091790145;Puchheim
+091790149;Türkenfeld
+091795131;Mammendorf (VGem)
+091795132;Grafrath (VGem)
+091800112;Bad Kohlgrub
+091800116;Farchant
+091800117;Garmisch-Partenkirchen, M
+091800118;Grainau
+091800122;Krün
+091800123;Mittenwald, M
+091800124;Murnau a.Staffelsee, M
+091800125;Oberammergau
+091800126;Oberau
+091800134;Uffing a.Staffelsee
+091800136;Wallgau
+091805133;Saulgrub (VGem)
+091805135;Unterammergau (VGem)
+091805136;Ohlstadt (VGem)
+091805137;Seehausen a.Staffelsee (VGem)
+091809451;Ettaler Forst
+091810113;Denklingen
+091810114;Dießen am Ammersee, M
+091810116;Egling a.d.Paar
+091810122;Geltendorf
+091810128;Kaufering, M
+091810130;Landsberg am Lech, GKSt
+091810132;Penzing
+091810144;Utting am Ammersee
+091810145;Weil
+091815138;Fuchstal (VGem)
+091815139;Igling (VGem)
+091815140;Prittriching (VGem)
+091815141;Pürgen (VGem)
+091815142;Reichling (VGem)
+091815143;Schondorf a.Ammersee (VGem)
+091815144;Windach (VGem)
+091819451;Ammersee
+091820111;Bad Wiessee
+091820112;Bayrischzell
+091820114;Fischbachau
+091820116;Gmund a.Tegernsee
+091820119;Hausham
+091820120;Holzkirchen, M
+091820123;Irschenberg
+091820124;Kreuth
+091820125;Miesbach, St
+091820127;Otterfing
+091820129;Rottach-Egern
+091820131;Schliersee, M
+091820132;Tegernsee, St
+091820133;Valley
+091820134;Waakirchen
+091820136;Warngau
+091820137;Weyarn
+091830112;Ampfing
+091830113;Aschau a.Inn
+091830114;Buchbach, M
+091830119;Haag i.OB, M
+091830127;Mettenheim
+091830128;Mühldorf a.Inn, St
+091830135;Obertaufkirchen
+091830144;Schwindegg
+091830148;Waldkraiburg, St
+091835145;Heldenstein (VGem)
+091835146;Gars a.Inn (VGem)
+091835147;Reichertsheim (VGem)
+091835148;Kraiburg a.Inn (VGem)
+091835149;Neumarkt-Sankt Veit (VGem)
+091835150;Oberbergkirchen (VGem)
+091835151;Polling (VGem)
+091835152;Rohrbach (VGem)
+091835183;Maitenbeth (VGem)
+091839451;Mühldorfer Hart
+091840112;Aschheim
+091840113;Baierbrunn
+091840114;Brunnthal
+091840118;Feldkirchen
+091840119;Garching b.München, St
+091840120;Gräfelfing
+091840121;Grasbrunn
+091840122;Grünwald
+091840123;Haar, St
+091840127;Höhenkirchen-Siegertsbrunn
+091840129;Hohenbrunn
+091840130;Ismaning
+091840131;Kirchheim b.München
+091840132;Neuried
+091840134;Oberhaching
+091840135;Oberschleißheim
+091840136;Ottobrunn
+091840137;Aying
+091840138;Planegg
+091840139;Pullach i.Isartal
+091840140;Putzbrunn
+091840141;Sauerlach
+091840142;Schäftlarn
+091840144;Straßlach-Dingharting
+091840145;Taufkirchen
+091840146;Neubiberg
+091840147;Unterföhring
+091840148;Unterhaching
+091840149;Unterschleißheim, St
+091849452;Forstenrieder Park
+091849454;Grünwalder Forst
+091849457;Perlacher Forst
+091850113;Aresing
+091850125;Burgheim, M
+091850127;Ehekirchen
+091850139;Karlshuld
+091850140;Karlskron
+091850149;Neuburg a.d.Donau, GKSt
+091850150;Oberhausen
+091850153;Rennertshofen, M
+091850158;Schrobenhausen, St
+091850163;Königsmoos
+091850168;Weichering
+091855154;Neuburg a.d.Donau (VGem)
+091855155;Schrobenhausen (VGem)
+091860113;Baar-Ebenhausen
+091860125;Gerolsbach
+091860128;Hohenwart, M
+091860132;Jetzendorf
+091860137;Manching, M
+091860139;Münchsmünster
+091860143;Pfaffenhofen a.d.Ilm, St
+091860146;Reichertshausen
+091860149;Rohrbach
+091860151;Scheyern
+091860152;Schweitenkirchen
+091860158;Vohburg a.d.Donau, St
+091860162;Wolnzach, M
+091865156;Geisenfeld (VGem)
+091865157;Ilmmünster (VGem)
+091865158;Reichertshofen (VGem)
+091870113;Amerang
+091870114;Aschau i.Chiemgau
+091870116;Babensham
+091870117;Bad Aibling, St
+091870118;Bernau a.Chiemsee
+091870120;Brannenburg
+091870122;Bruckmühl, M
+091870124;Edling
+091870125;Eggstätt
+091870126;Eiselfing
+091870128;Bad Endorf, M
+091870129;Bad Feilnbach
+091870130;Feldkirchen-Westerham
+091870131;Flintsbach a.Inn
+091870132;Frasdorf
+091870134;Griesstätt
+091870137;Großkarolinenfeld
+091870142;Schechen
+091870148;Kiefersfelden
+091870150;Kolbermoor, St
+091870154;Neubeuern, M
+091870156;Nußdorf a.Inn
+091870157;Oberaudorf
+091870162;Prien a.Chiemsee, M
+091870163;Prutting
+091870165;Raubling
+091870167;Riedering
+091870168;Rimsting
+091870169;Rohrdorf
+091870172;Samerberg
+091870174;Söchtenau
+091870176;Soyen
+091870177;Stephanskirchen
+091870179;Tuntenhausen
+091870181;Vogtareuth
+091870182;Wasserburg a.Inn, St
+091875160;Breitbrunn a.Chiemsee (VGem)
+091875162;Halfing (VGem)
+091875165;Rott a.Inn (VGem)
+091875184;Pfaffing (VGem)
+091879451;Rotter Forst-Nord
+091879452;Rotter Forst-Süd
+091880113;Berg
+091880117;Andechs
+091880118;Feldafing
+091880120;Gauting
+091880121;Gilching
+091880124;Herrsching a.Ammersee
+091880126;Inning a.Ammersee
+091880127;Krailling
+091880132;Seefeld
+091880137;Pöcking
+091880139;Starnberg, St
+091880141;Tutzing
+091880144;Weßling
+091880145;Wörthsee
+091889451;Starnberger See
+091890111;Altenmarkt a.d.Alz
+091890114;Chieming
+091890115;Engelsberg
+091890118;Fridolfing
+091890119;Grabenstätt
+091890120;Grassau, M
+091890124;Inzell
+091890127;Kirchanschöring
+091890130;Nußdorf
+091890134;Palling
+091890135;Petting
+091890139;Reit im Winkl
+091890140;Ruhpolding
+091890141;Schleching
+091890142;Schnaitsee
+091890143;Seeon-Seebruck
+091890145;Siegsdorf
+091890148;Surberg
+091890149;Tacherting
+091890152;Tittmoning, St
+091890154;Traunreut, St
+091890155;Traunstein, GKSt
+091890157;Trostberg, St
+091890159;Übersee
+091890160;Unterwössen
+091895166;Bergen (VGem)
+091895169;Marquartstein (VGem)
+091895170;Obing (VGem)
+091895173;Waging a.See (VGem)
+091899451;Chiemsee (See)
+091899452;Waginger See
+091900115;Bernried am Starnberger See
+091900130;Hohenpeißenberg
+091900138;Pähl
+091900139;Peißenberg, M
+091900140;Peiting, M
+091900141;Penzberg, St
+091900142;Polling
+091900144;Raisting
+091900148;Schongau, St
+091900157;Weilheim i.OB, St
+091900158;Wessobrunn
+091900159;Wielenbach
+091905174;Altenstadt (VGem)
+091905175;Bernbeuren (VGem)
+091905176;Habach (VGem)
+091905177;Huglfing (VGem)
+091905178;Rottenbuch (VGem)
+091905179;Seeshaupt (VGem)
+091905180;Steingaden (VGem)
+092610000;Landshut
+092620000;Passau
+092630000;Straubing
+092710111;Aholming
+092710113;Auerbach
+092710116;Bernried
+092710119;Deggendorf, GKSt
+092710122;Grafling
+092710125;Hengersberg, M
+092710127;Iggensbach
+092710128;Künzing
+092710132;Metten, M
+092710138;Niederalteich
+092710140;Offenberg
+092710141;Osterhofen, St
+092710146;Plattling, St
+092710151;Stephansposching
+092710153;Winzer, M
+092715202;Lalling (VGem)
+092715204;Oberpöring (VGem)
+092715205;Moos (VGem)
+092715206;Schöllnach (VGem)
+092720118;Freyung, St
+092720120;Grafenau, St
+092720121;Grainet
+092720122;Haidmühle
+092720127;Hohenau
+092720129;Jandelsbrunn
+092720134;Mauth
+092720136;Neureichenau
+092720140;Ringelai
+092720141;Röhrnbach, M
+092720142;Saldenburg
+092720143;Sankt Oswald-Riedlhütte
+092720146;Neuschönau
+092720149;Spiegelau
+092720151;Waldkirchen, St
+092725211;Schönberg (VGem)
+092725212;Hinterschmiding (VGem)
+092725213;Thurmansbang (VGem)
+092725214;Perlesreut (VGem)
+092729451;Annathaler Wald
+092729452;Frauenberger u. Duschlberger Wald
+092729453;Graineter Wald
+092729455;Leopoldsreuter Wald
+092729456;Mauther Forst
+092729457;Philipppsreuter Wald
+092729458;Pleckensteiner Wald
+092729459;Sankt Oswald
+092729460;Schlichtenberger Wald
+092729461;Schönbrunner Wald
+092729463;Waldhäuserwald
+092730111;Abensberg, St
+092730116;Bad Abbach, M
+092730137;Kelheim, St
+092730147;Mainburg, St
+092730152;Neustadt a.d.Donau, St
+092730159;Painten, M
+092730164;Riedenburg, St
+092730165;Rohr i.NB, M
+092735215;Ihrlerstein (VGem)
+092735216;Saal a.d.Donau (VGem)
+092735217;Langquaid (VGem)
+092735218;Siegenburg (VGem)
+092735219;Mainburg (VGem)
+092739451;Dürnbucher Forst
+092739453;Hacklberg
+092740111;Adlkofen
+092740113;Altdorf, M
+092740120;Bodenkirchen
+092740121;Buch a.Erlbach
+092740124;Eching
+092740126;Ergolding, M
+092740128;Essenbach, M
+092740134;Geisenhausen, M
+092740141;Hohenthann
+092740146;Kumhausen
+092740153;Neufahrn i.NB
+092740156;Niederaichbach
+092740172;Pfeffenhausen, M
+092740176;Rottenburg a.d.Laaber, St
+092740182;Tiefenbach
+092740184;Vilsbiburg, St
+092740185;Vilsheim
+092740194;Bruckberg
+092745220;Ergoldsbach (VGem)
+092745221;Furth (VGem)
+092745222;Wörth a.d.Isar (VGem)
+092745223;Gerzen (VGem)
+092745226;Altfraunhofen (VGem)
+092745227;Velden (VGem)
+092750111;Aicha vorm Wald
+092750114;Aldersbach
+092750116;Bad Füssing
+092750118;Breitenberg
+092750119;Büchlberg
+092750120;Eging a.See, M
+092750121;Fürstenstein
+092750122;Fürstenzell, M
+092750124;Bad Griesbach i.Rottal, St
+092750125;Haarbach
+092750126;Hauzenberg, St
+092750127;Hofkirchen, M
+092750128;Hutthurm, M
+092750130;Kirchham
+092750131;Kößlarn, M
+092750133;Neuburg a.Inn
+092750134;Neuhaus a.Inn
+092750135;Neukirchen vorm Wald
+092750137;Obernzell, M
+092750138;Ortenburg, M
+092750141;Pocking, St
+092750144;Ruderting
+092750145;Ruhstorf a.d.Rott, M
+092750146;Salzweg
+092750148;Sonnen
+092750149;Tettenweis
+092750150;Thyrnau
+092750151;Tiefenbach
+092750153;Untergriesbach, M
+092750154;Vilshofen an der Donau, St
+092750156;Wegscheid, M
+092750159;Windorf, M
+092755229;Tittling (VGem)
+092755232;Aidenbach (VGem)
+092755234;Rotthalmünster (VGem)
+092760113;Arnbruck
+092760115;Bayerisch Eisenstein
+092760116;Bischofsmais
+092760117;Bodenmais, M
+092760118;Böbrach
+092760120;Drachselsried
+092760121;Frauenau
+092760122;Geiersthal
+092760126;Kirchberg i.Wald
+092760127;Kirchdorf i.Wald
+092760128;Kollnburg
+092760129;Langdorf
+092760130;Lindberg
+092760134;Patersdorf
+092760135;Prackenbach
+092760138;Regen, St
+092760139;Rinchnach
+092760143;Teisnach, M
+092760144;Viechtach, St
+092760148;Zwiesel, St
+092765238;Ruhmannsfelden (VGem)
+092770111;Arnstorf, M
+092770114;Dietersburg
+092770116;Eggenfelden, St
+092770117;Egglham
+092770121;Gangkofen, M
+092770124;Hebertsfelden
+092770126;Johanniskirchen
+092770127;Julbach
+092770128;Kirchdorf a.Inn
+092770134;Mitterskirchen
+092770138;Pfarrkirchen, St
+092770139;Postmünster
+092770142;Roßbach
+092770144;Schönau
+092770145;Simbach a.Inn, St
+092770149;Triftern, M
+092770151;Unterdietfurt
+092770152;Wittibreut
+092770153;Wurmannsquick, M
+092770154;Zeilarn
+092775239;Falkenberg (VGem)
+092775240;Massing (VGem)
+092775241;Bad Birnbach (VGem)
+092775243;Tann (VGem)
+092775244;Ering (VGem)
+092780118;Bogen, St
+092780121;Feldkirchen
+092780123;Geiselhöring, St
+092780129;Haibach
+092780141;Kirchroth
+092780143;Konzell
+092780144;Laberweinting
+092780146;Leiblfing
+092780148;Mallersdorf-Pfaffenberg, M
+092780167;Oberschneiding
+092780170;Parkstetten
+092780178;Rattenberg
+092780184;Sankt Englmar
+092780190;Steinach
+092780197;Wiesenfelden
+092785246;Stallwang (VGem)
+092785248;Mitterfels (VGem)
+092785249;Hunderdorf (VGem)
+092785250;Rain (VGem)
+092785252;Schwarzach (VGem)
+092785256;Aiterhofen (VGem)
+092785257;Straßkirchen (VGem)
+092790112;Dingolfing, St
+092790113;Eichendorf, M
+092790115;Frontenhausen, M
+092790122;Landau a.d.Isar, St
+092790124;Loiching
+092790126;Marklkofen
+092790127;Mengkofen
+092790128;Moosthenning
+092790130;Niederviehbach
+092790132;Pilsting, M
+092790134;Reisbach, M
+092790135;Simbach, M
+092790137;Wallersdorf, M
+092795208;Mamming (VGem)
+093610000;Amberg
+093620000;Regensburg
+093630000;Weiden i.d.OPf.
+093710111;Ammerthal
+093710113;Auerbach i.d.OPf., St
+093710118;Ebermannsdorf
+093710119;Edelsfeld
+093710120;Ensdorf
+093710121;Freihung, M
+093710122;Freudenberg
+093710127;Hirschau, St
+093710129;Hohenburg, M
+093710132;Kastl, M
+093710136;Kümmersbruck
+093710144;Poppenricht
+093710146;Rieden, M
+093710148;Schmidmühlen, M
+093710150;Schnaittenbach, St
+093710151;Sulzbach-Rosenberg, St
+093710154;Ursensollen
+093710156;Vilseck, St
+093715301;Hahnbach (VGem)
+093715302;Königstein (VGem)
+093715303;Neukirchen b.Sulzbach-R. (VGem)
+093715304;Illschwang (VGem)
+093719452;Eichen
+093720112;Arnschwang
+093720113;Arrach
+093720115;Blaibach
+093720116;Cham, St
+093720117;Chamerau
+093720124;Eschlkam, M
+093720126;Furth im Wald, St
+093720130;Grafenwiesen
+093720135;Hohenwarth
+093720137;Bad Kötzting, St
+093720138;Lam, M
+093720143;Miltach
+093720144;Neukirchen b.Hl.Blut, M
+093720146;Pemfling
+093720151;Rimbach
+093720153;Roding, St
+093720154;Rötz, St
+093720155;Runding
+093720157;Schönthal
+093720158;Schorndorf
+093720164;Traitsching
+093720168;Waffenbrunn
+093720171;Waldmünchen, St
+093720175;Willmering
+093720177;Zandt
+093720178;Lohberg
+093725308;Tiefenbach (VGem)
+093725310;Stamsried (VGem)
+093725312;Weiding (VGem)
+093725313;Walderbach (VGem)
+093725317;Wald (VGem)
+093725318;Falkenstein (VGem)
+093730112;Berching, St
+093730113;Berg b.Neumarkt i.d.OPf.
+093730115;Breitenbrunn, M
+093730119;Deining
+093730121;Dietfurt a.d.Altmühl, St
+093730126;Freystadt, St
+093730134;Hohenfels, M
+093730140;Lauterhofen, M
+093730143;Lupburg, M
+093730146;Mühlhausen
+093730147;Neumarkt i.d.OPf., GKSt
+093730151;Parsberg, St
+093730155;Postbauer-Heng, M
+093730156;Pyrbaum, M
+093730160;Seubersdorf i.d.OPf.
+093730167;Velburg, St
+093735321;Neumarkt i.d.OPf. (VGem)
+093740111;Altenstadt a.d.Waldnaab
+093740118;Eslarn, M
+093740121;Floß, M
+093740122;Flossenbürg
+093740124;Grafenwöhr, St
+093740133;Luhe-Wildenau, M
+093740134;Mantel, M
+093740137;Moosbach, M
+093740139;Neustadt a.d.Waldnaab, St
+093740162;Vohenstrauß, St
+093740164;Waidhaus, M
+093740165;Waldthurn, M
+093740168;Windischeschenbach, St
+093745323;Neustadt a.d.Waldnaab (VGem)
+093745324;Pressath (VGem)
+093745325;Weiherhammer (VGem)
+093745326;Kirchenthumbach (VGem)
+093745327;Eschenbach i.d.OPf. (VGem)
+093745329;Schirmitz (VGem)
+093745330;Tännesberg (VGem)
+093745331;Pleystein (VGem)
+093749452;Manteler Forst
+093749458;Speinsharter Forst
+093750117;Barbing
+093750118;Beratzhausen, M
+093750119;Bernhardswald
+093750143;Hagelstadt
+093750148;Hemau, St
+093750161;Köfering
+093750165;Lappersdorf, M
+093750170;Mintraching
+093750174;Neutraubling, St
+093750175;Nittendorf, M
+093750179;Obertraubling
+093750180;Pentling
+093750181;Pettendorf
+093750183;Pfatter
+093750190;Regenstauf, M
+093750196;Schierling, M
+093750199;Sinzing
+093750204;Tegernheim
+093750205;Thalmassing
+093750208;Wenzenbach
+093750209;Wiesent
+093750213;Zeitlarn
+093755332;Kallmünz (VGem)
+093755333;Laaber (VGem)
+093755334;Pielenhofen-Wolfsegg (VGem)
+093755335;Donaustauf (VGem)
+093755336;Wörth a.d.Donau (VGem)
+093755337;Alteglofsheim (VGem)
+093755338;Sünching (VGem)
+093759451;Forstmühler Forst
+093759452;Kreuther Forst
+093760116;Bodenwöhr
+093760117;Bruck i.d.OPf., M
+093760119;Burglengenfeld, St
+093760125;Fensterbach
+093760141;Maxhütte-Haidhof, St
+093760147;Neunburg vorm Wald, St
+093760149;Nittenau, St
+093760150;Wernberg-Köblitz, M
+093760151;Oberviechtach, St
+093760159;Schmidgaden
+093760161;Schwandorf, GKSt
+093760170;Teublitz, St
+093765339;Oberviechtach (VGem)
+093765341;Nabburg (VGem)
+093765342;Schwarzenfeld (VGem)
+093765343;Pfreimd (VGem)
+093765344;Schönsee (VGem)
+093765345;Neunburg vorm Wald (VGem)
+093765346;Wackersdorf (VGem)
+093769455;Wolferlohe
+093770112;Bärnau, St
+093770116;Erbendorf, St
+093770118;Friedenfels
+093770119;Fuchsmühl, M
+093770127;Immenreuth
+093770131;Konnersreuth, M
+093770133;Kulmain
+093770139;Mähring, M
+093770142;Bad Neualbenreuth, M
+093770146;Plößberg, M
+093770154;Tirschenreuth, St
+093770157;Waldershof, St
+093770158;Waldsassen, St
+093775347;Mitterteich (VGem)
+093775348;Kemnath (VGem)
+093775349;Neusorg (VGem)
+093775350;Krummennaab (VGem)
+093775351;Wiesau (VGem)
+094610000;Bamberg
+094620000;Bayreuth
+094630000;Coburg
+094640000;Hof
+094710111;Altendorf
+094710117;Bischberg
+094710119;Breitengüßbach
+094710123;Buttenheim, M
+094710131;Frensdorf
+094710137;Gundelsheim
+094710140;Hallstadt, St
+094710142;Heiligenstadt i.OFr., M
+094710145;Hirschaid, M
+094710150;Kemmern
+094710155;Litzendorf
+094710159;Memmelsdorf
+094710165;Oberhaid
+094710169;Pettstadt
+094710172;Pommersfelden
+094710174;Rattelsdorf, M
+094710185;Scheßlitz, St
+094710191;Stegaurach
+094710195;Strullendorf
+094710207;Viereth-Trunstadt
+094710208;Walsdorf
+094710214;Zapfendorf, M
+094710220;Schlüsselfeld, St
+094715401;Baunach (VGem)
+094715403;Steinfeld (VGem)
+094715407;Ebrach (VGem)
+094715408;Burgebrach (VGem)
+094715445;Lisberg (VGem)
+094719452;Ebracher Forst
+094719453;Eichwald
+094719454;Geisberger Forst
+094719455;Hauptsmoor
+094719456;Koppenwinder Forst
+094719457;Lindach
+094719459;Semberg
+094719460;Steinachsrangen
+094719461;Winkelhofer Forst
+094719462;Zückshuter Forst
+094720111;Ahorntal
+094720116;Bad Berneck i.Fichtelgebirge, St
+094720119;Bindlach
+094720121;Bischofsgrün
+094720131;Eckersdorf
+094720138;Fichtelberg
+094720139;Gefrees, St
+094720143;Goldkronach, St
+094720150;Heinersreuth
+094720164;Mehlmeisel
+094720175;Pegnitz, St
+094720179;Pottenstein, St
+094720190;Speichersdorf
+094720197;Waischenfeld, St
+094720198;Warmensteinach
+094725412;Hollfeld (VGem)
+094725413;Mistelgau (VGem)
+094725414;Mistelbach (VGem)
+094725415;Weidenberg (VGem)
+094725416;Creußen (VGem)
+094725417;Betzenstein (VGem)
+094729451;Bischofsgrüner Forst
+094729453;Fichtelberg
+094729454;Forst Neustädtlein a.Forst
+094729456;Glashüttener Forst
+094729458;Heinersreuther Forst
+094729463;Neubauer Forst-Nord
+094729464;Prüll
+094729468;Veldensteinerforst
+094729469;Waidacher Forst
+094729470;Warmensteinacher Forst-Nord
+094730112;Ahorn
+094730120;Dörfles-Esbach
+094730121;Ebersdorf b.Coburg
+094730132;Großheirath
+094730138;Itzgrund
+094730141;Lautertal
+094730144;Meeder
+094730151;Neustadt b.Coburg, GKSt
+094730158;Bad Rodach, St
+094730159;Rödental, St
+094730165;Seßlach, St
+094730166;Sonnefeld
+094730170;Untersiemau
+094730174;Weidhausen b.Coburg
+094730175;Weitramsdorf
+094735418;Grub a.Forst (VGem)
+094739452;Callenberger Forst-West
+094739454;Köllnholz
+094740123;Eggolsheim, M
+094740124;Egloffstein, M
+094740126;Forchheim, GKSt
+094740129;Gößweinstein, M
+094740133;Hallerndorf
+094740134;Hausen
+094740135;Heroldsbach
+094740140;Igensdorf, M
+094740146;Langensendelbach
+094740154;Neunkirchen a.Brand, M
+094740156;Obertrubach
+094740161;Pretzfeld, M
+094740176;Wiesenttal, M
+094745420;Ebermannstadt (VGem)
+094745422;Gosberg (VGem)
+094745423;Kirchehrenbach (VGem)
+094745425;Effeltrich (VGem)
+094745426;Dormitz (VGem)
+094745427;Gräfenberg (VGem)
+094750112;Bad Steben, M
+094750113;Berg
+094750120;Döhlau
+094750128;Geroldsgrün
+094750136;Helmbrechts, St
+094750141;Köditz
+094750142;Konradsreuth
+094750154;Münchberg, St
+094750156;Naila, St
+094750158;Oberkotzau, M
+094750161;Regnitzlosau
+094750162;Rehau, St
+094750168;Schwarzenbach a.d.Saale, St
+094750169;Schwarzenbach a.Wald, St
+094750171;Selbitz, St
+094750175;Stammbach, M
+094750189;Zell im Fichtelgebirge, M
+094755428;Lichtenberg (VGem)
+094755430;Feilitzsch (VGem)
+094755431;Schauenstein (VGem)
+094755432;Sparneck (VGem)
+094759454;Martinlamitzer Forst-Nord
+094760145;Kronach, St
+094760146;Küps, M
+094760152;Ludwigsstadt, St
+094760159;Nordhalben, M
+094760164;Pressig, M
+094760175;Steinbach a.Wald
+094760177;Steinwiesen, M
+094760178;Stockheim
+094760179;Tettau, M
+094760183;Marktrodach, M
+094760184;Wallenfels, St
+094760185;Weißenbrunn
+094760189;Wilhelmsthal
+094765433;Teuschnitz (VGem)
+094765434;Mitwitz (VGem)
+094769451;Birnbaum
+094770121;Himmelkron
+094770128;Kulmbach, GKSt
+094770136;Mainleus, M
+094770139;Marktschorgast, M
+094770142;Neudrossenfeld
+094770143;Neuenmarkt
+094770148;Presseck, M
+094770157;Thurnau, M
+094770163;Wirsberg, M
+094775435;Stadtsteinach (VGem)
+094775436;Marktleugast (VGem)
+094775437;Untersteinach (VGem)
+094775438;Kasendorf (VGem)
+094775439;Trebgast (VGem)
+094780111;Altenkunstadt
+094780116;Burgkunstadt, St
+094780120;Ebensfeld, M
+094780139;Lichtenfels, St
+094780145;Michelau i.OFr.
+094780165;Bad Staffelstein, St
+094780176;Weismain, St
+094785441;Redwitz a.d.Rodach (VGem)
+094785446;Hochstadt-Marktzeuln (VGem)
+094789451;Breitengüßbacher Forst
+094789453;Neuensorger Forst
+094790112;Arzberg, St
+094790129;Kirchenlamitz, St
+094790135;Marktleuthen, St
+094790136;Marktredwitz, GKSt
+094790145;Röslau
+094790150;Schönwald, St
+094790152;Selb, GKSt
+094790166;Bad Weißenstadt, St
+094790169;Wunsiedel, St
+094795442;Thiersheim (VGem)
+094795443;Schirnding (VGem)
+094795444;Tröstau (VGem)
+094799455;Martinlamitzer Forst-Süd
+094799457;Neubauer Forst-Süd
+094799459;Tröstauer Forst-Ost
+094799460;Tröstauer Forst-West
+094799461;Vordorfer Forst
+095610000;Ansbach
+095620000;Erlangen
+095630000;Fürth
+095640000;Nürnberg
+095650000;Schwabach
+095710113;Arberg, M
+095710114;Aurach
+095710115;Bechhofen, M
+095710127;Burgoberbach
+095710130;Colmberg, M
+095710135;Dietenhofen, M
+095710136;Dinkelsbühl, GKSt
+095710139;Dürrwangen, M
+095710145;Feuchtwangen, St
+095710146;Flachslanden, M
+095710165;Heilsbronn, St
+095710166;Herrieden, St
+095710170;Langfurth
+095710171;Lehrberg, M
+095710174;Leutershausen, St
+095710175;Lichtenau, M
+095710177;Merkendorf, St
+095710180;Neuendettelsau
+095710183;Oberdachstetten
+095710190;Petersaurach
+095710193;Rothenburg ob der Tauber, GKSt
+095710196;Sachsen b.Ansbach
+095710199;Schnelldorf
+095710200;Schopfloch, M
+095710214;Wassertrüdingen, St
+095710226;Windsbach, St
+095715501;Rothenburg ob der Tauber (VGem)
+095715502;Schillingsfürst (VGem)
+095715504;Weihenzell (VGem)
+095715506;Triesdorf (VGem)
+095715507;Dentlein a.Forst (VGem)
+095715508;Wilburgstetten (VGem)
+095715509;Hesselberg (VGem)
+095715538;Wolframs-Eschenbach (VGem)
+095719451;Unterer Wald
+095720111;Adelsdorf
+095720115;Baiersdorf, St
+095720119;Bubenreuth
+095720121;Eckental, M
+095720130;Hemhofen
+095720131;Heroldsberg, M
+095720132;Herzogenaurach, St
+095720135;Höchstadt a.d.Aisch, St
+095720137;Kalchreuth
+095720142;Möhrendorf
+095720149;Röttenbach
+095720160;Wachenroth, M
+095720164;Weisendorf, M
+095725510;Höchstadt a.d.Aisch (VGem)
+095725512;Aurachtal (VGem)
+095725514;Uttenreuth (VGem)
+095725539;Heßdorf (VGem)
+095729451;Birkach
+095729452;Buckenhofer Forst
+095729453;Dormitzer Forst
+095729454;Erlenstegener Forst
+095729455;Forst Tennenlohe
+095729456;Geschaidt
+095729457;Kalchreuther Forst
+095729458;Kraftshofer Forst
+095729459;Mark
+095729460;Neunhofer Forst
+095730111;Ammerndorf, M
+095730114;Cadolzburg, M
+095730115;Großhabersdorf
+095730120;Langenzenn, St
+095730122;Oberasbach, St
+095730124;Puschendorf
+095730125;Roßtal, M
+095730127;Stein, St
+095730133;Wilhermsdorf, M
+095730134;Zirndorf, St
+095735517;Veitsbronn (VGem)
+095735540;Obermichelbach-Tuchenbach (VGem)
+095740112;Altdorf b.Nürnberg, St
+095740117;Burgthann
+095740123;Feucht, M
+095740132;Hersbruck, St
+095740135;Kirchensittenbach
+095740138;Lauf a.d.Pegnitz, St
+095740139;Leinburg
+095740140;Neuhaus a.d.Pegnitz, M
+095740141;Neunkirchen a.Sand
+095740146;Ottensoos
+095740147;Pommelsbrunn
+095740150;Reichenschwand
+095740152;Röthenbach a.d.Pegnitz, St
+095740154;Rückersdorf
+095740155;Schnaittach, M
+095740156;Schwaig b.Nürnberg
+095740157;Schwarzenbruck
+095740158;Simmelsdorf
+095740164;Winkelhaid
+095745527;Velden (VGem)
+095745528;Happurg (VGem)
+095745529;Henfenfeld (VGem)
+095749451;Behringersdorfer Forst
+095749452;Brunn
+095749453;Engelthaler Forst
+095749454;Feuchter Forst
+095749455;Fischbach
+095749456;Forsthof
+095749457;Günthersbühler Forst
+095749458;Haimendorfer Forst
+095749460;Laufamholzer Forst
+095749461;Leinburg
+095749462;Rückersdorfer Forst
+095749463;Schönberg
+095749464;Winkelhaid
+095749465;Zerzabelshofer Forst
+095750112;Bad Windsheim, St
+095750116;Burghaslach, M
+095750119;Dietersheim
+095750121;Emskirchen, M
+095750135;Ipsheim, M
+095750145;Markt Erlbach, M
+095750153;Neustadt a.d.Aisch, St
+095750156;Obernzenn, M
+095755518;Scheinfeld (VGem)
+095755519;Uffenheim (VGem)
+095755520;Hagenbüchach-Wilhelmsdorf (VGem)
+095755521;Diespeck (VGem)
+095755522;Uehlfeld (VGem)
+095755524;Burgbernheim (VGem)
+095755525;Neuhof a.d.Zenn (VGem)
+095759451;Osing
+095760111;Abenberg, St
+095760113;Allersberg, M
+095760117;Büchenbach
+095760121;Georgensgmünd
+095760122;Greding, St
+095760126;Heideck, St
+095760127;Hilpoltstein, St
+095760128;Kammerstein
+095760132;Schwanstetten, M
+095760137;Rednitzhembach
+095760141;Röttenbach
+095760142;Rohr
+095760143;Roth, St
+095760147;Spalt, St
+095760148;Thalmässing, M
+095760151;Wendelstein, M
+095769451;Abenberger Wald
+095769452;Dechenwald
+095769453;Forst Kleinschwarzenlohe
+095769454;Heidenberg
+095769455;Soos
+095770114;Muhr a.See
+095770136;Gunzenhausen, St
+095770148;Langenaltheim
+095770158;Pappenheim, St
+095770161;Pleinfeld, M
+095770162;Polsingen
+095770168;Solnhofen
+095770173;Treuchtlingen, St
+095770177;Weißenburg i.Bay., GKSt
+095775532;Gunzenhausen (VGem)
+095775533;Altmühltal (VGem)
+095775534;Ellingen (VGem)
+095775535;Nennslingen (VGem)
+095775536;Hahnenkamm (VGem)
+096610000;Aschaffenburg
+096620000;Schweinfurt
+096630000;Würzburg
+096710111;Alzenau, St
+096710112;Bessenbach
+096710114;Karlstein a.Main
+096710119;Geiselbach
+096710120;Glattbach
+096710121;Goldbach, M
+096710122;Großostheim, M
+096710124;Haibach
+096710130;Hösbach, M
+096710133;Johannesberg
+096710134;Kahl a.Main
+096710136;Kleinostheim
+096710139;Laufach
+096710140;Mainaschaff
+096710143;Mömbris, M
+096710148;Rothenbuch
+096710150;Sailauf
+096710155;Stockstadt a.Main, M
+096710156;Waldaschaff
+096710157;Weibersbrunn
+096715602;Heigenbrücken (VGem)
+096715603;Mespelbrunn (VGem)
+096715604;Schöllkrippen (VGem)
+096719451;Forst Hain i.Spessart
+096719453;Heinrichsthaler Forst
+096719456;Rohrbrunner Forst
+096719457;Rothenbucher Forst
+096719458;Sailaufer Forst
+096719459;Schöllkrippener Forst
+096719460;Waldaschaffer Forst
+096719461;Wiesener Forst
+096720112;Bad Bocklet, M
+096720113;Bad Brückenau, St
+096720114;Bad Kissingen, GKSt
+096720117;Burkardroth, M
+096720127;Hammelburg, St
+096720134;Motten
+096720135;Münnerstadt, St
+096720136;Nüdlingen
+096720139;Oberthulba, M
+096720140;Oerlenbach
+096720161;Wartmannsroth
+096720163;Wildflecken, M
+096720166;Zeitlofs, M
+096725606;Bad Brückenau (VGem)
+096725607;Elfershausen (VGem)
+096725608;Euerdorf (VGem)
+096725609;Maßbach (VGem)
+096729451;Dreistelzer Forst
+096729454;Forst Detter-Süd
+096729455;Geiersnest-Ost
+096729456;Geiersnest-West
+096729458;Kälberberg
+096729461;Mottener Forst-Süd
+096729462;Neuwirtshauser Forst
+096729463;Omerz u. Roter Berg
+096729464;Römershager Forst-Nord
+096729465;Römershager Forst-Ost
+096729466;Roßbacher Forst
+096729468;Waldfensterer Forst
+096730114;Bad Neustadt a.d.Saale, St
+096730117;Bischofsheim i.d.Rhön, St
+096730141;Bad Königshofen i.Grabfeld, St
+096730149;Oberelsbach, M
+096730162;Sandberg
+096735633;Mellrichstadt (VGem)
+096735634;Bad Königshofen i.Grabfeld (VGem)
+096735635;Bad Neustadt a.d.Saale (VGem)
+096735637;Fladungen (VGem)
+096735638;Heustreu (VGem)
+096735639;Ostheim v.d.Rhön (VGem)
+096735640;Saal a.d.Saale (VGem)
+096739451;Bundorfer Forst
+096739452;Burgwallbacher Forst
+096739453;Forst Schmalwasser-Nord
+096739454;Forst Schmalwasser-Süd
+096739455;Mellrichstadter Forst
+096739456;Steinacher Forst r.d.Saale
+096739457;Sulzfelder Forst
+096739458;Weigler
+096740133;Eltmann, St
+096740147;Haßfurt, St
+096740159;Oberaurach
+096740163;Knetzgau
+096740164;Königsberg i.Bay., St
+096740171;Maroldsweisach, M
+096740187;Rauhenebrach
+096740195;Sand a.Main
+096740210;Untermerzbach
+096740221;Zeil a.Main, St
+096745610;Ebelsbach (VGem)
+096745611;Ebern (VGem)
+096745612;Hofheim i.UFr. (VGem)
+096745613;Theres (VGem)
+096750117;Dettelbach, St
+096750127;Geiselwind, M
+096750141;Kitzingen, GKSt
+096750144;Mainbernheim, St
+096750158;Prichsenstadt, St
+096750165;Schwarzach a.Main, M
+096755614;Wiesentheid (VGem)
+096755615;Großlangheim (VGem)
+096755616;Iphofen (VGem)
+096755617;Kitzingen (VGem)
+096755618;Marktbreit (VGem)
+096755619;Volkach (VGem)
+096760112;Amorbach, St
+096760117;Collenberg
+096760118;Dorfprozelten
+096760119;Eichenbühl
+096760121;Elsenfeld, M
+096760122;Erlenbach a.Main, St
+096760123;Eschau, M
+096760124;Faulbach
+096760125;Großheubach, M
+096760126;Großwallstadt
+096760131;Kirchzell, M
+096760134;Klingenberg a.Main, St
+096760136;Leidersbach
+096760139;Miltenberg, St
+096760140;Mömlingen
+096760144;Niedernberg
+096760145;Obernburg a.Main, St
+096760156;Schneeberg, M
+096760160;Sulzbach a.Main, M
+096760165;Weilbach, M
+096760169;Wörth a.Main, St
+096765626;Erftal (VGem)
+096765627;Kleinheubach (VGem)
+096765630;Kleinwallstadt (VGem)
+096765631;Mönchberg (VGem)
+096765632;Stadtprozelten (VGem)
+096769452;Forstwald
+096769455;Hohe Wart
+096770114;Arnstein, St
+096770127;Eußenheim
+096770129;Frammersbach, M
+096770131;Gemünden a.Main, St
+096770148;Karlstadt, St
+096770154;Triefenstein, M
+096770155;Lohr a.Main, St
+096770157;Marktheidenfeld, St
+096770177;Rieneck, St
+096775620;Kreuzwertheim (VGem)
+096775621;Marktheidenfeld (VGem)
+096775622;Burgsinn (VGem)
+096775623;Gemünden a.Main (VGem)
+096775624;Lohr a.Main (VGem)
+096775625;Zellingen (VGem)
+096775656;Partenstein (VGem)
+096779452;Burgjoß
+096779453;Forst Aura
+096779454;Forst Lohrerstraße
+096779455;Frammersbacher Forst
+096779456;Fürstl. Löwenstein'scher Park
+096779457;Haurain
+096779458;Herrnwald
+096779459;Langenprozeltener Forst
+096779461;Partensteiner Forst
+096779463;Ruppertshüttener Forst
+096780115;Bergrheinfeld
+096780123;Dittelbrunn
+096780128;Euerbach
+096780132;Geldersheim
+096780135;Gochsheim
+096780136;Grafenrheinfeld
+096780138;Grettstadt
+096780150;Kolitzheim
+096780160;Niederwerrn
+096780168;Poppenhausen
+096780170;Röthlein
+096780174;Schonungen
+096780176;Schwebheim
+096780178;Sennfeld
+096780181;Stadtlauringen, M
+096780186;Üchtelhausen
+096780190;Waigolshausen
+096780192;Wasserlosen
+096780193;Werneck, M
+096785642;Gerolzhofen (VGem)
+096785643;Schwanfeld (VGem)
+096789451;Bürgerwald
+096789452;Geiersberg
+096789453;Hundelshausen
+096789454;Nonnenkloster
+096789455;Stollbergerforst
+096789456;Vollburg
+096789457;Wustvieler Forst
+096790126;Eisingen
+096790134;Gaukönigshofen
+096790136;Gerbrunn
+096790142;Güntersleben
+096790143;Hausen b.Würzburg
+096790147;Höchberg, M
+096790155;Kleinrinderfeld
+096790156;Kürnach
+096790164;Neubrunn, M
+096790170;Ochsenfurt, St
+096790175;Randersacker, M
+096790176;Reichenberg, M
+096790180;Rimpar, M
+096790185;Rottendorf
+096790193;Theilheim
+096790194;Thüngersheim
+096790200;Leinach
+096790201;Unterpleichfeld
+096790202;Veitshöchheim
+096790204;Waldbrunn
+096790205;Waldbüttelbrunn
+096790209;Zell a.Main, M
+096795644;Aub (VGem)
+096795645;Bergtheim (VGem)
+096795646;Eibelstadt (VGem)
+096795647;Estenfeld (VGem)
+096795648;Giebelstadt (VGem)
+096795649;Helmstadt (VGem)
+096795650;Kirchheim (VGem)
+096795651;Kist (VGem)
+096795652;Margetshöchheim (VGem)
+096795654;Röttingen (VGem)
+096795655;Hettstadt (VGem)
+096799451;Gramschatzer Wald
+096799452;Guttenberger Wald
+096799453;Irtenberger Wald
+097610000;Augsburg
+097620000;Kaufbeuren
+097630000;Kempten (Allgäu)
+097640000;Memmingen
+097710112;Affing
+097710113;Aichach, St
+097710130;Friedberg, St
+097710140;Hollenbach
+097710141;Inchenhofen, M
+097710142;Kissing
+097710145;Merching
+097710158;Rehling
+097710160;Ried
+097715701;Aindling (VGem)
+097715703;Kühbach (VGem)
+097715704;Dasing (VGem)
+097715705;Mering (VGem)
+097715771;Pöttmes (VGem)
+097720111;Adelsried
+097720115;Altenmünster
+097720117;Aystetten
+097720121;Biberbach, M
+097720125;Bobingen, St
+097720130;Diedorf, M
+097720131;Dinkelscherben, M
+097720141;Fischach, M
+097720145;Gablingen
+097720147;Gersthofen, St
+097720149;Graben
+097720159;Horgau
+097720163;Königsbrunn, St
+097720167;Kutzenhausen
+097720171;Langweid a.Lech
+097720177;Meitingen, M
+097720184;Neusäß, St
+097720200;Schwabmünchen, St
+097720202;Stadtbergen, St
+097720207;Thierhaupten, M
+097720215;Wehringen
+097720223;Zusmarshausen, M
+097725706;Nordendorf (VGem)
+097725707;Welden (VGem)
+097725708;Gessertshausen (VGem)
+097725709;Stauden (VGem)
+097725710;Großaitingen (VGem)
+097725711;Lechfeld (VGem)
+097725712;Langerringen (VGem)
+097729451;Schmellerforst
+097730117;Bissingen, M
+097730122;Buttenwiesen
+097730125;Dillingen a.d.Donau, GKSt
+097730144;Lauingen (Donau), St
+097735713;Gundelfingen a.d.Donau (VGem)
+097735714;Syrgenstein (VGem)
+097735715;Wittislingen (VGem)
+097735716;Höchstädt a.d.Donau (VGem)
+097735718;Wertingen (VGem)
+097735719;Holzheim (VGem)
+097740116;Ursberg
+097740119;Bibertal
+097740121;Burgau, St
+097740122;Burtenbach, M
+097740135;Günzburg, GKSt
+097740144;Jettingen-Scheppach, M
+097740145;Kammeltal
+097740150;Krumbach (Schwaben), St
+097740155;Leipheim, St
+097740162;Neuburg a.d.Kammel, M
+097745727;Offingen (VGem)
+097745728;Haldenwang (VGem)
+097745729;Kötz (VGem)
+097745730;Ichenhausen (VGem)
+097745731;Krumbach (Schwaben) (VGem)
+097745732;Thannhausen (VGem)
+097745733;Ziemetshausen (VGem)
+097749451;Ebershauser-Nattenhauser Wald
+097749452;Winzerwald
+097750115;Bellenberg
+097750129;Illertissen, St
+097750134;Nersingen
+097750135;Neu-Ulm, GKSt
+097750139;Elchingen
+097750149;Roggenburg
+097750152;Senden, St
+097750162;Vöhringen, St
+097750164;Weißenhorn, St
+097755739;Pfaffenhofen a.d.Roth (VGem)
+097755740;Altenstadt (VGem)
+097755741;Buch (VGem)
+097759451;Auwald
+097759452;Oberroggenburger Wald
+097759454;Stoffenrieder Forst
+097759455;Unterroggenburger Wald
+097760111;Bodolz
+097760114;Heimenkirch, M
+097760116;Lindau (Bodensee), GKSt
+097760117;Lindenberg i.Allgäu, St
+097760120;Nonnenhorn
+097760122;Opfenbach
+097760125;Scheidegg, M
+097760128;Wasserburg (Bodensee)
+097760129;Weiler-Simmerberg, M
+097760131;Hergatz
+097765735;Sigmarszell (VGem)
+097765737;Argental (VGem)
+097765738;Stiefenhofen (VGem)
+097770129;Füssen, St
+097770130;Germaringen
+097770147;Lechbruck am See
+097770151;Marktoberdorf, St
+097770152;Mauerstetten
+097770153;Nesselwang, M
+097770159;Pfronten
+097770165;Ronsberg, M
+097770169;Schwangau
+097770173;Halblech
+097775748;Buchloe (VGem)
+097775749;Pforzen (VGem)
+097775751;Westendorf (VGem)
+097775752;Biessenhofen (VGem)
+097775753;Eggenthal (VGem)
+097775754;Obergünzburg (VGem)
+097775755;Unterthingau (VGem)
+097775756;Seeg (VGem)
+097775770;Roßhaupten (VGem)
+097775772;Stötten a.Auerberg (VGem)
+097780116;Bad Wörishofen, St
+097780123;Buxheim
+097780137;Ettringen
+097780168;Markt Rettenbach, M
+097780169;Markt Wald, M
+097780173;Mindelheim, St
+097780196;Sontheim
+097780204;Tussenhausen, M
+097785757;Ottobeuren (VGem)
+097785758;Babenhausen (VGem)
+097785759;Pfaffenhausen (VGem)
+097785760;Kirchheim i.Schw. (VGem)
+097785761;Boos (VGem)
+097785762;Erkheim (VGem)
+097785764;Türkheim (VGem)
+097785765;Memmingerberg (VGem)
+097785766;Dirlewang (VGem)
+097785767;Illerwinkel (VGem)
+097785768;Bad Grönenbach (VGem)
+097789451;Ungerhauser Wald
+097790115;Asbach-Bäumenheim
+097790131;Donauwörth, GKSt
+097790147;Fremdingen
+097790155;Harburg (Schwaben), St
+097790169;Kaisheim, M
+097790178;Marxheim
+097790181;Mertingen
+097790185;Möttingen
+097790194;Nördlingen, GKSt
+097790196;Oberndorf a.Lech
+097790201;Rain, St
+097790218;Tapfheim
+097795720;Wallerstein (VGem)
+097795721;Oettingen i.Bay. (VGem)
+097795722;Ries (VGem)
+097795723;Wemding (VGem)
+097795724;Monheim (VGem)
+097795725;Rain (VGem)
+097799452;Dornstadt-Linkersbaindt
+097799453;Esterholz
+097800112;Altusried, M
+097800114;Betzigau
+097800115;Blaichach
+097800117;Buchenberg, M
+097800118;Burgberg i.Allgäu
+097800119;Dietmannsried, M
+097800120;Durach
+097800122;Haldenwang
+097800123;Bad Hindelang, M
+097800124;Immenstadt i.Allgäu, St
+097800125;Lauben
+097800128;Oy-Mittelberg
+097800132;Oberstaufen, M
+097800133;Oberstdorf, M
+097800137;Rettenberg
+097800139;Sonthofen, St
+097800140;Sulzberg, M
+097800143;Waltenhofen
+097800145;Wertach, M
+097800146;Wiggensbach, M
+097800147;Wildpoldsried
+097805742;Hörnergruppe (VGem)
+097805745;Weitnau (VGem)
+097809451;Kempter Wald
+100410100;Saarbrücken, Landeshauptstadt
+100410511;Friedrichsthal, Stadt
+100410512;Großrosseln
+100410513;Heusweiler
+100410514;Kleinblittersdorf
+100410515;Püttlingen, Stadt
+100410516;Quierschied
+100410517;Riegelsberg
+100410518;Sulzbach/ Saar, Stadt
+100410519;Völklingen, Stadt
+100420111;Beckingen
+100420112;Losheim am See
+100420113;Merzig, Kreisstadt
+100420114;Mettlach
+100420115;Perl
+100420116;Wadern, Stadt
+100420117;Weiskirchen
+100429999;Deutsch-luxemburgisches Hoheitsgebiet
+100430111;Eppelborn
+100430112;Illingen
+100430113;Merchweiler
+100430114;Neunkirchen, Kreisstadt
+100430115;Ottweiler, Stadt
+100430116;Schiffweiler
+100430117;Spiesen-Elversberg
+100440111;Dillingen/ Saar, Stadt
+100440112;Lebach, Stadt
+100440113;Nalbach
+100440114;Rehlingen-Siersburg
+100440115;Saarlouis, Kreisstadt
+100440116;Saarwellingen
+100440117;Schmelz
+100440118;Schwalbach
+100440119;Überherrn
+100440120;Wadgassen
+100440121;Wallerfangen
+100440122;Bous
+100440123;Ensdorf
+100450111;Bexbach, Stadt
+100450112;Blieskastel, Stadt
+100450113;Gersheim
+100450114;Homburg, Kreisstadt
+100450115;Kirkel
+100450116;Mandelbachtal
+100450117;St. Ingbert, Stadt
+100460111;Freisen
+100460112;Marpingen
+100460113;Namborn
+100460114;Nohfelden
+100460115;Nonnweiler
+100460116;Oberthal
+100460117;St. Wendel, Kreisstadt
+100460118;Tholey
+110000000;Berlin, Stadt
+120510000;Brandenburg an der Havel, Stadt
+120520000;Cottbus/Chóśebuz, Stadt
+120530000;Frankfurt (Oder), Stadt
+120540000;Potsdam, Stadt
+120600005;Ahrensfelde
+120600020;Bernau bei Berlin, Stadt
+120600052;Eberswalde, Stadt
+120600181;Panketal
+120600198;Schorfheide
+120600269;Wandlitz
+120600280;Werneuchen, Stadt
+120605003;Biesenthal-Barnim
+120605006;Joachimsthal (Schorfheide)
+120605011;Britz-Chorin-Oderberg
+120610020;Bestensee
+120610112;Eichwalde
+120610217;Heidesee
+120610219;Heideblick
+120610260;Königs Wusterhausen, Stadt
+120610316;Lübben (Spreewald) / Lubin (Błota), Stadt
+120610320;Luckau, Stadt
+120610329;Märkische Heide/Markojska Góla
+120610332;Mittenwalde, Stadt
+120610433;Schönefeld
+120610444;Schulzendorf
+120610540;Wildau, Stadt
+120610572;Zeuthen
+120615108;Schenkenländchen
+120615113;Lieberose/Oberspreewald
+120615114;Unterspreewald
+120620092;Doberlug-Kirchhain, Stadt
+120620124;Elsterwerda, Stadt
+120620140;Finsterwalde, Stadt
+120620224;Herzberg (Elster), Stadt
+120620410;Röderland
+120620461;Schönewalde, Stadt
+120620469;Sonnewalde, Stadt
+120625031;Liebenwerda
+120625202;Elsterland
+120625205;Kleine Elster (Niederlausitz)
+120625207;Plessa
+120625209;Schlieben
+120625211;Schradenland
+120630036;Brieselang
+120630056;Dallgow-Döberitz
+120630080;Falkensee, Stadt
+120630148;Ketzin/Havel, Stadt
+120630189;Milower Land
+120630208;Nauen, Stadt
+120630244;Premnitz, Stadt
+120630252;Rathenow, Stadt
+120630273;Schönwalde-Glien
+120630357;Wustermark
+120635302;Friesack
+120635306;Nennhausen
+120635309;Rhinow
+120640029;Altlandsberg, Stadt
+120640044;Bad Freienwalde (Oder), Stadt
+120640136;Fredersdorf-Vogelsdorf
+120640227;Hoppegarten
+120640274;Letschin
+120640317;Müncheberg, Stadt
+120640336;Neuenhagen bei Berlin
+120640380;Petershagen/Eggersdorf
+120640428;Rüdersdorf bei Berlin
+120640448;Seelow, Stadt
+120640472;Strausberg, Stadt
+120640512;Wriezen, Stadt
+120645403;Falkenberg-Höhe
+120645404;Golzow
+120645406;Lebus
+120645408;Märkische Schweiz
+120645412;Seelow-Land
+120645414;Barnim-Oderbruch
+120650036;Birkenwerder
+120650084;Fürstenberg/Havel, Stadt
+120650096;Glienicke/Nordbahn
+120650136;Hennigsdorf, Stadt
+120650144;Hohen Neuendorf, Stadt
+120650165;Kremmen, Stadt
+120650180;Leegebruch
+120650193;Liebenwalde, Stadt
+120650198;Löwenberger Land
+120650225;Mühlenbecker Land
+120650251;Oberkrämer
+120650256;Oranienburg, Stadt
+120650332;Velten, Stadt
+120650356;Zehdenick, Stadt
+120655502;Gransee und Gemeinden
+120660052;Calau/Kalawa, Stadt
+120660112;Großräschen/Rań, Stadt
+120660176;Lauchhammer, Stadt
+120660196;Lübbenau/Spreewald / Lubnjow/Błota, Stadt
+120660285;Schipkau
+120660296;Schwarzheide, Stadt
+120660304;Senftenberg/Zły Komorow, Stadt
+120660320;Vetschau/Spreewald / Wětošow/Błota, Stadt
+120665601;Altdöbern
+120665606;Ortrand
+120665607;Ruhland
+120670036;Beeskow, Stadt
+120670120;Eisenhüttenstadt, Stadt
+120670124;Erkner, Stadt
+120670137;Friedland, Stadt
+120670144;Fürstenwalde/Spree, Stadt
+120670201;Grünheide (Mark)
+120670426;Rietz-Neuendorf
+120670440;Schöneiche bei Berlin
+120670481;Storkow (Mark), Stadt
+120670493;Tauche
+120670544;Woltersdorf
+120675701;Brieskow-Finkenheerd
+120675705;Neuzelle
+120675706;Odervorland
+120675707;Scharmützelsee
+120675708;Schlaubetal
+120675709;Spreenhagen
+120680117;Fehrbellin
+120680181;Heiligengrabe
+120680264;Kyritz, Stadt
+120680320;Neuruppin, Stadt
+120680353;Rheinsberg, Stadt
+120680468;Wittstock/Dosse, Stadt
+120680477;Wusterhausen/Dosse
+120685804;Lindow (Mark)
+120685805;Neustadt (Dosse)
+120685807;Temnitz
+120690017;Beelitz, Stadt
+120690020;Bad Belzig, Stadt
+120690249;Groß Kreutz (Havel)
+120690304;Kleinmachnow
+120690306;Kloster Lehnin
+120690397;Michendorf
+120690454;Nuthetal
+120690590;Schwielowsee
+120690596;Seddiner See
+120690604;Stahnsdorf
+120690616;Teltow, Stadt
+120690632;Treuenbrietzen, Stadt
+120690656;Werder (Havel), Stadt
+120690665;Wiesenburg/Mark
+120695902;Beetzsee
+120695904;Brück
+120695910;Niemegk
+120695917;Wusterwitz
+120695918;Ziesar
+120700125;Groß Pankow (Prignitz)
+120700149;Gumtow
+120700173;Karstädt
+120700296;Perleberg, Stadt
+120700302;Plattenburg
+120700316;Pritzwalk, Stadt
+120700424;Wittenberge, Stadt
+120705001;Bad Wilsnack/Weisen
+120705005;Lenzen-Elbtalaue
+120705006;Meyenburg
+120705009;Putlitz-Berge
+120710057;Drebkau/Drjowk, Stadt
+120710076;Forst (Lausitz)/Baršć (Łužyca), Stadt
+120710160;Guben, Stadt
+120710244;Kolkwitz/Gołkojce
+120710301;Neuhausen/Spree / Kopańce/Sprjewja
+120710337;Schenkendöbern/Derbno
+120710372;Spremberg/Grodk, Stadt
+120710408;Welzow/Wjelcej, Stadt
+120715101;Burg (Spreewald)
+120715102;Döbern-Land
+120715107;Peitz
+120720002;Am Mellensee
+120720014;Baruth/Mark, Stadt
+120720017;Blankenfelde-Mahlow
+120720120;Großbeeren
+120720169;Jüterbog, Stadt
+120720232;Luckenwalde, Stadt
+120720240;Ludwigsfelde, Stadt
+120720297;Niedergörsdorf
+120720312;Nuthe-Urstromtal
+120720340;Rangsdorf
+120720426;Trebbin, Stadt
+120720477;Zossen, Stadt
+120725204;Dahme/Mark
+120730008;Angermünde, Stadt
+120730069;Boitzenburger Land
+120730384;Lychen, Stadt
+120730429;Nordwestuckermark
+120730452;Prenzlau, Stadt
+120730572;Templin, Stadt
+120730579;Uckerland
+120735051;Schwedt/Oder, Stadt
+120735303;Brüssow (Uckermark)
+120735304;Gartz (Oder)
+120735305;Gerswalde
+120735306;Gramzow
+130009999;Küstengewässer einschl. Anteil am Festlandsockel
+130030000;Rostock, Hanse- und Universitätsstadt
+130040000;Schwerin, Landeshauptstadt
+130710027;Dargun, Stadt
+130710029;Demmin, Hansestadt
+130710033;Feldberger Seenlandschaft
+130710107;Neubrandenburg, Vier-Tore-Stadt
+130710110;Neustrelitz, Residenzstadt
+130710156;Waren (Müritz), Stadt
+130715151;Demmin-Land
+130715152;Friedland
+130715153;Malchin am Kummerower See
+130715154;Malchow
+130715155;Mecklenburgische Kleinseenplatte
+130715156;Neustrelitz-Land
+130715157;Neverin
+130715158;Penzliner Land
+130715159;Röbel-Müritz
+130715160;Seenlandschaft Waren
+130715161;Stargarder Land
+130715162;Stavenhagen
+130715163;Treptower Tollensewinkel
+130715164;Woldegk
+130720006;Bad Doberan, Stadt
+130720029;Dummerstorf
+130720036;Graal-Müritz, Ostseeheilbad
+130720043;Güstrow, Barlachstadt
+130720058;Kröpelin, Stadt
+130720060;Kühlungsborn, Ostseebad, Stadt
+130720074;Neubukow, Schliemannstadt
+130720091;Sanitz
+130720093;Satow
+130720106;Teterow, Bergringstadt
+130725251;Bad Doberan-Land
+130725252;Bützow-Land
+130725253;Carbäk
+130725254;Gnoien
+130725255;Güstrow-Land
+130725256;Krakow am See
+130725257;Laage
+130725258;Mecklenburgische Schweiz
+130725259;Neubukow-Salzhaff
+130725260;Rostocker Heide
+130725261;Schwaan
+130725262;Tessin
+130725263;Warnow-West
+130730011;Binz, Ostseebad
+130730035;Grimmen, Stadt
+130730055;Marlow, Stadt
+130730070;Putbus, Stadt
+130730080;Sassnitz, Stadt
+130730088;Stralsund, Hansestadt
+130730089;Süderholz
+130730105;Zingst, Ostseeheilbad
+130735351;Altenpleen
+130735352;Barth
+130735353;Bergen auf Rügen
+130735354;Darß/Fischland
+130735355;Franzburg-Richtenberg
+130735356;Miltzow
+130735357;Mönchgut-Granitz
+130735358;Niepars
+130735359;Nord-Rügen
+130735360;Recknitz-Trebeltal
+130735361;Ribnitz-Damgarten
+130735362;West-Rügen
+130740026;Grevesmühlen, Stadt
+130740035;Insel Poel, Ostseebad
+130740087;Wismar, Hansestadt
+130745451;Dorf Mecklenburg-Bad Kleinen
+130745452;Gadebusch
+130745453;Grevesmühlen-Land
+130745454;Klützer Winkel
+130745455;Lützow-Lübstorf
+130745456;Neuburg
+130745457;Neukloster-Warin
+130745458;Rehna
+130745459;Schönberger Land
+130750005;Anklam, Hansestadt
+130750039;Greifswald, Universitäts- und Hansestadt
+130750049;Heringsdorf, Ostseebad
+130750105;Pasewalk, Stadt
+130750130;Strasburg (Uckermark), Stadt
+130750136;Ueckermünde, Seebad, Stadt
+130755551;Am Peenestrom
+130755552;Am Stettiner Haff
+130755553;Anklam-Land
+130755554;Jarmen-Tutow
+130755555;Landhagen
+130755556;Löcknitz-Penkun
+130755557;Lubmin
+130755558;Peenetal/Loitz
+130755559;Torgelow-Ferdinandshof
+130755560;Uecker-Randow-Tal
+130755561;Usedom-Nord
+130755562;Usedom-Süd
+130755563;Züssow
+130760014;Boizenburg/Elbe, Stadt
+130760060;Hagenow, Stadt
+130760088;Lübtheen, Stadt
+130760090;Ludwigslust, Stadt
+130760108;Parchim, Stadt
+130765652;Boizenburg-Land
+130765654;Dömitz-Malliß
+130765655;Eldenburg Lübz
+130765656;Goldberg-Mildenitz
+130765657;Grabow
+130765658;Hagenow-Land
+130765659;Ludwigslust-Land
+130765660;Neustadt-Glewe
+130765662;Parchimer Umland
+130765663;Plau am See
+130765664;Sternberger Seenlandschaft
+130765665;Stralendorf
+130765666;Wittenburg
+130765667;Zarrentin
+130765668;Crivitz
+145110000;Chemnitz, Stadt
+145210010;Amtsberg
+145210020;Annaberg-Buchholz, Stadt
+145210035;Aue-Bad Schlema, Stadt
+145210110;Breitenbrunn/Erzgeb., Hochschulort
+145210130;Crottendorf
+145210150;Drebach
+145210160;Ehrenfriedersdorf, Stadt
+145210170;Eibenstock, Stadt
+145210200;Gelenau/Erzgeb.
+145210240;Großolbersdorf
+145210250;Großrückerswalde
+145210260;Grünhain-Beierfeld, Stadt
+145210290;Hohndorf
+145210310;Jahnsdorf/Erzgeb.
+145210320;Johanngeorgenstadt, Stadt
+145210330;Jöhstadt, Stadt
+145210355;Lauter-Bernsbach, Stadt
+145210370;Lößnitz, Stadt
+145210390;Marienberg, Stadt
+145210400;Mildenau
+145210410;Neukirchen/Erzgeb.
+145210440;Oberwiesenthal, Kurort, Stadt
+145210450;Oelsnitz/Erzgeb., Stadt
+145210460;Olbernhau, Stadt
+145210495;Pockau-Lengefeld, Stadt
+145210500;Raschau-Markersbach
+145210530;Schneeberg, Stadt
+145210540;Schönheide
+145210550;Schwarzenberg/Erzgeb., Stadt
+145210560;Sehmatal
+145210600;Stützengrün
+145210620;Thalheim/Erzgeb., Stadt
+145210630;Thermalbad Wiesenbad
+145210640;Thum, Stadt
+145210670;Wolkenstein, Stadt
+145215101;Bärenstein-Königswalde
+145215103;Burkhardtsdorf
+145215110;Geyer-Tannenberg
+145215115;Lugau
+145215130;Scheibenberg-Schlettau
+145215132;Kurort Seiffen - Deutschneudorf - Heidersdorf
+145215133;Stollberg/Niederdorf
+145215138;Zschopau
+145215139;Zschorlau
+145215140;Zwönitz
+145215405;Wildenstein
+145220020;Augustusburg, Stadt
+145220035;Bobritzsch-Hilbersdorf
+145220050;Brand-Erbisdorf, Stadt
+145220070;Claußnitz
+145220080;Döbeln, Stadt
+145220110;Eppendorf
+145220120;Erlau
+145220140;Flöha, Stadt
+145220150;Frankenberg/Sa., Stadt, Garnisonsstadt
+145220170;Frauenstein, Stadt
+145220180;Freiberg, Stadt, Universitätsstadt
+145220190;Geringswalde, Stadt
+145220200;Großhartmannsdorf
+145220210;Großschirma, Stadt
+145220220;Großweitzschen
+145220230;Hainichen, Stadt
+145220240;Halsbrücke
+145220250;Hartha, Stadt
+145220260;Hartmannsdorf
+145220275;Jahnatal
+145220290;Königshain-Wiederau
+145220300;Kriebstein
+145220310;Leisnig, Stadt
+145220320;Leubsdorf
+145220330;Lichtenau
+145220350;Lunzenau, Stadt
+145220390;Mulda/Sa.
+145220400;Neuhausen/Erzgeb.
+145220420;Niederwiesa
+145220430;Oberschöna
+145220440;Oederan, Stadt
+145220460;Penig, Stadt
+145220470;Rechenberg-Bienenmühle
+145220480;Reinsberg
+145220500;Rossau
+145220510;Roßwein, Stadt
+145220540;Striegistal
+145220570;Waldheim, Stadt
+145220580;Wechselburg
+145225102;Burgstädt
+145225113;Lichtenberg-Weißenborn
+145225119;Mittweida
+145225126;Rochlitz
+145225129;Sayda/Dorfchemnitz
+145230010;Adorf/Vogtl., Stadt
+145230020;Auerbach/Vogtl., Stadt
+145230030;Bad Brambach
+145230040;Bad Elster, Stadt
+145230090;Ellefeld
+145230100;Elsterberg, Stadt
+145230160;Klingenthal, Stadt
+145230170;Lengenfeld, Stadt
+145230200;Markneukirchen, Stadt
+145230245;Muldenhammer, Erholungsort
+145230280;Neumark
+145230310;Pausa-Mühltroff, Stadt
+145230320;Plauen, Stadt, Hochschulstadt
+145230330;Pöhl
+145230360;Rodewisch, Stadt
+145230365;Rosenbach/Vogtl.
+145230380;Steinberg
+145230450;Weischlitz
+145235107;Falkenstein
+145235120;Netzschkau-Limbach
+145235122;Oelsnitz/Vogtl., Bösenbrunn, Eichigt und Triebel/V
+145235125;Reichenbach im Vogtland
+145235131;Schöneck/Mühlental
+145235134;Treuen/Neuensalz
+145235402;Jägerswald
+145240020;Callenberg
+145240060;Fraureuth
+145240070;Gersdorf
+145240080;Glauchau, Stadt, Hochschulstadt
+145240090;Hartenstein, Stadt
+145240120;Hohenstein-Ernstthal, Stadt
+145240140;Langenbernsdorf
+145240150;Langenweißbach
+145240170;Lichtentanne
+145240200;Mülsen
+145240210;Neukirchen/Pleiße
+145240230;Oberlungwitz, Stadt
+145240250;Reinsdorf
+145240300;Werdau, Stadt
+145240310;Wildenfels, Stadt
+145240320;Wilkau-Haßlau, Stadt
+145240330;Zwickau, Stadt, Hochschulstadt
+145245104;Crimmitschau-Dennheritz
+145245111;Kirchberg
+145245114;Limbach-Oberfrohna
+145245118;Meerane-Schönberg
+145245128;Rund um den Auersberg
+145245135;Waldenburg
+146120000;Dresden, Stadt
+146250010;Arnsdorf
+146250020;Bautzen / Budyšin, Stadt, Hochschulstadt / Wysokoš
+146250030;Bernsdorf, Stadt
+146250060;Burkau / Porchow
+146250090;Cunewalde
+146250100;Demitz-Thumitz
+146250110;Doberschau-Gaußig / Dobruša-Huska
+146250120;Elsterheide / Halštrowska Hola
+146250130;Elstra / Halštrow, Stadt
+146250150;Göda / Hodźij
+146250160;Großdubrau / Wulka Dubrawa
+146250200;Großröhrsdorf, Stadt
+146250220;Haselbachtal
+146250230;Hochkirch / Bukecy
+146250240;Hoyerswerda / Wojerecy, Stadt
+146250250;Kamenz / Kamjenc, Stadt
+146250280;Königswartha / Rakecy
+146250290;Kubschütz / Kubšicy
+146250310;Lauta, Stadt
+146250330;Lohsa / Łaz
+146250340;Malschwitz / Malešecy
+146250380;Neukirch/Lausitz
+146250420;Oßling / Wóslink
+146250430;Ottendorf-Okrilla
+146250480;Radeberg, Stadt
+146250490;Radibor / Radwor
+146250525;Schirgiswalde-Kirschau, Stadt
+146250530;Schmölln-Putzkau
+146250550;Schwepnitz
+146250560;Sohland a. d. Spree
+146250570;Spreetal / Sprjewiny Doł
+146250590;Steinigtwolmsdorf
+146250600;Wachau
+146250610;Weißenberg / Wóspork, Stadt
+146250630;Wilthen, Stadt
+146250640;Wittichenau / Kulow, Stadt
+146255207;Bischofswerda
+146255211;Großharthau
+146255212;Großpostwitz/O.L.
+146255218;Königsbrück
+146255223;Neschwitz
+146255231;Pulsnitz
+146255501;Am Klosterwasser
+146260060;Boxberg/O.L. / Hamor
+146260085;Ebersbach-Neugersdorf, Stadt
+146260110;Görlitz, Stadt, Hochschulstadt
+146260180;Herrnhut, Stadt
+146260245;Kottmar
+146260250;Krauschwitz i.d. O.L. / Krušwica
+146260280;Leutersdorf
+146260300;Markersdorf
+146260310;Mittelherwigsdorf
+146260370;Niesky, Stadt
+146260390;Oderwitz
+146260420;Ostritz, Stadt
+146260530;Seifhennersdorf, Stadt
+146260610;Zittau, Stadt, Hochschulstadt
+146265203;Bad Muskau
+146265206;Bernstadt / Schönau-Berzdorf
+146265214;Großschönau-Hainewalde
+146265220;Löbau
+146265224;Neusalza-Spremberg
+146265227;Olbersdorf
+146265228;Oppach-Beiersdorf
+146265232;Reichenbach/O.L.
+146265233;Rietschen
+146265235;Rothenburg/O.L.
+146265237;Schleife
+146265242;Weißwasser/O.L.
+146265502;Diehsa
+146265503;Weißer Schöps/Neiße
+146270010;Coswig, Stadt
+146270020;Diera-Zehren
+146270030;Ebersbach
+146270050;Gröditz, Stadt
+146270060;Großenhain, Stadt
+146270070;Hirschstein
+146270080;Käbschütztal
+146270100;Klipphausen
+146270130;Lommatzsch, Stadt
+146270140;Meißen, Stadt
+146270150;Moritzburg
+146270170;Niederau
+146270180;Nossen, Stadt
+146270200;Priestewitz
+146270210;Radebeul, Stadt
+146270220;Radeburg, Stadt
+146270230;Riesa, Stadt, Hochschulstadt
+146270260;Stauchitz
+146270270;Strehla, Stadt
+146270290;Thiendorf
+146270310;Weinböhla
+146270360;Zeithain
+146275225;Nünchritz
+146275234;Röderaue-Wülknitz
+146275238;Schönfeld
+146280050;Bannewitz
+146280060;Dippoldiswalde, Stadt
+146280100;Dürrröhrsdorf-Dittersbach
+146280110;Freital, Stadt
+146280130;Glashütte, Stadt
+146280160;Heidenau, Stadt
+146280190;Hohnstein, Stadt
+146280220;Kreischa
+146280260;Neustadt in Sachsen, Stadt
+146280300;Rabenau, Stadt
+146280360;Sebnitz, Stadt
+146280380;Stolpen, Stadt
+146280410;Wilsdruff, Stadt
+146285201;Altenberg
+146285202;Bad Gottleuba-Berggießhübel
+146285204;Bad Schandau
+146285209;Dohna-Müglitztal
+146285219;Königstein/Sächs. Schw.
+146285221;Lohmen/Stadt Wehlen
+146285229;Pirna
+146285230;Klingenberg
+146285240;Tharandt
+147130000;Leipzig, Stadt
+147290030;Bennewitz
+147290040;Böhlen, Stadt
+147290050;Borna, Stadt
+147290060;Borsdorf
+147290070;Brandis, Stadt
+147290080;Colditz, Stadt
+147290140;Frohburg, Stadt
+147290150;Geithain, Stadt
+147290160;Grimma, Stadt
+147290170;Groitzsch, Stadt
+147290190;Großpösna
+147290220;Kitzscher, Stadt
+147290245;Lossatal
+147290250;Machern
+147290260;Markkleeberg, Stadt
+147290270;Markranstädt, Stadt
+147290320;Neukieritzsch
+147290360;Regis-Breitingen, Stadt
+147290370;Rötha, Stadt
+147290380;Thallwitz
+147290400;Trebsen/Mulde, Stadt
+147290410;Wurzen, Stadt
+147290430;Zwenkau, Stadt
+147295301;Bad Lausick
+147295307;Naunhof
+147295308;Pegau
+147300020;Bad Düben, Stadt
+147300045;Belgern-Schildau, Stadt
+147300050;Cavertitz
+147300060;Dahlen, Stadt
+147300070;Delitzsch, Stadt
+147300080;Doberschütz
+147300110;Eilenburg, Stadt
+147300160;Laußig
+147300170;Liebschützberg
+147300180;Löbnitz
+147300190;Mockrehna
+147300200;Mügeln, Stadt
+147300210;Naundorf
+147300230;Oschatz, Stadt
+147300250;Rackwitz
+147300270;Schkeuditz, Stadt
+147300300;Taucha, Stadt
+147300330;Wermsdorf
+147300340;Wiedemar
+147305302;Beilrode
+147305303;Dommitzsch
+147305306;Krostitz-Schönwölkau
+147305311;Torgau/Dreiheide
+147305601;Eilenburg-West
+150010000;Dessau-Roßlau, Stadt
+150020000;Halle (Saale), Stadt
+150030000;Magdeburg, Landeshauptstadt
+150810030;Arendsee (Altmark), Stadt
+150810135;Gardelegen, Hansestadt
+150810240;Kalbe (Milde), Stadt
+150810280;Klötze, Stadt
+150810455;Salzwedel, Hansestadt
+150815051;Beetzendorf-Diesdorf
+150820005;Aken (Elbe), Stadt
+150820015;Bitterfeld-Wolfen, Stadt
+150820180;Köthen (Anhalt), Stadt
+150820241;Muldestausee
+150820256;Osternienburger Land
+150820301;Raguhn-Jeßnitz, Stadt
+150820340;Sandersdorf-Brehna, Stadt
+150820377;Südliches Anhalt, Stadt
+150820430;Zerbst/Anhalt, Stadt
+150820440;Zörbig, Stadt
+150830040;Barleben
+150830270;Haldensleben, Stadt
+150830298;Hohe Börde
+150830390;Niedere Börde
+150830411;Oebisfelde-Weferlingen, Stadt
+150830415;Oschersleben (Bode), Stadt
+150830490;Sülzetal
+150830531;Wanzleben-Börde, Stadt
+150830565;Wolmirstedt, Stadt
+150835051;Elbe-Heide
+150835052;Flechtingen
+150835053;Obere Aller
+150835054;Westliche Börde
+150840130;Elsteraue
+150840235;Hohenmölsen, Stadt
+150840315;Lützen, Stadt
+150840355;Naumburg (Saale), Stadt
+150840490;Teuchern, Stadt
+150840550;Weißenfels, Stadt
+150840590;Zeitz, Stadt
+150845051;An der Finne
+150845052;Droyßiger-Zeitzer Forst
+150845053;Unstruttal
+150845054;Wethautal
+150850040;Ballenstedt, Stadt
+150850055;Blankenburg (Harz), Stadt
+150850110;Falkenstein/Harz, Stadt
+150850135;Halberstadt, Stadt
+150850145;Harzgerode, Stadt
+150850185;Huy
+150850190;Ilsenburg (Harz), Stadt
+150850227;Nordharz
+150850228;Oberharz am Brocken, Stadt
+150850230;Osterwieck, Stadt
+150850235;Quedlinburg, Welterbestadt
+150850330;Thale, Stadt
+150850370;Wernigerode, Stadt
+150855051;Vorharz
+150860005;Biederitz
+150860015;Burg, Stadt
+150860035;Elbe-Parey
+150860040;Genthin, Stadt
+150860055;Gommern, Stadt
+150860080;Jerichow, Stadt
+150860140;Möckern, Stadt
+150860145;Möser
+150870015;Allstedt, Stadt
+150870031;Arnstein, Stadt
+150870130;Eisleben, Lutherstadt
+150870165;Gerbstedt, Stadt
+150870220;Hettstedt, Stadt
+150870275;Mansfeld, Stadt
+150870370;Sangerhausen, Stadt
+150870386;Seegebiet Mansfelder Land
+150870412;Südharz
+150875051;Goldene Aue
+150875052;Mansfelder Grund-Helbra
+150880020;Bad Dürrenberg, Solestadt
+150880025;Bad Lauchstädt, Goethestadt
+150880065;Braunsbedra, Stadt
+150880150;Kabelsketal
+150880195;Landsberg, Stadt
+150880205;Leuna, Stadt
+150880216;Wettin-Löbejün, Stadt
+150880220;Merseburg, Stadt
+150880235;Mücheln (Geiseltal), Stadt
+150880295;Petersberg
+150880305;Querfurt, Stadt
+150880319;Salzatal
+150880330;Schkopau
+150880365;Teutschenthal
+150885051;Weida-Land
+150890015;Aschersleben, Stadt
+150890026;Barby, Stadt
+150890030;Bernburg (Saale), Stadt
+150890042;Bördeland
+150890055;Calbe (Saale), Stadt
+150890175;Hecklingen, Stadt
+150890195;Könnern, Stadt
+150890235;Nienburg (Saale), Stadt
+150890305;Schönebeck (Elbe), Stadt
+150890307;Seeland, Stadt
+150890310;Staßfurt, Salzstadt
+150895051;Egelner Mulde
+150895052;Saale-Wipper
+150900070;Bismark (Altmark), Stadt
+150900225;Havelberg, Hansestadt
+150900415;Osterburg (Altmark), Hansestadt
+150900535;Stendal, Hansestadt
+150900546;Tangerhütte, Stadt
+150900550;Tangermünde, Stadt
+150905051;Arneburg-Goldbeck
+150905052;Elbe-Havel-Land
+150905053;Seehausen (Altmark)
+150910010;Annaburg, Stadt
+150910020;Bad Schmiedeberg, Stadt
+150910060;Coswig (Anhalt), Stadt
+150910110;Gräfenhainichen, Stadt
+150910145;Jessen (Elster), Stadt
+150910160;Kemberg, Stadt
+150910241;Oranienbaum-Wörlitz, Stadt
+150910375;Wittenberg, Lutherstadt
+150910391;Zahna-Elster, Stadt
+160510000;Erfurt, Stadt
+160520000;Gera, Stadt
+160530000;Jena, Stadt
+160540000;Suhl, Stadt
+160550000;Weimar, Stadt
+160610045;Heilbad Heiligenstadt, Stadt
+160610074;Niederorschel
+160610115;Leinefelde-Worbis, Stadt
+160610116;Am Ohmberg
+160610117;Sonnenstein
+160610118;Dingelstädt, Stadt
+160615001;Lindenberg/Eichsfeld
+160615006;Eichsfeld-Wipperaue
+160615008;Hanstein-Rusteberg
+160615009;Leinetal
+160615013;Westerwald-Obereichsfeld
+160615014;Ershausen/Geismar
+160615051;Uder
+160620005;Ellrich, Stadt
+160620041;Nordhausen, Stadt
+160620049;Sollstedt
+160620062;Hohenstein
+160620063;Werther
+160620065;Harztor
+160625053;Heringen/Helme, Stadt
+160625054;Bleicherode, Stadt
+160630004;Barchfeld-Immelborn
+160630076;Treffurt, Stadt
+160630078;Unterbreizbach
+160630082;Vacha, Stadt
+160630092;Wutha-Farnroda
+160630097;Gerstungen
+160630098;Hörselberg-Hainich
+160630099;Bad Liebenstein, Stadt
+160630101;Krayenberggemeinde
+160630103;Werra-Suhl-Tal, Stadt
+160630105;Eisenach, Stadt
+160635006;Hainich-Werratal
+160635051;Bad Salzungen, Stadt
+160635056;Geisa, Stadt
+160635057;Ruhla, Stadt
+160635059;Dermbach
+160640003;Bad Langensalza, Stadt
+160640046;Mühlhausen/Thüringen, Stadt
+160640071;Unstruttal
+160640074;Südeichsfeld
+160640076;Unstrut-Hainich
+160645001;Bad Tennstedt
+160645051;Herbsleben
+160645053;Vogtei
+160645055;Nottertal-Heilinger Höhen, Stadt
+160650003;Bad Frankenhausen/Kyffhäuser, Stadt
+160650032;Helbedündorf
+160650067;Sondershausen, Stadt
+160650085;Kyffhäuserland
+160650087;Roßleben-Wiehe, Stadt
+160650089;Greußen, Stadt
+160655002;Greußen
+160655052;Ebeleben, Stadt
+160655055;Artern, Stadt
+160655056;An der Schmücke, Stadt
+160660023;Floh-Seligenthal
+160660047;Oberhof, Stadt
+160660063;Schmalkalden, Stadt
+160660069;Steinbach-Hallenberg, Stadt
+160660074;Brotterode-Trusetal, Stadt
+160660092;Zella-Mehlis, Stadt
+160660093;Rhönblick
+160660094;Grabfeld
+160665005;Hohe Rhön
+160665013;Wasungen-Amt Sand
+160665014;Dolmar-Salzbrücke
+160665050;Meiningen, Stadt
+160665051;Breitungen/Werra
+160670019;Friedrichroda, Stadt
+160670029;Gotha, Stadt
+160670064;Bad Tabarz
+160670065;Tambach-Dietharz/Thür. Wald, Stadt
+160670072;Waltershausen, Stadt
+160670087;Nesse-Apfelstädt
+160670088;Hörsel
+160675007;Nesseaue
+160675012;Fahner Höhe
+160675050;Ohrdruf, Stadt
+160675052;Drei Gleichen
+160675053;Nessetal
+160675054;Georgenthal
+160680034;Kölleda, Stadt
+160680051;Sömmerda, Stadt
+160680058;Weißensee, Stadt
+160680063;Buttstädt
+160685002;Gera-Aue
+160685005;Kindelbrück
+160685006;Kölleda
+160685009;Straußfurt
+160685012;Gramme-Vippach
+160685050;Elxleben
+160690012;Eisfeld, Stadt
+160690024;Hildburghausen, Stadt
+160690042;Schleusegrund
+160690043;Schleusingen, Stadt
+160690053;Veilsdorf
+160690061;Masserberg
+160690062;Römhild, Stadt
+160695002;Feldstein
+160695004;Heldburger Unterland
+160695051;Auengrund
+160700004;Arnstadt, Stadt
+160700028;Amt Wachsenburg
+160700029;Ilmenau, Stadt
+160700048;Stadtilm, Stadt
+160700057;Geratal
+160700058;Großbreitenbach, Stadt
+160705002;Geratal/Plaue
+160705009;Riechheimer Berg
+160710001;Apolda, Stadt
+160710003;Bad Berka, Stadt
+160710008;Blankenhain, Stadt
+160710101;Ilmtal-Weinstraße
+160710103;Grammetal
+160715007;Kranichfeld
+160715008;Mellingen
+160715051;Bad Sulza, Stadt
+160715053;Am Ettersberg
+160720011;Lauscha, Stadt
+160720015;Schalkau, Stadt
+160720018;Sonneberg, Stadt
+160720019;Steinach, Stadt
+160720023;Frankenblick
+160720024;Föritztal
+160725051;Neuhaus am Rennweg, Stadt
+160730005;Bad Blankenburg, Stadt
+160730076;Rudolstadt, Stadt
+160730077;Saalfeld/Saale, Stadt
+160730106;Leutenberg, Stadt
+160730109;Uhlstädt-Kirchhasel
+160730111;Unterwellenborn
+160735005;Schiefergebirge
+160735012;Schwarzatal
+160735051;Kaulsdorf
+160735054;Königsee, Stadt
+160740044;Kahla, Stadt
+160745005;Heideland-Elstertal-Schkölen
+160745007;Hügelland/Täler
+160745011;Südliches Saaletal
+160745014;Hermsdorf
+160745015;Dornburg-Camburg
+160745050;Stadtroda, Stadt
+160745051;Bürgel, Stadt
+160745052;Eisenberg, Stadt
+160745053;Bad Klosterlausnitz
+160750046;Hirschberg, Stadt
+160750062;Bad Lobenstein, Stadt
+160750085;Pößneck, Stadt
+160750098;Schleiz, Stadt
+160750131;Gefell, Stadt
+160750132;Tanna, Stadt
+160750133;Wurzbach, Stadt
+160750134;Remptendorf
+160750135;Saalburg-Ebersdorf, Stadt
+160750136;Rosenthal am Rennsteig
+160755004;Seenplatte
+160755005;Oppurg
+160755011;Triptis
+160755013;Ranis-Ziegenrück
+160755050;Neustadt an der Orla, Stadt
+160760022;Greiz, Stadt
+160760061;Ronneburg, Stadt
+160760088;Harth-Pöllnitz
+160760089;Kraftsdorf
+160760092;Auma-Weidatal, Stadt
+160760093;Mohlsdorf-Teichwolframsdorf
+160760094;Berga-Wünschendorf, Stadt
+160765004;Ländereck
+160765006;Münchenbernsdorf
+160765008;Am Brahmetal
+160765051;Bad Köstritz, Stadt
+160765053;Weida, Stadt
+160765054;Zeulenroda-Triebes, Stadt
+160765056;Langenwetzendorf
+160770001;Altenburg, Stadt
+160770028;Lucka, Stadt
+160770032;Meuselwitz, Stadt
+160770043;Schmölln, Stadt
+160775004;Pleißenaue
+160775005;Rositz
+160775009;Oberes Sprottental
+160775050;Gößnitz, Stadt
+160775051;Nobitz
