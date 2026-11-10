@@ -11,11 +11,12 @@ import Foundation
 /// - `espelkamp`: Stadt Espelkamp (Kreis Minden-Lübbecke) – iKISS wie Kreis Herford, ohne Ortswahl
 /// - `prezero`: PreZero Bad Oeynhausen – Straßenliste + Hausnummer, ICS je Jahr
 /// - `frechen`: Stadtbetrieb Frechen – Straßenliste, Jahresseite je Straße (HTML)
+/// - `asto`: ASTO Oberbergischer Kreis (sechs Städte) – Straßenliste je Stadt, ICS je Straße und Jahr
 public struct NRWPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsNRW
     public let serviceKey: String
-    public var displayName: String { Self.names[serviceKey] ?? kind.displayName }
-    private let client: HTTPClient
+    public var displayName: String { Self.names[serviceKey] ?? Self.stadtportale[serviceKey] ?? Self.einzelportale[serviceKey] ?? kind.displayName }
+    let client: HTTPClient
     /// Nur für Tests: festes „heute“ für die Jahreswahl bei Kreis Herford/Espelkamp und PreZero.
     var referenceDate: Date?
 
@@ -29,6 +30,7 @@ public struct NRWPortalsProvider: WasteProvider {
         "rsag": "RSAG Rhein-Sieg", "gelsendienste": "Gelsendienste", "best": "BEST Bottrop",
         "herford": "Kreis Herford","enni": "ENNI Moers",
         "espelkamp": "Stadt Espelkamp", "prezero": "PreZero Bad Oeynhausen", "frechen": "Stadtbetrieb Frechen",
+        "asto": "ASTO Oberberg", "kirchhain": "Stadt Kirchhain", "sector27": "sector27 Müllkalender",
     ]
 
     /// Der Frechen-Hinweis erklärt die Auswahl und ist keine Einschränkung des Anbieters („Geht mein Ort?“).
@@ -58,6 +60,11 @@ public struct NRWPortalsProvider: WasteProvider {
     static let ikissPlaces: [String: [(name: String, ort: String, host: String)]] = [
         "herford": herfordPlaces,
         "espelkamp": [("Espelkamp", "322.4", "www.espelkamp.de")],
+        // 11.11.2026 live: Stadt Kirchhain (Hessen), 13 Stadtteile; nur die Kernstadt hat eine Straßenliste
+        "kirchhain": [("Anzefahr", "2848.2"), ("Betziesdorf", "2848.3"), ("Burgholz", "2848.4"), ("Emsdorf", "2848.5"),
+                      ("Großseelheim", "2848.6"), ("Himmelsberg", "2848.7"), ("Kirchhain", "2848.1"), ("Kleinseelheim", "2848.8"),
+                      ("Langenstein", "2848.9"), ("Niederwald", "2848.10"), ("Schönbach", "2848.11"), ("Sindersfeld", "2848.12"),
+                      ("Stausebach", "2848.13")].map { ($0.0, $0.1, "www.kirchhain.de") },
     ]
 
     // MARK: - Assistent
@@ -69,10 +76,14 @@ public struct NRWPortalsProvider: WasteProvider {
         case "awg": return try await awgStep(selections)
         case "rsag": return try await rsagStep(selections)
         case "gelsendienste", "best": return try await abisappStep(selections)
-        case "herford", "espelkamp": return try await herfordStep(selections)
+        case "herford", "espelkamp", "kirchhain": return try await herfordStep(selections)
         case "enni": return try await enniStep(selections)
         case "prezero": return try await prezeroStep(selections)
         case "frechen": return try await frechenStep(selections)
+        case "asto": return try await astoStep(selections)
+        case "sector27": return try await sector27Step(selections)
+        case _ where Self.stadtportale[serviceKey] != nil: return try await stadtportalStep(selections)
+        case _ where Self.einzelportale[serviceKey] != nil: return try await einzelportalStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -85,10 +96,14 @@ public struct NRWPortalsProvider: WasteProvider {
         case "awg": result = try await awgPickups(selections, calendar: calendar)
         case "rsag": result = try await rsagPickups(selections, calendar: calendar)
         case "gelsendienste", "best": result = try await abisappPickups(selections, calendar: calendar)
-        case "herford", "espelkamp": result = try await herfordPickups(selections, calendar: calendar)
+        case "herford", "espelkamp", "kirchhain": result = try await herfordPickups(selections, calendar: calendar)
         case "enni": result = try await enniPickups(selections, calendar: calendar)
         case "prezero": result = try await prezeroPickups(selections, calendar: calendar)
         case "frechen": result = try await frechenPickups(selections, calendar: calendar)
+        case "asto": result = try await astoPickups(selections, calendar: calendar)
+        case "sector27": result = try await sector27Pickups(selections, calendar: calendar)
+        case _ where Self.stadtportale[serviceKey] != nil: result = try await stadtportalPickups(selections, calendar: calendar)
+        case _ where Self.einzelportale[serviceKey] != nil: result = try await einzelportalPickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -109,6 +124,13 @@ public struct NRWPortalsProvider: WasteProvider {
         case "espelkamp": return join("Espelkamp", Array(titles.prefix(1)))
         case "prezero": return join("Bad Oeynhausen", Array(titles.prefix(2)))
         case "frechen": return join("Frechen", Array(titles.prefix(1)))
+        case "asto": return join(titles.first ?? "", Array(titles.dropFirst().prefix(1)))
+        case _ where Self.stadtportalOrte[serviceKey] != nil:
+            // Herten: erster Schritt ist nur das Suchwort, zählen tut die gewählte Straße.
+            return join(Self.stadtportalOrte[serviceKey]!, serviceKey == "herten" ? Array(titles.suffix(1)) : Array(titles.prefix(2)))
+        case _ where Self.einzelportalOrte[serviceKey] != nil:
+            // Gießen: erster Schritt ist nur das Suchwort, zählen Straße und Hausnummer.
+            return join(Self.einzelportalOrte[serviceKey]!, serviceKey == "giessen" ? Array(titles.dropFirst().prefix(2)) : Array(titles.prefix(2)))
         default: return titles.filter { !$0.isEmpty }.joined(separator: ", ")
         }
     }
@@ -393,11 +415,21 @@ public struct NRWPortalsProvider: WasteProvider {
         guard selections.count == offset else { return nil }
         guard let place else { throw ProviderError.selectAddressFirst }
         let html = try await client.string("https://\(place.host)/index.php?La=1&ffmod=abf&ort=\(place.ort)&call=sfm")
-        var options = HTMLText.options(ofSelect: "strasse", in: html).filter { !$0.value.isEmpty }
-            .map { SelectionOption(id: $0.value, title: $0.label) }
+        var options = Self.ikissStreets(html)
         if serviceKey == "espelkamp" { options = Self.withoutSplitStreets(options) }
         guard !options.isEmpty else { throw ProviderError.noDataGeneric }
         return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+    }
+
+    /// Straßen aus `<select name="strasse">`; Ortsteile ohne Straßenliste tragen die eine Straße als
+    /// verstecktes Feld (Kirchhain-Großseelheim …) – dann gibt es nur „Alle Straßen“.
+    static func ikissStreets(_ html: String) -> [SelectionOption] {
+        let options = HTMLText.options(ofSelect: "strasse", in: html).filter { !$0.value.isEmpty }
+            .map { SelectionOption(id: $0.value, title: $0.label) }
+        if options.isEmpty, let hidden = HTMLText.firstMatch(#"<input type="hidden" name="strasse" value="([^"]+)""#, in: html, group: 1) {
+            return [SelectionOption(id: hidden, title: L10n.t("Alle Straßen", "All streets"))]
+        }
+        return options
     }
 
     /// Espelkamp führt bei aufgeteilten Straßen den alten Gesamteintrag weiter („Fabbenstedter Straße“ neben
@@ -598,6 +630,180 @@ public struct NRWPortalsProvider: WasteProvider {
                     result.append(Pickup(date: date, name: NameCleaner.clean(HTMLText.decodeEntities(title))))
                 }
                 if let addon, let name = frechenAddons[addon] {
+                    result.append(Pickup(date: date, name: name))
+                }
+            }
+        }
+        return result
+    }
+
+    // MARK: - ASTO Oberbergischer Kreis
+
+    /// Jahresseite mit allen Straßen der sechs ASTO-Städte (Bergneustadt, Gummersbach, Marienheide, Waldbröl, Wiehl, Wipperfürth).
+    static func astoURL(_ year: Int) -> String {
+        "https://www.asto.de/abfallkalender/\(year)/abfallkalender-jahresdetail/jahrdetail-digital"
+    }
+
+    /// Je Stadt ein Block `<div … data-district="Wiehl">` mit einer Datalist `<option data-value="/…district-detailview?…">Straße</option>`.
+    static func astoStreets(_ html: String) -> [(city: String, streets: [(name: String, path: String)])] {
+        var result: [(city: String, streets: [(name: String, path: String)])] = []
+        for block in html.components(separatedBy: "data-district=\"").dropFirst() {
+            guard let end = block.firstIndex(of: "\"") else { continue }
+            let city = HTMLText.decodeEntities(String(block[..<end]))
+            var streets: [(name: String, path: String)] = []
+            for groups in HTMLText.matches(#"<option[^>]*data-value="([^"]+)"[^>]*>([^<]*)<"#, in: String(block)) {
+                let name = HTMLText.decodeEntities(groups[1]).trimmingCharacters(in: .whitespaces)
+                if !name.isEmpty { streets.append((name: name, path: HTMLText.decodeEntities(groups[0]))) }
+            }
+            if !city.isEmpty && !streets.isEmpty { result.append((city: city, streets: streets)) }
+        }
+        return result
+    }
+
+    /// Detailseite einer Straße: `href="/…/district-ical?…iCalExport…&amp;cHash=…"`.
+    static func astoICalPath(_ html: String) -> String? {
+        HTMLText.firstMatch(#"href="([^"]*district-ical[^"]*)""#, in: html, group: 1).map(HTMLText.decodeEntities)
+    }
+
+    private func astoStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        let year = Calendar(identifier: .gregorian).component(.year, from: referenceDate ?? Date())
+        let blocks = Self.astoStreets(try await client.string(Self.astoURL(year)))
+        guard !blocks.isEmpty else { throw ProviderError.noDataGeneric }
+        switch selections.count {
+        case 0:
+            return SelectionStep(title: SelectionStep.cityTitle, options: blocks.map { SelectionOption(id: $0.city, title: $0.city) })
+        case 1:
+            guard let block = blocks.first(where: { $0.city == selections[0].id }) else { throw Self.notFound(L10n.t("Stadt", "town")) }
+            // Kennung ist der Straßenname: Der Link enthält Jahr und Prüfsumme und gilt nur für ein Jahr.
+            return SelectionStep(title: SelectionStep.streetTitle,
+                                 options: Self.sortedOptions(block.streets.map { SelectionOption(id: $0.name, title: $0.name) }))
+        default:
+            return nil
+        }
+    }
+
+    private func astoYear(_ year: Int, city: String, street: String, calendar: Calendar) async throws -> [Pickup] {
+        let blocks = Self.astoStreets(try await client.string(Self.astoURL(year)))
+        guard let path = blocks.first(where: { $0.city == city })?.streets.first(where: { $0.name == street })?.path else {
+            throw Self.notFound(L10n.t("Straße", "street"))
+        }
+        guard let ical = Self.astoICalPath(try await client.string("https://www.asto.de" + path)) else { throw ProviderError.noDataGeneric }
+        return ICS.parse(Self.stripAlarms(try await client.string("https://www.asto.de" + ical)), calendar: calendar)
+            .map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary)) }
+    }
+
+    private func astoPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        // Das laufende Jahr muss kommen, das nächste erscheint erst gegen Jahresende und darf fehlen.
+        var result = try await astoYear(year, city: selections[0].id, street: selections[1].id, calendar: calendar)
+        if let next = try? await astoYear(year + 1, city: selections[0].id, street: selections[1].id, calendar: calendar) {
+            result += next
+        }
+        return result
+    }
+}
+
+// MARK: - sector27 Müllkalender (Datteln, Dorsten, Marl, Oer-Erkenschwick, Raesfeld, Schermbeck)
+
+/// Livewire-Seite ohne Kalenderdatei: Ort wählen, Straße suchen (höchstens zehn Treffer je Suchwort),
+/// danach liefert die Komponente den Jahreskalender als HTML; jeder Termin ist ein Farbfeld mit `title`.
+/// Jede Anfrage beginnt eine neue Sitzung (Seite laden, Snapshot weiterreichen), Cookies braucht sie nicht.
+extension NRWPortalsProvider {
+    static let sector27Cities: [(name: String, id: String)] = [
+        ("Datteln", "9"), ("Dorsten", "1"), ("Marl", "3"), ("Oer-Erkenschwick", "8"), ("Raesfeld", "7"), ("Schermbeck", "10"),
+    ]
+
+    private struct Sector27Session {
+        let client: HTTPClient
+        let update: String
+        let csrf: String
+        var snapshot: String
+
+        static func open(_ client: HTTPClient) async throws -> Sector27Session {
+            let html = try await client.string("https://muellkalender.sector27.de/")
+            guard let update = HTMLText.firstMatch(#"data-update-uri="([^"]+)""#, in: html, group: 1),
+                  let csrf = HTMLText.firstMatch(#"data-csrf="([^"]+)""#, in: html, group: 1),
+                  let snapshot = HTMLText.firstMatch(#"wire:snapshot="([^"]+)""#, in: html, group: 1) else { throw ProviderError.noDataGeneric }
+            return Sector27Session(client: client, update: HTMLText.decodeEntities(update), csrf: csrf, snapshot: HTMLText.decodeEntities(snapshot))
+        }
+
+        mutating func send(updates: [String: Any] = [:], calls: [[String: Any]] = []) async throws -> [String: Any] {
+            let payload: [String: Any] = ["_token": csrf, "components": [["snapshot": snapshot, "updates": updates, "calls": calls]]]
+            let body = try JSONSerialization.data(withJSONObject: payload)
+            let data = try await client.post(update, body: body, contentType: "application/json",
+                                             headers: ["X-Livewire": "1", "X-CSRF-TOKEN": csrf, "Accept": "application/json"])
+            guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let component = (json["components"] as? [[String: Any]])?.first,
+                  let next = component["snapshot"] as? String else { throw ProviderError.noDataGeneric }
+            snapshot = next
+            return component["effects"] as? [String: Any] ?? [:]
+        }
+
+        mutating func streets(_ search: String) async throws -> [SelectionOption] {
+            let effects = try await send(calls: [["path": "", "method": "callSchemaComponentMethod",
+                                                   "params": ["form.street_id", "getSearchResultsForJs", ["search": search]]]])
+            let rows = ((effects["returns"] as? [Any])?.first as? [[String: Any]]) ?? []
+            return rows.compactMap { row in
+                guard let label = row["label"] as? String else { return nil }
+                let value = (row["value"] as? String) ?? (row["value"] as? NSNumber)?.stringValue
+                return value.map { SelectionOption(id: $0, title: label.trimmingCharacters(in: .whitespaces)) }
+            }
+        }
+    }
+
+    func sector27Step(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            return SelectionStep(title: SelectionStep.cityTitle, options: Self.sector27Cities.map { SelectionOption(id: $0.id, title: $0.name) }, searchable: false)
+        case 1:
+            return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("Straßenname, z. B. Ahornweg", "Street name, e.g. Ahornweg"))
+        case 2:
+            var session = try await Sector27Session.open(client)
+            _ = try await session.send(updates: ["data.city_id": Int(selections[0].id) ?? 0])
+            let options = try await session.streets(selections[1].id.trimmingCharacters(in: .whitespaces))
+            guard !options.isEmpty else {
+                throw ProviderError.invalidSelection(L10n.t("Keine Straße gefunden, die zu „\(selections[1].id)“ passt.", "No street matches “\(selections[1].id)”."))
+            }
+            var step = SelectionStep(title: SelectionStep.streetTitle, options: options)
+            step.hint = L10n.t("Das Portal zeigt höchstens zehn Treffer. Fehlt deine Straße, gib mehr vom Namen ein.",
+                               "The portal shows at most ten matches. If your street is missing, type more of its name.")
+            return step
+        default:
+            return nil
+        }
+    }
+
+    func sector27Pickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 3 else { throw ProviderError.selectAddressFirst }
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        var session = try await Sector27Session.open(client)
+        _ = try await session.send(updates: ["data.city_id": Int(selections[0].id) ?? 0, "data.year": year])
+        var result: [Pickup] = []
+        let first = try await session.send(updates: ["data.street_id": selections[2].id])
+        result += Self.sector27Calendar(first["html"] as? String ?? "", year: year, calendar: calendar)
+        // Das Folgejahr steht meist ab Herbst bereit; fehlt es noch, bleibt der Kalender leer.
+        if let next = try? await session.send(updates: ["data.year": year + 1]) {
+            result += Self.sector27Calendar(next["html"] as? String ?? "", year: year + 1, calendar: calendar)
+        }
+        return result
+    }
+
+    /// Zwölf Monatsraster (`grid grid-cols-7`), je Tag eine Zelle mit Tageszahl und Farbfeldern (`role="img" … title`).
+    static func sector27Calendar(_ html: String, year: Int, calendar: Calendar) -> [Pickup] {
+        let months = html.components(separatedBy: #"class="grid grid-cols-7"#).dropFirst()
+        var result: [Pickup] = []
+        var month = 0
+        for grid in months {
+            month += 1
+            guard month <= 12 else { break }
+            for cell in grid.components(separatedBy: #"class="w-full text-center flex flex-col"#).dropFirst() {
+                guard let dayText = HTMLText.firstMatch(#"<div>\s*(\d{1,2})\s*</div>"#, in: cell, group: 1), let day = Int(dayText),
+                      let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) else { continue }
+                for match in HTMLText.matches(#"role="img"[^>]*title="([^"]+)""#, in: cell) {
+                    guard let title = match.first, !title.isEmpty else { continue }
+                    var name = NameCleaner.clean(HTMLText.decodeEntities(title))
+                    if let first = name.first, first.isLowercase { name = first.uppercased() + name.dropFirst() }
                     result.append(Pickup(date: date, name: name))
                 }
             }

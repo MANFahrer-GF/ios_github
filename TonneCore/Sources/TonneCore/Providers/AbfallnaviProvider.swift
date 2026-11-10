@@ -9,7 +9,7 @@ public struct AbfallnaviProvider: WasteProvider {
     private let client: HTTPClient
 
     /// Dienste, deren eigene Subdomain nicht mehr existiert.
-    private static let sharedDomainServices: Set<String> = ["unna", "frankenthal", "awvlippe", "kranenburg"]
+    private static let sharedDomainServices: Set<String> = ["unna", "frankenthal", "awvlippe", "kranenburg", "moerfelden-walldorf"]
 
     public init(service: String, client: HTTPClient = HTTPClient()) {
         self.serviceKey = service

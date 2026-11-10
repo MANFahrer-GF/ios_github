@@ -89,6 +89,55 @@ final class NRWPortalsProviderTests: XCTestCase {
         let ics = "BEGIN:VCALENDAR\nBEGIN:VEVENT\nSUMMARY:Restmüll/Bio\nDTSTART;VALUE=DATE:20260106\nBEGIN:VALARM\nSUMMARY:Dran denken\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR\n"
         XCTAssertEqual(ICS.parse(NRWPortalsProvider.stripAlarms(ics)).first?.summary, "Restmüll/Bio")
     }
+
+    /// ASTO: je Stadt ein Block mit Datalist; Links enthalten `&amp;` und gelten nur für ein Jahr.
+    func testAstoStreetsAndICalLink() {
+        let page = #"""
+        <div class="district_input_wrap " data-district="Bergneustadt"><input list="districtfinder_street_datalist-0"/><datalist id="districtfinder_street_datalist-0"><option data-value="/abfallkalender/2026/x/district-detailview?a=show&amp;district=58756&amp;cHash=a4">Ackerstr.</option></datalist></div>
+        <div class="district_input_wrap " data-district="Waldbröl"><datalist id="districtfinder_street_datalist-3"><option data-value="/abfallkalender/2026/x/district-detailview?district=56622">Adolf-Kolping-Str.</option><option data-value="/y">Ahornweg</option></datalist></div>
+        """#
+        let blocks = NRWPortalsProvider.astoStreets(page)
+        XCTAssertEqual(blocks.map(\.city), ["Bergneustadt", "Waldbröl"])
+        XCTAssertEqual(blocks[0].streets.first?.name, "Ackerstr.")
+        XCTAssertEqual(blocks[0].streets.first?.path, "/abfallkalender/2026/x/district-detailview?a=show&district=58756&cHash=a4")
+        XCTAssertEqual(blocks[1].streets.map(\.name), ["Adolf-Kolping-Str.", "Ahornweg"])
+        let detail = #"<a href="/abfallkalender/2026/x/district-ical?tx%5Baction%5D=iCalExport&amp;cHash=5b">iCal</a> <a href="/x/district-pdf?a=1">PDF</a>"#
+        XCTAssertEqual(NRWPortalsProvider.astoICalPath(detail), "/abfallkalender/2026/x/district-ical?tx%5Baction%5D=iCalExport&cHash=5b")
+    }
+
+    /// sector27: Monatsraster mit Tageszelle, Feiertagstext vor der Zahl und Farbfeldern mit `title`.
+    func testSector27Calendar() {
+        let cell = { (day: String, extra: String, titles: [String]) in
+            #"<div class="w-full text-center flex flex-col items-center bg-white group">"# + extra + "<div> \(day) </div><div class=\"min-h-10\">"
+                + titles.map { #"<div class="bg-black w-5" role="img" data-tour-color="black" aria-label="\#($0)" title="\#($0)"></div>"# }.joined() + "</div></div>"
+        }
+        let grid = #"<div class="grid grid-cols-7 rounded-md border"><div class="border-t-0! text-center">Mo.</div>"#
+        let html = grid + cell("2", "", ["gelbe Tonne"]) + cell("7", "", ["Restmüll", "Biotonne"]) + "</div>"
+            + grid + cell("3", "<div>Karfreitag</div>", ["Papiertonne"]) + cell("4", "", []) + "</div>"
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let pickups = NRWPortalsProvider.sector27Calendar(html, year: 2026, calendar: calendar)
+        let days = pickups.map { "\(calendar.component(.month, from: $0.date)).\(calendar.component(.day, from: $0.date)) \($0.name)" }
+        XCTAssertEqual(days, ["1.2 Gelbe Tonne", "1.7 Restmüll", "1.7 Biotonne", "2.3 Papiertonne"])
+    }
+
+    /// Kirchhain: Kernstadt mit Straßenliste, Ortsteile nur mit verstecktem Straßenfeld.
+    func testIkissStreetsWithHiddenStreet() {
+        let city = #"<select name="strasse" class="form_ft" id="InputStr"><option value="">-Bitte w&auml;hlen-</option><option value="2848.2.1">Alsfelder Straße</option></select><input type="hidden" name="call" value="suche">"#
+        XCTAssertEqual(NRWPortalsProvider.ikissStreets(city).map(\.id), ["2848.2.1"])
+        let village = #"<select name="ort"><option value="2848.6">Großseelheim</option></select><input type="hidden" name="strasse" value="2848.158.1">"#
+        XCTAssertEqual(NRWPortalsProvider.ikissStreets(village).map(\.id), ["2848.158.1"])
+        XCTAssertTrue(NRWPortalsProvider.ikissStreets("<p>nichts</p>").isEmpty)
+    }
+
+    /// „Geht mein Ort?“: ASTO gilt für Wiehl, nicht für Nümbrecht im selben Kreis (dort fährt der BAV).
+    func testAstoIsCoveredOnlyInItsTowns() throws {
+        let wiehl = try XCTUnwrap(ProviderCatalog.checkPlace("Wiehl").first)
+        XCTAssertEqual(wiehl.district, "Kreis Oberbergischer Kreis")
+        XCTAssertTrue(wiehl.entries.contains { $0.serviceKey == "asto" })
+        let nuembrecht = try XCTUnwrap(ProviderCatalog.checkPlace("Nümbrecht").first)
+        XCTAssertFalse((nuembrecht.entries + nuembrecht.otherEntries).contains { $0.serviceKey == "asto" })
+    }
 }
 
 /// Live-Abfragen je Betreiber (nur mit TONNE_LIVE=1).

@@ -27,10 +27,11 @@ public enum ICS {
         var location: String?
         var dtstart: Date?
         var rrule: String?
+        var inAlarm = false
 
         for line in unfold(text) {
             if line.hasPrefix("BEGIN:VEVENT") {
-                inEvent = true; summary = ""; location = nil; dtstart = nil; rrule = nil
+                inEvent = true; inAlarm = false; summary = ""; location = nil; dtstart = nil; rrule = nil
                 continue
             }
             if line.hasPrefix("END:VEVENT") {
@@ -46,6 +47,10 @@ public enum ICS {
                 continue
             }
             guard inEvent else { continue }
+            // Erinnerungsblock: sein SUMMARY („ABFUHRTERMIN“, Frankenberg) ist nicht der Termintitel
+            if line.hasPrefix("BEGIN:VALARM") { inAlarm = true; continue }
+            if line.hasPrefix("END:VALARM") { inAlarm = false; continue }
+            guard !inAlarm else { continue }
             let (key, params, value) = split(line)
             switch key {
             case "SUMMARY": summary = unescape(value)

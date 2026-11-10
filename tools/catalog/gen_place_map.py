@@ -32,6 +32,14 @@ def main():
     errors += [f'Lücke für unbekannten Schlüssel: {c}' for c in gaps if c not in codes]
     errors += [f'Lücke ohne Grund oder mit unbekannter Art: {c}' for c, g in gaps.items()
                if g.get('art') not in ('nicht_holbar', 'offen') or not g.get('grund')]
+    # Nicht holbar gilt nur mit bekanntem Grund; „nur PDF“ braucht Entsorger, Seite und Datum der Prüfung.
+    errors += [f'nicht holbar mit unbekanntem Grund: {c}' for c, g in gaps.items()
+               if g.get('art') == 'nicht_holbar' and g.get('grund') not in ('portal_abgeschaltet', 'nur_pdf', 'nicht_gefuehrt')]
+    # „nicht geführt“ (der zuständige Entsorger führt die Gemeinde online nicht) braucht dieselben Belege.
+    errors += [f'{g.get("grund")} ohne entsorger/url/stand/beleg: {c}' for c, g in gaps.items()
+               if g.get('grund') in ('nur_pdf', 'nicht_gefuehrt') and not all(g.get(f) for f in ('entsorger', 'url', 'stand', 'beleg'))]
+    errors += [f'nicht_gefuehrt ohne art nicht_holbar: {c}' for c, g in gaps.items()
+               if g.get('grund') == 'nicht_gefuehrt' and g.get('art') != 'nicht_holbar']
     if errors:
         sys.exit('\n'.join(errors[:40]) + f'\n{len(errors)} Fehler')
 

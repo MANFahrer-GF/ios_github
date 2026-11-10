@@ -138,5 +138,42 @@
   "extra": [
    "Groß-Gerau"
   ]
+ },
+ {
+  "id": "bad-orb",
+  "title": "Kurstadt Bad Orb",
+  "base": "https://stadt-bad-orb.de",
+  "extra": [
+   "Bad Orb"
+  ]
+ },
+ {
+  "id": "stadtallendorf",
+  "title": "Stadt Stadtallendorf",
+  "base": "https://stadtallendorf.de",
+  "extra": [
+   "Stadtallendorf",
+   "Erksdorf",
+   "Hatzbach",
+   "Niederklein",
+   "Schweinsberg",
+   "Wolferode"
+  ]
+ },
+ {
+  "id": "netphen",
+  "title": "Stadt Netphen",
+  "base": "https://www.netphen.de",
+  "extra": [
+   "Netphen"
+  ]
+ },
+ {
+  "id": "kelsterbach",
+  "title": "Stadt Kelsterbach",
+  "base": "https://kelsterbach.de",
+  "extra": [
+   "Kelsterbach"
+  ]
  }
 ]

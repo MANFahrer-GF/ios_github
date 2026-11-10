@@ -114,11 +114,17 @@ public struct SachsenPortalsProvider: WasteProvider {
                 }
             }
         }
+        // Eine Ausnahme ohne eigenes SUMMARY (Outlook-Export, Eilenburg) behält den Titel der Serie
+        var seriesTitle: [String: String] = [:]
+        for (index, block) in blocks.enumerated() where !isOverride[index] {
+            if let summary = block.lazy.map(ICS.split).first(where: { $0.key == "SUMMARY" }) { seriesTitle[uids[index]] = ICS.unescape(summary.value) }
+        }
         var events: [ICSEvent] = []
         for (index, block) in blocks.enumerated() {
             let single = ICS.parse((["BEGIN:VCALENDAR"] + block + ["END:VCALENDAR"]).joined(separator: "\n"), calendar: calendar)
             if isOverride[index] {
-                events += single
+                let hasTitle = block.contains { ICS.split($0).key == "SUMMARY" }
+                events += single.map { hasTitle ? $0 : ICSEvent(summary: seriesTitle[uids[index]] ?? $0.summary, date: $0.date, location: $0.location) }
             } else {
                 let skip = removed[uids[index]] ?? []
                 events += single.filter { !skip.contains($0.date) }

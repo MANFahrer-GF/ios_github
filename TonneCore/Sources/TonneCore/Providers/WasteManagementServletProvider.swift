@@ -32,6 +32,8 @@ public struct WasteManagementServletProvider: WasteProvider {
         "vogtland": Portal("Abfallwirtschaft Vogtlandkreis", ["https://awi.vogtlandkreis.de/WasteManagementVogtland"]),
         "suedbrandenburg": Portal("SBAZV Südbrandenburg", ["https://fahrzeuge.sbazv.de/WasteManagementSuedbrandenburg"]),
         "pfaffenhofen": Portal("AWP Pfaffenhofen", ["https://abfuhrtermine.awp-paf.de/WasteManagementPfaffenhofen"]),
+        // ZKE Saarbrücken: Portal von zke-sb.de/service/abfuhrtermine/abfuhrkalender (11.11.2026), Anfangsbuchstaben statt Orten
+        "saarbruecken": Portal("ZKE Saarbrücken", ["https://info.zke-sb.de/WasteManagementSaarbruecken"], city: "Saarbrücken"),
     ]
 
     public let kind: ProviderKind = .wasteManagementServlet

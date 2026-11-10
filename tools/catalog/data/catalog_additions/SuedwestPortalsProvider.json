@@ -56,5 +56,11 @@
   {"kind": "portalsSuedwest", "key": "volkertshausen", "title": "Gemeinde Volkertshausen",
    "website": "https://www.volkertshausen.de/leben-wohnen/ver-entsorgung/muelltermine",
    "places": ["Volkertshausen"],
-   "districts": ["Landkreis Konstanz"], "onlyDistricts": true, "partial": true}
+   "districts": ["Landkreis Konstanz"], "onlyDistricts": true, "partial": true},
+ {"kind": "portalsSuedwest", "key": "untertaunus", "title": "EAW Rheingau-Taunus-Kreis (Untertaunus)", "website": "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/",
+  "places": ["Aarbergen", "Bad Schwalbach", "Heidenrod", "Hohenstein", "Hünstetten", "Idstein", "Niedernhausen", "Schlangenbad", "Taunusstein", "Waldems"],
+  "districts": ["Landkreis Rheingau-Taunus-Kreis"], "onlyDistricts": true, "partial": true},
+  {"kind": "portalsSuedwest", "key": "staedteservice", "title": "Städteservice Raunheim Rüsselsheim",
+   "website": "https://www.staedteservice.de/",
+   "places": ["Rüsselsheim am Main", "Raunheim"]}
 ]

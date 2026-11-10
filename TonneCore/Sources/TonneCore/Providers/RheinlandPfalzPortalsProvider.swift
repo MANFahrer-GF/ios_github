@@ -12,6 +12,7 @@ import Foundation
 /// - `worms`: ebwo Worms (ICS je Straße und Jahr)
 /// - `koblenz`: Servicebetrieb Koblenz (ICS je Stadtteil, nur Wertstoffe/Grünschnitt/Schadstoffe)
 /// - `donnersberg`: Abfall-App Donnersbergkreis (Softwareentwicklung Roth; Ort/Straße als HTML-Liste, ICS je Jahr)
+/// - `kaiserslautern`: Landkreis Kaiserslautern (derselbe Dienst, Mandant `KL`)
 public struct RheinlandPfalzPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsRP
     public let serviceKey: String
@@ -37,6 +38,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "worms": return "ebwo Worms"
         case "koblenz": return "Servicebetrieb Koblenz"
         case "donnersberg": return "Donnersbergkreis"
+        case "kaiserslautern": return "Landkreis Kaiserslautern"
         default: return kind.displayName
         }
     }
@@ -53,7 +55,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "speyer": return try await speyerStep(selections)
         case "worms": return try await wormsStep(selections)
         case "koblenz": return try await koblenzStep(selections)
-        case "donnersberg": return try await donnersbergStep(selections)
+        case "donnersberg", "kaiserslautern": return try await donnersbergStep(selections)
         default: throw unknownService
         }
     }
@@ -72,7 +74,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         case "speyer": result = try await speyerPickups(selections, calendar: calendar)
         case "worms": result = try await wormsPickups(selections, calendar: calendar)
         case "koblenz": result = try await koblenzPickups(selections, calendar: calendar)
-        case "donnersberg": result = try await donnersbergPickups(selections, calendar: calendar)
+        case "donnersberg", "kaiserslautern": result = try await donnersbergPickups(selections, calendar: calendar)
         default: throw unknownService
         }
         let unique = Array(Set(result)).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
@@ -358,28 +360,51 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         return tables
     }
 
+    /// Das Portal führt zwei Gemeinden unter einer Kennung „Berschweiler“ (Verbandsgemeinde Baumholder und
+    /// Herrstein-Rhaunen, Stand 11.11.2026). Amtlich heißen sie „bei Baumholder“ und „bei Kirn“.
+    private static let birkenfeldTwins = ["Berschweiler|Baumholder": "Berschweiler bei Baumholder",
+                                          "Berschweiler|Herrstein-Rhaunen": "Berschweiler bei Kirn"]
+
+    /// Orte der Straßentabelle. Steht eine Kennung in mehreren Verbandsgemeinden, wird sie je Verbandsgemeinde
+    /// zu einer eigenen Zeile mit der Kennung „<GemeindeId>|<Verbandsgemeinde>“.
+    static func birkenfeldPlaces(_ streets: [[String: String]]) -> [SelectionOption] {
+        var unions: [String: Set<String>] = [:]
+        for row in streets { if let id = row["GemeindeId"] { unions[id, default: []].insert(row["Verbandsgemeinde"] ?? "") } }
+        var places: [String: SelectionOption] = [:]
+        for row in streets {
+            guard let id = row["GemeindeId"], let name = row["Gemeinde"] else { continue }
+            let union = row["Verbandsgemeinde"] ?? ""
+            let split = (unions[id]?.count ?? 0) > 1
+            // Oberstein ist in nummerierte Bezirke geteilt („1“ … „19“).
+            var title = name.allSatisfy(\.isNumber) ? "\(union) – \(L10n.t("Bezirk", "District")) \(name)" : name
+            if split { title = birkenfeldTwins["\(name)|\(union)"] ?? title }
+            let key = split ? "\(id)|\(union)" : id
+            places[key] = SelectionOption(id: key, title: title, subtitle: union.isEmpty ? nil : "VG \(union)")
+        }
+        return sortedOptions(Array(places.values))
+    }
+
+    /// Straßen eines Ortes; eine früher gespeicherte Kennung ohne Verbandsgemeinde zeigt weiter alle.
+    static func birkenfeldStreets(_ streets: [[String: String]], place: String) -> [SelectionOption] {
+        let parts = place.split(separator: "|", maxSplits: 1).map(String.init)
+        var options: [String: SelectionOption] = [:]
+        for row in streets where row["GemeindeId"] == parts.first && (parts.count < 2 || row["Verbandsgemeinde"] == parts[1]) {
+            guard let id = row["StrassenId"], let name = row["Strasse"] else { continue }
+            options[id] = SelectionOption(id: id, title: name)
+        }
+        return sortedOptions(Array(options.values))
+    }
+
     private func birkenfeldStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
-            let streets = try await birkenfeldTables()["tblStrassen"] ?? []
-            var places: [String: SelectionOption] = [:]
-            for row in streets {
-                guard let id = row["GemeindeId"], let name = row["Gemeinde"] else { continue }
-                // Oberstein ist in nummerierte Bezirke geteilt („1“ … „19“).
-                let title = name.allSatisfy(\.isNumber) ? "\(row["Verbandsgemeinde"] ?? "") – \(L10n.t("Bezirk", "District")) \(name)" : name
-                places[id] = SelectionOption(id: id, title: title, subtitle: row["Verbandsgemeinde"].map { "VG \($0)" })
-            }
+            let places = Self.birkenfeldPlaces(try await birkenfeldTables()["tblStrassen"] ?? [])
             guard !places.isEmpty else { throw ProviderError.noDataGeneric }
-            return SelectionStep(title: SelectionStep.cityTitle, options: Self.sortedOptions(Array(places.values)))
+            return SelectionStep(title: SelectionStep.cityTitle, options: places)
         case 1:
-            let streets = (try await birkenfeldTables()["tblStrassen"] ?? []).filter { $0["GemeindeId"] == selections[0].id }
-            var options: [String: SelectionOption] = [:]
-            for row in streets {
-                guard let id = row["StrassenId"], let name = row["Strasse"] else { continue }
-                options[id] = SelectionOption(id: id, title: name)
-            }
+            let options = Self.birkenfeldStreets(try await birkenfeldTables()["tblStrassen"] ?? [], place: selections[0].id)
             guard !options.isEmpty else { throw ProviderError.invalidSelection(L10n.t("Keine Straßen gefunden.", "No streets found.")) }
-            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(Array(options.values)))
+            return SelectionStep(title: SelectionStep.streetTitle, options: options)
         default:
             return nil
         }
@@ -754,6 +779,8 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
     private static let donnersbergBase = "https://abfallapp.softwareentwicklung-roth.de"
     /// Die Web-App antwortet auf `Accept: */*` (URLSession-Standard) mit 404 – nur HTML-Anfragen werden bedient.
     private static let donnersbergHTML = ["Accept": "text/html,application/xhtml+xml"]
+    /// Mandant im Pfad: `KIB` Donnersbergkreis, `KL` Landkreis Kaiserslautern.
+    private var rothClient: String { serviceKey == "kaiserslautern" ? "KL" : "KIB" }
     /// Präfix für Orte mit eigener Straßenliste (Eisenberg, Kirchheimbolanden, Rockenhausen, Winnweiler).
     static let donnersbergStreetPrefix = "orte/"
 
@@ -761,7 +788,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
     /// Die ID ist der Pfad hinter `/kalender/`; Orte mit Straßenliste behalten das Präfix `orte/`.
     static func donnersbergPlaces(_ html: String) -> [SelectionOption] {
         var options: [String: SelectionOption] = [:]
-        for link in HTMLText.matches(#"href="/web/KIB/de/kalender/((?:orte/)?[^"]+?)/(?:muellarten|strassen)"[^>]*>([^<]*)</a>"#, in: html) {
+        for link in HTMLText.matches(#"href="/web/[A-Z]+/de/kalender/((?:orte/)?[^"]+?)/(?:muellarten|strassen)"[^>]*>([^<]*)</a>"#, in: html) {
             let title = HTMLText.decodeEntities(link[1]).trimmingCharacters(in: .whitespacesAndNewlines)
             guard !title.isEmpty else { continue }
             let id = HTMLText.decodeEntities(link[0])
@@ -781,22 +808,22 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         return HTMLText.matches(#"name="(abfallart_[^"]+)""#, in: html).compactMap(\.first).filter { seen.insert($0).inserted }
     }
 
-    /// „Bioabfall\nVerlegt wg. Weihnachten“ → „Bioabfall“.
+    /// „Bioabfall\nVerlegt wg. Weihnachten“ → „Bioabfall“; Kaiserslautern schreibt „Vorverlegt wg. …“.
     static func donnersbergPickups(_ ics: String, calendar: Calendar) -> [Pickup] {
         icsPickups(ics, calendar: calendar) { summary in
-            [summary.replacingOccurrences(of: #"\s+verlegt\b.*$"#, with: "", options: [.regularExpression, .caseInsensitive])]
+            [summary.replacingOccurrences(of: #"\s+(?:vor|nach)?verlegt\b.*$"#, with: "", options: [.regularExpression, .caseInsensitive])]
         }
     }
 
     private func donnersbergStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
-            let html = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender", headers: Self.donnersbergHTML)
+            let html = try await client.string("\(Self.donnersbergBase)/web/\(rothClient)/de/kalender", headers: Self.donnersbergHTML)
             let places = Self.donnersbergPlaces(html)
             guard !places.isEmpty else { throw ProviderError.noDataGeneric }
             return SelectionStep(title: L10n.t("Ort", "Town"), options: places)
         case 1 where selections[0].id.hasPrefix(Self.donnersbergStreetPrefix):
-            let html = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender/\(selections[0].id)/strassen", headers: Self.donnersbergHTML)
+            let html = try await client.string("\(Self.donnersbergBase)/web/\(rothClient)/de/kalender/\(selections[0].id)/strassen", headers: Self.donnersbergHTML)
             let streets = Self.donnersbergStreets(html)
             guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
             return SelectionStep(title: SelectionStep.streetTitle, options: streets)
@@ -807,7 +834,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
 
     private func donnersbergPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard let path = selections.last?.id, !path.hasPrefix(Self.donnersbergStreetPrefix) else { throw ProviderError.selectAddressFirst }
-        let form = try await client.string("\(Self.donnersbergBase)/web/KIB/de/kalender/\(path)/muellarten", headers: Self.donnersbergHTML)
+        let form = try await client.string("\(Self.donnersbergBase)/web/\(rothClient)/de/kalender/\(path)/muellarten", headers: Self.donnersbergHTML)
         let types = Self.donnersbergTypes(form)
         guard !types.isEmpty else { throw ProviderError.noDataGeneric }
         let query = types.map { "\(HTTPClient.query($0))=on" }.joined(separator: "&")
@@ -815,7 +842,7 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         let current = calendar.component(.year, from: referenceDate ?? Date())
         var pickups: [Pickup] = []
         for year in [current, current + 1] {
-            guard let text = try? await client.string("\(Self.donnersbergBase)/\(year)/KIB/\(path)/ics/de?\(query)") else { continue }
+            guard let text = try? await client.string("\(Self.donnersbergBase)/\(year)/\(rothClient)/\(path)/ics/de?\(query)") else { continue }
             pickups += Self.donnersbergPickups(text, calendar: calendar)
         }
         return pickups

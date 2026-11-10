@@ -15,7 +15,12 @@ public struct ICSURLProvider: WasteProvider {
     /// Ist `serviceKey` selbst ein Kalender-Link? Nur die Portalseiten von mein-abfallkalender.online sind keine –
     /// dort holt man sich den persönlichen iCal-Link. Direktlinks heißen nicht immer „….ics“
     /// (z. B. `admin-post.php?action=mzv_ics_download&slug=Engen`).
+    /// `<Seite>#einfuegen`: Portalseite eines Entsorgers, der den Kalender je Straße ausgibt – wie bei
+    /// mein-abfallkalender.online kopiert man dort seinen iCal-Link und fügt ihn ein.
+    static let pasteMarker = "#einfuegen"
+
     var isDirectLink: Bool {
+        if serviceKey.hasSuffix(Self.pasteMarker) { return false }
         let lower = serviceKey.lowercased()
         if lower.hasPrefix("webcal://") || lower.contains(".ics") || lower.contains("ical") { return true }
         let host = URL(string: serviceKey)?.host?.lowercased() ?? ""
@@ -49,6 +54,12 @@ public struct ICSURLProvider: WasteProvider {
     private func load(_ template: String, year: Int, calendar: Calendar) async throws -> [Pickup] {
         var link = template.replacingOccurrences(of: "{%Y}", with: String(year))
         var excluded: [String] = []
+        var excludedPlaces: [String] = []
+        if let marker = link.range(of: Self.excludePlaceMarker) {
+            // Eine Datei für mehrere Bezirke, der Bezirk steht im Ort des Termins (MZV Rotenburg-Bebra: „Bebra Bebra 2“).
+            excludedPlaces = link[marker.upperBound...].split(separator: "|").map { $0.lowercased() }
+            link = String(link[..<marker.lowerBound])
+        }
         if let marker = link.range(of: Self.excludeMarker) {
             // Eine Datei für mehrere Bezirke: Termine mit diesen Texten im Titel gehören nicht zur Auswahl.
             excluded = link[marker.upperBound...].split(separator: "|").map { $0.lowercased() }
@@ -63,10 +74,23 @@ public struct ICSURLProvider: WasteProvider {
             }
             link = found.absoluteString
         }
-        let text = try await client.string(link)
+        var form: String?
+        if let marker = link.range(of: Self.postMarker) {
+            form = String(link[marker.upperBound...])
+            link = String(link[..<marker.lowerBound])
+        }
+        let text: String
+        if let form {
+            text = HTTPClient.text(from: try await client.post(link, body: Data(form.utf8), contentType: "application/x-www-form-urlencoded"))
+        } else {
+            text = try await client.string(link)
+        }
         let events = ICS.parse(text, calendar: calendar)
         guard !events.isEmpty else { throw ProviderError.noData("Die ICS-Datei enthält keine Termine.") }
-        return events.filter { event in !WasteCategory.isIgnorableTitle(event.summary) && !excluded.contains { event.summary.lowercased().contains($0) } }
+        return events.filter { event in
+            !WasteCategory.isIgnorableTitle(event.summary) && !excluded.contains { event.summary.lowercased().contains($0) }
+                && !excludedPlaces.contains { (event.location ?? "").lowercased().contains($0) }
+        }
             .flatMap { event in Self.names(event.summary).map { Pickup(date: event.date, name: $0, note: event.location) } }
     }
 
@@ -77,6 +101,14 @@ public struct ICSURLProvider: WasteProvider {
     /// `<Link>#ohne=<Text>|<Text>`: Termine, deren Titel einen dieser Texte enthält, weglassen
     /// (z. B. Steinbach: eine Datei für Bezirk 1 und 2, Titel „Restmüll (Bezirk 2)“).
     static let excludeMarker = "#ohne="
+
+    /// `<Link>#ohne-ort=<Text>|<Text>`: Termine, deren Ort (LOCATION) einen dieser Texte enthält, weglassen; steht als letzter
+    /// Marker (MZV Rotenburg-Bebra: eine Datei für die Kernstadt, Gelbe Tonne in vier Bezirken „Bebra 1“ … „Bebra 4“).
+    static let excludePlaceMarker = "#ohne-ort="
+
+    /// `<Link>#post=<Formular>`: Kalender gibt es nur als Antwort auf ein Formular (POST, `a=1&b=2`, `{%Y}` erlaubt);
+    /// steht vor `#ohne=`/`#ohne-ort=` (Ginsheim-Gustavsburg: `/export/ical` mit Zeitraum, Bezirk und Abfuhrarten).
+    static let postMarker = "#post="
 
     static func link(in html: String, base: URL, matching needle: String) -> URL? {
         let wanted = needle.lowercased()
@@ -112,6 +144,22 @@ public struct ICSURLProvider: WasteProvider {
         var name = NameCleaner.clean(withoutPickupTimeSuffix(summary))
             .replacingOccurrences(of: #"^(Abholung|Abfuhr|Leerung)\s*:\s*"#, with: "", options: [.regularExpression, .caseInsensitive])
         if let inner = HTMLText.firstMatch(#"^Abfalltermin\s*\((.+)\)$"#, in: name, group: 1) { name = inner }
+        // MZV Rotenburg-Bebra: „Entsorgung Gelbe Tonne“ (zweite SUMMARY-Zeile des Termins)
+        if let inner = HTMLText.firstMatch(#"^Entsorgung\s+(.+)$"#, in: name, group: 1) { name = inner }
+        // VUE Waltrop: „Abfuhr Rest+Bio Bezirk 1“ – der Bezirk steht schon im Eintrag, nicht in der Müllart
+        if let inner = HTMLText.firstMatch(#"^Abfuhr\s+(.+?)\s+Bezirk\s+\d+$"#, in: name, group: 1) { name = inner }
+        // Wachtendonk: „Bezirk 1 - Restmuell (grau)“, „Bezirk 1 - 4 - Glaskoerbe“ – Bezirk und Tonnenfarbe stehen schon im
+        // Eintrag; die Umschrift wechselt zwischen den Jahresdateien („Restmuell“ 2026, „Restmüll“ 2027)
+        if let inner = HTMLText.firstMatch(#"^Bezirk\s+\d+(?:\s*-\s*\d+)?\s+-\s+(.+)$"#, in: name, group: 1) {
+            name = inner.replacingOccurrences(of: #"\s*\((grau|braun|gruen|grün|gelb|blau)\)$"#, with: "", options: .regularExpression)
+            for (from, to) in [("muell", "müll"), ("Muell", "Müll"), ("gruen", "grün"), ("Gruen", "Grün"), ("koerbe", "körbe")] {
+                name = name.replacingOccurrences(of: from, with: to)
+            }
+        }
+        // Ginsheim-Gustavsburg: „Grüne Tonne - Ginsheim“, „Gelbe Tonne - Alle“ – der Bezirk steht schon im Eintrag
+        if let inner = HTMLText.firstMatch(#"^(.+?)\s+-\s+\p{Lu}\p{Ll}+$"#, in: name, group: 1), WasteCategory.classify(inner) != .other {
+            name = inner
+        }
         let parts = name.components(separatedBy: CharacterSet(charactersIn: ",/+"))
             .map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
         let categories = parts.map(WasteCategory.classify)

@@ -14,9 +14,11 @@ import Foundation
 /// - `kelkheim`: Stadt Kelkheim (Taunus) – Straße + Hausnummer per POST → ICS-Link des Bezirks
 /// - `floersheim`: Flörsheimer Umweltkalender – Straßensuche → ggf. Hausnummer → Bezirk → ICS
 /// - `volkertshausen`: Gemeinde Volkertshausen – Terminliste der Webseite (HTML, gemeindeweit, mehrseitig), ohne Auswahl
+/// - `untertaunus`: EAW Rheingau-Taunus-Kreis (Untertaunus) – Straßenliste (JSON) → Gemeinde → Ortsteil → Straße → ICS je Straße
+/// - `staedteservice`: Städteservice Raunheim Rüsselsheim – Ort → Straße (OData) → Hausnummer → ICS (Base64 im JSON)
 public struct SuedwestPortalsProvider: WasteProvider {
     public static let services = ["frankfurt", "stuttgart", "wiesbaden", "heidelberg", "heidenheim", "badenbaden", "kreiskassel", "reso",
-                                  "muellmann", "zvawmk", "kelkheim", "floersheim", "volkertshausen"]
+                                  "muellmann", "zvawmk", "kelkheim", "floersheim", "volkertshausen", "untertaunus", "staedteservice"]
 
     public let kind: ProviderKind = .portalsSuedwest
     public let serviceKey: String
@@ -45,6 +47,8 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "kelkheim": return try await kelkheimStep(selections)
         case "floersheim": return try await floersheimStep(selections)
         case "volkertshausen": return nil
+        case "untertaunus": return try await untertaunusStep(selections)
+        case "staedteservice": return try await staedteserviceStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -65,6 +69,8 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "kelkheim": result = try await kelkheimPickups(selections, calendar: calendar)
         case "floersheim": result = try await floersheimPickups(selections, calendar: calendar)
         case "volkertshausen": result = try await volkertshausenPickups(calendar: calendar)
+        case "untertaunus": result = try await untertaunusPickups(selections, calendar: calendar)
+        case "staedteservice": result = try await staedteservicePickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -104,6 +110,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
         case "kelkheim": return Self.join(["Kelkheim (Taunus)", "\(part(0)) \(part(1))".trimmingCharacters(in: .whitespaces)])
         case "floersheim": return Self.join(["Flörsheim am Main", "\(part(1)) \(part(2))".trimmingCharacters(in: .whitespaces)])
         case "volkertshausen": return "Volkertshausen"
+        case "staedteservice": return Self.join([part(0), "\(part(1)) \(part(2))".trimmingCharacters(in: .whitespaces)])
         default: return Self.join(titles)
         }
     }
@@ -859,6 +866,55 @@ public struct SuedwestPortalsProvider: WasteProvider {
         return Self.icsPickups(try await client.string(url), calendar: calendar, clean: Self.floersheimNames)
     }
 
+    // MARK: - EAW Rheingau-Taunus-Kreis (Untertaunus)
+
+    private struct UntertaunusStreet: Decodable {
+        let id: Int
+        let street: String
+        let districtId: Int
+        let district: String
+        let cityId: Int
+        let city: String
+    }
+
+    private static let untertaunusBase = "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine"
+
+    /// „Gelbe Tonne, Biotonne, Restmülltonne“ → je Fraktion ein Termin; „Tonnentausch“ ist keine Abfuhr.
+    static func untertaunusPickups(_ ics: String, calendar: Calendar) -> [Pickup] {
+        icsPickups(ics, calendar: calendar) { summary in
+            split(summary, at: ",").filter { $0.caseInsensitiveCompare("Tonnentausch") != .orderedSame }
+        }
+    }
+
+    /// Die Straßensuche der Webseite lädt einmal die ganze Liste (POST ohne Felder): Gemeinde → Ortsteil → Straße.
+    private func untertaunusStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        guard selections.count < 3 else { return nil }
+        let data = try await client.postForm(Self.untertaunusBase + "/autocomplete?type=1660824331", fields: [])
+        let all: [UntertaunusStreet] = try HTTPClient.decode(data)
+        let options: [SelectionOption]
+        let title: String
+        switch selections.count {
+        case 0:
+            title = SelectionStep.cityTitle
+            options = all.map { SelectionOption(id: "c:\($0.cityId)", title: $0.city) }
+        case 1:
+            title = SelectionStep.districtTitle
+            options = all.filter { "c:\($0.cityId)" == selections[0].id }.map { SelectionOption(id: "d:\($0.districtId)", title: $0.district) }
+        default:
+            title = SelectionStep.streetTitle
+            options = all.filter { "d:\($0.districtId)" == selections[1].id }.map { SelectionOption(id: String($0.id), title: $0.street) }
+        }
+        guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+        return SelectionStep(title: title, options: Self.sortedOptions(options))
+    }
+
+    /// Der Kalender hängt nur an der Straßen-ID; der Text davor im Pfad ist beliebig.
+    private func untertaunusPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count == 3, let id = Int(selections[2].id) else { throw ProviderError.selectAddressFirst }
+        let text = try await client.string("\(Self.untertaunusBase)/ics/strasse-\(id)/feed.ics")
+        return Self.untertaunusPickups(text, calendar: calendar)
+    }
+
     // MARK: - Volkertshausen (Gemeinde-Webseite, TYPO3 hw_abfallkalender)
 
     private static let volkertshausenBase = "https://www.volkertshausen.de"
@@ -899,6 +955,73 @@ public struct SuedwestPortalsProvider: WasteProvider {
             guard let next = Self.volkertshausenNextPage(html) else { break }
             url = next
         }
+        return result
+    }
+
+    // MARK: - Städteservice Raunheim Rüsselsheim
+
+    private static let staedteserviceAPI = "https://portal.staedteservice.de/api"
+    /// Orts-Kennungen des Portals (`Ort/OrteId`).
+    static let staedteserviceTowns = [("1", "Rüsselsheim am Main"), ("2", "Raunheim")]
+    /// Ohne `text/calendar` im Accept-Kopf antwortet `ZeigeAbfallkalender` mit HTTP 500.
+    private static let staedteserviceAccept = ["Accept": "application/json, text/plain;q=0.5, text/calendar"]
+
+    private struct StaedteserviceStreets: Decodable {
+        struct Street: Decodable { let StrassenId: Int; let Name: String }
+        let d: [Street]
+    }
+    private struct StaedteserviceCalendar: Decodable {
+        struct D: Decodable { struct File: Decodable { let FileContents: String }; let ZeigeAbfallkalender: File }
+        let d: D
+    }
+
+    private func staedteserviceStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            return SelectionStep(title: SelectionStep.cityTitle, options: Self.staedteserviceTowns.map { SelectionOption(id: $0.0, title: $0.1) },
+                                 searchable: false)
+        case 1:
+            let filter = "Ort/OrteId eq \(selections[0].id)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            let streets: StaedteserviceStreets = try await client.json("\(Self.staedteserviceAPI)/Strassen?$filter=\(filter)")
+            let options = streets.d.map { SelectionOption(id: String($0.StrassenId), title: $0.Name) }
+            guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+        case 2:
+            return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 10", "e.g. 10"))
+        default:
+            return nil
+        }
+    }
+
+    /// Das Portal erwartet die Felder in der Adresse und im Formular, Texte in Hochkommas (OData).
+    static func staedteserviceFields(town: String, street: String, number: String, year: Int) -> [(String, String)] {
+        [("orteId", town), ("strassenId", street), ("hausNr", "'\(number)'"), ("dateiName", "'Abfallkalender\(year).ics'"),
+         ("unixZeitOption", "-25200"), ("fixedYear", String(year))]
+    }
+
+    /// „Abfuhr: Restmüll“ → „Restmüll“.
+    static func staedteserviceName(_ summary: String) -> String {
+        NameCleaner.clean(summary.replacingOccurrences(of: #"^Abfuhr:\s*"#, with: "", options: .regularExpression))
+    }
+
+    private func staedteserviceYear(_ selections: [SelectionOption], year: Int, calendar: Calendar) async throws -> [Pickup] {
+        let number = selections[2].title.trimmingCharacters(in: .whitespaces)
+        let fields = Self.staedteserviceFields(town: selections[0].id, street: selections[1].id, number: number, year: year)
+        var components = URLComponents(string: "\(Self.staedteserviceAPI)/ZeigeAbfallkalender")
+        components?.queryItems = fields.map { URLQueryItem(name: $0.0, value: $0.1) }
+        guard let url = components?.url?.absoluteString else { throw ProviderError.noDataGeneric }
+        let data = try await client.postForm(url, fields: fields, headers: Self.staedteserviceAccept)
+        let file = try JSONDecoder().decode(StaedteserviceCalendar.self, from: data).d.ZeigeAbfallkalender.FileContents
+        guard let raw = Data(base64Encoded: file), let ics = String(data: raw, encoding: .utf8) else { throw ProviderError.noDataGeneric }
+        return ICS.parse(NRWPortalsProvider.stripAlarms(ics), calendar: calendar).map { Pickup(date: $0.date, name: Self.staedteserviceName($0.summary)) }
+    }
+
+    private func staedteservicePickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard selections.count >= 3 else { throw ProviderError.selectAddressFirst }
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        // Das laufende Jahr muss kommen, das nächste erscheint erst im Dezember und darf fehlen.
+        var result = try await staedteserviceYear(selections, year: year, calendar: calendar)
+        if let next = try? await staedteserviceYear(selections, year: year + 1, calendar: calendar) { result += next }
         return result
     }
 }

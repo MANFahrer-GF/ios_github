@@ -126,6 +126,10 @@ for slug,name,plz,n in json.load(open(S+'peine/hi_garbage.json',encoding='utf-8'
 # Neue Kennungen bestehender Plattformen (live geprüft)
 new.append(('awido','awhas','Abfallwirtschaft Landkreis Haßberge','https://www.awhas.de/',['Haßberge','Haßfurt','Ebern','Eltmann','Hofheim in Unterfranken','Königsberg in Bayern','Zeil am Main']))
 new.append(('awido','weiden','Stadt Weiden in der Oberpfalz','https://www.weiden.de/',['Weiden','Weiden in der Oberpfalz']))
+# 11.11.2026 live: AWIDO-Mandant burbach, 9 Orte (Burbach, Holzhausen, Würgendorf …), 93 Straßen, Termine 2026
+# 11.11.2026 live: AHE (Abfall+ Widgets v3) führt alle 9 Städte des Ennepe-Ruhr-Kreises und Hagen
+new.append(('abfallIOGraphQL','0d74f933a2959ed0133cd88eda556714','AHE Ennepe-Ruhr-Kreis','https://ahe.de/abfallkalender/',['Ennepe-Ruhr-Kreis','Breckerfeld','Ennepetal','Gevelsberg','Hattingen','Herdecke','Schwelm','Sprockhövel','Wetter (Ruhr)','Witten']))
+new.append(('awido','burbach','Gemeinde Burbach','https://www.burbach-siegerland.de/',['Burbach','Holzhausen','Würgendorf','Wahlbach','Gilsbach','Lützeln','Niederdresselndorf','Oberdresselndorf']))
 new.append(('gemosWasteBox','eaw','Mansfeld-Südharz (EAW Sangerhausen)','https://eaw.wastebox.gemos-management.de/',['Mansfeld-Südharz','Sangerhausen','Eisleben','Lutherstadt Eisleben','Hettstedt','Mansfeld','Allstedt','Arnstein','Gerbstedt','Seegebiet Mansfelder Land','Südharz','Kelbra']))
 new.append(('gemosWasteBox','apm','Potsdam-Mittelmark (APM)','https://apm.wastebox.gemos-management.de/',['Potsdam-Mittelmark','Bad Belzig','Werder','Teltow','Kleinmachnow','Stahnsdorf','Beelitz','Treuenbrietzen','Niemegk','Michendorf','Schwielowsee','Wiesenburg']))
 new.append(('gemosWasteBox','abikw','Anhalt-Bitterfeld (ABIKW)','https://www.abikw.de/',['Anhalt-Bitterfeld','Köthen','Köthen (Anhalt)','Bitterfeld-Wolfen','Zerbst','Zerbst/Anhalt','Sandersdorf-Brehna','Raguhn-Jeßnitz','Aken','Aken (Elbe)','Südliches Anhalt','Zörbig','Muldestausee','Osternienburger Land']))
@@ -133,7 +137,8 @@ new.append(('abfallAppNet','brandenburg','Brandenburg an der Havel','https://bra
 bp=json.load(open(S+'peine/bp_places.json',encoding='utf-8'))
 for key,title,web in [('alb_donau','Alb-Donau-Kreis','https://www.aw-adk.de/'),('cochem_zell','Landkreis Cochem-Zell','https://www.cochem-zell-online.de/'),
                       ('biedenkopf','MZV Biedenkopf','https://mzv-biedenkopf.de/'),('bedburg','Bedburg','https://www.bedburg.de/'),
-                      ('klevestadt','Kleve (USK)','https://buerger-app-klevestadt.azurewebsites.net/calendar'),('neu_ulm','Landkreis Neu-Ulm (Illertissen, Weißenhorn …)','https://www.awb-neu-ulm.de/')]:
+                      ('klevestadt','Kleve (USK)','https://buerger-app-klevestadt.azurewebsites.net/calendar'),('neu_ulm','Landkreis Neu-Ulm (Illertissen, Weißenhorn …)','https://www.awb-neu-ulm.de/'),
+                      ('voelklingen','EZV Völklingen','https://www.ezv-vk.de/')]:
     new.append(('buergerportal',key,title,web,bp.get(key,[])))
 new.append(('magdeburg','magdeburg','Magdeburg (SAB)','https://www.magdeburg.de/',['Magdeburg']))
 # Volle Gemeindenamen, wo der Kurzname mehrdeutig ist („Hofheim“ gibt es in Hessen und Unterfranken)
@@ -160,7 +165,10 @@ MAK_EXTRA=[('Alsfeld','alsfeld'),('Antrifttal','antrifttal'),('Feldatal','feldat
  ('Münzenberg','muenzenberg'),('Reichelsheim (Wetterau)','stadt-reichelsheim'),('Altenstadt','altenstadt'),('Bad Nauheim','bn'),('Büdingen','stadt-buedingen'),
  ('Gedern','gedern'),('Glauburg','glauburg'),('Kefenrod','gemeinde-kefenrod'),('Nidda','nidda'),('Ober-Mörlen','ober-moerlen'),('Ranstadt','ranstadt'),('Butzbach','stadt-butzbach'),
  ('Dreieich','dreieich'),('Neu-Isenburg','neu-isenburg'),
- ('Sulzbach (Taunus)','sulzbach-taunus'),('Bad Soden am Taunus','bad-soden'),('Hochheim am Main','hochheim'),('Hofheim am Taunus','hofheim')]
+ ('Sulzbach (Taunus)','sulzbach-taunus'),('Bad Soden am Taunus','bad-soden'),('Hochheim am Main','hochheim'),('Hofheim am Taunus','hofheim'),
+ # Wetterau, 11.11.2026 live geprüft (Startseite „Mein-Abfallkalender der Gemeinde/Stadt …“)
+ ('Echzell','echzell'),('Florstadt','florstadt'),('Hirzenhain','hirzenhain'),('Limeshain','limeshain'),('Niddatal','niddatal'),
+ ('Ortenberg','ortenberg'),('Rockenberg','rockenberg'),('Wölfersheim','woelfersheim'),('Wöllstadt','woellstadt')]
 have={k for _,k,*__ in new}
 for title,sub in MAK_EXTRA:
     host=f'https://{sub}.mein-abfallkalender.online'
@@ -278,6 +286,7 @@ for kind,key,title,places in entries:
         ('jumomind','ben'): ['Landkreis Grafschaft Bentheim'],
         ('abfallnavi','frankenthal'): ['Kreisfreie Stadt Frankenthal (Pfalz)'],
         ('abfallnavi','aachen'): ['Kreis Städteregion Aachen'],
+        ('abfallnavi','zew2'): ['Kreis Düren','Kreis Städteregion Aachen'],
         ('abfallPlusApp','de.k4systems.regioentsorgung'): ['Kreis Städteregion Aachen'],
         ('abfallnavi','wml2'): ['Kreis Borken'],
         ('abfallnavi','bav'): ['Kreis Rheinisch-Bergischer Kreis','Kreis Oberbergischer Kreis'],
@@ -291,6 +300,9 @@ for kind,key,title,places in entries:
         ('muellmax','Efb'): ['Landkreis Wetteraukreis'],
         ('awido','ebu'): ['Stadtkreis Ulm'],
         ('awido','zv-muc-so'): ['Landkreis München'],
+        # 11.11.2026 live (PlaceDatesLiveTests): alle 14 Orte der App liefern Termine (85–111)
+        ('abfallPlusApp','de.k4systems.lkmabfallplus'): ['Landkreis München'],
+        ('abfallIOGraphQL','0d74f933a2959ed0133cd88eda556714'): ['Kreis Ennepe-Ruhr-Kreis'],
         ('abfallPlusApp','de.cmcitymedia.shawaste'): ['Landkreis Schwäbisch Hall'],
         ('icsURL','https://langen.mein-abfallkalender.online'): ['Landkreis Offenbach'],
     }
@@ -338,6 +350,47 @@ LOCAL_KINDS=('heimatInfo','icsURL')
 LOCAL_MANUAL={('jumomind','hom'):[('Landkreis Hochtaunuskreis','Bad Homburg v.d.Höhe')],
               ('calendarPortal','awl_neuss'):[('Kreis Rhein-Kreis Neuss','Neuss')],
               ('portalsNRW','frechen'):[('Kreis Rhein-Erft-Kreis','Frechen')],
+              # 11.11.2026 live: Städteservice-Portal (OData, ICS je Adresse) für zwei Städte im Kreis Groß-Gerau
+              ('portalsSuedwest','staedteservice'):[('Landkreis Groß-Gerau','Rüsselsheim am Main'),('Landkreis Groß-Gerau','Raunheim')],
+              # 11.11.2026 live: ASTO führt sechs der 13 Oberberg-Gemeinden, die übrigen fährt der BAV
+              ('portalsNRW','asto'):[('Kreis Oberbergischer Kreis',x) for x in ('Bergneustadt','Gummersbach','Marienheide','Waldbröl','Wiehl','Wipperfürth')],
+              # 11.11.2026 live: iKISS-Abfallmodule je Stadt (Sitepark-Schnittstelle bzw. Herford-Export)
+              ('portalsNRW','kirchhain'):[('Landkreis Marburg-Biedenkopf','Kirchhain')],
+              ('sitepark','bad-orb'):[('Landkreis Main-Kinzig-Kreis','Bad Orb')],
+              ('sitepark','stadtallendorf'):[('Landkreis Marburg-Biedenkopf','Stadtallendorf')],
+              ('sitepark','netphen'):[('Kreis Siegen-Wittgenstein','Netphen')],
+              ('sitepark','kelsterbach'):[('Landkreis Groß-Gerau','Kelsterbach')],
+              # 11.11.2026 live: sector27-Müllkalender (Livewire), Ortsliste der Seite; Marl im Kreis Diepholz ist ein Namensvetter
+              ('portalsNRW','sector27'):[('Kreis Recklinghausen',x) for x in ('Datteln','Dorsten','Marl','Oer-Erkenschwick')]+[('Kreis Borken','Raesfeld'),('Kreis Wesel','Schermbeck')],
+              # 11.11.2026 live: eigene Stadtportale in NRW (NRWStadtportale.swift)
+              ('portalsNRW','detmold'):[('Kreis Lippe','Detmold')],
+              ('portalsNRW','herten'):[('Kreis Recklinghausen','Herten')],
+              ('portalsNRW','castrop'):[('Kreis Recklinghausen','Castrop-Rauxel')],
+              ('portalsNRW','monheim'):[('Kreis Mettmann','Monheim am Rhein')],
+              ('portalsNRW','roesrath'):[('Kreis Rheinisch-Bergischer Kreis','Rösrath')],
+              ('portalsNRW','bruehl'):[('Kreis Rhein-Erft-Kreis','Brühl')],
+              ('portalsNRW','siegen'):[('Kreis Siegen-Wittgenstein','Siegen')],
+              ('portalsNRW','verl'):[('Kreis Gütersloh','Verl')],
+              ('portalsNRW','velbert'):[('Kreis Mettmann','Velbert')],
+              # 11.11.2026 live: Einzelportale außerhalb NRW (Einzelportale.swift)
+              ('portalsNRW','eilenburg'):[('Landkreis Nordsachsen','Eilenburg')],
+              ('portalsNRW','weimar_lahn'):[('Landkreis Marburg-Biedenkopf','Weimar (Lahn)')],
+              ('portalsNRW','ottobrunn'):[('Landkreis München','Ottobrunn')],
+              ('portalsNRW','ismaning'):[('Landkreis München','Ismaning')],
+              ('portalsNRW','heilbronn'):[('Stadtkreis Heilbronn','Heilbronn')],
+              ('portalsNRW','erlensee'):[('Landkreis Main-Kinzig-Kreis','Erlensee')],
+              ('portalsNRW','frankenberg'):[('Landkreis Waldeck-Frankenberg','Frankenberg (Eder)')],
+              ('portalsNRW','wismar'):[('Landkreis Nordwestmecklenburg','Wismar')],
+              ('portalsNRW','goettingen'):[('Landkreis Göttingen','Göttingen')],
+              ('portalsNRW','giessen'):[('Landkreis Gießen','Gießen')],
+              ('portalsNRW','wetzlar'):[('Landkreis Lahn-Dill-Kreis','Wetzlar')],
+              ('portalsNRW','huerth'):[('Kreis Rhein-Erft-Kreis','Hürth')],
+              ('portalsNRW','eppelborn'):[('Landkreis Neunkirchen','Eppelborn')],
+              ('portalsNRW','waldeck'):[('Landkreis Waldeck-Frankenberg','Waldeck')],
+              ('portalsNRW','elchingen'):[('Landkreis Neu-Ulm','Elchingen')],
+              ('portalsNRW','nersingen'):[('Landkreis Neu-Ulm','Nersingen')],
+              ('portalsNRW','ebsdorfergrund'):[('Landkreis Marburg-Biedenkopf','Ebsdorfergrund')],
+              ('portalsNRW','brachttal'):[('Landkreis Main-Kinzig-Kreis','Brachttal')],
               ('jumomind','kbl'):[('Landkreis Offenbach','Langen (Hessen)')]}
 # Gemeinde-Einträge mit mehrdeutigem Namen – per PLZ (Heimat-Info) bzw. Seitentitel (Mein-Abfallkalender) geprüft
 MAK='https://{}.mein-abfallkalender.online'
@@ -353,10 +406,27 @@ for (kind,key),(district,name) in {
     ('icsURL',MAK.format('saarlouis')):('Landkreis Saarlouis','Saarlouis'), ('icsURL',MAK.format('wasserburg')):('Landkreis Rosenheim','Wasserburg a.Inn'),
     ('jumomind','sbm'):('Kreis Minden-Lübbecke','Minden'), ('sitepark','muehlenkreis'):('Kreis Minden-Lübbecke','Preußisch Oldendorf'),
     ('sitepark','neunkirchen-siegerland'):('Kreis Siegen-Wittgenstein','Neunkirchen'),
+    ('awido','burbach'):('Kreis Siegen-Wittgenstein','Burbach'),
+    # 11.11.2026 live: ZKE-Portal (Anfangsbuchstaben der Straßen) und EZV-Bürgerportal, je nur die eine Stadt
+    ('wasteManagementServlet','saarbruecken'):('Landkreis Regionalverband Saarbrücken','Saarbrücken'),
+    ('buergerportal','voelklingen'):('Landkreis Regionalverband Saarbrücken','Völklingen'),
     ('icsURL',MAK.format('schwalmtal-hessen')):('Landkreis Vogelsbergkreis','Schwalmtal'), ('icsURL',MAK.format('altenstadt')):('Landkreis Wetteraukreis','Altenstadt'),
     # Oktober 2026 live geprüft: MyMüll führt das hessische Glashütten (Schloßborn, Oberems); Wartenberg über den ZAV Vogelsberg
     ('jumomind','mymuell'):('Landkreis Hochtaunuskreis','Glashütten'), ('icsURL',MAK.format('gemeinde-wartenberg')):('Landkreis Vogelsbergkreis','Wartenberg'),
 }.items():
+    LOCAL_MANUAL.setdefault((kind,key),[]).append((district,name))
+# November 2026 live geprüft (Straßenliste der App): MyMüll führt Senden (Ay, Witzighausen) und Vöhringen im Kreis Neu-Ulm,
+# Elsdorf im Rhein-Erft-Kreis (Köln-Aachener Straße) und Rheinberg im Kreis Wesel (Orsoyer Straße, Xantener Straße)
+LOCAL_MANUAL[('jumomind','mymuell')]+=[('Landkreis Neu-Ulm','Senden'),('Landkreis Neu-Ulm','Vöhringen'),('Kreis Rhein-Erft-Kreis','Elsdorf'),('Kreis Wesel','Rheinberg')]
+# November 2026: Gemeinde-Einträge, deren Titel vom amtlichen Namen abweicht (Pullach im Isartal, STL Lüdenscheid,
+# Kranenburg gibt es auch im Kreis Stade, Rosbach Vor Der Höhe); Ortsliste je Eintrag per Sweep belegt
+for (kind,key),(district,name) in {('awido','pullach'):('Landkreis München','Pullach i.Isartal'),
+    ('abfallnavi','stl'):('Kreis Märkischer Kreis','Lüdenscheid'), ('abfallnavi','kranenburg'):('Kreis Kleve','Kranenburg'),
+    # 11.11.2026 live: AbfallNavi-Dienst der Stadt Mörfelden-Walldorf (336 Straßen, Termine bis Ende 2027)
+    ('abfallnavi','moerfelden-walldorf'):('Landkreis Groß-Gerau','Mörfelden-Walldorf'),
+    ('jumomind','ros'):('Landkreis Wetteraukreis','Rosbach v.d.Höhe'),
+    # Ortenberg gibt es auch im Ortenaukreis; die Seite nennt die Stadt Ortenberg (Wetterau), 11.11.2026
+    ('icsURL',MAK.format('ortenberg')):('Landkreis Wetteraukreis','Ortenberg')}.items():
     LOCAL_MANUAL.setdefault((kind,key),[]).append((district,name))
 local={}; title_hits=[]
 for kind,key,title,places in entries:

@@ -465,5 +465,14 @@
    "Landkreis Dahme-Spreewald"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "wasteManagementServlet",
+  "key": "saarbruecken",
+  "title": "ZKE Saarbrücken",
+  "website": "https://www.zke-sb.de/",
+  "places": [
+   "Saarbrücken"
+  ]
  }
 ]

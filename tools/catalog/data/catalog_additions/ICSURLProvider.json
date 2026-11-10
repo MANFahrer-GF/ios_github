@@ -388,5 +388,1157 @@
    "Kreis Minden-Lübbecke"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://neuberg.eu/Rathaus-Politik/Verwaltung/Abfallwirtschaft/Abfallkalender/#link=.ics",
+  "title": "Gemeinde Neuberg (Abfallkalender)",
+  "website": "https://neuberg.eu/",
+  "places": [
+   "Neuberg"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-1.ics",
+  "title": "Waltrop Bezirk 1 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-2.ics",
+  "title": "Waltrop Bezirk 2 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-3.ics",
+  "title": "Waltrop Bezirk 3 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-4.ics",
+  "title": "Waltrop Bezirk 4 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-5.ics",
+  "title": "Waltrop Bezirk 5 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-6.ics",
+  "title": "Waltrop Bezirk 6 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-7.ics",
+  "title": "Waltrop Bezirk 7 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-8.ics",
+  "title": "Waltrop Bezirk 8 (VUE Waltrop)",
+  "website": "https://www.vue-waltrop.de/",
+  "places": [
+   "Waltrop"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-gondsroth",
+  "title": "Hasselroth Gondsroth (Abfallkalender)",
+  "website": "https://www.hasselroth.de/",
+  "places": [
+   "Hasselroth"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-neuenhasslau",
+  "title": "Hasselroth Neuenhaßlau (Abfallkalender)",
+  "website": "https://www.hasselroth.de/",
+  "places": [
+   "Hasselroth"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-niedermittlau",
+  "title": "Hasselroth Niedermittlau (Abfallkalender)",
+  "website": "https://www.hasselroth.de/",
+  "places": [
+   "Hasselroth"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Salm%C3%BCnster_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Salmünster (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Bad_Soden_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Bad Soden (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Hausen_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Hausen (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Ahl_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Ahl (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Mernes_Alsberg_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Mernes, Alsberg (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Romsthal__Wahlert__Eckardroth__Kerbersdorf__Kath.-Will__Sch%C3%B6nhof_{%Y}.ics",
+  "title": "Bad Soden-Salmünster: Romsthal, Wahlert, Eckardroth, Kerbersdorf, Katholisch-Willenroth, Schönhof (Abfallkalender)",
+  "website": "https://www.badsoden-salmuenster.de/",
+  "places": [
+   "Bad Soden-Salmünster"
+  ],
+  "districts": [
+   "Landkreis Main-Kinzig-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.neuried.de/abfall-und-wertstoffe/#link=Abfallkalender_{%Y}_West",
+  "title": "Neuried West (Abfallkalender)",
+  "website": "https://www.neuried.de/",
+  "places": [
+   "Neuried"
+  ],
+  "districts": [
+   "Landkreis München"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.neuried.de/abfall-und-wertstoffe/#link=Abfallkalender_{%Y}_Ost",
+  "title": "Neuried Ost (Abfallkalender)",
+  "website": "https://www.neuried.de/",
+  "places": [
+   "Neuried"
+  ],
+  "districts": [
+   "Landkreis München"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-1",
+  "title": "Erndtebrück Bezirk 1 (Restmüll, Bio, Papier)",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-2",
+  "title": "Erndtebrück Bezirk 2 (Restmüll, Bio, Papier)",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-3",
+  "title": "Erndtebrück Bezirk 3 (Restmüll, Bio, Papier)",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-4",
+  "title": "Erndtebrück Bezirk 4 (Restmüll, Bio, Papier)",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-B",
+  "title": "Erndtebrück Gelbe Tonne Bezirk B",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-C",
+  "title": "Erndtebrück Gelbe Tonne Bezirk C",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-D",
+  "title": "Erndtebrück Gelbe Tonne Bezirk D",
+  "website": "https://www.erndtebrueck.de/",
+  "places": [
+   "Erndtebrück"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Aschbach.ics",
+  "title": "Lebach: Aschbach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/D%C3%B6rsdorf.ics",
+  "title": "Lebach: Dörsdorf (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Eidenborn.ics",
+  "title": "Lebach: Eidenborn (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Falscheid.ics",
+  "title": "Lebach: Falscheid (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Gresaubach.ics",
+  "title": "Lebach: Gresaubach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Hoxberg.ics",
+  "title": "Lebach: Hoxberg (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Knorscheid.ics",
+  "title": "Lebach: Knorscheid (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Landsweiler.ics",
+  "title": "Lebach: Landsweiler (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_%C3%84rztehaus.ics",
+  "title": "Lebach Nord Ärztehaus (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_1.ics",
+  "title": "Lebach Nord 1 (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_2_Am_Sch%C3%BCtzenberg.ics",
+  "title": "Lebach Nord 2, Am Schützenberg (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_2.ics",
+  "title": "Lebach Nord 2 (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_3.ics",
+  "title": "Lebach Nord 3 (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_Gewerbegebiet.ics",
+  "title": "Lebach Nord Gewerbegebiet (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_Gewerbegebiet_H%C3%A4pelt.ics",
+  "title": "Lebach Nord Gewerbegebiet Häpelt (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Saarlouiser_Stra%C3%9Fe_69-89.ics",
+  "title": "Lebach Saarlouiser Straße 69-89 (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_S%C3%BCd.ics",
+  "title": "Lebach Süd (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_S%C3%BCd_Spezial.ics",
+  "title": "Lebach Süd Spezial (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Weiherberg.ics",
+  "title": "Lebach Weiherberg (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Niedersaubach.ics",
+  "title": "Lebach: Niedersaubach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/R%C3%BCmmelbach.ics",
+  "title": "Lebach: Rümmelbach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Steinbach.ics",
+  "title": "Lebach: Steinbach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Thalexweiler.ics",
+  "title": "Lebach: Thalexweiler (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Thalexweiler_-_Schellenbach.ics",
+  "title": "Lebach: Thalexweiler - Schellenbach (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Zollstock.ics",
+  "title": "Lebach: Zollstock (Abfuhrkalender)",
+  "website": "https://www.lebach.de/",
+  "places": [
+   "Lebach"
+  ],
+  "districts": [
+   "Landkreis Saarlouis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://calendar.google.com/calendar/ical/hjkf44ehij4c5ti4bur004rpq8%40group.calendar.google.com/public/basic.ics",
+  "title": "Straßlach-Dingharting (Abfuhrkalender)",
+  "website": "https://www.isd-strasslach-dingharting.de/",
+  "places": [
+   "Straßlach-Dingharting"
+  ],
+  "districts": [
+   "Landkreis München"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.zb-gladbeck.de/abfuhrkalender#einfuegen",
+  "title": "Gladbeck (ZBG, eigener Kalender-Link)",
+  "website": "https://www.zb-gladbeck.de/",
+  "places": [
+   "Gladbeck"
+  ],
+  "districts": [
+   "Kreis Recklinghausen"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 1 als",
+  "title": "Wachtendonk Bezirk 1 (Restmüll, Bio, Papier)",
+  "website": "https://www.wachtendonk.de/",
+  "places": [
+   "Wachtendonk",
+   "Wankum"
+  ],
+  "districts": [
+   "Kreis Kleve"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 2 als",
+  "title": "Wachtendonk Bezirk 2 (Restmüll, Bio, Papier)",
+  "website": "https://www.wachtendonk.de/",
+  "places": [
+   "Wachtendonk",
+   "Wankum"
+  ],
+  "districts": [
+   "Kreis Kleve"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 3 als",
+  "title": "Wachtendonk Bezirk 3 (Restmüll, Bio, Papier)",
+  "website": "https://www.wachtendonk.de/",
+  "places": [
+   "Wachtendonk",
+   "Wankum"
+  ],
+  "districts": [
+   "Kreis Kleve"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 4 als",
+  "title": "Wachtendonk Bezirk 4 (Restmüll, Bio, Papier)",
+  "website": "https://www.wachtendonk.de/",
+  "places": [
+   "Wachtendonk",
+   "Wankum"
+  ],
+  "districts": [
+   "Kreis Kleve"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 1-4",
+  "title": "Wachtendonk Bezirk 1–4 (Wertstoffe, Glas, Schadstoff)",
+  "website": "https://www.wachtendonk.de/",
+  "places": [
+   "Wachtendonk",
+   "Wankum"
+  ],
+  "districts": [
+   "Kreis Kleve"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=asmushausen",
+  "title": "Bebra: Asmushausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=blank",
+  "title": "Bebra: Blankenheim und Lüdersdorf (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=boxerode",
+  "title": "Bebra: Gut Boxerode (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=braunhausen",
+  "title": "Bebra: Braunhausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=breit",
+  "title": "Bebra: Breitenbach (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=gilfershausen",
+  "title": "Bebra: Gilfershausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=iba",
+  "title": "Bebra: Iba (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=imshausen",
+  "title": "Bebra: Imshausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rautenhausen",
+  "title": "Bebra: Rautenhausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=solz",
+  "title": "Bebra: Solz (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=weite",
+  "title": "Bebra: Weiterode (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=braac",
+  "title": "Rotenburg a.d. Fulda: Braach, Mündershausen, Ellingerode … (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=lisp",
+  "title": "Rotenburg a.d. Fulda: Lispenhausen (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=schwa",
+  "title": "Rotenburg a.d. Fulda: Schwarzenhasel, Erkshausen, Seifertshausen, Dankerode (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=ronsh",
+  "title": "Ronshausen und Machtlos (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Ronshausen"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 2|Bebra 3|Bebra 4",
+  "title": "Bebra-Kernstadt, Gelbe Tonne Bezirk 1 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 3|Bebra 4",
+  "title": "Bebra-Kernstadt, Gelbe Tonne Bezirk 2 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 2|Bebra 4",
+  "title": "Bebra-Kernstadt, Gelbe Tonne Bezirk 3 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 2|Bebra 3",
+  "title": "Bebra-Kernstadt, Gelbe Tonne Bezirk 4 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Bebra"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 2|Rotenburg 3|Rotenburg 4|Kernstadt-Ost",
+  "title": "Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 1 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 2|Rotenburg 3|Rotenburg 4|Kernstadt-West",
+  "title": "Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 1 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 3|Rotenburg 4|Kernstadt-Ost",
+  "title": "Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 2 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 3|Rotenburg 4|Kernstadt-West",
+  "title": "Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 2 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 4|Kernstadt-Ost",
+  "title": "Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 3 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 4|Kernstadt-West",
+  "title": "Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 3 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 3|Kernstadt-Ost",
+  "title": "Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 4 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 3|Kernstadt-West",
+  "title": "Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 4 (MZV)",
+  "website": "https://www.mzv-rotenburg-bebra.de/",
+  "places": [
+   "Rotenburg a.d.Fulda",
+   "Rotenburg an der Fulda"
+  ],
+  "districts": [
+   "Landkreis Hersfeld-Rotenburg"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://abfallkalender.gigu.de/export/ical#post=dateFrom={%Y}-01-01&dateTo={%Y}-12-31&district=2&category=1&category=2&category=3&category=4&category=5&category=6&category=7&category=8",
+  "title": "Ginsheim-Gustavsburg: Ginsheim",
+  "website": "https://www.gigu.de/",
+  "places": [
+   "Ginsheim-Gustavsburg"
+  ]
+ },
+ {
+  "kind": "icsURL",
+  "key": "https://abfallkalender.gigu.de/export/ical#post=dateFrom={%Y}-01-01&dateTo={%Y}-12-31&district=3&category=1&category=2&category=3&category=4&category=5&category=6&category=7&category=8",
+  "title": "Ginsheim-Gustavsburg: Gustavsburg",
+  "website": "https://www.gigu.de/",
+  "places": [
+   "Ginsheim-Gustavsburg"
+  ]
  }
 ]

@@ -17,6 +17,9 @@ public struct SiteparkProvider: WasteProvider {
         public let refid: String?
         /// Zusätzliche Parameter für den ICS-Download (bereits URL-kodiert).
         public let download: String?
+        /// Eine Stadt, deren Straßen nach Abfuhrbezirken gruppiert sind: kein Ortsschritt aus den Klammern,
+        /// sondern die Stadt als einziger Ort und alle Einträge (auch die Bezirke) als Straßen.
+        var flat: String? = nil
     }
 
     public static let tenants: [String: Tenant] = [
@@ -32,6 +35,11 @@ public struct SiteparkProvider: WasteProvider {
         "neunkirchen-siegerland": Tenant(id: "neunkirchen-siegerland", base: "https://www.neunkirchen-siegerland.de", page: nil, refid: "3362.1", download: "kat=1&alarm=0"),
         "hilchenbach": Tenant(id: "hilchenbach", base: "https://hilchenbach.de", page: nil, refid: nil, download: "kat=1&alarm=0"),
         "gross-gerau": Tenant(id: "gross-gerau", base: "https://www.gross-gerau.de", page: nil, refid: "3411.1", download: nil),
+        // 11.11.2026 live: iKISS-Abfallmodul mit derselben Schnittstelle (79–224 Termine je Straße)
+        "bad-orb": Tenant(id: "bad-orb", base: "https://stadt-bad-orb.de", page: nil, refid: nil, download: nil),
+        "stadtallendorf": Tenant(id: "stadtallendorf", base: "https://stadtallendorf.de", page: nil, refid: nil, download: nil),
+        "netphen": Tenant(id: "netphen", base: "https://www.netphen.de", page: nil, refid: nil, download: nil),
+        "kelsterbach": Tenant(id: "kelsterbach", base: "https://kelsterbach.de", page: nil, refid: nil, download: nil, flat: "Kelsterbach"),
     ]
 
     public let kind: ProviderKind = .sitepark
@@ -81,6 +89,7 @@ public struct SiteparkProvider: WasteProvider {
     // MARK: - Orte und Straßen
 
     private func places(_ tenant: Tenant) async throws -> [SelectionOption] {
+        if let flat = tenant.flat { return [SelectionOption(id: flat, title: flat)] }
         if let page = tenant.page {
             let html = try await client.string(tenant.base + page, headers: referer)
             guard let select = HTMLText.firstMatch(#"<select[^>]*id="sf_locid"[^>]*>(.*?)</select>"#, in: html.replacingOccurrences(of: "\n", with: " "), group: 1) else { return [] }
@@ -98,7 +107,9 @@ public struct SiteparkProvider: WasteProvider {
 
     private func streets(_ tenant: Tenant, place: SelectionOption) async throws -> [SelectionOption] {
         let entries: [(pois: String, label: String)]
-        if tenant.page != nil {
+        if tenant.flat != nil {
+            entries = try await autocomplete(tenant, refid: tenant.refid)
+        } else if tenant.page != nil {
             entries = try await autocomplete(tenant, refid: place.id)
         } else {
             entries = try await autocomplete(tenant, refid: tenant.refid).filter { Self.split($0.label).place == place.id }

@@ -463,6 +463,37 @@ final class SuedwestNeueBetreiberTests: XCTestCase {
         checkUpcoming(pickups, "Flörsheim Hauptstraße")
         XCTAssertFalse(pickups.contains { $0.name.contains("Container") || $0.name.contains("Deponie") })
     }
+
+    /// Städteservice: OData-Straßenliste, ICS als Base64 im JSON; Felder in Adresse und Formular, Accept mit text/calendar.
+    func testStaedteserviceFlow() async throws {
+        let ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20261117\r\nSUMMARY:Abfuhr: Restmüll\r\nBEGIN:VALARM\r\nSUMMARY:Raunheim-Rüsselsheim\r\nEND:VALARM\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20261120\r\nSUMMARY:Abfuhr: Gelbe Tonne\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        let file = Data(ics.utf8).base64EncodedString()
+        var provider = SuedwestPortalsProvider(service: "staedteservice", client: HTTPClient(session: PortalStub.session { request in
+            if request.url.hasPrefix("https://portal.staedteservice.de/api/Strassen?") {
+                return #"{"d":[{"StrassenId":314,"Name":"Industriestraße"},{"StrassenId":12,"Name":"Am Bahnhof"}]}"#
+            }
+            guard request.url.hasPrefix("https://portal.staedteservice.de/api/ZeigeAbfallkalender?"), request.url.contains("fixedYear=2026"),
+                  request.headers["Accept"]?.contains("text/calendar") == true else { return nil }
+            return #"{"d":{"ZeigeAbfallkalender":{"FileContents":"\#(file)"}}}"#
+        }))
+        provider.referenceDate = DateComponents(calendar: calendar, year: 2026, month: 11, day: 11).date
+        let towns = try await provider.nextStep(after: [])
+        XCTAssertEqual(towns?.options.map(\.title), ["Rüsselsheim am Main", "Raunheim"])
+        let town = try XCTUnwrap(towns?.options.last)
+        let streets = try await provider.nextStep(after: [town])
+        XCTAssertEqual(streets?.options.map(\.title), ["Am Bahnhof", "Industriestraße"])
+        let street = try XCTUnwrap(streets?.options.last)
+        let number = SelectionOption(id: "3", title: "3 ")
+        let numberStep = try await provider.nextStep(after: [town, street])
+        XCTAssertEqual(numberStep?.input, .text)
+        let pickups = try await provider.pickups(for: [town, street, number], calendar: calendar)
+        XCTAssertEqual(names(pickups), ["2026-11-17 Restmüll", "2026-11-20 Gelbe Tonne"])
+        XCTAssertEqual(provider.label(for: [town, street, number]), "Raunheim, Industriestraße 3")
+        let post = try XCTUnwrap(PortalStub.requests().first { $0.method == "POST" && $0.url.contains("fixedYear=2026") })
+        XCTAssertTrue(post.url.contains("orteId=2&strassenId=314&hausNr='3'"), post.url)
+        XCTAssertTrue(post.body.contains("dateiName=%27Abfallkalender2026.ics%27"), post.body)
+        XCTAssertTrue(PortalStub.requests().contains { $0.url.contains("fixedYear=2027") }, "nächstes Jahr wird versucht")
+    }
 }
 
 /// Nachgestellte Portale: `route` liefert je Anfrage die Antwort, `nil` heißt HTTP 404.

@@ -27,6 +27,9 @@ final class PlaceCoverageSweepTests: XCTestCase {
         /// Zweite Auswahl je Zeile der ersten, wenn die erste nur Verbandsgemeinden, Ämter oder Landkreise zeigt.
         var subStep: String?
         var sub: [String: [String]]
+        /// Dritte Auswahl („Bundesland|Landkreis“ → Orte), wenn die zweite erst den Landkreis abfragt (Abfall+ Wecker).
+        var deepStep: String?
+        var deep: [String: [String]]
     }
 
     func testFirstSteps() async throws {
@@ -68,7 +71,7 @@ final class PlaceCoverageSweepTests: XCTestCase {
 
     private static func walk(_ entry: CatalogEntry, probes: [String], expand: Bool) async -> Line {
         let provider = ProviderFactory.make(kind: entry.kind, serviceKey: entry.serviceKey)
-        var line = Line(id: entry.id, kind: entry.kind.rawValue, input: "fehler", step: nil, options: [], error: nil, probes: [], subStep: nil, sub: [:])
+        var line = Line(id: entry.id, kind: entry.kind.rawValue, input: "fehler", step: nil, options: [], error: nil, probes: [], subStep: nil, sub: [:], deepStep: nil, deep: [:])
         var first: [SelectionOption] = []
         do {
             guard let step = try await provider.nextStep(after: []) else {
@@ -88,6 +91,12 @@ final class PlaceCoverageSweepTests: XCTestCase {
                 guard let next = try? await provider.nextStep(after: [option]), next.input == .list else { continue }
                 line.subStep = next.title
                 line.sub[option.title] = next.options.map(\.title)
+                guard next.title == "Landkreis" else { continue }
+                for district in next.options {
+                    guard let third = try? await provider.nextStep(after: [option, district]), third.input == .list else { continue }
+                    line.deepStep = third.title
+                    line.deep[option.title + "|" + district.title] = third.options.map(\.title)
+                }
             }
         }
         guard line.input == "text" else { return line }
@@ -97,7 +106,11 @@ final class PlaceCoverageSweepTests: XCTestCase {
                 if let next = try await provider.nextStep(after: [SelectionOption(id: text, title: text)]) {
                     probe.step = next.title
                     probe.count = next.input == .text ? -1 : next.options.count
-                    probe.sample = next.options.prefix(40).map(\.title)
+                    // Straßen-Suchfeld eines Kreises: der Ort steht im Untertitel („29614 Soltau“) → „Soltau / Hauptstr.“
+                    probe.sample = next.options.prefix(600).map { option in
+                        let place = (option.subtitle ?? "").replacingOccurrences(of: #"^\d{5}\s*"#, with: "", options: .regularExpression)
+                        return place.isEmpty ? option.title : "\(place) / \(option.title)"
+                    }
                 } else {
                     probe.count = -2
                 }

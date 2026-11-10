@@ -957,8 +957,10 @@
 "code": "010515178045",
 "kreis": "Kreis Dithmarschen",
 "gemeinde": "Hellschen-Heringsand-Unterschaar",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"awsh:awd:Abfallwirtschaft Dithmarschen (AWD)"
+]
 },
 {
 "code": "010515178050",
@@ -1126,8 +1128,10 @@
 "code": "010530129129",
 "kreis": "Kreis Herzogtum Lauenburg",
 "gemeinde": "Wentorf bei Hamburg",
-"art": "schwach",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"awsh:awsh:Abfallwirtschaft Südholstein (AWSH)"
+]
 },
 {
 "code": "010535308008",
@@ -1203,8 +1207,10 @@
 "code": "010535308094",
 "kreis": "Kreis Herzogtum Lauenburg",
 "gemeinde": "Niendorf bei Berkenthin",
-"art": "schwach",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"awsh:awsh:Abfallwirtschaft Südholstein (AWSH)"
+]
 },
 {
 "code": "010535308103",
@@ -2470,7 +2476,7 @@
 "code": "010545439078",
 "kreis": "Kreis Nordfriesland",
 "gemeinde": "List auf Sylt",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappnf:Kreis Nordfriesland"
 ]
@@ -2621,8 +2627,10 @@
 "code": "010545459074",
 "kreis": "Kreis Nordfriesland",
 "gemeinde": "Langeneß",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappnf:Kreis Nordfriesland"
+]
 },
 {
 "code": "010545459103",
@@ -2835,8 +2843,10 @@
 "code": "010545489034",
 "kreis": "Kreis Nordfriesland",
 "gemeinde": "Friedrich-Wilhelm-Lübke-Koog",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappnf:Kreis Nordfriesland"
+]
 },
 {
 "code": "010545489048",
@@ -3058,8 +3068,10 @@
 "code": "010545492026",
 "kreis": "Kreis Nordfriesland",
 "gemeinde": "Elisabeth-Sophien-Koog",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappnf:Kreis Nordfriesland"
+]
 },
 {
 "code": "010545492032",
@@ -3083,8 +3095,10 @@
 "code": "010545492043",
 "kreis": "Kreis Nordfriesland",
 "gemeinde": "Hattstedtermarsch",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappnf:Kreis Nordfriesland"
+]
 },
 {
 "code": "010545492052",
@@ -5635,7 +5649,7 @@
 "code": "010585888132",
 "kreis": "Kreis Rendsburg-Eckernförde",
 "gemeinde": "Rade b.Rendsburg",
-"art": "ortsteile",
+"art": "kurzform",
 "eintraege": [
 "awsh:awr:Abfallwirtschaft Rendsburg-Eckernförde (AWR)"
 ]
@@ -10387,8 +10401,10 @@
 "code": "031540013013",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Königslutter am Elm",
-"art": "fehlt",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031540014014",
@@ -10430,120 +10446,154 @@
 "code": "031545401015",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Mariental",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545401016",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Querenhorst",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545401018",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Rennau",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545402002",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Beierstedt",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545402006",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Gevensleben",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545402012",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Jerxheim",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545402027",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Söllingen",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403005",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Frellstedt",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403017",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Räbke",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403021",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Süpplingen",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403022",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Süpplingenburg",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403025",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Warberg",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545403026",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Wolsdorf",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545404001",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Bahrdorf",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545404004",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Danndorf",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545404007",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Grafhorst",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545404009",
 "kreis": "Landkreis Helmstedt",
 "gemeinde": "Groß Twülpstedt",
-"art": "fehlt",
-"eintraege": []
+"art": "verband",
+"eintraege": [
+"portalsNord:helmstedt:Landkreis Helmstedt Abfallwirtschaft"
+]
 },
 {
 "code": "031545404024",
@@ -11011,6 +11061,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11021,6 +11072,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11031,6 +11083,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11041,6 +11094,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11051,6 +11105,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11061,6 +11116,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11071,6 +11127,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11081,6 +11138,7 @@
 "art": "ortsteile",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11088,8 +11146,10 @@
 "code": "031590016016",
 "kreis": "Landkreis Göttingen",
 "gemeinde": "Göttingen",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:goettingen:GEB Göttingen – Abfuhrkalender"
+]
 },
 {
 "code": "031590017017",
@@ -11098,6 +11158,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11108,6 +11169,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11118,6 +11180,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11128,6 +11191,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11138,6 +11202,7 @@
 "art": "ortsteile",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11148,6 +11213,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11158,6 +11224,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11168,6 +11235,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11178,6 +11246,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11188,6 +11257,7 @@
 "art": "ortsteile",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11198,6 +11268,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11208,6 +11279,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11218,6 +11290,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11228,6 +11301,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11238,6 +11312,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11248,6 +11323,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11258,6 +11334,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11268,6 +11345,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11278,6 +11356,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11288,6 +11367,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11298,6 +11378,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11308,6 +11389,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11318,6 +11400,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11328,6 +11411,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11338,6 +11422,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11348,6 +11433,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11358,6 +11444,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11368,6 +11455,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11378,6 +11466,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11388,6 +11477,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:4b5702d771c82b611c386ebbc7629026:Landkreis Göttingen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)",
 "abfallPlusApp:de.k4systems.lkgoettingen:Kreis Göttingen"
 ]
 },
@@ -11998,7 +12088,7 @@
 "code": "032520002002",
 "kreis": "Landkreis Hameln-Pyrmont",
 "gemeinde": "Bad Münder am Deister",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "wasteManagementServlet:hameln:KAW Hameln-Pyrmont"
 ]
@@ -13414,7 +13504,7 @@
 "code": "033520060060",
 "kreis": "Landkreis Cuxhaven",
 "gemeinde": "Hagen im Bremischen",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallIOLegacy:49fe8a63a056adbfc43f051f61dd4a44:Landkreis Cuxhaven",
 "abfallPlusApp:de.k4systems.abfallappcux:Kreis Cuxhaven"
@@ -13454,8 +13544,11 @@
 "code": "033525404024",
 "kreis": "Landkreis Cuxhaven",
 "gemeinde": "Hollnseth",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"abfallIOLegacy:49fe8a63a056adbfc43f051f61dd4a44:Landkreis Cuxhaven",
+"abfallPlusApp:de.k4systems.abfallappcux:Kreis Cuxhaven"
+]
 },
 {
 "code": "033525404029",
@@ -15349,43 +15442,55 @@
 "code": "033580002002",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Bispingen",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580008008",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Bad Fallingbostel",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580016016",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Munster",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580017017",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Neuenkirchen",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580019019",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Schneverdingen",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580021021",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Soltau",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033580023023",
@@ -15400,43 +15505,55 @@
 "code": "033580024024",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Walsrode",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585401001",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Ahlden (Aller)",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585401006",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Eickeloh",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585401011",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Grethem",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585401012",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Hademstorf",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585401014",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Hodenhagen",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585402003",
@@ -15451,57 +15568,73 @@
 "code": "033585402009",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Frankenfeld",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585402013",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Häuslingen",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585402018",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Rethem (Aller)",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585403005",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Buchholz (Aller)",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585403007",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Essel",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585403010",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Gilten",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585403015",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Lindwedel",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033585403020",
 "kreis": "Landkreis Heidekreis",
 "gemeinde": "Schwarmstedt",
-"art": "fehlt",
-"eintraege": []
+"art": "sonde",
+"eintraege": [
+"portalsNord:heidekreis:Abfallwirtschaft Heidekreis"
+]
 },
 {
 "code": "033590010010",
@@ -18308,7 +18441,7 @@
 "code": "034620019019",
 "kreis": "Landkreis Wittmund",
 "gemeinde": "Wittmund",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "jumomind:mymuell:MyMüll-App",
 "sitepark:wittmund:Landkreis Wittmund"
@@ -18328,16 +18461,20 @@
 "code": "034625401003",
 "kreis": "Landkreis Wittmund",
 "gemeinde": "Esens",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App",
+"sitepark:wittmund:Landkreis Wittmund"
+]
 },
 {
 "code": "034625401006",
 "kreis": "Landkreis Wittmund",
 "gemeinde": "Holtgast",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"sitepark:wittmund:Landkreis Wittmund"
 ]
 },
 {
@@ -18404,8 +18541,11 @@
 "code": "034625402009",
 "kreis": "Landkreis Wittmund",
 "gemeinde": "Nenndorf",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App",
+"sitepark:wittmund:Landkreis Wittmund"
+]
 },
 {
 "code": "034625402011",
@@ -18451,15 +18591,20 @@
 "code": "034625402018",
 "kreis": "Landkreis Wittmund",
 "gemeinde": "Westerholt",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App",
+"sitepark:wittmund:Landkreis Wittmund"
+]
 },
 {
 "code": "040110000000",
 "kreis": "Kreisfreie Stadt Bremen",
 "gemeinde": "Bremen",
-"art": "fehlt",
-"eintraege": []
+"art": "stadt",
+"eintraege": [
+"cTrace:bremenabfallkalender:Bremer Stadtreinigung"
+]
 },
 {
 "code": "040120000000",
@@ -18485,7 +18630,8 @@
 "gemeinde": "Duisburg",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:80acad6c77fe9342ebafad29a8c58bf6:Wirtschaftsbetriebe Duisburg (WBD)"
+"abfallIOGraphQL:80acad6c77fe9342ebafad29a8c58bf6:Wirtschaftsbetriebe Duisburg (WBD)",
+"abfallPlusApp:de.idcontor.abfallwbd:Duisburg"
 ]
 },
 {
@@ -18647,8 +18793,10 @@
 "code": "051540040040",
 "kreis": "Kreis Kleve",
 "gemeinde": "Kranenburg",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"abfallnavi:kranenburg:Gemeinde Kranenburg"
+]
 },
 {
 "code": "051540044044",
@@ -18690,8 +18838,14 @@
 "code": "051540060060",
 "kreis": "Kreis Kleve",
 "gemeinde": "Wachtendonk",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 1 als:Wachtendonk Bezirk 1 (Restmüll, Bio, Papier)",
+"icsURL:https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 1-4:Wachtendonk Bezirk 1–4 (Wertstoffe, Glas, Schadstoff)",
+"icsURL:https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 2 als:Wachtendonk Bezirk 2 (Restmüll, Bio, Papier)",
+"icsURL:https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 3 als:Wachtendonk Bezirk 3 (Restmüll, Bio, Papier)",
+"icsURL:https://www.wachtendonk.de/rathaus-buergerservice/buergerservice/abfallkalender/#link={%Y} Bezirk 4 als:Wachtendonk Bezirk 4 (Restmüll, Bio, Papier)"
+]
 },
 {
 "code": "051540064064",
@@ -18760,8 +18914,10 @@
 "code": "051580026026",
 "kreis": "Kreis Mettmann",
 "gemeinde": "Monheim am Rhein",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:monheim:Stadt Monheim am Rhein – Abfallkalender"
+]
 },
 {
 "code": "051580028028",
@@ -18776,8 +18932,10 @@
 "code": "051580032032",
 "kreis": "Kreis Mettmann",
 "gemeinde": "Velbert",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:velbert:TBV Velbert – Abfallkalender"
+]
 },
 {
 "code": "051580036036",
@@ -18995,8 +19153,10 @@
 "code": "051700024024",
 "kreis": "Kreis Wesel",
 "gemeinde": "Moers",
-"art": "unklar",
-"eintraege": []
+"art": "titel",
+"eintraege": [
+"portalsNRW:enni:ENNI Moers"
+]
 },
 {
 "code": "051700028028",
@@ -19011,15 +19171,19 @@
 "code": "051700032032",
 "kreis": "Kreis Wesel",
 "gemeinde": "Rheinberg",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App"
+]
 },
 {
 "code": "051700036036",
 "kreis": "Kreis Wesel",
 "gemeinde": "Schermbeck",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
+]
 },
 {
 "code": "051700040040",
@@ -19061,8 +19225,10 @@
 "code": "053140000000",
 "kreis": "Kreisfreie Stadt Bonn",
 "gemeinde": "Bonn",
-"art": "fehlt",
-"eintraege": []
+"art": "stadt",
+"eintraege": [
+"abfallPlusApp:de.k4systems.bonnorange:Bonn"
+]
 },
 {
 "code": "053150000000",
@@ -19088,7 +19254,9 @@
 "gemeinde": "Aachen",
 "art": "liste",
 "eintraege": [
-"abfallnavi:aachen:Stadt Aachen"
+"abfallnavi:aachen:Stadt Aachen",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19097,7 +19265,9 @@
 "gemeinde": "Alsdorf",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19106,7 +19276,9 @@
 "gemeinde": "Baesweiler",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19115,7 +19287,9 @@
 "gemeinde": "Eschweiler",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19124,7 +19298,9 @@
 "gemeinde": "Herzogenrath",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19133,7 +19309,9 @@
 "gemeinde": "Monschau",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19142,7 +19320,9 @@
 "gemeinde": "Roetgen",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19151,7 +19331,9 @@
 "gemeinde": "Simmerath",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19160,7 +19342,9 @@
 "gemeinde": "Stolberg (Rhld.)",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19169,7 +19353,9 @@
 "gemeinde": "Würselen",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19178,15 +19364,20 @@
 "gemeinde": "Aldenhoven",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.muellalarm:Schönmackers Müllalarm (Aldenhoven, Alpen, Bad Münstereifel …)"
+"abfallPlusApp:de.k4systems.muellalarm:Schönmackers Müllalarm (Aldenhoven, Alpen, Bad Münstereifel …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
 "code": "053580008008",
 "kreis": "Kreis Düren",
 "gemeinde": "Düren",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
+]
 },
 {
 "code": "053580012012",
@@ -19194,7 +19385,9 @@
 "gemeinde": "Heimbach",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19203,6 +19396,8 @@
 "gemeinde": "Hürtgenwald",
 "art": "lokal",
 "eintraege": [
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West",
 "heimatInfo:hurtgenwald:Hürtgenwald (Heimat-Info)"
 ]
 },
@@ -19212,22 +19407,30 @@
 "gemeinde": "Inden",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
 "code": "053580024024",
 "kreis": "Kreis Düren",
 "gemeinde": "Jülich",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
+]
 },
 {
 "code": "053580028028",
 "kreis": "Kreis Düren",
 "gemeinde": "Kreuzau",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
+]
 },
 {
 "code": "053580032032",
@@ -19235,7 +19438,9 @@
 "gemeinde": "Langerwehe",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19244,7 +19449,9 @@
 "gemeinde": "Linnich",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19253,7 +19460,9 @@
 "gemeinde": "Merzenich",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.muellalarm:Schönmackers Müllalarm (Aldenhoven, Alpen, Bad Münstereifel …)"
+"abfallPlusApp:de.k4systems.muellalarm:Schönmackers Müllalarm (Aldenhoven, Alpen, Bad Münstereifel …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19262,7 +19471,9 @@
 "gemeinde": "Nideggen",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19271,7 +19482,9 @@
 "gemeinde": "Niederzier",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19280,15 +19493,20 @@
 "gemeinde": "Nörvenich",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
 "code": "053580056056",
 "kreis": "Kreis Düren",
 "gemeinde": "Titz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
+]
 },
 {
 "code": "053580060060",
@@ -19296,7 +19514,9 @@
 "gemeinde": "Vettweiß",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)"
+"abfallPlusApp:de.k4systems.regioentsorgung:Regio Entsorgung (Alsdorf, Baesweiler, Eschweiler …)",
+"abfallnavi:zew2:AWA Entsorgungs GmbH",
+"abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"
 ]
 },
 {
@@ -19322,15 +19542,19 @@
 "code": "053620012012",
 "kreis": "Kreis Rhein-Erft-Kreis",
 "gemeinde": "Brühl",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:bruehl:Stadtservice Brühl – Abfallkalender"
+]
 },
 {
 "code": "053620016016",
 "kreis": "Kreis Rhein-Erft-Kreis",
 "gemeinde": "Elsdorf",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App"
+]
 },
 {
 "code": "053620020020",
@@ -19354,8 +19578,10 @@
 "code": "053620028028",
 "kreis": "Kreis Rhein-Erft-Kreis",
 "gemeinde": "Hürth",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:huerth:Stadtverkehr Hürth – Müllkalender"
+]
 },
 {
 "code": "053620032032",
@@ -19593,8 +19819,10 @@
 "code": "053740004004",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Bergneustadt",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053740008008",
@@ -19609,8 +19837,10 @@
 "code": "053740012012",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Gummersbach",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053740016016",
@@ -19634,8 +19864,10 @@
 "code": "053740024024",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Marienheide",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053740028028",
@@ -19677,22 +19909,28 @@
 "code": "053740044044",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Waldbröl",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053740048048",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Wiehl",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053740052052",
 "kreis": "Kreis Oberbergischer Kreis",
 "gemeinde": "Wipperfürth",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:asto:ASTO Oberberg (Bergneustadt, Gummersbach, Marienheide …)"
+]
 },
 {
 "code": "053780004004",
@@ -19753,8 +19991,10 @@
 "code": "053780028028",
 "kreis": "Kreis Rheinisch-Bergischer Kreis",
 "gemeinde": "Rösrath",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:roesrath:Stadtwerke Rösrath – Abfuhrkalender"
+]
 },
 {
 "code": "053780032032",
@@ -20048,9 +20288,10 @@
 "code": "055540040040",
 "kreis": "Kreis Borken",
 "gemeinde": "Raesfeld",
-"art": "liste",
+"art": "lokal",
 "eintraege": [
-"abfallnavi:wml2:EGW Westmünsterland"
+"abfallnavi:wml2:EGW Westmünsterland",
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
 ]
 },
 {
@@ -20219,15 +20460,19 @@
 "code": "055620004004",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Castrop-Rauxel",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:castrop:EUV Stadtbetrieb Castrop-Rauxel – Leerungsabfrage"
+]
 },
 {
 "code": "055620008008",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Datteln",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
+]
 },
 {
 "code": "055620012012",
@@ -20235,15 +20480,18 @@
 "gemeinde": "Dorsten",
 "art": "lokal",
 "eintraege": [
-"abfallnavi:dorsten:Stadt Dorsten"
+"abfallnavi:dorsten:Stadt Dorsten",
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
 ]
 },
 {
 "code": "055620014014",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Gladbeck",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.zb-gladbeck.de/abfuhrkalender#einfuegen:Gladbeck (ZBG, eigener Kalender-Link)"
+]
 },
 {
 "code": "055620016016",
@@ -20258,22 +20506,28 @@
 "code": "055620020020",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Herten",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:herten:ZBH Herten – Abfallkalender"
+]
 },
 {
 "code": "055620024024",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Marl",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
+]
 },
 {
 "code": "055620028028",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Oer-Erkenschwick",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:sector27:sector27 Müllkalender (Datteln, Marl, Oer-Erkenschwick, Schermbeck …)"
+]
 },
 {
 "code": "055620032032",
@@ -20288,8 +20542,17 @@
 "code": "055620036036",
 "kreis": "Kreis Recklinghausen",
 "gemeinde": "Waltrop",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-1.ics:Waltrop Bezirk 1 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-2.ics:Waltrop Bezirk 2 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-3.ics:Waltrop Bezirk 3 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-4.ics:Waltrop Bezirk 4 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-5.ics:Waltrop Bezirk 5 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-6.ics:Waltrop Bezirk 6 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-7.ics:Waltrop Bezirk 7 (VUE Waltrop)",
+"icsURL:https://www.vue-waltrop.de/bereich-abfall/abfallkalender/#link=Bezirk-8.ics:Waltrop Bezirk 8 (VUE Waltrop)"
+]
 },
 {
 "code": "055660004004",
@@ -20751,8 +21014,10 @@
 "code": "057540044044",
 "kreis": "Kreis Gütersloh",
 "gemeinde": "Verl",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:verl:Stadt Verl – Umwelt- und Abfallkalender"
+]
 },
 {
 "code": "057540048048",
@@ -20859,7 +21124,8 @@
 "gemeinde": "Bad Driburg",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20877,7 +21143,8 @@
 "gemeinde": "Borgentreich",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20886,7 +21153,8 @@
 "gemeinde": "Brakel",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20904,7 +21172,8 @@
 "gemeinde": "Marienmünster",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20922,7 +21191,8 @@
 "gemeinde": "Steinheim",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20931,7 +21201,8 @@
 "gemeinde": "Warburg",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20940,7 +21211,8 @@
 "gemeinde": "Willebadessen",
 "art": "liste",
 "eintraege": [
-"jumomind:hox:Höxter"
+"jumomind:hox:Höxter",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -20983,8 +21255,10 @@
 "code": "057660020020",
 "kreis": "Kreis Lippe",
 "gemeinde": "Detmold",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:detmold:Stadt Detmold – Abfuhrkalender"
+]
 },
 {
 "code": "057660024024",
@@ -21191,7 +21465,8 @@
 "gemeinde": "Altenbeken",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21209,7 +21484,8 @@
 "gemeinde": "Borchen",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21218,7 +21494,8 @@
 "gemeinde": "Büren",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21227,7 +21504,8 @@
 "gemeinde": "Delbrück",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21245,7 +21523,8 @@
 "gemeinde": "Lichtenau",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21272,7 +21551,8 @@
 "gemeinde": "Bad Wünnenberg",
 "art": "liste",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21288,8 +21568,10 @@
 "code": "059130000000",
 "kreis": "Kreisfreie Stadt Dortmund",
 "gemeinde": "Dortmund",
-"art": "fehlt",
-"eintraege": []
+"art": "stadt",
+"eintraege": [
+"abfallPlusApp:de.edg.abfallapp:Dortmund (EDG)"
+]
 },
 {
 "code": "059140000000",
@@ -21322,50 +21604,66 @@
 "code": "059540004004",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Breckerfeld",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059540008008",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Ennepetal",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059540012012",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Gevelsberg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059540016016",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Hattingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis",
+"insertIT:Hattingen:Hattingen"
+]
 },
 {
 "code": "059540020020",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Herdecke",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059540024024",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Schwelm",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059540028028",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Sprockhövel",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059540032032",
@@ -21373,6 +21671,7 @@
 "gemeinde": "Wetter (Ruhr)",
 "art": "lokal",
 "eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis",
 "icsURL:https://stadtbetrieb-wetter.mein-abfallkalender.online:Wetter (Mein-Abfallkalender)"
 ]
 },
@@ -21380,8 +21679,10 @@
 "code": "059540036036",
 "kreis": "Kreis Ennepe-Ruhr-Kreis",
 "gemeinde": "Witten",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallIOGraphQL:0d74f933a2959ed0133cd88eda556714:AHE Ennepe-Ruhr-Kreis"
+]
 },
 {
 "code": "059580004004",
@@ -21389,22 +21690,27 @@
 "gemeinde": "Arnsberg",
 "art": "lokal",
 "eintraege": [
-"cTrace:arnsberg-abfallkalender:Stadt Arnsberg"
+"cTrace:arnsberg-abfallkalender:Stadt Arnsberg",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059580008008",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Bestwig",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580012012",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Brilon",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580016016",
@@ -21412,45 +21718,55 @@
 "gemeinde": "Eslohe (Sauerland)",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)"
+"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059580020020",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Hallenberg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580024024",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Marsberg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580028028",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Medebach",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580032032",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Meschede",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
-"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)"
+"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059580036036",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Olsberg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059580040040",
@@ -21458,7 +21774,8 @@
 "gemeinde": "Schmallenberg",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)"
+"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21467,29 +21784,36 @@
 "gemeinde": "Sundern (Sauerland)",
 "art": "liste",
 "eintraege": [
-"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)"
+"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059580048048",
 "kreis": "Kreis Hochsauerlandkreis",
 "gemeinde": "Winterberg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620004004",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Altena",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620008008",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Balve",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620012012",
@@ -21497,15 +21821,18 @@
 "gemeinde": "Halver",
 "art": "lokal",
 "eintraege": [
-"abfallnavi:hlv:Halver"
+"abfallnavi:hlv:Halver",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059620016016",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Hemer",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620020020",
@@ -21520,43 +21847,55 @@
 "code": "059620024024",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Iserlohn",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620028028",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Kierspe",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620032032",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Lüdenscheid",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"abfallnavi:stl:STL Lüdenscheid"
+]
 },
 {
 "code": "059620036036",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Meinerzhagen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620040040",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Menden (Sauerland)",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620044044",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Nachrodt-Wiblingwerde",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620048048",
@@ -21571,24 +21910,29 @@
 "code": "059620052052",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Plettenberg",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
-"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)"
+"abfallPlusApp:de.remondis.rheinland:Remondis (Albaching, Amerang, Attendorn …)",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "059620056056",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Schalksmühle",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059620060060",
 "kreis": "Kreis Märkischer Kreis",
 "gemeinde": "Werdohl",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059660004004",
@@ -21657,22 +22001,34 @@
 "code": "059700004004",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Bad Berleburg",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "059700008008",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Burbach",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"awido:burbach:Gemeinde Burbach"
+]
 },
 {
 "code": "059700012012",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Erndtebrück",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-1:Erndtebrück Bezirk 1 (Restmüll, Bio, Papier)",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-2:Erndtebrück Bezirk 2 (Restmüll, Bio, Papier)",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-3:Erndtebrück Bezirk 3 (Restmüll, Bio, Papier)",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=Entsorgungstermine-{%Y}-Bezirk-4:Erndtebrück Bezirk 4 (Restmüll, Bio, Papier)",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-B:Erndtebrück Gelbe Tonne Bezirk B",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-C:Erndtebrück Gelbe Tonne Bezirk C",
+"icsURL:https://www.erndtebrueck.de/leben-in-erndtebrueck/abfallentsorgung/#link=gelbe-Tonne-{%Y}-Bezirk-D:Erndtebrück Gelbe Tonne Bezirk D"
+]
 },
 {
 "code": "059700016016",
@@ -21705,15 +22061,17 @@
 "code": "059700028028",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Bad Laasphe",
-"art": "unklar",
+"art": "fehlt",
 "eintraege": []
 },
 {
 "code": "059700032032",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Netphen",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"sitepark:netphen:Stadt Netphen"
+]
 },
 {
 "code": "059700036036",
@@ -21728,8 +22086,10 @@
 "code": "059700040040",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Siegen",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:siegen:Stadt Siegen – Abfallkalender"
+]
 },
 {
 "code": "059700044044",
@@ -21818,7 +22178,8 @@
 "gemeinde": "Rüthen",
 "art": "liste",
 "eintraege": [
-"abfallAppNet:soest:Kreis Soest"
+"abfallAppNet:soest:Kreis Soest",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -21836,7 +22197,8 @@
 "gemeinde": "Warstein",
 "art": "liste",
 "eintraege": [
-"abfallAppNet:soest:Kreis Soest"
+"abfallAppNet:soest:Kreis Soest",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
@@ -22434,8 +22796,11 @@
 "code": "064330005005",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Ginsheim-Gustavsburg",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://abfallkalender.gigu.de/export/ical#post=dateFrom={%Y}-01-01&dateTo={%Y}-12-31&district=2&category=1&category=2&category=3&category=4&category=5&category=6&category=7&category=8:Ginsheim-Gustavsburg: Ginsheim",
+"icsURL:https://abfallkalender.gigu.de/export/ical#post=dateFrom={%Y}-01-01&dateTo={%Y}-12-31&district=3&category=1&category=2&category=3&category=4&category=5&category=6&category=7&category=8:Ginsheim-Gustavsburg: Gustavsburg"
+]
 },
 {
 "code": "064330006006",
@@ -22450,15 +22815,19 @@
 "code": "064330007007",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Kelsterbach",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"sitepark:kelsterbach:Stadt Kelsterbach"
+]
 },
 {
 "code": "064330008008",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Mörfelden-Walldorf",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"abfallnavi:moerfelden-walldorf:Stadt Mörfelden-Walldorf"
+]
 },
 {
 "code": "064330009009",
@@ -22473,8 +22842,10 @@
 "code": "064330010010",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Raunheim",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:staedteservice:Städteservice Raunheim Rüsselsheim"
+]
 },
 {
 "code": "064330011011",
@@ -22489,8 +22860,10 @@
 "code": "064330012012",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Rüsselsheim am Main",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:staedteservice:Städteservice Raunheim Rüsselsheim"
+]
 },
 {
 "code": "064330013013",
@@ -22636,15 +23009,24 @@
 "code": "064350001001",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Bad Orb",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"sitepark:bad-orb:Kurstadt Bad Orb"
+]
 },
 {
 "code": "064350002002",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Bad Soden-Salmünster",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Ahl_{%Y}.ics:Bad Soden-Salmünster: Ahl (Abfallkalender)",
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Bad_Soden_{%Y}.ics:Bad Soden-Salmünster: Bad Soden (Abfallkalender)",
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Hausen_{%Y}.ics:Bad Soden-Salmünster: Hausen (Abfallkalender)",
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Mernes_Alsberg_{%Y}.ics:Bad Soden-Salmünster: Mernes, Alsberg (Abfallkalender)",
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Romsthal__Wahlert__Eckardroth__Kerbersdorf__Kath.-Will__Sch%C3%B6nhof_{%Y}.ics:Bad Soden-Salmünster: Romsthal, Wahlert, Eckardroth, Kerbersdorf, Katholisch-Willenroth, Schönhof (Abfallkalender)",
+"icsURL:https://www.badsoden-salmuenster.de/d238/user_upload/Abfallkalender_Salm%C3%BCnster_{%Y}.ics:Bad Soden-Salmünster: Salmünster (Abfallkalender)"
+]
 },
 {
 "code": "064350003003",
@@ -22668,8 +23050,10 @@
 "code": "064350005005",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Brachttal",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:brachttal:Gemeinde Brachttal – Müllkalender"
+]
 },
 {
 "code": "064350006006",
@@ -22684,8 +23068,10 @@
 "code": "064350007007",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Erlensee",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:erlensee:Stadt Erlensee – Terminservice"
+]
 },
 {
 "code": "064350008008",
@@ -22754,8 +23140,12 @@
 "code": "064350015015",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Hasselroth",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-gondsroth:Hasselroth Gondsroth (Abfallkalender)",
+"icsURL:https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-neuenhasslau:Hasselroth Neuenhaßlau (Abfallkalender)",
+"icsURL:https://www.hasselroth.de/buergerportal/rathaus/abfallentsorgung/ics/#link=kalender-{%Y}-niedermittlau:Hasselroth Niedermittlau (Abfallkalender)"
+]
 },
 {
 "code": "064350016016",
@@ -22798,8 +23188,10 @@
 "code": "064350020020",
 "kreis": "Landkreis Main-Kinzig-Kreis",
 "gemeinde": "Neuberg",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://neuberg.eu/Rathaus-Politik/Verwaltung/Abfallwirtschaft/Abfallkalender/#link=.ics:Gemeinde Neuberg (Abfallkalender)"
+]
 },
 {
 "code": "064350021021",
@@ -23228,15 +23620,19 @@
 "code": "064390001001",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Aarbergen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390002002",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Bad Schwalbach",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390003003",
@@ -23260,29 +23656,37 @@
 "code": "064390005005",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Heidenrod",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390006006",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Hohenstein",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390007007",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Hünstetten",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390008008",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Idstein",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390009009",
@@ -23306,8 +23710,10 @@
 "code": "064390011011",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Niedernhausen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390012012",
@@ -23331,22 +23737,28 @@
 "code": "064390014014",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Schlangenbad",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390015015",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Taunusstein",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390016016",
 "kreis": "Landkreis Rheingau-Taunus-Kreis",
 "gemeinde": "Waldems",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsSuedwest:untertaunus:EAW Rheingau-Taunus-Kreis (Untertaunus)"
+]
 },
 {
 "code": "064390017017",
@@ -23406,22 +23818,28 @@
 "code": "064400006006",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Echzell",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://echzell.mein-abfallkalender.online:Echzell (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400007007",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Florstadt",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://florstadt.mein-abfallkalender.online:Florstadt (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400008008",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Friedberg (Hessen)",
-"art": "fehlt",
-"eintraege": []
+"art": "titel",
+"eintraege": [
+"muellmax:Efb:Kreisstadt Friedberg (Hessen)"
+]
 },
 {
 "code": "064400009009",
@@ -23445,8 +23863,10 @@
 "code": "064400011011",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Hirzenhain",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://hirzenhain.mein-abfallkalender.online:Hirzenhain (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400012012",
@@ -23470,8 +23890,10 @@
 "code": "064400014014",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Limeshain",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://limeshain.mein-abfallkalender.online:Limeshain (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400015015",
@@ -23495,8 +23917,10 @@
 "code": "064400017017",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Niddatal",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://niddatal.mein-abfallkalender.online:Niddatal (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400018018",
@@ -23511,8 +23935,10 @@
 "code": "064400019019",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Ortenberg",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://ortenberg.mein-abfallkalender.online:Ortenberg (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400020020",
@@ -23536,29 +23962,37 @@
 "code": "064400022022",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Rockenberg",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://rockenberg.mein-abfallkalender.online:Rockenberg (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400023023",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Rosbach v.d.Höhe",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jumomind:ros:Rosbach Vor Der Höhe"
+]
 },
 {
 "code": "064400024024",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Wölfersheim",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://woelfersheim.mein-abfallkalender.online:Wölfersheim (Mein-Abfallkalender)"
+]
 },
 {
 "code": "064400025025",
 "kreis": "Landkreis Wetteraukreis",
 "gemeinde": "Wöllstadt",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://woellstadt.mein-abfallkalender.online:Wöllstadt (Mein-Abfallkalender)"
+]
 },
 {
 "code": "065310001001",
@@ -23604,8 +24038,10 @@
 "code": "065310005005",
 "kreis": "Landkreis Gießen",
 "gemeinde": "Gießen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:giessen:Stadtreinigung Gießen – Abfuhrkalender"
+]
 },
 {
 "code": "065310006006",
@@ -23939,8 +24375,10 @@
 "code": "065320023023",
 "kreis": "Landkreis Lahn-Dill-Kreis",
 "gemeinde": "Wetzlar",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:wetzlar:Stadt Wetzlar – Abfuhrtermine"
+]
 },
 {
 "code": "065330001001",
@@ -24180,8 +24618,10 @@
 "code": "065340008008",
 "kreis": "Landkreis Marburg-Biedenkopf",
 "gemeinde": "Ebsdorfergrund",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:ebsdorfergrund:Gemeinde Ebsdorfergrund – Online-Abfuhrkalender"
+]
 },
 {
 "code": "065340009009",
@@ -24205,8 +24645,10 @@
 "code": "065340011011",
 "kreis": "Landkreis Marburg-Biedenkopf",
 "gemeinde": "Kirchhain",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:kirchhain:Stadt Kirchhain"
+]
 },
 {
 "code": "065340012012",
@@ -24264,8 +24706,10 @@
 "code": "065340018018",
 "kreis": "Landkreis Marburg-Biedenkopf",
 "gemeinde": "Stadtallendorf",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"sitepark:stadtallendorf:Stadt Stadtallendorf"
+]
 },
 {
 "code": "065340019019",
@@ -24280,8 +24724,10 @@
 "code": "065340020020",
 "kreis": "Landkreis Marburg-Biedenkopf",
 "gemeinde": "Weimar (Lahn)",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:weimar_lahn:Gemeinde Weimar (Lahn) – Abfallkalender"
+]
 },
 {
 "code": "065340021021",
@@ -24710,14 +25156,30 @@
 "code": "066320003003",
 "kreis": "Landkreis Hersfeld-Rotenburg",
 "gemeinde": "Bebra",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=asmushausen:Bebra: Asmushausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 2|Bebra 3:Bebra-Kernstadt, Gelbe Tonne Bezirk 4 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 2|Bebra 4:Bebra-Kernstadt, Gelbe Tonne Bezirk 3 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 1|Bebra 3|Bebra 4:Bebra-Kernstadt, Gelbe Tonne Bezirk 2 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=bebra#ohne-ort=Bebra 2|Bebra 3|Bebra 4:Bebra-Kernstadt, Gelbe Tonne Bezirk 1 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=blank:Bebra: Blankenheim und Lüdersdorf (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=boxerode:Bebra: Gut Boxerode (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=braunhausen:Bebra: Braunhausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=breit:Bebra: Breitenbach (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=gilfershausen:Bebra: Gilfershausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=iba:Bebra: Iba (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=imshausen:Bebra: Imshausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rautenhausen:Bebra: Rautenhausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=solz:Bebra: Solz (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=weite:Bebra: Weiterode (MZV)"
+]
 },
 {
 "code": "066320004004",
 "kreis": "Landkreis Hersfeld-Rotenburg",
 "gemeinde": "Breitenbach a.Herzberg",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "awido:azv-hef-rof:Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg"
 ]
@@ -24834,15 +25296,29 @@
 "code": "066320017017",
 "kreis": "Landkreis Hersfeld-Rotenburg",
 "gemeinde": "Ronshausen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=ronsh:Ronshausen und Machtlos (MZV)"
+]
 },
 {
 "code": "066320018018",
 "kreis": "Landkreis Hersfeld-Rotenburg",
 "gemeinde": "Rotenburg a.d.Fulda",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=braac:Rotenburg a.d. Fulda: Braach, Mündershausen, Ellingerode … (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=lisp:Rotenburg a.d. Fulda: Lispenhausen (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 3|Kernstadt-Ost:Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 4 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 3|Kernstadt-West:Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 4 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 4|Kernstadt-Ost:Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 3 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 2|Rotenburg 4|Kernstadt-West:Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 3 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 3|Rotenburg 4|Kernstadt-Ost:Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 2 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 1|Rotenburg 3|Rotenburg 4|Kernstadt-West:Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 2 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 2|Rotenburg 3|Rotenburg 4|Kernstadt-Ost:Rotenburg-Kernstadt West, Gelbe Tonne Bezirk 1 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=rote#ohne-ort=Rotenburg 2|Rotenburg 3|Rotenburg 4|Kernstadt-West:Rotenburg-Kernstadt Ost, Gelbe Tonne Bezirk 1 (MZV)",
+"icsURL:https://www.mzv-rotenburg-bebra.de/entsorgung.php?ort=schwa:Rotenburg a.d. Fulda: Schwarzenhasel, Erkshausen, Seifertshausen, Dankerode (MZV)"
+]
 },
 {
 "code": "066320019019",
@@ -25361,8 +25837,10 @@
 "code": "066350001001",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Allendorf (Eder)",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350002002",
@@ -25370,120 +25848,147 @@
 "gemeinde": "Bad Arolsen",
 "art": "lokal",
 "eintraege": [
-"jumomind:mymuell:MyMüll-App"
+"jumomind:mymuell:MyMüll-App",
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
 ]
 },
 {
 "code": "066350003003",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Bad Wildungen",
-"art": "unklar",
+"art": "fehlt",
 "eintraege": []
 },
 {
 "code": "066350004004",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Battenberg (Eder)",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350006006",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Burgwald",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350007007",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Diemelsee",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350008008",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Diemelstadt",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350009009",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Edertal",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350010010",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Frankenau",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350011011",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Frankenberg (Eder)",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:frankenberg:Stadt Frankenberg (Eder) – Abfallkalender"
+]
 },
 {
 "code": "066350012012",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Gemünden (Wohra)",
-"art": "unklar",
+"art": "fehlt",
 "eintraege": []
 },
 {
 "code": "066350013013",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Haina (Kloster)",
-"art": "unklar",
+"art": "fehlt",
 "eintraege": []
 },
 {
 "code": "066350014014",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Hatzfeld (Eder)",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350015015",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Korbach",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350016016",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Lichtenfels",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350017017",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Rosenthal",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350018018",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Twistetal",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350019019",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Vöhl",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066350020020",
@@ -25498,15 +26003,19 @@
 "code": "066350021021",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Waldeck",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:waldeck:Stadt Waldeck – Müllkalender"
+]
 },
 {
 "code": "066350022022",
 "kreis": "Landkreis Waldeck-Frankenberg",
 "gemeinde": "Willingen (Upland)",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"lobbe:lobbe:Lobbe (Sauerland, Märkischer Kreis, Waldeck-Frankenberg …)"
+]
 },
 {
 "code": "066360001001",
@@ -27672,8 +28181,10 @@
 "code": "071335006074",
 "kreis": "Landkreis Bad Kreuznach",
 "gemeinde": "Oberhausen an der Nahe",
-"art": "schwach",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"portalsRP:kreuznach:AWB Landkreis Bad Kreuznach"
+]
 },
 {
 "code": "071335006075",
@@ -27814,8 +28325,10 @@
 "code": "071335009010",
 "kreis": "Landkreis Bad Kreuznach",
 "gemeinde": "Becherbach bei Kirn",
-"art": "schwach",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"portalsRP:kreuznach:AWB Landkreis Bad Kreuznach"
+]
 },
 {
 "code": "071335009016",
@@ -27911,8 +28424,10 @@
 "code": "071335009073",
 "kreis": "Landkreis Bad Kreuznach",
 "gemeinde": "Oberhausen bei Kirn",
-"art": "schwach",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"portalsRP:kreuznach:AWB Landkreis Bad Kreuznach"
+]
 },
 {
 "code": "071335009077",
@@ -28476,8 +28991,10 @@
 "code": "071345001008",
 "kreis": "Landkreis Birkenfeld",
 "gemeinde": "Berschweiler bei Baumholder",
-"art": "schwach",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:birkenfeld:AWB Landkreis Birkenfeld"
+]
 },
 {
 "code": "071345001021",
@@ -28888,8 +29405,10 @@
 "code": "071345005009",
 "kreis": "Landkreis Birkenfeld",
 "gemeinde": "Berschweiler bei Kirn",
-"art": "schwach",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:birkenfeld:AWB Landkreis Birkenfeld"
+]
 },
 {
 "code": "071345005012",
@@ -31907,8 +32426,10 @@
 "code": "071405004105",
 "kreis": "Landkreis Rhein-Hunsrück-Kreis",
 "gemeinde": "Nieder Kostenz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:rhe:Rhein-Hunsrück"
+]
 },
 {
 "code": "071405004107",
@@ -31932,8 +32453,10 @@
 "code": "071405004111",
 "kreis": "Landkreis Rhein-Hunsrück-Kreis",
 "gemeinde": "Ober Kostenz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:rhe:Rhein-Hunsrück"
+]
 },
 {
 "code": "071405004120",
@@ -36418,8 +36941,10 @@
 "code": "072315008114",
 "kreis": "Landkreis Bernkastel-Wittlich",
 "gemeinde": "Schladt",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:art:A.R.T. Abfallwirtschaft Region Trier"
+]
 },
 {
 "code": "072315008116",
@@ -42473,15 +42998,19 @@
 "code": "073335007202",
 "kreis": "Landkreis Donnersbergkreis",
 "gemeinde": "Reichsthal",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:donnersberg:Abfall-App Donnersbergkreis"
+]
 },
 {
 "code": "073335007203",
 "kreis": "Landkreis Donnersbergkreis",
 "gemeinde": "Seelen",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:donnersberg:Abfall-App Donnersbergkreis"
+]
 },
 {
 "code": "073335007502",
@@ -42775,351 +43304,451 @@
 "code": "073355001003",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Bruchmühlbach-Miesau",
-"art": "ohne",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355001011",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Gerhardsbrunn",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355001201",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Lambsborn",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355001202",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Langwieden",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355001203",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Martinshöhe",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002004",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Enkenbach-Alsenborn",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002007",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Fischbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002010",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Frankenstein",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002015",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Hochspeyer",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002026",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Mehlingen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002028",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Neuhemsbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002048",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Waldleiningen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355002205",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Sembach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355008016",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Hütschenhausen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355008020",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Kottweiler-Schwanden",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355008030",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Niedermohr",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355008038",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Ramstein-Miesenbach",
-"art": "ohne",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355008044",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Steinwenden",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009005",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Erzenhausen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009006",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Eulenbis",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009019",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Kollweiler",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009024",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Mackenbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009040",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Rodenbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009043",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Schwedelbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009049",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Weilerbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355009501",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Reichenbach-Steegen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010009",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Frankelbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010013",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Heiligenmoschel",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010014",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Hirschhorn/Pfalz",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010017",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Katzweiler",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010025",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Mehlbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010029",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Niederkirchen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010033",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Olsbrücken",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010034",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Otterbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010035",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Otterberg",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010041",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Schallodenbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010042",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Schneckenhausen",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355010046",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Sulzbachtal",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011002",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Bann",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011012",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Hauptstuhl",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011018",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Kindsbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011021",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Krickenbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011022",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Landstuhl",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011023",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Linden",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011027",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Mittelbrunn",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011031",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Oberarnbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011037",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Queidersbach",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011045",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Stelzenberg",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011047",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Trippstadt",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073355011204",
 "kreis": "Landkreis Kaiserslautern",
 "gemeinde": "Schopp",
-"art": "ohne",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsRP:kaiserslautern:Abfallwirtschaft Landkreis Kaiserslautern"
+]
 },
 {
 "code": "073365008001",
@@ -43449,8 +44078,10 @@
 "code": "073365008090",
 "kreis": "Landkreis Kusel",
 "gemeinde": "Rutsweiler an der Lauter",
-"art": "schwach",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"portalsRP:kusel:Abfallwirtschaft Landkreis Kusel"
+]
 },
 {
 "code": "073365008095",
@@ -43933,8 +44564,10 @@
 "code": "073365010089",
 "kreis": "Landkreis Kusel",
 "gemeinde": "Rutsweiler am Glan",
-"art": "schwach",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"portalsRP:kusel:Abfallwirtschaft Landkreis Kusel"
+]
 },
 {
 "code": "073365010091",
@@ -44867,8 +45500,10 @@
 "code": "073385008001",
 "kreis": "Landkreis Rhein-Pfalz-Kreis",
 "gemeinde": "Altrip",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallAppNet:rhein-pfalz-kreis:Rhein-Pfalz-Kreis"
+]
 },
 {
 "code": "073385008020",
@@ -47169,8 +47804,10 @@
 "code": "081175009060",
 "kreis": "Landkreis Göppingen",
 "gemeinde": "Zell unter Aichelberg",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.awbgp:Kreis Göppingen"
+]
 },
 {
 "code": "081175010003",
@@ -47842,8 +48479,10 @@
 "code": "081210000000",
 "kreis": "Stadtkreis Heilbronn",
 "gemeinde": "Heilbronn",
-"art": "ohne",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:heilbronn:Entsorgungsbetriebe Heilbronn – Abfuhrtermine"
+]
 },
 {
 "code": "081250007007",
@@ -48614,7 +49253,7 @@
 "code": "081275008046",
 "kreis": "Landkreis Schwäbisch Hall",
 "gemeinde": "Kirchberg an der Jagst",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.cmcitymedia.shawaste:Kreis Schwäbisch-Hall"
 ]
@@ -48641,7 +49280,7 @@
 "code": "081275009056",
 "kreis": "Landkreis Schwäbisch Hall",
 "gemeinde": "Michelbach an der Bilz",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.cmcitymedia.shawaste:Kreis Schwäbisch-Hall"
 ]
@@ -50828,7 +51467,7 @@
 "code": "082355005084",
 "kreis": "Landkreis Calw",
 "gemeinde": "Bad Teinach-Zavelstein",
-"art": "ortsteile",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallinfocw:Kreis Calw"
 ]
@@ -52439,7 +53078,7 @@
 "code": "083175014146",
 "kreis": "Landkreis Ortenaukreis",
 "gemeinde": "Zell am Harmersbach",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappog:Ortenaukreis"
 ]
@@ -52667,7 +53306,7 @@
 "code": "083260052052",
 "kreis": "Landkreis Schwarzwald-Baar-Kreis",
 "gemeinde": "St. Georgen im Schwarzwald",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallIOGraphQL:30628292bdd8b43db86a48f7e0d85f85:Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis",
 "abfallPlusApp:de.k4systems.abfallsbk:Schwarzwald-Baar-Kreis"
@@ -52837,246 +53476,316 @@
 "code": "083275001004",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Bärenthal",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001008",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Buchheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001016",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Fridingen an der Donau",
-"art": "unklar",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001027",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Irndorf",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001030",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Kolbingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001036",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Mühlheim an der Donau",
-"art": "unklar",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275001041",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Renquishausen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002007",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Bubsheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002009",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Deilingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002013",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Egesheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002019",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Gosheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002029",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Königsheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002040",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Reichenbach am Heuberg",
-"art": "unklar",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275002051",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Wehingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275003018",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Geisingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275003025",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Immendingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004002",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Aldingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004005",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Balgheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004006",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Böttingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004010",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Denkingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004011",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Dürbheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004017",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Frittlingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004023",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Hausen ob Verena",
-"art": "unklar",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004033",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Mahlstetten",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275004046",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Spaichingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275005012",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Durchhausen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275005020",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Gunningen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275005048",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Talheim",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275005049",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Trossingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006038",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Neuhausen ob Eck",
-"art": "unklar",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006050",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Tuttlingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006054",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Wurmlingen",
-"art": "unklar",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006055",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Seitingen-Oberflacht",
-"art": "unklar",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006056",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Rietheim-Weilheim",
-"art": "unklar",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083275006057",
 "kreis": "Landkreis Tuttlingen",
 "gemeinde": "Emmingen-Liptingen",
-"art": "unklar",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
+]
 },
 {
 "code": "083350035035",
@@ -54037,6 +54746,7 @@
 "art": "liste",
 "eintraege": [
 "abfallIOGraphQL:15f69fab91c4cae50d9dbb5bcfd383f0:Landkreis Reutlingen",
+"abfallPlusApp:de.k4systems.abfallappmetz:Metzingen",
 "abfallPlusApp:de.k4systems.abfallkreisrt:Kreis Reutlingen"
 ]
 },
@@ -54486,7 +55196,7 @@
 "code": "084175006029",
 "kreis": "Landkreis Zollernalbkreis",
 "gemeinde": "Hausen am Tann",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallzak:Zollernalbkreis"
 ]
@@ -54513,14 +55223,16 @@
 "code": "084175006071",
 "kreis": "Landkreis Zollernalbkreis",
 "gemeinde": "Weilen unter den Rinnen",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallzak:Zollernalbkreis"
+]
 },
 {
 "code": "084175006078",
 "kreis": "Landkreis Zollernalbkreis",
 "gemeinde": "Zimmern unter der Burg",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallzak:Zollernalbkreis"
 ]
@@ -56230,7 +56942,7 @@
 "code": "084375007107",
 "kreis": "Landkreis Sigmaringen",
 "gemeinde": "Stetten am kalten Markt",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappsig:Kreis Sigmaringen"
 ]
@@ -56937,8 +57649,10 @@
 "code": "091740147147",
 "kreis": "Landkreis Dachau",
 "gemeinde": "Hilgertshausen-Tandern",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"awido:lra-dah:Landratsamt Dachau"
+]
 },
 {
 "code": "091740150150",
@@ -58990,6 +59704,7 @@
 "gemeinde": "Aschheim",
 "art": "lokal",
 "eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
 "heimatInfo:aschheim:Aschheim (Heimat-Info)"
 ]
 },
@@ -58997,8 +59712,10 @@
 "code": "091840113113",
 "kreis": "Landkreis München",
 "gemeinde": "Baierbrunn",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840114114",
@@ -59020,8 +59737,10 @@
 "code": "091840119119",
 "kreis": "Landkreis München",
 "gemeinde": "Garching b.München",
-"art": "fehlt",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840120120",
@@ -59029,6 +59748,7 @@
 "gemeinde": "Gräfelfing",
 "art": "lokal",
 "eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
 "icsURL:https://graefelfing.mein-abfallkalender.online:Gräfelfing (Mein-Abfallkalender)"
 ]
 },
@@ -59036,22 +59756,28 @@
 "code": "091840121121",
 "kreis": "Landkreis München",
 "gemeinde": "Grasbrunn",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840122122",
 "kreis": "Landkreis München",
 "gemeinde": "Grünwald",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840123123",
 "kreis": "Landkreis München",
 "gemeinde": "Haar",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840127127",
@@ -59075,43 +59801,56 @@
 "code": "091840130130",
 "kreis": "Landkreis München",
 "gemeinde": "Ismaning",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:ismaning:Gemeinde Ismaning – Abfallkalender"
+]
 },
 {
 "code": "091840131131",
 "kreis": "Landkreis München",
 "gemeinde": "Kirchheim b.München",
-"art": "fehlt",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840132132",
 "kreis": "Landkreis München",
 "gemeinde": "Neuried",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.neuried.de/abfall-und-wertstoffe/#link=Abfallkalender_{%Y}_Ost:Neuried Ost (Abfallkalender)",
+"icsURL:https://www.neuried.de/abfall-und-wertstoffe/#link=Abfallkalender_{%Y}_West:Neuried West (Abfallkalender)"
+]
 },
 {
 "code": "091840134134",
 "kreis": "Landkreis München",
 "gemeinde": "Oberhaching",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840135135",
 "kreis": "Landkreis München",
 "gemeinde": "Oberschleißheim",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840136136",
 "kreis": "Landkreis München",
 "gemeinde": "Ottobrunn",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:ottobrunn:Gemeinde Ottobrunn – Müll App"
+]
 },
 {
 "code": "091840137137",
@@ -59128,6 +59867,7 @@
 "gemeinde": "Planegg",
 "art": "lokal",
 "eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
 "icsURL:https://planegg.mein-abfallkalender.online:Planegg (Mein-Abfallkalender)"
 ]
 },
@@ -59135,8 +59875,11 @@
 "code": "091840139139",
 "kreis": "Landkreis München",
 "gemeinde": "Pullach i.Isartal",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
+"awido:pullach:Pullach im Isartal"
+]
 },
 {
 "code": "091840140140",
@@ -59167,15 +59910,20 @@
 "code": "091840144144",
 "kreis": "Landkreis München",
 "gemeinde": "Straßlach-Dingharting",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
+"icsURL:https://calendar.google.com/calendar/ical/hjkf44ehij4c5ti4bur004rpq8%40group.calendar.google.com/public/basic.ics:Straßlach-Dingharting (Abfuhrkalender)"
+]
 },
 {
 "code": "091840145145",
 "kreis": "Landkreis München",
 "gemeinde": "Taufkirchen",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
+]
 },
 {
 "code": "091840146146",
@@ -61107,8 +61855,10 @@
 "code": "092720143143",
 "kreis": "Landkreis Freyung-Grafenau",
 "gemeinde": "Sankt Oswald-Riedlhütte",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
+]
 },
 {
 "code": "092720146146",
@@ -61366,7 +62116,7 @@
 "code": "092735218119",
 "kreis": "Landkreis Kelheim",
 "gemeinde": "Biburg",
-"art": "verband",
+"art": "liste",
 "eintraege": [
 "awido:kelheim:Landkreis Kelheim"
 ]
@@ -61411,8 +62161,10 @@
 "code": "092735219113",
 "kreis": "Landkreis Kelheim",
 "gemeinde": "Aiglsbach",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"awido:kelheim:Landkreis Kelheim"
+]
 },
 {
 "code": "092735219115",
@@ -61625,7 +62377,7 @@
 "code": "092745220119",
 "kreis": "Landkreis Landshut",
 "gemeinde": "Bayerbach b.Ergoldsbach",
-"art": "verband",
+"art": "kurzform",
 "eintraege": [
 "abfallIOLegacy:04b7561b94f2cbaa171cd85bb6aa56de:Landkreis Landshut",
 "abfallPlusApp:de.k4systems.landshutlk:Kreis Landshut"
@@ -61795,8 +62547,10 @@
 "code": "092750111111",
 "kreis": "Landkreis Passau",
 "gemeinde": "Aicha vorm Wald",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
+]
 },
 {
 "code": "092750114114",
@@ -61865,7 +62619,7 @@
 "code": "092750124124",
 "kreis": "Landkreis Passau",
 "gemeinde": "Bad Griesbach i.Rottal",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
 ]
@@ -61946,8 +62700,10 @@
 "code": "092750135135",
 "kreis": "Landkreis Passau",
 "gemeinde": "Neukirchen vorm Wald",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
+]
 },
 {
 "code": "092750137137",
@@ -62142,8 +62898,10 @@
 "code": "092760115115",
 "kreis": "Landkreis Regen",
 "gemeinde": "Bayerisch Eisenstein",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
+]
 },
 {
 "code": "092760116116",
@@ -62212,7 +62970,7 @@
 "code": "092760127127",
 "kreis": "Landkreis Regen",
 "gemeinde": "Kirchdorf i.Wald",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.zawdw:AWG Donau-Wald"
 ]
@@ -63963,8 +64721,10 @@
 "code": "093740139139",
 "kreis": "Landkreis Neustadt a.d.Waldnaab",
 "gemeinde": "Neustadt a.d.Waldnaab",
-"art": "schwach",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"awido:neustadt:Neustadt a.d. Waldnaab"
+]
 },
 {
 "code": "093740162162",
@@ -65161,8 +65921,10 @@
 "code": "094640000000",
 "kreis": "Kreisfreie Stadt Hof",
 "gemeinde": "Hof",
-"art": "unklar",
-"eintraege": []
+"art": "stadt",
+"eintraege": [
+"portalsBayern:hof_stadt:AZV Hof – Stadt Hof"
+]
 },
 {
 "code": "094710111111",
@@ -65502,7 +66264,7 @@
 "code": "094720116116",
 "kreis": "Landkreis Bayreuth",
 "gemeinde": "Bad Berneck i.Fichtelgebirge",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfalllkbt:Kreis Bayreuth"
 ]
@@ -66313,7 +67075,7 @@
 "code": "094750168168",
 "kreis": "Landkreis Hof",
 "gemeinde": "Schwarzenbach a.d.Saale",
-"art": "ortsteile",
+"art": "kurzform",
 "eintraege": [
 "portalsBayern:hof_lk:AZV Hof – Landkreis Hof"
 ]
@@ -66322,7 +67084,7 @@
 "code": "094750169169",
 "kreis": "Landkreis Hof",
 "gemeinde": "Schwarzenbach a.Wald",
-"art": "ortsteile",
+"art": "kurzform",
 "eintraege": [
 "portalsBayern:hof_lk:AZV Hof – Landkreis Hof"
 ]
@@ -67287,8 +68049,10 @@
 "code": "095710193193",
 "kreis": "Landkreis Ansbach",
 "gemeinde": "Rothenburg ob der Tauber",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"awido:ansbach:Landkreis Ansbach"
+]
 },
 {
 "code": "095710196196",
@@ -69330,8 +70094,10 @@
 "code": "096720114114",
 "kreis": "Landkreis Bad Kissingen",
 "gemeinde": "Bad Kissingen",
-"art": "fehlt",
-"eintraege": []
+"art": "titel",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappbk:Bad Kissingen"
+]
 },
 {
 "code": "096720117117",
@@ -69545,7 +70311,7 @@
 "code": "096730114114",
 "kreis": "Landkreis Rhön-Grabfeld",
 "gemeinde": "Bad Neustadt a.d.Saale",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "portalsBayern:rhoen_grabfeld:Abfallwirtschaft Landkreis Rhön-Grabfeld"
 ]
@@ -69563,7 +70329,7 @@
 "code": "096730141141",
 "kreis": "Landkreis Rhön-Grabfeld",
 "gemeinde": "Bad Königshofen i.Grabfeld",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "portalsBayern:rhoen_grabfeld:Abfallwirtschaft Landkreis Rhön-Grabfeld"
 ]
@@ -71778,8 +72544,10 @@
 "code": "097610000000",
 "kreis": "Kreisfreie Stadt Augsburg",
 "gemeinde": "Augsburg",
-"art": "fehlt",
-"eintraege": []
+"art": "stadt",
+"eintraege": [
+"abfallPlusApp:de.k4systems.awa:Augsburg"
+]
 },
 {
 "code": "097620000000",
@@ -73055,8 +73823,10 @@
 "code": "097750134134",
 "kreis": "Landkreis Neu-Ulm",
 "gemeinde": "Nersingen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:nersingen:Knittel Entsorgung – Nersingen"
+]
 },
 {
 "code": "097750135135",
@@ -73071,8 +73841,10 @@
 "code": "097750139139",
 "kreis": "Landkreis Neu-Ulm",
 "gemeinde": "Elchingen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:elchingen:Knittel Entsorgung – Elchingen"
+]
 },
 {
 "code": "097750149149",
@@ -73088,15 +73860,19 @@
 "code": "097750152152",
 "kreis": "Landkreis Neu-Ulm",
 "gemeinde": "Senden",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App"
+]
 },
 {
 "code": "097750162162",
 "kreis": "Landkreis Neu-Ulm",
 "gemeinde": "Vöhringen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jumomind:mymuell:MyMüll-App"
+]
 },
 {
 "code": "097750164164",
@@ -73502,8 +74278,10 @@
 "code": "097775749164",
 "kreis": "Landkreis Ostallgäu",
 "gemeinde": "Rieden",
-"art": "schwach",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappoal:Kreis Ostallgäu"
+]
 },
 {
 "code": "097775751141",
@@ -73725,7 +74503,7 @@
 "code": "097775770163",
 "kreis": "Landkreis Ostallgäu",
 "gemeinde": "Rieden am Forggensee",
-"art": "verband",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappoal:Kreis Ostallgäu"
 ]
@@ -73743,7 +74521,7 @@
 "code": "097775772171",
 "kreis": "Landkreis Ostallgäu",
 "gemeinde": "Stötten a.Auerberg",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappoal:Kreis Ostallgäu"
 ]
@@ -73752,7 +74530,7 @@
 "code": "097775772183",
 "kreis": "Landkreis Ostallgäu",
 "gemeinde": "Rettenbach a.Auerberg",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.abfallappoal:Kreis Ostallgäu"
 ]
@@ -74881,8 +75659,10 @@
 "code": "100410100100",
 "kreis": "Landkreis Regionalverband Saarbrücken",
 "gemeinde": "Saarbrücken",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"wasteManagementServlet:saarbruecken:ZKE Saarbrücken"
+]
 },
 {
 "code": "100410511511",
@@ -74960,8 +75740,10 @@
 "code": "100410519519",
 "kreis": "Landkreis Regionalverband Saarbrücken",
 "gemeinde": "Völklingen",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"buergerportal:voelklingen:EZV Völklingen"
+]
 },
 {
 "code": "100420111111",
@@ -75030,8 +75812,10 @@
 "code": "100430111111",
 "kreis": "Landkreis Neunkirchen",
 "gemeinde": "Eppelborn",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:eppelborn:AFZE Eppelborn – Abfuhrkalender"
+]
 },
 {
 "code": "100430112112",
@@ -75098,8 +75882,34 @@
 "code": "100440112112",
 "kreis": "Landkreis Saarlouis",
 "gemeinde": "Lebach",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Aschbach.ics:Lebach: Aschbach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/D%C3%B6rsdorf.ics:Lebach: Dörsdorf (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Eidenborn.ics:Lebach: Eidenborn (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Falscheid.ics:Lebach: Falscheid (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Gresaubach.ics:Lebach: Gresaubach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Hoxberg.ics:Lebach: Hoxberg (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Knorscheid.ics:Lebach: Knorscheid (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Landsweiler.ics:Lebach: Landsweiler (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_%C3%84rztehaus.ics:Lebach Nord Ärztehaus (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_1.ics:Lebach Nord 1 (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_2.ics:Lebach Nord 2 (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_2_Am_Sch%C3%BCtzenberg.ics:Lebach Nord 2, Am Schützenberg (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_3.ics:Lebach Nord 3 (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_Gewerbegebiet.ics:Lebach Nord Gewerbegebiet (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Nord_Gewerbegebiet_H%C3%A4pelt.ics:Lebach Nord Gewerbegebiet Häpelt (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_S%C3%BCd.ics:Lebach Süd (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_S%C3%BCd_Spezial.ics:Lebach Süd Spezial (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Saarlouiser_Stra%C3%9Fe_69-89.ics:Lebach Saarlouiser Straße 69-89 (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Lebach_Weiherberg.ics:Lebach Weiherberg (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Niedersaubach.ics:Lebach: Niedersaubach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/R%C3%BCmmelbach.ics:Lebach: Rümmelbach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Steinbach.ics:Lebach: Steinbach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Thalexweiler.ics:Lebach: Thalexweiler (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Thalexweiler_-_Schellenbach.ics:Lebach: Thalexweiler - Schellenbach (Abfuhrkalender)",
+"icsURL:https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/{%Y}/Zollstock.ics:Lebach: Zollstock (Abfuhrkalender)"
+]
 },
 {
 "code": "100440113113",
@@ -75322,8 +76132,10 @@
 "code": "100460117117",
 "kreis": "Landkreis St. Wendel",
 "gemeinde": "St. Wendel",
-"art": "fehlt",
-"eintraege": []
+"art": "titel",
+"eintraege": [
+"cTrace:stwendel:Kreisstadt St. Wendel"
+]
 },
 {
 "code": "100460118118",
@@ -75375,7 +76187,7 @@
 "code": "120540000000",
 "kreis": "Kreisfreie Stadt Potsdam",
 "gemeinde": "Potsdam",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsBrandenburg:potsdam:Landeshauptstadt Potsdam"
 ]
@@ -75483,8 +76295,10 @@
 "code": "120605003192",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Rüdnitz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605003250",
@@ -75517,8 +76331,10 @@
 "code": "120605006100",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Joachimsthal",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605006296",
@@ -75533,8 +76349,10 @@
 "code": "120605011036",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Britz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011045",
@@ -75549,36 +76367,46 @@
 "code": "120605011092",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Hohenfinow",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011128",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Liepe",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011149",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Lunow-Stolzenhagen",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011172",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Niederfinow",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011176",
 "kreis": "Landkreis Barnim",
 "gemeinde": "Oderberg",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"jumomind:bdg:Barnim"
+]
 },
 {
 "code": "120605011185",
@@ -75764,7 +76592,7 @@
 "code": "120615113005",
 "kreis": "Landkreis Dahme-Spreewald",
 "gemeinde": "Alt Zauche-Wußwerk",
-"art": "ortsteile",
+"art": "kurzform",
 "eintraege": [
 "portalsBrandenburg:kaev:KAEV Niederlausitz"
 ]
@@ -77710,7 +78538,7 @@
 "code": "120685804188",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Herzberg (Mark)",
-"art": "verband",
+"art": "liste",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77729,7 +78557,7 @@
 "code": "120685804372",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Rüthnick",
-"art": "verband",
+"art": "liste",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77738,7 +78566,7 @@
 "code": "120685804437",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Vielitzsee",
-"art": "verband",
+"art": "ortsteile",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77747,7 +78575,7 @@
 "code": "120685805052",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Breddin",
-"art": "verband",
+"art": "liste",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77756,7 +78584,7 @@
 "code": "120685805109",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Dreetz",
-"art": "verband",
+"art": "liste",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77775,7 +78603,7 @@
 "code": "120685805409",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Sieversdorf-Hohenofen",
-"art": "verband",
+"art": "ortsteile",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77784,7 +78612,7 @@
 "code": "120685805417",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Stüdenitz-Schönermark",
-"art": "verband",
+"art": "ortsteile",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77793,7 +78621,7 @@
 "code": "120685805501",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Zernitz-Lohm",
-"art": "verband",
+"art": "ortsteile",
 "eintraege": [
 "sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
 ]
@@ -77802,36 +78630,46 @@
 "code": "120685807072",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Dabergotz",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
+]
 },
 {
 "code": "120685807306",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Märkisch Linden",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
+]
 },
 {
 "code": "120685807413",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Storbeck-Frankendorf",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
+]
 },
 {
 "code": "120685807425",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Temnitzquell",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
+]
 },
 {
 "code": "120685807426",
 "kreis": "Landkreis Ostprignitz-Ruppin",
 "gemeinde": "Temnitztal",
-"art": "fehlt",
-"eintraege": []
+"art": "ortsteile",
+"eintraege": [
+"sitepark:ostprignitz-ruppin:Landkreis Ostprignitz-Ruppin"
+]
 },
 {
 "code": "120685807452",
@@ -78190,7 +79028,8 @@
 "gemeinde": "Groß Pankow (Prignitz)",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:af91b65d2753a219309072837d8ea4e1:Gemeinde Groß Pankow (Landkreis Prignitz)"
+"abfallIOLegacy:af91b65d2753a219309072837d8ea4e1:Gemeinde Groß Pankow (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78199,7 +79038,8 @@
 "gemeinde": "Gumtow",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:3cefa45ab357d231891bb497253c630f:Gemeinde Gumtow (Landkreis Prignitz)"
+"abfallIOLegacy:3cefa45ab357d231891bb497253c630f:Gemeinde Gumtow (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78208,7 +79048,8 @@
 "gemeinde": "Karstädt",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:798f59a75627f5d7686dab0c7226c877:Gemeinde Karstädt (Landkreis Prignitz)"
+"abfallIOLegacy:798f59a75627f5d7686dab0c7226c877:Gemeinde Karstädt (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78217,7 +79058,8 @@
 "gemeinde": "Perleberg",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:9fb3e2e5498e825250105ee272102a7b:Stadt Perleberg (Landkreis Prignitz)"
+"abfallIOLegacy:9fb3e2e5498e825250105ee272102a7b:Stadt Perleberg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78226,7 +79068,8 @@
 "gemeinde": "Plattenburg",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:a0461612534502273c518e28d4f6f1e4:Gemeinde Plattenburg (Landkreis Prignitz)"
+"abfallIOLegacy:a0461612534502273c518e28d4f6f1e4:Gemeinde Plattenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78235,7 +79078,8 @@
 "gemeinde": "Pritzwalk",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:d92f59ef4066ae6d299478996d1d8430:Stadt Pritzwalk (Landkreis Prignitz)"
+"abfallIOLegacy:d92f59ef4066ae6d299478996d1d8430:Stadt Pritzwalk (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78244,7 +79088,8 @@
 "gemeinde": "Wittenberge",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:b870ecfa6e1f882680758d374ba3fa2d:Stadt Wittenberge (Landkreis Prignitz)"
+"abfallIOLegacy:b870ecfa6e1f882680758d374ba3fa2d:Stadt Wittenberge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78253,7 +79098,8 @@
 "gemeinde": "Bad Wilsnack",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)"
+"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78262,7 +79108,8 @@
 "gemeinde": "Breese",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)"
+"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78271,7 +79118,8 @@
 "gemeinde": "Legde/Quitzöbel",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)"
+"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78280,7 +79128,8 @@
 "gemeinde": "Rühstädt",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)"
+"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78289,7 +79138,8 @@
 "gemeinde": "Weisen",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)"
+"abfallIOLegacy:1e9592418582666e2a5d1c62b2683435:Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78298,7 +79148,8 @@
 "gemeinde": "Cumlosen",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)"
+"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78307,7 +79158,8 @@
 "gemeinde": "Lanz",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)"
+"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78316,16 +79168,18 @@
 "gemeinde": "Lenzen (Elbe)",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)"
+"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "120705005246",
 "kreis": "Landkreis Prignitz",
 "gemeinde": "Lenzerwische",
-"art": "ortsteile",
+"art": "verband",
 "eintraege": [
-"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)"
+"abfallIOLegacy:bb937857acd951dfc8de5be8b8a49f6d:Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78334,34 +79188,38 @@
 "gemeinde": "Gerdshagen",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)"
+"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "120705006153",
 "kreis": "Landkreis Prignitz",
 "gemeinde": "Halenbeck-Rohlsdorf",
-"art": "ortsteile",
+"art": "verband",
 "eintraege": [
-"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)"
+"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "120705006222",
 "kreis": "Landkreis Prignitz",
 "gemeinde": "Kümmernitztal",
-"art": "ortsteile",
+"art": "verband",
 "eintraege": [
-"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)"
+"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "120705006266",
 "kreis": "Landkreis Prignitz",
 "gemeinde": "Marienfließ",
-"art": "ortsteile",
+"art": "verband",
 "eintraege": [
-"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)"
+"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78370,7 +79228,8 @@
 "gemeinde": "Meyenburg",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)"
+"abfallIOLegacy:4638881e7bebe6869e2e86de5f8aa09e:Amt Meyenburg (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78379,16 +79238,18 @@
 "gemeinde": "Berge",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)"
+"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "120705009145",
 "kreis": "Landkreis Prignitz",
 "gemeinde": "Gülitz-Reetz",
-"art": "ortsteile",
+"art": "verband",
 "eintraege": [
-"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)"
+"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78397,7 +79258,8 @@
 "gemeinde": "Pirow",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)"
+"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78406,7 +79268,8 @@
 "gemeinde": "Putlitz",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)"
+"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -78415,7 +79278,8 @@
 "gemeinde": "Triglitz",
 "art": "liste",
 "eintraege": [
-"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)"
+"abfallIOLegacy:4f06df48f154246415e57ce12b26abe5:Amt Putlitz/Berge (Landkreis Prignitz)",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -79736,8 +80600,10 @@
 "code": "130715158173",
 "kreis": "Landkreis Mecklenburgische Seenplatte",
 "gemeinde": "Kuckssee",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"sitepark:seenplatte:Landkreis Mecklenburgische Seenplatte"
+]
 },
 {
 "code": "130715159003",
@@ -82272,8 +83138,10 @@
 "code": "130735362040",
 "kreis": "Landkreis Vorpommern-Rügen",
 "gemeinde": "Insel Hiddensee",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"abfallPlusApp:de.k4systems.abfallappvorue:Kreis Vorpommern-Rügen"
+]
 },
 {
 "code": "130735362045",
@@ -82360,8 +83228,10 @@
 "code": "130740087087",
 "kreis": "Landkreis Nordwestmecklenburg",
 "gemeinde": "Wismar",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:wismar:EVB Wismar – Abfuhrtermine"
+]
 },
 {
 "code": "130745451002",
@@ -82646,7 +83516,7 @@
 "code": "130745455001",
 "kreis": "Landkreis Nordwestmecklenburg",
 "gemeinde": "Alt Meteln",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMV:nwm:Landkreis Nordwestmecklenburg (Abfallwirtschaft)"
 ]
@@ -82745,8 +83615,10 @@
 "code": "130745455064",
 "kreis": "Landkreis Nordwestmecklenburg",
 "gemeinde": "Pokrent",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsMV:nwm:Landkreis Nordwestmecklenburg (Abfallwirtschaft)"
+]
 },
 {
 "code": "130745455072",
@@ -83544,7 +84416,7 @@
 "code": "130755555025",
 "kreis": "Landkreis Vorpommern-Greifswald",
 "gemeinde": "Dargelin",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMV:vevg:VEVG Vorpommern-Greifswald"
 ]
@@ -83562,7 +84434,7 @@
 "code": "130755555050",
 "kreis": "Landkreis Vorpommern-Greifswald",
 "gemeinde": "Hinrichshagen",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMV:vevg:VEVG Vorpommern-Greifswald"
 ]
@@ -83760,7 +84632,7 @@
 "code": "130755557060",
 "kreis": "Landkreis Vorpommern-Greifswald",
 "gemeinde": "Kemnitz",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMV:vevg:VEVG Vorpommern-Greifswald"
 ]
@@ -84229,7 +85101,7 @@
 "code": "130755563041",
 "kreis": "Landkreis Vorpommern-Greifswald",
 "gemeinde": "Groß Kiesow",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMV:vevg:VEVG Vorpommern-Greifswald"
 ]
@@ -84553,7 +85425,7 @@
 "code": "130765655075",
 "kreis": "Landkreis Ludwigslust-Parchim",
 "gemeinde": "Kreien",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "gemosWasteBox:lwl:Ludwigslust-Parchim (ALP)"
 ]
@@ -85462,8 +86334,10 @@
 "code": "130765668007",
 "kreis": "Landkreis Ludwigslust-Parchim",
 "gemeinde": "Barnin",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"gemosWasteBox:lwl:Ludwigslust-Parchim (ALP)"
+]
 },
 {
 "code": "130765668023",
@@ -85496,7 +86370,7 @@
 "code": "130765668029",
 "kreis": "Landkreis Ludwigslust-Parchim",
 "gemeinde": "Demen",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "gemosWasteBox:lwl:Ludwigslust-Parchim (ALP)"
 ]
@@ -85523,8 +86397,10 @@
 "code": "130765668044",
 "kreis": "Landkreis Ludwigslust-Parchim",
 "gemeinde": "Gneven",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"gemosWasteBox:lwl:Ludwigslust-Parchim (ALP)"
+]
 },
 {
 "code": "130765668080",
@@ -85548,8 +86424,10 @@
 "code": "130765668112",
 "kreis": "Landkreis Ludwigslust-Parchim",
 "gemeinde": "Pinnow",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"gemosWasteBox:lwl:Ludwigslust-Parchim (ALP)"
+]
 },
 {
 "code": "130765668113",
@@ -87929,7 +88807,7 @@
 "code": "146265206500",
 "kreis": "Landkreis Görlitz",
 "gemeinde": "Schönau-Berzdorf a.d.Eigen",
-"art": "verband",
+"art": "kurzform",
 "eintraege": [
 "abfallPlusApp:de.k4systems.lkgr:Landkreis Görlitz"
 ]
@@ -89110,7 +89988,8 @@
 "gemeinde": "Bad Düben",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89119,7 +89998,8 @@
 "gemeinde": "Belgern-Schildau",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89128,7 +90008,8 @@
 "gemeinde": "Cavertitz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89137,7 +90018,8 @@
 "gemeinde": "Dahlen",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89146,7 +90028,8 @@
 "gemeinde": "Delitzsch",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89155,15 +90038,18 @@
 "gemeinde": "Doberschütz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
 "code": "147300110110",
 "kreis": "Landkreis Nordsachsen",
 "gemeinde": "Eilenburg",
-"art": "unklar",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"portalsNRW:eilenburg:Stadt Eilenburg – Abfallkalender"
+]
 },
 {
 "code": "147300160160",
@@ -89171,7 +90057,8 @@
 "gemeinde": "Laußig",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89180,7 +90067,8 @@
 "gemeinde": "Liebschützberg",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89189,7 +90077,8 @@
 "gemeinde": "Löbnitz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89198,7 +90087,8 @@
 "gemeinde": "Mockrehna",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89207,7 +90097,8 @@
 "gemeinde": "Mügeln",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89216,7 +90107,8 @@
 "gemeinde": "Naundorf",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89225,7 +90117,8 @@
 "gemeinde": "Oschatz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89234,7 +90127,8 @@
 "gemeinde": "Rackwitz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89243,7 +90137,8 @@
 "gemeinde": "Schkeuditz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89252,7 +90147,8 @@
 "gemeinde": "Taucha",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89261,7 +90157,8 @@
 "gemeinde": "Wermsdorf",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89270,7 +90167,8 @@
 "gemeinde": "Wiedemar",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89279,7 +90177,8 @@
 "gemeinde": "Arzberg",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89288,7 +90187,8 @@
 "gemeinde": "Beilrode",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89297,7 +90197,8 @@
 "gemeinde": "Dommitzsch",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89306,7 +90207,8 @@
 "gemeinde": "Elsnig",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89315,7 +90217,8 @@
 "gemeinde": "Trossin",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89324,7 +90227,8 @@
 "gemeinde": "Krostitz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89333,7 +90237,8 @@
 "gemeinde": "Schönwölkau",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89342,7 +90247,8 @@
 "gemeinde": "Dreiheide",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89351,7 +90257,8 @@
 "gemeinde": "Torgau",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89360,7 +90267,8 @@
 "gemeinde": "Jesewitz",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89369,7 +90277,8 @@
 "gemeinde": "Zschepplin",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen"
+"abfallIOGraphQL:2085afd95285e645e15ee9623d0c5172:ASG Nordsachsen",
+"abfallPlusApp:de.abfallwecker:Abfall+ Wecker (Tuttlingen, Prignitz, Osterode am Harz …)"
 ]
 },
 {
@@ -89826,8 +90735,10 @@
 "code": "150835053275",
 "kreis": "Landkreis Börde",
 "gemeinde": "Harbke",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"hausmuellInfo:boerde:Kommunalservice Landkreis Börde (KsB)"
+]
 },
 {
 "code": "150835053320",
@@ -92119,7 +93030,7 @@
 "code": "160635006006",
 "kreis": "Landkreis Wartburgkreis",
 "gemeinde": "Berka v.d.Hainich",
-"art": "grundname",
+"art": "kurzform",
 "eintraege": [
 "hausmuellInfo:azv:AZV Wartburgkreis (mit Eisenach)"
 ]
@@ -92542,7 +93453,7 @@
 "code": "160650085085",
 "kreis": "Landkreis Kyffhäuserkreis",
 "gemeinde": "Kyffhäuserland",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "portalsMitte:kyffhaeuser:Kyffhäuserkreis (Abfallwirtschaft)"
 ]
@@ -94412,14 +95323,16 @@
 "code": "160715051022",
 "kreis": "Landkreis Weimarer Land",
 "gemeinde": "Großheringen",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"muellabfuhrDeutschland:194:Weimarer Land (Müllabfuhr Deutschland)"
+]
 },
 {
 "code": "160715051064",
 "kreis": "Landkreis Weimarer Land",
 "gemeinde": "Niedertrebra",
-"art": "ortsteile",
+"art": "liste",
 "eintraege": [
 "muellabfuhrDeutschland:194:Weimarer Land (Müllabfuhr Deutschland)"
 ]
@@ -94437,8 +95350,10 @@
 "code": "160715051083",
 "kreis": "Landkreis Weimarer Land",
 "gemeinde": "Schmiedehausen",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"muellabfuhrDeutschland:194:Weimarer Land (Müllabfuhr Deutschland)"
+]
 },
 {
 "code": "160715053005",
@@ -95731,8 +96646,10 @@
 "code": "160755004063",
 "kreis": "Landkreis Saale-Orla-Kreis",
 "gemeinde": "Löhma",
-"art": "fehlt",
-"eintraege": []
+"art": "grundname",
+"eintraege": [
+"awido:zaso:Zweckverband Abfallwirtschaft Saale-Orla"
+]
 },
 {
 "code": "160755004068",
@@ -95846,8 +96763,10 @@
 "code": "160755005056",
 "kreis": "Landkreis Saale-Orla-Kreis",
 "gemeinde": "Lausnitz b.Neustadt an der Orla",
-"art": "fehlt",
-"eintraege": []
+"art": "kurzform",
+"eintraege": [
+"awido:zaso:Zweckverband Abfallwirtschaft Saale-Orla"
+]
 },
 {
 "code": "160755005074",
@@ -96240,8 +97159,10 @@
 "code": "160765004043",
 "kreis": "Landkreis Greiz",
 "gemeinde": "Linda b.Weida",
-"art": "fehlt",
-"eintraege": []
+"art": "liste",
+"eintraege": [
+"portalsMitte:awvot:AWV Ostthüringen (Gera, Greiz)"
+]
 },
 {
 "code": "160765004055",

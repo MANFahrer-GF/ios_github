@@ -142,6 +142,12 @@ enum PlaceMapIndex {
         case "portal_abgeschaltet":
             return L10n.t("Das Portal des Entsorgers ist derzeit abgeschaltet – es gibt keinen abrufbaren Online-Kalender.",
                           "The provider's portal is currently offline – there is no online calendar to fetch.")
+        case "nur_pdf":
+            return L10n.t("Bei unserer Prüfung gab es die Termine hier nur als PDF oder auf Papier – einen abrufbaren Online-Kalender haben wir nicht gefunden.",
+                          "When we checked, the dates here were only available as a PDF or on paper – we found no online calendar to fetch.")
+        case "nicht_gefuehrt":
+            return L10n.t("Der Entsorger führt diese Gemeinde in seinem Online-Kalender nicht.",
+                          "The waste company does not list this municipality in its online calendar.")
         case "kein_eintrag":
             return L10n.t("Für diesen Kreis gibt es noch keinen Entsorger im Katalog.",
                           "There is no provider for this district in the catalogue yet.")

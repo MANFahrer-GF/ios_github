@@ -204,6 +204,97 @@ final class DonnersbergTests: XCTestCase {
         } catch {}
     }
 
+    // MARK: - Landkreis Kaiserslautern (derselbe Dienst, Mandant KL)
+
+    // /web/KL/de/kalender (gekürzt, November 2026)
+    static let placesKL = #"""
+    <ul class="orte-liste" id="orte-liste">
+                                <li><a href="/web/KL/de/kalender/orte/Albersbach/strassen">Albersbach</a></li>
+                                            <li><a href="/web/KL/de/kalender/orte/Breitenau_Maudensteig/strassen">Breitenau, Maudensteig</a></li>
+                                            <li><a href="/web/KL/de/kalender/Dudenbacherhof/muellarten">Dudenbacherhof</a></li>
+                                            <li><a href="/web/KL/de/kalender/orte/Landstuhl-Stadt/strassen">Landstuhl-Stadt</a></li>
+    </ul>
+    """#
+
+    // /2026/KL/Dudenbacherhof/ics/de?… (gekürzt, November 2026)
+    static let icsKL = """
+    BEGIN:VCALENDAR\r
+    VERSION:2.0\r
+    PRODID:-//Softwareentwicklung-Roth//abfallkalender_online_1_0//DE\r
+    BEGIN:VEVENT\r
+    UID:20261112-1912302503445-2735631775161507942@abfallkalender_online.s\r
+     oftwareentwicklung-roth.de\r
+    DTSTAMP:20261110T202908Z\r
+    DTSTART;VALUE=DATE:20261112\r
+    DTEND;VALUE=DATE:20261113\r
+    LOCATION:Dudenbacherhof\r
+    SUMMARY:Biomüll\r
+    TRANSP:TRANSPARENT\r
+    CLASS:PUBLIC\r
+    END:VEVENT\r
+    BEGIN:VEVENT\r
+    UID:20261223-1912302503445-2735631775161507942@abfallkalender_online.s\r
+     oftwareentwicklung-roth.de\r
+    DTSTAMP:20261110T202908Z\r
+    DTSTART;VALUE=DATE:20261223\r
+    DTEND;VALUE=DATE:20261224\r
+    LOCATION:Dudenbacherhof\r
+    SUMMARY:Papiermüll\\nVorverlegt wg. Weihnachten\r
+    TRANSP:TRANSPARENT\r
+    CLASS:PUBLIC\r
+    END:VEVENT\r
+    END:VCALENDAR\r
+
+    """
+
+    func testKaiserslauternPlacesAndNote() {
+        let options = RheinlandPfalzPortalsProvider.donnersbergPlaces(Self.placesKL)
+        XCTAssertEqual(options.map(\.title), ["Albersbach", "Breitenau, Maudensteig", "Dudenbacherhof", "Landstuhl-Stadt"])
+        XCTAssertEqual(options.map(\.id), ["orte/Albersbach", "orte/Breitenau_Maudensteig", "Dudenbacherhof", "orte/Landstuhl-Stadt"])
+        let pickups = RheinlandPfalzPortalsProvider.donnersbergPickups(Self.icsKL, calendar: calendar)
+        XCTAssertEqual(pickups.map(\.name), ["Biomüll", "Papiermüll"], "Hinweis „Vorverlegt wg. Weihnachten“ wird abgeschnitten")
+        XCTAssertEqual(pickups.map { WasteCategory.classify($0.name) }, [.organic, .paper])
+        XCTAssertEqual(RheinlandPfalzPortalsProvider(service: "kaiserslautern").displayName, "Landkreis Kaiserslautern")
+    }
+
+    /// Der Mandant steht im Pfad: Kaiserslautern fragt `KL`, nie `KIB`.
+    func testKaiserslauternFlowAgainstStub() async throws {
+        var provider = RheinlandPfalzPortalsProvider(service: "kaiserslautern", client: HTTPClient(session: DonnersbergStub.session()))
+        provider.referenceDate = Days.parse("2026-11-10", calendar: calendar)
+        let places = try await provider.nextStep(after: [])
+        let village = try XCTUnwrap(places?.options.first { $0.title == "Dudenbacherhof" })
+        let villageDone = try await provider.nextStep(after: [village])
+        XCTAssertNil(villageDone)
+        let pickups = try await provider.pickups(for: [village], calendar: calendar)
+        XCTAssertEqual(pickups.count, 2)
+        let requests = DonnersbergStub.requests()
+        let base = "https://abfallapp.softwareentwicklung-roth.de"
+        XCTAssertTrue(requests.contains { $0.url == "\(base)/web/KL/de/kalender" })
+        XCTAssertTrue(requests.contains { $0.url == "\(base)/web/KL/de/kalender/Dudenbacherhof/muellarten" })
+        XCTAssertTrue(requests.contains { $0.url.hasPrefix("\(base)/2026/KL/Dudenbacherhof/ics/de?") })
+        XCTAssertFalse(requests.contains { $0.url.contains("/KIB/") }, "\(requests.map(\.url))")
+    }
+
+    func testLiveKaiserslautern() async throws {
+        guard ProcessInfo.processInfo.environment["TONNE_LIVE"] == "1" else { throw XCTSkip("nur live") }
+        let provider = RheinlandPfalzPortalsProvider(service: "kaiserslautern")
+        let places = try await provider.nextStep(after: [])
+        XCTAssertGreaterThan(places?.options.count ?? 0, 70)
+
+        let village = try XCTUnwrap(places?.options.first { $0.title == "Dudenbacherhof" })
+        let villagePickups = try await provider.pickups(for: [village], calendar: calendar)
+        XCTAssertGreaterThanOrEqual(villagePickups.count, 5)
+        XCTAssertTrue(villagePickups.allSatisfy { WasteCategory.classify($0.name) != .other }, "\(villagePickups.map(\.name))")
+        print("Kaiserslautern Dudenbacherhof:", villagePickups.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+
+        let town = try XCTUnwrap(places?.options.first { $0.title == "Landstuhl-Stadt" })
+        let streets = try await provider.nextStep(after: [town])
+        let street = try XCTUnwrap(streets?.options.first)
+        let pickups = try await provider.pickups(for: [town, street], calendar: calendar)
+        XCTAssertGreaterThanOrEqual(pickups.count, 5)
+        print("Kaiserslautern Landstuhl-Stadt, \(street.title):", pickups.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+    }
+
     func testLiveDonnersberg() async throws {
         guard ProcessInfo.processInfo.environment["TONNE_LIVE"] == "1" else { throw XCTSkip("nur live") }
         let provider = RheinlandPfalzPortalsProvider(service: "donnersberg")
@@ -257,9 +348,11 @@ final class DonnersbergStub: URLProtocol {
         var body: String?
         if path.hasPrefix("/web/") && !accept.contains("text/html") { body = nil }
         else if path == "/web/KIB/de/kalender" { body = DonnersbergTests.places }
+        else if path == "/web/KL/de/kalender" { body = DonnersbergTests.placesKL }
         else if path.hasSuffix("/strassen") { body = DonnersbergTests.streets }
         else if path.hasSuffix("/muellarten") { body = DonnersbergTests.types }
         else if path.hasPrefix("/2026/KIB/") && path.hasSuffix("/ics/de") { body = DonnersbergTests.ics }
+        else if path.hasPrefix("/2026/KL/") && path.hasSuffix("/ics/de") { body = DonnersbergTests.icsKL }
         let response = HTTPURLResponse(url: request.url!, statusCode: body == nil ? 404 : 200, httpVersion: "HTTP/1.1",
                                        headerFields: ["Content-Type": "text/html; charset=UTF-8"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)

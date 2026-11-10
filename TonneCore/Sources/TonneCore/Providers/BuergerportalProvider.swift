@@ -11,6 +11,8 @@ public struct BuergerportalProvider: WasteProvider {
         "bedburg": "https://buerger-portal-bedburg.azurewebsites.net/api",
         "klevestadt": "https://buerger-portal-klevestadt.azurewebsites.net/api",
         "neu_ulm": "https://buerger-portal-neuulmlandkreis.azurewebsites.net/api",
+        // EZV Völklingen: Bürgerportal von ezv-vk.de (11.11.2026)
+        "voelklingen": "https://buerger-portal-voelklingen.azurewebsites.net/api",
     ]
 
     public let kind: ProviderKind = .buergerportal
