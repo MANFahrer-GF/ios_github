@@ -40,30 +40,29 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
 
-### Neu in dieser Version – 2.0.8
+### Neu in dieser Version – 2.0.9
 
 ```
-Mein Tonnendienst
-Du bist nur zeitweise für die Tonnen zuständig? Lege je Standort deine Zeiträume fest, auf Wunsch jedes Jahr wieder. Außerhalb davon bleibt die App still und zeigt „Du bist nicht dran“.
+Jede Müllart einzeln wählen
+Beim Einrichten siehst du jetzt jede Müllart deines Entsorgers mit eigenem Schalter. Alle sind vorab eingeschaltet, abwählen entscheidest du selbst. So fehlt zum Beispiel der Grünschnitt nicht mehr im Kalender.
 
-Mehr Straßen, bessere Suche
-Auswahllisten sind jetzt vollständig, auch in großen Städten. Die Suche findet Straßen zuverlässiger, zum Beispiel mit „Str.“ statt „Straße“. Stadtteile, die der Entsorger nur als Ganzes führt, stehen oben in der Liste.
+Neu dabei
+• Frechen liefert Termine je Straße, auch für die Leerung alle vier Wochen
 
 Wieder da
-• Landkreis Cham, AZV Wartburgkreis und Nordfriesland liefern wieder Termine
-• Holzheim und weitere Orte im Landkreis Neu-Ulm finden ihre Straßen
+• Leipzig liefert wieder Termine
 
-Absturzbericht
-Nach einem Absturz bietet die App einen technischen Bericht an. Er geht nur als Mail raus, die du selbst absendest.
+Zuverlässiger
+Antwortet ein Portal einmal nicht vollständig, bleiben deine kommenden Termine stehen.
 ```
 
 ### Werbetext (optional, max. 170 Zeichen)
 
 ```
-Neu: Mein Tonnendienst – Erinnerungen nur, wenn du dran bist. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.
+Neu: Jede Müllart mit eigenem Schalter, damit keine Abfuhr fehlt. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.
 ```
 
-(162 Zeichen, seit 2.0.8. Vorher: „Neu: „Diesmal nicht rausstellen“ – und gemacht fürs iPhone Duo. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Eine neue Version übernimmt den Werbetext nicht, er muss jedes Mal neu eingetragen werden. Der Werbetext lässt sich jederzeit ohne neue Version ändern.)
+(166 Zeichen, seit 2.0.9. Vorher: „Neu: Mein Tonnendienst – Erinnerungen nur, wenn du dran bist. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Eine neue Version übernimmt den Werbetext nicht, er muss jedes Mal neu eingetragen werden. Der Werbetext lässt sich jederzeit ohne neue Version ändern.)
 
 ### Schlüsselwörter (Pflicht, max. 100 Zeichen, ohne Leerzeichen nach Kommas)
 

@@ -10,6 +10,7 @@ import Foundation
 /// - `enni`: ENNI Moers – Straßenliste, ICS je Straße
 /// - `espelkamp`: Stadt Espelkamp (Kreis Minden-Lübbecke) – iKISS wie Kreis Herford, ohne Ortswahl
 /// - `prezero`: PreZero Bad Oeynhausen – Straßenliste + Hausnummer, ICS je Jahr
+/// - `frechen`: Stadtbetrieb Frechen – Straßenliste, Jahresseite je Straße (HTML)
 public struct NRWPortalsProvider: WasteProvider {
     public let kind: ProviderKind = .portalsNRW
     public let serviceKey: String
@@ -27,8 +28,17 @@ public struct NRWPortalsProvider: WasteProvider {
         "awista": "AWISTA Düsseldorf", "mags": "mags Mönchengladbach", "awg": "AWG Wuppertal",
         "rsag": "RSAG Rhein-Sieg", "gelsendienste": "Gelsendienste", "best": "BEST Bottrop",
         "herford": "Kreis Herford","enni": "ENNI Moers",
-        "espelkamp": "Stadt Espelkamp", "prezero": "PreZero Bad Oeynhausen",
+        "espelkamp": "Stadt Espelkamp", "prezero": "PreZero Bad Oeynhausen", "frechen": "Stadtbetrieb Frechen",
     ]
+
+    /// Der Frechen-Hinweis erklärt die Auswahl und ist keine Einschränkung des Anbieters („Geht mein Ort?“).
+    public var restriction: String? { nil }
+
+    public var notice: String? {
+        guard serviceKey == "frechen" else { return nil }
+        return L10n.t("Restmüll steht doppelt im Kalender: alle 14 Tage und alle 4 Wochen. Lass nur die Leerung eingeschaltet, die du hast – die Großcontainer brauchst du nur in einer Wohnanlage.",
+                      "General waste is listed twice: every 14 days and every 4 weeks. Keep only the rhythm you have switched on – the large containers only matter in an apartment complex.")
+    }
 
     /// abisapp-Portale: Straßenliste im `<select name="street">`, ICS über `format=ical`.
     static let abisapp: [String: (url: String, city: String)] = [
@@ -62,6 +72,7 @@ public struct NRWPortalsProvider: WasteProvider {
         case "herford", "espelkamp": return try await herfordStep(selections)
         case "enni": return try await enniStep(selections)
         case "prezero": return try await prezeroStep(selections)
+        case "frechen": return try await frechenStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -77,6 +88,7 @@ public struct NRWPortalsProvider: WasteProvider {
         case "herford", "espelkamp": result = try await herfordPickups(selections, calendar: calendar)
         case "enni": result = try await enniPickups(selections, calendar: calendar)
         case "prezero": result = try await prezeroPickups(selections, calendar: calendar)
+        case "frechen": result = try await frechenPickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
@@ -96,6 +108,7 @@ public struct NRWPortalsProvider: WasteProvider {
         case "enni": return join("Moers", Array(titles.prefix(1)))
         case "espelkamp": return join("Espelkamp", Array(titles.prefix(1)))
         case "prezero": return join("Bad Oeynhausen", Array(titles.prefix(2)))
+        case "frechen": return join("Frechen", Array(titles.prefix(1)))
         default: return titles.filter { !$0.isEmpty }.joined(separator: ", ")
         }
     }
@@ -513,10 +526,11 @@ public struct NRWPortalsProvider: WasteProvider {
         let html = HTTPClient.text(from: try await client.postForm(Self.prezeroURL, fields: [("street", selections[0].id), ("houseNo", number)]))
         guard let path = Self.prezeroDownloadPath(html) else { throw ProviderError.noDataGeneric }
         let year = calendar.component(.year, from: referenceDate ?? Date())
-        var result: [Pickup] = []
-        for target in [year, year + 1] {
-            guard let data = try? await client.postForm("https://abfallkalender.prezero.network\(path)/\(target)", fields: []) else { continue }
-            result += Self.prezeroPickups(HTTPClient.text(from: data), calendar: calendar)
+        // Das laufende Jahr muss kommen (Abruffehler nicht als „keine Termine mehr“ werten), das nächste darf fehlen.
+        let base = "https://abfallkalender.prezero.network\(path)"
+        var result = Self.prezeroPickups(HTTPClient.text(from: try await client.postForm("\(base)/\(year)", fields: [])), calendar: calendar)
+        if let next = try? await client.postForm("\(base)/\(year + 1)", fields: []) {
+            result += Self.prezeroPickups(HTTPClient.text(from: next), calendar: calendar)
         }
         return result
     }
@@ -530,5 +544,64 @@ public struct NRWPortalsProvider: WasteProvider {
     static func prezeroPickups(_ ics: String, calendar: Calendar) -> [Pickup] {
         ICS.parse(stripAlarms(ics), calendar: calendar).filter { !$0.summary.contains("Reinigung") }
             .map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary)) }
+    }
+
+    // MARK: - Stadtbetrieb Frechen
+
+    private static let frechenURL = "https://www.stadtbetrieb-frechen.de/service/abfallkalender"
+
+    private func frechenStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        guard selections.isEmpty else { return nil }
+        let options = Self.frechenStreets(try await client.string(Self.frechenURL))
+        guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+        return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+    }
+
+    /// Straßen der Übersichtsseite: `<a href="/service/abfallkalender/aachener-strasse-1/2026-11"><em>A</em>achener Straße</a>`.
+    static func frechenStreets(_ html: String) -> [SelectionOption] {
+        HTMLText.matches(#"<a[^>]*href="/service/abfallkalender/([a-z0-9-]+)/\d{4}-\d{1,2}"[^>]*>([\s\S]*?)</a>"#, in: html).map { groups in
+            SelectionOption(id: groups[0], title: NameCleaner.clean(HTMLText.decodeEntities(HTMLText.stripTags(groups[1]))))
+        }
+    }
+
+    /// Die Jahresseite je Straße, für dieses und das nächste Jahr. Der iCal-Abruf daneben taugt nicht: Er nennt Restmüll
+    /// auch an Feiertagen, an denen niemand kommt, und kennt die Leerung alle vier Wochen nicht.
+    private func frechenPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard let street = selections.first?.id else { throw ProviderError.selectAddressFirst }
+        let year = calendar.component(.year, from: referenceDate ?? Date())
+        // Das laufende Jahr muss kommen: Ein Abruffehler darf nicht als „keine Termine mehr“ durchgehen,
+        // sonst löschte der Abgleich die gespeicherten. Das nächste Jahr ist erst spät im Jahr veröffentlicht
+        // (vorher Umleitung auf die Übersicht, dort steht kein Termin) und darf fehlen.
+        var result = Self.frechenPickups(try await client.string("\(Self.frechenURL)/\(street)/\(year)"), calendar: calendar)
+        if let next = try? await client.string("\(Self.frechenURL)/\(street)/\(year + 1)") {
+            result += Self.frechenPickups(next, calendar: calendar)
+        }
+        return result
+    }
+
+    /// Zusatzzeichen am Termin: ● Restmülltonne mit Leerung alle vier Wochen, ■ Großcontainer mit Leerung alle 14 Tage,
+    /// 🎄 Weihnachtsbäume. Sie werden zu eigenen Müllarten, damit jeder Haushalt seine Leerung wählen kann.
+    static let frechenAddons: [String: String] = [
+        "rm_4w": "Restmüll 4-wöchentlich", "gr_14t": "Großcontainer Restmüll 14-täglich", "wa": "Weihnachtsbäume",
+    ]
+
+    static func frechenPickups(_ html: String, calendar: Calendar) -> [Pickup] {
+        var result: [Pickup] = []
+        for cell in HTMLText.matches(#"<td[^>]*rel="(\d{4}-\d{2}-\d{2})"[^>]*>([\s\S]*?)</td>"#, in: html) {
+            guard let date = Days.parse(cell[0], calendar: calendar) else { continue }
+            for entry in cell[1].components(separatedBy: "calendar--disposaltype ").dropFirst() {
+                guard let title = HTMLText.firstMatch(#"title="([^"]+)""#, in: entry, group: 1) else { continue }
+                let addon = HTMLText.firstMatch(#"addon--([a-z0-9_]+)"#, in: entry, group: 1)
+                // Die Baumabfuhr führt die Seite als Grünschnitt mit Baum-Zusatz; der Abfallkalender nennt an dem Tag
+                // nur die Weihnachtsbäume. Die Zusätze ● und ■ dagegen markieren eine Teilmenge der normalen Leerung.
+                if addon != "wa" {
+                    result.append(Pickup(date: date, name: NameCleaner.clean(HTMLText.decodeEntities(title))))
+                }
+                if let addon, let name = frechenAddons[addon] {
+                    result.append(Pickup(date: date, name: name))
+                }
+            }
+        }
+        return result
     }
 }

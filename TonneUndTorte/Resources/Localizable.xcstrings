@@ -260,16 +260,6 @@
         }
       }
     },
-    "Abgewählte Müllarten bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unchecked waste types are kept but won't send reminders. You can change this anytime."
-          }
-        }
-      }
-    },
     "Abhol-Erinnerung starten" : {
       "localizations" : {
         "en" : {

@@ -18,6 +18,13 @@ final class TonneUITests: XCTestCase {
             XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10), "App läuft nicht mit den Beispieldaten")
             return
         }
+        // Assistent: echte Portale und der gespeicherte Datenbestand des Simulators, nur auf Wunsch (TEST_RUNNER_TONNE_WIZARD=1)
+        if name.contains("Wizard") {
+            guard ProcessInfo.processInfo.environment["TONNE_WIZARD"] == "1" else { throw XCTSkip("nur von Hand: ruft echte Portale ab") }
+            app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+            app.terminate(); app.launch()
+            return
+        }
         app.launchArguments = ["-uiTesting", "-uiTestingSeed", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
         app.launchEnvironment["TONNE_UITESTING"] = "1"
         app.terminate()
@@ -380,5 +387,166 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Berichte löschen"].waitForExistence(timeout: 5))
         app.buttons["Berichte löschen"].tap()
         XCTAssertTrue(text("Keine Absturzberichte vorhanden").waitForExistence(timeout: 5), "Bericht wurde nicht gelöscht")
+    }
+
+    // MARK: - Einrichtungs-Assistent (echte Portale, Reihenfolge durch die Nummer im Namen)
+
+    private func dump(_ place: String) {
+        print("WIZ[\(place)] switches:", app.switches.allElementsBoundByIndex.map { "\($0.label)=\($0.value as? String ?? "?")" })
+        print("WIZ[\(place)] buttons:", app.buttons.allElementsBoundByIndex.map(\.label).prefix(40))
+        print("WIZ[\(place)] texts:", app.staticTexts.allElementsBoundByIndex.map(\.label).prefix(40))
+        snap(place)
+    }
+
+    private func element(_ query: XCUIElementQuery, prefix: String) -> XCUIElement {
+        query.matching(NSPredicate(format: "label BEGINSWITH %@", prefix)).firstMatch
+    }
+
+    /// Eine Auswahl im Assistenten: Suchtext eingeben, Treffer antippen.
+    private func choose(_ prefix: String, search: String) {
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 20), "Suchfeld für „\(search)“ fehlt")
+        field.tap()
+        // Gleich nach dem Schrittwechsel kommt der erste Tipp manchmal ohne Tastaturfokus an
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { field.tap() }
+        field.typeText(search)
+        let hit = element(app.buttons, prefix: prefix)
+        if !hit.waitForExistence(timeout: 20) { dump("kein-treffer-\(search)") }
+        XCTAssertTrue(hit.exists, "Treffer „\(prefix)“ fehlt")
+        hit.tap()
+    }
+
+    private func scrollTo(_ element: XCUIElement) {
+        for _ in 0..<8 where !(element.exists && element.isHittable) { app.swipeUp() }
+    }
+
+    /// Schalter einer Müllart im letzten Schritt („Restmüll, 26 Termine“).
+    private func binSwitch(_ name: String) -> XCUIElement { element(app.switches, prefix: name + ", ") }
+
+    private func setBin(_ name: String, on: Bool) {
+        let row = binSwitch(name)
+        scrollTo(row)
+        XCTAssertTrue(row.exists, "Schalter „\(name)“ fehlt")
+        guard (row.value as? String == "1") != on else { return }
+        let inner = row.switches.firstMatch
+        (inner.exists ? inner : row).tap()
+        XCTAssertEqual(row.value as? String, on ? "1" : "0", "Schalter „\(name)“ hat nicht umgeschaltet")
+    }
+
+    private func finishWizard() {
+        let create = app.buttons["Standort anlegen"]
+        scrollTo(create)
+        create.tap()
+        XCTAssertTrue(app.buttons["Los geht’s"].waitForExistence(timeout: 20), "Assistent wird nicht fertig")
+        app.buttons["Los geht’s"].tap()
+    }
+
+    private func newWizard() {
+        tab("Müll")
+        let bar = app.navigationBars["Müll"]
+        XCTAssertTrue(bar.waitForExistence(timeout: 5))
+        bar.buttons.element(boundBy: bar.buttons.count - 1).tap()
+        XCTAssertTrue(app.buttons["Standort mit Entsorger anlegen"].waitForExistence(timeout: 5))
+        app.buttons["Standort mit Entsorger anlegen"].tap()
+    }
+
+    /// Vorhandenen Standort über „Entsorger oder Adresse ändern“ neu einrichten.
+    private func editWizard(_ location: String) {
+        tab("Müll")
+        let row = element(app.buttons, prefix: location)
+        XCTAssertTrue(row.waitForExistence(timeout: 5), "Standort „\(location)“ fehlt")
+        row.tap()
+        let change = app.buttons["Entsorger oder Adresse ändern"]
+        scrollTo(change)
+        change.tap()
+    }
+
+    /// Zustand unter „Müll“: deaktivierte Müllarten tragen „Deaktiviert“ in ihrer Zeile.
+    private func assertDisabled(_ name: String, _ disabled: Bool, file: StaticString = #filePath, line: UInt = #line) {
+        tab("Müll")
+        let row = element(app.buttons, prefix: name + ",")
+        scrollTo(row)
+        XCTAssertTrue(row.exists, "Müllart „\(name)“ fehlt unter „Müll“", file: file, line: line)
+        XCTAssertEqual(row.label.contains("Deaktiviert"), disabled, "„\(name)“: \(row.label)", file: file, line: line)
+    }
+
+    /// Neu anlegen: alle neun Arten vorab an; drei Restmüll-Arten abwählen, nur „Restmüll“ bleibt.
+    func testWizard1Frechen() {
+        newWizard()
+        choose("Stadtbetrieb Frechen", search: "Frechen")
+        choose("Aachener", search: "Aachener")
+        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        XCTAssertEqual(app.switches.allElementsBoundByIndex.filter { !$0.label.isEmpty }.map { $0.value as? String }, Array(repeating: "1", count: 9))
+        for name in ["Großcontainer Restmüll", "Großcontainer Restmüll 14-täglich", "Restmüll 4-wöchentlich"] { setBin(name, on: false) }
+        dump("1-frechen-schalter")
+        finishWizard()
+        dump("1-frechen-muell")
+        for name in ["Großcontainer Restmüll", "Großcontainer Restmüll 14-täglich", "Restmüll 4-wöchentlich"] { assertDisabled(name, true) }
+        for name in ["Restmüll", "Grünschnittabfuhr / Bündel", "Weihnachtsbäume", "Biotonne / Biosäcke"] { assertDisabled(name, false) }
+    }
+
+    /// Gleiche Adresse neu einrichten: Schalter zeigen den gespeicherten Zustand, Einschalten wirkt.
+    func testWizard2SameAddress() {
+        editWizard("Frechen")
+        choose("Stadtbetrieb Frechen", search: "Frechen")
+        choose("Aachener", search: "Aachener")
+        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        XCTAssertEqual(binSwitch("Restmüll 4-wöchentlich").value as? String, "0")
+        XCTAssertEqual(binSwitch("Restmüll").value as? String, "1")
+        setBin("Restmüll 4-wöchentlich", on: true)
+        dump("2-gleich-schalter")
+        finishWizard()
+        assertDisabled("Restmüll 4-wöchentlich", false)
+        assertDisabled("Großcontainer Restmüll", true)
+        assertDisabled("Restmüll", false)
+    }
+
+    /// Vorbereitung je Fall per sqlite (siehe Übergabe): eine eingeschaltete Müllart „Altart“ mit Quellentitel, den der
+    /// Abruf nicht liefert (umbenannte „Weihnachtsbäume“). Andere Adresse: Die Art der alten, die die neue nicht liefert, ist aus.
+    func testWizard3OtherAddress() throws {
+        tab("Müll")
+        guard element(app.buttons, prefix: "Altart,").waitForExistence(timeout: 5) else { throw XCTSkip("Altart nicht vorbereitet") }
+        assertDisabled("Altart", false)
+        editWizard("Frechen")
+        choose("Stadtbetrieb Frechen", search: "Frechen")
+        choose("Hauptstraße", search: "Hauptstr")
+        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        dump("3-andere-schalter")
+        finishWizard()
+        assertDisabled("Altart", true)
+        assertDisabled("Restmüll 4-wöchentlich", false)
+    }
+
+    /// Gleiche Adresse (Hauptstraße aus Fall 3), „Altart“ wieder eingeschaltet: Sie bleibt an, denn Portale, die nur
+    /// Kommendes liefern, nennen Saisonarten zeitweise gar nicht.
+    func testWizard4SeasonalStays() throws {
+        tab("Müll")
+        guard element(app.buttons, prefix: "Altart,").waitForExistence(timeout: 5) else { throw XCTSkip("Altart nicht vorbereitet") }
+        assertDisabled("Altart", false)
+        editWizard("Frechen")
+        choose("Stadtbetrieb Frechen", search: "Frechen")
+        choose("Hauptstraße", search: "Hauptstr")
+        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        finishWizard()
+        dump("4-saison-muell")
+        assertDisabled("Altart", false)
+        assertDisabled("Weihnachtsbäume", false)
+    }
+
+    /// Jülich (ZEW, Anlass: Grünschnitt fehlte): Grünschnitt ist im Assistenten dabei und vorab an.
+    func testWizard5Juelich() {
+        newWizard()
+        choose("ZEW", search: "ZEW")
+        choose("Jülich", search: "Jülich")
+        choose("Aachener Landstr", search: "Aachener Land")
+        let green = app.switches.matching(NSPredicate(format: "label BEGINSWITH %@", "Grün")).firstMatch
+        if !green.waitForExistence(timeout: 30) { dump("5-juelich-ohne-gruen") }
+        XCTAssertTrue(green.exists, "Grünschnitt fehlt im Assistenten")
+        XCTAssertEqual(green.value as? String, "1", "Grünschnitt nicht vorab an")
+        XCTAssertTrue(app.switches.allElementsBoundByIndex.filter { !$0.label.isEmpty }.allSatisfy { $0.value as? String == "1" }, "nicht alle Arten vorab an")
+        dump("5-juelich-schalter")
+        let greenName = green.label.components(separatedBy: ",").first ?? "Grün"
+        finishWizard()
+        assertDisabled(greenName, false)
     }
 }

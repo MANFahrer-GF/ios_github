@@ -572,6 +572,7 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .portalsNRW, serviceKey: "enni", title: "ENNI Moers", website: "https://abfallkalender.enni.de/", places: ["Moers"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "espelkamp", title: "Abfallkalender Stadt Espelkamp", website: "https://www.espelkamp.de/index.php?La=1&ffmod=abf&ort=322.4&call=sfm", places: ["Espelkamp"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "prezero", title: "PreZero Abfallkalender Bad Oeynhausen", website: "https://abfallkalender.prezero.network/bad-oeynhausen", places: ["Bad Oeynhausen"]),
+        CatalogEntry(kind: .portalsNRW, serviceKey: "frechen", title: "Stadtbetrieb Frechen", website: "https://www.stadtbetrieb-frechen.de/service/abfallkalender", places: ["Frechen"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "hamburg", title: "Stadtreinigung Hamburg", website: "https://www.stadtreinigung.hamburg/abfuhrkalender/", places: ["Hamburg", "Altona", "Bergedorf", "Eimsbüttel", "Hamburg-Mitte", "Hamburg-Nord", "Wandsbek", "Hamburg-Harburg"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "bremerhaven", title: "BEG Bremerhaven (Bremerhavener Entsorgungsgesellschaft)", website: "https://beg-bhv.de/", places: ["Bremerhaven", "Cuxhaven"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "kiel", title: "ABK Kiel (Abfallwirtschaftsbetrieb Kiel)", website: "https://abki.de/", places: ["Kiel"]),

@@ -63,6 +63,21 @@ public enum ScheduleEngine {
         return (newSet.subtracting(oldSet).sorted(), oldSet.subtracting(newSet).sorted())
     }
 
+    /// Gespeicherte Termine, die ein Abgleich stehen lassen muss. Viele Portale werden je Kalenderjahr abgerufen, und ein
+    /// Abruffehler überspringt nur dieses Jahr; ersetzte der Abgleich alles, fehlten die Termine bis zum nächsten Lauf.
+    /// Stehen bleibt ein kommender Termin, zu dessen Jahr die Müllart nichts Neues bekam, wenn es das laufende Jahr ist
+    /// oder der ganze Abruf (`feed`) nichts zu diesem Jahr enthält.
+    public static func datesKeptOnSync(old: [Date], new: [Date], feed: [Date], from: Date = Date(), calendar: Calendar = .current) -> [Date] {
+        let today = calendar.startOfDay(for: from)
+        let currentYear = calendar.component(.year, from: today)
+        let typeYears = Set(new.map { calendar.component(.year, from: $0) })
+        let feedYears = Set(feed.map { calendar.component(.year, from: $0) })
+        return old.map { calendar.startOfDay(for: $0) }.filter { day in
+            let year = calendar.component(.year, from: day)
+            return day >= today && !typeYears.contains(year) && (year == currentYear || !feedYears.contains(year))
+        }
+    }
+
     /// Weggefallene Termine samt Ersatz (höchstens 7 Tage daneben), die den eigenen Dienst berühren:
     /// Der alte oder der neue Termin liegt darin. Sonst betrifft die Verschiebung einen nicht.
     public static func dutyRelevantMoves(removed: [Date], added: [Date], isOnDuty: (Date) -> Bool, calendar: Calendar = .current) -> [(old: Date, new: Date?)] {

@@ -270,6 +270,27 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(diff.removed, [day("2026-10-08")])
     }
 
+    /// Abruf fällt für ein Jahr aus: Gespeicherte kommende Termine bleiben, sonst fehlen sie bis zum nächsten Abgleich.
+    func testDatesKeptOnSync() {
+        let today = day("2026-11-10")
+        func kept(old: [String], new: [String], feed: [String]? = nil, from: Date? = nil) -> [String] {
+            ScheduleEngine.datesKeptOnSync(old: old.map(day), new: new.map(day), feed: (feed ?? new).map(day), from: from ?? today, calendar: calendar)
+                .map { Days.iso($0, calendar: calendar) }
+        }
+        // Laufendes Jahr fehlt, nur das Folgejahr kam: Kommendes bleibt, Vergangenes nicht
+        XCTAssertEqual(kept(old: ["2026-10-01", "2026-11-20", "2026-12-04"], new: ["2027-01-08"]), ["2026-11-20", "2026-12-04"])
+        // Auch wenn nur diese Müllart ausfiel und andere das laufende Jahr brachten
+        XCTAssertEqual(kept(old: ["2026-11-20"], new: ["2027-01-08"], feed: ["2026-11-12", "2027-01-08"]), ["2026-11-20"])
+        // Beide Jahre da: Es wird ersetzt, ein gestrichener Termin verschwindet
+        XCTAssertEqual(kept(old: ["2026-11-20", "2027-01-08"], new: ["2026-12-04", "2027-01-15"]), [])
+        // Ende Dezember ohne Resttermine: nichts zu behalten
+        XCTAssertEqual(kept(old: ["2026-12-20"], new: ["2027-01-08"], from: day("2026-12-30")), [])
+        // Das ganze Folgejahr fehlt im Abruf (Ausfall): Januar bleibt
+        XCTAssertEqual(kept(old: ["2026-12-04", "2027-01-08"], new: ["2026-12-04"]), ["2027-01-08"])
+        // Nur diese Müllart hat kein Folgejahr, der Abruf aber schon: Der Portalstand gilt
+        XCTAssertEqual(kept(old: ["2027-01-08"], new: ["2026-12-04"], feed: ["2026-12-04", "2027-01-15"]), [])
+    }
+
     func testBirthdayLeapYearAndAge() {
         let lena = AnnualDate(day: 29, month: 2, year: 2000)
         XCTAssertEqual(lena.occurrence(inYear: 2027, calendar: calendar), day("2027-02-28"))

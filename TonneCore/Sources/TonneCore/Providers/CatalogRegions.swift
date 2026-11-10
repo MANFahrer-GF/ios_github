@@ -987,6 +987,7 @@ Stadtkreis Ulm|Ulm
         "muellmax:His:Stadt Hanau": ["Landkreis Main-Kinzig-Kreis|Hanau"],
         "muellmax:Mai:Stadt Maintal": ["Landkreis Main-Kinzig-Kreis|Maintal"],
         "portalsNRW:espelkamp:Abfallkalender Stadt Espelkamp": ["Kreis Minden-Lübbecke|Espelkamp"],
+        "portalsNRW:frechen:Stadtbetrieb Frechen": ["Kreis Rhein-Erft-Kreis|Frechen"],
         "portalsNRW:prezero:PreZero Abfallkalender Bad Oeynhausen": ["Kreis Minden-Lübbecke|Bad Oeynhausen"],
         "portalsSuedwest:floersheim:Flörsheimer Umweltkalender": ["Landkreis Main-Taunus-Kreis|Flörsheim am Main"],
         "portalsSuedwest:kelkheim:Stadt Kelkheim (Taunus)": ["Landkreis Main-Taunus-Kreis|Kelkheim (Taunus)"],

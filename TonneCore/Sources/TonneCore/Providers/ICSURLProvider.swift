@@ -103,8 +103,13 @@ public struct ICSURLProvider: WasteProvider {
         old != name && names(old).first == name
     }
 
+    /// „Biotonne (Abholzeit)“ → „Biotonne“ (Stadtreinigung Leipzig).
+    static func withoutPickupTimeSuffix(_ summary: String) -> String {
+        summary.replacingOccurrences(of: #"\s*\(Abholzeit\)\s*$"#, with: "", options: [.regularExpression, .caseInsensitive])
+    }
+
     static func names(_ summary: String) -> [String] {
-        var name = NameCleaner.clean(summary)
+        var name = NameCleaner.clean(withoutPickupTimeSuffix(summary))
             .replacingOccurrences(of: #"^(Abholung|Abfuhr|Leerung)\s*:\s*"#, with: "", options: [.regularExpression, .caseInsensitive])
         if let inner = HTMLText.firstMatch(#"^Abfalltermin\s*\((.+)\)$"#, in: name, group: 1) { name = inner }
         let parts = name.components(separatedBy: CharacterSet(charactersIn: ",/+"))

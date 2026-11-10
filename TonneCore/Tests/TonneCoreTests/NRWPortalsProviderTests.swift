@@ -3,6 +3,70 @@ import XCTest
 
 /// Offline: Namensaufbereitung der Kreis-Herford-Portale.
 final class NRWPortalsProviderTests: XCTestCase {
+    // Echte Ausschnitte der Seiten des Stadtbetriebs Frechen (10.11.2026), gekürzt.
+    static let frechenOverview = #"""
+    <div class="row" id="_a"> <div class="col-md-3"> <ul> <li>
+      <a href="/service/abfallkalender/aachener-strasse-1/2026-11"><em>A</em>achener Straße </a> </li> <li>
+      <a href="/service/abfallkalender/ahrendgaesschen-8/2026-11">Ahrendg&auml;&szlig;chen </a> </li></ul></div></div>
+    <a href="/service/abfallkalender">Abfallkalender</a>
+    """#
+    static let frechenYear = #"""
+    <td class="calendar--day " rel="2026-01-13"> <div class="calendar--day-content"> <div class="calendar--day-number">13</div>
+      <div class="calendar--disposaltype disposal--gs" data-toggle="tooltip" data-id="7221" title="Grünschnittabfuhr / Bündel">
+        <span class="disposaltype--code"> GS </span> <span class="disposaltype--addon addon--wa"> &#127876; </span> </div> </div> </td>
+    <td class="calendar--day " rel="2026-03-10"> <div class="calendar--day-content"> <div class="calendar--day-number">10</div>
+      <div class="calendar--disposaltype disposal--gs" data-toggle="tooltip" data-id="7300" title="Grünschnittabfuhr / Bündel"> <span class="disposaltype--code"> GS </span> </div> </div> </td>
+    <td class="calendar--day " rel="2026-11-09"> <div class="calendar--day-content"> <div class="calendar--day-number">9</div>
+      <div class="calendar--disposaltype disposal--rm" data-toggle="tooltip" data-id="8075" title="Restmüll"> <span class="disposaltype--code"> RM </span> </div>
+      <div class="calendar--disposaltype disposal--gt" data-toggle="tooltip" data-id="8077" title="Gelbe Tonne / gelber Sack"> <span class="disposaltype--code"> GT </span> <span class="disposaltype--modifier"> b </span> </div>
+      <div class="calendar--disposaltype disposal--gr" data-toggle="tooltip" data-id="8078" title="Großcontainer Restmüll"> <span class="disposaltype--code"> GR </span> <span class="disposaltype--addon addon--gr_14t"> ■ </span> </div> </div> </td>
+    <td class="calendar--day calendar--day-today" rel="2026-11-10"> <div class="calendar--day-content"> <div class="calendar--day-number">10</div>
+      <div class="calendar--disposaltype disposal--bt" data-toggle="tooltip" data-id="8079" title="Biotonne / Biosäcke"> <span class="disposaltype--code"> BT </span> </div> </div> </td>
+    <td class="calendar--day " rel="2026-11-23"> <div class="calendar--day-content"> <div class="calendar--day-number">23</div>
+      <div class="calendar--disposaltype disposal--rm" data-toggle="tooltip" data-id="8115" title="Restmüll"> <span class="disposaltype--code"> RM </span> <span class="disposaltype--addon addon--rm_4w"> ● </span> </div> </div> </td>
+    <td class="calendar--holiday bg-gray" rel="2026-12-25">25 <span class="holiday-name">1. Weihnachtstag</span></td>
+    <td class="calendar--day " rel="2026-12-27"> <div class="calendar--day-content"> <div class="calendar--day-number">27</div> </div> </td>
+    <span class="disposaltype--addon addon--rm_4w"> ● </span> <span class="calendar--disposaltype-addon-desc addon--rm_4w"> Abholtag für Restmülltonne </span>
+    """#
+
+    /// „Geht mein Ort?“: Frechen ist abgedeckt, die Nachbarstadt im selben Kreis bekommt den Eintrag nicht.
+    func testFrechenIsCoveredOnlyInFrechen() throws {
+        let frechen = try XCTUnwrap(ProviderCatalog.checkPlace("Frechen").first)
+        XCTAssertEqual(frechen.district, "Kreis Rhein-Erft-Kreis")
+        let entry = try XCTUnwrap(frechen.entries.first { $0.serviceKey == "frechen" })
+        // Der Hinweis zur Leerung erscheint beim Standort, Frechen zählt aber nicht als eingeschränkt
+        XCTAssertNil(ProviderCatalog.restriction(for: entry))
+        XCTAssertNotNil(NRWPortalsProvider(service: "frechen").notice)
+        let huerth = try XCTUnwrap(ProviderCatalog.checkPlace("Hürth").first)
+        XCTAssertFalse((huerth.entries + huerth.otherEntries).contains { $0.serviceKey == "frechen" })
+    }
+
+    func testFrechenStreets() {
+        let streets = NRWPortalsProvider.frechenStreets(Self.frechenOverview)
+        XCTAssertEqual(streets.map(\.id), ["aachener-strasse-1", "ahrendgaesschen-8"])
+        XCTAssertEqual(streets.map(\.title), ["Aachener Straße", "Ahrendgäßchen"])
+    }
+
+    func testFrechenPickups() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let pickups = NRWPortalsProvider.frechenPickups(Self.frechenYear, calendar: calendar)
+        XCTAssertEqual(pickups.map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" }, [
+            "2026-01-13 Weihnachtsbäume",
+            "2026-03-10 Grünschnittabfuhr / Bündel",
+            "2026-11-09 Restmüll", "2026-11-09 Gelbe Tonne / gelber Sack",
+            "2026-11-09 Großcontainer Restmüll", "2026-11-09 Großcontainer Restmüll 14-täglich",
+            "2026-11-10 Biotonne / Biosäcke",
+            "2026-11-23 Restmüll", "2026-11-23 Restmüll 4-wöchentlich",
+        ])
+        // Jede Art landet in der richtigen Gruppe (Symbol, Farbe, „rausstellen“)
+        XCTAssertEqual(Set(pickups.map(\.name)).sorted().map(WasteCategory.classify),
+                       [.organic, .packaging, .residual, .residual, .green, .residual, .residual, .green])
+        XCTAssertEqual(WasteCategory.classify("Blaue Tonne / Papierbündel"), .paper)
+        // Eine noch nicht veröffentlichte Jahresseite (Umleitung auf die Übersicht) liefert nichts
+        XCTAssertTrue(NRWPortalsProvider.frechenPickups(Self.frechenOverview, calendar: calendar).isEmpty)
+    }
+
     func testHerfordNames() {
         XCTAssertEqual(NRWPortalsProvider.herfordNames("HF Gelbe Tonne, Blaue Tonne, Altkleider, 4 wöchentlich: Herford", place: "Herford"),
                        ["Gelbe Tonne", "Blaue Tonne", "Altkleider"])
@@ -51,6 +115,10 @@ extension LiveProviderTests {
 
     func testNRWBest() async throws {
         try await checkTyped(NRWPortalsProvider(service: "best"), typed: ["10"], prefer: ["Hochstraße"], minCount: 3)
+    }
+
+    func testNRWFrechen() async throws {
+        try await check(NRWPortalsProvider(service: "frechen"), prefer: ["Aachener Straße"], minCount: 10)
     }
 
     func testNRWEnni() async throws {

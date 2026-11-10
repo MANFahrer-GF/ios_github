@@ -62,21 +62,59 @@ public struct LeipzigProvider: WasteProvider {
 
     public init(client: HTTPClient = HTTPClient()) { self.client = client }
 
-    private struct Streets: Decodable { let results: [String: [String: [String]]] }
+    /// Antwort von `rest/odata/Streets` (seit November 2026; der Vorgänger `rest/Navision/Streets` antwortet mit 405).
+    struct Streets: Decodable {
+        struct Street: Decodable {
+            struct Number: Decodable { let number: String; let position_nos: [String] }
+            let name: String
+            var postalcode: String?
+            var district: String?
+            let numbers: [Number]
+            var place: String { [postalcode, district].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " ") }
+        }
+        let results: [Street]
+    }
+
+    private func search(_ term: String) async throws -> [Streets.Street] {
+        let result: Streets = try await client.json("https://stadtreinigung-leipzig.de/rest/odata/Streets?search=\(HTTPClient.query(term))")
+        return result.results
+    }
+
+    /// Gleichnamige Straßen unterscheidet nur Postleitzahl und Ortsteil – in der Kennung hinter „|“ und als Unterzeile.
+    static func streetOptions(_ streets: [Streets.Street]) -> [SelectionOption] {
+        let counts = Dictionary(streets.map { ($0.name, 1) }, uniquingKeysWith: +)
+        return streets.sorted { ($0.name, $0.place) < ($1.name, $1.place) }.map {
+            let twin = (counts[$0.name] ?? 0) > 1
+            return SelectionOption(id: twin ? "street:\($0.name)|\($0.place)" : "street:\($0.name)", title: $0.name, subtitle: twin ? $0.place : nil)
+        }
+    }
+
+    /// Straßenname und (bei gleichnamigen Straßen) Postleitzahl mit Ortsteil aus der Kennung.
+    static func streetParts(_ id: String) -> (name: String, place: String?) {
+        let parts = id.dropFirst("street:".count).split(separator: "|", maxSplits: 1).map(String.init)
+        return (parts.first ?? "", parts.count > 1 ? parts[1] : nil)
+    }
+
+    /// Eine Hausnummer kann mehrere Standplätze haben; der Kalender braucht alle (so ruft ihn auch die Webseite ab).
+    static func houseOptions(_ streets: [Streets.Street], for street: SelectionOption) -> [SelectionOption]? {
+        let wanted = streetParts(street.id)
+        let sameName = streets.filter { $0.name == wanted.name }
+        guard let match = sameName.first(where: { $0.place == wanted.place }) ?? sameName.first else { return nil }
+        let sorted = match.numbers.sorted { (Int($0.number.filter(\.isNumber)) ?? 0, $0.number) < (Int($1.number.filter(\.isNumber)) ?? 0, $1.number) }
+        return sorted.map { SelectionOption(id: "house:\($0.position_nos.joined(separator: ",")):\($0.number)", title: $0.number) }
+    }
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0: return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("z. B. Bahnhofsallee", "e.g. Bahnhofsallee"))
         case 1:
-            let result: Streets = try await client.json("https://stadtreinigung-leipzig.de/rest/Navision/Streets?old_format=1&search=\(HTTPClient.query(selections[0].title))")
-            guard !result.results.isEmpty else { throw ProviderError.noData(L10n.t("Straße nicht gefunden.", "Street not found.")) }
-            return SelectionStep(title: SelectionStep.streetTitle, options: result.results.keys.sorted().map { SelectionOption(id: "street:\($0)", title: $0) })
+            let streets = try await search(selections[0].title)
+            guard !streets.isEmpty else { throw ProviderError.noData(L10n.t("Straße nicht gefunden.", "Street not found.")) }
+            return SelectionStep(title: SelectionStep.streetTitle, options: LeipzigProvider.streetOptions(streets))
         case 2:
-            let street = String(selections[1].id.dropFirst("street:".count))
-            let result: Streets = try await client.json("https://stadtreinigung-leipzig.de/rest/Navision/Streets?old_format=1&search=\(HTTPClient.query(street))")
-            guard let numbers = result.results[street] else { return nil }
-            let sorted = numbers.keys.sorted { (Int($0.filter(\.isNumber)) ?? 0, $0) < (Int($1.filter(\.isNumber)) ?? 0, $1) }
-            return SelectionStep(title: SelectionStep.houseNumberTitle, options: sorted.map { SelectionOption(id: "house:\(numbers[$0]?.first ?? ""):\($0)", title: $0) })
+            let streets = try await search(LeipzigProvider.streetParts(selections[1].id).name)
+            guard let options = LeipzigProvider.houseOptions(streets, for: selections[1]) else { return nil }
+            return SelectionStep(title: SelectionStep.houseNumberTitle, options: options)
         default: return nil
         }
     }
@@ -85,11 +123,17 @@ public struct LeipzigProvider: WasteProvider {
         guard let house = selections.last(where: { $0.id.hasPrefix("house:") }), let street = selections.first(where: { $0.id.hasPrefix("street:") }) else { throw ProviderError.selectAddressFirst }
         let parts = house.id.split(separator: ":").map(String.init)
         guard parts.count == 3 else { throw ProviderError.selectAddressFirst }
-        let name = HTTPClient.query("\(street.id.dropFirst("street:".count)) \(parts[2])")
+        let name = HTTPClient.query("\(LeipzigProvider.streetParts(street.id).name) \(parts[2])")
         let text = try await client.string("https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=\(parts[1])&name=\(name)&mode=download")
         let events = ICS.parse(text, calendar: calendar)
         guard !events.isEmpty else { throw ProviderError.noDataGeneric }
-        return events.map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary.trimmingCharacters(in: CharacterSet(charactersIn: ", ")))) }
+        return events.map { Pickup(date: $0.date, name: LeipzigProvider.cleanName($0.summary)) }
+    }
+
+    /// Der Kalender hängt an jeden Titel „(Abholzeit)“ – das ist keine Müllart.
+    static func cleanName(_ summary: String) -> String {
+        let edges = CharacterSet(charactersIn: ", ")
+        return NameCleaner.clean(ICSURLProvider.withoutPickupTimeSuffix(summary.trimmingCharacters(in: edges)).trimmingCharacters(in: edges))
     }
 }
 

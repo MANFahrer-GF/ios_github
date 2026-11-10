@@ -51,8 +51,11 @@ enum SyncService {
     }
 
     /// Übernimmt Termine. `replace` ersetzt die bisherigen Einzeltermine (Abgleich), sonst werden sie ergänzt.
+    /// `activeNames` (Einrichtungs-Assistent): Genau diese Titel sind danach eingeschaltet, alle anderen aus.
+    /// `sourceChanged` (Einrichtungs-Assistent): Der Standort liest ab jetzt aus einer anderen Quelle oder Adresse.
+    /// `keepingMissingYears` (automatischer Abgleich): siehe `ScheduleEngine.datesKeptOnSync`.
     @discardableResult
-    static func apply(pickups: [Pickup], mappings: [Mapping], location: Location?, context: ModelContext, replace: Bool, activeCategories: Set<WasteCategory>? = nil) -> Result {
+    static func apply(pickups: [Pickup], mappings: [Mapping], location: Location?, context: ModelContext, replace: Bool, activeNames: Set<String>? = nil, sourceChanged: Bool = false, keepingMissingYears: Bool = false) -> Result {
         let grouped = Dictionary(grouping: pickups, by: \.name)
         var imported = 0
         var changes: [String] = []
@@ -65,6 +68,13 @@ enum SyncService {
         for mapping in mappings where grouped[mapping.summary]?.isEmpty == false {
             if case .existing(let type) = mapping.target { sharedTargets[ObjectIdentifier(type), default: 0] += 1 }
         }
+        // Andere Quelle: Eine Müllart der alten, die die neue nicht liefert, stand im Assistenten nicht zur Wahl.
+        // Bei gleicher Adresse bleibt sie, wie sie ist: Portale, die nur Kommendes liefern, nennen Saisonarten zeitweise gar nicht.
+        if sourceChanged {
+            for type in location?.wasteTypes ?? [] where type.sourceKey != nil && sharedTargets[ObjectIdentifier(type)] == nil {
+                type.isActive = false
+            }
+        }
 
         for mapping in mappings {
             guard let items = grouped[mapping.summary], !items.isEmpty else { continue }
@@ -73,10 +83,12 @@ enum SyncService {
             case .ignore:
                 continue
             case .existing(let type):
+                // Standort neu eingerichtet: Der Schalter im Assistenten gilt auch für eine schon vorhandene Müllart
+                if let activeNames { type.isActive = activeNames.contains(mapping.summary) }
                 target = type
             case .new(let category):
                 let type = WasteType(name: mapping.summary, category: category, sortOrder: nextSortOrder, sourceKey: mapping.summary)
-                if let activeCategories { type.isActive = activeCategories.contains(category) }
+                if let activeNames { type.isActive = activeNames.contains(mapping.summary) }
                 nextSortOrder += 1
                 context.insert(type)
                 type.location = location
@@ -100,14 +112,17 @@ enum SyncService {
             }
         }
         for (target, days, notes) in collected {
+            let kept = keepingMissingYears ? ScheduleEngine.datesKeptOnSync(old: target.explicitDates, new: Array(days), feed: pickups.map(\.date)) : []
+            let keptDays = Set(kept.map { Days.iso($0) })
             // Nur beim Hinbringen merken; bei Tonnen wäre es meist nur der Straßenname
             if target.handling == .bringTo {
-                target.dayNotes = replace ? notes : target.dayNotes.merging(notes) { _, new in new }
+                target.dayNotes = replace ? notes.merging(target.dayNotes.filter { keptDays.contains($0.key) }) { new, _ in new } : target.dayNotes.merging(notes) { _, new in new }
             } else if replace, !target.dayNotesJSON.isEmpty {
                 target.dayNotes = [:]
             }
             if replace {
-                let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(days))
+                let allDays = days.union(kept)
+                let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(allDays))
                 if !target.explicitDates.isEmpty {
                     // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert
                     for move in ScheduleEngine.dutyRelevantMoves(removed: diff.removed, added: diff.added, isOnDuty: target.isOnDuty(on:)).prefix(3) {
@@ -115,7 +130,7 @@ enum SyncService {
                     }
                 }
                 target.intervalWeeks = 0
-                target.explicitDates = days.sorted()
+                target.explicitDates = allDays.sorted()
             } else {
                 for day in days { target.addExplicitDate(day) }
             }
@@ -134,7 +149,7 @@ enum SyncService {
         // Während des Abrufs gelöscht (iCloud, anderes Fenster): Zugriff auf das Objekt wäre ein Absturz
         guard location.modelContext != nil, !location.isDeleted else { throw CancellationError() }
         let mappings = suggestMappings(for: pickups, location: location)
-        let result = apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: true)
+        let result = apply(pickups: pickups, mappings: mappings, location: location, context: context, replace: true, keepingMissingYears: true)
         location.lastSyncAt = Date()
         location.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
         do {

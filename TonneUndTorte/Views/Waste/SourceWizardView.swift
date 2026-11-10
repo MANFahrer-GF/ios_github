@@ -27,7 +27,8 @@ struct SourceWizardView: View {
     @State private var stepIndex = OptionSearch([])
     @State private var textInput = ""
     @State private var pickups: [Pickup] = []
-    @State private var categories: [WasteCategory: Bool] = [:]
+    /// Schalter je Müllart (Titel der Quelle) im letzten Schritt.
+    @State private var activeNames: [String: Bool] = [:]
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var locationName = ""
@@ -340,8 +341,14 @@ struct SourceWizardView: View {
         defer { isLoading = false }
         do {
             pickups = try await provider.pickups(for: selections)
-            let found = Set(pickups.map { WasteCategory.classify($0.name) })
-            categories = Dictionary(uniqueKeysWithValues: found.map { ($0, [.residual, .organic, .paper, .packaging].contains($0) || found.count <= 4) })
+            // Alles vorab eingeschaltet: Abgewählte Arten fehlen im Kalender, und abwählen soll nur der Nutzer selbst.
+            // (Früher blieben ab fünf Arten nur Rest, Bio, Papier, Gelb an – der Grünschnitt fehlte dann unbemerkt.)
+            // Wird ein Standort neu eingerichtet, behalten vorhandene Müllarten ihren Zustand.
+            var active: [String: Bool] = [:]
+            for mapping in SyncService.suggestMappings(for: pickups, location: location) {
+                if case .existing(let type) = mapping.target { active[mapping.summary] = type.isActive } else { active[mapping.summary] = true }
+            }
+            activeNames = active
             if locationName.isEmpty {
                 // Lesbare Adresse („Stadt Ansbach, Adlerstraße“) statt nur der ersten Auswahl (bei Straßensuche wäre das der Suchtext)
                 let label = provider.label(for: selections)
@@ -356,12 +363,12 @@ struct SourceWizardView: View {
 
     // MARK: - Tonnen auswählen
 
-    private var binNames: [(category: WasteCategory, names: [String], count: Int)] {
-        let grouped = Dictionary(grouping: pickups.filter { !WasteCategory.isIgnorableTitle($0.name) }, by: { WasteCategory.classify($0.name) })
-        return grouped.keys.sorted { $0.rawValue < $1.rawValue }.map { category in
-            let items = grouped[category] ?? []
-            return (category, Array(Set(items.map(\.name))).sorted(), items.count)
-        }
+    /// Jede Müllart der Quelle einzeln – ein Ort kann mehrere derselben Gruppe liefern (Frechen: Restmüll alle 14 Tage
+    /// und alle 4 Wochen), von denen ein Haushalt nur eine hat.
+    private var binNames: [(name: String, category: WasteCategory, count: Int)] {
+        let grouped = Dictionary(grouping: pickups.filter { !WasteCategory.isIgnorableTitle($0.name) }, by: \.name)
+        return grouped.map { (name: $0.key, category: WasteCategory.classify($0.key), count: $0.value.count) }
+            .sorted { ($0.category.rawValue, $0.name) < ($1.category.rawValue, $1.name) }
     }
 
     private var binsStage: some View {
@@ -377,19 +384,20 @@ struct SourceWizardView: View {
                 }
             }
             Section {
-                ForEach(binNames, id: \.category) { bin in
-                    Toggle(isOn: Binding(get: { categories[bin.category] ?? false }, set: { categories[bin.category] = $0 })) {
+                ForEach(binNames, id: \.name) { bin in
+                    Toggle(isOn: Binding(get: { activeNames[bin.name] ?? false }, set: { activeNames[bin.name] = $0 })) {
                         HStack(spacing: 12) {
-                            SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36, wasteName: bin.names.first ?? bin.category.name)
+                            SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36, wasteName: bin.name)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(bin.names.joined(separator: ", ")).font(.body.weight(.semibold)).lineLimit(2)
+                                Text(bin.name).font(.body.weight(.semibold)).lineLimit(2)
                                 Text(L10n.dates(bin.count)).font(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
                 }
             } header: { Text("Welche Müllarten hast du?") } footer: {
-                Text("Abgewählte Müllarten bleiben gespeichert, aber ohne Erinnerung. Du kannst das jederzeit ändern.")
+                Text(L10n.t("Abgewählte Müllarten erscheinen nicht im Kalender und erinnern nicht. Unter „Müll“ kannst du sie jederzeit wieder einschalten.",
+                            "Deselected waste types do not appear in the calendar and send no reminders. You can switch them back on under “Waste” at any time."))
             }
             Section {
                 Button { finish() } label: { Label("Standort anlegen", systemImage: "checkmark.circle.fill").frame(maxWidth: .infinity) }
@@ -409,10 +417,12 @@ struct SourceWizardView: View {
             context.insert(target)
         }
         if target.name.isEmpty { target.name = locationName }
-        target.source = SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: selections, label: provider.label(for: selections).isEmpty ? entry.title : provider.label(for: selections))
-        let active = Set(categories.filter { $0.value }.map(\.key))
+        let newSource = SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: selections, label: provider.label(for: selections).isEmpty ? entry.title : provider.label(for: selections))
+        let sourceChanged = target.source != newSource
+        target.source = newSource
+        let active = Set(activeNames.filter { $0.value }.map(\.key))
         let mappings = SyncService.suggestMappings(for: pickups, location: target)
-        let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeCategories: active)
+        let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeNames: active, sourceChanged: sourceChanged)
         target.lastSyncAt = Date()
         target.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
         guard model.save() else { return }

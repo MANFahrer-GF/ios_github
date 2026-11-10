@@ -193,6 +193,22 @@ final class MindenLuebbeckeTests: XCTestCase {
         XCTAssertEqual(downloads.first?.method, "POST")
     }
 
+    /// Das laufende Jahr muss kommen, sonst gilt der Abruf als gescheitert. Das Folgejahr darf fehlen.
+    func testPrezeroYearFailures() async throws {
+        let selections = [SelectionOption(id: "Aalstraße", title: "Aalstraße"), SelectionOption(id: "1", title: "1")]
+        func provider(failing suffix: String) -> NRWPortalsProvider {
+            var provider = NRWPortalsProvider(service: "prezero", client: HTTPClient(session: MindenStub.session(failingSuffix: suffix)))
+            provider.referenceDate = Self.fixtureDay
+            return provider
+        }
+        do {
+            _ = try await provider(failing: "/787/1/2026").pickups(for: selections, calendar: calendar)
+            XCTFail("Ausfall des laufenden Jahres darf nicht als Erfolg durchgehen")
+        } catch {}
+        let pickups = try await provider(failing: "/787/1/2027").pickups(for: selections, calendar: calendar)
+        XCTAssertEqual(pickups.count, 5)
+    }
+
     // MARK: - Live
 
     func testLiveEspelkamp() async throws {
@@ -222,8 +238,9 @@ final class MindenLuebbeckeTests: XCTestCase {
         let street = try XCTUnwrap(streets?.options.first { $0.title == "Aalstraße" })
         let selections = [street, SelectionOption(id: "1", title: "1")]
         let pickups = try await provider.pickups(for: selections, calendar: calendar)
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-15" })
-        XCTAssertTrue(pickups.contains { Days.iso($0.date) == "2026-10-22" })
+        // Das Portal liefert nur kommende Termine; feste Daten veralten hier
+        let today = Days.iso(Date())
+        XCTAssertTrue(pickups.contains { Days.iso($0.date) >= today })
         XCTAssertTrue(Set(pickups.map { WasteCategory.classify($0.name) }).isSuperset(of: [.residual, .organic, .paper, .packaging]))
         print("Bad Oeynhausen:", pickups.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
     }
@@ -235,8 +252,11 @@ final class MindenStub: URLProtocol {
     private static let lock = NSLock()
     nonisolated(unsafe) private static var seen: [Seen] = []
 
-    static func session() -> URLSession {
-        lock.lock(); seen = []; lock.unlock()
+    /// Anfragen mit dieser URL-Endung scheitern wie bei einem Netzwerkfehler.
+    nonisolated(unsafe) static var failingSuffix: String?
+
+    static func session(failingSuffix: String? = nil) -> URLSession {
+        lock.lock(); seen = []; Self.failingSuffix = failingSuffix; lock.unlock()
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MindenStub.self]
         return URLSession(configuration: config)
@@ -268,7 +288,12 @@ final class MindenStub: URLProtocol {
         Self.lock.lock()
         Self.seen.append(Seen(url: url, method: method, headers: request.allHTTPHeaderFields ?? [:],
                               body: body.map { String(decoding: $0, as: UTF8.self) } ?? ""))
+        let failing = Self.failingSuffix
         Self.lock.unlock()
+        if let failing, url.hasSuffix(failing) {
+            client?.urlProtocol(self, didFailWithError: URLError(.timedOut))
+            return
+        }
 
         let year = 2026  // Jahr der Fixtures, passend zu `fixtureDay`
         let data: Data
@@ -277,7 +302,9 @@ final class MindenStub: URLProtocol {
             // Wie live: Für das Folgejahr gibt es noch keine Termine.
             data = Data((url.contains("vJ=\(year)&") ? MindenLuebbeckeTests.espelkampICS : "BEGIN:VCALENDAR\nEND:VCALENDAR\n").utf8)
         } else if url.contains("/download/ical/") {
-            data = Data((url.hasSuffix("/\(year)") ? MindenLuebbeckeTests.prezeroICS : "BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n").utf8)
+            // Fällt das laufende Jahr aus, ist das Folgejahr gefüllt: Sonst fiele der Ausfall schon als leerer Abruf auf.
+            let filled = url.hasSuffix("/\(year)") || failing?.hasSuffix("/\(year)") == true
+            data = Data((filled ? MindenLuebbeckeTests.prezeroICS : "BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n").utf8)
         } else if method == "POST" { data = Data(MindenLuebbeckeTests.prezeroCalendarPage.utf8) }
         else { data = Data(MindenLuebbeckeTests.prezeroStreets.utf8) }
         let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: [:])!
