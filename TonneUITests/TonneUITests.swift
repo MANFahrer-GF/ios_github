@@ -318,9 +318,12 @@ final class TonneUITests: XCTestCase {
         app.buttons["Einstellungen"].tap()
         var flipped = Set<String>()
         for _ in 0..<8 {
-            for toggle in app.switches.allElementsBoundByIndex where toggle.isHittable && !toggle.label.isEmpty && !flipped.contains(toggle.label) {
-                flipped.insert(toggle.label)
-                flip(toggle.label); flip(toggle.label)
+            // Namen vorab festhalten: Elemente aus allElementsBoundByIndex hängen an ihrer Nummer, und nach dem Scrollen
+            // beim Umlegen liegt unter derselben Nummer ein anderer (oder kein) Schalter (iPad, Gesamtlauf 11.11.).
+            let labels = app.switches.allElementsBoundByIndex.filter(\.isHittable).map(\.label)
+            for label in labels where !label.isEmpty && !flipped.contains(label) {
+                flipped.insert(label)
+                flip(label); flip(label)
             }
             app.swipeUp()
         }
