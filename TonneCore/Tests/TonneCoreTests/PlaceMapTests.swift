@@ -20,6 +20,18 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertFalse(PlaceMapIndex.entryIDs.values.contains { $0.isEmpty }, "Zuordnung ohne Eintrag")
     }
 
+    /// Heißt ein gemeindefreies Gebiet wie eine echte Gemeinde desselben Kreises (Stadt Helmstedt, „Gemeindefreies
+    /// Gebiet Helmstedt“), zählt die Gemeinde. Vorher fielen 13 Städte und Gemeinden aus Abdeckung und Test.
+    func testTownNamedLikeUnincorporatedAreaStillCounts() throws {
+        for pair in ["Landkreis Helmstedt|Helmstedt", "Landkreis Holzminden|Holzminden", "Landkreis Ortenaukreis|Rheinau"] {
+            XCTAssertTrue(places.contains(pair), pair)
+        }
+        XCTAssertTrue(CatalogRegions.unincorporated.contains("Landkreis Helmstedt|Brunsleberfeld"), "echtes gemeindefreies Gebiet bleibt draußen")
+        let helmstedt = try XCTUnwrap(ProviderCatalog.coverage.first { $0.district == "Landkreis Helmstedt" })
+        XCTAssertEqual(helmstedt.municipalityCount, 23, "23 Gemeinden laut Verzeichnis")
+        XCTAssertEqual(Set(places).count, 10_750, "alle Gemeinden des Verzeichnisses ohne gemeindefreie Gebiete")
+    }
+
     func testEveryMappedEntryExistsInTheCatalog() {
         let known = Set(ProviderCatalog.entries.map(\.id))
         XCTAssertEqual(Set(CatalogPlaceMap.entryIDs).subtracting(known).sorted(), [])

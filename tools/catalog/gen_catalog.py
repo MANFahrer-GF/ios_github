@@ -473,7 +473,11 @@ for k,v in sorted(mapping.items()):
 out+=['    ]','','    /// Einträge, die nur einzelne Gemeinden bedienen: Eintrag → „Landkreis|Gemeinde“.','    static let localEntries: [String: [String]] = [']
 for k,v in sorted(local.items()):
     out.append(f'        {q(k)}: [{", ".join(q(x) for x in v)}],')
-unincorporated=sorted(f"{r['krs_name']}|{r['gem_name_short']}" for r in rows if r['gem_type']=='Gemeindefreies Gebiet')
+# Heißt ein gemeindefreies Gebiet wie eine echte Gemeinde desselben Kreises (Stadt Helmstedt und „Gemeindefreies Gebiet
+# Helmstedt“), teilen beide den Schlüssel „Kreis|Name“ – dann zählt die Gemeinde, sonst fiele sie aus der Abdeckung.
+real_places={(r['krs_name'],r['gem_name_short']) for r in rows if r['gem_type']!='Gemeindefreies Gebiet'}
+unincorporated=sorted({f"{r['krs_name']}|{r['gem_name_short']}" for r in rows
+                       if r['gem_type']=='Gemeindefreies Gebiet' and (r['krs_name'],r['gem_name_short']) not in real_places})
 out+=['    ]','','    /// Gemeindefreie Gebiete („Landkreis|Name“, meist unbewohnte Forste und Seen): zählen nicht zur Abdeckung.',
       '    static let unincorporated: Set<String> = [']
 for x in unincorporated:
