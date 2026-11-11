@@ -181,6 +181,21 @@ public struct PlaceCheck: Identifiable, Hashable {
         ]
         return components.url
     }
+
+    /// Mail „Ort melden“ ohne gefundene Gemeinde. Nimmt bewusst keine Eingabe: Der Suchtext kann eine Adresse sein, und
+    /// die soll nicht ungefragt in einer Mail stehen. Gemeinde und Kreis trägt man selbst ein.
+    public static var blankReportMailURL: URL? {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "thomas@kant.ovh"
+        components.queryItems = [
+            URLQueryItem(name: "subject", value: L10n.t("Ort fehlt", "Town missing")),
+            URLQueryItem(name: "body", value: L10n.t(
+                "Gemeinde:\nKreis:\n\nLink zum Abfallkalender (falls bekannt):\n\n",
+                "Municipality:\nDistrict:\n\nLink to the waste calendar (if known):\n\n")),
+        ]
+        return components.url
+    }
 }
 
 /// Die erzeugte Zuordnung Gemeinde → Einträge (`CatalogPlaceMap`), einmal gelesen. Schlüssel: „Landkreis|Gemeinde“.

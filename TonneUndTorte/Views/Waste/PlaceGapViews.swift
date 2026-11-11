@@ -43,27 +43,13 @@ struct PlaceGapSection: View {
 
 /// Wege zu den Terminen, wenn die Suche keine Gemeinde findet oder kein Ort eingegeben ist.
 struct MissingPlaceHelpSection: View {
-    /// Eingabe für die Mail „Ort melden“ (leer = ohne Ort).
-    let query: String
     var onPasteLink: (() -> Void)? = nil
     var onImportFile: (() -> Void)? = nil
 
-    private var reportMail: URL? {
-        var components = URLComponents()
-        components.scheme = "mailto"
-        components.path = "thomas@kant.ovh"
-        let place = query.trimmingCharacters(in: .whitespaces)
-        components.queryItems = [
-            URLQueryItem(name: "subject", value: L10n.t("Ort fehlt", "Town missing") + (place.isEmpty ? "" : ": \(place)")),
-            URLQueryItem(name: "body", value: L10n.t("Gemeinde / Kreis: \(place)\n\nLink zum Abfallkalender (falls bekannt):\n\n",
-                                                     "Municipality / district: \(place)\n\nLink to the waste calendar (if known):\n\n")),
-        ]
-        return components.url
-    }
-
     var body: some View {
         Section {
-            MissingPlaceActions(onPasteLink: onPasteLink, onImportFile: onImportFile, reportMail: reportMail)
+            // Ohne Suchtext: der könnte eine Adresse sein.
+            MissingPlaceActions(onPasteLink: onPasteLink, onImportFile: onImportFile, reportMail: PlaceCheck.blankReportMailURL)
         } header: {
             Text(L10n.t("Ort fehlt? So geht es trotzdem", "Town missing? How to still get your dates"))
         } footer: {

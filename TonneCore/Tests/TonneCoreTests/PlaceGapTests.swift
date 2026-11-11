@@ -132,6 +132,16 @@ final class PlaceGapTests: XCTestCase {
         XCTAssertFalse(body.lowercased().contains("straße") || body.lowercased().contains("koordinate"))
     }
 
+    /// „Ort melden“ ohne gefundene Gemeinde: kein Suchtext in der Mail (er könnte eine Adresse sein), Felder leer.
+    func testBlankReportMailCarriesNoInput() throws {
+        let url = try XCTUnwrap(PlaceCheck.blankReportMailURL)
+        XCTAssertEqual(url.scheme, "mailto")
+        let items = try XCTUnwrap(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems)
+        XCTAssertEqual(items.first { $0.name == "subject" }?.value, "Ort fehlt")
+        let body = try XCTUnwrap(items.first { $0.name == "body" }?.value)
+        XCTAssertTrue(body.hasPrefix("Gemeinde:\nKreis:\n"), body)
+    }
+
     /// Ohne Quelle (nicht belegt) bleibt der allgemeine Satz, ohne erfundenen Entsorger.
     func testGapWithoutSourceFallsBackToNote() {
         let gap = PlaceGap(reason: "nur_pdf", isUnavailable: true)

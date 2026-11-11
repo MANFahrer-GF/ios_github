@@ -31,7 +31,7 @@ struct CoverageView: View {
                 restrictedSection
                 if !missing.isEmpty { missingSection }
                 districtsSection
-                MissingPlaceHelpSection(query: "", onPasteLink: onPasteLink, onImportFile: onImportFile)
+                MissingPlaceHelpSection(onPasteLink: onPasteLink, onImportFile: onImportFile)
             } else {
                 resultSections
             }
@@ -114,7 +114,7 @@ struct CoverageView: View {
                                 "Nothing found. The search looks for municipalities – for a village that belongs to one, enter the municipality."))
                         .foregroundStyle(.secondary)
                 }
-                MissingPlaceHelpSection(query: trimmedQuery, onPasteLink: onPasteLink, onImportFile: onImportFile)
+                MissingPlaceHelpSection(onPasteLink: onPasteLink, onImportFile: onImportFile)
             } else {
                 Section(L10n.t("Passende Entsorger", "Matching providers")) {
                     ForEach(found) { entryRow($0) }
