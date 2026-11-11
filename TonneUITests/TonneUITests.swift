@@ -556,7 +556,10 @@ final class TonneUITests: XCTestCase {
     /// Concurrency-Thread auf, UIKit brach mit einer NSException ab. Laut drei Berichten (zwei Geräte) nach „Erledigt“ in der
     /// Mitteilung (AppModel.markDone im Absturz). Hier: Testmitteilung, App in den Hintergrund, lange drücken, „Erledigt“ –
     /// die App darf dabei nicht beendet werden.
-    func testTappingNotificationKeepsAppRunning() {
+    func testTappingNotificationKeepsAppRunning() throws {
+        // iPad-Simulator (iOS 27.2): Weder langes Drücken noch Herunterziehen klappt das Banner auf (11.11.2026 zweimal
+        // nachgestellt). Der Weg in `NotificationManager` ist auf beiden Geräten derselbe, das iPhone deckt ihn ab.
+        if UIDevice.current.userInterfaceIdiom == .pad { throw XCTSkip("Mitteilungsaktionen im iPad-Simulator nicht erreichbar") }
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         tab("Mehr")
         app.buttons["Einstellungen"].tap()
