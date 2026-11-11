@@ -50,6 +50,10 @@ Neu dabei
 • Frechen liefert Termine je Straße, auch für die Leerung alle vier Wochen
 • Viele weitere Städte und Gemeinden, zum Beispiel Neuss, Göttingen, Gießen, Wetzlar, Hürth und Saarbrücken
 
+Ort nicht dabei?
+• Gibt es für deinen Ort keinen abrufbaren Online-Kalender, sagt die App jetzt klar, warum: mit Entsorger, Webseite und Tag unserer Prüfung
+• Von dort fügst du direkt einen Kalender-Link ein, lädst Termine aus einer Datei oder meldest uns den Ort
+
 Wieder da
 • Leipzig liefert wieder Termine
 
