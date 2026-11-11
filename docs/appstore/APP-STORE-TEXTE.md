@@ -64,6 +64,9 @@ Wieder da
 Zuverlässiger
 • Die App stürzt nicht mehr ab, wenn du in der Erinnerung auf „Erledigt“ oder „In 1 Stunde nochmal“ tippst
 • Antwortet ein Portal einmal nicht vollständig, bleiben deine kommenden Termine stehen
+• Nach der Straßensuche trägt der Standort nur noch die Adresse im Namen, nicht mehr den eingetippten Suchtext
+• Findet die Suche genau eine Straße, zeigt die App sie dir zum Antippen, statt sie still zu übernehmen
+• Rückfragen vor dem Löschen erscheinen direkt am Knopf
 ```
 
 ### Werbetext (optional, max. 170 Zeichen)
