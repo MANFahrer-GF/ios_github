@@ -299,6 +299,26 @@ final class TonneUITests: XCTestCase {
         tab("Kalender"); sleep(1); snap("07-kalender")
     }
 
+    // MARK: - Standort löschen
+
+    func testDeleteLocationAsksAndRemovesIt() {
+        app.terminate()
+        app.launchArguments = ["-uiTesting", "-demoData", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10))
+        tab("Müll")
+        XCTAssertTrue(text("Gifhorn").waitForExistence(timeout: 5))
+        text("Gifhorn").tap()
+        let delete = app.buttons["Standort löschen"]
+        scrollTo(delete)
+        delete.tap()
+        let confirm = app.buttons["Löschen"]
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Rückfrage fehlt")
+        sleep(1); snap("standort-loeschen-rueckfrage")
+        confirm.tap()
+        XCTAssertTrue(text("Gifhorn").waitForNonExistence(timeout: 5), "Standort wurde nicht gelöscht")
+    }
+
     // MARK: - Mehr und Einstellungen
 
     func testMoreAndSettings() {
