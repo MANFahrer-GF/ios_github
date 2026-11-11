@@ -121,11 +121,23 @@ final class MissingPlaceUITests: XCTestCase {
 
         let paste = element("placeGapPasteLink")
         XCTAssertTrue(paste.exists, "„Kalender-Link einfügen“ fehlt")
-        paste.tap()
+        tapFree(paste)
         checkLinkSheet("assistent-linkfeld")
         // „Verwenden“ lädt den Link: Blatt zu, Fehler als Hinweis sichtbar
-        paste.tap()
+        tapFree(paste)
         useFailingLink()
+    }
+
+    /// Knopf in der Suchliste antippen, ohne die schwebende Suchleiste zu treffen: Sie steht über der Tastatur und kann
+    /// den Knopf verdecken (im Gesamtlauf gemessen: Knopf 497–549 pt, Suchfeld 500–528 pt), der Tipp landete dann im Suchfeld.
+    private func tapFree(_ button: XCUIElement) {
+        let field = app.searchFields.firstMatch
+        if app.keyboards.firstMatch.exists, field.exists { field.typeText("\n") }
+        for _ in 0..<4 where field.exists && button.frame.maxY > field.frame.minY - 4 && button.frame.minY < field.frame.maxY + 4 {
+            app.swipeUp()
+        }
+        XCTAssertTrue(button.isHittable, "\(button.label) ist verdeckt")
+        button.tap()
     }
 
     /// „Verwenden“ mit einem Link, der sofort scheitert: Blatt schließt, „Geht mein Ort?“ ist verlassen, der Hinweis erscheint.
@@ -184,10 +196,11 @@ final class MissingPlaceUITests: XCTestCase {
         search("Neunkirchen")
         XCTAssertTrue(element("placeGapReason").waitForExistence(timeout: 10), "Karte für Neunkirchen fehlt")
         let header = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Andere Treffer")).firstMatch
+        // Auf dem iPad ist das Blatt kleiner: Der Kopf liegt unter der Karte außerhalb des Bilds und wird erst beim Scrollen geladen.
+        app.searchFields.firstMatch.typeText("\n")
+        for _ in 0..<6 where !(header.exists && header.isHittable) { app.swipeUp() }
         XCTAssertTrue(header.waitForExistence(timeout: 5), "Kopf „Andere Treffer“ fehlt")
         XCTAssertTrue(header.label.localizedCaseInsensitiveContains("gelten nicht für Neunkirchen"), header.label)
-        app.searchFields.firstMatch.typeText("\n")
-        for _ in 0..<4 where !header.isHittable { app.swipeUp() }
         snap("assistent-neunkirchen-andere-treffer")
         // Gegenprobe: belegter Ort ohne Karte behält den einfachen Kopf
         search("Wittmund")
@@ -210,20 +223,19 @@ final class MissingPlaceUITests: XCTestCase {
         openCoverageInWizard(searching: "Langeoog")
         let paste = element("placeGapPasteLink")
         XCTAssertTrue(paste.exists, "„Kalender-Link einfügen“ fehlt in „Geht mein Ort?“")
-        paste.tap()
+        tapFree(paste)
         checkLinkSheet("assistent-ort-linkfeld")
 
         // „Verwenden“ aus „Geht mein Ort?“: Blatt zu, Seite verlassen, Hinweis sichtbar
         XCTAssertTrue(paste.waitForExistence(timeout: 5))
-        paste.tap()
+        tapFree(paste)
         useFailingLink()
 
         // Datei laden direkt von „Geht mein Ort?“
         openCoverageInWizard(searching: "Langeoog")
         let importFile = element("placeGapImportFile")
         XCTAssertTrue(importFile.waitForExistence(timeout: 5))
-        XCTAssertTrue(importFile.isHittable)
-        importFile.tap()
+        tapFree(importFile)
         // Die Dateiauswahl läuft in einem eigenen Prozess und ist in der App-Hierarchie leer. Sie deckt die Seite ab
         // (iPhone: Blatt über die volle Breite, iPad: mittiges Blatt mit Abdunklung), der Knopf ist dann nicht mehr treffbar.
         let covered = XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "isHittable == false"), object: importFile)], timeout: 10)
