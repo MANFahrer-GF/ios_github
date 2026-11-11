@@ -169,7 +169,8 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         content.title = L10n.t("Morgen: Gelber Sack", "Tomorrow: Yellow bag")
         content.body = L10n.t("So sieht eine Erinnerung von Tonne & Torte aus. 🎉", "This is what a Tonne & Torte reminder looks like. 🎉")
         content.sound = .default
-        content.categoryIdentifier = "WASTE"
+        // Oberflächen-Test: „Ist drin“ gibt es nur in der Hereinhol-Erinnerung, der Test wählt sie per Startschalter.
+        content.categoryIdentifier = TonneUndTorteApp.isUITesting ? (UserDefaults.standard.string(forKey: "uiTestNotificationCategory") ?? "WASTE") : "WASTE"
         content.userInfo = ["dayKey": Days.iso(Days.add(1, to: Days.today())), "category": "WASTE_EVENING"]
         let request = UNNotificationRequest(identifier: "test-\(UUID().uuidString)", content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false))
         center.add(request)

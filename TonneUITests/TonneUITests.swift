@@ -553,13 +553,35 @@ final class TonneUITests: XCTestCase {
     // MARK: - Mitteilungen
 
     /// Absturz 2.0.8 (9): Nach dem Tippen auf eine Mitteilung rief die App UIKits Completion-Handler auf einem
-    /// Concurrency-Thread auf, UIKit brach mit einer NSException ab. Laut drei Berichten (zwei Geräte) nach „Erledigt“ in der
-    /// Mitteilung (AppModel.markDone im Absturz). Hier: Testmitteilung, App in den Hintergrund, lange drücken, „Erledigt“ –
-    /// die App darf dabei nicht beendet werden.
+    /// Concurrency-Thread auf, UIKit brach mit einer NSException ab (11 Berichte, 10 Geräte, belegt nach „Erledigt“).
+    /// Der Weg hängt nicht von der Aktion ab, darum wird jede Aktion ohne `.foreground` einmal geklickt:
+    /// Testmitteilung, App in den Hintergrund, lange drücken, Aktion – die App darf dabei nicht beendet werden.
     func testTappingNotificationKeepsAppRunning() throws {
+        try skipOnPad()
+        openNotificationSettings()
+        for action in ["Erledigt", "In 1 Stunde nochmal", "Diesmal nicht"] {
+            tapNotificationAction(action)
+        }
+    }
+
+    /// „Ist drin“ steht nur in der Hereinhol-Erinnerung; die Testmitteilung bekommt diese Kategorie per Startschalter.
+    func testBringInNotificationActionKeepsAppRunning() throws {
+        try skipOnPad()
+        app.terminate()
+        app.launchArguments += ["-uiTestNotificationCategory", "WASTE_BRINGIN"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10), "App läuft nicht mit den Testdaten")
+        openNotificationSettings()
+        tapNotificationAction("Ist drin")
+    }
+
+    private func skipOnPad() throws {
         // iPad-Simulator (iOS 27.2): Weder langes Drücken noch Herunterziehen klappt das Banner auf (11.11.2026 zweimal
         // nachgestellt). Der Weg in `NotificationManager` ist auf beiden Geräten derselbe, das iPhone deckt ihn ab.
         if UIDevice.current.userInterfaceIdiom == .pad { throw XCTSkip("Mitteilungsaktionen im iPad-Simulator nicht erreichbar") }
+    }
+
+    private func openNotificationSettings() {
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         tab("Mehr")
         app.buttons["Einstellungen"].tap()
@@ -569,6 +591,10 @@ final class TonneUITests: XCTestCase {
             let systemAllow = springboard.alerts.buttons.matching(NSPredicate(format: "label IN {'Erlauben', 'Allow'}")).firstMatch
             if systemAllow.waitForExistence(timeout: 5) { systemAllow.tap() }
         }
+    }
+
+    private func tapNotificationAction(_ action: String) {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let send = app.buttons["Testmitteilung senden"]
         XCTAssertTrue(send.waitForExistence(timeout: 5), "„Testmitteilung senden“ fehlt")
         expectation(for: NSPredicate(format: "isEnabled == true"), evaluatedWith: send)
@@ -577,15 +603,19 @@ final class TonneUITests: XCTestCase {
         XCUIDevice.shared.press(.home)
 
         let banner = springboard.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'Gelber Sack'")).firstMatch
-        XCTAssertTrue(banner.waitForExistence(timeout: 15), "Testmitteilung kam nicht an")
+        XCTAssertTrue(banner.waitForExistence(timeout: 15), "Testmitteilung kam nicht an (\(action))")
         banner.press(forDuration: 1.5)
-        let done = springboard.buttons.matching(NSPredicate(format: "label CONTAINS 'Erledigt'")).firstMatch
-        XCTAssertTrue(done.waitForExistence(timeout: 5), "Aktion „Erledigt“ fehlt in der Mitteilung")
-        done.tap()
+        let button = springboard.buttons.matching(NSPredicate(format: "label CONTAINS %@", action)).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 5), "Aktion „\(action)“ fehlt in der Mitteilung")
+        let shot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        shot.name = "mitteilung-\(action)"
+        shot.lifetime = .keepAlways
+        add(shot)
+        button.tap()
 
         sleep(4) // der Abbruch kam erst nach dem Abarbeiten der Aktion (Speichern, dann Rückmeldung an iOS)
-        XCTAssertNotEqual(app.state, .notRunning, "App ist nach „Erledigt“ in der Mitteilung abgestürzt")
+        XCTAssertNotEqual(app.state, .notRunning, "App ist nach „\(action)“ in der Mitteilung abgestürzt")
         app.activate()
-        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 10), "App zeigt nach „Erledigt“ keine Oberfläche mehr")
+        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 10), "App zeigt nach „\(action)“ keine Oberfläche mehr")
     }
 }
