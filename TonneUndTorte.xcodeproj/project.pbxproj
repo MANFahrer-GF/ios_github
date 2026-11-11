@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E10E44B7D3491D018BD40D7 /* TonneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */; };
+		5D1A7C0E2B9F4E6A8C3D2F10 /* MissingPlaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A7C0E2B9F4E6A8C3D2F11 /* MissingPlaceUITests.swift */; };
 		6EDDBDD64B5C5A76C60B64F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BE9AD4316C1BA62B95B13F /* Foundation.framework */; };
 		A1B2C3D4E5F600000000002B /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F6000000000029 /* TonneCore */; };
 		A1B2C3D4E5F600000000002C /* TonneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600000000002A /* TonneCore */; };
@@ -87,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TonneUITests.swift; sourceTree = "<group>"; };
+		5D1A7C0E2B9F4E6A8C3D2F11 /* MissingPlaceUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MissingPlaceUITests.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000001 /* Tonne & Torte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tonne & Torte.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F6000000000015 /* TonneWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TonneWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F600000000003D /* TonneUndTorte.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TonneUndTorte.entitlements; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 		359AA73763E96E10C6E1E122 /* TonneUITests */ = {
 			isa = PBXGroup;
 			children = (
+				5D1A7C0E2B9F4E6A8C3D2F11 /* MissingPlaceUITests.swift */,
 				8D0DB65233A6F3EA878F5F52 /* TonneUITests.swift */,
 			);
 			path = TonneUITests;
@@ -458,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D1A7C0E2B9F4E6A8C3D2F10 /* MissingPlaceUITests.swift in Sources */,
 				2E10E44B7D3491D018BD40D7 /* TonneUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

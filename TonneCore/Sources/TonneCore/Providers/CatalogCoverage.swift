@@ -84,6 +84,61 @@ enum CoverageIndex {
     }()
 }
 
+/// Warum eine Gemeinde keinen abrufbaren Online-Kalender hat – mit Entsorger, Webseite und Tag unserer Prüfung.
+public struct PlaceGap: Hashable, Sendable {
+    /// Grund-Kürzel der Zuordnung: portal_abgeschaltet, nur_pdf, nicht_gefuehrt (leer = nicht belegt).
+    public let reason: String
+    /// Nachweislich kein abrufbarer Online-Kalender (nicht nur „noch nicht angebunden“).
+    public let isUnavailable: Bool
+    /// Entsorger, bei dem wir nachgesehen haben, z. B. „Landkreis Wittmund (Abfuhr Fa. Augustin)“.
+    public let provider: String?
+    /// Öffentliche Webseite des Entsorgers mit Terminen oder Hinweisen.
+    public let website: URL?
+    /// Tag unserer Prüfung, „JJJJ-MM-TT“.
+    public let checkedOn: String?
+
+    public init(reason: String, isUnavailable: Bool, provider: String? = nil, website: URL? = nil, checkedOn: String? = nil) {
+        self.reason = reason
+        self.isUnavailable = isUnavailable
+        self.provider = provider
+        self.website = website
+        self.checkedOn = checkedOn
+    }
+
+    /// Prüftag zum Lesen: „10.11.2026“ / „10 Nov 2026“.
+    public var checkedOnText: String? {
+        guard let checkedOn else { return nil }
+        let parts = checkedOn.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3, (1...12).contains(parts[1]) else { return nil }
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        return L10n.t(String(format: "%02d.%02d.%04d", parts[2], parts[1], parts[0]), "\(parts[2]) \(months[parts[1] - 1]) \(parts[0])")
+    }
+
+    /// Kurze Überschrift der Karte.
+    public var headline: String {
+        isUnavailable ? L10n.t("Kein abrufbarer Online-Kalender", "No online calendar to fetch")
+                      : L10n.t("Noch nicht angebunden", "Not connected yet")
+    }
+
+    /// Klartext zum Grund für eine Gemeinde. Sagt, was wir wann gesehen haben – nicht, dass es nie einen Kalender gibt.
+    public func explanation(for place: String) -> String {
+        guard let provider, let date = checkedOnText else { return PlaceMapIndex.note(reason) }
+        switch reason {
+        case "portal_abgeschaltet":
+            return L10n.t("Bei unserer Prüfung am \(date) war das Online-Portal von \(provider) abgeschaltet. Termine ließen sich dort nicht abrufen.",
+                          "When we checked on \(date), the online portal of \(provider) was switched off. No dates could be fetched there.")
+        case "nur_pdf":
+            return L10n.t("Bei unserer Prüfung am \(date) gab es die Termine von \(provider) nur als PDF oder auf Papier, nicht als abrufbaren Online-Kalender.",
+                          "When we checked on \(date), \(provider) only offered the dates as a PDF or on paper, not as an online calendar to fetch.")
+        case "nicht_gefuehrt":
+            return L10n.t("Bei unserer Prüfung am \(date) stand \(place) nicht im Online-Kalender von \(provider).",
+                          "When we checked on \(date), \(place) was not listed in the online calendar of \(provider).")
+        default:
+            return PlaceMapIndex.note(reason)
+        }
+    }
+}
+
 /// Antwort auf „Geht mein Ort?“: eine Gemeinde mit den Entsorgern, die sie bedienen.
 public struct PlaceCheck: Identifiable, Hashable {
     public let name: String
@@ -93,24 +148,39 @@ public struct PlaceCheck: Identifiable, Hashable {
     /// Weitere Einträge desselben Kreises, die erkennbar für andere Gemeinden gelten (z. B. „Gemeinde Gumtow“ bei Perleberg)
     /// – ein Amt kann trotzdem auch seine Mitgliedsgemeinden bedienen.
     public let otherEntries: [CatalogEntry]
-    /// Warum kein Entsorger belegt ist (ausdrückliche Lücke der Zuordnung), sonst nil.
-    public let gapNote: String?
-    /// Nachweislich kein abrufbarer Online-Kalender (z. B. Portal des Entsorgers abgeschaltet).
-    public let isUnavailable: Bool
+    /// Warum kein Entsorger belegt ist, sonst nil.
+    public let gap: PlaceGap?
 
-    public init(name: String, district: String, entries: [CatalogEntry], otherEntries: [CatalogEntry],
-                gapNote: String? = nil, isUnavailable: Bool = false) {
+    public init(name: String, district: String, entries: [CatalogEntry], otherEntries: [CatalogEntry], gap: PlaceGap? = nil) {
         self.name = name
         self.district = district
         self.entries = entries
         self.otherEntries = otherEntries
-        self.gapNote = gapNote
-        self.isUnavailable = isUnavailable
+        self.gap = gap
     }
 
     public var id: String { "\(district)|\(name)" }
     /// Nur, wenn ein Entsorger die Gemeinde belegt führt – weitere Einträge des Kreises zählen nicht.
     public var isCovered: Bool { !entries.isEmpty }
+    /// Klartext, warum kein Entsorger belegt ist, sonst nil.
+    public var gapNote: String? { gap?.explanation(for: name) }
+    /// Nachweislich kein abrufbarer Online-Kalender (z. B. Portal des Entsorgers abgeschaltet).
+    public var isUnavailable: Bool { gap?.isUnavailable == true }
+
+    /// Vorbefüllte Mail „Ort melden“: Gemeinde, Kreis und Grund – keine Adresse, kein Standort.
+    public var reportMailURL: URL? {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "thomas@kant.ovh"
+        let reason = gapNote ?? L10n.t("kein Entsorger gefunden", "no provider found")
+        components.queryItems = [
+            URLQueryItem(name: "subject", value: L10n.t("Ort fehlt: \(name)", "Town missing: \(name)")),
+            URLQueryItem(name: "body", value: L10n.t(
+                "Gemeinde: \(name)\nKreis: \(DistrictCoverage.displayName(district))\nHinweis der App: \(reason)\n\nLink zum Abfallkalender (falls bekannt):\n\n",
+                "Municipality: \(name)\nDistrict: \(DistrictCoverage.displayName(district))\nApp note: \(reason)\n\nLink to the waste calendar (if known):\n\n")),
+        ]
+        return components.url
+    }
 }
 
 /// Die erzeugte Zuordnung Gemeinde → Einträge (`CatalogPlaceMap`), einmal gelesen. Schlüssel: „Landkreis|Gemeinde“.
@@ -125,14 +195,21 @@ enum PlaceMapIndex {
         return out
     }()
 
-    /// Ausdrückliche Lücken: Gemeinde → (nachweislich nicht holbar, Grund-Kürzel).
-    static let gaps: [String: (unavailable: Bool, reason: String)] = {
-        var out: [String: (unavailable: Bool, reason: String)] = [:]
+    /// Ausdrückliche Lücken: „Landkreis|Gemeinde“ → Grund mit Entsorger, Webseite und Prüftag.
+    static let gaps: [String: PlaceGap] = {
+        let sources: [(provider: String, website: URL?, checkedOn: String)?] = CatalogPlaceMap.gapSources.map { line in
+            let parts = line.split(separator: "|", omittingEmptySubsequences: false).map(String.init)
+            guard parts.count == 3 else { return nil }
+            return (parts[0], URL(string: parts[1]), parts[2])
+        }
+        var out: [String: PlaceGap] = [:]
         for line in CatalogPlaceMap.gaps.split(separator: "\n") {
             guard let cut = line.lastIndex(of: "=") else { continue }
             let parts = line[line.index(after: cut)...].split(separator: ",")
-            guard parts.count == 2, let index = Int(parts[1]), CatalogPlaceMap.gapReasons.indices.contains(index) else { continue }
-            out[String(line[..<cut])] = (parts[0] == "n", CatalogPlaceMap.gapReasons[index])
+            guard parts.count >= 2, let index = Int(parts[1]), CatalogPlaceMap.gapReasons.indices.contains(index) else { continue }
+            let source = parts.count >= 3 ? Int(parts[2]).flatMap { sources.indices.contains($0) ? sources[$0] : nil } : nil
+            out[String(line[..<cut])] = PlaceGap(reason: CatalogPlaceMap.gapReasons[index], isUnavailable: parts[0] == "n",
+                                                 provider: source?.provider, website: source?.website, checkedOn: source?.checkedOn)
         }
         return out
     }()
@@ -178,8 +255,7 @@ public extension ProviderCatalog {
                 return ga != gb ? ga : byTitle(a, b)
             }
             return PlaceCheck(name: hit.name, district: hit.district, entries: fits.sorted(by: byTitle), otherEntries: groupsFirst,
-                              gapNote: fits.isEmpty ? PlaceMapIndex.note(gap?.reason ?? "") : nil,
-                              isUnavailable: fits.isEmpty && gap?.unavailable == true)
+                              gap: fits.isEmpty ? (gap ?? PlaceGap(reason: "", isUnavailable: false)) : nil)
         }
     }
 

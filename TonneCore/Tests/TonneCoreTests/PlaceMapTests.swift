@@ -32,16 +32,16 @@ final class PlaceMapTests: XCTestCase {
         // PDF/Papier oder der zuständige Entsorger führt die Gemeinde in seinem Online-Kalender nicht (Gröde, Helgoland …).
         // Jeder Grund hat einen eigenen Text; offene Gründe gelten nie als nicht holbar.
         let final = ["portal_abgeschaltet", "nur_pdf", "nicht_gefuehrt"]
-        let unavailable = PlaceMapIndex.gaps.filter(\.value.unavailable)
+        let unavailable = PlaceMapIndex.gaps.filter(\.value.isUnavailable)
         XCTAssertTrue(unavailable.allSatisfy { final.contains($0.value.reason) })
-        XCTAssertTrue(PlaceMapIndex.gaps.filter { !$0.value.unavailable }.allSatisfy { !final.contains($0.value.reason) })
+        XCTAssertTrue(PlaceMapIndex.gaps.filter { !$0.value.isUnavailable }.allSatisfy { !final.contains($0.value.reason) })
         XCTAssertEqual(unavailable.filter { $0.key.hasPrefix("Landkreis Rhein-Lahn-Kreis|") }.count, 137)
         let notes = ["portal_abgeschaltet", "nur_pdf", "nicht_gefuehrt", "kein_eintrag", "nicht_in_liste", "ungeprueft"].map(PlaceMapIndex.note)
         XCTAssertEqual(Set(notes).count, notes.count)
         XCTAssertTrue(PlaceMapIndex.note("nur_pdf").contains("PDF"))
         XCTAssertTrue(PlaceMapIndex.note("nicht_gefuehrt").contains("führt diese Gemeinde"))
         XCTAssertEqual(PlaceMapIndex.gaps["Kreis Nordfriesland|Gröde"]?.reason, "nicht_gefuehrt")
-        XCTAssertEqual(PlaceMapIndex.gaps["Kreis Nordfriesland|Gröde"]?.unavailable, true)
+        XCTAssertEqual(PlaceMapIndex.gaps["Kreis Nordfriesland|Gröde"]?.isUnavailable, true)
         // Seit 11.11.2026 ist jede amtliche Gemeinde belegt oder nachweislich nicht holbar (Grund, Entsorger, Seite und
         // Wortlaut je Zeile in tools/catalog/data/place_map/luecken.json). Eine neue offene Lücke ist ein Fehler.
         XCTAssertEqual(PlaceMapIndex.gaps.count - unavailable.count, 0)

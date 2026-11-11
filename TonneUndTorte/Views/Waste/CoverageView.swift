@@ -6,6 +6,10 @@ import TonneCore
 struct CoverageView: View {
     /// Im Einrichtungsassistenten: Antippen eines Entsorgers wählt ihn direkt aus.
     var onChoose: ((CatalogEntry) -> Void)? = nil
+    /// Im Einrichtungsassistenten: zum Feld für den Kalender-Link springen.
+    var onPasteLink: (() -> Void)? = nil
+    /// Im Einrichtungsassistenten: Termine aus einer ICS-/CSV-Datei laden.
+    var onImportFile: (() -> Void)? = nil
 
     @State private var query = ""
     /// Treffer zur Eingabe – nur bei geänderter Eingabe neu berechnet, nicht bei jedem Neuzeichnen.
@@ -27,7 +31,7 @@ struct CoverageView: View {
                 restrictedSection
                 if !missing.isEmpty { missingSection }
                 districtsSection
-                workaroundSection
+                MissingPlaceHelpSection(query: "", onPasteLink: onPasteLink, onImportFile: onImportFile)
             } else {
                 resultSections
             }
@@ -78,17 +82,22 @@ struct CoverageView: View {
     }
 
     private var missingSection: some View {
-        Section(L10n.t("Noch nicht angebunden", "Not connected yet")) {
+        Section {
             ForEach(missing) { item in
                 VStack(alignment: .leading, spacing: 2) {
                     Text(item.displayName)
                     if !item.missingPlaces.isEmpty {
-                        Text(L10n.t("Es fehlen noch: \(item.missingPlaces.joined(separator: ", "))",
-                                    "Still missing: \(item.missingPlaces.joined(separator: ", "))"))
-                            .font(.caption).foregroundStyle(.secondary).lineLimit(3)
+                        Text(L10n.count(item.missingPlaces.count, "Gemeinde ohne abrufbaren Online-Kalender", "Gemeinden ohne abrufbaren Online-Kalender",
+                                        "municipality without an online calendar", "municipalities without an online calendar"))
+                            .font(.caption).foregroundStyle(.secondary)
                     }
                 }
             }
+        } header: {
+            Text(L10n.t("Noch nicht vollständig angebunden", "Not fully connected yet"))
+        } footer: {
+            Text(L10n.t("Gib oben einen Ort ein, um den Grund und die Webseite des Entsorgers zu sehen.",
+                        "Enter a town above to see the reason and the provider's website."))
         }
     }
 
@@ -105,7 +114,7 @@ struct CoverageView: View {
                                 "Nothing found. The search looks for municipalities – for a village that belongs to one, enter the municipality."))
                         .foregroundStyle(.secondary)
                 }
-                workaroundSection
+                MissingPlaceHelpSection(query: trimmedQuery, onPasteLink: onPasteLink, onImportFile: onImportFile)
             } else {
                 Section(L10n.t("Passende Entsorger", "Matching providers")) {
                     ForEach(found) { entryRow($0) }
@@ -113,28 +122,18 @@ struct CoverageView: View {
             }
         } else {
             ForEach(checks) { check in
-                Section {
-                    if check.isCovered {
+                if check.isCovered {
+                    Section {
                         ForEach(check.entries) { entryRow($0) }
-                    } else if check.isUnavailable, let note = check.gapNote {
-                        // Nachweislich kein abrufbarer Kalender: ehrlich sagen statt Kandidaten anbieten
-                        Label(note, systemImage: "xmark.circle.fill")
-                            .foregroundStyle(.orange)
-                    } else if !check.otherEntries.isEmpty {
-                        Label(L10n.t("Kein Entsorger nennt \(check.name) ausdrücklich. Oft gehört der Ort zu einem Amt oder einer Verbandsgemeinde unten – sonst steht ganz unten, wie du trotzdem zu Terminen kommst.",
-                                     "No provider names \(check.name) explicitly. It often belongs to an Amt or association listed below – otherwise see the bottom of the page for how to still get your dates."),
-                              systemImage: "questionmark.circle.fill")
-                            .foregroundStyle(.orange)
-                    } else {
-                        Label(L10n.t("Noch nicht angebunden – unten steht, wie du trotzdem zu Terminen kommst.",
-                                     "Not connected yet – see below how to still get your dates."),
-                              systemImage: "exclamationmark.circle.fill")
-                            .foregroundStyle(.orange)
+                    } header: {
+                        Text("\(check.name) · \(DistrictCoverage.displayName(check.district))")
                     }
-                } header: {
-                    Text("\(check.name) · \(DistrictCoverage.displayName(check.district))")
+                } else {
+                    // Gleiche Karte wie im Assistenten: Grund mit Entsorger und Prüftag, dann direkte Wege zu den Terminen
+                    PlaceGapSection(check: check, onPasteLink: onPasteLink, onImportFile: onImportFile)
                 }
-                if !check.otherEntries.isEmpty {
+                // Nachweislich kein abrufbarer Kalender: keine Kandidaten anbieten, die die Gemeinde nicht führen
+                if !check.otherEntries.isEmpty, !check.isUnavailable {
                     Section {
                         ForEach(check.otherEntries) { entryRow($0) }
                     } header: {
@@ -145,7 +144,6 @@ struct CoverageView: View {
                     }
                 }
             }
-            if checks.contains(where: { !$0.isCovered }) { workaroundSection }
         }
     }
 
@@ -175,49 +173,6 @@ struct CoverageView: View {
             }
         }
         .accessibilityElement(children: .combine)
-    }
-
-    /// Mail mit Ort und PDF-Link an den Entwickler; der Ort kommt bei der Jahrespflege über tools/pdfkalender dazu.
-    private var pdfMail: URL? {
-        let place = trimmedQuery
-        var components = URLComponents()
-        components.scheme = "mailto"
-        components.path = "thomas@kant.ovh"
-        components.queryItems = [
-            URLQueryItem(name: "subject", value: L10n.t("PDF-Abfallkalender", "PDF waste calendar") + (place.isEmpty ? "" : " – \(place)")),
-            URLQueryItem(name: "body", value: L10n.t("Ort / Landkreis: \(place)\nLink zum PDF-Abfallkalender (oder PDF anhängen):\n\n",
-                                                     "Town / district: \(place)\nLink to the PDF waste calendar (or attach the PDF):\n\n")),
-        ]
-        return components.url
-    }
-
-    private var workaroundSection: some View {
-        Section {
-            Label(L10n.t("ICS-Link: Viele Abfallportale bieten „Kalender abonnieren“ oder „iCal-Export“. Den Link beim Anlegen eines Standorts unter „Entsorger nicht dabei?“ einfügen – er wird wöchentlich neu geladen.",
-                         "ICS link: many waste portals offer “subscribe to calendar” or “iCal export”. Paste the link under “Provider not listed?” when adding a location – it is reloaded weekly."),
-                  systemImage: "link")
-            Label(L10n.t("CSV-Datei: Vorlage unten in „Dateien“ sichern oder an dich selbst schicken, Termine vom Papierkalender eintragen (Datum;Müllart, z. B. in Excel oder Numbers) und beim Standort „ICS- oder CSV-Datei importieren“ wählen.",
-                         "CSV file: save the template below to Files or send it to yourself, enter the dates from your paper calendar (date;waste type, e.g. in Excel or Numbers) and choose “Import ICS or CSV file” in the location."),
-                  systemImage: "tablecells")
-            Label(L10n.t("Rhythmus: Feste Abfuhr (z. B. alle 2 Wochen dienstags) direkt bei der Müllart einstellen.",
-                         "Rhythm: set a fixed schedule (e.g. every 2 weeks on Tuesday) directly in the waste type."),
-                  systemImage: "repeat")
-            ShareLink(item: PickupCSVFile(text: PickupCSV.template(), fileName: L10n.t("Abfuhrtermine-Vorlage.csv", "Pickup-template.csv")),
-                      preview: SharePreview(L10n.t("CSV-Vorlage", "CSV template"))) {
-                Label(L10n.t("CSV-Vorlage speichern oder senden", "Save or send CSV template"), systemImage: "square.and.arrow.up")
-            }
-            Label(L10n.t("Nur PDF? Schick uns den Abfallkalender deines Orts. Er wird geprüft und mit einem der nächsten Updates eingebaut.",
-                         "Only a PDF? Send us your town’s waste calendar. It will be checked and added in a future update."),
-                  systemImage: "doc.richtext")
-            if let pdfMail {
-                Link(destination: pdfMail) {
-                    Label(L10n.t("PDF-Kalender schicken", "Send PDF calendar"), systemImage: "envelope")
-                }
-            }
-        } header: {
-            Text(L10n.t("Ort fehlt? So geht es trotzdem", "Town missing? How to still get your dates"))
-        }
-        .font(.subheadline)
     }
 }
 

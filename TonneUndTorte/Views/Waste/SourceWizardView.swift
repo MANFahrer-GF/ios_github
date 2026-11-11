@@ -38,7 +38,11 @@ struct SourceWizardView: View {
     @State private var showImport = false
     /// Suchergebnisse, einmal je Eingabe berechnet.
     @State private var results: [CatalogEntry] = []
-    @State private var uncovered: (place: String, districts: [String])?
+    /// Gefundene Gemeinden ohne belegten Entsorger – je Gemeinde geprüft, jede mit ihrem eigenen Kreis.
+    @State private var uncovered: [PlaceCheck] = []
+    @FocusState private var icsFieldFocused: Bool
+    /// Zum Feld für den Kalender-Link scrollen (Knopf „Kalender-Link einfügen“).
+    @State private var scrollToICS = false
     @State private var hint: String?
 
     var body: some View {
@@ -68,10 +72,17 @@ struct SourceWizardView: View {
                 Button("OK", role: .cancel) {}
             } message: { Text(errorMessage ?? "") }
             .navigationDestination(isPresented: $showCoverage) {
-                CoverageView { entry in
+                CoverageView(onChoose: { entry in
                     showCoverage = false
                     choose(entry)
-                }
+                }, onPasteLink: {
+                    showCoverage = false
+                    pasteLink()
+                }, onImportFile: {
+                    showCoverage = false
+                    // Erst nach dem Zurückgehen öffnen, sonst verwirft SwiftUI die Dateiauswahl mit der schließenden Seite
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { showFileImporter = true }
+                })
             }
             .fileImporter(isPresented: $showFileImporter, allowedContentTypes: LocationDetailView.importTypes, onCompletion: handleImportFile)
             .sheet(isPresented: $showImport) {
@@ -100,16 +111,16 @@ struct SourceWizardView: View {
     private func updateResults() {
         results = query.isEmpty ? region.suggestions : ProviderCatalog.search(query)
         hint = query.isEmpty ? nil : ProviderCatalog.municipalityHint(for: query)
-        let missing = query.isEmpty ? [] : ProviderCatalog.uncoveredMunicipalities(matching: query)
-        if let first = missing.first {
-            let districts: [String] = Array(Set(missing.map(\.district))).sorted().map { DistrictCoverage.displayName($0) }
-            uncovered = (place: first.name, districts: districts)
-        } else {
-            uncovered = nil
-        }
+        uncovered = query.isEmpty ? [] : ProviderCatalog.uncoveredPlaces(matching: query)
+    }
+
+    private func pasteLink() {
+        scrollToICS = true
+        icsFieldFocused = true
     }
 
     private var searchStage: some View {
+        ScrollViewReader { proxy in
         List {
             Section {
                 Button {
@@ -129,7 +140,11 @@ struct SourceWizardView: View {
                     Label(L10n.t("Geht mein Ort?", "Is my town covered?"), systemImage: "map")
                 }
             }
-            if let uncovered { uncoveredSection(uncovered) }
+            ForEach(uncovered) { check in
+                PlaceGapSection(check: check, onPasteLink: pasteLink, onImportFile: { showFileImporter = true })
+            }
+            // Leere Trefferliste nicht zusätzlich zur Karte zeigen – „Versuche den Landkreis“ widerspräche ihr
+            if !(results.isEmpty && !uncovered.isEmpty) {
             Section {
                 ForEach(query.isEmpty && region.suggestions.isEmpty ? ProviderCatalog.entries : results) { item in
                     Button { choose(item) } label: {
@@ -151,9 +166,12 @@ struct SourceWizardView: View {
                     Text(hint)
                 }
             }
+            }
             Section {
                 TextField("https://…/download?system=ical…", text: $icsURL)
                     .keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                    .focused($icsFieldFocused)
+                    .accessibilityIdentifier("icsLinkField")
                 Button("ICS-Link verwenden") { chooseICS() }
                     .disabled(URL(string: icsURL) == nil || !icsURL.hasPrefix("http"))
             } header: {
@@ -161,8 +179,15 @@ struct SourceWizardView: View {
             } footer: {
                 Text("Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.")
             }
+            .id("icsSection")
         }
         .searchable(text: $query, prompt: "Landkreis, Stadt oder Entsorger")
+        .onChange(of: scrollToICS) { _, go in
+            guard go else { return }
+            withAnimation { proxy.scrollTo("icsSection", anchor: .center) }
+            scrollToICS = false
+        }
+        }
     }
 
     private var resultsHeader: String {
@@ -192,29 +217,6 @@ struct SourceWizardView: View {
         Task { await loadNextStep() }
     }
 
-    // MARK: - Nicht angebundene Regionen
-
-    private func uncoveredSection(_ missing: (place: String, districts: [String])) -> some View {
-        Section {
-            Label {
-                Text(L10n.t("\(missing.place) (\(missing.districts.joined(separator: ", "))) ist noch nicht angebunden. Du kannst die Termine trotzdem nutzen: als ICS-Link (unten) oder als CSV-/ICS-Datei.",
-                            "\(missing.place) (\(missing.districts.joined(separator: ", "))) is not connected yet. You can still use your dates: as an ICS link (below) or as a CSV/ICS file."))
-            } icon: {
-                Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
-            }
-            .font(.subheadline)
-            Button { showFileImporter = true } label: {
-                Label(L10n.t("Termine aus CSV- oder ICS-Datei laden", "Load dates from CSV or ICS file"), systemImage: "square.and.arrow.down")
-            }
-            ShareLink(item: PickupCSVFile(text: PickupCSV.template(), fileName: L10n.t("Abfuhrtermine-Vorlage.csv", "Pickup-template.csv")),
-                      preview: SharePreview(L10n.t("CSV-Vorlage", "CSV template"))) {
-                Label(L10n.t("CSV-Vorlage zum Ausfüllen", "CSV template to fill in"), systemImage: "doc.badge.plus")
-            }
-        } header: {
-            Text(L10n.t("Noch nicht angebunden", "Not connected yet"))
-        }
-    }
-
     private func handleImportFile(_ result: Result<URL, Error>) {
         do {
             let pickups = try SyncService.readPickupFile(at: result.get())
@@ -234,7 +236,7 @@ struct SourceWizardView: View {
 
     /// Neuer Standort für den Dateiimport – erst beim Bestätigen angelegt, damit ein Abbruch nichts hinterlässt.
     private func makeImportLocation() -> Location {
-        let name = uncovered?.place ?? (query.isEmpty ? L10n.t("Zuhause", "Home") : query)
+        let name = uncovered.first?.name ?? (query.isEmpty ? L10n.t("Zuhause", "Home") : query)
         let target = Location(name: name, sortOrder: model.allLocations().count)
         target.colorHex = Palette.colors[model.allLocations().count % Palette.colors.count]
         context.insert(target)

@@ -133,10 +133,10 @@ final class CoverageTests: XCTestCase {
         let titles = ProviderCatalog.search("Unterhaching").map(\.title)
         XCTAssertTrue(titles.contains { $0.contains("Unterhaching") })
         XCTAssertFalse(titles.contains { $0.contains("Aschheim") || $0.contains("Planegg") })
-        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Unterhaching").isEmpty)
+        XCTAssertTrue(ProviderCatalog.uncoveredPlaces(matching: "Unterhaching").isEmpty)
         // Seit Oktober 2026 angebunden: Soltau (Heidekreis), Öhningen (Landkreis Konstanz, PDF-Jahresdaten)
-        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Soltau").isEmpty)
-        XCTAssertTrue(ProviderCatalog.uncoveredMunicipalities(matching: "Öhningen").isEmpty)
+        XCTAssertTrue(ProviderCatalog.uncoveredPlaces(matching: "Soltau").isEmpty)
+        XCTAssertTrue(ProviderCatalog.uncoveredPlaces(matching: "Öhningen").isEmpty)
         // Konstanz: Müllmann, MZV Hegau, Gemeinde-Kalender und Jahresdaten zusammen – kein kreisweiter Eintrag
         let konstanz = ProviderCatalog.coverage.first { $0.district == "Landkreis Konstanz" }
         XCTAssertEqual(konstanz?.entryIDs.isEmpty, true, "Müllmann zählt nur für seine Gemeinden")

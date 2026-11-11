@@ -37,7 +37,12 @@ def main():
                if g.get('art') == 'nicht_holbar' and g.get('grund') not in ('portal_abgeschaltet', 'nur_pdf', 'nicht_gefuehrt')]
     # „nicht geführt“ (der zuständige Entsorger führt die Gemeinde online nicht) braucht dieselben Belege.
     errors += [f'{g.get("grund")} ohne entsorger/url/stand/beleg: {c}' for c, g in gaps.items()
-               if g.get('grund') in ('nur_pdf', 'nicht_gefuehrt') and not all(g.get(f) for f in ('entsorger', 'url', 'stand', 'beleg'))]
+               if g.get('art') == 'nicht_holbar' and not all(g.get(f) for f in ('entsorger', 'url', 'stand', 'beleg'))]
+    # Die App zeigt Entsorger, Link und Stand je Lücke: nur öffentliche Webseiten (https), Stand als Datum JJJJ-MM-TT.
+    errors += [f'url nicht https oder stand kein Datum: {c}' for c, g in gaps.items() if g.get('art') == 'nicht_holbar'
+               and not (str(g.get('url', '')).startswith('https://') and len(str(g.get('stand', ''))) == 10
+                        and str(g.get('stand'))[4] == '-' and str(g.get('stand'))[7] == '-')]
+    errors += [f'Trennzeichen | in entsorger/url: {c}' for c, g in gaps.items() if '|' in g.get('entsorger', '') + g.get('url', '')]
     errors += [f'nicht_gefuehrt ohne art nicht_holbar: {c}' for c, g in gaps.items()
                if g.get('grund') == 'nicht_gefuehrt' and g.get('art') != 'nicht_holbar']
     if errors:
@@ -65,10 +70,18 @@ def main():
     out += [k + '=' + ','.join(str(i) for i in sorted(v)) for k, v in sorted(place_lines.items())]
     out += ['"""#', '', '    /// Gründe der ausdrücklichen Lücken, auf die sich `gaps` bezieht.', '    static let gapReasons: [String] = [']
     out += ['        ' + q(g) + ',' for g in reasons]
+    # Entsorger, Webseite und Stand der Prüfung, je Lücke über ihre Position (viele Gemeinden teilen einen Entsorger).
+    sources = sorted({(g['entsorger'], g['url'], g['stand']) for g in gap_lines.values() if g.get('entsorger')})
+    sindex = {s: i for i, s in enumerate(sources)}
+    out += ['    ]', '', '    /// Je Eintrag: „Entsorger|Webseite|Stand der Prüfung (JJJJ-MM-TT)“, auf die sich `gaps` bezieht.',
+            '    static let gapSources: [String] = [']
+    out += ['        ' + q('|'.join(s)) + ',' for s in sources]
     out += ['    ]', '',
-            '    /// Je Zeile: „Landkreis|Gemeinde=Art,Grund“; Art n = nachweislich kein abrufbarer Kalender, o = noch nicht belegt.',
+            '    /// Je Zeile: „Landkreis|Gemeinde=Art,Grund[,Quelle]“; Art n = nachweislich kein abrufbarer Kalender, o = noch nicht belegt.',
             '    static let gaps: String = #"""']
-    out += [f'{k}={g["art"][0]},{rindex[g["grund"]]}' for k, g in sorted(gap_lines.items()) if k not in place_lines]
+    out += [f'{k}={g["art"][0]},{rindex[g["grund"]]}'
+            + (f',{sindex[(g["entsorger"], g["url"], g["stand"])]}' if g.get('entsorger') else '')
+            for k, g in sorted(gap_lines.items()) if k not in place_lines]
     out += ['"""#', '}', '']
     open(OUT, 'w', encoding='utf-8').write('\n'.join(out))
     kinds = [g['art'] for k, g in gap_lines.items() if k not in place_lines]

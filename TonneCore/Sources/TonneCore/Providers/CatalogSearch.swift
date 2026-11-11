@@ -35,7 +35,12 @@ public extension ProviderCatalog {
         // Gemeinden mit belegter Zuordnung zeigen nur die Einträge, die sie führen (Neuss → AWL Neuss, nicht jeden
         // Entsorger des Rhein-Kreises). Nur wo die Zuordnung keinen kennt, bleiben die Einträge des Kreises als Kandidaten.
         let proven = Set(pairs.flatMap { PlaceMapIndex.entryIDs[$0] ?? [] })
-        let openDistricts = Set(hits.filter { PlaceMapIndex.entryIDs["\($0.district)|\($0.name)"] == nil }.map(\.district))
+        // Nachweislich nicht holbare Gemeinden (Portal abgeschaltet, nur PDF, nicht geführt) bekommen keine Kandidaten aus dem
+        // Kreis – die führen sie nicht, und die Auswahl endete bei „Nichts gefunden“.
+        let openDistricts = Set(hits.filter {
+            let pair = "\($0.district)|\($0.name)"
+            return PlaceMapIndex.entryIDs[pair] == nil && PlaceMapIndex.gaps[pair]?.isUnavailable != true
+        }.map(\.district))
         let inDistrict = { (entry: CatalogEntry) in
             proven.contains(entry.id)
                 || (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: openDistricts.contains)
@@ -74,16 +79,10 @@ public extension ProviderCatalog {
         return Array(exact.isEmpty ? hits.prefix(8) : hits[...]).map { (name: $0.name, district: $0.district) }
     }
 
-    /// Gibt es für diese Gemeinde einen Entsorger – kreisweit oder eigens für die Gemeinde?
-    static func isCovered(municipality name: String, district: String) -> Bool {
-        SearchIndex.coveredDistricts.contains(district) || SearchIndex.coveredMunicipalities.contains("\(district)|\(name)")
-    }
-
-    /// Gefundene Gemeinden, für die es noch keinen Entsorger gibt (leer, wenn mindestens eine abgedeckt ist).
-    static func uncoveredMunicipalities(matching query: String) -> [(name: String, district: String)] {
-        let hits = municipalities(matching: query)
-        guard !hits.isEmpty, !hits.contains(where: { isCovered(municipality: $0.name, district: $0.district) }) else { return [] }
-        return hits
+    /// Gefundene Gemeinden ohne belegten Entsorger, jede mit ihrem eigenen Kreis und Grund. Geprüft wird je Gemeinde,
+    /// nicht je Kreis: Ein Kreis mit Entsorger kann einzelne Gemeinden haben, die dieser nicht führt.
+    static func uncoveredPlaces(matching query: String) -> [PlaceCheck] {
+        checkPlace(query).filter { !$0.isCovered }
     }
 
     /// Kurzer Hinweis für die Suche, z. B. „Nostorf liegt im Landkreis Ludwigslust-Parchim.“
@@ -123,14 +122,4 @@ enum SearchIndex {
     static let text: [String: String] = Dictionary(ProviderCatalog.entries.map { ($0.id, $0.searchText) }, uniquingKeysWith: { first, _ in first })
     static let places: [String: [String]] = Dictionary(ProviderCatalog.entries.map { ($0.id, $0.places.map(ProviderCatalog.fold)) },
                                                         uniquingKeysWith: { first, _ in first })
-    /// Kreise mit mindestens einem kreisweiten Entsorger.
-    static let coveredDistricts: Set<String> = {
-        let known = Set(ProviderCatalog.entries.map(\.id))
-        return Set(CatalogRegions.entryDistricts.filter { known.contains($0.key) }.flatMap(\.value))
-    }()
-    /// „Landkreis|Gemeinde“ mit eigenem Gemeinde-Eintrag.
-    static let coveredMunicipalities: Set<String> = {
-        let known = Set(ProviderCatalog.entries.map(\.id))
-        return Set(CatalogRegions.localEntries.filter { known.contains($0.key) }.flatMap(\.value))
-    }()
 }
