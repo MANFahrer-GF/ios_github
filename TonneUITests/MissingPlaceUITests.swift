@@ -122,13 +122,26 @@ final class MissingPlaceUITests: XCTestCase {
         let paste = element("placeGapPasteLink")
         XCTAssertTrue(paste.exists, "„Kalender-Link einfügen“ fehlt")
         paste.tap()
-        let field = element("icsLinkField")
-        XCTAssertTrue(field.waitForExistence(timeout: 5))
-        let focused = NSPredicate(format: "hasKeyboardFocus == true")
-        expectation(for: focused, evaluatedWith: field)
-        waitForExpectations(timeout: 5)
-        snap("assistent-linkfeld")
+        checkLinkSheet("assistent-linkfeld")
 
+    }
+
+    /// Blatt „Kalender-Link einfügen“: Feld fokussiert und sichtbar über der Tastatur, „Verwenden“ erst mit gültigem Link.
+    private func checkLinkSheet(_ name: String) {
+        let field = element("icsLinkSheetField")
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "Blatt „Kalender-Link einfügen“ fehlt")
+        expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: field)
+        waitForExpectations(timeout: 5)
+        let keyboard = app.keyboards.firstMatch
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 5))
+        XCTAssertLessThanOrEqual(field.frame.maxY, keyboard.frame.minY, "Linkfeld liegt hinter der Tastatur")
+        let use = app.buttons["Verwenden"]
+        XCTAssertFalse(use.isEnabled, "„Verwenden“ ohne Link")
+        field.typeText("https://example.org/abfall.ics")
+        XCTAssertTrue(use.isEnabled, "„Verwenden“ bleibt mit gültigem Link aus")
+        snap(name)
+        app.navigationBars["Kalender-Link einfügen"].buttons["Abbrechen"].tap()
+        XCTAssertFalse(field.waitForExistence(timeout: 2) && field.exists, "Blatt schließt nicht")
     }
 
     private func openWizard() {
@@ -156,5 +169,40 @@ final class MissingPlaceUITests: XCTestCase {
         search("Wittmund")
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Treffer")).firstMatch.waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Andere Treffer")).firstMatch.exists)
+    }
+
+    private func openCoverageInWizard(searching place: String) {
+        let link = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Geht mein Ort?")).firstMatch
+        XCTAssertTrue(link.waitForExistence(timeout: 5))
+        link.tap()
+        search(place)
+        XCTAssertTrue(element("placeGapReason").waitForExistence(timeout: 10), "Karte fehlt in „Geht mein Ort?“")
+    }
+
+    /// Aus „Geht mein Ort?“ im Assistenten ohne geschätzte Wartezeit: Link einfügen öffnet das Blatt mit fokussiertem,
+    /// sichtbarem Feld, „Termine aus Datei laden“ öffnet die Dateiauswahl.
+    func testWizardCoverageActionsReachTheirTarget() {
+        openWizard()
+        openCoverageInWizard(searching: "Langeoog")
+        let paste = element("placeGapPasteLink")
+        XCTAssertTrue(paste.exists, "„Kalender-Link einfügen“ fehlt in „Geht mein Ort?“")
+        paste.tap()
+        checkLinkSheet("assistent-ort-linkfeld")
+
+        // Nach „Abbrechen“ steht „Geht mein Ort?“ noch da: Datei laden direkt von hier
+        XCTAssertTrue(element("placeGapImportFile").waitForExistence(timeout: 5))
+        // Die Dateiauswahl läuft in einem eigenen Prozess; in der App erscheint sie als Blatt über die volle Breite.
+        let width = app.frame.width
+        func fullWidthLayers() -> Int {
+            app.otherElements.allElementsBoundByIndex.filter {
+                $0.frame.minY > 40 && $0.frame.minY < 120 && $0.frame.height > 600 && abs($0.frame.width - width) < 1
+            }.count
+        }
+        let before = fullWidthLayers()
+        element("placeGapImportFile").tap()
+        for _ in 0..<20 where fullWidthLayers() <= before { usleep(250_000) }
+        XCTAssertGreaterThan(fullWidthLayers(), before, "Dateiauswahl erscheint nicht")
+        XCTAssertTrue(app.navigationBars["Geht mein Ort?"].exists, "„Geht mein Ort?“ wurde dafür verlassen")
+        snap("assistent-ort-dateiauswahl")
     }
 }

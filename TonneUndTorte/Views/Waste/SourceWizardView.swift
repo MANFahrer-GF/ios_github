@@ -40,9 +40,8 @@ struct SourceWizardView: View {
     @State private var results: [CatalogEntry] = []
     /// Gefundene Gemeinden ohne belegten Entsorger – je Gemeinde geprüft, jede mit ihrem eigenen Kreis.
     @State private var uncovered: [PlaceCheck] = []
-    @FocusState private var icsFieldFocused: Bool
-    /// Zum Feld für den Kalender-Link scrollen (Knopf „Kalender-Link einfügen“).
-    @State private var scrollToICS = false
+    /// Eigenes Blatt für „Kalender-Link einfügen“: Feld oben, von keiner Tastatur verdeckt, auf jedem Weg gleich.
+    @State private var showLinkSheet = false
     @State private var hint: String?
 
     var body: some View {
@@ -76,15 +75,21 @@ struct SourceWizardView: View {
                     showCoverage = false
                     choose(entry)
                 }, onPasteLink: {
-                    showCoverage = false
-                    pasteLink()
+                    // Blatt und Dateiauswahl hängen am NavigationStack und öffnen auch über „Geht mein Ort?“.
+                    showLinkSheet = true
                 }, onImportFile: {
-                    showCoverage = false
-                    // Erst nach dem Zurückgehen öffnen, sonst verwirft SwiftUI die Dateiauswahl mit der schließenden Seite
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { showFileImporter = true }
+                    // Die Dateiauswahl hängt am NavigationStack und öffnet auch über der Seite „Geht mein Ort?“.
+                    showFileImporter = true
                 })
             }
             .fileImporter(isPresented: $showFileImporter, allowedContentTypes: LocationDetailView.importTypes, onCompletion: handleImportFile)
+            .sheet(isPresented: $showLinkSheet) {
+                ICSLinkSheet(url: $icsURL) {
+                    showLinkSheet = false
+                    showCoverage = false
+                    chooseICS()
+                }
+            }
             .sheet(isPresented: $showImport) {
                 ICSImportView(pickups: importPickups, location: location, makeLocation: makeImportLocation) {
                     model.onboardingDone = true
@@ -115,12 +120,10 @@ struct SourceWizardView: View {
     }
 
     private func pasteLink() {
-        scrollToICS = true
-        icsFieldFocused = true
+        showLinkSheet = true
     }
 
     private var searchStage: some View {
-        ScrollViewReader { proxy in
         List {
             Section {
                 Button {
@@ -170,7 +173,6 @@ struct SourceWizardView: View {
             Section {
                 TextField("https://…/download?system=ical…", text: $icsURL)
                     .keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
-                    .focused($icsFieldFocused)
                     .accessibilityIdentifier("icsLinkField")
                 Button("ICS-Link verwenden") { chooseICS() }
                     .disabled(URL(string: icsURL) == nil || !icsURL.hasPrefix("http"))
@@ -179,15 +181,8 @@ struct SourceWizardView: View {
             } footer: {
                 Text("Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Diesen hier einfügen – die App lädt die Termine dann wöchentlich neu. Alternativ kannst du Termine auch von Hand als Rhythmus anlegen.")
             }
-            .id("icsSection")
         }
         .searchable(text: $query, prompt: "Landkreis, Stadt oder Entsorger")
-        .onChange(of: scrollToICS) { _, go in
-            guard go else { return }
-            withAnimation { proxy.scrollTo("icsSection", anchor: .center) }
-            scrollToICS = false
-        }
-        }
     }
 
     private var resultsHeader: String {
@@ -450,5 +445,44 @@ struct SourceWizardView: View {
                 .buttonStyle(.borderedProminent).controlSize(.large).padding(.horizontal)
         }
         .padding()
+    }
+}
+
+/// „Kalender-Link einfügen“: das Feld steht oben im eigenen Blatt und hat sofort den Fokus. In der langen Suchliste lag es
+/// unten und blieb nach dem Rückweg aus „Geht mein Ort?“ hinter der Tastatur.
+private struct ICSLinkSheet: View {
+    @Binding var url: String
+    let onUse: () -> Void
+    @Environment(\.dismiss) private var dismiss
+    @FocusState private var focused: Bool
+
+    private var isValid: Bool { URL(string: url) != nil && url.hasPrefix("http") }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("https://…/download?system=ical…", text: $url)
+                        .keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .focused($focused)
+                        .submitLabel(.done)
+                        .onSubmit { if isValid { onUse() } }
+                        .accessibilityIdentifier("icsLinkSheetField")
+                } footer: {
+                    Text(L10n.t("Viele Abfallportale bieten einen Link „Kalender abonnieren“ oder „iCal-Export“. Die App lädt die Termine dann wöchentlich neu.",
+                                "Many waste portals offer a “subscribe to calendar” or “iCal export” link. The app then reloads the dates every week."))
+                }
+            }
+            .navigationTitle(L10n.t("Kalender-Link einfügen", "Paste calendar link"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.t("Abbrechen", "Cancel")) { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(L10n.t("Verwenden", "Use")) { onUse() }.disabled(!isValid)
+                }
+            }
+            .onAppear { focused = true }
+        }
+        .presentationDetents([.medium, .large])
     }
 }
