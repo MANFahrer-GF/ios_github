@@ -108,8 +108,14 @@ public struct PlaceGap: Hashable, Sendable {
     /// Prüftag zum Lesen: „10.11.2026“ / „10 Nov 2026“.
     public var checkedOnText: String? {
         guard let checkedOn else { return nil }
-        let parts = checkedOn.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3, (1...12).contains(parts[1]) else { return nil }
+        let parts = checkedOn.split(separator: "-", omittingEmptySubsequences: false).compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        // Nur echte Kalendertage: 2026-02-30 ergäbe nach Rundweg den 02.03. und gilt deshalb nicht.
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        guard let date = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2])) else { return nil }
+        let back = calendar.dateComponents([.year, .month, .day], from: date)
+        guard back.year == parts[0], back.month == parts[1], back.day == parts[2] else { return nil }
         let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         return L10n.t(String(format: "%02d.%02d.%04d", parts[2], parts[1], parts[0]), "\(parts[2]) \(months[parts[1] - 1]) \(parts[0])")
     }

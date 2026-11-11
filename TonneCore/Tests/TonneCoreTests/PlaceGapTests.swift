@@ -142,6 +142,18 @@ final class PlaceGapTests: XCTestCase {
         XCTAssertTrue(body.hasPrefix("Gemeinde:\nKreis:\n"), body)
     }
 
+    /// Prüftag nur als echter Kalendertag: 2026-02-30 wird nicht still zum 02.03., der 29.02. eines Schaltjahrs gilt.
+    func testCheckedOnRejectsImpossibleDates() {
+        func text(_ date: String) -> String? {
+            PlaceGap(reason: "nur_pdf", isUnavailable: true, provider: "A", checkedOn: date).checkedOnText
+        }
+        XCTAssertNil(text("2026-02-30"))
+        XCTAssertNil(text("2027-02-29"))
+        XCTAssertNil(text("2026-11-31"))
+        XCTAssertEqual(text("2028-02-29"), "29.02.2028")
+        XCTAssertEqual(text("2026-11-10"), "10.11.2026")
+    }
+
     /// Ohne Quelle (nicht belegt) bleibt der allgemeine Satz, ohne erfundenen Entsorger.
     func testGapWithoutSourceFallsBackToNote() {
         let gap = PlaceGap(reason: "nur_pdf", isUnavailable: true)

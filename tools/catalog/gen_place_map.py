@@ -10,12 +10,21 @@ Eingaben (beide im Repo, damit der Lauf ohne Netz wiederholbar ist):
 Jede Gemeinde steht in genau einer der beiden Mengen. Fehlt eine in beiden oder steht eine in beiden, bricht der Lauf ab
 (und der feste Test PlaceMapTests wird rot). App und Messung lesen dieselbe erzeugte Datei.
 """
+import datetime
 import json, os, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(REPO, 'tools', 'catalog', 'data', 'place_map')
 OUT = os.path.join(REPO, 'TonneCore', 'Sources', 'TonneCore', 'Providers', 'CatalogPlaceMap.swift')
 
+
+
+def is_iso_date(text):
+    """Echtes Kalenderdatum JJJJ-MM-TT (2026-02-30 gilt nicht)."""
+    try:
+        return len(str(text)) == 10 and datetime.date.fromisoformat(str(text)).isoformat() == str(text)
+    except ValueError:
+        return False
 
 def q(s):
     return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
@@ -40,8 +49,7 @@ def main():
                if g.get('art') == 'nicht_holbar' and not all(g.get(f) for f in ('entsorger', 'url', 'stand', 'beleg'))]
     # Die App zeigt Entsorger, Link und Stand je Lücke: nur öffentliche Webseiten (https), Stand als Datum JJJJ-MM-TT.
     errors += [f'url nicht https oder stand kein Datum: {c}' for c, g in gaps.items() if g.get('art') == 'nicht_holbar'
-               and not (str(g.get('url', '')).startswith('https://') and len(str(g.get('stand', ''))) == 10
-                        and str(g.get('stand'))[4] == '-' and str(g.get('stand'))[7] == '-')]
+               and not (str(g.get('url', '')).startswith('https://') and is_iso_date(g.get('stand')))]
     errors += [f'Trennzeichen | in entsorger/url: {c}' for c, g in gaps.items() if '|' in g.get('entsorger', '') + g.get('url', '')]
     errors += [f'nicht_gefuehrt ohne art nicht_holbar: {c}' for c, g in gaps.items()
                if g.get('grund') == 'nicht_gefuehrt' and g.get('art') != 'nicht_holbar']
