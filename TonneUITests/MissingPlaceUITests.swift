@@ -130,4 +130,31 @@ final class MissingPlaceUITests: XCTestCase {
         snap("assistent-linkfeld")
 
     }
+
+    private func openWizard() {
+        tab("Müll")
+        let bar = app.navigationBars["Müll"]
+        XCTAssertTrue(bar.waitForExistence(timeout: 5))
+        bar.buttons.element(boundBy: bar.buttons.count - 1).tap()
+        XCTAssertTrue(app.buttons["Standort mit Entsorger anlegen"].waitForExistence(timeout: 5))
+        app.buttons["Standort mit Entsorger anlegen"].tap()
+    }
+
+    /// Gleichnamige Orte: Neben der Karte für Neunkirchen (Saar, nur PDF) sagt der Kopf, dass die übrigen Treffer
+    /// nicht für diesen Ort gelten.
+    func testWizardMarksResultsOfOtherSameNamePlaces() {
+        openWizard()
+        search("Neunkirchen")
+        XCTAssertTrue(element("placeGapReason").waitForExistence(timeout: 10), "Karte für Neunkirchen fehlt")
+        let header = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Andere Treffer")).firstMatch
+        XCTAssertTrue(header.waitForExistence(timeout: 5), "Kopf „Andere Treffer“ fehlt")
+        XCTAssertTrue(header.label.localizedCaseInsensitiveContains("gelten nicht für Neunkirchen"), header.label)
+        app.searchFields.firstMatch.typeText("\n")
+        for _ in 0..<4 where !header.isHittable { app.swipeUp() }
+        snap("assistent-neunkirchen-andere-treffer")
+        // Gegenprobe: belegter Ort ohne Karte behält den einfachen Kopf
+        search("Wittmund")
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Treffer")).firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Andere Treffer")).firstMatch.exists)
+    }
 }

@@ -196,6 +196,12 @@ struct SourceWizardView: View {
                 ? L10n.t("Alle Entsorger (\(ProviderCatalog.count))", "All providers (\(ProviderCatalog.count))")
                 : L10n.t("Vorschläge", "Suggestions")
         }
+        // Neben der Karte eines fehlenden Orts: Die übrigen Treffer gehören zu gleichnamigen Orten anderswo.
+        if !uncovered.isEmpty {
+            let places = uncovered.map { "\($0.name) (\(DistrictCoverage.displayName($0.district)))" }.joined(separator: ", ")
+            return L10n.t("Andere Treffer (\(results.count)) – gelten nicht für \(places)",
+                          "Other results (\(results.count)) – not for \(places)")
+        }
         return L10n.t("Treffer (\(results.count))", "Results (\(results.count))")
     }
 
