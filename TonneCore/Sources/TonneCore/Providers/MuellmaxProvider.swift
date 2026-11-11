@@ -58,9 +58,25 @@ public struct MuellmaxProvider: WasteProvider {
         return (html, ses)
     }
 
-    /// „Musterstadt, Hauptstraße, 10“ ohne den getippten Suchtext (Texteingaben haben keine Kennung mit „:“).
+    /// Adresskopf der Seite: „<strong>Abfuhrtermine</strong><br />Hauptstraße<br />Mainz“ → „Hauptstraße“.
+    static func chosenStreet(in html: String) -> String? {
+        guard let raw = HTMLText.firstMatch(#"class="m_symadr">[\s\S]*?</strong>\s*<br\s*/?>\s*([^<]+?)\s*<br"#, in: html, group: 1) else { return nil }
+        let street = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        return street.isEmpty ? nil : street
+    }
+
+    /// „Musterstadt, Hauptstraße, 10“ ohne den getippten Suchtext (Texteingaben haben keine Kennung mit „:“) – aber nur, wenn
+    /// danach eine Straße gewählt wurde. Findet das Portal genau eine Straße, springt es gleich zu den Hausnummern
+    /// (Bochum „Kortum“, Mainz „Haupt“); dann steht die echte Straße im Untertitel der Hausnummer und ersetzt den Suchtext.
     public func label(for selections: [SelectionOption]) -> String {
-        selections.filter { $0.id.contains(":") }.map(\.title)
+        let hasStreet = selections.contains { $0.id.hasPrefix("str:") }
+        // Ohne Straßenliste: echte Straße aus dem Adresskopf (Untertitel der Hausnummer) statt des getippten Suchtexts
+        let found = selections.first { $0.id.hasPrefix("hnr:") }?.subtitle
+        return selections.compactMap { option -> String? in
+            if option.id.contains(":") { return option.title }
+            if hasStreet { return nil }
+            return found ?? option.title
+        }
             .filter { !$0.isEmpty && $0.lowercased() != "alle hausnummern" && $0.lowercased() != "alle straßen" }
             .joined(separator: ", ")
     }
@@ -89,7 +105,9 @@ public struct MuellmaxProvider: WasteProvider {
         }
         if !chosen.contains("hnr") {
             let numbers = HTMLText.options(ofSelect: "mm_frm_hnr_sel", in: html).filter { !$0.value.isEmpty }
-            if !numbers.isEmpty { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "hnr:\($0.value)", title: $0.label) }) }
+            // Ohne Straßenliste (Portal fand genau eine Straße) steht die echte Straße nur im Adresskopf – sie reist im Untertitel mit.
+            let street = chosen.contains("str") ? nil : Self.chosenStreet(in: html)
+            if !numbers.isEmpty { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "hnr:\($0.value)", title: $0.label, subtitle: street) }) }
         }
         return nil
     }

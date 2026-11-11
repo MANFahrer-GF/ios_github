@@ -84,6 +84,19 @@ final class SearchTextLabelTests: XCTestCase {
         XCTAssertNil(other.repairedSearchTextLabel())
     }
 
+    /// Müllmax Bochum (live 12.11.): Findet das Portal genau eine Straße, folgen gleich die Hausnummern – der getippte Text
+    /// ist dann die einzige Straßenangabe und muss im Namen bleiben (sonst hieße der Standort nur „2“).
+    func testMuellmaxKeepsTypedStreetWithoutStreetList() {
+        let provider = MuellmaxProvider(service: "Usb")
+        XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("hnr:2", "2", "Kortumstraße")]), "Kortumstraße, 2")
+        // Ohne Adresskopf bleibt der getippte Text die einzige Straßenangabe
+        XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("hnr:2", "2")]), "Kortum, 2")
+        // Adresskopf der echten Seite (EB Mainz, Suche „Haupt“, 12.11.2026)
+        let head = "<div class=\"m_symadr\">\n\t\t\t\t\t<strong>Abfuhrtermine</strong><br />Hauptstraße<br />Mainz\n\t\t\t\t</div>"
+        XCTAssertEqual(MuellmaxProvider.chosenStreet(in: head), "Hauptstraße")
+        XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("str:5", "Kortumstraße"), Self.option("hnr:2", "2")]), "Kortumstraße, 2")
+    }
+
     func testKoelnLabelUsesTheFoundAddress() {
         let selections = [Self.typed("Aachener Str."), Self.typed("50"), Self.option("addr:1234:50", "Aachener Straße 50")]
         XCTAssertEqual(AWBKoelnProvider().label(for: selections), "Köln, Aachener Straße 50")
