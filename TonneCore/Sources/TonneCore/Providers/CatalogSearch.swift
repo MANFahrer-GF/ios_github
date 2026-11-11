@@ -46,10 +46,19 @@ public extension ProviderCatalog {
                 || (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: openDistricts.contains)
                 || (CatalogRegions.localEntries[entry.id] ?? []).contains(where: pairs.contains)
         }
+        // Sind alle gefundenen Gemeinden nachweislich nicht holbar, fallen auch Titel-Treffer weg, die an deren Kreis
+        // gebunden sind („Garmisch-Partenkirchen“ → nicht „Kreis Garmisch-Partenkirchen“, der die Gemeinde nicht führt).
+        let allUnavailable = proven.isEmpty && hits.allSatisfy {
+            PlaceMapIndex.gaps["\($0.district)|\($0.name)"]?.isUnavailable == true
+        }
+        let boundToUnavailable = { (entry: CatalogEntry) in
+            allUnavailable && ((CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: districts.contains)
+                || (CatalogRegions.localEntries[entry.id] ?? []).contains(where: pairs.contains))
+        }
         let known = Set(strong.map(\.id))
         let viaDistrict = entries.filter { !known.contains($0.id) && inDistrict($0) }.sorted { $0.title < $1.title }
         let rest = weak.filter { !inDistrict($0) }
-        return strong + viaDistrict + rest
+        return (strong + viaDistrict + rest).filter { !boundToUnavailable($0) }
     }
 
     /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.

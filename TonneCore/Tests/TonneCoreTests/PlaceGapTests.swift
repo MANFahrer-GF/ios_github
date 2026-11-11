@@ -104,6 +104,19 @@ final class PlaceGapTests: XCTestCase {
         XCTAssertFalse(Set(ProviderCatalog.search("Wittmund").map(\.id)).isDisjoint(with: wittmundIDs))
     }
 
+    /// Auch ein Titel-Treffer fällt weg, wenn er an den Kreis eines nicht holbaren Orts gebunden ist
+    /// („Garmisch-Partenkirchen“ nur als PDF → nicht „Kreis Garmisch-Partenkirchen“). Gegenprobe: Murnau im selben
+    /// Kreis wird vom Kreis-Eintrag geführt und behält ihn.
+    func testSearchDropsTitleHitBoundToUnavailablePlace() throws {
+        let gap = try check("Garmisch-Partenkirchen", in: "Landkreis Garmisch-Partenkirchen")
+        XCTAssertTrue(gap.isUnavailable, "Voraussetzung: Garmisch-Partenkirchen ist nur als PDF belegt")
+        let kreis = try XCTUnwrap(CatalogRegions.entryDistricts.first {
+            $0.value.contains("Landkreis Garmisch-Partenkirchen")
+        }?.key)
+        XCTAssertFalse(ProviderCatalog.search("Garmisch-Partenkirchen").map(\.id).contains(kreis))
+        XCTAssertTrue(ProviderCatalog.search("Murnau a.Staffelsee").map(\.id).contains(kreis))
+    }
+
     /// „Ort melden“: Gemeinde, Kreis und Grund vorbefüllt, keine Adresse oder Koordinaten.
     func testReportMailIsPrefilledWithoutAddress() throws {
         let langeoog = try check("Langeoog", in: "Landkreis Wittmund")
