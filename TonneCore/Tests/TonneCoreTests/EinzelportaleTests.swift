@@ -235,3 +235,150 @@ final class EinzelportaleTests: XCTestCase {
         }
     }
 }
+
+// MARK: - Jahresgrenzen, Altdateien und nicht auswertbare Serien (Prüfrunde 11.11.2026)
+
+extension EinzelportaleTests {
+    private static func ics(_ events: [(String, String)]) -> String {
+        "BEGIN:VCALENDAR\n" + events.map { "BEGIN:VEVENT\nUID:\($0.0)-\($0.1)\nDTSTART;VALUE=DATE:\($0.0)\nSUMMARY:\($0.1)\nEND:VEVENT\n" }.joined() + "END:VCALENDAR\n"
+    }
+
+    private func provider(_ key: String, on date: Date, pages: [String: String]) -> NRWPortalsProvider {
+        var provider = NRWPortalsProvider(service: key, client: HTTPClient(session: EinzelStub.session(pages)))
+        provider.referenceDate = date
+        return provider
+    }
+
+    /// Brachttal: Eine Vorjahresdatei, die nicht mehr abrufbar ist, darf den Ortsteil nicht lahmlegen; das laufende Jahr ist Pflicht.
+    func testBrachttalSkipsOldYearFiles() async throws {
+        let base = "https://www.brachttal.de/m/muellkalender-hellstein-"
+        let page = #"&quot;url&quot;:&quot;//www.brachttal.de/m/muellkalender-hellstein-2025.ics&quot; &quot;url&quot;:&quot;//www.brachttal.de/m/muellkalender-hellstein-2026.ics&quot;"#
+        let pageURL = "https://www.brachttal.de/rathaus-buergerschaft/gemeindeverwaltung/abfallentsorgung/"
+        let selection = [SelectionOption(id: "hellstein", title: "Hellstein")]
+        let pickups = try await provider("brachttal", on: day(2026, 11, 11), pages: [pageURL: page, base + "2026.ics": Self.ics([("20261120", "Restmüll")])])
+            .pickups(for: selection, calendar: calendar)
+        XCTAssertEqual(pickups.map(\.date), [day(2026, 11, 20)])
+        XCTAssertFalse(EinzelStub.requested().contains(base + "2025.ics"), "Altjahr wird gar nicht erst geladen")
+        // Gegenprobe: Fällt die Datei des laufenden Jahres aus, ist das ein Fehler, kein leerer Kalender
+        do {
+            _ = try await provider("brachttal", on: day(2026, 11, 11), pages: [pageURL: page]).pickups(for: selection, calendar: calendar)
+            XCTFail("Ausfall des laufenden Jahres darf nicht als Erfolg durchgehen")
+        } catch {}
+        // Im Dezember darf die Datei des Folgejahres noch fehlen
+        let december = try await provider("brachttal", on: day(2026, 12, 2), pages: [pageURL: page + #" &quot;url&quot;:&quot;//www.brachttal.de/m/muellkalender-hellstein-2027.ics&quot;"#,
+                                                                                      base + "2026.ics": Self.ics([("20261214", "Restmüll")])])
+            .pickups(for: selection, calendar: calendar)
+        XCTAssertEqual(december.map(\.date), [day(2026, 12, 14)])
+    }
+
+    /// Knittel: Verlinkt die Jahresseite auch die Altjahresdatei, gilt die des angefragten Jahres; Folgejahr im Dezember darf fehlen.
+    func testKnittelUsesFileOfRequestedYear() async throws {
+        let up = "https://www.knittel-entsorgung.com/wp-content/uploads/"
+        let page = #"<a href="\#(up)2024/11/ELCHINGEN_Thalfingen_2025.ics">alt</a> <a href="\#(up)2025/11/ELCHINGEN_Thalfingen_2026.ics">neu</a> <a href="\#(up)2025/11/ELCHINGEN_Unterelchingen_2026.ics">x</a>"#
+        let pages = ["https://www.knittel-entsorgung.com/abfuhrkalender-2026/": page,
+                     up + "2024/11/ELCHINGEN_Thalfingen_2025.ics": Self.ics([("20250110", "Restmüll")]),
+                     up + "2025/11/ELCHINGEN_Thalfingen_2026.ics": Self.ics([("20261210", "Restmüll")])]
+        let selection = [SelectionOption(id: "Thalfingen", title: "Thalfingen")]
+        let pickups = try await provider("elchingen", on: day(2026, 12, 1), pages: pages).pickups(for: selection, calendar: calendar)
+        XCTAssertEqual(pickups.map(\.date), [day(2026, 12, 10)])
+        let step = try await provider("elchingen", on: day(2026, 11, 1), pages: pages).nextStep(after: [])
+        XCTAssertEqual(step?.options.map(\.id), ["Thalfingen", "Unterelchingen"])
+    }
+
+    /// Das Abrufjahr folgt der deutschen Uhr, nicht der Zeitzone des Geräts: 31.12. 23:30 UTC ist in Deutschland schon der 1. Januar.
+    func testEinzelYearFollowsGermanClock() async throws {
+        let saved = NSTimeZone.default
+        NSTimeZone.default = TimeZone(identifier: "America/New_York")!
+        defer { NSTimeZone.default = saved }
+        var utc = Calendar(identifier: .gregorian); utc.timeZone = TimeZone(identifier: "UTC")!
+        let newYear = utc.date(from: DateComponents(year: 2026, month: 12, day: 31, hour: 23, minute: 30))!
+        let up = "https://www.knittel-entsorgung.com/wp-content/uploads/"
+        let pages = ["https://www.knittel-entsorgung.com/abfuhrkalender-2027/": #"<a href="\#(up)2026/11/NERSINGEN_Nersingen_2027.ics">x</a>"#,
+                     up + "2026/11/NERSINGEN_Nersingen_2027.ics": Self.ics([("20270105", "Restmüll")])]
+        let pickups = try await provider("nersingen", on: newYear, pages: pages).pickups(for: [], calendar: calendar)
+        XCTAssertEqual(pickups.map(\.date), [day(2027, 1, 5)])
+    }
+
+    /// Eppelborn: Eine Serienregel, die der Parser nicht auswerten kann, meldet einen Fehler statt still nur den ersten Termin zu zeigen.
+    func testEppelbornRejectsUnsupportedRecurrence() {
+        let weekly = "BEGIN:VEVENT\nUID:a\nDTSTART;VALUE=DATE:20260105\nRRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20261231;BYDAY=MO\nSUMMARY:Restmüll\nEND:VEVENT\n"
+        XCTAssertTrue(NRWPortalsProvider.eppelbornUnsupportedRules(weekly, calendar: calendar, today: day(2026, 11, 11)).isEmpty)
+        XCTAssertTrue(NRWPortalsProvider.eppelbornUnsupportedRules("BEGIN:VEVENT\nDTSTART;VALUE=DATE:20260105\nSUMMARY:Papier\nEND:VEVENT\n", calendar: calendar, today: day(2026, 11, 11)).isEmpty)
+        for rule in ["FREQ=MONTHLY;BYMONTHDAY=5;UNTIL=20261231", "FREQ=WEEKLY;BYDAY=MO,TH;UNTIL=20261231", "FREQ=WEEKLY;BYDAY=TU;UNTIL=20261231",
+                     "FREQ=WEEKLY;BYMONTH=1,2"] {
+            let block = "BEGIN:VEVENT\nUID:b\nDTSTART;VALUE=DATE:20260105\nRRULE:\(rule)\nSUMMARY:Bio\nEND:VEVENT\n"
+            XCTAssertEqual(NRWPortalsProvider.eppelbornUnsupportedRules(block, calendar: calendar, today: day(2026, 11, 11)), [rule], rule)
+        }
+        // Serie ohne Ende, die vor über zwei Jahren begann: der Grundparser bricht nach zwei Jahren ab
+        let old = "BEGIN:VEVENT\nDTSTART;VALUE=DATE:20230102\nRRULE:FREQ=WEEKLY\nSUMMARY:Bio\nEND:VEVENT\n"
+        XCTAssertEqual(NRWPortalsProvider.eppelbornUnsupportedRules(old, calendar: calendar, today: day(2026, 11, 11)), ["FREQ=WEEKLY"])
+        let fresh = "BEGIN:VEVENT\nDTSTART;VALUE=DATE:20260102\nRRULE:FREQ=WEEKLY\nSUMMARY:Bio\nEND:VEVENT\n"
+        XCTAssertTrue(NRWPortalsProvider.eppelbornUnsupportedRules(fresh, calendar: calendar, today: day(2026, 11, 11)).isEmpty)
+    }
+
+    /// Abgesagte Termine (STATUS:CANCELLED) sind keine Abfuhr – auch nicht als abgesagter Einzeltermin einer Serie.
+    func testCancelledEventsAreDropped() {
+        let ics = """
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        UID:serie
+        DTSTART;VALUE=DATE:20260105
+        RRULE:FREQ=WEEKLY;COUNT=3
+        SUMMARY:Restmüll
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:serie
+        RECURRENCE-ID;VALUE=DATE:20260112
+        DTSTART;VALUE=DATE:20260112
+        STATUS:CANCELLED
+        SUMMARY:Restmüll
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:einzeln
+        DTSTART;VALUE=DATE:20260107
+        STATUS:CANCELLED
+        SUMMARY:Papier
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:bestaetigt
+        DTSTART;VALUE=DATE:20260108
+        STATUS:CONFIRMED
+        SUMMARY:Bio
+        END:VEVENT
+        END:VCALENDAR
+        """
+        XCTAssertEqual(SachsenPortalsProvider.parseICS(ics, calendar: calendar).map { "\(Days.iso($0.date, calendar: calendar))|\($0.summary)" },
+                       ["2026-01-05|Restmüll", "2026-01-08|Bio", "2026-01-19|Restmüll"])
+        XCTAssertEqual(ICS.parse(ics, calendar: calendar).filter { $0.summary == "Papier" }.count, 0)
+    }
+}
+
+/// Liefert feste Seiten je Adresse; alle anderen Adressen scheitern wie bei einem Netzwerkfehler.
+final class EinzelStub: URLProtocol {
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var pages: [String: String] = [:]
+    nonisolated(unsafe) private static var seen: [String] = []
+
+    static func session(_ pages: [String: String]) -> URLSession {
+        lock.lock(); Self.pages = pages; seen = []; lock.unlock()
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [EinzelStub.self]
+        return URLSession(configuration: config)
+    }
+
+    static func requested() -> [String] { lock.lock(); defer { lock.unlock() }; return seen }
+
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+
+    override func startLoading() {
+        let url = request.url?.absoluteString ?? ""
+        Self.lock.lock(); Self.seen.append(url); let body = Self.pages[url]; Self.lock.unlock()
+        guard let body else { client?.urlProtocol(self, didFailWithError: URLError(.fileDoesNotExist)); return }
+        client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: [:])!, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: Data(body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}

@@ -88,7 +88,14 @@ extension NRWPortalsProvider {
         }
     }
 
-    private var einzelYear: Int { Calendar(identifier: .gregorian).component(.year, from: referenceDate ?? Date()) }
+    /// Kalender mit deutscher Uhr: Das Abrufjahr hängt nicht an der Zeitzone des Geräts.
+    private static let germanCalendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin") ?? .current
+        return calendar
+    }()
+
+    private var einzelYear: Int { Self.germanCalendar.component(.year, from: referenceDate ?? Date()) }
 
     /// Text eines Links ohne Tags und mehrfache Leerzeichen.
     static func linkText(_ html: String) -> String {
@@ -774,7 +781,7 @@ extension NRWPortalsProvider {
     /// Jahre, deren Dateien abgefragt werden: das laufende, im Dezember zusätzlich das folgende (darf noch fehlen).
     private var einzelYears: [Int] {
         let today = referenceDate ?? Date()
-        return Calendar(identifier: .gregorian).component(.month, from: today) == 12 ? [einzelYear, einzelYear + 1] : [einzelYear]
+        return Self.germanCalendar.component(.month, from: today) == 12 ? [einzelYear, einzelYear + 1] : [einzelYear]
     }
 
     private static func year(of date: Date, _ calendar: Calendar) -> Int { calendar.component(.year, from: date) }
@@ -803,6 +810,36 @@ extension NRWPortalsProvider {
         return (name.prefix(1).uppercased() + name.dropFirst(), note)
     }
 
+    /// Serienregeln, die `ICS.expand` nicht vollständig auswertet (nur DAILY/WEEKLY am Wochentag von DTSTART, ohne BYMONTH…;
+    /// ohne Ende höchstens zwei Jahre ab Beginn). Gemessen 11.11.2026: alle neun Bezirkskalender sind auswertbar.
+    static func eppelbornUnsupportedRules(_ text: String, calendar: Calendar, today: Date) -> [String] {
+        let weekdays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"]
+        var rules: [String] = []
+        var start: Date?
+        var rule: String?
+        for line in ICS.unfold(text) {
+            if line.hasPrefix("BEGIN:VEVENT") { start = nil; rule = nil; continue }
+            let (key, params, value) = ICS.split(line)
+            if key == "DTSTART" { start = ICS.parseDate(value, params: params, calendar: calendar) }
+            if key == "RRULE" { rule = value }
+            guard line.hasPrefix("END:VEVENT"), let rule, let start else { continue }
+            var fields: [String: String] = [:]
+            for part in rule.split(separator: ";") {
+                let kv = part.split(separator: "=", maxSplits: 1).map(String.init)
+                if kv.count == 2 { fields[kv[0].uppercased()] = kv[1].uppercased() }
+            }
+            let known: Set<String> = ["FREQ", "INTERVAL", "COUNT", "UNTIL", "BYDAY", "WKST"]
+            let startDay = weekdays[calendar.component(.weekday, from: start) - 1]
+            let open = fields["UNTIL"] == nil && fields["COUNT"] == nil
+            let tooOld = open && (calendar.date(byAdding: .year, value: 2, to: start) ?? start) < today
+            if !["DAILY", "WEEKLY"].contains(fields["FREQ"] ?? "") || !Set(fields.keys).isSubset(of: known)
+                || fields["BYDAY"].map({ $0 != startDay }) == true || tooOld {
+                rules.append(rule)
+            }
+        }
+        return rules
+    }
+
     private func eppelbornStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
         guard selections.isEmpty else { return nil }
         let options = Self.eppelbornDistricts(try await client.string(Self.eppelbornPage))
@@ -820,8 +857,14 @@ extension NRWPortalsProvider {
         guard let link = HTMLText.firstMatch(#"(https://calendar\.google\.com/calendar/ical/[^"'<\s]+?/public/basic\.ics)"#, in: page, group: 1) else {
             throw ProviderError.invalidSelection(L10n.t("Der Bezirk hat keinen Kalender mehr.", "The district no longer has a calendar."))
         }
+        let text = try await client.string(HTMLText.decodeEntities(link))
+        // Eine Serie, die der Parser nicht ganz auswertet, ergäbe still zu wenige Termine
+        guard Self.eppelbornUnsupportedRules(text, calendar: calendar, today: referenceDate ?? Date()).isEmpty else {
+            throw ProviderError.notSupported(L10n.t("Der Kalender des Bezirks nutzt eine Terminregel, die die App nicht lesen kann.",
+                                                    "The district calendar uses a recurrence rule the app cannot read."))
+        }
         // Termine als Serien (RRULE mit UNTIL) mit verschobenen Einzelterminen (RECURRENCE-ID) und EXDATE
-        return SachsenPortalsProvider.parseICS(try await client.string(HTMLText.decodeEntities(link)), calendar: calendar).map { event in
+        return SachsenPortalsProvider.parseICS(text, calendar: calendar).map { event in
             let (name, note) = Self.eppelbornName(event.summary)
             return Pickup(date: event.date, name: NameCleaner.clean(name), note: note)
         }
@@ -874,9 +917,11 @@ extension NRWPortalsProvider {
     // MARK: Knittel Entsorgung (Elchingen, Nersingen)
 
     /// ICS-Dateien der Jahresseite mit Präfix (`ELCHINGEN_`), als (Bereich, Adresse). Der Upload-Pfad wechselt je Jahr.
-    static func knittelFiles(_ html: String, prefix: String) -> [(area: String, url: String)] {
+    /// Mit `year` nur Dateien dieses Jahres: Verlinkt die Seite auch die Altjahresdatei, belegte sie sonst den Bereich.
+    static func knittelFiles(_ html: String, prefix: String, year: Int? = nil) -> [(area: String, url: String)] {
         var seen = Set<String>()
-        return HTMLText.matches(#"(https?:(?:\\?/){2}[^"'\s<>]+?/\#(prefix)([^"'\s<>/]+?)_\d{4}\.ics)"#, in: html).compactMap { groups in
+        let suffix = year.map(String.init) ?? #"\d{4}"#
+        return HTMLText.matches(#"(https?:(?:\\?/){2}[^"'\s<>]+?/\#(prefix)([^"'\s<>/]+?)_\#(suffix)\.ics)"#, in: html).compactMap { groups in
             seen.insert(groups[1]).inserted ? (groups[1], groups[0].replacingOccurrences(of: "\\/", with: "/")) : nil
         }
     }
@@ -884,7 +929,7 @@ extension NRWPortalsProvider {
     private var knittelPrefix: String { serviceKey.uppercased() + "_" }
 
     private func knittelYearFiles(_ year: Int) async throws -> [(area: String, url: String)] {
-        Self.knittelFiles(try await client.string("https://www.knittel-entsorgung.com/abfuhrkalender-\(year)/"), prefix: knittelPrefix)
+        Self.knittelFiles(try await client.string("https://www.knittel-entsorgung.com/abfuhrkalender-\(year)/"), prefix: knittelPrefix, year: year)
     }
 
     private func knittelStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
@@ -975,12 +1020,14 @@ extension NRWPortalsProvider {
 
     private func brachttalPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard let area = selections.first?.id else { throw ProviderError.selectAddressFirst }
-        let files = Self.brachttalFiles(try await client.string(Self.brachttalPage)).filter { $0.area == area }
+        let files = Self.brachttalFiles(try await client.string(Self.brachttalPage)).filter { $0.area == area && $0.year >= einzelYear }
         guard !files.isEmpty else { throw ProviderError.invalidSelection(L10n.t("Der Ortsteil steht nicht mehr auf der Seite der Gemeinde.", "The district is no longer listed by the municipality.")) }
         var pickups: [Pickup] = []
-        for file in files {
+        for file in files where einzelYears.contains(file.year) {
+            // Nur das laufende Jahr ist Pflicht; die Datei des Folgejahres darf im Dezember noch fehlen
+            guard let text = file.year == einzelYear ? try await client.string(file.url) : try? await client.string(file.url) else { continue }
             // Wiederkehrende Einträge (Serien) nur im Jahr der Datei
-            pickups += SachsenPortalsProvider.parseICS(try await client.string(file.url), calendar: calendar)
+            pickups += SachsenPortalsProvider.parseICS(text, calendar: calendar)
                 .filter { Self.year(of: $0.date, calendar) == file.year && Self.brachttalIsPickup($0.summary) }
                 .map { Pickup(date: $0.date, name: NameCleaner.clean($0.summary)) }
         }

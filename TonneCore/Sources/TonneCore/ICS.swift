@@ -28,14 +28,15 @@ public enum ICS {
         var dtstart: Date?
         var rrule: String?
         var inAlarm = false
+        var cancelled = false
 
         for line in unfold(text) {
             if line.hasPrefix("BEGIN:VEVENT") {
-                inEvent = true; inAlarm = false; summary = ""; location = nil; dtstart = nil; rrule = nil
+                inEvent = true; inAlarm = false; cancelled = false; summary = ""; location = nil; dtstart = nil; rrule = nil
                 continue
             }
             if line.hasPrefix("END:VEVENT") {
-                if inEvent, let start = dtstart {
+                if inEvent, !cancelled, let start = dtstart {
                     let name = summary.isEmpty ? "Unbenannt" : summary
                     for date in expand(start: start, rrule: rrule, calendar: calendar) where events.count < maxEvents {
                         events.append(ICSEvent(summary: name, date: date, location: location))
@@ -57,6 +58,8 @@ public enum ICS {
             case "LOCATION": location = unescape(value)
             case "DTSTART": dtstart = parseDate(value, params: params, calendar: calendar)
             case "RRULE": rrule = value
+            // Abgesagter Termin (auch ein abgesagter Einzeltermin einer Serie, dessen Tag RECURRENCE-ID schon entfernt)
+            case "STATUS": cancelled = value.trimmingCharacters(in: .whitespaces).uppercased() == "CANCELLED"
             default: break
             }
         }
