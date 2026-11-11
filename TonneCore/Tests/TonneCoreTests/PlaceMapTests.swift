@@ -4,6 +4,11 @@ import XCTest
 /// Fester Test ohne Netz: Jede Gemeinde des Verzeichnisses hat einen Eintrag, der sie belegt führt, oder steht mit Grund
 /// in der ausdrücklichen Lückenliste – nie beides, nie keins. Anlass: Neuss fehlte, weil je Kreis gezählt wurde.
 final class PlaceMapTests: XCTestCase {
+    // Prüft deutsche Hinweistexte; ohne Festlegung gilt die Systemsprache (CI: Englisch).
+    override func setUp() {
+        L10n.forcedLanguage = "de"
+    }
+
     private var places: [String] {
         MunicipalityIndex.all.map { "\($0.district)|\($0.name)" }.filter { !CatalogRegions.unincorporated.contains($0) }
     }

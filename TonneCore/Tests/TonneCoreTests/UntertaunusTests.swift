@@ -56,7 +56,7 @@ final class UntertaunusTests: XCTestCase {
 
     func testPickupsSplitAndDropBinSwap() {
         let pickups = SuedwestPortalsProvider.untertaunusPickups(Self.ics, calendar: calendar)
-        XCTAssertEqual(pickups.map { "\(Days.iso($0.date)) \($0.name)" }.sorted(),
+        XCTAssertEqual(pickups.map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" }.sorted(),
                        ["2026-11-12 Biotonne", "2026-11-12 Gelbe Tonne", "2026-11-12 Restmülltonne",
                         "2026-11-26 Altpapiertonne", "2026-11-26 Gelbe Tonne"],
                        "je Fraktion ein Termin; „Tonnentausch“ ist keine Abfuhr")
@@ -110,7 +110,7 @@ final class UntertaunusTests: XCTestCase {
             let pickups = try await provider.pickups(for: [town, district, street], calendar: calendar)
             XCTAssertGreaterThanOrEqual(pickups.count, 3)
             XCTAssertTrue(pickups.allSatisfy { WasteCategory.classify($0.name) != .other }, "\(pickups.map(\.name))")
-            print("Untertaunus \(name), \(district.title), \(street.title):", pickups.prefix(8).map { "\(Days.iso($0.date)) \($0.name)" })
+            print("Untertaunus \(name), \(district.title), \(street.title):", pickups.prefix(8).map { "\(Days.iso($0.date, calendar: calendar)) \($0.name)" })
         }
     }
 }
