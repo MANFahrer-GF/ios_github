@@ -125,6 +125,8 @@ public struct NRWPortalsProvider: WasteProvider {
         case "prezero": return join("Bad Oeynhausen", Array(titles.prefix(2)))
         case "frechen": return join("Frechen", Array(titles.prefix(1)))
         case "asto": return join(titles.first ?? "", Array(titles.dropFirst().prefix(1)))
+        // sector27: Ort, getippter Suchtext, gewählte Straße – der Suchtext gehört nicht in den Namen.
+        case "sector27": return join(titles.first ?? "", Array(titles.dropFirst(2).prefix(1)))
         case _ where Self.stadtportalOrte[serviceKey] != nil:
             // Herten: erster Schritt ist nur das Suchwort, zählen tut die gewählte Straße.
             return join(Self.stadtportalOrte[serviceKey]!, serviceKey == "herten" ? Array(titles.suffix(1)) : Array(titles.prefix(2)))

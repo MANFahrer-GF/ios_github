@@ -58,6 +58,13 @@ public struct MuellmaxProvider: WasteProvider {
         return (html, ses)
     }
 
+    /// „Musterstadt, Hauptstraße, 10“ ohne den getippten Suchtext (Texteingaben haben keine Kennung mit „:“).
+    public func label(for selections: [SelectionOption]) -> String {
+        selections.filter { $0.id.contains(":") }.map(\.title)
+            .filter { !$0.isEmpty && $0.lowercased() != "alle hausnummern" && $0.lowercased() != "alle straßen" }
+            .joined(separator: ", ")
+    }
+
     /// Texteingaben (id == title) sind die Straßensuche.
     private func normalized(_ selections: [SelectionOption]) -> [SelectionOption] {
         selections.map { option in

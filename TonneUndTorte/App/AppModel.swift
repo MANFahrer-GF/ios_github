@@ -196,8 +196,23 @@ final class AppModel: ObservableObject {
     func start() async {
         guard !started else { return }
         started = true
+        repairSearchTextLabels()
         await notifications.refreshStatus()
         await becameActive()
+    }
+
+    /// Standorte aus Leipzig, Köln, Hannover, Müllmax und sector27 trugen bis 2.0.9 den getippten Suchtext im Namen.
+    /// Nur der unveränderte automatische Name wird ersetzt; ein selbst vergebener Name bleibt.
+    func repairSearchTextLabels() {
+        var changed = false
+        for location in allLocations() {
+            guard var source = location.source, let fresh = source.repairedSearchTextLabel() else { continue }
+            if location.name == source.label { location.name = fresh }
+            source.label = fresh
+            location.source = source
+            changed = true
+        }
+        if changed { _ = save() }
     }
 
     func becameActive() async {

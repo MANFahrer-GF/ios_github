@@ -22,6 +22,8 @@ struct SourceWizardView: View {
     @State private var entry: CatalogEntry?
     @State private var provider: WasteProvider?
     @State private var selections: [SelectionOption] = []
+    /// Stellen in `selections`, die aus einer Texteingabe stammen – nur für diese Sitzung, nicht gespeichert.
+    @State private var typedIndices: Set<Int> = []
     @State private var currentStep: SelectionStep?
     @State private var stepSearch = ""
     @State private var stepIndex = OptionSearch([])
@@ -222,6 +224,7 @@ struct SourceWizardView: View {
         entry = item
         provider = ProviderFactory.make(kind: item.kind, serviceKey: item.serviceKey)
         selections = []
+        typedIndices = []
         locationName = location?.name ?? ""
         Task { await loadNextStep() }
     }
@@ -257,6 +260,7 @@ struct SourceWizardView: View {
         entry = CatalogEntry(kind: .icsURL, serviceKey: icsURL, title: "ICS-Link")
         provider = ICSURLProvider(url: icsURL)
         selections = []
+        typedIndices = []
         Task { await loadPickups() }
     }
 
@@ -313,12 +317,14 @@ struct SourceWizardView: View {
     private func submitText() {
         let value = textInput.trimmingCharacters(in: .whitespaces)
         guard !value.isEmpty else { return }
+        typedIndices.insert(selections.count)
         select(SelectionOption(id: value, title: value))
     }
 
     private func goBack() {
         guard !selections.isEmpty else { return }   // schneller Doppeltipp auf „Zurück“
         selections.removeLast()
+        typedIndices = typedIndices.filter { $0 < selections.count }
         Task { await loadNextStep() }
     }
 
@@ -328,8 +334,10 @@ struct SourceWizardView: View {
         defer { isLoading = false }
         do {
             if let step = try await provider.nextStep(after: selections) {
-                // Einzige Option automatisch wählen (z. B. „Alle Hausnummern“) – begrenzt, falls ein Portal sich im Kreis dreht
-                if step.options.count == 1, selections.count < 12 {
+                // Einzige Option automatisch wählen (z. B. „Alle Hausnummern“) – begrenzt, falls ein Portal sich im Kreis dreht.
+                // Nicht direkt nach einer Texteingabe: Der einzige Treffer einer Suche soll sichtbar sein (Leipzig „Hamburger Str.“).
+                let afterTyping = typedIndices.contains(selections.count - 1)
+                if step.options.count == 1, !afterTyping, selections.count < 12 {
                     selections.append(step.options[0])
                     await loadNextStep()
                     return

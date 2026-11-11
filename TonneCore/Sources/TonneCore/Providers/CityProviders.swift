@@ -11,6 +11,12 @@ public struct AWBKoelnProvider: WasteProvider {
 
     public init(client: HTTPClient = HTTPClient()) { self.client = client }
 
+    /// „Köln, Aachener Straße 50“: Straße und Hausnummer sind nur getippte Suche, zählen tut die gefundene Adresse.
+    public func label(for selections: [SelectionOption]) -> String {
+        guard let address = selections.first(where: { $0.id.hasPrefix("addr:") }) else { return "Köln" }
+        return "Köln, " + address.title
+    }
+
     private struct Street: Decodable { let street_name: String; let building_number: String; let street_code: String; let district: String?; let zipcode: String? }
     private struct Streets: Decodable { let data: [Street] }
     private struct Entry: Decodable { let day: Int; let month: Int; let year: Int; let type: String }
@@ -61,6 +67,14 @@ public struct LeipzigProvider: WasteProvider {
     private let client: HTTPClient
 
     public init(client: HTTPClient = HTTPClient()) { self.client = client }
+
+    /// „Leipzig, Hamburger Straße 10“: Der getippte Suchtext („Hamburger Str.“) gehört nicht zur Adresse.
+    public func label(for selections: [SelectionOption]) -> String {
+        let street = selections.first { $0.id.hasPrefix("street:") }?.title ?? ""
+        let house = selections.first { $0.id.hasPrefix("house:") }?.title ?? ""
+        let address = [street, house].filter { !$0.isEmpty }.joined(separator: " ")
+        return address.isEmpty ? "Leipzig" : "Leipzig, " + address
+    }
 
     /// Antwort von `rest/odata/Streets` (seit November 2026; der Vorgänger `rest/Navision/Streets` antwortet mit 405).
     struct Streets: Decodable {
@@ -148,6 +162,15 @@ public struct AhaHannoverProvider: WasteProvider {
     private let api = "https://www.aha-region.de/abholtermine/abfuhrkalender"
 
     public init(client: HTTPClient = HTTPClient()) { self.client = client }
+
+    /// „Hannover, Hauptstraße 10“: Der zweite Schritt ist nur der getippte Suchtext für die Straßenliste.
+    public func label(for selections: [SelectionOption]) -> String {
+        let city = selections.first { $0.id.hasPrefix("city:") }?.title ?? ""
+        let street = selections.first { $0.id.hasPrefix("street:") }?.title ?? ""
+        let number = selections.count > 3 ? selections[3].title.trimmingCharacters(in: .whitespaces) : ""
+        let place = selections.first { $0.id.hasPrefix("ladeort:") }?.title ?? ""
+        return [city, [street, number].filter { !$0.isEmpty }.joined(separator: " "), place].filter { !$0.isEmpty }.joined(separator: ", ")
+    }
 
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {

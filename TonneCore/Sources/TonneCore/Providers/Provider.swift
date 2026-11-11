@@ -88,6 +88,26 @@ public struct SourceConfiguration: Hashable, Codable {
     }
 }
 
+public extension SourceConfiguration {
+    /// Bis 2.0.9 enthielt der Name bei diesen Anbietern den getippten Suchtext („Hamburger Str., Hamburger Straße, 10“).
+    /// Liefert den neuen Namen, wenn der gespeicherte noch genau der alte automatische ist – sonst nil (selbst benannt oder schon richtig).
+    func repairedSearchTextLabel() -> String? {
+        let titles = selections.map(\.title).filter { !$0.isEmpty }
+        let legacy: String
+        switch providerKind {
+        case .leipzig, .awbKoeln, .ahaHannover, .muellmax:
+            legacy = titles.filter { $0.lowercased() != "alle hausnummern" && $0.lowercased() != "alle straßen" }.joined(separator: ", ")
+        case .portalsNRW where serviceKey == "sector27":
+            legacy = titles.joined(separator: ", ")
+        default:
+            return nil
+        }
+        guard label == legacy else { return nil }
+        let fresh = ProviderFactory.make(kind: providerKind, serviceKey: serviceKey).label(for: selections)
+        return fresh.isEmpty || fresh == label ? nil : fresh
+    }
+}
+
 public enum ProviderKind: String, Codable, CaseIterable, Hashable {
     case awido
     case abfallIOGraphQL
