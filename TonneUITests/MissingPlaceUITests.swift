@@ -131,12 +131,21 @@ final class MissingPlaceUITests: XCTestCase {
     /// Knopf in der Suchliste antippen, ohne die schwebende Suchleiste zu treffen: Sie steht über der Tastatur und kann
     /// den Knopf verdecken (im Gesamtlauf gemessen: Knopf 497–549 pt, Suchfeld 500–528 pt), der Tipp landete dann im Suchfeld.
     private func tapFree(_ button: XCUIElement) {
+        // Kein Enter ins Suchfeld: Das nahm im Gesamtlauf den Fokus weg (iPhone) bzw. klappte die Suche ein (iPad).
+        // Stattdessen die Liste ein Stück schieben, bis weder Suchleiste noch Tastatur den Knopf verdecken.
         let field = app.searchFields.firstMatch
-        if app.keyboards.firstMatch.exists, field.exists { field.typeText("\n") }
-        for _ in 0..<4 where field.exists && button.frame.maxY > field.frame.minY - 4 && button.frame.minY < field.frame.maxY + 4 {
-            app.swipeUp()
+        let keyboard = app.keyboards.firstMatch
+        func covered() -> Bool {
+            let f = button.frame
+            if field.exists, f.maxY > field.frame.minY - 4, f.minY < field.frame.maxY + 4 { return true }
+            if keyboard.exists, f.maxY > keyboard.frame.minY { return true }
+            return false
         }
-        XCTAssertTrue(button.isHittable, "\(button.label) ist verdeckt")
+        for _ in 0..<4 where covered() {
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+            start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -150)))
+        }
+        XCTAssertFalse(covered(), "\(button.label) ist verdeckt")
         button.tap()
     }
 
@@ -196,9 +205,12 @@ final class MissingPlaceUITests: XCTestCase {
         search("Neunkirchen")
         XCTAssertTrue(element("placeGapReason").waitForExistence(timeout: 10), "Karte für Neunkirchen fehlt")
         let header = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Andere Treffer")).firstMatch
-        // Auf dem iPad ist das Blatt kleiner: Der Kopf liegt unter der Karte außerhalb des Bilds und wird erst beim Scrollen geladen.
-        app.searchFields.firstMatch.typeText("\n")
-        for _ in 0..<6 where !(header.exists && header.isHittable) { app.swipeUp() }
+        // Auf dem iPad ist das Blatt kleiner: Der Kopf liegt unter der Karte außerhalb des Bilds und wird erst beim Scrollen
+        // geladen. Kein Enter ins Suchfeld (nahm im Gesamtlauf den Fokus weg), nur schieben.
+        for _ in 0..<8 where !header.waitForExistence(timeout: 1) {
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+            start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -150)))
+        }
         XCTAssertTrue(header.waitForExistence(timeout: 5), "Kopf „Andere Treffer“ fehlt")
         XCTAssertTrue(header.label.localizedCaseInsensitiveContains("gelten nicht für Neunkirchen"), header.label)
         snap("assistent-neunkirchen-andere-treffer")
