@@ -64,9 +64,11 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars[title].waitForNonExistence(timeout: 5), "„Abbrechen“ schließt „\(title)“ nicht", file: file, line: line)
     }
 
-    /// „Anrufen“ fragt nach – und „Abbrechen“ in der Nachfrage ruft nicht an.
-    private func assertCallAsksFirst(name: String, file: StaticString = #filePath, line: UInt = #line) {
+    /// „Anrufen“ fragt nach – und „Abbrechen“ in der Nachfrage ruft nicht an. Mit `near`: Die Nachfrage liegt beim Knopf.
+    private func assertCallAsksFirst(name: String, near trigger: CGRect? = nil, shot: String, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertTrue(app.staticTexts["\(name) anrufen?"].waitForExistence(timeout: 5), "keine Nachfrage vor dem Anruf", file: file, line: line)
+        sleep(1); snap(shot)
+        if let trigger { assertNear(app.staticTexts["\(name) anrufen?"].frame, trigger, file: file, line: line) }
         // iOS 26 zeigt die Nachfrage als kleines Menü: ohne eigenen Abbrechen-Knopf, schließen durch Tippen daneben
         let dismiss = app.descendants(matching: .any)["Einblendmenü schließen"].firstMatch
         if app.buttons["Abbrechen"].exists { app.buttons["Abbrechen"].firstMatch.tap() }
@@ -74,6 +76,20 @@ final class TonneUITests: XCTestCase {
         else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap() }
         XCTAssertTrue(app.staticTexts["\(name) anrufen?"].waitForNonExistence(timeout: 5), file: file, line: line)
         XCTAssertEqual(app.state, .runningForeground, "App hat die Telefon-App geöffnet", file: file, line: line)
+    }
+
+    /// Eine Rückfrage als Blase gehört an ihren Knopf (Thomas 11.11.2026: Blase oben, Pfeil auf eine fremde Zeile, Knopf unten).
+    private func assertNear(_ dialog: CGRect, _ trigger: CGRect, file: StaticString = #filePath, line: UInt = #line) {
+        let gap = max(0, max(dialog.minY - trigger.maxY, trigger.minY - dialog.maxY))
+        XCTAssertLessThan(gap, 120, "Rückfrage liegt \(Int(gap)) pt vom Knopf entfernt (Rückfrage \(dialog), Knopf \(trigger))", file: file, line: line)
+    }
+
+    /// Lösch-Rückfrage: erscheint, liegt beim Knopf, Bild für die Sichtprüfung.
+    private func assertDeleteAsks(_ trigger: CGRect, title: String, shot: String, file: StaticString = #filePath, line: UInt = #line) {
+        let question = app.staticTexts[title].firstMatch
+        XCTAssertTrue(question.waitForExistence(timeout: 5), "Rückfrage „\(title)“ fehlt", file: file, line: line)
+        sleep(1); snap(shot)
+        assertNear(question.frame, trigger, file: file, line: line)
     }
 
     /// Screenshot für die Sichtprüfung (bleibt im Testergebnis).
@@ -140,8 +156,10 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Lena Sommer").exists)
         XCTAssertEqual(app.buttons.matching(identifier: "Anrufen").count, 1, "Anrufen soll nur beim heutigen Geburtstag stehen")
         XCTAssertEqual(app.buttons.matching(identifier: "Nachricht").count, 1)
-        app.buttons["Anrufen"].firstMatch.tap()
-        assertCallAsksFirst(name: "Lena Sommer")
+        let overviewCall = app.buttons["Anrufen"].firstMatch
+        let overviewFrame = overviewCall.frame
+        overviewCall.tap()
+        assertCallAsksFirst(name: "Lena Sommer", near: overviewFrame, shot: "anruf-uebersicht")
     }
 
     // MARK: - Termine › Geburtstage
@@ -160,8 +178,10 @@ final class TonneUITests: XCTestCase {
         XCTAssertFalse(app.datePickers.firstMatch.exists, "ohne Jahr steht noch eine Datumsauswahl mit Jahr da")
         for _ in 0..<4 { app.swipeUp() }
         XCTAssertTrue(app.buttons["Glückwunsch per Nachricht senden"].exists || app.links["Glückwunsch per Nachricht senden"].exists, "Glückwunsch fehlt")
-        app.buttons["Anrufen"].firstMatch.tap()
-        assertCallAsksFirst(name: "Test Person")
+        let editCall = app.buttons["Anrufen"].firstMatch
+        let editFrame = editCall.frame
+        editCall.tap()
+        assertCallAsksFirst(name: "Test Person", near: editFrame, shot: "anruf-geburtstag")
         app.buttons["Abbrechen"].firstMatch.tap()
         XCTAssertTrue(app.navigationBars["Geburtstag"].waitForNonExistence(timeout: 5))
 
@@ -171,7 +191,7 @@ final class TonneUITests: XCTestCase {
             row.swipeRight()
             XCTAssertTrue(app.buttons["Gratulieren"].waitForExistence(timeout: 3))
             app.buttons["Anrufen"].firstMatch.tap()
-            assertCallAsksFirst(name: "Test Person")
+            assertCallAsksFirst(name: "Test Person", shot: "anruf-wischen")
         }
 
         // Neu anlegen ohne Jahr, sichern, wieder löschen
@@ -190,7 +210,10 @@ final class TonneUITests: XCTestCase {
         text("Neu Person").tap()
         XCTAssertTrue(app.navigationBars["Geburtstag"].waitForExistence(timeout: 5))
         app.swipeUp(); app.swipeUp()
-        app.buttons["Geburtstag löschen"].firstMatch.tap()
+        let deleteBirthday = app.buttons["Geburtstag löschen"].firstMatch
+        let birthdayFrame = deleteBirthday.frame
+        deleteBirthday.tap()
+        assertDeleteAsks(birthdayFrame, title: "Geburtstag wirklich löschen?", shot: "geburtstag-loeschen-rueckfrage")
         app.buttons["Löschen"].firstMatch.tap()
         XCTAssertTrue(text("Neu Person").waitForNonExistence(timeout: 5), "Geburtstag wurde nicht gelöscht")
     }
@@ -311,12 +334,44 @@ final class TonneUITests: XCTestCase {
         text("Gifhorn").tap()
         let delete = app.buttons["Standort löschen"]
         scrollTo(delete)
+        let deleteFrame = delete.frame
         delete.tap()
-        let confirm = app.buttons["Löschen"]
-        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Rückfrage fehlt")
-        sleep(1); snap("standort-loeschen-rueckfrage")
-        confirm.tap()
+        assertDeleteAsks(deleteFrame, title: "Standort und alle Müllarten löschen?", shot: "standort-loeschen-rueckfrage")
+        app.buttons["Löschen"].firstMatch.tap()
         XCTAssertTrue(text("Gifhorn").waitForNonExistence(timeout: 5), "Standort wurde nicht gelöscht")
+    }
+
+    /// Müllart löschen: Rückfrage beim Knopf, danach ist die Müllart weg.
+    func testDeleteWasteTypeAsksAndRemovesIt() {
+        tab("Müll")
+        XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
+        text("Papier").tap()
+        let delete = app.buttons["Müllart löschen"]
+        scrollTo(delete)
+        let frame = delete.frame
+        delete.tap()
+        assertDeleteAsks(frame, title: "„Papier“ wirklich löschen?", shot: "muellart-loeschen-rueckfrage")
+        app.buttons["Löschen"].firstMatch.tap()
+        XCTAssertTrue(text("Papier").waitForNonExistence(timeout: 5), "Müllart wurde nicht gelöscht")
+    }
+
+    /// „Alle Daten löschen“: Rückfrage beim Knopf; schließen ohne zu löschen, die Daten bleiben.
+    func testResetAllAsksAndCanBeDismissed() {
+        tab("Mehr")
+        app.buttons["Einstellungen"].tap()
+        let reset = app.buttons["Alle Daten löschen"]
+        scrollTo(reset)
+        let frame = reset.frame
+        reset.tap()
+        assertDeleteAsks(frame, title: "Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?", shot: "alles-loeschen-rueckfrage")
+        let dismiss = app.descendants(matching: .any)["Einblendmenü schließen"].firstMatch
+        if app.buttons["Abbrechen"].exists { app.buttons["Abbrechen"].firstMatch.tap() }
+        else if dismiss.exists { dismiss.tap() }
+        else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap() }
+        XCTAssertTrue(app.staticTexts["Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?"].waitForNonExistence(timeout: 5))
+        tab("Termine")
+        app.buttons["Geburtstage"].firstMatch.tap()
+        XCTAssertTrue(text("Test Person").waitForExistence(timeout: 5), "Daten weg, obwohl nicht bestätigt")
     }
 
     // MARK: - Mehr und Einstellungen
@@ -571,6 +626,35 @@ final class TonneUITests: XCTestCase {
         let greenName = green.label.components(separatedBy: ",").first ?? "Grün"
         finishWizard()
         assertDisabled(greenName, false)
+    }
+
+    /// Leipzig (Thomas, 11.11.2026): Die Suche „Hamburger Str.“ hat genau einen Treffer. Er muss sichtbar sein (früher still
+    /// gewählt), auch nach „Zurück“ aus der Hausnummer, und der Name enthält den Suchtext nicht („Hamburger Str., Hamburger Straße, 10“).
+    func testWizard6LeipzigSingleMatchAndName() {
+        newWizard()
+        choose("Stadtreinigung Leipzig", search: "Leipzig")
+        let field = app.textFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 20), "Straßenfeld fehlt")
+        field.tap()
+        field.typeText("Hamburger Str.\n")
+        let match = element(app.buttons, prefix: "Hamburger Straße")
+        if !match.waitForExistence(timeout: 30) { dump("6-leipzig-ohne-treffer") }
+        XCTAssertTrue(match.exists, "Einziger Treffer wird nicht angezeigt")
+        XCTAssertFalse(element(app.buttons, prefix: "10").exists, "Hausnummern schon da – Treffer wurde still gewählt")
+        snap("6-leipzig-treffer")
+        match.tap()
+        let number = app.buttons.matching(NSPredicate(format: "label == %@", "10")).firstMatch
+        XCTAssertTrue(number.waitForExistence(timeout: 30), "Hausnummern kommen nicht")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(element(app.buttons, prefix: "Hamburger Straße").waitForExistence(timeout: 30), "Nach „Zurück“ fehlt der Treffer")
+        snap("6-leipzig-zurueck")
+        element(app.buttons, prefix: "Hamburger Straße").tap()
+        XCTAssertTrue(number.waitForExistence(timeout: 30))
+        number.tap()
+        let name = app.textFields["Name des Standorts"]
+        XCTAssertTrue(name.waitForExistence(timeout: 30), "Namensfeld fehlt")
+        XCTAssertEqual(name.value as? String, "Leipzig, Hamburger Straße 10")
+        snap("6-leipzig-name")
     }
 
     // MARK: - Mitteilungen

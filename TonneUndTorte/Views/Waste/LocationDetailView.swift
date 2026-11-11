@@ -53,12 +53,6 @@ struct LocationDetailView: View {
         } message: {
             Text(message ?? "")
         }
-        .confirmationDialog("Standort und alle Müllarten löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
-            Button("Löschen", role: .destructive) {
-                dismiss()
-                model.deleteLater(location)
-            }
-        }
         .onAppear(perform: updateExport)
         .onChange(of: location.lastSyncAt) { _, _ in updateExport() }
         .onChange(of: location.lastSyncMessage) { _, _ in updateExport() }
@@ -219,6 +213,13 @@ struct LocationDetailView: View {
                 showDeleteConfirm = true
             } label: {
                 Label("Standort löschen", systemImage: "trash")
+            }
+            // Rückfrage am auslösenden Knopf: iOS 26 zeigt sie als Blase, die auf ihren Anker zeigt (an der Liste zeigte sie ins Leere).
+            .confirmationDialog("Standort und alle Müllarten löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+                Button("Löschen", role: .destructive) {
+                    dismiss()
+                    model.deleteLater(location)
+                }
             }
         }
     }

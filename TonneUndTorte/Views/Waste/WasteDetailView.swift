@@ -90,16 +90,19 @@ struct WasteDetailView: View {
                     }
                 }
             }
-            Section { Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Müllart löschen", systemImage: "trash") } }
+            Section {
+                Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Müllart löschen", systemImage: "trash") }
+                    // Rückfrage am auslösenden Knopf: iOS 26 zeigt sie als Blase, die auf ihren Anker zeigt (an der Liste zeigte sie ins Leere).
+                    .confirmationDialog("„\(type.name)“ wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+                        Button("Löschen", role: .destructive) { dismiss(); model.deleteLater(type) }
+                    }
+            }
         }
         .navigationTitle(type.name.isEmpty ? L10n.t("Müllart", "Waste type") : type.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showAddDate) { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }
         .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }
-        }
-        .confirmationDialog("„\(type.name)“ wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
-            Button("Löschen", role: .destructive) { dismiss(); model.deleteLater(type) }
         }
         .onChange(of: type.intervalWeeks) { _, _ in save() }
         .onChange(of: type.isActive) { _, _ in save() }

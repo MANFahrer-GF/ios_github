@@ -131,6 +131,17 @@ struct SettingsView: View {
             Section {
                 LabeledContent("iCloud", value: L10n.t("Abgleich über deinen iCloud-Account", "Synced via your iCloud account"))
                 Button("Alle Daten löschen", role: .destructive) { showResetConfirm = true }
+                    // Rückfrage am auslösenden Knopf: iOS 26 zeigt sie als Blase, die auf ihren Anker zeigt (an der Liste zeigte sie ins Leere).
+                    .confirmationDialog("Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?", isPresented: $showResetConfirm, titleVisibility: .visible) {
+                        Button("Alles löschen", role: .destructive) {
+                            try? context.delete(model: WasteType.self); try? context.delete(model: Location.self)
+                            try? context.delete(model: Person.self); try? context.delete(model: CustomEvent.self)
+                            guard model.save() else { return }
+                            crashReports.removeAll()
+                            model.onboardingDone = false
+                            refresh()
+                        }
+                    }
             } header: { Text("Daten") }
 
             Section {
@@ -183,16 +194,6 @@ struct SettingsView: View {
         .onChange(of: liveActivities) { _, _ in refresh() }
         .onChange(of: bringInEnabled) { _, _ in refresh() }
         .onChange(of: bringInMinutes) { _, _ in refresh() }
-        .confirmationDialog("Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?", isPresented: $showResetConfirm, titleVisibility: .visible) {
-            Button("Alles löschen", role: .destructive) {
-                try? context.delete(model: WasteType.self); try? context.delete(model: Location.self)
-                try? context.delete(model: Person.self); try? context.delete(model: CustomEvent.self)
-                guard model.save() else { return }
-                crashReports.removeAll()
-                model.onboardingDone = false
-                refresh()
-            }
-        }
         .alert("Hinweis", isPresented: Binding(get: { info != nil }, set: { if !$0 { info = nil } })) { Button("OK", role: .cancel) {} } message: { Text(info ?? "") }
         .task {
             await notifications.refreshStatus()

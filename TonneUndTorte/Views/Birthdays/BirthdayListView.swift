@@ -156,8 +156,9 @@ struct BirthdayListView: View {
                     }
                 }
             }
-            .confirmationDialog(L10n.t("\(callPerson?.name ?? "") anrufen?", "Call \(callPerson?.name ?? "")?"),
-                                isPresented: Binding(get: { callPerson != nil }, set: { if !$0 { callPerson = nil } }), titleVisibility: .visible) {
+            // Aus der Wischaktion: Deren Knopf verschwindet, eine Blase hätte keinen Anker – darum mittig als Hinweis.
+            .alert(L10n.t("\(callPerson?.name ?? "") anrufen?", "Call \(callPerson?.name ?? "")?"),
+                   isPresented: Binding(get: { callPerson != nil }, set: { if !$0 { callPerson = nil } })) {
                 Button(L10n.t("Anrufen", "Call")) { if let url = CallLink.url(callPerson?.phone) { openURL(url) } }
                 Button(L10n.t("Abbrechen", "Cancel"), role: .cancel) {}
             }
@@ -404,6 +405,10 @@ struct BirthdayEditView: View {
                                 .callConfirmation(isPresented: $confirmCall, name: name, url: url)
                         }
                         Button(role: .destructive) { showDeleteConfirm = true } label: { Label("Geburtstag löschen", systemImage: "trash") }
+                            // Rückfrage am auslösenden Knopf: iOS 26 zeigt sie als Blase, die auf ihren Anker zeigt (an der Liste zeigte sie ins Leere).
+                            .confirmationDialog("Geburtstag wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+                                Button("Löschen", role: .destructive) { dismiss(); model.deleteLater(person) }
+                            }
                     }
                 }
             }
@@ -411,9 +416,6 @@ struct BirthdayEditView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Sichern") { save() }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty) }
-            }
-            .confirmationDialog("Geburtstag wirklich löschen?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
-                Button("Löschen", role: .destructive) { dismiss(); if let person { model.deleteLater(person) } }
             }
             .onAppear(perform: load)
         }
