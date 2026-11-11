@@ -48,12 +48,14 @@ Beim Einrichten siehst du jetzt jede Müllart deines Entsorgers mit eigenem Scha
 
 Neu dabei
 • Frechen liefert Termine je Straße, auch für die Leerung alle vier Wochen
+• Viele weitere Städte und Gemeinden, zum Beispiel Neuss, Göttingen, Gießen, Wetzlar, Hürth und Saarbrücken
 
 Wieder da
 • Leipzig liefert wieder Termine
 
 Zuverlässiger
-Antwortet ein Portal einmal nicht vollständig, bleiben deine kommenden Termine stehen.
+• Die App stürzt nicht mehr ab, wenn du in der Erinnerung auf „Erledigt“ oder „In 1 Stunde nochmal“ tippst
+• Antwortet ein Portal einmal nicht vollständig, bleiben deine kommenden Termine stehen
 ```
 
 ### Werbetext (optional, max. 170 Zeichen)
