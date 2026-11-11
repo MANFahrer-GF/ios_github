@@ -91,7 +91,7 @@ final class MissingPlaceUITests: XCTestCase {
         snap("ort-neuss-belegt")
     }
 
-    func testWizardShowsSameCardAndJumpsToLinkField() {
+    func testWizardShowsSameCardAndOpensLinkSheet() {
         tab("Müll")
         let bar = app.navigationBars["Müll"]
         XCTAssertTrue(bar.waitForExistence(timeout: 5))
@@ -123,7 +123,31 @@ final class MissingPlaceUITests: XCTestCase {
         XCTAssertTrue(paste.exists, "„Kalender-Link einfügen“ fehlt")
         paste.tap()
         checkLinkSheet("assistent-linkfeld")
+        // „Verwenden“ lädt den Link: Blatt zu, Fehler als Hinweis sichtbar
+        paste.tap()
+        useFailingLink()
+    }
 
+    /// „Verwenden“ mit einem Link, der sofort scheitert: Blatt schließt, „Geht mein Ort?“ ist verlassen, der Hinweis erscheint.
+    private func useFailingLink() {
+        let field = element("icsLinkSheetField")
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "Blatt „Kalender-Link einfügen“ fehlt")
+        expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: field)
+        waitForExpectations(timeout: 5)
+        // Das Feld behält einen früher eingegebenen Link; ersetzen statt anhängen
+        if let old = field.value as? String, !old.isEmpty, old != field.placeholderValue {
+            field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count))
+        }
+        field.typeText("https://beispiel.invalid/a.ics")
+        app.buttons["Verwenden"].tap()
+        let alert = app.alerts["Hinweis"]
+        XCTAssertTrue(alert.waitForExistence(timeout: 20), "Hinweis nach „Verwenden“ erscheint nicht")
+        XCTAssertTrue(alert.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "example.org")).count == 0, "alter Link wurde geladen")
+        snap("assistent-link-verwenden-hinweis")
+        XCTAssertFalse(field.exists, "Blatt bleibt nach „Verwenden“ offen")
+        XCTAssertFalse(app.navigationBars["Geht mein Ort?"].exists, "„Geht mein Ort?“ bleibt nach „Verwenden“ stehen")
+        alert.buttons["OK"].tap()
+        XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 5), "Suche fehlt nach dem Hinweis")
     }
 
     /// Blatt „Kalender-Link einfügen“: Feld fokussiert und sichtbar über der Tastatur, „Verwenden“ erst mit gültigem Link.
@@ -189,20 +213,29 @@ final class MissingPlaceUITests: XCTestCase {
         paste.tap()
         checkLinkSheet("assistent-ort-linkfeld")
 
-        // Nach „Abbrechen“ steht „Geht mein Ort?“ noch da: Datei laden direkt von hier
-        XCTAssertTrue(element("placeGapImportFile").waitForExistence(timeout: 5))
-        // Die Dateiauswahl läuft in einem eigenen Prozess; in der App erscheint sie als Blatt über die volle Breite.
-        let width = app.frame.width
-        func fullWidthLayers() -> Int {
-            app.otherElements.allElementsBoundByIndex.filter {
-                $0.frame.minY > 40 && $0.frame.minY < 120 && $0.frame.height > 600 && abs($0.frame.width - width) < 1
-            }.count
+        // „Verwenden“ aus „Geht mein Ort?“: Blatt zu, Seite verlassen, Hinweis sichtbar
+        XCTAssertTrue(paste.waitForExistence(timeout: 5))
+        paste.tap()
+        useFailingLink()
+
+        // Datei laden direkt von „Geht mein Ort?“
+        openCoverageInWizard(searching: "Langeoog")
+        let importFile = element("placeGapImportFile")
+        XCTAssertTrue(importFile.waitForExistence(timeout: 5))
+        XCTAssertTrue(importFile.isHittable)
+        importFile.tap()
+        // Die Dateiauswahl läuft in einem eigenen Prozess und ist in der App-Hierarchie leer. Sie deckt die Seite ab
+        // (iPhone: Blatt über die volle Breite, iPad: mittiges Blatt mit Abdunklung), der Knopf ist dann nicht mehr treffbar.
+        let covered = XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "isHittable == false"), object: importFile)], timeout: 10)
+        if covered != .completed {
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "hierarchie-dateiauswahl"
+            tree.lifetime = .keepAlways
+            add(tree)
         }
-        let before = fullWidthLayers()
-        element("placeGapImportFile").tap()
-        for _ in 0..<20 where fullWidthLayers() <= before { usleep(250_000) }
-        XCTAssertGreaterThan(fullWidthLayers(), before, "Dateiauswahl erscheint nicht")
+        XCTAssertEqual(covered, .completed, "Dateiauswahl erscheint nicht")
         XCTAssertTrue(app.navigationBars["Geht mein Ort?"].exists, "„Geht mein Ort?“ wurde dafür verlassen")
+        sleep(2)
         snap("assistent-ort-dateiauswahl")
     }
 }
