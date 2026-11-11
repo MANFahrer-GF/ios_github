@@ -177,11 +177,22 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
 
     // MARK: - UNUserNotificationCenterDelegate
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        [.banner, .sound, .list]
+    // Bewusst die Varianten mit Completion-Handler statt `async`: Absturz 2.0.8 (9) kam aus der vom Compiler erzeugten
+    // Brücke von `nonisolated … async didReceive`, die UIKits Handler auf einem Concurrency-Thread aufrief; UIKit warf dort
+    // eine NSException (Name fehlt im Bericht, vermutlich Haupt-Thread-Prüfung). Darum Handler ausdrücklich auf dem Haupt-Thread.
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        DispatchQueue.main.async { completionHandler([.banner, .sound, .list]) }
     }
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        Task {
+            // Erst alles ablegen, dann melden: iOS darf die im Hintergrund gestartete App danach sofort anhalten.
+            await self.handle(response, center: center)
+            await MainActor.run { completionHandler() }
+        }
+    }
+
+    private nonisolated func handle(_ response: UNNotificationResponse, center: UNUserNotificationCenter) async {
         let userInfo = response.notification.request.content.userInfo
         let dayKey = userInfo["dayKey"] as? String ?? ""
         let title = response.notification.request.content.title

@@ -549,4 +549,40 @@ final class TonneUITests: XCTestCase {
         finishWizard()
         assertDisabled(greenName, false)
     }
+
+    // MARK: - Mitteilungen
+
+    /// Absturz 2.0.8 (9): Nach dem Tippen auf eine Mitteilung rief die App UIKits Completion-Handler auf einem
+    /// Concurrency-Thread auf, UIKit brach mit einer NSException ab. Laut drei Berichten (zwei Geräte) nach „Erledigt“ in der
+    /// Mitteilung (AppModel.markDone im Absturz). Hier: Testmitteilung, App in den Hintergrund, lange drücken, „Erledigt“ –
+    /// die App darf dabei nicht beendet werden.
+    func testTappingNotificationKeepsAppRunning() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        tab("Mehr")
+        app.buttons["Einstellungen"].tap()
+        let allow = app.buttons["Erlauben"]
+        if allow.waitForExistence(timeout: 3) {
+            allow.tap()
+            let systemAllow = springboard.alerts.buttons.matching(NSPredicate(format: "label IN {'Erlauben', 'Allow'}")).firstMatch
+            if systemAllow.waitForExistence(timeout: 5) { systemAllow.tap() }
+        }
+        let send = app.buttons["Testmitteilung senden"]
+        XCTAssertTrue(send.waitForExistence(timeout: 5), "„Testmitteilung senden“ fehlt")
+        expectation(for: NSPredicate(format: "isEnabled == true"), evaluatedWith: send)
+        waitForExpectations(timeout: 5)
+        send.tap()
+        XCUIDevice.shared.press(.home)
+
+        let banner = springboard.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'Gelber Sack'")).firstMatch
+        XCTAssertTrue(banner.waitForExistence(timeout: 15), "Testmitteilung kam nicht an")
+        banner.press(forDuration: 1.5)
+        let done = springboard.buttons.matching(NSPredicate(format: "label CONTAINS 'Erledigt'")).firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 5), "Aktion „Erledigt“ fehlt in der Mitteilung")
+        done.tap()
+
+        sleep(4) // der Abbruch kam erst nach dem Abarbeiten der Aktion (Speichern, dann Rückmeldung an iOS)
+        XCTAssertNotEqual(app.state, .notRunning, "App ist nach „Erledigt“ in der Mitteilung abgestürzt")
+        app.activate()
+        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 10), "App zeigt nach „Erledigt“ keine Oberfläche mehr")
+    }
 }
