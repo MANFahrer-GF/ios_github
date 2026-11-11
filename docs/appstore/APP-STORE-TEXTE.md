@@ -50,6 +50,10 @@ Neu dabei
 • Frechen liefert Termine je Straße, auch für die Leerung alle vier Wochen
 • Viele weitere Städte und Gemeinden, zum Beispiel Neuss, Göttingen, Gießen, Wetzlar, Hürth und Saarbrücken
 
+Jede Gemeinde einzeln geprüft
+• Wir haben nicht nur die Landkreise abgefragt, sondern alle 10.751 Städte und Gemeinden in Deutschland einzeln gegen die Entsorger geprüft
+• Für 10.596 davon findet die App den zuständigen Entsorger direkt über die Suche
+
 Ort nicht dabei?
 • Gibt es für deinen Ort keinen abrufbaren Online-Kalender, sagt die App jetzt klar, warum: mit Entsorger, Webseite und Tag unserer Prüfung
 • Von dort fügst du direkt einen Kalender-Link ein, lädst Termine aus einer Datei oder meldest uns den Ort
