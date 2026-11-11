@@ -42,6 +42,8 @@ struct SourceWizardView: View {
     @State private var uncovered: [PlaceCheck] = []
     /// Eigenes Blatt für „Kalender-Link einfügen“: Feld oben, von keiner Tastatur verdeckt, auf jedem Weg gleich.
     @State private var showLinkSheet = false
+    /// „Verwenden“ im Blatt: der Link wird in `onDismiss` geladen.
+    @State private var useLinkOnDismiss = false
     @State private var hint: String?
 
     var body: some View {
@@ -83,11 +85,17 @@ struct SourceWizardView: View {
                 })
             }
             .fileImporter(isPresented: $showFileImporter, allowedContentTypes: LocationDetailView.importTypes, onCompletion: handleImportFile)
-            .sheet(isPresented: $showLinkSheet) {
+            .sheet(isPresented: $showLinkSheet, onDismiss: {
+                // Erst laden, wenn das Blatt ganz zu ist: Scheitert der Link sofort, verwirft iOS einen Hinweis, der
+                // noch während des Schließens erscheinen soll.
+                guard useLinkOnDismiss else { return }
+                useLinkOnDismiss = false
+                showCoverage = false
+                chooseICS()
+            }) {
                 ICSLinkSheet(url: $icsURL) {
+                    useLinkOnDismiss = true
                     showLinkSheet = false
-                    showCoverage = false
-                    chooseICS()
                 }
             }
             .sheet(isPresented: $showImport) {
