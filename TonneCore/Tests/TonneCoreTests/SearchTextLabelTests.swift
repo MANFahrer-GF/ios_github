@@ -79,6 +79,16 @@ final class SearchTextLabelTests: XCTestCase {
         let sector = SourceConfiguration(providerKind: .portalsNRW, serviceKey: "sector27",
                                          selections: [Self.option("1", "Datteln"), Self.typed("Ahorn"), Self.option("s:77", "Ahornweg")], label: "Datteln, Ahorn, Ahornweg")
         XCTAssertEqual(sector.repairedSearchTextLabel(), "Datteln, Ahornweg")
+        // Müllmax-Direktsprung aus Build 12 (2.0.9): Name nur „2“ → getippter Text kommt zurück (die echte Straße kennt die alte
+        // Auswahl nicht); mit gewählter Straße oder selbst vergebenem Namen bleibt alles, wie es ist
+        let jump = SourceConfiguration(providerKind: .muellmax, serviceKey: "Usb", selections: [Self.typed("Kortum"), Self.option("hnr:5", "2")], label: "2")
+        XCTAssertEqual(jump.repairedSearchTextLabel(), "Kortum, 2")
+        let withStreet = SourceConfiguration(providerKind: .muellmax, serviceKey: "Usb",
+                                             selections: [Self.typed("Kortum"), Self.option("str:5", "Kortumstraße"), Self.option("hnr:2", "2")], label: "Kortumstraße, 2")
+        XCTAssertNil(withStreet.repairedSearchTextLabel())
+        var ownJump = jump
+        ownJump.label = "Büro"
+        XCTAssertNil(ownJump.repairedSearchTextLabel())
         // Andere Anbieter fasst die Reparatur nicht an
         let other = SourceConfiguration(providerKind: .portalsSachsen, serviceKey: "dresden", selections: selections, label: "Hamburger Str., Hamburger Straße, 10")
         XCTAssertNil(other.repairedSearchTextLabel())

@@ -169,9 +169,10 @@ public enum DutySchedule {
         while result.count < count, probe < limit {
             let near = intervals(of: periods, around: probe, calendar: calendar).filter { $0.end >= probe }
             guard var block = near.min(by: { $0.start < $1.start }) else { break }
-            // Alles anhängen, was den Dienst überlappt oder am Folgetag weiterführt
+            // Alles anhängen, was den Dienst überlappt oder am Folgetag weiterführt – bis zur Grenze, denn lückenlose Dienste
+            // (ganzes Jahr jährlich, jede Woche) wüchsen sonst endlos
             var grown = true
-            while grown {
+            while grown, block.end < limit {
                 grown = false
                 let reach = Days.add(1, to: block.end, calendar: calendar)
                 let candidates = intervals(of: periods, around: block.end, calendar: calendar) + near

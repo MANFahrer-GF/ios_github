@@ -353,6 +353,9 @@ final class TonneUITests: XCTestCase {
         let four = app.buttons["Jede 4. Woche"].firstMatch
         XCTAssertTrue(four.waitForExistence(timeout: 5), "Auswahl „Jede 4. Woche“ fehlt")
         four.tap(); sleep(1)
+        // Vorschau zeigt wirklich Dienste (Von – Bis), nicht nur die Überschrift (Codex 12.11.2026)
+        let ranges = app.staticTexts.matching(NSPredicate(format: "label CONTAINS ' – '"))
+        XCTAssertGreaterThanOrEqual(ranges.count, 4, "Vorschau ohne Dienste")
         snap("03-rhythmus-jede-4-woche")
         app.buttons["Sichern"].firstMatch.tap()
         XCTAssertTrue(app.navigationBars["Rhythmus"].waitForNonExistence(timeout: 5))
@@ -360,7 +363,9 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Jede 4. Woche").waitForExistence(timeout: 5), "Rhythmus fehlt in der Liste")
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Du bist dran bis'")).firstMatch.waitForExistence(timeout: 5),
                       "Statuszeile fehlt: Der erste Dienst beginnt in dieser Woche")
-        XCTAssertTrue(app.descendants(matching: .any)["duty.preview"].exists, "„Deine nächsten Dienste“ fehlt")
+        let preview = app.descendants(matching: .any)["duty.preview"].firstMatch
+        XCTAssertTrue(preview.exists, "„Deine nächsten Dienste“ fehlt")
+        XCTAssertTrue(preview.label.contains(" – "), "Vorschau ohne Dienste: \(preview.label)")
         sleep(1); snap("04-standort-mit-rhythmus")
 
         // Monats-Rhythmus mit 2 Monaten Länge: Beim erneuten Öffnen muss die Länge stehen bleiben (Prüfung 12.11.2026)
@@ -615,13 +620,21 @@ final class TonneUITests: XCTestCase {
         XCTAssertEqual(row.label.contains("Deaktiviert"), disabled, "„\(name)“: \(row.label)", file: file, line: line)
     }
 
+    static let frechenBins = ["Grünschnittabfuhr / Bündel", "Weihnachtsbäume", "Biotonne / Biosäcke", "Gelbe Tonne / gelber Sack", "Blaue Tonne / Papierbündel",
+                              "Großcontainer Restmüll", "Großcontainer Restmüll 14-täglich", "Restmüll", "Restmüll 4-wöchentlich"]
+
     /// Neu anlegen: alle neun Arten vorab an; drei Restmüll-Arten abwählen, nur „Restmüll“ bleibt.
     func testWizard1Frechen() {
         newWizard()
         choose("Stadtbetrieb Frechen", search: "Frechen")
         choose("Aachener", search: "Aachener")
-        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
-        XCTAssertEqual(app.switches.allElementsBoundByIndex.filter { !$0.label.isEmpty }.map { $0.value as? String }, Array(repeating: "1", count: 9))
+        // Die Liste lädt nur Sichtbares: auf den ersten Schalter warten, dann jede der neun Arten einzeln anscrollen
+        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        for name in Self.frechenBins {
+            let row = binSwitch(name)
+            scrollTo(row)
+            XCTAssertEqual(row.value as? String, "1", "„\(name)“ ist nicht vorab eingeschaltet")
+        }
         for name in ["Großcontainer Restmüll", "Großcontainer Restmüll 14-täglich", "Restmüll 4-wöchentlich"] { setBin(name, on: false) }
         dump("1-frechen-schalter")
         finishWizard()
@@ -635,8 +648,10 @@ final class TonneUITests: XCTestCase {
         editWizard("Frechen")
         choose("Stadtbetrieb Frechen", search: "Frechen")
         choose("Aachener", search: "Aachener")
-        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        scrollTo(binSwitch("Restmüll 4-wöchentlich"))
         XCTAssertEqual(binSwitch("Restmüll 4-wöchentlich").value as? String, "0")
+        scrollTo(binSwitch("Restmüll"))
         XCTAssertEqual(binSwitch("Restmüll").value as? String, "1")
         setBin("Restmüll 4-wöchentlich", on: true)
         dump("2-gleich-schalter")
@@ -655,7 +670,7 @@ final class TonneUITests: XCTestCase {
         editWizard("Frechen")
         choose("Stadtbetrieb Frechen", search: "Frechen")
         choose("Hauptstraße", search: "Hauptstr")
-        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 30), "Müllarten kommen nicht")
         dump("3-andere-schalter")
         finishWizard()
         assertDisabled("Altart", true)
@@ -671,7 +686,7 @@ final class TonneUITests: XCTestCase {
         editWizard("Frechen")
         choose("Stadtbetrieb Frechen", search: "Frechen")
         choose("Hauptstraße", search: "Hauptstr")
-        XCTAssertTrue(binSwitch("Restmüll").waitForExistence(timeout: 30), "Müllarten kommen nicht")
+        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 30), "Müllarten kommen nicht")
         finishWizard()
         dump("4-saison-muell")
         assertDisabled("Altart", false)

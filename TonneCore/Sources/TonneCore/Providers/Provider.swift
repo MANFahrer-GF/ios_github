@@ -102,7 +102,11 @@ public extension SourceConfiguration {
         default:
             return nil
         }
-        guard label == legacy else { return nil }
+        // Müllmax mit Direktsprung zu den Hausnummern: Build 12 (2.0.9) ließ den getippten Text weg und speicherte nur „2“
+        let build12 = selections.filter { $0.id.contains(":") }.map(\.title)
+            .filter { !$0.isEmpty && $0.lowercased() != "alle hausnummern" && $0.lowercased() != "alle straßen" }
+            .joined(separator: ", ")
+        guard label == legacy || (providerKind == .muellmax && label == build12) else { return nil }
         let fresh = ProviderFactory.make(kind: providerKind, serviceKey: serviceKey).label(for: selections)
         return fresh.isEmpty || fresh == label ? nil : fresh
     }

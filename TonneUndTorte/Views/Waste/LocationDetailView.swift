@@ -483,8 +483,13 @@ private struct DutyRhythmEditor: View {
         Days.parse(key).map { DateText.short($0) } ?? key
     }
 
+    /// Endet der Dienst in einem anderen Jahr, steht das Jahr dabei – sonst läse sich ein durchgehender Dienst bis 2029 wie ein paar Tage.
     static func rangeText(_ start: Date, _ end: Date) -> String {
-        "\(DateText.short(start)) – \(DateText.short(end))"
+        let calendar = Calendar.current
+        guard calendar.component(.year, from: start) != calendar.component(.year, from: end) else {
+            return "\(DateText.short(start)) – \(DateText.short(end))"
+        }
+        return "\(DateText.short(start)) – \(end.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated).year()))"
     }
 
     static func startOfThisWeek() -> Date {

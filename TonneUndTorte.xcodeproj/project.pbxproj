@@ -655,7 +655,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -692,7 +692,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte;
 				PRODUCT_NAME = "Tonne & Torte";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -718,7 +718,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -745,7 +745,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.TonneWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -776,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -808,7 +808,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -835,7 +835,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -862,7 +862,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = de.manfahrer.TonneUndTorte.watchkitapp.TonneWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

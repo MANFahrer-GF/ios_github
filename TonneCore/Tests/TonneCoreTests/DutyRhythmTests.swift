@@ -85,6 +85,18 @@ final class DutyRhythmTests: XCTestCase {
         }
     }
 
+    /// Lückenlose Dienste (ganzes Jahr jährlich, oder jede Woche) dürfen die Vorschau nicht endlos verlängern (Codex 12.11.2026:
+    /// Standortseite fror ein). Der Dienst endet in der Vorschau spätestens drei Jahre voraus.
+    func testPreviewOfGaplessDutyTerminates() {
+        let wholeYear = [DutyPeriod(startKey: "2026-01-01", endKey: "2026-12-31", yearly: true)]
+        let everyWeek = [DutyPeriod.rhythm(start: day("2026-11-16"), DutyRhythm(every: 1, unit: .weeks), calendar: calendar)]
+        for periods in [wholeYear, everyWeek] {
+            let next = DutySchedule.upcoming(periods, from: day("2026-11-24"), count: 3, calendar: calendar)
+            XCTAssertEqual(next.count, 1, "ein durchgehender Dienst")
+            XCTAssertLessThanOrEqual(next[0].end, Days.add(4 * 366, to: day("2026-11-24"), calendar: calendar))
+        }
+    }
+
     /// Ein Abstand von 0 aus fremden Daten darf nicht durch null teilen.
     func testDecodedZeroIntervalIsClamped() throws {
         let json = #"[{"id":"\#(UUID())","startKey":"2026-11-16","endKey":"2026-11-22","rhythm":{"every":0,"unit":"weeks","length":3}}]"#
