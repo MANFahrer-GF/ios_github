@@ -88,7 +88,7 @@ final class SearchTextLabelTests: XCTestCase {
     /// ist dann die einzige Straßenangabe und muss im Namen bleiben (sonst hieße der Standort nur „2“).
     func testMuellmaxKeepsTypedStreetWithoutStreetList() {
         let provider = MuellmaxProvider(service: "Usb")
-        XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("hnr:2", "2", "Kortumstraße")]), "Kortumstraße, 2")
+        XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("hnr:2|straße:Kortumstraße", "2")]), "Kortumstraße, 2")
         // Ohne Adresskopf bleibt der getippte Text die einzige Straßenangabe
         XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("hnr:2", "2")]), "Kortum, 2")
         // Adresskopf der echten Seite (EB Mainz, Suche „Haupt“, 12.11.2026)
@@ -103,7 +103,7 @@ final class SearchTextLabelTests: XCTestCase {
     /// Adresse und braucht keinen Fall. Danach die Zahl hier anpassen.
     static let textSteps: [String: Int] = [
         "AWMMuenchenProvider.swift": 1,          // Hausnummer am Ende
-        "AbfallPlusAppProvider.swift": 1,        // Fall abfallPlusApp
+        "AbfallPlusAppProvider.swift": 3,        // Fall abfallPlusApp (ein geteilter Schritt, zwei Verwendungen)
         "BayernPortalsProvider.swift": 2,        // Fälle fuerth, landkreis_as
         "BuergerportalProvider.swift": 1,        // Hausnummer am Ende
         "CTraceProvider.swift": 3,               // Ort, Straße, Hausnummer getippt, keine Trefferliste danach
@@ -117,12 +117,18 @@ final class SearchTextLabelTests: XCTestCase {
         "MuellmaxProvider.swift": 1,             // Fall muellmax
         "NRWPortalsProvider.swift": 7,           // Fälle awista, awg, sector27
         "NRWStadtportale.swift": 4,              // Fall herten, sonst Hausnummer bzw. ganze Adresse am Ende
-        "NordPortalsProvider.swift": 2,          // Fälle hamburg, bremerhaven, kiel, heidekreis
+        "NordPortalsProvider.swift": 6,          // Fälle hamburg, bremerhaven, kiel, heidekreis (geteilter Schritt, vier Verwendungen)
         "RegionalProviders.swift": 2,            // Fall bsr
         "SachsenPortalsProvider.swift": 1,       // Fall dresden
         "SuedwestPortalsProvider.swift": 9,      // Fälle frankfurt, stuttgart, wiesbaden, heidenheim, floersheim
         "WasteManagementServletProvider.swift": 1, // Hausnummer am Ende
     ]
+
+    /// „    static var streetSearchStep: SelectionStep {“ → „streetSearchStep“
+    static func sharedStepName(_ line: String) -> String? {
+        guard let match = line.range(of: #"var \w+: SelectionStep \{"#, options: .regularExpression) else { return nil }
+        return String(line[match].dropFirst(4).prefix { $0 != ":" })
+    }
 
     func testEveryTextStepIsReviewed() throws {
         let dir = URL(fileURLWithPath: #filePath)
@@ -131,15 +137,84 @@ final class SearchTextLabelTests: XCTestCase {
         var found: [String: Int] = [:]
         for file in try FileManager.default.contentsOfDirectory(atPath: dir.path) where file.hasSuffix(".swift") {
             let source = try String(contentsOf: dir.appendingPathComponent(file), encoding: .utf8)
-            let count = source.components(separatedBy: "\n").filter { $0.contains(".text(title") && !$0.contains("static func") }.count
+            let lines = source.components(separatedBy: "\n")
+            var count = lines.filter { $0.contains(".text(title") && !$0.contains("static func") }.count
+            // Geteilte Schritte („var streetSearchStep: SelectionStep { .text(title: …) }“): jede Verwendung zählt als eigener Schritt,
+            // sonst bliebe ein weiterer Dienst, der denselben Schritt nutzt, unbemerkt (Prüfung 12.11.2026)
+            for (index, line) in lines.enumerated() {
+                guard let name = Self.sharedStepName(line), lines[index...].prefix(3).contains(where: { $0.contains(".text(title") }) else { continue }
+                count += lines.filter { $0.range(of: "\\b\(name)\\b", options: .regularExpression) != nil }.count - 1
+            }
             if count > 0 { found[file] = count }
         }
         XCTAssertFalse(found.isEmpty, "Quelltext nicht gefunden: \(dir.path)")
         XCTAssertEqual(found, Self.textSteps, "Texteingabe-Schritte geändert: Fall in `cases` ergänzen oder begründen, dann `textSteps` anpassen")
     }
 
+    /// Ganzer Weg ohne Netz: Müllmax springt nach „Kortum“ gleich zu den Hausnummern. Die Straße aus dem Adresskopf muss in der
+    /// Kennung der Hausnummer landen (nicht im Untertitel, der die Suche verfälscht), und die Abfrage schickt nur die Nummer.
+    func testMuellmaxDirectJumpCarriesStreetOffline() async throws {
+        let provider = MuellmaxProvider(service: "Usb", client: HTTPClient(session: MuellmaxStub.session()))
+        let typed = Self.typed("Kortum")
+        let step = try await provider.nextStep(after: [typed])
+        let numbers = try XCTUnwrap(step?.options)
+        XCTAssertEqual(numbers.map(\.title), ["2", "2a", "12"])
+        XCTAssertTrue(numbers.allSatisfy { $0.subtitle == nil }, "Straße gehört nicht in den Untertitel")
+        XCTAssertEqual(provider.label(for: [typed, numbers[1]]), "Kortumstraße, 2a")
+        _ = try await provider.nextStep(after: [typed, numbers[1]])
+        XCTAssertTrue(MuellmaxStub.bodies().contains { $0.contains("mm_frm_hnr_sel=7") && !$0.contains("Kortum%C3%9F") && !$0.contains("stra") },
+                      "Hausnummer-Abfrage muss nur die Nummer schicken: \(MuellmaxStub.bodies())")
+    }
+
     func testKoelnLabelUsesTheFoundAddress() {
         let selections = [Self.typed("Aachener Str."), Self.typed("50"), Self.option("addr:1234:50", "Aachener Straße 50")]
         XCTAssertEqual(AWBKoelnProvider().label(for: selections), "Köln, Aachener Straße 50")
     }
+}
+
+/// Müllmax-Seite nach der Straßensuche „Kortum“: genau eine Straße, deshalb gleich die Hausnummern.
+final class MuellmaxStub: URLProtocol {
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var seen: [String] = []
+
+    static func session() -> URLSession {
+        lock.lock(); seen = []; lock.unlock()
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MuellmaxStub.self]
+        return URLSession(configuration: config)
+    }
+
+    static func bodies() -> [String] { lock.lock(); defer { lock.unlock() }; return seen }
+
+    override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "www.muellmax.de" }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+
+    override func startLoading() {
+        var body = request.httpBody ?? Data()
+        if body.isEmpty, let stream = request.httpBodyStream {
+            stream.open()
+            var buffer = [UInt8](repeating: 0, count: 1024)
+            while stream.hasBytesAvailable {
+                let count = stream.read(&buffer, maxLength: buffer.count)
+                if count <= 0 { break }
+                body.append(buffer, count: count)
+            }
+            stream.close()
+        }
+        Self.lock.lock(); Self.seen.append(String(decoding: body, as: UTF8.self)); Self.lock.unlock()
+        let html = """
+        <form><input type="hidden" name="mm_ses" value="abc">
+        <div class="m_symadr">
+            <strong>Abfuhrtermine</strong><br />Kortumstraße<br />Bochum
+        </div>
+        <select name="mm_frm_hnr_sel"><option value="">bitte wählen</option><option value="5">2</option><option value="7">2a</option><option value="9">12</option></select>
+        </form>
+        """
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/html; charset=utf-8"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: Data(html.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
 }

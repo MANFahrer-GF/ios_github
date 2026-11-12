@@ -50,13 +50,18 @@ public struct MuellmaxProvider: WasteProvider {
             case "str":
                 html = try await post([("mm_ses", ses), ("xxx", "1"), ("mm_frm_str_sel", parts[1]), ("mm_aus_str_sel_submit", "weiter")])
             case "hnr":
-                html = try await post([("mm_ses", ses), ("xxx", "1"), ("mm_frm_hnr_sel", parts[1]), ("mm_aus_hnr_sel_submit", "weiter")])
+                let number = parts[1].components(separatedBy: Self.streetMarker)[0]
+                html = try await post([("mm_ses", ses), ("xxx", "1"), ("mm_frm_hnr_sel", number), ("mm_aus_hnr_sel_submit", "weiter")])
             default: break
             }
             ses = token(html)
         }
         return (html, ses)
     }
+
+    /// Trenner in der Kennung einer Hausnummer: „hnr:5|straße:Kortumstraße“. Die Straße reist in der Kennung statt im Untertitel,
+    /// damit die Suche in der Hausnummernliste nicht über den Straßennamen trifft („2a“ fände sonst auch „12“ in der „…allee 2a“).
+    static let streetMarker = "|straße:"
 
     /// Adresskopf der Seite: „<strong>Abfuhrtermine</strong><br />Hauptstraße<br />Mainz“ → „Hauptstraße“.
     static func chosenStreet(in html: String) -> String? {
@@ -67,11 +72,11 @@ public struct MuellmaxProvider: WasteProvider {
 
     /// „Musterstadt, Hauptstraße, 10“ ohne den getippten Suchtext (Texteingaben haben keine Kennung mit „:“) – aber nur, wenn
     /// danach eine Straße gewählt wurde. Findet das Portal genau eine Straße, springt es gleich zu den Hausnummern
-    /// (Bochum „Kortum“, Mainz „Haupt“); dann steht die echte Straße im Untertitel der Hausnummer und ersetzt den Suchtext.
+    /// (Bochum „Kortum“, Mainz „Haupt“); dann steht die echte Straße in der Kennung der Hausnummer und ersetzt den Suchtext.
     public func label(for selections: [SelectionOption]) -> String {
         let hasStreet = selections.contains { $0.id.hasPrefix("str:") }
-        // Ohne Straßenliste: echte Straße aus dem Adresskopf (Untertitel der Hausnummer) statt des getippten Suchtexts
-        let found = selections.first { $0.id.hasPrefix("hnr:") }?.subtitle
+        // Ohne Straßenliste: echte Straße aus dem Adresskopf (in der Kennung der Hausnummer) statt des getippten Suchtexts
+        let found = selections.first { $0.id.hasPrefix("hnr:") }?.id.components(separatedBy: Self.streetMarker).dropFirst().first
         return selections.compactMap { option -> String? in
             if option.id.contains(":") { return option.title }
             if hasStreet { return nil }
@@ -105,9 +110,10 @@ public struct MuellmaxProvider: WasteProvider {
         }
         if !chosen.contains("hnr") {
             let numbers = HTMLText.options(ofSelect: "mm_frm_hnr_sel", in: html).filter { !$0.value.isEmpty }
-            // Ohne Straßenliste (Portal fand genau eine Straße) steht die echte Straße nur im Adresskopf – sie reist im Untertitel mit.
+            // Ohne Straßenliste (Portal fand genau eine Straße) steht die echte Straße nur im Adresskopf – sie reist in der Kennung mit.
             let street = chosen.contains("str") ? nil : Self.chosenStreet(in: html)
-            if !numbers.isEmpty { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "hnr:\($0.value)", title: $0.label, subtitle: street) }) }
+            let suffix = street.map { Self.streetMarker + $0 } ?? ""
+            if !numbers.isEmpty { return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers.map { SelectionOption(id: "hnr:\($0.value)" + suffix, title: $0.label) }) }
         }
         return nil
     }

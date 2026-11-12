@@ -298,7 +298,7 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(tip.waitForExistence(timeout: 5), "Hinweis auf den Tonnendienst fehlt")
         sleep(1); snap("01b-muell-mit-hinweis")
         tip.tap()
-        let add = app.buttons["Zeitraum hinzufügen"].firstMatch
+        let add = app.buttons["Festen Zeitraum hinzufügen"].firstMatch
         XCTAssertTrue(add.waitForExistence(timeout: 5))
         sleep(1); snap("02-standort-ohne-zeitraum")
 
@@ -330,6 +330,63 @@ final class TonneUITests: XCTestCase {
         sleep(1); snap("06-uebersicht-nicht-dran")
 
         tab("Kalender"); sleep(1); snap("07-kalender")
+    }
+
+    /// Tonnendienst im Rhythmus: jede 4. Woche ab dieser Woche, Vorschau zeigt die Dienste, Statuszeile „Du bist dran bis“.
+    func testDutyRhythm() {
+        app.terminate()
+        app.launchArguments = ["-uiTesting", "-demoData", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10))
+        tab("Müll")
+        XCTAssertTrue(text("Gifhorn").waitForExistence(timeout: 5))
+        text("Gifhorn").tap()
+        let rhythm = app.buttons["Rhythmus festlegen"].firstMatch
+        XCTAssertTrue(rhythm.waitForExistence(timeout: 5))
+        sleep(1); snap("01-standort-tonnendienst")
+        rhythm.tap()
+        XCTAssertTrue(app.navigationBars["Rhythmus"].waitForExistence(timeout: 5))
+        XCTAssertTrue(text("Deine nächsten Dienste").exists, "Vorschau fehlt")
+        sleep(1); snap("02-rhythmus-standard")
+
+        app.buttons["rhythm.every"].firstMatch.tap()
+        let four = app.buttons["Jede 4. Woche"].firstMatch
+        XCTAssertTrue(four.waitForExistence(timeout: 5), "Auswahl „Jede 4. Woche“ fehlt")
+        four.tap(); sleep(1)
+        snap("03-rhythmus-jede-4-woche")
+        app.buttons["Sichern"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Rhythmus"].waitForNonExistence(timeout: 5))
+
+        XCTAssertTrue(text("Jede 4. Woche").waitForExistence(timeout: 5), "Rhythmus fehlt in der Liste")
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Du bist dran bis'")).firstMatch.waitForExistence(timeout: 5),
+                      "Statuszeile fehlt: Der erste Dienst beginnt in dieser Woche")
+        XCTAssertTrue(app.descendants(matching: .any)["duty.preview"].exists, "„Deine nächsten Dienste“ fehlt")
+        sleep(1); snap("04-standort-mit-rhythmus")
+
+        // Monats-Rhythmus mit 2 Monaten Länge: Beim erneuten Öffnen muss die Länge stehen bleiben (Prüfung 12.11.2026)
+        app.buttons["Rhythmus festlegen"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Rhythmus"].waitForExistence(timeout: 5))
+        app.buttons["Monate"].firstMatch.tap(); sleep(1)
+        app.buttons["rhythm.every"].firstMatch.tap()
+        let six = app.buttons["Jeden 6. Monat"].firstMatch
+        XCTAssertTrue(six.waitForExistence(timeout: 5), "Auswahl „Jeden 6. Monat“ fehlt")
+        six.tap(); sleep(1)
+        app.buttons["rhythm.length"].firstMatch.tap()
+        let two = app.buttons["2 Monate"].firstMatch
+        XCTAssertTrue(two.waitForExistence(timeout: 5), "Auswahl „2 Monate“ fehlt")
+        two.tap(); sleep(1)
+        snap("05-rhythmus-monate")
+        app.buttons["Sichern"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Rhythmus"].waitForNonExistence(timeout: 5))
+        let monthly = text("Jeden 6. Monat, je 2 Monate")
+        XCTAssertTrue(monthly.waitForExistence(timeout: 5), "Monats-Rhythmus fehlt in der Liste")
+        monthly.tap()
+        XCTAssertTrue(app.navigationBars["Rhythmus"].waitForExistence(timeout: 5))
+        let length = app.buttons["rhythm.length"].firstMatch
+        XCTAssertTrue(length.waitForExistence(timeout: 5))
+        XCTAssertTrue("\(length.label) \(length.value ?? "")".contains("2 Monate"), "Länge beim Öffnen verloren: \(length.label) \(length.value ?? "")")
+        sleep(1); snap("06-rhythmus-monate-wieder-geoeffnet")
+        app.buttons["Abbrechen"].firstMatch.tap()
     }
 
     // MARK: - Standort löschen

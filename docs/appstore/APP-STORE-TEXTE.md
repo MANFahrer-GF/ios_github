@@ -43,8 +43,10 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 ### Neu in der nächsten Version – 2.0.10 (Entwurf)
 
 ```
-Tonnendienst leichter finden
-Wechselt ihr euch im Haus mit den Tonnen ab? Ein Hinweis in der Müll-Liste führt jetzt direkt zu „Mein Tonnendienst“. Dort trägst du deine Zeiträume ein, und die App erinnert dich nur, wenn du dran bist.
+Tonnendienst im Rhythmus
+Wechselt ihr euch im Haus mit den Tonnen ab? Stell einfach deinen Rhythmus ein, zum Beispiel „jede 2. Woche“, „jede 4. Woche, je 2 Wochen“ oder „jeden 3. Monat“. Die App rechnet deine Dienste selbst aus, zeigt dir die nächsten Termine und erinnert dich nur, wenn du dran bist. Unregelmäßige Pläne trägst du weiter als feste Zeiträume ein.
+• Ein Hinweis in der Müll-Liste führt direkt zu „Mein Tonnendienst“
+• Nutzt du die App auf mehreren Geräten, aktualisiere alle: Ältere Versionen kennen den Rhythmus nicht und erinnern dort weiter an jede Abfuhr
 
 Zuverlässiger
 • Findet Müllmax (zum Beispiel Bochum, Mainz) bei der Straßensuche genau eine Straße, heißt der Standort wieder nach der Straße und nicht nur nach der Hausnummer
