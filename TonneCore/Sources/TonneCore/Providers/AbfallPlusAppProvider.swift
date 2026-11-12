@@ -313,7 +313,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
             if last["done"] == "1" { return nil }
             // Das Portal führt Ortsteile ganz ohne Straßen (Kreis Verden: Holtebüttel, Lehringen …, Prüflauf 12.11.2026).
             // Dann dieselbe Liste ohne die bereits gewählten Ortsteile noch einmal anbieten statt in einer Sackgasse zu enden.
-            if state.steps.contains("bezirk"), try await streets(session, state, query: "").isEmpty {
+            if state.steps.contains("bezirk"), let all = await allStreets(session, state), all.isEmpty {
                 let tried = Set(selections.compactMap { Self.decode($0.id)["k"] == "bez" ? Self.decode($0.id)["bez"] : nil })
                 var fields = baseFields(state)
                 fields.append(("id_kommune", state.kommune))
@@ -382,9 +382,28 @@ public struct AbfallPlusAppProvider: WasteProvider {
     /// Straubing 556). Dann gleich als Liste: In kleinen Ortsteilen trifft sonst kein naheliegender Wortanfang („Haupt“, „Kirch“ …).
     /// Liefert sie nichts, bleibt die Texteingabe.
     private func streetEntry(_ session: Session, _ state: State, orElse text: SelectionStep) async throws -> SelectionStep {
-        let all = try await streets(session, state, query: "")
-        return all.isEmpty ? text : streetList(all)
+        guard let all = await allStreets(session, state), !all.isEmpty else { return text }
+        return streetList(all)
     }
+
+    /// Ganze Straßenliste (leere Suche) – nur, wenn sie schnell kommt. Bei Großstädten, deren „Bezirk“ die ganze Stadt ist
+    /// (Oldenburg, Essen), bricht der Server nach Minuten ab (Prüflauf 12.11.2026); dann wie früher die Texteingabe.
+    /// nil = nicht bekannt (zu langsam oder Fehler), [] = der Ort hat wirklich keine Straßen.
+    private func allStreets(_ session: Session, _ state: State) async -> [Item]? {
+        await withTaskGroup(of: [Item]?.self) { group in
+            group.addTask { try? await self.streets(session, state, query: "") }
+            group.addTask {
+                try? await Task.sleep(nanoseconds: Self.fullListTimeout)
+                return nil
+            }
+            let first = await group.next() ?? nil
+            group.cancelAll()
+            return first
+        }
+    }
+
+    /// Wartezeit für die ganze Straßenliste; Tests setzen sie herunter.
+    nonisolated(unsafe) static var fullListTimeout: UInt64 = 8_000_000_000
 
     private var streetSearchStep: SelectionStep {
         .text(title: SelectionStep.streetTitle, placeholder: L10n.t("Straßenname oder Anfang davon", "Street name or its beginning"))

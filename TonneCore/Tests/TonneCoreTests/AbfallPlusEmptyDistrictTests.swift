@@ -62,3 +62,58 @@ final class APLStub: URLProtocol {
     }
     override func stopLoading() {}
 }
+
+/// Oldenburg, Essen (Prüflauf 12.11.2026): Ist der „Bezirk“ die ganze Stadt, bricht der Server die volle Straßenliste nach
+/// Minuten ab. Dann muss nach kurzer Zeit die Straßensuche zum Eintippen kommen statt einer Wartezeit mit Fehler.
+final class AbfallPlusSlowStreetListTests: XCTestCase {
+    func testSlowFullStreetListFallsBackToTextSearch() async throws {
+        let saved = AbfallPlusAppProvider.fullListTimeout
+        AbfallPlusAppProvider.fullListTimeout = 300_000_000
+        defer { AbfallPlusAppProvider.fullListTimeout = saved }
+        var provider = AbfallPlusAppProvider(appID: "de.k4systems.abfallappol")
+        provider.urlProtocols = [APLSlowStub.self]
+        let first = try await provider.nextStep(after: [])
+        let city = try XCTUnwrap(try XCTUnwrap(first).options.first)
+        let started = Date()
+        let next = try await provider.nextStep(after: [city])
+        XCTAssertEqual(try XCTUnwrap(next).input, .text, "Straßensuche statt Warten auf die ganze Stadt")
+        XCTAssertLessThan(Date().timeIntervalSince(started), 3, "nicht auf den Server warten")
+    }
+}
+
+/// Wie APLStub, aber nur ein Bezirk (die ganze Stadt) und eine leere Straßensuche, die 5 s braucht.
+final class APLSlowStub: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { request.url?.host == "app.abfallplus.de" }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        var body = request.httpBody ?? Data()
+        if body.isEmpty, let stream = request.httpBodyStream {
+            stream.open(); var buffer = [UInt8](repeating: 0, count: 2048)
+            while stream.hasBytesAvailable { let n = stream.read(&buffer, maxLength: buffer.count); if n <= 0 { break }; body.append(buffer, count: n) }
+            stream.close()
+        }
+        let form = String(decoding: body, as: UTF8.self).removingPercentEncoding ?? ""
+        let path = (request.url?.path ?? "").trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        let item = #"<li><a href="javascript:void(0)" data-rel="back" onclick="awk_standort_auswahl_step_fertig('5|0|Oldenburg','Oldenburg','bezirk','strasse','',{'step_follow':0,'step_follow_data':{}})">Oldenburg</a></li>"#
+        var text = ""
+        var delay = 0.0
+        switch path {
+        case "login":
+            text = #"<input name="f_id_bundesland" value="0"><input name="f_id_landkreis" value="0"><input name="f_id_kommune" value="0"> #awk_assistent_step_standort_bezirk #awk_assistent_step_standort_strasse"#
+        case "assistent/bezirk":
+            text = "<ul>" + item + "</ul>"
+        case "assistent/strasse":
+            if form.contains("strasse_qry=&") || form.hasSuffix("strasse_qry=") { delay = 5 }
+            text = "<ul> </ul>"
+        default: text = ""
+        }
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: ["Content-Type": "text/html"])!
+        DispatchQueue.global().asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self else { return }
+            self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            self.client?.urlProtocol(self, didLoad: Data(text.utf8))
+            self.client?.urlProtocolDidFinishLoading(self)
+        }
+    }
+    override func stopLoading() {}
+}
