@@ -37,7 +37,7 @@ final class SearchTextLiveTests: XCTestCase {
         try await run(LeipzigProvider(), ["Hamburger Str.", "Hamburger Straße", "10"], search: "Hamburger Str.", street: "Hamburger Straße")
     }
     func testKoeln() async throws {
-        try await run(AWBKoelnProvider(), ["Aachener Str.", "50"], search: "Aachener Str.", street: "Aachener Str")
+        try await run(AWBKoelnProvider(), ["Aachener Str.", "Aachener Str", "50", "Aachener Str. 50"], search: "Aachener Str.", street: "Aachener Str")
     }
     func testAhaHannover() async throws {
         try await run(AhaHannoverProvider(), ["Hannover", "Podbi", "Podbielskistr", "10"], search: "Podbi", street: "Podbielski")

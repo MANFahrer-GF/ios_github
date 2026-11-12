@@ -23828,7 +23828,8 @@
 "gemeinde": "Florstadt",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://florstadt.mein-abfallkalender.online:Florstadt – nur Schadstofftermine (Mein-Abfallkalender)"
+"icsURL:https://florstadt.mein-abfallkalender.online:Florstadt – nur Schadstofftermine (Mein-Abfallkalender)",
+"jahresdaten:florstadt:Gemeinde Florstadt"
 ]
 },
 {
@@ -23865,7 +23866,8 @@
 "gemeinde": "Hirzenhain",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://hirzenhain.mein-abfallkalender.online:Hirzenhain – nur Schadstofftermine (Mein-Abfallkalender)"
+"icsURL:https://hirzenhain.mein-abfallkalender.online:Hirzenhain – nur Schadstofftermine (Mein-Abfallkalender)",
+"jahresdaten:hirzenhain:Gemeinde Hirzenhain"
 ]
 },
 {
@@ -23979,7 +23981,8 @@
 "gemeinde": "Rockenberg",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://rockenberg.mein-abfallkalender.online:Rockenberg – nur Schadstofftermine (Mein-Abfallkalender)"
+"icsURL:https://rockenberg.mein-abfallkalender.online:Rockenberg – nur Schadstofftermine (Mein-Abfallkalender)",
+"jahresdaten:rockenberg:Gemeinde Rockenberg"
 ]
 },
 {
@@ -33311,959 +33314,1233 @@
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lahnstein",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_lahnstein_lahnstein:Stadt Lahnstein (Lahnstein)"
+]
 },
 {
 "code": "071415003002",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Altendiez",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_altendiez:VG Diez (Altendiez)"
+]
 },
 {
 "code": "071415003005",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Aull",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_aull:VG Diez (Aull)"
+]
 },
 {
 "code": "071415003014",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Birlenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_birlenbach:VG Diez (Birlenbach)"
+]
 },
 {
 "code": "071415003021",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Charlottenberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_charlottenberg:VG Diez (Charlottenberg, Holzappel, Laurenburg u. a.)"
+]
 },
 {
 "code": "071415003022",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Cramberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_cramberg:VG Diez (Cramberg, Geilnau, Steinsberg)"
+]
 },
 {
 "code": "071415003029",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Diez",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_diez:VG Diez (Diez)"
+]
 },
 {
 "code": "071415003030",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dörnberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_doernberg:VG Diez (Dörnberg, Eppenrod, Isselbach)"
+]
 },
 {
 "code": "071415003038",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Eppenrod",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_doernberg:VG Diez (Dörnberg, Eppenrod, Isselbach)"
+]
 },
 {
 "code": "071415003045",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Geilnau",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_cramberg:VG Diez (Cramberg, Geilnau, Steinsberg)"
+]
 },
 {
 "code": "071415003049",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Gückingen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_gueckingen:VG Diez (Gückingen, Hambach)"
+]
 },
 {
 "code": "071415003052",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hambach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_gueckingen:VG Diez (Gückingen, Hambach)"
+]
 },
 {
 "code": "071415003053",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Heistenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_heistenbach:VG Diez (Heistenbach)"
+]
 },
 {
 "code": "071415003057",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hirschberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_hirschberg:VG Diez (Hirschberg, Horhausen)"
+]
 },
 {
 "code": "071415003059",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Holzappel",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_charlottenberg:VG Diez (Charlottenberg, Holzappel, Laurenburg u. a.)"
+]
 },
 {
 "code": "071415003061",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Holzheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_holzheim:VG Diez (Holzheim)"
+]
 },
 {
 "code": "071415003062",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Horhausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_hirschberg:VG Diez (Hirschberg, Horhausen)"
+]
 },
 {
 "code": "071415003064",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Isselbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_doernberg:VG Diez (Dörnberg, Eppenrod, Isselbach)"
+]
 },
 {
 "code": "071415003076",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Langenscheid",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_langenscheid:VG Diez (Langenscheid)"
+]
 },
 {
 "code": "071415003077",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Laurenburg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_charlottenberg:VG Diez (Charlottenberg, Holzappel, Laurenburg u. a.)"
+]
 },
 {
 "code": "071415003124",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Scheidt",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_charlottenberg:VG Diez (Charlottenberg, Holzappel, Laurenburg u. a.)"
+]
 },
 {
 "code": "071415003130",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Steinsberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_cramberg:VG Diez (Cramberg, Geilnau, Steinsberg)"
+]
 },
 {
 "code": "071415003133",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Wasenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_wasenbach:VG Diez (Wasenbach)"
+]
 },
 {
 "code": "071415003503",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Balduinstein",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_diez_balduinstein:VG Diez (Balduinstein)"
+]
 },
 {
 "code": "071415007009",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Berg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_berg:VG Nastätten (Berg, Hunzel, Marienfels u. a.)"
+]
 },
 {
 "code": "071415007012",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Bettendorf",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_bettendorf:VG Nastätten (Bettendorf, Miehlen)"
+]
 },
 {
 "code": "071415007015",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Bogel",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_bogel:VG Nastätten (Bogel)"
+]
 },
 {
 "code": "071415007019",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Buch",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_buch:VG Nastätten (Buch, Holzhausen an der Haide)"
+]
 },
 {
 "code": "071415007035",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Ehr",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007037",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Endlichhofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_endlichhofen:VG Nastätten (Endlichhofen)"
+]
 },
 {
 "code": "071415007040",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Eschbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007047",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Gemmerich",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007055",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Himmighofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007060",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Holzhausen an der Haide",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_buch:VG Nastätten (Buch, Holzhausen an der Haide)"
+]
 },
 {
 "code": "071415007063",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hunzel",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_berg:VG Nastätten (Berg, Hunzel, Marienfels u. a.)"
+]
 },
 {
 "code": "071415007067",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kasdorf",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007070",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kehlbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_kehlbach:VG Nastätten (Kehlbach)"
+]
 },
 {
 "code": "071415007078",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lautert",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_lautert:VG Nastätten (Lautert, Münchenroth)"
+]
 },
 {
 "code": "071415007080",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lipporn",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_lipporn:VG Nastätten (Lipporn)"
+]
 },
 {
 "code": "071415007084",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Marienfels",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_berg:VG Nastätten (Berg, Hunzel, Marienfels u. a.)"
+]
 },
 {
 "code": "071415007085",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Miehlen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_bettendorf:VG Nastätten (Bettendorf, Miehlen)"
+]
 },
 {
 "code": "071415007092",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Nastätten",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_nastaetten:VG Nastätten (Nastätten)"
+]
 },
 {
 "code": "071415007094",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Niederbachheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007097",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Niederwallmenach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_niederwallmenach:VG Nastätten (Niederwallmenach)"
+]
 },
 {
 "code": "071415007100",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oberbachheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007104",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Obertiefenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_berg:VG Nastätten (Berg, Hunzel, Marienfels u. a.)"
+]
 },
 {
 "code": "071415007105",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oberwallmenach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_oberwallmenach:VG Nastätten (Oberwallmenach, Rettershain)"
+]
 },
 {
 "code": "071415007107",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oelsberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_oelsberg:VG Nastätten (Oelsberg)"
+]
 },
 {
 "code": "071415007110",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hainau",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007116",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Rettershain",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_oberwallmenach:VG Nastätten (Oberwallmenach, Rettershain)"
+]
 },
 {
 "code": "071415007120",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Ruppertshofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007131",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Strüth",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_diethardt:VG Nastätten (Diethardt, Strüth, Weidenbach u. a.)"
+]
 },
 {
 "code": "071415007134",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Weidenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_diethardt:VG Nastätten (Diethardt, Strüth, Weidenbach u. a.)"
+]
 },
 {
 "code": "071415007137",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Welterod",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_diethardt:VG Nastätten (Diethardt, Strüth, Weidenbach u. a.)"
+]
 },
 {
 "code": "071415007140",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Winterwerb",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_ehr:VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)"
+]
 },
 {
 "code": "071415007502",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Diethardt",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_nastaetten_diethardt:VG Nastätten (Diethardt, Strüth, Weidenbach u. a.)"
+]
 },
 {
 "code": "071415009004",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Auel",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_auel:VG Loreley (Auel, Lierschied, Nochern u. a.)"
+]
 },
 {
 "code": "071415009016",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Bornich",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_bornich:VG Loreley (Bornich, Dörscheid, Kaub u. a.)"
+]
 },
 {
 "code": "071415009023",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dachsenhausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_dachsenhausen:VG Loreley (Dachsenhausen)"
+]
 },
 {
 "code": "071415009024",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dahlheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_dahlheim:VG Loreley (Dahlheim)"
+]
 },
 {
 "code": "071415009031",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dörscheid",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_bornich:VG Loreley (Bornich, Dörscheid, Kaub u. a.)"
+]
 },
 {
 "code": "071415009042",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Filsen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_filsen:VG Loreley (Filsen, Kestert, Oberkestert u. a.)"
+]
 },
 {
 "code": "071415009066",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kamp-Bornhofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_kamp_bornhofen:VG Loreley (Kamp-Bornhofen, Prath)"
+]
 },
 {
 "code": "071415009069",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kaub",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_bornich:VG Loreley (Bornich, Dörscheid, Kaub u. a.)"
+]
 },
 {
 "code": "071415009072",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kestert",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_filsen:VG Loreley (Filsen, Kestert, Oberkestert u. a.)"
+]
 },
 {
 "code": "071415009079",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lierschied",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_auel:VG Loreley (Auel, Lierschied, Nochern u. a.)"
+]
 },
 {
 "code": "071415009083",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lykershausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_lykershausen:VG Loreley (Lykershausen)"
+]
 },
 {
 "code": "071415009099",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Nochern",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_auel:VG Loreley (Auel, Lierschied, Nochern u. a.)"
+]
 },
 {
 "code": "071415009108",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Osterspai",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_filsen:VG Loreley (Filsen, Kestert, Oberkestert u. a.)"
+]
 },
 {
 "code": "071415009109",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Patersberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_patersberg:VG Loreley (Patersberg, Reichenberg, Reitzenhain)"
+]
 },
 {
 "code": "071415009112",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Prath",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_kamp_bornhofen:VG Loreley (Kamp-Bornhofen, Prath)"
+]
 },
 {
 "code": "071415009114",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Reichenberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_patersberg:VG Loreley (Patersberg, Reichenberg, Reitzenhain)"
+]
 },
 {
 "code": "071415009115",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Reitzenhain",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_patersberg:VG Loreley (Patersberg, Reichenberg, Reitzenhain)"
+]
 },
 {
 "code": "071415009121",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Sankt Goarshausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_sankt_goarshausen:VG Loreley (Sankt Goarshausen)"
+]
 },
 {
 "code": "071415009122",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Sauerthal",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_bornich:VG Loreley (Bornich, Dörscheid, Kaub u. a.)"
+]
 },
 {
 "code": "071415009136",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Weisel",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_bornich:VG Loreley (Bornich, Dörscheid, Kaub u. a.)"
+]
 },
 {
 "code": "071415009138",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Weyer",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_auel:VG Loreley (Auel, Lierschied, Nochern u. a.)"
+]
 },
 {
 "code": "071415009501",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Braubach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_loreley_braubach:VG Loreley (Braubach)"
+]
 },
 {
 "code": "071415010003",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Attenhausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_attenhausen:VG Bad Ems-Nassau (Attenhausen, Singhofen)"
+]
 },
 {
 "code": "071415010006",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Bad Ems",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_bad_ems:VG Bad Ems-Nassau (Bad Ems)"
+]
 },
 {
 "code": "071415010008",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Becheln",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_becheln:VG Bad Ems-Nassau (Becheln, Schweighausen)"
+]
 },
 {
 "code": "071415010025",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dausenau",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dausenau:VG Bad Ems-Nassau (Dausenau)"
+]
 },
 {
 "code": "071415010026",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dessighofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dessighofen:VG Bad Ems-Nassau (Dessighofen, Dornholzhausen, Geisig u. a.)"
+]
 },
 {
 "code": "071415010027",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dienethal",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dienethal:VG Bad Ems-Nassau (Dienethal, Misselberg, Nassau u. a.)"
+]
 },
 {
 "code": "071415010033",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dornholzhausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dessighofen:VG Bad Ems-Nassau (Dessighofen, Dornholzhausen, Geisig u. a.)"
+]
 },
 {
 "code": "071415010041",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Fachbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_fachbach:VG Bad Ems-Nassau (Fachbach)"
+]
 },
 {
 "code": "071415010044",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Frücht",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_fruecht:VG Bad Ems-Nassau (Frücht)"
+]
 },
 {
 "code": "071415010046",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Geisig",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dessighofen:VG Bad Ems-Nassau (Dessighofen, Dornholzhausen, Geisig u. a.)"
+]
 },
 {
 "code": "071415010058",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hömberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_hoemberg:VG Bad Ems-Nassau (Hömberg, Zimmerschied)"
+]
 },
 {
 "code": "071415010071",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kemmenau",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_arzbach:VG Bad Ems-Nassau (Arzbach, Kemmenau)"
+]
 },
 {
 "code": "071415010082",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lollschied",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_lollschied:VG Bad Ems-Nassau (Lollschied, Pohl)"
+]
 },
 {
 "code": "071415010086",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Miellen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_miellen:VG Bad Ems-Nassau (Miellen)"
+]
 },
 {
 "code": "071415010087",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Misselberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dienethal:VG Bad Ems-Nassau (Dienethal, Misselberg, Nassau u. a.)"
+]
 },
 {
 "code": "071415010091",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Nassau",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dienethal:VG Bad Ems-Nassau (Dienethal, Misselberg, Nassau u. a.)"
+]
 },
 {
 "code": "071415010098",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Nievern",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_nievern:VG Bad Ems-Nassau (Nievern)"
+]
 },
 {
 "code": "071415010103",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Obernhof",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_obernhof:VG Bad Ems-Nassau (Obernhof, Weinähr, Winden)"
+]
 },
 {
 "code": "071415010106",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oberwies",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dessighofen:VG Bad Ems-Nassau (Dessighofen, Dornholzhausen, Geisig u. a.)"
+]
 },
 {
 "code": "071415010111",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Pohl",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_lollschied:VG Bad Ems-Nassau (Lollschied, Pohl)"
+]
 },
 {
 "code": "071415010127",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Schweighausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_becheln:VG Bad Ems-Nassau (Becheln, Schweighausen)"
+]
 },
 {
 "code": "071415010128",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Seelbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_seelbach:VG Bad Ems-Nassau (Seelbach)"
+]
 },
 {
 "code": "071415010129",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Singhofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_attenhausen:VG Bad Ems-Nassau (Attenhausen, Singhofen)"
+]
 },
 {
 "code": "071415010132",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Sulzbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_dienethal:VG Bad Ems-Nassau (Dienethal, Misselberg, Nassau u. a.)"
+]
 },
 {
 "code": "071415010135",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Weinähr",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_obernhof:VG Bad Ems-Nassau (Obernhof, Weinähr, Winden)"
+]
 },
 {
 "code": "071415010139",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Winden",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_obernhof:VG Bad Ems-Nassau (Obernhof, Weinähr, Winden)"
+]
 },
 {
 "code": "071415010141",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Zimmerschied",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_hoemberg:VG Bad Ems-Nassau (Hömberg, Zimmerschied)"
+]
 },
 {
 "code": "071415010201",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Arzbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_bad_ems_nassau_arzbach:VG Bad Ems-Nassau (Arzbach, Kemmenau)"
+]
 },
 {
 "code": "071415011001",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Allendorf",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)"
+]
 },
 {
 "code": "071415011010",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Berghausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_berghausen:VG Aar-Einrich (Berghausen)"
+]
 },
 {
 "code": "071415011011",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Berndroth",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)"
+]
 },
 {
 "code": "071415011013",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Biebrich",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011018",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Bremberg",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011020",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Burgschwalbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_burgschwalbach:VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)"
+]
 },
 {
 "code": "071415011032",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Dörsdorf",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)"
+]
 },
 {
 "code": "071415011034",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Ebertshausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011036",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Eisighofen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)"
+]
 },
 {
 "code": "071415011039",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Ergeshausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011043",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Flacht",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_flacht:VG Aar-Einrich (Flacht)"
+]
 },
 {
 "code": "071415011050",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Gutenacker",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_gutenacker:VG Aar-Einrich (Gutenacker)"
+]
 },
 {
 "code": "071415011051",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Hahnstätten",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_burgschwalbach:VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)"
+]
 },
 {
 "code": "071415011054",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Herold",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011065",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kaltenholzhausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_burgschwalbach:VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)"
+]
 },
 {
 "code": "071415011068",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Katzenelnbogen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)"
+]
 },
 {
 "code": "071415011073",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Klingelbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011074",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Kördorf",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_biebrich:VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)"
+]
 },
 {
 "code": "071415011081",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Lohrheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_lohrheim:VG Aar-Einrich (Lohrheim)"
+]
 },
 {
 "code": "071415011088",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Mittelfischbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_mittelfischbach:VG Aar-Einrich (Mittelfischbach, Oberfischbach)"
+]
 },
 {
 "code": "071415011089",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Mudershausen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_burgschwalbach:VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)"
+]
 },
 {
 "code": "071415011093",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Netzbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_netzbach:VG Aar-Einrich (Netzbach)"
+]
 },
 {
 "code": "071415011095",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Niederneisen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_niederneisen:VG Aar-Einrich (Niederneisen)"
+]
 },
 {
 "code": "071415011096",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Niedertiefenbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_niedertiefenbach:VG Aar-Einrich (Niedertiefenbach, Rettert)"
+]
 },
 {
 "code": "071415011101",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oberfischbach",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_mittelfischbach:VG Aar-Einrich (Mittelfischbach, Oberfischbach)"
+]
 },
 {
 "code": "071415011102",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Oberneisen",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_oberneisen:VG Aar-Einrich (Oberneisen)"
+]
 },
 {
 "code": "071415011113",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Reckenroth",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_reckenroth:VG Aar-Einrich (Reckenroth)"
+]
 },
 {
 "code": "071415011117",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Rettert",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_niedertiefenbach:VG Aar-Einrich (Niedertiefenbach, Rettert)"
+]
 },
 {
 "code": "071415011118",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Roth",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_roth:VG Aar-Einrich (Roth)"
+]
 },
 {
 "code": "071415011125",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Schiesheim",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_burgschwalbach:VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)"
+]
 },
 {
 "code": "071415011126",
 "kreis": "Landkreis Rhein-Lahn-Kreis",
 "gemeinde": "Schönborn",
 "art": "unklar",
-"eintraege": []
+"eintraege": [
+"jahresdaten:rlk_aar_einrich_schoenborn:VG Aar-Einrich (Schönborn)"
+]
 },
 {
 "code": "071435001206",

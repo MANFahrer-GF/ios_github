@@ -226,5 +226,1025 @@
   ],
   "onlyDistricts": true,
   "partial": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "hirzenhain",
+  "title": "Gemeinde Hirzenhain",
+  "website": "https://www.hirzenhain.de/seite/207414/abfall.html",
+  "places": [
+   "Hirzenhain"
+  ],
+  "districts": [
+   "Landkreis Wetteraukreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rockenberg",
+  "title": "Gemeinde Rockenberg",
+  "website": "https://www.rockenberg.de/seite/828630/m%C3%BCllkalender.html",
+  "places": [
+   "Rockenberg"
+  ],
+  "districts": [
+   "Landkreis Wetteraukreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_allendorf",
+  "title": "VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Allendorf",
+   "Berndroth",
+   "Dörsdorf",
+   "Eisighofen",
+   "Katzenelnbogen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_berghausen",
+  "title": "VG Aar-Einrich (Berghausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Berghausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_biebrich",
+  "title": "VG Aar-Einrich (Biebrich, Bremberg, Ebertshausen u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Biebrich",
+   "Bremberg",
+   "Ebertshausen",
+   "Ergeshausen",
+   "Herold",
+   "Klingelbach",
+   "Kördorf"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_burgschwalbach",
+  "title": "VG Aar-Einrich (Burgschwalbach, Hahnstätten, Kaltenholzhausen u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Burgschwalbach",
+   "Hahnstätten",
+   "Kaltenholzhausen",
+   "Mudershausen",
+   "Schiesheim",
+   "Zollhaus"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_flacht",
+  "title": "VG Aar-Einrich (Flacht)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Flacht"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_gutenacker",
+  "title": "VG Aar-Einrich (Gutenacker)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Gutenacker"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_lohrheim",
+  "title": "VG Aar-Einrich (Lohrheim)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Lohrheim"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_mittelfischbach",
+  "title": "VG Aar-Einrich (Mittelfischbach, Oberfischbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Mittelfischbach",
+   "Oberfischbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_netzbach",
+  "title": "VG Aar-Einrich (Netzbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Netzbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_niederneisen",
+  "title": "VG Aar-Einrich (Niederneisen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Niederneisen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_niedertiefenbach",
+  "title": "VG Aar-Einrich (Niedertiefenbach, Rettert)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Niedertiefenbach",
+   "Rettert"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_oberneisen",
+  "title": "VG Aar-Einrich (Oberneisen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Oberneisen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_reckenroth",
+  "title": "VG Aar-Einrich (Reckenroth)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Reckenroth"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_roth",
+  "title": "VG Aar-Einrich (Roth)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Roth"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_aar_einrich_schoenborn",
+  "title": "VG Aar-Einrich (Schönborn)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-aar-einrich-abfuhrtermine-2026.pdf",
+  "places": [
+   "Schönborn"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_arzbach",
+  "title": "VG Bad Ems-Nassau (Arzbach, Kemmenau)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Arzbach",
+   "Kemmenau"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_attenhausen",
+  "title": "VG Bad Ems-Nassau (Attenhausen, Singhofen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Attenhausen",
+   "Singhofen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_bad_ems",
+  "title": "VG Bad Ems-Nassau (Bad Ems)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Bad Ems"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_becheln",
+  "title": "VG Bad Ems-Nassau (Becheln, Schweighausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Becheln",
+   "Schweighausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_dausenau",
+  "title": "VG Bad Ems-Nassau (Dausenau)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Dausenau"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_dessighofen",
+  "title": "VG Bad Ems-Nassau (Dessighofen, Dornholzhausen, Geisig u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Dessighofen",
+   "Dornholzhausen",
+   "Geisig",
+   "Oberwies"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_dienethal",
+  "title": "VG Bad Ems-Nassau (Dienethal, Misselberg, Nassau u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Dienethal",
+   "Misselberg",
+   "Nassau",
+   "Sulzbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_fachbach",
+  "title": "VG Bad Ems-Nassau (Fachbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Fachbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_fruecht",
+  "title": "VG Bad Ems-Nassau (Frücht)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Frücht"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_hoemberg",
+  "title": "VG Bad Ems-Nassau (Hömberg, Zimmerschied)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Hömberg",
+   "Zimmerschied"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_lollschied",
+  "title": "VG Bad Ems-Nassau (Lollschied, Pohl)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Lollschied",
+   "Pohl"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_miellen",
+  "title": "VG Bad Ems-Nassau (Miellen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Miellen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_nievern",
+  "title": "VG Bad Ems-Nassau (Nievern)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Nievern"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_obernhof",
+  "title": "VG Bad Ems-Nassau (Obernhof, Weinähr, Winden)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Obernhof",
+   "Weinähr",
+   "Winden"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_bad_ems_nassau_seelbach",
+  "title": "VG Bad Ems-Nassau (Seelbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-bad-ems-nassau-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Seelbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_altendiez",
+  "title": "VG Diez (Altendiez)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Altendiez"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_aull",
+  "title": "VG Diez (Aull)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Aull"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_balduinstein",
+  "title": "VG Diez (Balduinstein)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Balduinstein"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_birlenbach",
+  "title": "VG Diez (Birlenbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Birlenbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_charlottenberg",
+  "title": "VG Diez (Charlottenberg, Holzappel, Laurenburg u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Charlottenberg",
+   "Holzappel",
+   "Laurenburg",
+   "Scheidt"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_cramberg",
+  "title": "VG Diez (Cramberg, Geilnau, Steinsberg)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Cramberg",
+   "Geilnau",
+   "Steinsberg"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_diez",
+  "title": "VG Diez (Diez)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Diez"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_doernberg",
+  "title": "VG Diez (Dörnberg, Eppenrod, Isselbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Dörnberg",
+   "Eppenrod",
+   "Isselbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_gueckingen",
+  "title": "VG Diez (Gückingen, Hambach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Gückingen",
+   "Hambach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_heistenbach",
+  "title": "VG Diez (Heistenbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Heistenbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_hirschberg",
+  "title": "VG Diez (Hirschberg, Horhausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Hirschberg",
+   "Horhausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_holzheim",
+  "title": "VG Diez (Holzheim)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Holzheim"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_langenscheid",
+  "title": "VG Diez (Langenscheid)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Langenscheid"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_diez_wasenbach",
+  "title": "VG Diez (Wasenbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-diez-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Wasenbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_lahnstein_lahnstein",
+  "title": "Stadt Lahnstein (Lahnstein)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/lahnstein-abfuhrtermine-2026-und-strassenverzeichnis.pdf",
+  "places": [
+   "Lahnstein"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_auel",
+  "title": "VG Loreley (Auel, Lierschied, Nochern u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Auel",
+   "Lierschied",
+   "Nochern",
+   "Weyer"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_bornich",
+  "title": "VG Loreley (Bornich, Dörscheid, Kaub u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Bornich",
+   "Dörscheid",
+   "Kaub",
+   "Sauerthal",
+   "Weisel"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_braubach",
+  "title": "VG Loreley (Braubach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Braubach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_dachsenhausen",
+  "title": "VG Loreley (Dachsenhausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Dachsenhausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_dahlheim",
+  "title": "VG Loreley (Dahlheim)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Dahlheim"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_filsen",
+  "title": "VG Loreley (Filsen, Kestert, Oberkestert u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Filsen",
+   "Kestert",
+   "Oberkestert",
+   "Osterspai"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_hinterwald",
+  "title": "VG Loreley (Hinterwald)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Hinterwald"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_kamp_bornhofen",
+  "title": "VG Loreley (Kamp-Bornhofen, Prath)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Kamp-Bornhofen",
+   "Prath"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_lykershausen",
+  "title": "VG Loreley (Lykershausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Lykershausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_patersberg",
+  "title": "VG Loreley (Patersberg, Reichenberg, Reitzenhain)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Patersberg",
+   "Reichenberg",
+   "Reitzenhain"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_loreley_sankt_goarshausen",
+  "title": "VG Loreley (Sankt Goarshausen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-loreley-abfuhrtermine-2026.pdf",
+  "places": [
+   "Sankt Goarshausen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_berg",
+  "title": "VG Nastätten (Berg, Hunzel, Marienfels u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Berg",
+   "Hunzel",
+   "Marienfels",
+   "Obertiefenbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_bettendorf",
+  "title": "VG Nastätten (Bettendorf, Miehlen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Bettendorf",
+   "Miehlen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_bogel",
+  "title": "VG Nastätten (Bogel)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Bogel"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_buch",
+  "title": "VG Nastätten (Buch, Holzhausen an der Haide)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Buch",
+   "Holzhausen an der Haide"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_diethardt",
+  "title": "VG Nastätten (Diethardt, Strüth, Weidenbach u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Diethardt",
+   "Strüth",
+   "Weidenbach",
+   "Welterod"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_ehr",
+  "title": "VG Nastätten (Ehr, Eschbach, Gemmerich u. a.)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Ehr",
+   "Eschbach",
+   "Gemmerich",
+   "Hainau",
+   "Himmighofen",
+   "Kasdorf",
+   "Niederbachheim",
+   "Oberbachheim",
+   "Ruppertshofen",
+   "Winterwerb"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_endlichhofen",
+  "title": "VG Nastätten (Endlichhofen)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Endlichhofen"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_kehlbach",
+  "title": "VG Nastätten (Kehlbach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Kehlbach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_lautert",
+  "title": "VG Nastätten (Lautert, Münchenroth)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Lautert",
+   "Münchenroth"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_lipporn",
+  "title": "VG Nastätten (Lipporn)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Lipporn"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_nastaetten",
+  "title": "VG Nastätten (Nastätten)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Nastätten"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_niederwallmenach",
+  "title": "VG Nastätten (Niederwallmenach)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Niederwallmenach"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_oberwallmenach",
+  "title": "VG Nastätten (Oberwallmenach, Rettershain)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Oberwallmenach",
+   "Rettershain"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "rlk_nastaetten_oelsberg",
+  "title": "VG Nastätten (Oelsberg)",
+  "website": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/vg-nastaetten-abfuhrtermine-2026.pdf",
+  "places": [
+   "Oelsberg"
+  ],
+  "districts": [
+   "Landkreis Rhein-Lahn-Kreis"
+  ],
+  "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "florstadt",
+  "title": "Gemeinde Florstadt",
+  "website": "https://www.florstadt.de/abfallkalender",
+  "places": [
+   "Florstadt"
+  ],
+  "districts": [
+   "Landkreis Wetteraukreis"
+  ],
+  "onlyDistricts": true
  }
 ]

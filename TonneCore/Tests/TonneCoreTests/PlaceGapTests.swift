@@ -45,13 +45,11 @@ final class PlaceGapTests: XCTestCase {
         XCTAssertFalse(text.contains("k4systems"), "keine App-Paketkennung im Text")
     }
 
-    func testPortalOfflineNamesProviderAndDate() throws {
+    /// Rhein-Lahn: Portal nach Sicherheitsvorfall abgeschaltet; seit 2.0.10 Termine aus den PDFs der Verbandsgemeinden.
+    func testRheinLahnComesFromPDFData() throws {
         let diez = try check("Diez", in: "Landkreis Rhein-Lahn-Kreis")
-        let text = try XCTUnwrap(diez.gapNote)
-        XCTAssertEqual(diez.gap?.reason, "portal_abgeschaltet")
-        XCTAssertTrue(text.contains("Abfallwirtschaft Rhein-Lahn-Kreis"), text)
-        XCTAssertTrue(text.contains("am 10.11.2026"), text)
-        XCTAssertEqual(diez.gap?.website?.absoluteString, "https://www.rhein-lahn-kreis-abfallwirtschaft.de/")
+        XCTAssertNil(diez.gapNote)
+        XCTAssertTrue(diez.entries.contains { $0.kind == .jahresdaten && $0.serviceKey == "rlk_diez_diez" })
     }
 
     func testEnglishTextAndDate() throws {

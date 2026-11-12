@@ -24,21 +24,46 @@ public struct AWBKoelnProvider: WasteProvider {
 
     static let typeNames: [String: String] = ["grey": "Restmüll", "blue": "Papiertonne", "brown": "Biotonne", "wertstoff": "Wertstofftonne", "yellow": "Wertstofftonne", "green": "Biotonne"]
 
+    /// Die Adress-Suche der AWB verlangt zwingend eine Hausnummer und liefert nur Straßen, die diese Nummer haben.
+    /// Für die Straßenliste werden darum mehrere gängige Nummern probiert (Prüflauf 12.11.2026: ohne Liste endete die Auswahl in einem Textfeld).
+    static let probeNumbers = ["1", "2", "3", "4", "5", "7", "10"]
+
+    private func lookup(street: String, number: String, addition: String = "") async throws -> [Street] {
+        let url = "https://www.awbkoeln.de/api/streets?street_name=\(HTTPClient.query(street))&building_number=\(number)"
+            + (addition.isEmpty ? "" : "&building_number_addition=\(HTTPClient.query(addition))")
+        let result: Streets = try await client.json(url)
+        return result.data
+    }
+
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0: return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("z. B. Aachener Str.", "e.g. Aachener Str."))
-        case 1: return .text(title: SelectionStep.houseNumberTitle, placeholder: "50")
-        case 2:
+        case 1:
+            var found: [Street] = []
+            var failure: Error?
+            for number in Self.probeNumbers {
+                do { found += try await lookup(street: selections[0].title, number: number) } catch { failure = error }
+            }
+            var seen = Set<String>()
+            let streets = found.filter { seen.insert($0.street_code).inserted }
+            guard !streets.isEmpty else {
+                if let failure { throw failure }
+                throw ProviderError.invalidSelection(L10n.t("Keine Straße in Köln gefunden, die mit „\(selections[0].title)“ beginnt.", "No street found in Cologne starting with “\(selections[0].title)”."))
+            }
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map {
+                SelectionOption(id: "str:\($0.street_code)", title: $0.street_name, subtitle: [$0.zipcode, $0.district].compactMap { $0 }.joined(separator: " "))
+            })
+        case 2: return .text(title: SelectionStep.houseNumberTitle, placeholder: "50")
+        case 3:
             // Die API will eine reine Zahl, Zusätze getrennt – „50-52“ oder „50/1“ ergaben sonst HTTP 422 (12.11.2026)
-            let (number, addition) = Self.splitNumber(selections[1].title)
+            let (number, addition) = Self.splitNumber(selections[2].title)
             guard !number.isEmpty else {
                 throw ProviderError.invalidSelection(L10n.t("Bitte eine Hausnummer mit Zahl eingeben, z. B. 50 oder 50a.", "Please enter a house number, e.g. 50 or 50a."))
             }
-            let url = "https://www.awbkoeln.de/api/streets?street_name=\(HTTPClient.query(selections[0].title))&building_number=\(number)"
-                + (addition.isEmpty ? "" : "&building_number_addition=\(HTTPClient.query(addition))")
-            let result: Streets = try await client.json(url)
-            guard !result.data.isEmpty else { throw ProviderError.noData(L10n.t("Keine passende Adresse in Köln gefunden.", "No matching address found in Cologne.")) }
-            return SelectionStep(title: L10n.t("Adresse", "Address"), options: result.data.map {
+            let code = selections[1].id.replacingOccurrences(of: "str:", with: "")
+            let matches = try await lookup(street: selections[1].title, number: number, addition: addition).filter { $0.street_code == code }
+            guard !matches.isEmpty else { throw ProviderError.noData(L10n.t("Diese Hausnummer gibt es in dieser Straße nicht.", "This house number does not exist in this street.")) }
+            return SelectionStep(title: L10n.t("Adresse", "Address"), options: matches.map {
                 SelectionOption(id: "addr:\($0.street_code):\($0.building_number)", title: "\($0.street_name) \($0.building_number)", subtitle: [$0.zipcode, $0.district].compactMap { $0 }.joined(separator: " "))
             }, searchable: false)
         default: return nil

@@ -113,4 +113,55 @@ final class JahresdatenProviderTests: XCTestCase {
             XCTAssertEqual(ProviderCatalog.entries.filter { $0.kind == .jahresdaten && $0.serviceKey == key }.count, 1, "\(key): Katalogeintrag fehlt")
         }
     }
+    /// Termine ab 12.11.2026 für einen Ortsteil/Bezirk der ausgelieferten Daten: Anzahl je Abfallart.
+    private func shipped(_ key: String, _ area: String) async throws -> [String: Int] {
+        var provider = JahresdatenProvider(key: key)
+        provider.referenceDate = Days.parse("2026-11-12", calendar: calendar)
+        let reference = try XCTUnwrap(Days.parse("2026-11-12", calendar: calendar))
+        let firstStep = try await provider.nextStep(after: [])
+        var selection: [SelectionOption] = []
+        if let step = firstStep {  // ohne Auswahl (ein einziger Eintrag) liefert der Provider direkt die Termine
+            selection = [try XCTUnwrap(step.options.first { $0.id == area }, "\(key): \(area) fehlt in \(step.options.map(\.id))")]
+        }
+        var counts: [String: Int] = [:]
+        for pickup in try await provider.pickups(for: selection, calendar: calendar) where pickup.date >= reference {
+            counts[pickup.name, default: 0] += 1
+        }
+        return counts
+    }
+
+    /// Hirzenhain (Wetteraukreis, farbiger Jahresraster-PDF): Tour 2 = Hirzenhain mit Schadstoffmobil, Tour 1 ohne.
+    func testShippedHirzenhain() async throws {
+        let hirzenhain = try await shipped("hirzenhain", "hirzenhain")
+        XCTAssertEqual(hirzenhain, ["Altpapier": 2, "Biomüll": 4, "Gelbe Tonne": 3, "Grünschnitt": 1, "Restmüll": 2, "Schadstoffmobil": 1])
+        let glashuetten = try await shipped("hirzenhain", "glashuetten_merkenfritz")
+        XCTAssertNil(glashuetten["Schadstoffmobil"])
+        XCTAssertEqual(glashuetten.values.reduce(0, +), 12)
+    }
+
+    /// Rockenberg (nur Bild, von Hand abgelesen): Rockenberg und Oppershofen unterscheiden sich bei Restmüll und Gelber Tonne.
+    func testShippedRockenberg() async throws {
+        let oppershofen = try await shipped("rockenberg", "oppershofen")
+        XCTAssertEqual(oppershofen, ["Altpapier": 2, "Biomüll": 4, "Gelbe Tonne": 2, "Restmüll": 2])
+        let rockenberg = try await shipped("rockenberg", "rockenberg")
+        XCTAssertEqual(rockenberg["Restmüll"], 3)
+        XCTAssertEqual(rockenberg.values.reduce(0, +), 11)
+    }
+
+    /// Florstadt (Wetteraukreis, WordPress-Terminliste der Gemeinde): sechs Ortsteile, zwei Restmüll-Touren (Mi / Fr).
+    func testShippedFlorstadt() async throws {
+        let expected = ["Altpapier": 2, "Biomüll": 3, "Gelbe Tonne": 2, "Restmüll": 2]
+        for ortsteil in ["leidhecken", "nieder_florstadt", "nieder_mockstadt", "ober_florstadt", "staden", "stammheim"] {
+            let counts = try await shipped("florstadt", ortsteil)
+            XCTAssertEqual(counts, expected, ortsteil)
+        }
+    }
+
+    /// Rhein-Lahn-Kreis: eine Ortsgruppe der VG Loreley und ein Bezirk der Stadt Lahnstein.
+    func testShippedRheinLahn() async throws {
+        let auel = try await shipped("rlk_loreley_auel", "auel")
+        XCTAssertEqual(auel, ["Altpapier": 2, "Biomüll": 3, "Gelbe Tonne": 1, "Restmüll": 4])
+        let friedrichssegen = try await shipped("rlk_lahnstein_lahnstein", "friedrichssegen")
+        XCTAssertEqual(friedrichssegen, ["Altpapier": 1, "Biomüll": 4, "Gelbe Tonne": 2, "Restmüll": 4])
+    }
 }

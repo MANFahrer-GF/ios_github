@@ -52,7 +52,8 @@ final class PlaceMapTests: XCTestCase {
         let unavailable = PlaceMapIndex.gaps.filter(\.value.isUnavailable)
         XCTAssertTrue(unavailable.allSatisfy { final.contains($0.value.reason) })
         XCTAssertTrue(PlaceMapIndex.gaps.filter { !$0.value.isUnavailable }.allSatisfy { !final.contains($0.value.reason) })
-        XCTAssertEqual(unavailable.filter { $0.key.hasPrefix("Landkreis Rhein-Lahn-Kreis|") }.count, 137)
+        // Rhein-Lahn seit 2.0.10 aus den PDFs der Verbandsgemeinden, keine Lücke mehr
+        XCTAssertEqual(unavailable.filter { $0.key.hasPrefix("Landkreis Rhein-Lahn-Kreis|") }.count, 0)
         let notes = ["portal_abgeschaltet", "nur_pdf", "nicht_gefuehrt", "kein_eintrag", "nicht_in_liste", "ungeprueft"].map(PlaceMapIndex.note)
         XCTAssertEqual(Set(notes).count, notes.count)
         XCTAssertTrue(PlaceMapIndex.note("nur_pdf").contains("PDF"))
@@ -224,9 +225,10 @@ final class PlaceMapTests: XCTestCase {
         // Wetterau über Mein-Abfallkalender (Startseiten live 11.11.2026)
         XCTAssertEqual(entries("Landkreis Wetteraukreis|Echzell"), ["icsURL:https://echzell.mein-abfallkalender.online:Echzell (Mein-Abfallkalender)"])
         // Dort nur Schadstofftermine und keine andere Quelle: Eintrag bleibt, sagt es aber im Titel (Portal-Prüfung 12.11.2026)
+        // Florstadt, Hirzenhain, Rockenberg: dazu die regulären Termine aus Terminliste, PDF bzw. Bild der Gemeinde (Jahresdaten)
         for (name, sub) in [("Florstadt", "florstadt"), ("Hirzenhain", "hirzenhain"), ("Rockenberg", "rockenberg")] {
-            XCTAssertEqual(entries("Landkreis Wetteraukreis|\(name)"),
-                           ["icsURL:https://\(sub).mein-abfallkalender.online:\(name) – nur Schadstofftermine (Mein-Abfallkalender)"], name)
+            XCTAssertTrue(entries("Landkreis Wetteraukreis|\(name)").contains("icsURL:https://\(sub).mein-abfallkalender.online:\(name) – nur Schadstofftermine (Mein-Abfallkalender)"), name)
+            XCTAssertTrue(entries("Landkreis Wetteraukreis|\(name)").contains { $0.hasPrefix("jahresdaten:\(sub):") }, name)
         }
         // Nur Schadstoff auf Mein-Abfallkalender, reguläre Termine aus den Gemeinde-Kalendern (je Ortsteil bzw. Bezirk)
         for (name, count) in [("Glauburg", 2), ("Limeshain", 4), ("Niddatal", 4), ("Ortenberg", 10), ("Wölfersheim", 5), ("Wöllstadt", 2)] {
@@ -261,11 +263,12 @@ final class PlaceMapTests: XCTestCase {
     }
 
     func testUnavailablePortalIsToldHonestly() throws {
-        let diez = try XCTUnwrap(ProviderCatalog.checkPlace("Diez").first { $0.district == "Landkreis Rhein-Lahn-Kreis" })
-        XCTAssertFalse(diez.isCovered)
-        XCTAssertTrue(diez.isUnavailable)
-        XCTAssertNotNil(diez.gapNote)
+        let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
+        XCTAssertFalse(wildungen.isCovered)
+        XCTAssertTrue(wildungen.isUnavailable)
+        XCTAssertNotNil(wildungen.gapNote)
+        // Rhein-Lahn: früher „Portal abgeschaltet“, jetzt abgedeckt
         let district = try XCTUnwrap(ProviderCatalog.coverage.first { $0.district == "Landkreis Rhein-Lahn-Kreis" })
-        XCTAssertFalse(district.isCovered)
+        XCTAssertTrue(district.isCovered)
     }
 }

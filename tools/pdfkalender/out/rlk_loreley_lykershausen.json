@@ -1,0 +1,344 @@
+{
+ "key": "rlk_loreley_lykershausen",
+ "title": "VG Loreley (Lykershausen)",
+ "source": "https://www.rhein-lahn-kreis.de/rhein-lahn-kreis/abfallwirtschaft/abfuhrtermine-formulare-und-merkblaetter/",
+ "stand": "2026-11-12",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Ort",
+ "notice": null,
+ "areas": [
+  {
+   "id": "lykershausen",
+   "title": "Lykershausen",
+   "group": null,
+   "plan": "p1"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-07",
+    "Restmüll"
+   ],
+   [
+    "2026-01-14",
+    "Biomüll"
+   ],
+   [
+    "2026-01-16",
+    "Altpapier"
+   ],
+   [
+    "2026-01-21",
+    "Restmüll"
+   ],
+   [
+    "2026-01-28",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-04",
+    "Restmüll"
+   ],
+   [
+    "2026-02-11",
+    "Biomüll"
+   ],
+   [
+    "2026-02-13",
+    "Altpapier"
+   ],
+   [
+    "2026-02-18",
+    "Restmüll"
+   ],
+   [
+    "2026-02-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-04",
+    "Restmüll"
+   ],
+   [
+    "2026-03-11",
+    "Biomüll"
+   ],
+   [
+    "2026-03-13",
+    "Altpapier"
+   ],
+   [
+    "2026-03-18",
+    "Restmüll"
+   ],
+   [
+    "2026-03-25",
+    "Biomüll"
+   ],
+   [
+    "2026-03-28",
+    "Gelbe Tonne",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-03-31",
+    "Restmüll",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-04-09",
+    "Biomüll",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-04-11",
+    "Altpapier",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-04-15",
+    "Restmüll"
+   ],
+   [
+    "2026-04-22",
+    "Biomüll"
+   ],
+   [
+    "2026-04-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-29",
+    "Restmüll"
+   ],
+   [
+    "2026-05-06",
+    "Biomüll"
+   ],
+   [
+    "2026-05-08",
+    "Altpapier"
+   ],
+   [
+    "2026-05-13",
+    "Restmüll"
+   ],
+   [
+    "2026-05-20",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Gelbe Tonne",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-05-28",
+    "Restmüll",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-06-03",
+    "Biomüll"
+   ],
+   [
+    "2026-06-06",
+    "Altpapier",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-06-10",
+    "Restmüll"
+   ],
+   [
+    "2026-06-17",
+    "Biomüll"
+   ],
+   [
+    "2026-06-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-24",
+    "Restmüll"
+   ],
+   [
+    "2026-07-01",
+    "Biomüll"
+   ],
+   [
+    "2026-07-03",
+    "Altpapier"
+   ],
+   [
+    "2026-07-08",
+    "Restmüll"
+   ],
+   [
+    "2026-07-15",
+    "Biomüll"
+   ],
+   [
+    "2026-07-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-22",
+    "Restmüll"
+   ],
+   [
+    "2026-07-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-31",
+    "Altpapier"
+   ],
+   [
+    "2026-08-05",
+    "Restmüll"
+   ],
+   [
+    "2026-08-12",
+    "Biomüll"
+   ],
+   [
+    "2026-08-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-19",
+    "Restmüll"
+   ],
+   [
+    "2026-08-26",
+    "Biomüll"
+   ],
+   [
+    "2026-08-28",
+    "Altpapier"
+   ],
+   [
+    "2026-09-02",
+    "Restmüll"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-16",
+    "Restmüll"
+   ],
+   [
+    "2026-09-23",
+    "Biomüll"
+   ],
+   [
+    "2026-09-25",
+    "Altpapier"
+   ],
+   [
+    "2026-09-30",
+    "Restmüll"
+   ],
+   [
+    "2026-10-07",
+    "Biomüll"
+   ],
+   [
+    "2026-10-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-14",
+    "Restmüll"
+   ],
+   [
+    "2026-10-21",
+    "Biomüll"
+   ],
+   [
+    "2026-10-23",
+    "Altpapier"
+   ],
+   [
+    "2026-10-28",
+    "Restmüll"
+   ],
+   [
+    "2026-11-04",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-11",
+    "Restmüll"
+   ],
+   [
+    "2026-11-18",
+    "Biomüll"
+   ],
+   [
+    "2026-11-20",
+    "Altpapier"
+   ],
+   [
+    "2026-11-25",
+    "Restmüll"
+   ],
+   [
+    "2026-12-02",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-09",
+    "Restmüll"
+   ],
+   [
+    "2026-12-16",
+    "Biomüll"
+   ],
+   [
+    "2026-12-18",
+    "Altpapier"
+   ],
+   [
+    "2026-12-22",
+    "Restmüll",
+    "verschoben wegen Feiertag"
+   ],
+   [
+    "2026-12-30",
+    "Biomüll"
+   ]
+  ]
+ }
+}

@@ -19,6 +19,9 @@ public struct AbfallPlusAppProvider: WasteProvider {
     private static let assistant = "https://app.abfallplus.de/assistent/"
     private static let assistantAgent = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Abfallwecker"
 
+    /// Nur für Tests: Protokolle, die die Sitzung statt des Netzes bedienen.
+    var urlProtocols: [AnyClass] = []
+
     public init(appID: String) {
         self.serviceKey = appID
     }
@@ -62,9 +65,10 @@ public struct AbfallPlusAppProvider: WasteProvider {
         let client = UUID().uuidString.lowercased()
         let urlSession: URLSession
 
-        init(appID: String) {
+        init(appID: String, protocols: [AnyClass] = []) {
             self.appID = appID
             let config = URLSessionConfiguration.ephemeral
+            if !protocols.isEmpty { config.protocolClasses = protocols }
             config.httpCookieAcceptPolicy = .always
             config.httpShouldSetCookies = true
             config.timeoutIntervalForRequest = 30
@@ -224,7 +228,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
     // MARK: - Ablauf
 
     private func start() async throws -> (Session, State) {
-        let session = Session(appID: serviceKey)
+        let session = Session(appID: serviceKey, protocols: urlProtocols)
         _ = try await session.app("config.xml")
         let html = HTTPClient.text(from: try await session.app("login/"))
         var state = State()
@@ -307,6 +311,15 @@ public struct AbfallPlusAppProvider: WasteProvider {
             return try await streetOrDistrict(session, state)
         case "bez":
             if last["done"] == "1" { return nil }
+            // Das Portal führt Ortsteile ganz ohne Straßen (Kreis Verden: Holtebüttel, Lehringen …, Prüflauf 12.11.2026).
+            // Dann dieselbe Liste ohne die bereits gewählten Ortsteile noch einmal anbieten statt in einer Sackgasse zu enden.
+            if state.steps.contains("bezirk"), try await streets(session, state, query: "").isEmpty {
+                let tried = Set(selections.compactMap { Self.decode($0.id)["k"] == "bez" ? Self.decode($0.id)["bez"] : nil })
+                var fields = baseFields(state)
+                fields.append(("id_kommune", state.kommune))
+                let others = try await list(session, "bezirk/", fields).filter { !tried.contains($0.id) }
+                if !others.isEmpty { return districtStep(others) }
+            }
             return try await streetEntry(session, state, orElse: streetSearchStep)
         case "q":
             return try await streetStep(session, state, query: last["q"] ?? "")
@@ -345,22 +358,24 @@ public struct AbfallPlusAppProvider: WasteProvider {
             var fields = baseFields(state)
             fields.append(("id_kommune", state.kommune))
             let items = try await list(session, "bezirk/", fields)
-            if !items.isEmpty {
-                return SelectionStep(title: SelectionStep.districtTitle, options: items.map { item in
-                    var fields: [String: String] = ["k": "bez", "bez": item.id]
-                    if let kom = item.extra["set_id_kommune"] { fields["kom"] = kom }
-                    if let lk = item.extra["set_id_landkreis"] { fields["lk"] = lk }
-                    if let bl = item.extra["set_id_bundesland"] { fields["bl"] = bl }
-                    if item.extra["step_akt"] == "strasse" || item.next == "fertig" {
-                        fields["done"] = "1"
-                        // „alle Straßen“ des Bezirks: Die Straßen-Kennung steckt in step_follow_data (wie in der App).
-                        fields["str"] = item.extra["step_akt"] == "strasse" ? (item.extra["id"] ?? item.id) : item.id
-                    }
-                    return SelectionOption(id: Self.encode(fields), title: item.name)
-                })
-            }
+            if !items.isEmpty { return districtStep(items) }
         }
         return try await streetEntry(session, state, orElse: streetSearchStep)
+    }
+
+    private func districtStep(_ items: [Item]) -> SelectionStep {
+        SelectionStep(title: SelectionStep.districtTitle, options: items.map { item in
+            var fields: [String: String] = ["k": "bez", "bez": item.id]
+            if let kom = item.extra["set_id_kommune"] { fields["kom"] = kom }
+            if let lk = item.extra["set_id_landkreis"] { fields["lk"] = lk }
+            if let bl = item.extra["set_id_bundesland"] { fields["bl"] = bl }
+            if item.extra["step_akt"] == "strasse" || item.next == "fertig" {
+                fields["done"] = "1"
+                // „alle Straßen“ des Bezirks: Die Straßen-Kennung steckt in step_follow_data (wie in der App).
+                fields["str"] = item.extra["step_akt"] == "strasse" ? (item.extra["id"] ?? item.id) : item.id
+            }
+            return SelectionOption(id: Self.encode(fields), title: item.name)
+        })
     }
 
     /// Die leere Suche liefert die ganze Straßenliste des Orts bzw. Ortsteils (12.11.2026: Duisburg-Laar 28, Duisburg-Altstadt 79,

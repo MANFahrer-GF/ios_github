@@ -12,7 +12,7 @@ import common
 PAGE = 'https://www.hirzenhain.de/seite/207414/abfall.html'
 PDF = {2026: 'https://daten2.verwaltungsportal.de/dateien/seitengenerator/afd40d00c1a2eb22c5bdd03cfdd13940138863/Abfallkalender_2026.pdf'}
 MONTHS = ['januar', 'februar', 'märz', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'dezember']
-KINDS = {'RM': 'Restmüll', 'BIO': 'Biomüll', 'PPK': 'Altpapier', 'GRÜN': 'Grünschnitt', 'GA': 'Schadstoffmobil'}
+KINDS = {'RM': 'Restmüll', 'BIO': 'Biomüll', 'PPK': 'Altpapier', 'GRÜN': 'Grünschnitt', 'GRÜNSCHNITT': 'Grünschnitt', 'GA': 'Schadstoffmobil'}
 TOUR_NOTE = {1: 'Tour 1 (Glashütten, Merkenfritz)', 2: 'Tour 2 (Hirzenhain)'}
 WD = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so']
 HOLIDAYS = ('neujahr', 'karfreitag', 'ostermontag', 'ostern', 'tag der arbeit', 'tag d. dt. einheit', 'christi himmelfahrt',
@@ -36,7 +36,7 @@ def events(pdf, year):
         heads = sorted([w for w in words if w[4].lower() in MONTHS and abs(w[1] - max(hy, key=hy.count)) < 3], key=lambda w: w[0])
         assert len(heads) == 6, [h[4] for h in heads]
         mid = [(heads[i][0] + heads[i][2]) / 2 for i in range(6)]
-        bounds = [0] + [(mid[i] + mid[i + 1]) / 2 for i in range(5)] + [10000]
+        bounds = [0] + [(mid[i] + mid[i + 1]) / 2 - 12 for i in range(5)] + [10000]
         for i, h in enumerate(heads):
             month = MONTHS.index(h[4].lower()) + 1
             x0, x1 = bounds[i], bounds[i + 1]
@@ -45,7 +45,7 @@ def events(pdf, year):
                 yc = (w[1] + w[3]) / 2
                 if not x0 <= w[0] < cut or yc < h[3]:
                     continue
-                wd = [v for v in words if abs((v[1] + v[3]) / 2 - yc) < 3 and 0 < v[0] - w[2] < 8 and v[4].lower() in WD]
+                wd = [v for v in words if abs((v[1] + v[3]) / 2 - yc) < 3 and 0 < v[0] - w[2] < 16 and v[4].lower() in WD]
                 if not wd:
                     continue
                 try:
@@ -91,8 +91,8 @@ def _row(day, items, unknown):
         m = re.fullmatch(r'LVP ([12])', t)
         if m:
             res.append((day, 'Gelbe Tonne', TOUR_NOTE[int(m.group(1))], int(m.group(1))))
-        elif t in KINDS:
-            res.append((day, KINDS[t], None, 0))
+        elif t.upper() in KINDS:
+            res.append((day, KINDS[t.upper()], None, 0))
         elif t.lower() in HOLIDAYS or _near(pal, (1, 0, 0), .05):
             pass
         else:

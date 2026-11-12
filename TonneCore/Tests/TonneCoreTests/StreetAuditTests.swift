@@ -331,7 +331,7 @@ final class StreetAuditTests: XCTestCase {
     func testKreiszuordnungHaengtNichtAmGleichnamigenOrt() {
         let wrong: [(String, String)] = [
             ("portalsRP:art", "Kreisfreie Stadt Hamm"), ("portalsRP:art", "Landkreis Esslingen"), ("portalsRP:art", "Landkreis Neunkirchen"),
-            ("portalsRP:kreuznach", "Landkreis Roth"), ("portalsRP:rheinlahn", "Landkreis Roth"),
+            ("portalsRP:kreuznach", "Landkreis Roth"), // portalsRP:rheinlahn seit 2.0.10 entfernt (Portal abgeschaltet, Termine aus PDFs)
             ("hausmuellInfo:wesel", "Landkreis Wittenberg"), ("portalsBayern:eva", "Kreisfreie Stadt Oberhausen"),
             ("portalsMitte:ajl", "Kreisfreie Stadt Hagen"), ("wasteManagementServlet:hameln", "Kreisfreie Stadt Hagen"),
             ("portalsNord:bremerhaven", "Landkreis Cuxhaven"),

@@ -82,7 +82,7 @@ extension LiveProviderTests {
 
     func testCTraceBremen() async throws { try await checkTyped(CTraceProvider(service: "bremenabfallkalender"), typed: ["Abbentorstraße", "5"], prefer: []) }
     func testCTraceAugsburg() async throws { try await checkTyped(CTraceProvider(service: "augsburglandkreis"), typed: ["Königsbrunn", "Marktplatz", "7"], prefer: []) }
-    func testKoeln() async throws { try await checkTyped(AWBKoelnProvider(), typed: ["Aachener Str.", "50"], prefer: ["Aachener Str. 50"]) }
+    func testKoeln() async throws { try await checkTyped(AWBKoelnProvider(), typed: ["Aachener Str.", "50"], prefer: ["Aachener Str", "Aachener Str. 50"]) }
     func testLeipzig() async throws { try await checkTyped(LeipzigProvider(), typed: ["Bahnhofsallee"], prefer: ["Bahnhofsallee", "7"]) }
     func testHannover() async throws { try await checkTyped(AhaHannoverProvider(), typed: ["Voltastr", "25"], prefer: ["Hannover", "Voltastr. / Vahrenwald"]) }
     func testMuellmaxMuenster() async throws { try await checkTyped(MuellmaxProvider(service: "Awm"), typed: ["Achatiusweg"], prefer: ["Achatiusweg"]) }
