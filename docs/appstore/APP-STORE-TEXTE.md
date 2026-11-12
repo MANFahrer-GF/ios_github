@@ -48,6 +48,15 @@ Wechselt ihr euch im Haus mit den Tonnen ab? Stell einfach deinen Rhythmus ein, 
 • Ein Hinweis in der Müll-Liste führt direkt zu „Mein Tonnendienst“
 • Nutzt du die App auf mehreren Geräten, aktualisiere alle: Ältere Versionen kennen den Rhythmus nicht und erinnern dort weiter an jede Abfuhr
 
+Jeder Entsorger geprüft
+Wir haben alle über 800 Entsorger einzeln durchgespielt, von der Adresse bis zu den Terminen, und die gefundenen Fehler behoben.
+• Rhein-Lahn-Kreis wieder dabei: Das Portal ist abgeschaltet, die Termine kommen jetzt aus den Kalendern der Verbandsgemeinden
+• Neu oder wieder da: Rheingau (Eltville, Geisenheim, Rüdesheim …), Pirmasens, Gladbeck, Wetterau-Gemeinden wie Florstadt, Niddatal, Ortenberg und Wölfersheim
+• Bei über 70 Städten und Gemeinden mit „Mein-Abfallkalender“ (zum Beispiel Marburg, Erlangen, Bad Nauheim) wählst du jetzt einfach deine Straße – kein Link mehr zum Kopieren
+• Bremen, Bayreuth, Arnsberg, Landau, Köln und weitere: Straßen zum Antippen statt genauer Schreibweise
+• Repariert unter anderem: Lübeck, Kassel, Offenbach, Wuppertal, Düsseldorf, Velbert, Göttingen, Aurich, Kreis Verden
+• Liefert ein Portal keine kommenden Termine mehr, sagt die App das jetzt klar und hilft beim Wechsel
+
 Zuverlässiger
 • Findet Müllmax (zum Beispiel Bochum, Mainz) bei der Straßensuche genau eine Straße, heißt der Standort wieder nach der Straße und nicht nur nach der Hausnummer
 ```
