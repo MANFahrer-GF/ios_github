@@ -12,6 +12,7 @@ enum SettingsKeys {
     static let store: UserDefaults = TonneUndTorteApp.isUITesting ? (UserDefaults(suiteName: uiTestSuite) ?? .standard) : .standard
     static let uiTestSuite = "de.manfahrer.TonneUndTorte.uitests"
     static let onboardingDone = "app.onboardingDone"
+    static let dutyTipDismissed = "tip.dutyDismissed"
     static let eveningEnabled = "reminder.evening.enabled"
     static let eveningMinutes = "reminder.evening.minutes"
     static let morningEnabled = "reminder.morning.enabled"

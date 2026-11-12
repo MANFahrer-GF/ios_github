@@ -97,6 +97,47 @@ final class SearchTextLabelTests: XCTestCase {
         XCTAssertEqual(provider.label(for: [Self.typed("Kortum"), Self.option("str:5", "Kortumstraße"), Self.option("hnr:2", "2")]), "Kortumstraße, 2")
     }
 
+    /// Wächter: Jeder Texteingabe-Schritt (`.text(title:`) in den Anbietern ist hier gezählt. Kommt einer dazu oder fällt einer weg,
+    /// wird der Test rot. Dann prüfen: Folgt auf die Eingabe eine Trefferliste? Dann gehört ein Fall in `cases` (sonst landet der
+    /// Suchtext im Standortnamen, Leipzig 11.11.2026). Endet der Assistent mit der Eingabe (Hausnummer, ICS-Link), ist sie Teil der
+    /// Adresse und braucht keinen Fall. Danach die Zahl hier anpassen.
+    static let textSteps: [String: Int] = [
+        "AWMMuenchenProvider.swift": 1,          // Hausnummer am Ende
+        "AbfallPlusAppProvider.swift": 1,        // Fall abfallPlusApp
+        "BayernPortalsProvider.swift": 2,        // Fälle fuerth, landkreis_as
+        "BuergerportalProvider.swift": 1,        // Hausnummer am Ende
+        "CTraceProvider.swift": 3,               // Ort, Straße, Hausnummer getippt, keine Trefferliste danach
+        "CityProviders.swift": 5,                // Fälle koeln (2), leipzig, hannover (2)
+        "Einzelportale.swift": 4,                // Fall giessen, sonst Hausnummer am Ende
+        "HausmuellInfoProvider.swift": 1,        // Fall erfurt
+        "ICSURLProvider.swift": 1,               // ICS-Link
+        "InsertITProvider.swift": 1,             // Fall offenbach
+        "MagdeburgProvider.swift": 1,            // Hausnummer am Ende
+        "MecklenburgPortalsProvider.swift": 2,   // Fall rostock
+        "MuellmaxProvider.swift": 1,             // Fall muellmax
+        "NRWPortalsProvider.swift": 7,           // Fälle awista, awg, sector27
+        "NRWStadtportale.swift": 4,              // Fall herten, sonst Hausnummer bzw. ganze Adresse am Ende
+        "NordPortalsProvider.swift": 2,          // Fälle hamburg, bremerhaven, kiel, heidekreis
+        "RegionalProviders.swift": 2,            // Fall bsr
+        "SachsenPortalsProvider.swift": 1,       // Fall dresden
+        "SuedwestPortalsProvider.swift": 9,      // Fälle frankfurt, stuttgart, wiesbaden, heidenheim, floersheim
+        "WasteManagementServletProvider.swift": 1, // Hausnummer am Ende
+    ]
+
+    func testEveryTextStepIsReviewed() throws {
+        let dir = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+            .appendingPathComponent("Sources/TonneCore/Providers")
+        var found: [String: Int] = [:]
+        for file in try FileManager.default.contentsOfDirectory(atPath: dir.path) where file.hasSuffix(".swift") {
+            let source = try String(contentsOf: dir.appendingPathComponent(file), encoding: .utf8)
+            let count = source.components(separatedBy: "\n").filter { $0.contains(".text(title") && !$0.contains("static func") }.count
+            if count > 0 { found[file] = count }
+        }
+        XCTAssertFalse(found.isEmpty, "Quelltext nicht gefunden: \(dir.path)")
+        XCTAssertEqual(found, Self.textSteps, "Texteingabe-Schritte geändert: Fall in `cases` ergänzen oder begründen, dann `textSteps` anpassen")
+    }
+
     func testKoelnLabelUsesTheFoundAddress() {
         let selections = [Self.typed("Aachener Str."), Self.typed("50"), Self.option("addr:1234:50", "Aachener Straße 50")]
         XCTAssertEqual(AWBKoelnProvider().label(for: selections), "Köln, Aachener Straße 50")

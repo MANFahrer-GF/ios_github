@@ -40,6 +40,16 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
 
+### Neu in der nächsten Version – 2.0.10 (Entwurf)
+
+```
+Tonnendienst leichter finden
+Wechselt ihr euch im Haus mit den Tonnen ab? Ein Hinweis in der Müll-Liste führt jetzt direkt zu „Mein Tonnendienst“. Dort trägst du deine Zeiträume ein, und die App erinnert dich nur, wenn du dran bist.
+
+Zuverlässiger
+• Findet Müllmax (zum Beispiel Bochum, Mainz) bei der Straßensuche genau eine Straße, heißt der Standort wieder nach der Straße und nicht nur nach der Hausnummer
+```
+
 ### Neu in dieser Version – 2.0.9
 
 ```

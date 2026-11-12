@@ -272,6 +272,11 @@ final class TonneUITests: XCTestCase {
 
     func testWasteTab() {
         tab("Müll")
+        // Hinweis auf den Tonnendienst lässt sich schließen
+        let close = app.buttons["dutyTip.close"].firstMatch
+        XCTAssertTrue(close.waitForExistence(timeout: 5), "Hinweis auf den Tonnendienst fehlt")
+        close.tap()
+        XCTAssertTrue(app.buttons["dutyTip.open"].waitForNonExistence(timeout: 3), "Hinweis bleibt nach dem Schließen")
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
         text("Papier").tap()
         XCTAssertTrue(app.navigationBars.buttons.element(boundBy: 0).waitForExistence(timeout: 5))
@@ -287,9 +292,12 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Oma Erika"].firstMatch.waitForExistence(timeout: 10))
         sleep(1); snap("01-uebersicht-vorher")
 
+        // Hinweis in der Müll-Liste führt zum Standort (Frank, 12.11.2026: Tonnendienst nicht gefunden)
         tab("Müll")
-        XCTAssertTrue(text("Gifhorn").waitForExistence(timeout: 5))
-        text("Gifhorn").tap()
+        let tip = app.buttons["dutyTip.open"].firstMatch
+        XCTAssertTrue(tip.waitForExistence(timeout: 5), "Hinweis auf den Tonnendienst fehlt")
+        sleep(1); snap("01b-muell-mit-hinweis")
+        tip.tap()
         let add = app.buttons["Zeitraum hinzufügen"].firstMatch
         XCTAssertTrue(add.waitForExistence(timeout: 5))
         sleep(1); snap("02-standort-ohne-zeitraum")
@@ -314,6 +322,8 @@ final class TonneUITests: XCTestCase {
         sleep(1); snap("05-standort-mit-zeitraum")
 
         app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(text("Gifhorn").waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["dutyTip.open"].exists, "Hinweis bleibt trotz eingetragenem Tonnendienst")
         tab("Übersicht")
         XCTAssertTrue(text("Du bist nicht dran").waitForExistence(timeout: 5), "Übersicht zeigt den Tonnendienst nicht")
         XCTAssertFalse(app.buttons["Bleibt drin"].exists, "„Bleibt drin“ ergibt ohne Dienst keinen Sinn")

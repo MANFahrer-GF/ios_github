@@ -14,6 +14,12 @@ struct WasteListView: View {
     @State private var newTypeLocation: Location?
     @State private var syncingID: UUID?
     @State private var message: String?
+    @AppStorage(SettingsKeys.dutyTipDismissed) private var dutyTipDismissed = false
+
+    /// Hinweis auf „Mein Tonnendienst“ (Frank, 12.11.2026: Funktion nicht gefunden), bis er geschlossen oder genutzt wird.
+    private var showDutyTip: Bool {
+        !dutyTipDismissed && !locations.isEmpty && locations.allSatisfy { $0.dutyPeriods.isEmpty }
+    }
 
     private var orphanTypes: [WasteType] { wasteTypes.filter { $0.location == nil } }
 
@@ -26,6 +32,9 @@ struct WasteListView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
+                if showDutyTip, let first = locations.first {
+                    dutyTip(first)
+                }
                 ForEach(locations) { location in
                     locationSection(location)
                 }
@@ -54,6 +63,31 @@ struct WasteListView: View {
     }
 
     // MARK: Teile der Liste
+
+    private func dutyTip(_ location: Location) -> some View {
+        Section {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "person.2.fill").foregroundStyle(.tint).font(.title3)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L10n.t("Wechselt ihr euch mit den Tonnen ab?", "Taking turns with the bins?")).font(.subheadline.weight(.semibold))
+                    Text(L10n.t("Tippe auf deinen Standort und trage unter „Mein Tonnendienst“ deine Zeiträume ein. Dann erinnert dich die App nur, wenn du dran bist.",
+                                "Tap your location and add your periods under “My bin duty”. The app then only reminds you when it's your turn."))
+                        .font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                    Button(L10n.t("Tonnendienst einrichten", "Set up bin duty")) { path.append(location) }
+                        .font(.footnote.weight(.semibold)).buttonStyle(.borderless).padding(.top, 2)
+                        .accessibilityIdentifier("dutyTip.open")
+                }
+                Spacer(minLength: 0)
+                Button { dutyTipDismissed = true } label: {
+                    Image(systemName: "xmark").font(.caption.weight(.bold)).foregroundStyle(.secondary)
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel(L10n.t("Hinweis schließen", "Dismiss tip"))
+                .accessibilityIdentifier("dutyTip.close")
+            }
+            .padding(.vertical, 4)
+        }
+    }
 
     private func locationSection(_ location: Location) -> some View {
         Section {
