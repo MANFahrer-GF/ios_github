@@ -70,6 +70,15 @@ struct TonneUndTorteApp: App {
         }
     }
 
+    /// Bis 2.0.10 (13) lag die Datenbank im App-Group-Ordner (SwiftData-Vorgabe bei vorhandener App Group).
+    static func moveStoreOutOfAppGroup() -> StoreMigration.Outcome {
+        let fm = FileManager.default
+        guard let group = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.de.manfahrer.TonneUndTorte")?
+                .appendingPathComponent("Library/Application Support"),
+              let own = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return .nothingToMove }
+        return StoreMigration.move(store: "TonneUndTorte", from: group, to: own)
+    }
+
     /// SwiftData-Container mit iCloud-Sync; fällt ohne iCloud-Berechtigung auf lokalen Speicher zurück.
     @MainActor
     static func makeContainer() -> ModelContainer {
@@ -89,11 +98,15 @@ struct TonneUndTorteApp: App {
         let simulateFailure = false
         #endif
         if !simulateFailure {
-            let cloud = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .automatic)
+            // Datenbank im eigenen App-Ordner statt im gemeinsamen App-Group-Ordner: Dort beendet iOS die App mit 0xdead10cc,
+            // wenn beim Suspendieren noch eine SQLite-Sperre gehalten wird (Absturzbericht 2.0.10 (13)). Einmalig verschieben;
+            // klappt das nicht (Gerät nach Neustart noch gesperrt), diesmal den alten Ort öffnen – nie zwei Datenbanken.
+            let group: ModelConfiguration.GroupContainer = moveStoreOutOfAppGroup() == .failed ? .automatic : .none
+            let cloud = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .automatic)
             if let container = try? ModelContainer(for: schema, configurations: [cloud]) {
                 return container
             }
-            let local = ModelConfiguration("TonneUndTorte", schema: schema, cloudKitDatabase: .none)
+            let local = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .none)
             if let container = try? ModelContainer(for: schema, configurations: [local]) {
                 return container
             }
