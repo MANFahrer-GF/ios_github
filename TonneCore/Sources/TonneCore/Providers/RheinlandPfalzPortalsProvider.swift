@@ -239,7 +239,15 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
     private func rheinLahnStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
-            let html = try await client.string("\(Self.rheinLahnBase)/html/cs_6615.html")
+            let html: String
+            do {
+                html = try await client.string("\(Self.rheinLahnBase)/html/cs_6615.html")
+            } catch HTTPError.status(404, _) {
+                // Seit dem Sicherheitsvorfall (Hinweis auf der Startseite, 12.11.2026) ist das Portal abgeschaltet und jede
+                // Unterseite 404; die Termine gibt es übergangsweise nur als PDF je Verbandsgemeinde bei der Kreisverwaltung.
+                throw ProviderError.noData(L10n.t("Die Abfallwirtschaft Rhein-Lahn hat ihr Portal nach einem Sicherheitsvorfall vorübergehend abgeschaltet. Die Abfuhrtermine gibt es übergangsweise als PDF auf rhein-lahn-kreis.de (Abfallwirtschaft → Abfuhrtermine).",
+                                                  "The Rhein-Lahn waste authority has temporarily shut down its portal after a security incident. Collection dates are available as PDFs on rhein-lahn-kreis.de (Abfallwirtschaft → Abfuhrtermine) for now."))
+            }
             let places = HTMLText.options(ofSelect: "gemeinde", in: html).filter { !$0.value.isEmpty }
             guard !places.isEmpty else { throw ProviderError.noDataGeneric }
             return SelectionStep(title: SelectionStep.cityTitle, options: Self.sortedOptions(places.map { SelectionOption(id: $0.value, title: $0.label) }))

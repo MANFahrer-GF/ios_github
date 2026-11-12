@@ -128,8 +128,8 @@ public struct NRWPortalsProvider: WasteProvider {
         // sector27: Ort, getippter Suchtext, gewählte Straße – der Suchtext gehört nicht in den Namen.
         case "sector27": return join(titles.first ?? "", Array(titles.dropFirst(2).prefix(1)))
         case _ where Self.stadtportalOrte[serviceKey] != nil:
-            // Herten: erster Schritt ist nur das Suchwort, zählen tut die gewählte Straße.
-            return join(Self.stadtportalOrte[serviceKey]!, serviceKey == "herten" ? Array(titles.suffix(1)) : Array(titles.prefix(2)))
+            // Herten, Velbert: erster Schritt ist nur das Suchwort, zählen tut die gewählte Straße bzw. Adresse.
+            return join(Self.stadtportalOrte[serviceKey]!, serviceKey == "herten" || serviceKey == "velbert" ? Array(titles.suffix(1)) : Array(titles.prefix(2)))
         case _ where Self.einzelportalOrte[serviceKey] != nil:
             // Gießen: erster Schritt ist nur das Suchwort, zählen Straße und Hausnummer.
             return join(Self.einzelportalOrte[serviceKey]!, serviceKey == "giessen" ? Array(titles.dropFirst().prefix(2)) : Array(titles.prefix(2)))
@@ -174,7 +174,8 @@ public struct NRWPortalsProvider: WasteProvider {
     /// die gesuchte steht im Chunk mit `addressIdForQuery` (liefert Adress-UUIDs) und kommt zuerst.
     private func awistaActions() async throws -> [String] {
         let page = try await client.string(Self.awistaBase)
-        let chunks = HTMLText.matches(#"src="(/_next/static/chunks/[^"?]+\.js)"#, in: page).compactMap(\.first)
+        // Seit November 2026 unter `/_next/static/immutable/chunks/` (vorher `/_next/static/chunks/`)
+        let chunks = HTMLText.matches(#"src="(/_next/static/(?:immutable/)?chunks/[^"?]+\.js)"#, in: page).compactMap(\.first)
         var preferred: [String] = [], others: [String] = []
         // Seitenspezifische Chunks stehen hinten – rückwärts suchen und beim ersten Treffer aufhören.
         var seen = Set<String>()
@@ -320,7 +321,8 @@ public struct NRWPortalsProvider: WasteProvider {
     private func awgPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
         let page = try await client.string(Self.awgURL)
-        guard let action = HTMLText.firstMatch(#"<form action="([^"]+)"[^>]*name="demand""#, in: page, group: 1),
+        // Seit November 2026 stehen `autocomplete` und `class` vor `action` – Reihenfolge der Attribute offen lassen.
+        guard let action = HTMLText.firstMatch(#"<form[^>]*\saction="([^"]+)"[^>]*name="demand""#, in: page, group: 1),
               let form = HTMLText.firstMatch(#"<form[^>]*name="demand"[^>]*>([\s\S]*?)</form>"#, in: page, group: 1) else { throw ProviderError.noDataGeneric }
         var fields = HTMLText.hiddenInputs(in: form).map { ($0.name, $0.value) }
         fields.append(("tx_bwwastecalendar_pi1[demand][streetname]", selections[1].id))

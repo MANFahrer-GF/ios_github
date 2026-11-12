@@ -16,8 +16,7 @@ final class ICSURLProviderTests: XCTestCase {
     }
 
     func testPortalPageAsksForLink() async throws {
-        let step = try await ICSURLProvider(url: "https://alsfeld.mein-abfallkalender.online").nextStep(after: [])
-        XCTAssertEqual(step?.input, .text)
+        // mein-abfallkalender.online fragt seit 2.0.10 keine Links mehr ab, sondern zeigt die Straßen (MeinAbfallkalenderTests)
         let direct = try await ICSURLProvider(url: "https://cms.eigeltingen.de/tools/icsAbfalltermine/?datasource=eigeltingen").nextStep(after: [])
         XCTAssertNil(direct)
         let paste = try await ICSURLProvider(url: "https://example.org/abfall/ical/#einfuegen").nextStep(after: [])

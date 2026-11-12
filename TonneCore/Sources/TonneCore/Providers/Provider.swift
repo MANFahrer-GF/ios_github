@@ -208,6 +208,23 @@ public enum ProviderError: LocalizedError {
     public static var selectAddressFirst: ProviderError {
         .invalidSelection(L10n.t("Bitte zuerst eine Adresse wählen.", "Please choose an address first."))
     }
+
+    /// Liefert ein Portal nur noch Vergangenes, ist die Quelle veraltet (Feucht bei Heimat-Info, Stand 12.11.2026: nur Termine
+    /// bis Ende 2025). Statt still „0 kommende Termine“ zu übernehmen, klar sagen, was zu tun ist.
+    /// `setup`: beim Einrichten (anderen Entsorger wählen) statt beim Abgleich eines vorhandenen Standorts.
+    public static func requireUpcoming(_ pickups: [Pickup], today: Date, setup: Bool = false, calendar: Calendar = .current) throws {
+        let day = calendar.startOfDay(for: today)
+        guard !pickups.isEmpty, !pickups.contains(where: { $0.date >= day }), let last = pickups.map(\.date).max() else { return }
+        let text = last.formatted(.dateTime.day().month(.wide).year())
+        if setup {
+            throw ProviderError.noData(L10n.t(
+                "Dieses Portal liefert keine kommenden Termine mehr, der letzte war am \(text). Bitte zurückgehen und einen anderen Entsorger wählen.",
+                "This portal no longer provides upcoming dates; the last one was on \(text). Please go back and choose another provider."))
+        }
+        throw ProviderError.noData(L10n.t(
+            "Dieses Portal liefert keine kommenden Termine mehr, der letzte war am \(text). Bitte den Entsorger neu wählen: Standort öffnen und „Entsorger oder Adresse ändern“ antippen.",
+            "This portal no longer provides upcoming dates; the last one was on \(text). Please choose the provider again: open the location and tap “Change provider or address”."))
+    }
 }
 
 /// Eine Online-Quelle für Abfuhrtermine: liefert Auswahlschritte und am Ende die Termine.

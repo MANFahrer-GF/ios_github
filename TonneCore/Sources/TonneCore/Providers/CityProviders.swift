@@ -29,7 +29,13 @@ public struct AWBKoelnProvider: WasteProvider {
         case 0: return .text(title: SelectionStep.streetTitle, placeholder: L10n.t("z. B. Aachener Str.", "e.g. Aachener Str."))
         case 1: return .text(title: SelectionStep.houseNumberTitle, placeholder: "50")
         case 2:
-            let url = "https://www.awbkoeln.de/api/streets?street_name=\(HTTPClient.query(selections[0].title))&building_number=\(HTTPClient.query(selections[1].title))"
+            // Die API will eine reine Zahl, Zusätze getrennt – „50-52“ oder „50/1“ ergaben sonst HTTP 422 (12.11.2026)
+            let (number, addition) = Self.splitNumber(selections[1].title)
+            guard !number.isEmpty else {
+                throw ProviderError.invalidSelection(L10n.t("Bitte eine Hausnummer mit Zahl eingeben, z. B. 50 oder 50a.", "Please enter a house number, e.g. 50 or 50a."))
+            }
+            let url = "https://www.awbkoeln.de/api/streets?street_name=\(HTTPClient.query(selections[0].title))&building_number=\(number)"
+                + (addition.isEmpty ? "" : "&building_number_addition=\(HTTPClient.query(addition))")
             let result: Streets = try await client.json(url)
             guard !result.data.isEmpty else { throw ProviderError.noData(L10n.t("Keine passende Adresse in Köln gefunden.", "No matching address found in Cologne.")) }
             return SelectionStep(title: L10n.t("Adresse", "Address"), options: result.data.map {
@@ -37,6 +43,13 @@ public struct AWBKoelnProvider: WasteProvider {
             }, searchable: false)
         default: return nil
         }
+    }
+
+    /// „ 50 a“ → („50“, „a“), „50-52“ → („50“, „-52“)
+    static func splitNumber(_ raw: String) -> (number: String, addition: String) {
+        let text = raw.trimmingCharacters(in: .whitespaces)
+        let number = String(text.prefix { $0.isASCII && $0.isNumber })
+        return (number, text.dropFirst(number.count).trimmingCharacters(in: .whitespaces))
     }
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {

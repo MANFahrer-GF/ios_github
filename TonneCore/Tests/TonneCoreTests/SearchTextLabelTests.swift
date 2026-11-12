@@ -120,7 +120,7 @@ final class SearchTextLabelTests: XCTestCase {
         "CityProviders.swift": 5,                // Fälle koeln (2), leipzig, hannover (2)
         "Einzelportale.swift": 4,                // Fall giessen, sonst Hausnummer am Ende
         "HausmuellInfoProvider.swift": 1,        // Fall erfurt
-        "ICSURLProvider.swift": 1,               // ICS-Link
+        "ICSURLProvider.swift": 2,               // ICS-Link; Gladbeck (Hausnummer am Ende)
         "InsertITProvider.swift": 1,             // Fall offenbach
         "MagdeburgProvider.swift": 1,            // Hausnummer am Ende
         "MecklenburgPortalsProvider.swift": 2,   // Fall rostock

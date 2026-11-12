@@ -179,21 +179,31 @@ public struct AbfallPlusAppProvider: WasteProvider {
         var next: String
         var extra: [String: String]
         var formStreet: String?
+        /// Hinweis, den die App beim Antippen zeigt (z. B. „Dieser Landkreis wird aktuell nicht unterstützt.“)
+        var hint = ""
     }
 
     static func items(in html: String) -> [Item] {
-        let pattern = #"awk_standort_auswahl_step_fertig\('((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([^']*)','([^']*)','[^']*'(?:,\{(.*?)\})?\)([^"]*)""#
+        let pattern = #"awk_standort_auswahl_step_fertig\('((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([^']*)','([^']*)','((?:[^'\\]|\\.)*)'(?:,\{(.*?)\})?\)([^"]*)""#
         return HTMLText.matches(pattern, in: html).map { groups in
             var extra: [String: String] = [:]
             // Werte in Anführungszeichen oder blank; verschachtelte Objekte ({…}) werden mit durchsucht.
-            for pair in HTMLText.matches(#"'(\w+)':(?:'([^']*)'|([^,'{}]*))"#, in: groups[4]) where pair.count == 3 {
+            for pair in HTMLText.matches(#"'(\w+)':(?:'([^']*)'|([^,'{}]*))"#, in: groups[5]) where pair.count == 3 {
                 extra[pair[0]] = pair[1].isEmpty ? pair[2] : pair[1]
             }
-            let formStreet = HTMLText.firstMatch(#"#f_id_strasse'\)\.val\((\d+)\)"#, in: groups[5], group: 1)
+            let formStreet = HTMLText.firstMatch(#"#f_id_strasse'\)\.val\((\d+)\)"#, in: groups[6], group: 1)
             return Item(id: HTMLText.decodeEntities(groups[0].replacingOccurrences(of: "\\'", with: "'")),
                         name: HTMLText.decodeEntities(groups[1].replacingOccurrences(of: "\\'", with: "'")),
-                        step: groups[2], next: groups[3], extra: extra, formStreet: formStreet)
-        }
+                        step: groups[2], next: groups[3], extra: extra, formStreet: formStreet, hint: groups[4])
+        }.filter(isOffered)
+    }
+
+    /// Der „Abfall+ Wecker“ listet alle Landkreise eines Bundeslands, auch solche ohne Daten: Die echte App zeigt dann nur
+    /// „Dieser Landkreis wird aktuell nicht unterstützt.“ bzw. „App in Vorbereitung“ (Niedersachsen 12.11.2026: 27 von 42).
+    /// Wählbar sind sie dort nicht – hier also auch nicht, sonst endet der Assistent in einer Straßensuche ohne Treffer.
+    static func isOffered(_ item: Item) -> Bool {
+        let hint = HTMLText.decodeEntities(item.hint).lowercased()
+        return !hint.contains("nicht unterstützt") && !hint.contains("app in vorbereitung")
     }
 
     private static func encode(_ fields: [String: String]) -> String {
@@ -297,7 +307,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
             return try await streetOrDistrict(session, state)
         case "bez":
             if last["done"] == "1" { return nil }
-            return streetSearchStep
+            return try await streetEntry(session, state, orElse: streetSearchStep)
         case "q":
             return try await streetStep(session, state, query: last["q"] ?? "")
         case "str":
@@ -350,7 +360,15 @@ public struct AbfallPlusAppProvider: WasteProvider {
                 })
             }
         }
-        return streetSearchStep
+        return try await streetEntry(session, state, orElse: streetSearchStep)
+    }
+
+    /// Die leere Suche liefert die ganze Straßenliste des Orts bzw. Ortsteils (12.11.2026: Duisburg-Laar 28, Duisburg-Altstadt 79,
+    /// Straubing 556). Dann gleich als Liste: In kleinen Ortsteilen trifft sonst kein naheliegender Wortanfang („Haupt“, „Kirch“ …).
+    /// Liefert sie nichts, bleibt die Texteingabe.
+    private func streetEntry(_ session: Session, _ state: State, orElse text: SelectionStep) async throws -> SelectionStep {
+        let all = try await streets(session, state, query: "")
+        return all.isEmpty ? text : streetList(all)
     }
 
     private var streetSearchStep: SelectionStep {
@@ -370,9 +388,18 @@ public struct AbfallPlusAppProvider: WasteProvider {
     private func streetStep(_ session: Session, _ state: State, query: String) async throws -> SelectionStep? {
         let items = try await streets(session, state, query: query)
         if items.isEmpty {
+            // Ortsteil ganz ohne Straßen (Kreis Verden, Langwedel-Holtebüttel 12.11.2026): Suchen hilft nicht
+            if !state.bezirk.isEmpty, try await streets(session, state, query: "").isEmpty {
+                throw ProviderError.invalidSelection(L10n.t("Für diesen Ortsteil führt der Abfallkalender keine Straßen. Bitte einen anderen Ortsteil wählen.",
+                                                            "The waste calendar lists no streets for this district. Please choose another district."))
+            }
             throw ProviderError.invalidSelection(L10n.t("Keine Straße gefunden, die mit „\(query)“ beginnt.", "No street found starting with “\(query)”."))
         }
-        return SelectionStep(title: SelectionStep.streetTitle, options: items.map { item in
+        return streetList(items)
+    }
+
+    private func streetList(_ items: [Item]) -> SelectionStep {
+        SelectionStep(title: SelectionStep.streetTitle, options: items.map { item in
             var fields: [String: String] = ["k": "str", "str": item.id, "next": item.next]
             if let kom = item.extra["set_id_kommune"] { fields["kom"] = kom }
             if let bez = item.extra["set_id_bezirk"] { fields["bez"] = bez == "0" ? "" : bez }
@@ -406,11 +433,36 @@ public struct AbfallPlusAppProvider: WasteProvider {
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         // Kreis Nordfriesland (153 Abfallarten): Mit allen Schaltern lehnt der Server die Sitzung nach dem Abschluss ab.
-        try await Self.retryingAfter401 {
-            try await pickups(for: selections, calendar: calendar, onlyPreselected: false)
-        } retry: {
-            try await pickups(for: selections, calendar: calendar, onlyPreselected: true)
+        try await Self.retryingWhenBusy {
+            try await Self.retryingAfter401 {
+                try await pickups(for: selections, calendar: calendar, onlyPreselected: false)
+            } retry: {
+                try await pickups(for: selections, calendar: calendar, onlyPreselected: true)
+            }
         }
+    }
+
+    /// Server liefert gerade nichts Brauchbares (Termine nicht bereit oder Platzhalter) – vorübergehend.
+    struct ServerBusy: LocalizedError {
+        var errorDescription: String? {
+            L10n.t("Der AbfallPlus-Server hat gerade keine Termine geliefert. Bitte in ein paar Minuten erneut versuchen.", "The AbfallPlus server returned no dates right now. Please try again in a few minutes.")
+        }
+    }
+
+    /// Einmal mit frischer Sitzung wiederholen, wenn der Server nur vorübergehend nichts geliefert hat.
+    static func retryingWhenBusy<T>(pause: UInt64 = 3_000_000_000, _ work: () async throws -> T) async throws -> T {
+        do { return try await work() } catch is ServerBusy {
+            try await Task.sleep(nanoseconds: pause)
+            return try await work()
+        }
+    }
+
+    /// Keine verwertbaren Termine: Ist die Terminliste gültig, aber leer (ZAW-SR Mengkofen 12.11.2026, auch nach 21 s), hat die
+    /// Adresse keine Termine; fehlt sie oder kamen nur Platzhalter, ist es vorübergehend.
+    static func emptyResultError(_ xml: String) -> Error {
+        let empty = xml.range(of: #"<key>dates</key>\s*<array>\s*</array>"#, options: .regularExpression) != nil
+        return empty ? ProviderError.noData(L10n.t("Der Abfallkalender führt für diese Adresse keine Termine. Bitte Ort und Straße prüfen.",
+                                                   "The waste calendar has no dates for this address. Please check town and street.")) : ServerBusy()
     }
 
     /// Scheitert auch der zweite Versuch, bleibt die 401-Meldung des ersten stehen.
@@ -472,9 +524,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
         }
 
         let result = Self.parseStructure(xml, typeIDs: Set(typeIDs), calendar: calendar).filter { !Self.isPlaceholder($0.name) }
-        guard !result.isEmpty else {
-            throw ProviderError.noData(L10n.t("Der AbfallPlus-Server hat gerade keine Termine geliefert. Bitte in ein paar Minuten erneut versuchen.", "The AbfallPlus server returned no dates right now. Please try again in a few minutes."))
-        }
+        guard !result.isEmpty else { throw Self.emptyResultError(xml) }
         return result
     }
 

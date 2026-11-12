@@ -359,7 +359,9 @@ struct SourceWizardView: View {
         isLoading = true
         defer { isLoading = false }
         do {
-            pickups = try await provider.pickups(for: selections)
+            let fetched = try await provider.pickups(for: selections)
+            try ProviderError.requireUpcoming(fetched, today: Date(), setup: true)
+            pickups = fetched
             // Alles vorab eingeschaltet: Abgewählte Arten fehlen im Kalender, und abwählen soll nur der Nutzer selbst.
             // (Früher blieben ab fünf Arten nur Rest, Bio, Papier, Gelb an – der Grünschnitt fehlte dann unbemerkt.)
             // Wird ein Standort neu eingerichtet, behalten vorhandene Müllarten ihren Zustand.

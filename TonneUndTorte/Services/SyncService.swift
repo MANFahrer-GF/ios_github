@@ -146,6 +146,8 @@ enum SyncService {
         guard let config = location.source else { return Result(importedCount: 0, changes: []) }
         let provider = ProviderFactory.make(config)
         let pickups = try await provider.pickups(for: config.selections)
+        // Nur Vergangenes: Quelle veraltet – vorhandene Termine bleiben, der Standort zeigt den Hinweis
+        try ProviderError.requireUpcoming(pickups, today: Date())
         // Während des Abrufs gelöscht (iCloud, anderes Fenster): Zugriff auf das Objekt wäre ein Absturz
         guard location.modelContext != nil, !location.isDeleted else { throw CancellationError() }
         let mappings = suggestMappings(for: pickups, location: location)

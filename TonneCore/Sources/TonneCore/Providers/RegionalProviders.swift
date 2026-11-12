@@ -142,6 +142,29 @@ public struct AWSHProvider: WasteProvider {
         return order.map { (key: $0, types: map[$0] ?? []) }
     }
 
+    private func calendarURL(city: String, street: String, ids: [String]) -> String {
+        "\(base)/ort/\(city)/strasse/\(street)/hausnummern/0/abfallarten/\(ids.joined(separator: "-"))/kalender.ics"
+    }
+
+    /// Die Abfallarten gelten für den ganzen Ort; in der Straße fährt oft nur ein Teil (ASF Medelby „Lückepott“, 12.11.2026:
+    /// Großcontainer und Unterflur ohne einen Termin). Ein Kalender mit allen Arten zeigt, welche Varianten vorkommen –
+    /// nur die werden angeboten. Passt keine Variante einer Gruppe zum Kalender, bleibt die Gruppe unverändert.
+    private func groups(city: String, street: String) async throws -> [(key: String, types: [WasteType])] {
+        let all = try await groups(city: city)
+        guard let text = try? await client.string(calendarURL(city: city, street: street, ids: all.flatMap { $0.types.map(\.id) })) else { return all }
+        return Self.restrict(all, to: Set(ICS.parse(text, calendar: Calendar(identifier: .gregorian)).map(\.summary)))
+    }
+
+    /// SUMMARY im Kalender: „Bezeichnung(Zyklus)“, z. B. „Restabfalltonne (60-120l)(4wö.)“.
+    static func restrict(_ groups: [(key: String, types: [WasteType])], to summaries: Set<String>) -> [(key: String, types: [WasteType])] {
+        func key(_ text: String) -> String { text.lowercased().filter { !$0.isWhitespace } }
+        let present = Set(summaries.map(key))
+        return groups.map { group in
+            let hits = group.types.filter { present.contains(key($0.bezeichnung + "(" + ($0.zyklus ?? "") + ")")) || present.contains(key($0.bezeichnung)) }
+            return (key: group.key, types: hits.isEmpty ? group.types : hits)
+        }
+    }
+
     private static func groupTitle(_ types: [WasteType]) -> String {
         let first = types.first?.bezeichnung ?? ""
         let base = first.components(separatedBy: CharacterSet.decimalDigits).first?.trimmingCharacters(in: .whitespaces) ?? first
@@ -157,7 +180,7 @@ public struct AWSHProvider: WasteProvider {
             let streets: Streets = try await client.json("\(base)/ort/\(selections[0].id)/strassen")
             return SelectionStep(title: SelectionStep.streetTitle, options: streets.strassen.map { SelectionOption(id: $0.strassennummer.value, title: $0.strassenbezeichnung) })
         default:
-            let choices = try await groups(city: selections[0].id).filter { $0.types.count > 1 }
+            let choices = try await groups(city: selections[0].id, street: selections[1].id).filter { $0.types.count > 1 }
             let index = selections.count - 2
             guard index < choices.count else { return nil }
             let group = choices[index]
@@ -170,7 +193,7 @@ public struct AWSHProvider: WasteProvider {
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
         let city = selections[0].id, street = selections[1].id
-        let all = try await groups(city: city)
+        let all = try await groups(city: city, street: street)
         let chosen = Set(selections.dropFirst(2).compactMap { $0.id.hasPrefix("type:") && !$0.id.hasPrefix("type:none:") ? String($0.id.dropFirst(5)) : nil })
         let answered = Set(selections.dropFirst(2).compactMap { option -> String? in
             if option.id.hasPrefix("type:none:") { return String(option.id.dropFirst("type:none:".count)) }
@@ -179,12 +202,11 @@ public struct AWSHProvider: WasteProvider {
         })
         var ids: [String] = []
         for group in all {
-            if group.types.count == 1 { ids.append(group.types[0].id) }
-            else if answered.contains(group.key) { ids += group.types.map(\.id).filter(chosen.contains) }
+            if answered.contains(group.key) { ids += group.types.map(\.id).filter(chosen.contains) }
             else { ids += group.types.map(\.id) }
         }
         guard !ids.isEmpty else { throw ProviderError.noDataGeneric }
-        let text = try await client.string("\(base)/ort/\(city)/strasse/\(street)/hausnummern/0/abfallarten/\(ids.joined(separator: "-"))/kalender.ics")
+        let text = try await client.string(calendarURL(city: city, street: street, ids: ids))
         let events = ICS.parse(text, calendar: calendar)
         guard !events.isEmpty else { throw ProviderError.noDataGeneric }
         return events.map { Pickup(date: $0.date, name: Self.cleanName($0.summary)) }

@@ -30,8 +30,9 @@ final class CTracePlacesTests: XCTestCase {
         XCTAssertThrowsError(try CTraceProvider.parseNames(Data("<html>404</html>".utf8)))
     }
 
-    func testFixedCityServiceStillAsksStreetAsText() async throws {
-        let provider = CTraceProvider(service: "bremenabfallkalender")
+    /// Liefert das Portal keine Straßenliste, bleibt die Texteingabe (Bayreuth ist im Stub nicht hinterlegt → 404).
+    func testFixedCityFallsBackToStreetTextWhenListFails() async throws {
+        let provider = CTraceProvider(service: "bayreuthstadt-abfallkalender", client: HTTPClient(session: CTraceStub.session()))
         let step = try await provider.nextStep(after: [])
         XCTAssertEqual(step?.input, .text)
         XCTAssertEqual(step?.title, SelectionStep.streetTitle)
@@ -48,25 +49,22 @@ final class CTracePlacesTests: XCTestCase {
         let streetStep = try await provider.nextStep(after: [place])
         XCTAssertEqual(streetStep?.input, .list)
         let street = try XCTUnwrap(streetStep?.options.first)
-        // Hausnummer wie das Portal: aus dem Listen-Aufruf der Seite
-        let client = HTTPClient()
-        let url = "https://web.c-trace.de/segebergwzv-abfallkalender/Hausnummern?ort=\(HTTPClient.query(place.title))&strasse=\(HTTPClient.query(street.title))"
-        let numbers = try await client.json(url, as: [String].self)
-        let house = try XCTUnwrap(numbers.first).trimmingCharacters(in: .whitespaces)
-        let houseOption = SelectionOption(id: house, title: house)
-        let end = try await provider.nextStep(after: [place, street])
-        XCTAssertEqual(end?.input, .text)
+        // Hausnummer als Liste aus dem Portal
+        let houseStep = try await provider.nextStep(after: [place, street])
+        XCTAssertEqual(houseStep?.input, .list)
+        let houseOption = try XCTUnwrap(houseStep?.options.first)
         let none = try await provider.nextStep(after: [place, street, houseOption])
         XCTAssertNil(none)
         let pickups = try await provider.pickups(for: [place, street, houseOption], calendar: calendar)
         XCTAssertGreaterThan(pickups.count, 10)
     }
 
-    /// Alle sieben Dienste: Ortsliste und Straßenliste kommen; optional als JSON ablegen (TONNE_ORTE_JSON=Pfad).
+    /// Alle Dienste mit Ortsliste: Ortsliste und Straßenliste kommen; optional als JSON ablegen (TONNE_ORTE_JSON=Pfad).
     func testLiveAllServicesListPlaces() async throws {
         try XCTSkipUnless(ProcessInfo.processInfo.environment["TONNE_LIVE"] != nil, "TONNE_LIVE nicht gesetzt")
-        let keys = ["augsburglandkreis", "segebergwzv-abfallkalender", "maintauberkreis-abfallkalender", "rheingauleerungen",
-                    "grossgeraulandkreis-abfallkalender", "roth", "aurich-abfallkalender"]
+        // Roth und Rheingau führen keine aktuellen Termine mehr (CTraceListsTests.testRetiredPortalsExplainWithoutAsking).
+        let keys = ["augsburglandkreis", "segebergwzv-abfallkalender", "maintauberkreis-abfallkalender",
+                    "grossgeraulandkreis-abfallkalender", "aurich-abfallkalender"]
         var all: [String: [String]] = [:]
         for key in keys {
             let provider = CTraceProvider(service: key)

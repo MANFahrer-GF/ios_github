@@ -19,15 +19,59 @@ public struct ICSURLProvider: WasteProvider {
     /// mein-abfallkalender.online kopiert man dort seinen iCal-Link und fügt ihn ein.
     static let pasteMarker = "#einfuegen"
 
+    /// `<Seite>#adresse-zbg`: Zentrale Betriebe Gladbeck – Straße aus der Liste der Seite, Hausnummer als Text; der Kalender
+    /// kommt von `<Seite>?format=ical&street=<Kennung>&number=<Nr.>` (der Verlauf hängt an der Hausnummer).
+    static let addressMarker = "#adresse-zbg"
+
     var isDirectLink: Bool {
-        if serviceKey.hasSuffix(Self.pasteMarker) { return false }
+        if serviceKey.hasSuffix(Self.pasteMarker) || serviceKey.hasSuffix(Self.addressMarker) { return false }
         let lower = serviceKey.lowercased()
         if lower.hasPrefix("webcal://") || lower.contains(".ics") || lower.contains("ical") { return true }
         let host = URL(string: serviceKey)?.host?.lowercased() ?? ""
         return !host.hasSuffix("mein-abfallkalender.online")
     }
 
+    /// Portalseite von mein-abfallkalender.online (keine Kopiervorlage): Straße wählen, Termine aus der Jahresübersicht lesen.
+    /// Den iCal-Link verschickt das Portal nur per E-Mail mit Rechenaufgabe; bis 2.0.9 musste der Nutzer ihn selbst
+    /// besorgen und einfügen (Portal-Prüfung 12.11.2026: 78 Orte so nicht automatisch nutzbar).
+    var isMeinAbfallkalender: Bool {
+        !isDirectLink && !serviceKey.hasSuffix(Self.pasteMarker)
+            && (URL(string: serviceKey)?.host?.lowercased().hasSuffix("mein-abfallkalender.online") ?? false)
+    }
+
+    /// Kennung einer gewählten Straße bei mein-abfallkalender.online.
+    static let streetPrefix = "mak:"
+
+    /// Mit dem iPhone-User-Agent der App leitet das Portal auf seine Handy-Ansicht um (ohne Formular, ohne Cookie in
+    /// einer Weiterleitungsschleife) – die Desktop-Seite hat Straßenliste und Jahresübersicht.
+    static let desktopHeaders = ["User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"]
+
+    private var addressPage: String { String(serviceKey.dropLast(Self.addressMarker.count)) }
+
+    private var portalRoot: String {
+        guard let url = URL(string: serviceKey), let scheme = url.scheme, let host = url.host else { return serviceKey }
+        return "\(scheme)://\(host)/"
+    }
+
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+        if serviceKey.hasSuffix(Self.addressMarker) {
+            switch selections.count {
+            case 0:
+                let streets = HTMLText.options(ofSelect: "street", in: try await client.string(addressPage)).filter { !$0.value.isEmpty }
+                guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
+                return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: $0.value, title: $0.label) })
+            case 1:
+                return .text(title: SelectionStep.houseNumberTitle, placeholder: L10n.t("z. B. 12 oder 12a", "e.g. 12 or 12a"))
+            default:
+                return nil
+            }
+        }
+        if isMeinAbfallkalender {
+            guard selections.isEmpty else { return nil }
+            let streets = HTMLText.options(ofSelect: "street_id", in: try await client.string(portalRoot, headers: Self.desktopHeaders)).filter { !$0.value.isEmpty }
+            guard !streets.isEmpty else { throw ProviderError.noDataGeneric }
+            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: Self.streetPrefix + $0.value, title: $0.label) })
+        }
         guard !isDirectLink, selections.isEmpty else { return nil }
         let host = URL(string: serviceKey)?.host ?? serviceKey
         return .text(title: L10n.t("ICS-Link von \(host)", "ICS link from \(host)"),
@@ -35,6 +79,16 @@ public struct ICSURLProvider: WasteProvider {
     }
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        if let street = selections.last?.id, street.hasPrefix(Self.streetPrefix) {
+            return try await meinAbfallkalenderPickups(street: String(street.dropFirst(Self.streetPrefix.count)), calendar: calendar)
+        }
+        if serviceKey.hasSuffix(Self.addressMarker) {
+            guard selections.count >= 2 else { throw ProviderError.selectAddressFirst }
+            let number = selections[1].title.trimmingCharacters(in: .whitespaces)
+            guard !number.isEmpty else { throw ProviderError.selectAddressFirst }
+            let link = "\(addressPage)?format=ical&street=\(HTTPClient.query(selections[0].id))&number=\(HTTPClient.query(number))"
+            return Array(Set(try await load(link, year: calendar.component(.year, from: Date()), calendar: calendar))).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
+        }
         var link = isDirectLink ? serviceKey : (selections.last?.id ?? "")
         guard !link.isEmpty else { throw ProviderError.selectAddressFirst }
         if link.lowercased().hasPrefix("webcal://") { link = "https://" + link.dropFirst("webcal://".count) }
@@ -92,6 +146,39 @@ public struct ICSURLProvider: WasteProvider {
                 && !excludedPlaces.contains { (event.location ?? "").lowercased().contains($0) }
         }
             .flatMap { event in Self.names(event.summary).map { Pickup(date: event.date, name: $0, note: event.location) } }
+    }
+
+    /// Jahresübersichten („all.2026“, „all.2027“) ab dem laufenden Jahr abrufen; gespeicherte Kopierlinks laufen weiter über ICS.
+    private func meinAbfallkalenderPickups(street: String, calendar: Calendar) async throws -> [Pickup] {
+        let page = try await client.string(portalRoot, headers: Self.desktopHeaders)
+        let year = calendar.component(.year, from: Date())
+        let periods = HTMLText.options(ofSelect: "filter_period", in: page).map(\.value)
+            .filter { value in value.hasPrefix("all.") && (Int(value.dropFirst(4)) ?? 0) >= year }
+        var pickups: [Pickup] = []
+        for period in periods.isEmpty ? ["next_20"] : periods {
+            let html = HTTPClient.text(from: try await client.postForm(portalRoot, fields: [("street_id", street), ("filter_period", period), ("submit", "Meine Termine anzeigen")], headers: Self.desktopHeaders))
+            pickups += Self.meinAbfallkalenderRows(html, calendar: calendar)
+        }
+        guard !pickups.isEmpty else { throw ProviderError.noDataGeneric }
+        return Array(Set(pickups)).sorted { $0.date != $1.date ? $0.date < $1.date : $0.name < $1.name }
+    }
+
+    /// Zeilen der Terminliste: „<div class="RM">“ · „Restmüll“ · Wochentag · „07.01.2026“. Öffnungszeiten des Wertstoffhofs
+    /// stehen in derselben Liste, sind aber keine Abfuhr.
+    static func meinAbfallkalenderRows(_ html: String, calendar: Calendar) -> [Pickup] {
+        guard let start = html.range(of: #"id="dates_table""#) else { return [] }
+        let table = html[start.upperBound...]
+        let end = table.range(of: "</table>")?.lowerBound ?? table.endIndex
+        return HTMLText.matches(#"<tr[^>]*class="dates"[^>]*>([\s\S]*?)</tr>"#, in: String(table[..<end])).compactMap { row -> Pickup? in
+            let cells = HTMLText.matches(#"<td[^>]*>([\s\S]*?)</td>"#, in: row[0]).map { $0[0] }
+            guard cells.count >= 4 else { return nil }
+            let code = HTMLText.firstMatch(#"class="([^"]+)""#, in: cells[0], group: 1) ?? ""
+            let name = HTMLText.decodeEntities(HTMLText.stripTags(cells[1])).trimmingCharacters(in: .whitespacesAndNewlines)
+            let parts = HTMLText.stripTags(cells[3]).trimmingCharacters(in: .whitespacesAndNewlines).split(separator: ".").compactMap { Int($0) }
+            guard parts.count == 3, !name.isEmpty, code != "WeSt", !name.lowercased().contains("wertstoffhof"),
+                  let date = Days.parse(String(format: "%04d-%02d-%02d", parts[2], parts[1], parts[0]), calendar: calendar) else { return nil }
+            return Pickup(date: date, name: NameCleaner.clean(name))
+        }
     }
 
     /// `<Seite>#link=<Text>`: Kalender ist der erste ICS-Link der Seite, dessen Adresse oder Linktext `<Text>` enthält

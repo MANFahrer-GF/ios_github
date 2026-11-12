@@ -26,6 +26,9 @@ public struct InsertITProvider: WasteProvider {
 
     private var base: String? { Self.cities[serviceKey].map { "https://www.insert-it.de/\($0)" } }
 
+    /// Bis zu so vielen Treffern wird je Straße nachgesehen, ob es Hausnummern gibt (eine Abfrage je Straße)
+    static let filterLimit = 12
+
     private struct Street: Decodable { let ID: Int; let Name: String }
     private struct Location: Decodable { let ID: Int; let Text: String }
 
@@ -39,10 +42,35 @@ public struct InsertITProvider: WasteProvider {
             guard !streets.isEmpty else {
                 throw ProviderError.invalidSelection(L10n.t("Keine Straße gefunden. Bitte anders schreiben.", "No street found. Please try another spelling."))
             }
-            return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: String($0.ID), title: $0.Name) })
+            // Kurze Trefferlisten: Straßen ohne Hausnummern (Plätze, „Hauptbahnhof“) gleich weglassen – dort gibt es keine Tonnen
+            // und sie standen zuvor oben in der Liste (Lübeck „Haupt“: Hauptbahnhof, Hauptstraße; Offenbach: Haupteingangstraße)
+            var usable = streets
+            if streets.count > 1, streets.count <= Self.filterLimit {
+                let client = self.client
+                let withNumbers = await withTaskGroup(of: (Int, Bool?).self) { group -> (has: Set<Int>, failed: Bool) in
+                    for street in streets {
+                        group.addTask {
+                            let found: [Location]? = try? await client.json("\(base)/Main/GetLocations?streetId=\(street.ID)")
+                            return (street.ID, found.map { !$0.isEmpty })
+                        }
+                    }
+                    var ok = Set<Int>(), failed = false
+                    for await (id, has) in group {
+                        if let has { if has { ok.insert(id) } } else { failed = true }
+                    }
+                    return (ok, failed)
+                }
+                // Abfragen gescheitert: Liste unverändert lassen; sonst nur Straßen mit Hausnummern, und keine davon ist ein Fehler
+                if !withNumbers.failed {
+                    guard !withNumbers.has.isEmpty else { throw Self.noStreetWithNumbers(typed: selections[0].title) }
+                    usable = streets.filter { withNumbers.has.contains($0.ID) }
+                }
+            }
+            return SelectionStep(title: SelectionStep.streetTitle, options: usable.map { SelectionOption(id: String($0.ID), title: $0.Name) })
         case 2:
             let locations: [Location] = try await client.json("\(base)/Main/GetLocations?streetId=\(selections[1].id)")
-            guard !locations.isEmpty else { throw ProviderError.noDataGeneric }
+            // Das Portal listet auch Straßen ohne Hausnummern (Lübeck „Hauptstraße“, Kassel „Kirchplatz“, 12.11.2026) – dort gibt es keine Termine
+            guard !locations.isEmpty else { throw Self.noHouseNumbers(selections[1].title) }
             return SelectionStep(title: SelectionStep.houseNumberTitle, options: locations.map { SelectionOption(id: String($0.ID), title: $0.Text) })
         default:
             return nil
@@ -73,6 +101,16 @@ public struct InsertITProvider: WasteProvider {
             if !streets.isEmpty { return streets }
         }
         return []
+    }
+
+    static func noStreetWithNumbers(typed: String) -> ProviderError {
+        .invalidSelection(L10n.t("Zu „\(typed)“ führt das Portal nur Straßen ohne Hausnummern (Plätze, Bahnhöfe). Bitte anders schreiben.",
+                                 "The portal lists only streets without house numbers for “\(typed)”. Please try another spelling."))
+    }
+
+    static func noHouseNumbers(_ street: String) -> ProviderError {
+        .invalidSelection(L10n.t("Zu „\(street)“ führt das Portal keine Hausnummern, also auch keine Tonnen (oft ein Platz oder eine Straße ohne Wohnhäuser). Bitte die Straße der Hausanschrift wählen.",
+                                 "The portal lists no house numbers for “\(street)”, so there are no bins. Please choose the street of your address."))
     }
 
     /// Label ohne den Suchtext: „Kaiserstraße 1“.

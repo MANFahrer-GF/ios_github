@@ -141,12 +141,24 @@ private struct LRO {
             return SelectionStep(title: SelectionStep.streetTitle, options: MecklenburgPortalsProvider.sorted(options))
         case base:
             return SelectionStep(title: L10n.t("Schwarze Tonne (Restmüll)", "Black bin (residual waste)"),
-                                 options: Self.rhythms(letters: selections[base - 1].id, weekly: "RW", twice: "RZW"), searchable: false)
+                                 options: Self.blackRhythms(letters: selections[base - 1].id), searchable: false)
         case base + 1:
             return SelectionStep(title: L10n.t("Grüne Tonne (Bioabfall)", "Green bin (organic waste)"),
                                  options: Self.rhythms(letters: selections[base - 1].id, weekly: "BW", twice: "BZW"), searchable: false)
         default:
             return nil
+        }
+    }
+
+    /// Saison bei der schwarzen Tonne: Das Portal liefert dann auch Gelbe und Blaue Tonne nur in der Saison (ical.php, gemessen
+    /// 12.11.2026, Küsserow-Hof: mit `bsaison` Schwarz 01.04.–28.10., Gelb bis 19.10., Blau bis 05.10., Grün weiter bis 31.12.;
+    /// `gsaison` kürzt nur die grüne Tonne). Der Hinweis erklärt, warum im Winter dann Termine fehlen.
+    static func blackRhythms(letters: String) -> [SelectionOption] {
+        rhythms(letters: letters, weekly: "RW", twice: "RZW").map { option in
+            guard MecklenburgPortalsProvider.rhythmValue(option)?.hasSuffix("|s") == true else { return option }
+            return SelectionOption(id: option.id, title: option.title,
+                                   subtitle: L10n.t("Dann auch Gelbe und Blaue Tonne nur in der Saison (April bis Oktober)",
+                                                    "Yellow and blue bins then also only in season (April to October)"))
         }
     }
 

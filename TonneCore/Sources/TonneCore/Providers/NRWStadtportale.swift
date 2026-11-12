@@ -34,7 +34,7 @@ extension NRWPortalsProvider {
         case "bruehl": return try await bruehlStep(selections)
         case "siegen": return try await siegenStep(selections)
         case "verl": return verlStep(selections)
-        case "velbert": return velbertStep(selections)
+        case "velbert": return try await velbertStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -380,9 +380,48 @@ extension NRWPortalsProvider {
 
     // MARK: Velbert (TBV)
 
-    private func velbertStep(_ selections: [SelectionOption]) -> SelectionStep? {
-        guard selections.isEmpty else { return nil }
-        return .text(title: L10n.t("Straße und Hausnummer", "Street and house number"), placeholder: L10n.t("z. B. Am Lindenkamp 33", "e.g. Am Lindenkamp 33"))
+    /// Eingabe → Trefferliste der Adressen (je Treffer eine Kennung `abstid`). Bis 2.0.10 gab es keine Auswahl: Alle Treffer wurden
+    /// zusammengemischt („Haupt“: 219 Adressen, 438 Abrufe), und eine nicht vorhandene Nummer endete ohne Hilfe.
+    private func velbertStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        switch selections.count {
+        case 0:
+            return .text(title: L10n.t("Straße und Hausnummer", "Street and house number"), placeholder: L10n.t("z. B. Am Lindenkamp 33", "e.g. Am Lindenkamp 33"))
+        case 1:
+            let query = selections[0].id.trimmingCharacters(in: .whitespaces)
+            var options = Self.velbertAddresses(try await velbertSearch(query))
+            var hint: String?
+            // Nummer unbekannt („Hauptstraße 1“): die Hausnummern der Straße zeigen
+            if options.isEmpty, let street = HTMLText.firstMatch(#"^(.*\D)\s*\d+\s*\w?$"#, in: query, group: 1)?.trimmingCharacters(in: .whitespaces), street.count >= 3 {
+                options = Self.velbertAddresses(try await velbertSearch(street))
+                hint = L10n.t("„\(query)“ kennt das Portal nicht. Bitte die Adresse aus der Liste wählen.", "The portal does not know “\(query)”. Please choose the address from the list.")
+            }
+            guard !options.isEmpty else {
+                throw ProviderError.invalidSelection(L10n.t("Keine Adresse gefunden – bitte Straße und Hausnummer angeben, z. B. „Am Lindenkamp 33“.", "No address found – please enter street and house number, e.g. “Am Lindenkamp 33”."))
+            }
+            var step = SelectionStep(title: L10n.t("Adresse", "Address"), options: options)
+            step.hint = hint
+            return step
+        default:
+            return nil
+        }
+    }
+
+    /// Treffer der Straßensuche: „<strong>Straße</strong><br/> Am Lindenkamp 1“ und die Kalender-Links mit `abstid`.
+    static func velbertAddresses(_ html: String) -> [SelectionOption] {
+        var seen = Set<String>()
+        return html.components(separatedBy: #"class="container waste-result""#).dropFirst().compactMap { block in
+            guard let title = HTMLText.firstMatch(#"<strong>Straße</strong><br\s*/?>\s*([^<]+?)\s*</p>"#, in: block, group: 1),
+                  let id = HTMLText.firstMatch(#"tx_tbvabfall_kalender%5Babstid%5D=(\d+)"#, in: block, group: 1), seen.insert(id).inserted else { return nil }
+            return SelectionOption(id: id, title: HTMLText.decodeEntities(title))
+        }
+    }
+
+    private func velbertSearch(_ query: String) async throws -> String {
+        let page = try await client.string("https://www.tbv-velbert.de/abfall")
+        guard let form = HTMLText.firstMatch(#"(<form[^>]*tbvabfall[\s\S]*?</form>)"#, in: page, group: 1),
+              let action = HTMLText.firstMatch(#"action="([^"]+)""#, in: form, group: 1) else { throw ProviderError.noDataGeneric }
+        let fields = HTMLText.hiddenInputs(in: form).map { ($0.name, $0.value) } + [("tx_tbvabfall_strassensuche[suchbegriff]", query)]
+        return HTTPClient.text(from: try await client.postForm("https://www.tbv-velbert.de" + HTMLText.decodeEntities(action), fields: fields))
     }
 
     static let germanMonths = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
@@ -410,13 +449,13 @@ extension NRWPortalsProvider {
 
     private func velbertPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         guard let query = selections.first?.id.trimmingCharacters(in: .whitespaces), !query.isEmpty else { throw ProviderError.selectAddressFirst }
-        let page = try await client.string("https://www.tbv-velbert.de/abfall")
-        guard let form = HTMLText.firstMatch(#"(<form[^>]*tbvabfall[\s\S]*?</form>)"#, in: page, group: 1),
-              let action = HTMLText.firstMatch(#"action="([^"]+)""#, in: form, group: 1) else { throw ProviderError.noDataGeneric }
-        let fields = HTMLText.hiddenInputs(in: form).map { ($0.name, $0.value) } + [("tx_tbvabfall_strassensuche[suchbegriff]", query)]
-        let result = HTTPClient.text(from: try await client.postForm("https://www.tbv-velbert.de" + HTMLText.decodeEntities(action), fields: fields))
+        // Gewählte Adresse: mit ihrem Titel suchen und nur ihre Links nehmen (Halbjahre kommen so immer frisch). Bis 2.0.10
+        // gespeicherte Standorte haben nur die Eingabe – dann wie damals alle Treffer.
+        let chosen = selections.count > 1 ? selections[1] : nil
+        let result = try await velbertSearch(chosen?.title ?? query)
         // Je Halbjahr ein Link mit Startdatum und Adress-Kennung; die Tabelle kommt ohne Druck-Parameter.
         let links = HTMLText.matches(#"tx_tbvabfall_kalender%5Babdate%5D=(\d{8})&(?:amp;)?tx_tbvabfall_kalender%5Babstid%5D=(\d+)"#, in: result)
+            .filter { chosen == nil || $0[1] == chosen?.id }
         guard !links.isEmpty else {
             throw ProviderError.invalidSelection(L10n.t("Keine Adresse gefunden – bitte Straße und Hausnummer angeben, z. B. „Am Lindenkamp 33“.", "No address found – please enter street and house number, e.g. “Am Lindenkamp 33”."))
         }

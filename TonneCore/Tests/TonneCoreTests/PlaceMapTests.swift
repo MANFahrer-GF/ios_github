@@ -117,8 +117,11 @@ final class PlaceMapTests: XCTestCase {
         }
         // Straßlach-Dingharting: Google-Kalender der Gemeinde und die Abfall+-App des Landkreises
         XCTAssertEqual(entries("Landkreis München|Straßlach-Dingharting").filter { $0.hasPrefix("icsURL:") }.count, 1)
-        // Kalender je Straße: Eintrag führt auf die Seite, auf der man den eigenen Link kopiert
-        XCTAssertEqual(entries("Kreis Recklinghausen|Gladbeck"), ["icsURL:https://www.zb-gladbeck.de/abfuhrkalender#einfuegen:Gladbeck (ZBG, eigener Kalender-Link)"])
+        // Kalender je Straße: seit 2.0.10 Straße und Hausnummer in der App statt Link kopieren
+        XCTAssertEqual(entries("Kreis Recklinghausen|Gladbeck"), ["icsURL:https://www.zb-gladbeck.de/abfuhrkalender#adresse-zbg:Gladbeck (ZBG)"])
+        // Pirmasens: verwaiste Mein-Abfallkalender-Seite ersetzt durch den Kalender der Stadt, je Abfuhrbezirk M1–M10
+        XCTAssertEqual(entries("Kreisfreie Stadt Pirmasens|Pirmasens").count, 10)
+        XCTAssertFalse(entries("Kreisfreie Stadt Pirmasens|Pirmasens").contains { $0.contains("mein-abfallkalender") })
         // ZEW (abfallnavi zew2) führt die Orte im Kreis Düren in seiner Ortsliste (Sweep 11.11.2026)
         for name in ["Düren", "Jülich", "Kreuzau", "Titz"] {
             XCTAssertTrue(entries("Kreis Düren|\(name)").contains("abfallnavi:zew2:ZEW Zweckverband Entsorgungsregion West"), name)
@@ -219,11 +222,16 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertEqual(entries("Landkreis Ortenaukreis|Neuried"), ["abfallPlusApp:de.k4systems.abfallappog:Ortenaukreis"])
         XCTAssertEqual(entries("Landkreis Main-Kinzig-Kreis|Neuberg").count, 1)
         // Wetterau über Mein-Abfallkalender (Startseiten live 11.11.2026)
-        for (name, sub) in [("Echzell", "echzell"), ("Florstadt", "florstadt"), ("Hirzenhain", "hirzenhain"), ("Limeshain", "limeshain"),
-                            ("Niddatal", "niddatal"), ("Ortenberg", "ortenberg"), ("Rockenberg", "rockenberg"),
-                            ("Wölfersheim", "woelfersheim"), ("Wöllstadt", "woellstadt")] {
+        XCTAssertEqual(entries("Landkreis Wetteraukreis|Echzell"), ["icsURL:https://echzell.mein-abfallkalender.online:Echzell (Mein-Abfallkalender)"])
+        // Dort nur Schadstofftermine und keine andere Quelle: Eintrag bleibt, sagt es aber im Titel (Portal-Prüfung 12.11.2026)
+        for (name, sub) in [("Florstadt", "florstadt"), ("Hirzenhain", "hirzenhain"), ("Rockenberg", "rockenberg")] {
             XCTAssertEqual(entries("Landkreis Wetteraukreis|\(name)"),
-                           ["icsURL:https://\(sub).mein-abfallkalender.online:\(name) (Mein-Abfallkalender)"], name)
+                           ["icsURL:https://\(sub).mein-abfallkalender.online:\(name) – nur Schadstofftermine (Mein-Abfallkalender)"], name)
+        }
+        // Nur Schadstoff auf Mein-Abfallkalender, reguläre Termine aus den Gemeinde-Kalendern (je Ortsteil bzw. Bezirk)
+        for (name, count) in [("Glauburg", 2), ("Limeshain", 4), ("Niddatal", 4), ("Ortenberg", 10), ("Wölfersheim", 5), ("Wöllstadt", 2)] {
+            XCTAssertEqual(entries("Landkreis Wetteraukreis|\(name)").count, count, name)
+            XCTAssertFalse(entries("Landkreis Wetteraukreis|\(name)").contains { $0.contains("mein-abfallkalender") }, name)
         }
         // Gegenprobe: Ortenberg im Ortenaukreis bekommt den hessischen Eintrag nicht
         XCTAssertFalse(entries("Landkreis Ortenaukreis|Ortenberg").contains { $0.contains("mein-abfallkalender") })

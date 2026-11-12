@@ -20490,7 +20490,7 @@
 "gemeinde": "Gladbeck",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://www.zb-gladbeck.de/abfuhrkalender#einfuegen:Gladbeck (ZBG, eigener Kalender-Link)"
+"icsURL:https://www.zb-gladbeck.de/abfuhrkalender#adresse-zbg:Gladbeck (ZBG)"
 ]
 },
 {
@@ -23171,7 +23171,6 @@
 "gemeinde": "Linsengericht",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://linsengericht.mein-abfallkalender.online:Linsengericht (Mein-Abfallkalender)",
 "jumomind:mkk:Main-Kinzig-Kreis"
 ]
 },
@@ -23640,7 +23639,7 @@
 "gemeinde": "Eltville am Rhein",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://eltville.mein-abfallkalender.online:Eltville am Rhein (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23649,7 +23648,7 @@
 "gemeinde": "Geisenheim",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://geisenheim.mein-abfallkalender.online:Geisenheim (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23694,7 +23693,7 @@
 "gemeinde": "Kiedrich",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://kiedrich.mein-abfallkalender.online:Kiedrich (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23703,7 +23702,7 @@
 "gemeinde": "Lorch",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://lorch-rheingau.mein-abfallkalender.online:Lorch (Rheingau) (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23721,7 +23720,7 @@
 "gemeinde": "Oestrich-Winkel",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://oestrich-winkel.mein-abfallkalender.online:Oestrich-Winkel (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23730,7 +23729,7 @@
 "gemeinde": "Rüdesheim am Rhein",
 "art": "grundname",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://ruedesheim.mein-abfallkalender.online:Rüdesheim am Rhein (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23766,7 +23765,7 @@
 "gemeinde": "Walluf",
 "art": "liste",
 "eintraege": [
-"cTrace:rheingauleerungen:Rheingau-Taunus-Kreis"
+"icsURL:https://walluf.mein-abfallkalender.online:Walluf (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23829,7 +23828,7 @@
 "gemeinde": "Florstadt",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://florstadt.mein-abfallkalender.online:Florstadt (Mein-Abfallkalender)"
+"icsURL:https://florstadt.mein-abfallkalender.online:Florstadt – nur Schadstofftermine (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23856,7 +23855,8 @@
 "gemeinde": "Glauburg",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://glauburg.mein-abfallkalender.online:Glauburg (Mein-Abfallkalender)"
+"icsURL:https://calendar.google.com/calendar/ical/46c2118aa324d7eca670e08455132ecfff13511238a0cb6fb97182e627439d1b%40group.calendar.google.com/public/basic.ics:Glauburg-Stockheim",
+"icsURL:https://calendar.google.com/calendar/ical/59b4a0a670fd813f5ac895880e3b8c7fe9a2d4e8a3d7e3ad2de30f7e7276f526%40group.calendar.google.com/public/basic.ics:Glauburg-Glauberg"
 ]
 },
 {
@@ -23865,7 +23865,7 @@
 "gemeinde": "Hirzenhain",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://hirzenhain.mein-abfallkalender.online:Hirzenhain (Mein-Abfallkalender)"
+"icsURL:https://hirzenhain.mein-abfallkalender.online:Hirzenhain – nur Schadstofftermine (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23892,7 +23892,10 @@
 "gemeinde": "Limeshain",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://limeshain.mein-abfallkalender.online:Limeshain (Mein-Abfallkalender)"
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/6/garbage_disposals.ics?district_id=20:Limeshain-Rommelhausen (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/6/garbage_disposals.ics?district_id=21:Limeshain-Hainchen (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/6/garbage_disposals.ics?district_id=22:Limeshain-Himbach (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/6/garbage_disposals.ics?district_id=23:Limeshain, Gewerbegebiet Nord (Gemeinde-App)"
 ]
 },
 {
@@ -23919,7 +23922,10 @@
 "gemeinde": "Niddatal",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://niddatal.mein-abfallkalender.online:Niddatal (Mein-Abfallkalender)"
+"icsURL:https://niddatal.de/leben-in-niddatal/abfallentsorgung/#link=abfallkalender_assenheim{%Y}.ics:Niddatal-Assenheim",
+"icsURL:https://niddatal.de/leben-in-niddatal/abfallentsorgung/#link=abfallkalender_boenstadt{%Y}.ics:Niddatal-Bönstadt",
+"icsURL:https://niddatal.de/leben-in-niddatal/abfallentsorgung/#link=abfallkalender_ilbenstadt{%Y}.ics:Niddatal-Ilbenstadt",
+"icsURL:https://niddatal.de/leben-in-niddatal/abfallentsorgung/#link=abfallkalender_kaichen{%Y}.ics:Niddatal-Kaichen"
 ]
 },
 {
@@ -23937,7 +23943,16 @@
 "gemeinde": "Ortenberg",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://ortenberg.mein-abfallkalender.online:Ortenberg (Mein-Abfallkalender)"
+"icsURL:webcal://www.google.com/calendar/ical/0lrere4fs4prg929jui6l3mrtk%40group.calendar.google.com/public/basic.ics:Ortenberg-Lißberg",
+"icsURL:webcal://www.google.com/calendar/ical/37uj3rpv42budis1q6d6nb810g%40group.calendar.google.com/public/basic.ics:Ortenberg-Wippenbach",
+"icsURL:webcal://www.google.com/calendar/ical/3ap04dhsqjc0nun1qv6i9g8smo%40group.calendar.google.com/public/basic.ics:Ortenberg-Eckartsborn",
+"icsURL:webcal://www.google.com/calendar/ical/4gqnolu03kqdj7ssoigeie5h2k%40group.calendar.google.com/public/basic.ics:Ortenberg-Selters",
+"icsURL:webcal://www.google.com/calendar/ical/5gbpuc92iqvn4s549hhgvrn0rk%40group.calendar.google.com/public/basic.ics:Ortenberg-Usenborn",
+"icsURL:webcal://www.google.com/calendar/ical/63vhrpn9rv6pgmi1k76afcnddo%40group.calendar.google.com/public/basic.ics:Ortenberg-Gelnhaar",
+"icsURL:webcal://www.google.com/calendar/ical/90d2re9e503bflo2fpj2d5n0f8%40group.calendar.google.com/public/basic.ics:Ortenberg-Effolderbach",
+"icsURL:webcal://www.google.com/calendar/ical/bv9129oo9fogiatn5o39ppkgpg%40group.calendar.google.com/public/basic.ics:Ortenberg-Kernstadt",
+"icsURL:webcal://www.google.com/calendar/ical/ee7kq0m7jln0auphop8sn9ukeo%40group.calendar.google.com/public/basic.ics:Ortenberg-Bleichenbach",
+"icsURL:webcal://www.google.com/calendar/ical/u2sn3fvlm5hqjjp1amh389kc50%40group.calendar.google.com/public/basic.ics:Ortenberg-Bergheim"
 ]
 },
 {
@@ -23964,7 +23979,7 @@
 "gemeinde": "Rockenberg",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://rockenberg.mein-abfallkalender.online:Rockenberg (Mein-Abfallkalender)"
+"icsURL:https://rockenberg.mein-abfallkalender.online:Rockenberg – nur Schadstofftermine (Mein-Abfallkalender)"
 ]
 },
 {
@@ -23982,7 +23997,11 @@
 "gemeinde": "Wölfersheim",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://woelfersheim.mein-abfallkalender.online:Wölfersheim (Mein-Abfallkalender)"
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/2/garbage_disposals.ics?district_id=11:Wölfersheim-Södel (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/2/garbage_disposals.ics?district_id=12:Wölfersheim-Melbach (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/2/garbage_disposals.ics?district_id=13:Wölfersheim-Wohnbach (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/2/garbage_disposals.ics?district_id=14:Wölfersheim-Berstadt (Gemeinde-App)",
+"icsURL:webcal://feed.gemeindeapp.de/v1/communities/2/garbage_disposals.ics?district_id=9:Wölfersheim (Gemeinde-App)"
 ]
 },
 {
@@ -23991,7 +24010,8 @@
 "gemeinde": "Wöllstadt",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://woellstadt.mein-abfallkalender.online:Wöllstadt (Mein-Abfallkalender)"
+"icsURL:https://www.woellstadt.de/index.html?eventtyp=6&field2=-1&field1=14~a1aa578fba0cc281e91efb660ef44f2a&modules=events&ansicht=3#link=ical.php:Wöllstadt: Ober-Wöllstadt",
+"icsURL:https://www.woellstadt.de/index.html?eventtyp=6&field2=-1&field1=16~d843cea749c116ae9e06f0f7c4dd2e0e&modules=events&ansicht=3#link=ical.php:Wöllstadt: Nieder-Wöllstadt"
 ]
 },
 {
@@ -41209,7 +41229,16 @@
 "gemeinde": "Pirmasens",
 "art": "lokal",
 "eintraege": [
-"icsURL:https://pirmasens.mein-abfallkalender.online:Pirmasens (Mein-Abfallkalender)"
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Adalbert-Stifter-Stra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M6",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Adlerstra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M7",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Adolf-Ludwig-Ring&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M1",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Akazienweg&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M4",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Albert-Bastian-Weg&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M5",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Albert-Schweitzer-Stra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M2",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Bergstra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M3",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Bismarckstra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M10",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Castellstra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M9",
+"icsURL:https://www.pirmasens.de/:c_c_a_wasteCalendar/waste.ical?street=Denkmalstra%C3%9Fe&year={%Y}&parent=132751:Pirmasens, Abfuhrbezirk M8"
 ]
 },
 {
@@ -59748,8 +59777,7 @@
 "gemeinde": "Gräfelfing",
 "art": "lokal",
 "eintraege": [
-"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis",
-"icsURL:https://graefelfing.mein-abfallkalender.online:Gräfelfing (Mein-Abfallkalender)"
+"abfallPlusApp:de.k4systems.lkmabfallplus:München Landkreis"
 ]
 },
 {
@@ -68763,7 +68791,6 @@
 "gemeinde": "Feucht",
 "art": "lokal",
 "eintraege": [
-"heimatInfo:feucht:Feucht (Heimat-Info)",
 "portalsBayern:nuernberger_land:Abfallwirtschaft Nürnberger Land"
 ]
 },
@@ -69333,8 +69360,7 @@
 "gemeinde": "Abenberg",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69343,8 +69369,7 @@
 "gemeinde": "Allersberg",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69353,8 +69378,7 @@
 "gemeinde": "Büchenbach",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69363,8 +69387,7 @@
 "gemeinde": "Georgensgmünd",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69373,8 +69396,7 @@
 "gemeinde": "Greding",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69383,8 +69405,7 @@
 "gemeinde": "Heideck",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69393,8 +69414,7 @@
 "gemeinde": "Hilpoltstein",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69403,8 +69423,7 @@
 "gemeinde": "Kammerstein",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69413,8 +69432,7 @@
 "gemeinde": "Schwanstetten",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69423,8 +69441,7 @@
 "gemeinde": "Rednitzhembach",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69433,8 +69450,7 @@
 "gemeinde": "Röttenbach",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69443,8 +69459,7 @@
 "gemeinde": "Rohr",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69453,8 +69468,7 @@
 "gemeinde": "Roth",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69463,8 +69477,7 @@
 "gemeinde": "Spalt",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69473,8 +69486,7 @@
 "gemeinde": "Thalmässing",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {
@@ -69483,8 +69495,7 @@
 "gemeinde": "Wendelstein",
 "art": "liste",
 "eintraege": [
-"awido:roth:Landkreis Roth",
-"cTrace:roth:Landkreis Roth (C-Trace)"
+"awido:roth:Landkreis Roth"
 ]
 },
 {

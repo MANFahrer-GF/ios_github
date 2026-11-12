@@ -120,7 +120,11 @@ for mid,(title,extra,district) in MAD.items():
     new.append(('muellabfuhrDeutschland',mid,title+' (Müllabfuhr Deutschland)','https://portal.muellabfuhr-deutschland.de/',pl))
     MANUAL_EXTRA[('muellabfuhrDeutschland',mid)]=[district]
 # Heimat-Info: nur Gemeinden mit Abfallkalender (live ermittelt)
+# Veraltet: Gemeinde pflegt Heimat-Info nicht mehr (Portal-Prüfung 12.11.2026: Feucht nur Termine bis Ende 2025,
+# Termine kommen über „Abfallwirtschaft Nürnberger Land“)
+HEIMATINFO_OUTDATED={'feucht'}
 for slug,name,plz,n in json.load(open(S+'peine/hi_garbage.json',encoding='utf-8')):
+    if slug in HEIMATINFO_OUTDATED: continue
     name=name.strip()
     new.append(('heimatInfo',slug,name+' (Heimat-Info)','https://heimat-info.de/',[name]+plz))
 # Neue Kennungen bestehender Plattformen (live geprüft)
@@ -168,11 +172,23 @@ MAK_EXTRA=[('Alsfeld','alsfeld'),('Antrifttal','antrifttal'),('Feldatal','feldat
  ('Sulzbach (Taunus)','sulzbach-taunus'),('Bad Soden am Taunus','bad-soden'),('Hochheim am Main','hochheim'),('Hofheim am Taunus','hofheim'),
  # Wetterau, 11.11.2026 live geprüft (Startseite „Mein-Abfallkalender der Gemeinde/Stadt …“)
  ('Echzell','echzell'),('Florstadt','florstadt'),('Hirzenhain','hirzenhain'),('Limeshain','limeshain'),('Niddatal','niddatal'),
- ('Ortenberg','ortenberg'),('Rockenberg','rockenberg'),('Wölfersheim','woelfersheim'),('Wöllstadt','woellstadt')]
+ ('Ortenberg','ortenberg'),('Rockenberg','rockenberg'),('Wölfersheim','woelfersheim'),('Wöllstadt','woellstadt'),
+ # Rheingau, 12.11.2026 live geprüft (Straßenwahl, volle Daten 2026): Ersatz für das verwaiste C-Trace „rheingauleerungen“
+ ('Eltville am Rhein','eltville'),('Geisenheim','geisenheim'),('Rüdesheim am Rhein','ruedesheim'),('Walluf','walluf'),
+ ('Kiedrich','kiedrich'),('Oestrich-Winkel','oestrich-winkel'),('Lorch (Rheingau)','lorch-rheingau')]
 have={k for _,k,*__ in new}
 for title,sub in MAK_EXTRA:
     host=f'https://{sub}.mein-abfallkalender.online'
     if host not in have: new.append(('icsURL',host,f"{title} (Mein-Abfallkalender)",host+'/',[title]))
+# Verwaist (Portal-Prüfung 12.11.2026): letzter Datenstand 2023/Anfang 2024, keine kommenden Termine.
+# Gräfelfing kommt über „München Landkreis“, Linsengericht über „Main-Kinzig-Kreis“.
+MAK_OUTDATED={'pirmasens','graefelfing','linsengericht'}
+# Nur Schadstofftermine auf mein-abfallkalender (Portal-Prüfung 12.11.2026); die regulären Termine kommen jetzt aus den
+# Gemeinde-Kalendern (ICSURLProvider.json). Ohne solche Quelle bleibt der Eintrag, sagt aber ehrlich, was er liefert.
+MAK_OUTDATED|={'glauburg','niddatal','ortenberg','woelfersheim','limeshain','woellstadt'}
+MAK_HAZARD_ONLY={'florstadt','rockenberg','hirzenhain'}
+new=[e for e in new if not (e[0]=='icsURL' and any(f'//{sub}.mein-abfallkalender.online' in e[1] for sub in MAK_OUTDATED))]
+new=[(k,key,title.replace(' (Mein-Abfallkalender)',' – nur Schadstofftermine (Mein-Abfallkalender)') if k=='icsURL' and any(f'//{sub}.mein-abfallkalender.online' in key for sub in MAK_HAZARD_ONLY) else title,web,pl) for k,key,title,web,pl in new]
 
 # Ergebnisse der Portal-Familien (je Datei eine Liste von Betreibern, live geprüft)
 import glob, os
@@ -410,6 +426,13 @@ for (kind,key),(district,name) in {
     # 11.11.2026 live: ZKE-Portal (Anfangsbuchstaben der Straßen) und EZV-Bürgerportal, je nur die eine Stadt
     ('wasteManagementServlet','saarbruecken'):('Landkreis Regionalverband Saarbrücken','Saarbrücken'),
     ('buergerportal','voelklingen'):('Landkreis Regionalverband Saarbrücken','Völklingen'),
+    ('icsURL',MAK.format('eltville')):('Landkreis Rheingau-Taunus-Kreis','Eltville am Rhein'),
+    ('icsURL',MAK.format('geisenheim')):('Landkreis Rheingau-Taunus-Kreis','Geisenheim'),
+    ('icsURL',MAK.format('ruedesheim')):('Landkreis Rheingau-Taunus-Kreis','Rüdesheim am Rhein'),
+    ('icsURL',MAK.format('walluf')):('Landkreis Rheingau-Taunus-Kreis','Walluf'),
+    ('icsURL',MAK.format('kiedrich')):('Landkreis Rheingau-Taunus-Kreis','Kiedrich'),
+    ('icsURL',MAK.format('oestrich-winkel')):('Landkreis Rheingau-Taunus-Kreis','Oestrich-Winkel'),
+    ('icsURL',MAK.format('lorch-rheingau')):('Landkreis Rheingau-Taunus-Kreis','Lorch'),
     ('icsURL',MAK.format('schwalmtal-hessen')):('Landkreis Vogelsbergkreis','Schwalmtal'), ('icsURL',MAK.format('altenstadt')):('Landkreis Wetteraukreis','Altenstadt'),
     # Oktober 2026 live geprüft: MyMüll führt das hessische Glashütten (Schloßborn, Oberems); Wartenberg über den ZAV Vogelsberg
     ('jumomind','mymuell'):('Landkreis Hochtaunuskreis','Glashütten'), ('icsURL',MAK.format('gemeinde-wartenberg')):('Landkreis Vogelsbergkreis','Wartenberg'),

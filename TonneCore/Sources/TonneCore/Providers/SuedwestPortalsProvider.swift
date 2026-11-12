@@ -85,7 +85,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
             // Bei Suche mit Hausnummer steht die vollständige Adresse schon in Schritt 2.
             let street = selections.count > 2 ? "\(part(1)) \(part(2))" : part(1)
             return Self.join(["Frankfurt am Main", street])
-        case "stuttgart": return Self.join(["Stuttgart", "\(part(1)) \(part(2))".trimmingCharacters(in: .whitespaces)])
+        case "stuttgart": return Self.join(["Stuttgart", "\(part(1)) \(selections.count > 2 ? Self.stuttgartNumber(selections) : "")".trimmingCharacters(in: .whitespaces)])
         case "wiesbaden":
             let street = selections.count > 1 ? (selections[1].id.components(separatedBy: ", ").first ?? part(1)) : ""
             let city = selections.count > 1 ? (selections[1].id.components(separatedBy: ", ").dropFirst().first ?? "Wiesbaden") : "Wiesbaden"
@@ -242,10 +242,14 @@ public struct SuedwestPortalsProvider: WasteProvider {
             // Hausnummer gegen die Vorschlagsliste prüfen – das Formular antwortet sonst mit HTTP 500.
             let number = selections[2].title.replacingOccurrences(of: " ", with: "")
             let found: StuttgartSuggestions = try await client.json("\(Self.stuttgartBase)/hausnummern?street=\(HTTPClient.query(selections[1].id))&streetnr=\(HTTPClient.query(number))")
-            guard found.suggestions.contains(where: { $0.data.caseInsensitiveCompare(number) == .orderedSame }) else {
-                throw Self.notFound("\(selections[1].title) \(selections[2].title)")
-            }
-            return nil
+            if found.suggestions.contains(where: { $0.data.caseInsensitiveCompare(number) == .orderedSame }) { return nil }
+            // Nummer gibt es so nicht („1“ → „1/1“, „106A“ …): Vorschläge des Portals zur Wahl statt Sackgasse
+            guard !found.suggestions.isEmpty else { throw Self.notFound("\(selections[1].title) \(selections[2].title)") }
+            var step = SelectionStep(title: SelectionStep.houseNumberTitle,
+                                     options: found.suggestions.map { SelectionOption(id: "nr:\($0.data)", title: $0.value) }, searchable: false)
+            step.hint = L10n.t("„\(selections[1].title) \(selections[2].title)“ kennt das Portal nicht. Gemeint ist vielleicht:",
+                               "The portal does not know “\(selections[1].title) \(selections[2].title)”. Did you mean:")
+            return step
         default:
             return nil
         }
@@ -262,7 +266,7 @@ public struct SuedwestPortalsProvider: WasteProvider {
         let end = HTMLText.firstMatch(#"data-date-end-date="([0-9.]+)""#, in: page, group: 1)
             ?? Self.germanDateString(calendar.date(byAdding: .month, value: 6, to: Date()) ?? Date())
         var fields: [(String, String)] = [("calendar[street]", selections[1].id),
-                                          ("calendar[streetnr]", selections[2].title.replacingOccurrences(of: " ", with: "")),
+                                          ("calendar[streetnr]", Self.stuttgartNumber(selections)),
                                           ("calendar[datefrom]", start), ("calendar[dateto]", end)]
         fields += (types.isEmpty ? ["restmuell", "biomuell", "altpapier", "gelbersack"] : types).map { ("calendar[wastetype][]", $0) }
         fields.append(("calendar[submit]", ""))
@@ -273,6 +277,12 @@ public struct SuedwestPortalsProvider: WasteProvider {
             throw Self.notFound("\(selections[1].title) \(selections[2].title)")
         }
         return Self.parseStuttgart(html, calendar: calendar)
+    }
+
+    /// Hausnummer: gewählter Vorschlag („nr:1/1“) vor der getippten Eingabe.
+    static func stuttgartNumber(_ selections: [SelectionOption]) -> String {
+        if selections.count > 3, selections[3].id.hasPrefix("nr:") { return String(selections[3].id.dropFirst(3)) }
+        return selections[2].title.replacingOccurrences(of: " ", with: "")
     }
 
     /// Tabelle `#awstable`: Kopfzeile je Fraktion, darunter Zeilen „Wochentag | Datum | Rhythmus“.

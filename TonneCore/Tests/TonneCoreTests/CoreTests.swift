@@ -131,9 +131,12 @@ final class CoreTests: XCTestCase {
     }
 
     func testSearchFindsHeimatInfo() {
-        for query in ["Salgen", "Gründau", "Aschheim", "Oberelsbach", "Feucht"] {
+        for query in ["Salgen", "Gründau", "Aschheim", "Oberelsbach", "Kirchweidach"] {
             XCTAssertTrue(ProviderCatalog.search(query).contains { $0.kind == .heimatInfo }, query)
         }
+        // Feucht pflegt Heimat-Info nicht mehr (nur Termine bis 2025, Portal-Prüfung 12.11.2026): Suche führt zu Nürnberger Land
+        XCTAssertFalse(ProviderCatalog.search("Feucht").contains { $0.kind == .heimatInfo })
+        XCTAssertTrue(ProviderCatalog.search("Feucht").contains { $0.serviceKey == "nuernberger_land" })
     }
 
     /// Heimat-Info führt für Mainburg nur den Bezirk „Test“ ohne Termine; zuständig ist der Landkreis Kelheim.
