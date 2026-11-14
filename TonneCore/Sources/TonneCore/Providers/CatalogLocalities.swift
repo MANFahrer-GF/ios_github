@@ -2,7 +2,7 @@
 // Ortsteile: GeoNames (https://www.geonames.org, CC BY 4.0) und Gemeinde-Abgleich.
 
 enum CatalogLocalities {
-    /// Je Zeile: „Landkreis|Gemeinde|Ortsteil,Ortsteil,…“ – 59925 Ortsteile in 7594 Gemeinden.
+    /// Je Zeile: „Landkreis|Gemeinde|Ortsteil,Ortsteil,…“ – 59795 Ortsteile in 7575 Gemeinden.
     static let localities: String = #"""
 Kreis Borken|Ahaus|Alstätte,Ammeln,Averesch,Barle,Beßlinghook,Brink,Gervinghook,Graes,Hörsteloe,Ortwick,Quantwick,Sabstätte,Schmäinghook,Schwiepinghook,Wessum,Wüllen
 Kreis Borken|Bocholt|Barlo,Biemenhorst,Hemden,Holtwick,Liedern,Lowick,Mussum,Spork,Suderwick
@@ -618,7 +618,6 @@ Kreis Rendsburg-Eckernförde|Osterstedt|Alsen
 Kreis Rendsburg-Eckernförde|Owschlag|Norby,Ramsdorf,Steinsieken
 Kreis Rendsburg-Eckernförde|Padenstedt|Padenstedt-Feld,Padenstedt-Kamp
 Kreis Rendsburg-Eckernförde|Quarnbek|Flemhude,Rajensdorf,Stampe,Strohbrück
-Kreis Rendsburg-Eckernförde|Rade b.Hohenwestedt|Rade bei Hohenwestedt
 Kreis Rendsburg-Eckernförde|Reesdorf|Lurup
 Kreis Rendsburg-Eckernförde|Rendsburg|Klint,Neuwerker Gärten,Nobiskrug,Saatsee
 Kreis Rendsburg-Eckernförde|Rieseby|Basdorf,Dingstock,Kriesebyau,Norby,Sönderby,Zimmert
@@ -628,8 +627,7 @@ Kreis Rendsburg-Eckernförde|Schacht-Audorf|Audorf
 Kreis Rendsburg-Eckernförde|Schmalstede|Eiderkampsweg
 Kreis Rendsburg-Eckernförde|Schwedeneck|Birkenmoor,Dänisch-Nienhof,Fischerberg,Krusendorf,Sprenge,Stohl,Surendorf
 Kreis Rendsburg-Eckernförde|Schülldorf|Ohe
-Kreis Rendsburg-Eckernförde|Schülp b.Nortorf|Augenberg,Bekkamp,Looper Weg,Schülp bei Nortorf
-Kreis Rendsburg-Eckernförde|Schülp b.Rendsburg|Schülp bei Rendsburg
+Kreis Rendsburg-Eckernförde|Schülp b.Nortorf|Augenberg,Bekkamp,Looper Weg
 Kreis Rendsburg-Eckernförde|Sophienhamm|Oha
 Kreis Rendsburg-Eckernförde|Stafstedt|Legan
 Kreis Rendsburg-Eckernförde|Steenfeld|Fischerhütte,Liesbüttel,Pemeln
@@ -1306,11 +1304,11 @@ Landkreis Altmarkkreis Salzwedel|Salzwedel|Altstadt,Andorf,Barnebeck,Bombeck,Bre
 Landkreis Altmarkkreis Salzwedel|Wallstawe|Gieseritz,Hilmsen,Nipkendey,Umfelde
 Landkreis Altötting|Altötting|Baumanngütl,Graming,Loha,Oberholzhausen,Oberschlottham,Sankt Georgen,Staudham,Strassmühle,Unterholzhausen,Unterschlottham,Wallner an der Osterwiese
 Landkreis Altötting|Burghausen|Bergham,Fuchshausen,Hiebel,Holzfeld,Laimgruben,Oberhadermark,Raitenhaslach,Scheuerhof,Unterhadermark
-Landkreis Altötting|Burgkirchen a.d.Alz|Aichlberg,Bergham,Bremsstallmühle,Burgkirchen an der Alz,Gendorf,Gufflham,Gunzing,Hasenbühl,Hinterberg,Hochöster,Margarethenberg,Pirach,Plattenberg,Rehdorf,Riedl,Wechselberg,Willhartsberg
+Landkreis Altötting|Burgkirchen a.d.Alz|Aichlberg,Bergham,Bremsstallmühle,Gendorf,Gufflham,Gunzing,Hasenbühl,Hinterberg,Hochöster,Margarethenberg,Pirach,Plattenberg,Rehdorf,Riedl,Wechselberg,Willhartsberg
 Landkreis Altötting|Emmerting|Oberemmerting,Seng,Unteremmerting
 Landkreis Altötting|Erlbach|Breitenaich,Ellbrunn,Endlkirchen,Enggrub,Hölzlwimm,Obereck,Oeging,Pleining,Taiding,Untereck
 Landkreis Altötting|Feichten a.d.Alz|Edelham,Ellerting,Fernreith,Gramsham,Mankham,Oberweidach
-Landkreis Altötting|Garching a.d.Alz|Garching an der Alz,Hart an der Alz,Lehen,Mauerberg,Obergarching,Stecken,Wald an der Alz,Weipolding
+Landkreis Altötting|Garching a.d.Alz|Hart an der Alz,Lehen,Mauerberg,Obergarching,Stecken,Wald an der Alz,Weipolding
 Landkreis Altötting|Haiming|Daxenthal,Eisching,Fahnbach,Hub,Kemerting,Niedergottsau,Oberdaxenthal,Oberviehhausen,Piesing,Unterdaxenthal,Unterviehhausen,Wimm,Winklham
 Landkreis Altötting|Halsbach|Brandhub,Dösham,Hofschalling,Hollerberg,Itschenöd,Itsching,Krieging,Moosen,Pfeffersöd,Reisachöd,Schmidham
 Landkreis Altötting|Kastl|Endfellen,Ferndörfl,Hub,Pirach,Schmidhub,Schnitzlehen,Staudhub
@@ -1323,7 +1321,7 @@ Landkreis Altötting|Pleiskirchen|Anhaltsberg,Bachleiten,Brandhub,Geiselloh,Gün
 Landkreis Altötting|Reischach|Arbing,Aushofen,Brandmühl,Ecking,Golderberg,Haunberg,Heitzmannsberg,Illenberg,Lanzenberg,Petzlberg,Rockersbach,Sankt Anton,Waldberg
 Landkreis Altötting|Stammham|Haunreit,Hofschallern
 Landkreis Altötting|Tyrlaching|Kienertsham,Kraham,Loah,Niederbuch,Oberbuch,Oberschnitzing,Pirkern,Unterschnitzing,Waltenham,Zaiselham
-Landkreis Altötting|Töging a.Inn|Engfurt,Höchfelden,Töging am Inn,Westerham
+Landkreis Altötting|Töging a.Inn|Engfurt,Höchfelden,Westerham
 Landkreis Altötting|Tüßling|Boinham,Burgkirchen am Wald,Engolding,Kiefering,Mörmoosen,Waltenberg
 Landkreis Altötting|Unterneukirchen|Gasteig,Kirmaier,Kohlfuß,Pinsmaier,Waitzgraming
 Landkreis Altötting|Winhöring|Aufham,Eisenfelden,Enhofen,Guntersberg,Hart,Mandelsberg,Obersteinhöring,Salzing,Sankt Anna,Unterau,Untersteinhöring
@@ -1358,7 +1356,7 @@ Landkreis Amberg-Sulzbach|Illschwang|Aichazandt,Altensee,Angfeld,Augsberg,Bachet
 Landkreis Amberg-Sulzbach|Kastl|Allmannsfeld,Deinshof,Dettnach,Drahberg,Flügelsbuch,Freischweibach,Gaishof,Giggelsberg,Mennersberg,Pattershofen,Reusch,Richt,Umelsdorf,Utzenhofen,Wolfersdorf b. Kastl,Wolfsfeld
 Landkreis Amberg-Sulzbach|Königstein|Bischofsreuth,Breitenstein,Fichtenhof,Hannesreuth,Kürmreuth,Loch,Mönlas,Namsreuth,Pruihausen,Wildenhof
 Landkreis Amberg-Sulzbach|Kümmersbruck|Engelsdorf,Gärmersdorf,Haidweiher,Haselmühl,Penkhof,Theuern
-Landkreis Amberg-Sulzbach|Neukirchen b.Sulzbach-Rosenberg|Büchelberg,Eckenricht,Erkelsdorf,Ermhof,Fichtelbrunn,Fromberg,Föderricht,Gaisheim,Habres,Haghof,Haid,Holnstein,Hundheim,Hundsboden,Högberg,Lockenricht,Mittelreinbach,Neukirchen bei Sulzbach-Rosenberg,Obermainshof,Oberreinbach,Peilstein,Pilgramshof,Rittmannshof,Röckenricht,Schönlind,Trondorf,Truisdorf
+Landkreis Amberg-Sulzbach|Neukirchen b.Sulzbach-Rosenberg|Büchelberg,Eckenricht,Erkelsdorf,Ermhof,Fichtelbrunn,Fromberg,Föderricht,Gaisheim,Habres,Haghof,Haid,Holnstein,Hundheim,Hundsboden,Högberg,Lockenricht,Mittelreinbach,Obermainshof,Oberreinbach,Peilstein,Pilgramshof,Rittmannshof,Röckenricht,Schönlind,Trondorf,Truisdorf
 Landkreis Amberg-Sulzbach|Poppenricht|Altmannshof,Häringlohe,Speckshof,Traßlberg,Wirnsricht,Witzlhof
 Landkreis Amberg-Sulzbach|Rieden|Aufheim,Gattershof,Günzersreuth,Hammerberg,Siegenhofen,Vilswörth
 Landkreis Amberg-Sulzbach|Schmidmühlen|Eglsee,Emhof,Greining,Harschhof,Pettenhof,Sinzenhof,Unteradlhof,Winbuch
@@ -1388,11 +1386,11 @@ Landkreis Ansbach|Arberg|Eybburg,Georgenhaag,Goldbühl,Gothendorf,Großlellenfel
 Landkreis Ansbach|Aurach|Dietenbronn,Eyerlohe,Gindelbach,Hilsbach,Vehlberg,Weinberg,Windshofen
 Landkreis Ansbach|Bechhofen|Fröschau,Gastenfelden,Großenried,Heinersdorf,Kallert,Kaudorf,Kleinried,Königshofen an der Heide,Liebersdorf,Mörlach,Oberkönigshofen,Rottnersdorf,Sachsbach,Selingsdorf,Thann,Voggendorf,Waizendorf,Weidendorf,Wiesethbruck
 Landkreis Ansbach|Bruckberg|Neubruck,Reckersdorf,Wustendorf
-Landkreis Ansbach|Buch a.Wald|Berbersbach,Buch am Wald,Gastenfelden,Hagenau,Morlitzwinden,Schweikartswinden,Schönbronn,Sengelhof,Traisdorf
+Landkreis Ansbach|Buch a.Wald|Berbersbach,Gastenfelden,Hagenau,Morlitzwinden,Schweikartswinden,Schönbronn,Sengelhof,Traisdorf
 Landkreis Ansbach|Burgoberbach|Dieresdorf,Gerersdorf,Neuses,Niederoberbach
 Landkreis Ansbach|Burk|Meierndorf
 Landkreis Ansbach|Colmberg|Bieg,Binzwangen,Häslabronn,Kurzendorf,Meuchlein,Oberfelden,Oberhegenau,Poppenbach,Unterfelden,Unterhegenau
-Landkreis Ansbach|Dentlein a.Forst|Angerhof,Dentlein am Forst,Erlmühle,Fetschendorf,Großohrenbronn,Kleinohrenbronn,Leichsenhof,Obermosbach,Schwaighausen
+Landkreis Ansbach|Dentlein a.Forst|Angerhof,Erlmühle,Fetschendorf,Großohrenbronn,Kleinohrenbronn,Leichsenhof,Obermosbach,Schwaighausen
 Landkreis Ansbach|Diebach|Bellershausen,Oberoestheim,Unteroestheim,Wolfsau
 Landkreis Ansbach|Dietenhofen|Adelmannsdorf,Andorf,Dietenholz,Frickendorf,Götteldorf,Haunoldshofen,Herpersdorf,Hörleinsdorf,Kehlmünz,Kleinhabersdorf,Kleinhaslach,Lentersdorf,Leonrod,Münchzell,Oberschlauersbach,Rothleiten,Rüdern,Warzfelden
 Landkreis Ansbach|Dinkelsbühl|Bernhardswend,Botzenweiler,Esbach,Gersbronn,Hellenbach,Hohenschwärz,Holzapfelshof,Karlsholz,Ketschenweiler,Langensteinbach,Neustädtlein,Oberhard,Oberradach,Oberwinstetten,Radwang,Rauenstadt,Reuenthal,Röthendorf,Segringen,Seidelsdorf,Sinbronn,Sittlingen,Tiefweg,Untermeissling,Unterradach,Unterwinstetten,Veitswend,Weidelbach,Wolfertsbronn
@@ -1423,7 +1421,7 @@ Landkreis Ansbach|Petersaurach|Adelmannssitz,Altendettelsau,Frohnhof,Gleizendorf
 Landkreis Ansbach|Rothenburg ob der Tauber|Bodendenkmal D-5-6626-0033 Rothenburg ob der Tauber,Bodendenkmal D-5-6626-0035 Rothenburg ob der Tauber,Bodendenkmal D-5-6626-0048 Rothenburg ob der Tauber,Bodendenkmal D-5-6627-0053 Rothenburg ob der Tauber,Bronnenmühle,Brundorf,Brunzendorf,Detwang,Dürrenhof,Franziskanerkirche,Fuchsmühle,Haltenmühle,Hammerschmiede,Hansrödermühle,Hemmendorf,Herrenmühle,Herrnwinden,Hohbach,Hollermühle,Kaiserstuhl,Kaiserstuhl (Rothenburg ob der Tauber),Langenmühle,Leuzenbronn,Ludlesmühle,Lukasrödermühle,Mittelmühle,Obere Walkmühle,Obermühle,Reusch,Sankt Leonhard,Schandhof,Schlößlein,Schmelzmühle,Schnepfendorf,Schwarzenmühle,Siechenmühle,Steinmühle,Untere Walkmühle,Weißenmühle,Wildbad,Ziegelhütte
 Landkreis Ansbach|Röckingen|Opfenried
 Landkreis Ansbach|Rügland|Daubersbach,Fladengreuth,Kräft,Obernbibert,Unternbibert
-Landkreis Ansbach|Sachsen b.Ansbach|Alberndorf,Hirschbronn,Ratzenwinden,Rutzendorf,Sachsen bei Ansbach,Steinhof,Volkersdorf
+Landkreis Ansbach|Sachsen b.Ansbach|Alberndorf,Hirschbronn,Ratzenwinden,Rutzendorf,Steinhof,Volkersdorf
 Landkreis Ansbach|Schillingsfürst|Altengreuth,Bersbronn,Faulenberg,Leipoldsberg,Neureuth,Stilzendorf,Wittum,Wohnbach,Ziegelhütte
 Landkreis Ansbach|Schnelldorf|Gailroth,Grimmschwinden,Gumpenweiler,Hilpertsweiler,Leitsweiler,Oberampfrach,Ransbach an der Holzecke,Steinbach an der Holzecke,Stollenhof,Theuerbronn,Unterampfrach,Wildenholz
 Landkreis Ansbach|Schopfloch|Deuenbach,Dickersbronn,Lehenbuch,Lehengütingen,Waldhäuslein,Zwernberg
@@ -1452,8 +1450,8 @@ Landkreis Aschaffenburg|Haibach|Dörrmorsbach,Grünmorsbach
 Landkreis Aschaffenburg|Heigenbrücken|Jakobsthal
 Landkreis Aschaffenburg|Hösbach|Feldkahl,Rottenberg,Schmerlenbach,Wenighösbach,Winzenhohl
 Landkreis Aschaffenburg|Johannesberg|Breunsberg,Oberafferbach,Rückersbach
-Landkreis Aschaffenburg|Kahl a.Main|Emmerichshofen,Kahl am Main
-Landkreis Aschaffenburg|Karlstein a.Main|Dettingen am Main,Großwelzheim,Karlstein am Main,Kimmelsteich
+Landkreis Aschaffenburg|Kahl a.Main|Emmerichshofen
+Landkreis Aschaffenburg|Karlstein a.Main|Dettingen am Main,Großwelzheim,Kimmelsteich
 Landkreis Aschaffenburg|Kleinkahl|Edelbach,Großkahl,Großlaudenbach,Kleinlaudenbach
 Landkreis Aschaffenburg|Krombach|Oberschur,Unterschur
 Landkreis Aschaffenburg|Laufach|Hain im Spessart
@@ -1462,7 +1460,6 @@ Landkreis Aschaffenburg|Mömbris|Angelsberg,Daxberg,Dörnsteinbach,Großhemsbach
 Landkreis Aschaffenburg|Sailauf|Obersailauf,Untersailauf,Weiberhof
 Landkreis Aschaffenburg|Schöllkrippen|Ernstkirchen,Hofstädten,Langenborn
 Landkreis Aschaffenburg|Sommerkahl|Vormwald
-Landkreis Aschaffenburg|Stockstadt a.Main|Stockstadt am Main
 Landkreis Aschaffenburg|Weibersbrunn|Rohrbrunn
 Landkreis Aschaffenburg|Westerngrund|Huckelheim,Oberwestern,Unterwestern
 Landkreis Augsburg|Adelsried|Kruichen
@@ -1531,7 +1528,6 @@ Landkreis Bad Dürkheim|Neuleiningen|Nakterhof
 Landkreis Bad Dürkheim|Obrigheim (Pfalz)|Albsheim an der Eis,Colgenstein-Heidesheim,Heidesheim,Mühlheim an der Eis
 Landkreis Bad Dürkheim|Quirnheim|Boßweiler,Hertlingshäuserhof
 Landkreis Bad Dürkheim|Weidenthal|Mainzertal
-Landkreis Bad Kissingen|Aura a.d.Saale|Aura an der Saale
 Landkreis Bad Kissingen|Bad Bocklet|Aschach bei Bad Kissingen,Großenbrach,Nickersfelden,Roth an der Saale,Steinach an der Saale
 Landkreis Bad Kissingen|Bad Brückenau|Römershag,Staatsbad Brückenau,Volkers,Wernarz
 Landkreis Bad Kissingen|Bad Kissingen|Albertshausen,Albertshausen bei Bad Kissingen,Altenburgerhaus,Arnshausen,Brandmühle,Garitz,Götzenmühle,Hausen bei Bad Kissingen,Klaushof,Kleinbrach,Poppenroth,Reiterswiesen,Saline Kissingen,Schlettenmühle,Steinhof,Wehrhaus,Winkels
@@ -1715,7 +1711,7 @@ Landkreis Bautzen|Wilthen|Irgersdorf,Neuwilthen,Sora,Tautewalde
 Landkreis Bautzen|Wittichenau|Brischko,Dubring,Hoske,Keula,Kotten,Maukendorf,Neu Hoske,Neudorf Klösterlich,Rachlau,Saalau,Sollschwitz,Spohla
 Landkreis Bayreuth|Ahorntal|Adlitz,Brünnberg,Christanz,Eichig,Freiahorn,Hintergereuth,Hundshof,Kirchahorn,Körzendorf,Oberailsfeld,Pfaffenberg,Reizendorf,Volsbach,Vordergereuth,Weiher,Zauppenberg
 Landkreis Bayreuth|Aufseß|Dörnhof,Heckenhof,Hochstahl,Hundshof,Kobelsberg,Neuhaus b. Aufseß,Sachsendorf,Zochenreuth
-Landkreis Bayreuth|Bad Berneck i.Fichtelgebirge|Bad Berneck im Fichtelgebirge,Blumenau,Bärnreuth,Escherlich,Föllmar,Goldmühl,Gothendorf,Köslar,Micheldorf,Nenntmannsreuth,Rimlas,Röhrenhof,Vorderröhrenhof,Wasserknoden
+Landkreis Bayreuth|Bad Berneck i.Fichtelgebirge|Blumenau,Bärnreuth,Escherlich,Föllmar,Goldmühl,Gothendorf,Köslar,Micheldorf,Nenntmannsreuth,Rimlas,Röhrenhof,Vorderröhrenhof,Wasserknoden
 Landkreis Bayreuth|Betzenstein|Altenwiesen,Eckenreuth,Eichenstruth,Fischstein,Hetzendorf,Hunger,Hüll,Illafeld,Klausberg,Kröttenhof,Leupoldstein,Mergners,Münchs,Ottenberg,Reipertsgesee,Riegelstein,Spies,Stierberg,Waiganz,Weidensees
 Landkreis Bayreuth|Bindlach|Allersdorf,Benk,Bindlacher Berg,Buchhof,Deps,Dörflas,Eckershof,Euben,Flurhof,Forkenhof,Gemein,Haselhof,Hauenreuth,Heisenstein,Katzeneichen,Obergräfenthal,Pferch,Ramsenthal,Röhrig,Röthelbach,Stöckig,Weiherhaus
 Landkreis Bayreuth|Bischofsgrün|Birnstengel,Dürrnhieb,Fröbershammer,Hohehaid,Wülfersreuth
@@ -1754,10 +1750,9 @@ Landkreis Berchtesgadener Land|Freilassing|Brodhausen,Hofham,Sailen,Salzburghofe
 Landkreis Berchtesgadener Land|Laufen|Abrain,Daring,Froschham,Gastag,Kulbing,Leobendorf,Mayerhofen,Moosham,Niederheining,Niedervillern,Oberheining,Obervillern,Obslaufen,Triebenbach,Wiedmannsfelden
 Landkreis Berchtesgadener Land|Marktschellenberg|Ettenberg,Mehlweg,Oberstein,Schaden
 Landkreis Berchtesgadener Land|Piding|Mauthausen,Pidingerau,Urwies
-Landkreis Berchtesgadener Land|Ramsau b.Berchtesgaden|Ramsau bei Berchtesgaden
 Landkreis Berchtesgadener Land|Saaldorf-Surheim|Abtsdorf,Arbisbichl,Gerspoint,Großgerstetten,Kemating,Leustetten,Moosen,Obersurheim,Schign,Sillersdorf,Steinbrünning,Surheim
 Landkreis Berchtesgadener Land|Schneizlreuth|Melleck,Ulrichholz,Unterjettenberg
-Landkreis Berchtesgadener Land|Schönau a.Königssee|Dörfl,Faselsberg,Königssee,Schönau am Königssee
+Landkreis Berchtesgadener Land|Schönau a.Königssee|Dörfl,Faselsberg,Königssee
 Landkreis Berchtesgadener Land|Teisendorf|Achthal,Eichham,Endorf,Freidling,Hörafing,Karlsbach,Kothbrünning,Neukirchen am Teisenberg,Oberteisendorf,Offenwang,Parmbichl,Patting,Ufering,Weildorf,Wimmern
 Landkreis Bergstraße|Abtsteinach|Kreidach,Ober-Abtsteinach,Unter-Abtsteinach
 Landkreis Bergstraße|Bensheim|Fehlheim,Fürstenlager,Hochstädten,Langwaden,Wilmshausen
@@ -1925,7 +1920,7 @@ Landkreis Breisgau-Hochschwarzwald|Oberried|Halde,Hofsgrund,Vörlinsbach,Zastler
 Landkreis Breisgau-Hochschwarzwald|Pfaffenweiler|Öhlinsweiler
 Landkreis Breisgau-Hochschwarzwald|Schallstadt|Föhrenschallstadt,Leutersberg,Wolfenweiler
 Landkreis Breisgau-Hochschwarzwald|Schluchsee|Aha,Eisenbreche,Faulenfürst,Loch,Oberschwarzhalden,Schönenbach,Seebrugg,Äule
-Landkreis Breisgau-Hochschwarzwald|St. Märgen|Sankt Märgen,Schaltkarrendorf,Zweribach
+Landkreis Breisgau-Hochschwarzwald|St. Märgen|Schaltkarrendorf,Zweribach
 Landkreis Breisgau-Hochschwarzwald|St. Peter|Langeck,Ränke,Unterwasser
 Landkreis Breisgau-Hochschwarzwald|Staufen im Breisgau|Bötzen,Etzenbach,Grunern,Kropbach,Wettelbrunn
 Landkreis Breisgau-Hochschwarzwald|Stegen|Oberbirken,Reckenberg,Unterbirken,Wittental
@@ -2104,18 +2099,18 @@ Landkreis Cloppenburg|Saterland|Bibelte,Bollingen,Bollinger Kanal,Bätholt,Ferme
 Landkreis Coburg|Ahorn|Eicha,Finkenau,Schafhof,Schorkendorf,Triebsdorf,Wohlbach
 Landkreis Coburg|Bad Rodach|Carlshan,Elsa,Gauerstadt,Grattstadt,Heldritt,Lempertshausen,Mährenhausen,Niederndorf,Oettingshausen,Roßfeld,Rudelsdorf,Schweighof
 Landkreis Coburg|Dörfles-Esbach|Esbach
-Landkreis Coburg|Ebersdorf b.Coburg|Ebersdorf bei Coburg,Friesendorf,Frohnlach,Großgarnstadt,Kleingarnstadt,Oberfüllbach
+Landkreis Coburg|Ebersdorf b.Coburg|Friesendorf,Frohnlach,Großgarnstadt,Kleingarnstadt,Oberfüllbach
 Landkreis Coburg|Großheirath|Buchenrod,Gossenberg,Neuses an den Eichen,Rossach,Watzendorf
-Landkreis Coburg|Grub a.Forst|Buscheller,Forsthub,Grub am Forst,Roth am Forst,Zeickhorn
+Landkreis Coburg|Grub a.Forst|Buscheller,Forsthub,Roth am Forst,Zeickhorn
 Landkreis Coburg|Itzgrund|Bodelstadt,Büdenhof,Gleußen,Herreth,Kaltenbrunn,Kaltenherberg,Lahm,Pülsdorf,Schleifenhan,Schottenstein,Welsberg
 Landkreis Coburg|Lautertal|Oberlauter,Tiefenlauter,Tremersdorf,Unterlauter
 Landkreis Coburg|Meeder|Beuerfeld,Drossenhausen,Einzelberg,Großwalbur,Herbartsdorf,Kleinwalbur,Kösfeld,Mirsdorf,Moggenbrunn,Neida,Ottowind
-Landkreis Coburg|Neustadt b.Coburg|Birkig,Boderndorf,Brüx,Fechheim,Fürth am Berg,Haarbrücken,Kemmaten,Ketschenbach,Meilschnitz,Mittelwasungen,Neustadt bei Coburg,Plesten,Rüttmannsdorf,Thann,Unterwasungen,Weimersdorf,Wellmersdorf,Wildenheid
+Landkreis Coburg|Neustadt b.Coburg|Birkig,Boderndorf,Brüx,Fechheim,Fürth am Berg,Haarbrücken,Kemmaten,Ketschenbach,Meilschnitz,Mittelwasungen,Plesten,Rüttmannsdorf,Thann,Unterwasungen,Weimersdorf,Wellmersdorf,Wildenheid
 Landkreis Coburg|Rödental|Blumenrod,Einberg,Fornbach,Gereuth,Kipfendorf,Mittelberg,Mönchröden,Oberwohlsbach,Oeslau,Rothenhof,Schönstädt,Spittelstein,Theißenstein,Thierach,Unterwohlsbach,Waldsachsen,Weißenbrunn vorm Wald
 Landkreis Coburg|Seßlach|Autenhausen,Bischwind bei Heilgersdorf,Dietersdorf,Gemünda,Gleismuthhausen,Hattersdorf,Heilgersdorf,Lechenroth,Merlach,Muggenbach,Oberelldorf,Rothenberg,Setzelsdorf,Trammershof,Unterelldorf
 Landkreis Coburg|Sonnefeld|Bieberbach,Firmelsdorf,Gestungshausen,Neuses am Brand,Oberwasungen,Weickenbach,Weischau,Wörlsdorf,Zedersdorf
 Landkreis Coburg|Untersiemau|Birkach am Forst,Haarth,Meschenbach,Obersiemau,Scherneck,Stöppach,Weißenbrunn am Forst,Ziegelsdorf
-Landkreis Coburg|Weidhausen b.Coburg|Neuensorg,Trübenbach,Weidhausen bei Coburg
+Landkreis Coburg|Weidhausen b.Coburg|Neuensorg,Trübenbach
 Landkreis Coburg|Weitramsdorf|Eichhof,Gersbach (Weitramsdorf),Hergramsdorf,Neundorf am Holz,Schlettach,Weidach
 Landkreis Cochem-Zell|Alf|Burg Arras,Höllenthal
 Landkreis Cochem-Zell|Bad Bertrich|Kennfus
@@ -2179,7 +2174,7 @@ Landkreis Dachau|Karlsfeld|Rothschwaige
 Landkreis Dachau|Markt Indersdorf|Ainhofen,Albersbach,Arnzell,Eglersried,Eichhofen,Eichstock,Engelbrechtsmühle,Frauenhofen,Gittersbach,Gundackersdorf,Harreszell,Hartwigshausen,Hirtlbach,Hörgenbach,Indersdorf Kloster,Karpfhofen,Kattalaich,Langenpettenbach,Lanzenried,Niederroth,Ottmarshart,Puch,Riedhof,Siechhäusern,Stachusried,Stangenreid,Straßbach,Tiefenlachen,Täfern,Wagenried,Westerholzhausen,Weyhern,Wöhr
 Landkreis Dachau|Odelzhausen|Dietenhausen,Gaggers,Hadersried,Höfa,Lukka,Miegersbach,Sittenbach,Sixtnitgern,Taxa,Todtenried
 Landkreis Dachau|Petershausen|Freymann,Glonnbercha,Göppertshausen,Kollbach,Mittermarbach,Obermarbach,Piflitz,Sollern,Weißling,Ziegelberg
-Landkreis Dachau|Pfaffenhofen a.d.Glonn|Bayerzell,Ebersried,Egenburg,Miesberg,Oberumbach,Pfaffenhofen an der Glonn,Unterumbach,Wagenhofen,Weitenried
+Landkreis Dachau|Pfaffenhofen a.d.Glonn|Bayerzell,Ebersried,Egenburg,Miesberg,Oberumbach,Unterumbach,Wagenhofen,Weitenried
 Landkreis Dachau|Röhrmoos|Großinzemoos,Kleininzemoos,Mariabrunn,Riedenzhofen,Rudelzhofen,Schillhofen,Sigmertshausen
 Landkreis Dachau|Schwabhausen|Armetshofen,Arnbach,Edenholzhausen,Grubhof,Kappelhof,Machtenstein,Puchschlagen,Rienshofen,Rumeltshausen,Sickertshofen,Unterhandenzhofen
 Landkreis Dachau|Sulzemoos|Einsbach,Hilpertsried,Oberwinden,Orthofen,Wiedenzhausen
@@ -2308,14 +2303,13 @@ Landkreis Dillingen a.d.Donau|Bachhagel|Burghagel,Oberbechingen
 Landkreis Dillingen a.d.Donau|Bissingen|Buch am Rannenberg,Buggenhofen,Burgmagerbein,Diemantstein,Gaishardt,Göllingen,Hochstein,Kallertshofen,Kesselostheim,Kömertshof,Leiheim,Leitenhof,Oberliezheim,Obermagerbein,Oberringingen,Reimertshof,Stillnau,Tuifstädt,Unterbissingen,Unterringingen,Warnhofen,Zoltingen
 Landkreis Dillingen a.d.Donau|Blindheim|Unterglauheim,Wolpertstetten
 Landkreis Dillingen a.d.Donau|Buttenwiesen|Frauenstetten,Greggenhof,Hinterried,Illemad,Oberthürheim,Unterthürheim,Vorderried,Wortelstetten
-Landkreis Dillingen a.d.Donau|Bächingen a.d.Brenz|Bächingen an der Brenz
-Landkreis Dillingen a.d.Donau|Dillingen a.d.Donau|Dillingen an der Donau,Donaualtheim,Fristingen,Kicklingen,Nordfelderhof,Schretzheim
+Landkreis Dillingen a.d.Donau|Dillingen a.d.Donau|Donaualtheim,Fristingen,Kicklingen,Nordfelderhof,Schretzheim
 Landkreis Dillingen a.d.Donau|Finningen|Mörslingen,Oberfinningen,Unterfinningen
 Landkreis Dillingen a.d.Donau|Glött|Heudorf
 Landkreis Dillingen a.d.Donau|Gundelfingen a.d.Donau|Echenbrunn,Maxfelderhof,Peterswörth,Schönauhof
 Landkreis Dillingen a.d.Donau|Haunsheim|Unterbechingen
 Landkreis Dillingen a.d.Donau|Holzheim|Altenbaindt,Ellerbach,Eppisburg,Fultenbach,Weisingen
-Landkreis Dillingen a.d.Donau|Höchstädt a.d.Donau|Deisenhofen,Höchstädt an der Donau,Oberglauheim,Schwennenbach,Sonderheim
+Landkreis Dillingen a.d.Donau|Höchstädt a.d.Donau|Deisenhofen,Oberglauheim,Schwennenbach,Sonderheim
 Landkreis Dillingen a.d.Donau|Laugna|Bocksberg,Hinterbuch,Kaag,Modelshausen,Osterbuch
 Landkreis Dillingen a.d.Donau|Lauingen (Donau)|Birkacherhöfe,Faimingen,Frauenriedhausen,Helmeringen,Hygstetterhof,Veitriedhausen
 Landkreis Dillingen a.d.Donau|Lutzingen|Unterliezheim
@@ -2332,7 +2326,7 @@ Landkreis Dingolfing-Landau|Dingolfing|Frauenbiburg,Geratsberg,Goben,Höll,Mietz
 Landkreis Dingolfing-Landau|Eichendorf|Adldorf,Attenkaisen,Badersdorf,Dornach,Einstorf,Enzerweis,Exing,Habersbrunn,Haid,Hartkirchen,Hochwimm,Hütt,Indersbach,Kröhstorf,Madl,Mildenberg,Oberklingenbach,Paßhausen,Perbing,Pitzling,Prunn,Rannersdorf,Reichstorf,Rengersdorf,Rengwartling,Salzberg,Stelzenöd,Unterklingenbach,Wannersdorf,Wegnagl,Weichslöd,Wildeneck,Wisselsdorf,Wochenweis
 Landkreis Dingolfing-Landau|Frontenhausen|Bertensdorf,Biegendorf,Friedersdorf,Georgenschwimmbach,Loitersdorf,Rampoldstetten,Wachlkofen,Wettersdorf,Witzeldorf
 Landkreis Dingolfing-Landau|Gottfrieding|Daibersdorf,Frichlkofen,Gottfriedingerschwaige,Hackerskofen,Oberweilnbach,Tichling,Unterweilnbach
-Landkreis Dingolfing-Landau|Landau a.d.Isar|Dietlsberg,Hilgersdorf,Kammern,Kuchlholz,Landau an der Isar,Mettenhausen,Möding,Niederhöcking,Oberframmering,Oberhöcking,Poldering,Reichersdorf,Rottersdorf,Steinhaus,Thalham,Thanhöcking,Usterling,Wildthurn,Windschnur,Wolfsdorf,Wolfsgasse,Zanklau,Zeholfing,Zulling
+Landkreis Dingolfing-Landau|Landau a.d.Isar|Dietlsberg,Hilgersdorf,Kammern,Kuchlholz,Mettenhausen,Möding,Niederhöcking,Oberframmering,Oberhöcking,Poldering,Reichersdorf,Rottersdorf,Steinhaus,Thalham,Thanhöcking,Usterling,Wildthurn,Windschnur,Wolfsdorf,Wolfsgasse,Zanklau,Zeholfing,Zulling
 Landkreis Dingolfing-Landau|Loiching|Bergham,Göttersdorf,Kronwieden,Oberspechtrain,Oberteisbach,Oberweigendorf,Oberwolkersdorf,Piegendorf,Pischelsdorf,Unterspechtrain,Unterweigendorf,Unterwolkersdorf,Wendelskirchen,Wornstorf
 Landkreis Dingolfing-Landau|Mamming|Bachhausen,Batzenhäusl,Dittenkofen,Graflkofen,Kuttenkofen,Mammingerschwaigen,Pilberskofen,Ruhsam,Seemannskirchen
 Landkreis Dingolfing-Landau|Marklkofen|Aiglkofen,Aunkofen,Birnthal,Freinberg,Grietzen,Gschaid,Johannisschwimmbach,Petzenbrunn,Poxau,Reithen,Rosshof,Schwingham,Siglhof,Stockhof,Ulrichschwimmbach,Warth,Weiher,Wildenschönau,Wunder
@@ -2352,7 +2346,7 @@ Landkreis Donau-Ries|Daiting|Hochfeld,Natterholz,Reichertswies,Unterbuch
 Landkreis Donau-Ries|Deiningen|Klosterzimmern,Möderhof
 Landkreis Donau-Ries|Donauwörth|Auchsesheim,Binsberg,Dittelspoint,Felsheim,Huttenbach,Kreuzhof,Lederstatt,Maggerhof,Neffsend,Neudeck,Osterweiler,Ramhof,Reichertsweiler,Schellenbergerhof,Schäfstall,Schöttlehof,Wallbacherhof,Wörnitzstein,Zirgesheim
 Landkreis Donau-Ries|Ederheim|Christgarten,Hürnheim
-Landkreis Donau-Ries|Ehingen a.Ries|Belzheim,Ehingen am Ries,Schaffhausen
+Landkreis Donau-Ries|Ehingen a.Ries|Belzheim,Schaffhausen
 Landkreis Donau-Ries|Fremdingen|Bühlingen,Eitersberg,Enslingen,Herblingen,Hochaltingen,Raustetten,Schopflohe,Seglohe,Uttenstetten
 Landkreis Donau-Ries|Fünfstetten|Asbacherhof,Heidmersbrunn,Ingershof,Nußbühl,Rothenbergerhof
 Landkreis Donau-Ries|Genderkingen|Breitwangerhof,Urfahrhof
@@ -2428,7 +2422,7 @@ Landkreis Ebersberg|Emmering|Angelsbruck,Bruckhof,Einholz,Esterndorf,Haus,Hirsch
 Landkreis Ebersberg|Forstinning|Aitersteinering,Niederried,Schwaberwegen,Sempt,Wind
 Landkreis Ebersberg|Frauenneuharting|Aichat,Haging,Jacobneuharting,Kleinaschau,Tegernau
 Landkreis Ebersberg|Glonn|Adling,Balkham,Doblberg,Frauenreuth,Hafelsberg,Herrmannsdorf,Kastenseeon,Kreuz,Mattenhofen,Mühlthal,Schlacht,Straß,Ursprung,Westerndorf,Wetterling,Zinneberg,Überloh
-Landkreis Ebersberg|Grafing b.München|Dichau,Elkofen,Filzhof,Gasteig,Grafing Bahnhof,Grafing bei München,Haidling,Katzenreuth,Nettelkofen,Oberelkofen,Straußdorf,Unterelkofen,Wiesham,Öxing
+Landkreis Ebersberg|Grafing b.München|Dichau,Elkofen,Filzhof,Gasteig,Grafing Bahnhof,Haidling,Katzenreuth,Nettelkofen,Oberelkofen,Straußdorf,Unterelkofen,Wiesham,Öxing
 Landkreis Ebersberg|Hohenlinden|Altmühlhausen,Altstockach,Kreith,Neumühlhausen,Neupullach,Neustockach,Niederkaging,Oberkaging
 Landkreis Ebersberg|Kirchseeon|Eglharting,Eglhartinger Kolonie,Forstseeon,Ilching,Osterseeon
 Landkreis Ebersberg|Moosach|Berghofen,Fürmoosen,Niederseeon
@@ -2652,7 +2646,7 @@ Landkreis Enzkreis|Ölbronn-Dürrn|Dürrn
 Landkreis Enzkreis|Ötisheim|Corres
 Landkreis Erding|Berglern|Glaslern,Mitterlern,Niederlern
 Landkreis Erding|Bockhorn|Aurlfing,Bergarn,Breitasch,Deimling,Englpolding,Eschlbach,Ferteln,Flanning,Gugging,Hammerthal,Hörgersberg,Kinzlbach,Kirchasch,Maierklopfen,Mauggen,Oberstrogn,Papferding,Polzing,Riedersheim,Salmannskirchen,Tankham,Thal,Unterstrogn,Windham,Zeilding,Übermiething
-Landkreis Erding|Buch a.Buchrain|Buch am Buchrain,Fang,Haidberg,Hammersdorf,Hausmehring,Kaltenbach,Loiperding,Mitterbuch,Oberbuch
+Landkreis Erding|Buch a.Buchrain|Fang,Haidberg,Hammersdorf,Hausmehring,Kaltenbach,Loiperding,Mitterbuch,Oberbuch
 Landkreis Erding|Dorfen|Algasing,Bergham,Breitenloh,Dürneibach,Eglafing,Eibach,Embach,Englschalling,Eppenhöning,Esterndorf,Frauenornau,Galgenberg,Geierseck,Glockshub,Großkatzbach,Grün,Grüntegernbach,Haidvocking,Hampersdorf,Haus,Hausmehring,Herrnöd,Hienering,Jaibing,Jakobrettenbach,Kaidach,Kalling,Kirnham,Kleinkatzbach,Kloster Moosen,Kraham,Landersdorf,Lappach,Lindum,Loiperstätt,Mitterschiltern,Norlaching,Oberdorfen,Oberhausmehring,Oberschiltern,Parschalling,Pausenberg,Pemberg,Polding,Puch,Rinning,Rogglfing,Scheideck,Schwindkirchen,Straß,Taubenthal,Thal,Unterhausmehring,Unterschiltern,Unterseebach,Unterstollnkirchen,Urtlfing,Vocking,Voldering,Wampeltsham,Wasentegernbach,Watzling,Weckerling,Wölling,Zeilhofen,Zettl
 Landkreis Erding|Eitting|Gaden,Reisen
 Landkreis Erding|Erding|Altenerding,Altham,Ammersdorf,Bergham,Eichenkofen,Indorf,Itzling,Kehr,Klettham,Langengeisling,Pretzen,Sankt Paul,Siglfing,Singlding,Werndlfing
@@ -2660,7 +2654,7 @@ Landkreis Erding|Finsing|Eicherloh,Neufinsing
 Landkreis Erding|Forstern|Kreiling,Neuharting,Preisendorf,Sickenberg,Straßham,Tading,Wetting
 Landkreis Erding|Fraunberg|Bergham,Endham,Forach,Granting,Großhündlbach,Großstürzlham,Großthalheim,Grucking,Gückling,Harham,Helling,Hinterbaumberg,Kleinhündlbach,Kleinstürzlham,Kleinthalheim,Maria Thalheim,Oberbierbach,Pillkofen,Rappoltskirchen,Reichenkirchen,Riding,Tittenkofen,Unterbierbach,Vorderbaumberg,Ödersberg
 Landkreis Erding|Hohenpolding|Dickarting,Diemating,Großstockach,Harting,Klesham,Loiting,Penk,Penning,Ramperting,Reinting,Reitgarten,Starzell,Sulding,Waltersberg
-Landkreis Erding|Inning a.Holz|Adlberg,Gosmehring,Großwimpasing,Hain,Heldering,Hienraching,Inning am Holz,Kleinwimpasing,Ottering,Reimering,Sonnendorf
+Landkreis Erding|Inning a.Holz|Adlberg,Gosmehring,Großwimpasing,Hain,Heldering,Hienraching,Kleinwimpasing,Ottering,Reimering,Sonnendorf
 Landkreis Erding|Isen|Altweg,Aschberg,Bachleiten,Berging,Buchschachen,Burgrain,Eschbaum,Fahrnbach,Fleck,Gmain,Hub,Kuglstadt,Lichtenweg,Loipfing,Mais,Mittbach,Pemmering,Schnaupping,Sollach,Strich,Weiher,Westach,Willmating,Zellershub
 Landkreis Erding|Kirchberg|Arndorf,Baustarring,Burgharting,Halberstätt,Hammerlbach,Inholzen,Irlach,Itzling,Schelchenvils,Schleibing,Schröding,Sinnering,Thal
 Landkreis Erding|Langenpreising|Appolding,Hinterholzhausen,Pottenau,Vorderholzhausen,Weipersdorf,Zustorf
@@ -2685,7 +2679,7 @@ Landkreis Erlangen-Höchstadt|Hemhofen|Zeckern
 Landkreis Erlangen-Höchstadt|Heroldsberg|Großgeschaidt,Johannisthal,Kleingeschaidt,Stettenberg
 Landkreis Erlangen-Höchstadt|Herzogenaurach|Beutelsdorf,Dondörflein,Galgenhof,Hammerbach,Hauptendorf,Niederndorf,Zweifelsheim
 Landkreis Erlangen-Höchstadt|Heßdorf|Dannberg,Hannberg,Hesselberg,Klebheim,Mittelmembach,Niederlindach,Obermembach,Röhrach,Untermembach
-Landkreis Erlangen-Höchstadt|Höchstadt a.d.Aisch|Ailersbach,Biengarten,Bösenbechhofen,Etzelskirchen,Förtschwind,Greiendorf,Greuth,Großneuses,Höchstadt an der Aisch,Jungenhofen,Kieferndorf,Kleinneuses,Lappach,Limbachshof,Mechelwind,Medbach,Nackendorf,Saltendorf,Sterpersdorf,Weidendorf,Zentbechhofen
+Landkreis Erlangen-Höchstadt|Höchstadt a.d.Aisch|Ailersbach,Biengarten,Bösenbechhofen,Etzelskirchen,Förtschwind,Greiendorf,Greuth,Großneuses,Jungenhofen,Kieferndorf,Kleinneuses,Lappach,Limbachshof,Mechelwind,Medbach,Nackendorf,Saltendorf,Sterpersdorf,Weidendorf,Zentbechhofen
 Landkreis Erlangen-Höchstadt|Kalchreuth|Käswasser,Röckenhof
 Landkreis Erlangen-Höchstadt|Lonnerstadt|Ailsbach,Fetzelhofen,Mailach
 Landkreis Erlangen-Höchstadt|Marloffstein|Adlitz,Atzelsberg,Rathsberg,Schneckenhof
@@ -2785,7 +2779,7 @@ Landkreis Forchheim|Kleinsendelbach|Schellenberg,Schleinhof
 Landkreis Forchheim|Kunreuth|Ermreus,Regensberg,Weingarts
 Landkreis Forchheim|Langensendelbach|Bräuningshof
 Landkreis Forchheim|Leutenbach|Dietzhof,Mittelehrenbach,Oberehrenbach,Ortspitz,Seidmar
-Landkreis Forchheim|Neunkirchen a.Brand|Baad,Ermreuth,Gleisenhof,Großenbuch,Neunkirchen am Brand,Rödlas,Vogelhof,Wellucken
+Landkreis Forchheim|Neunkirchen a.Brand|Baad,Ermreuth,Gleisenhof,Großenbuch,Rödlas,Vogelhof,Wellucken
 Landkreis Forchheim|Obertrubach|Bärnfels,Geschwand,Herzogwind,Untertrubach,Wolfsberg
 Landkreis Forchheim|Pinzberg|Dobenreuth,Elsenberg,Gosberg
 Landkreis Forchheim|Pretzfeld|Eberhardstein,Hetzelsdorf,Kolmreuth,Lützelsdorf,Oberzaunsbach,Unterzaunsbach,Urspring,Wannbach
@@ -2796,12 +2790,12 @@ Landkreis Forchheim|Wiesenthau|Schlaifhausen
 Landkreis Forchheim|Wiesenttal|Albertshof,Birkenreuth,Draisendorf,Engelhardsberg,Gößmannsberg,Muggendorf,Niederfellendorf,Oberfellendorf,Streitberg,Störnhof,Trainmeusel,Voigendorf,Wartleiten,Wohlmannsgesees,Wöhr,Wüstenstein
 Landkreis Freising|Allershausen|Aiterbach,Eggenberg,Göttschlag,Hinterbuch,Laimbach,Leonhardsbuch,Oberkienberg,Schroßlach,Tünzhausen,Unterkienberg
 Landkreis Freising|Attenkirchen|Berging,Brandloh,Gallersberg,Gütlsdorf,Haarland,Hettenkirchen,Kronsdorf,Pfettrach,Pischlsdorf,Staudhausen,Thalham,Wimpasing
-Landkreis Freising|Au i.d.Hallertau|Abens,Au in der Hallertau,Dellnhausen,Halsberg,Hemhausen,Herbersdorf,Hirnkirchen,Holzhof,Leitersdorf,Osseltshausen,Osterwaal,Piedendorf,Rudertshausen,Seysdorf,Sillertshausen
+Landkreis Freising|Au i.d.Hallertau|Abens,Dellnhausen,Halsberg,Hemhausen,Herbersdorf,Hirnkirchen,Holzhof,Leitersdorf,Osseltshausen,Osterwaal,Piedendorf,Rudertshausen,Seysdorf,Sillertshausen
 Landkreis Freising|Eching|Deutenhausen,Ottenburg
 Landkreis Freising|Fahrenzhausen|Appercha,Bachenhausen,Gesseltshausen,Großeisenbach,Großnöbach,Hörenzhausen,Jarzt,Kammerberg,Kleineisenbach,Kleinnöbach,Unterbruck,Viehbach
 Landkreis Freising|Freising|Achering,Attaching,Dürneck,Gartelshausen,Haindlfing,Haxthausen,Hohenbachern,Itzling,Lageltshausen,Lerchenfeld,Neustift,Pallhausen,Pellhausen,Pettenbrunn,Pulling,Sünzhausen,Tuching,Untergartelshausen,Vötting,Weihenstephan,Zellhausen,Zurnhausen
 Landkreis Freising|Gammelsdorf|Flickendorf,Gelbersdorf,Katharinazell,Oberpriel,Priel,Reichersdorf,Willersdorf
-Landkreis Freising|Haag a.d.Amper|Haag an der Amper,Inkofen,Mittermarchenbach,Obermarchenbach,Oberplörnbach,Plörnbach,Seeberg,Sollern,Untermarchenbach,Unterplörnbach
+Landkreis Freising|Haag a.d.Amper|Inkofen,Mittermarchenbach,Obermarchenbach,Oberplörnbach,Plörnbach,Seeberg,Sollern,Untermarchenbach,Unterplörnbach
 Landkreis Freising|Hallbergmoos|Erching,Goldach,Mariabrunn
 Landkreis Freising|Hohenkammer|Deutldorf,Dörnbach,Eglhausen,Herschenhofen,Niernsdorf,Oberwohlbach,Pelka,Schlipps,Untermarbach,Unterwohlbach
 Landkreis Freising|Hörgertshausen|Doidorf,Margarethenried b. Hörgertshausen,Peterswahl,Saxberg,Sielstetten
@@ -2812,7 +2806,7 @@ Landkreis Freising|Marzling|Eixendorf,Hangenham,Jaibling,Riegerau,Rudlfing,Unter
 Landkreis Freising|Mauern|Alpersdorf,Dürnseiboldsdorf,Enghausen,Freundsbach,Kleidorf,Kronwinkl,Niederndorf,Schwarzersdorf,Thal,Wollersdorf
 Landkreis Freising|Moosburg a.d.Isar|Aich,Bonau,Grünseiboldsdorf,Kirchamper,Niederambach,Oberambach,Oberpolln,Oberreit,Pfrombach,Pillhofen,Thonstetten
 Landkreis Freising|Nandlstadt|Aiglsdorf,Airischwand,Altfalterbach,Andorf,Bauernried,Faistenberg,Figlsdorf,Großgründling,Gründl,Hausmehring,Kleinwolfersdorf,Kollersdorf,Kronwinkl,Reith,Schatz,Tölzkirchen,Unterholzhäuseln,Weihersdorf
-Landkreis Freising|Neufahrn b.Freising|Fürholzen,Giggenhausen,Grüneck,Hetzenhausen,Massenhausen,Neufahrn bei Freising
+Landkreis Freising|Neufahrn b.Freising|Fürholzen,Giggenhausen,Grüneck,Hetzenhausen,Massenhausen
 Landkreis Freising|Paunzhausen|Angerhöfe,Hohenbuch,Letten,Schernbuch,Walterskirchen
 Landkreis Freising|Rudelzhausen|Agstall,Bergham,Enzelhausen,Hebrontshausen,Iglsdorf,Niederhinzing,Notzenhausen,Oberhinzing,Oberreith,Pittersdorf,Pumpernudl,Tegernbach,Traich
 Landkreis Freising|Wang|Burgschlag,Dornhaselbach,Hagsdorf,Inzkofen,Pfettrach,Schlaghäuseln,Schweinersdorf,Sixthaselbach,Spörerau,Thalbach,Thulbach,Volkmannsdorferau,Weghausen
@@ -2924,13 +2918,12 @@ Landkreis Garmisch-Partenkirchen|Grainau|Badersee,Eibsee,Knappenhäuser,Obergrai
 Landkreis Garmisch-Partenkirchen|Großweil|Kleinweil,Pölten
 Landkreis Garmisch-Partenkirchen|Krün|Barmsee,Elmau,Gerold,Klais,Kranzbach
 Landkreis Garmisch-Partenkirchen|Mittenwald|Lautersee
-Landkreis Garmisch-Partenkirchen|Murnau a.Staffelsee|Achrain,Froschhausen,Hechendorf,Hermannswiese,Murnau am Staffelsee,Mühlhagen,Weindorf,Westried
+Landkreis Garmisch-Partenkirchen|Murnau a.Staffelsee|Achrain,Froschhausen,Hechendorf,Hermannswiese,Mühlhagen,Weindorf,Westried
 Landkreis Garmisch-Partenkirchen|Oberau|Untermberg
 Landkreis Garmisch-Partenkirchen|Ohlstadt|Buchenried,Kleinaschau,Schwaiganger
 Landkreis Garmisch-Partenkirchen|Riegsee|Aidling,Leibersberg
 Landkreis Garmisch-Partenkirchen|Saulgrub|Altenau,Unternogg,Wurmansau
 Landkreis Garmisch-Partenkirchen|Schwaigen|Fuchsloch,Grafenaschau,Plaiken,Vorderbraunau
-Landkreis Garmisch-Partenkirchen|Seehausen a.Staffelsee|Seehausen am Staffelsee
 Landkreis Garmisch-Partenkirchen|Spatzenhausen|Waltersberg
 Landkreis Garmisch-Partenkirchen|Uffing a.Staffelsee|Hechenrain,Kirnberg,Luketsried,Saliter,Sallach,Schöffau,Völlenbach
 Landkreis Garmisch-Partenkirchen|Unterammergau|Scherenau
@@ -3190,7 +3183,7 @@ Landkreis Günzburg|Kötz|Großkötz,Kleinkötz
 Landkreis Günzburg|Landensberg|Glöttweng
 Landkreis Günzburg|Leipheim|Riedheim,Weißingen
 Landkreis Günzburg|Münsterhausen|Hagenried,Häuserhof,Reichertsried
-Landkreis Günzburg|Neuburg a.d.Kammel|Edelstetten,Erisweiler,Halbertshofen,Höselhurst,Langenhaslach,Naichen,Neuburg an der Kammel,Wattenweiler
+Landkreis Günzburg|Neuburg a.d.Kammel|Edelstetten,Erisweiler,Halbertshofen,Höselhurst,Langenhaslach,Naichen,Wattenweiler
 Landkreis Günzburg|Offingen|Schnuttenbach
 Landkreis Günzburg|Rettenbach|Remshart
 Landkreis Günzburg|Thannhausen|Nettershausen
@@ -3384,7 +3377,7 @@ Landkreis Helmstedt|Warberg|Kißleberfeld
 Landkreis Hersfeld-Rotenburg|Alheim|Baumbach,Erdpenhausen,Heinebach,Hergershausen,Licherode,Niederellenbach,Niedergude,Oberellenbach,Obergude,Sterkelshausen
 Landkreis Hersfeld-Rotenburg|Bad Hersfeld|Allmershausen,Beiershausen,Eichhof,Heenes,Kalkobes,Kathus,Kohlhausen,Sorga,Sölzerhöfe,Wehneberg
 Landkreis Hersfeld-Rotenburg|Bebra|Asmushausen,Braunhausen,Gilfershausen,Iba,Imshausen,Rautenhausen,Solz,Weiterode
-Landkreis Hersfeld-Rotenburg|Breitenbach a.Herzberg|Breitenbach am Herzberg,Gehau,Hatterode,Machtlos,Oberjossa
+Landkreis Hersfeld-Rotenburg|Breitenbach a.Herzberg|Gehau,Hatterode,Machtlos,Oberjossa
 Landkreis Hersfeld-Rotenburg|Cornberg|Königswald,Rockensüß
 Landkreis Hersfeld-Rotenburg|Friedewald|Hillartshausen,Lautenhausen,Motzfeld
 Landkreis Hersfeld-Rotenburg|Hauneck|Bodes,Eitra,Oberhaun,Rotensee,Sieglos,Unterhaun,Wendebach
@@ -3398,7 +3391,7 @@ Landkreis Hersfeld-Rotenburg|Neuenstein|Aua,Gittersdorf,Mühlbach,Obergeis,Rabol
 Landkreis Hersfeld-Rotenburg|Niederaula|Erlingsberg,Hattenbach,Hilperhausen,Kerspenhausen,Kleba,Mengshausen,Niederjossa
 Landkreis Hersfeld-Rotenburg|Philippsthal (Werra)|Gethsemane,Harnrode,Heimboldshausen,Oberneurode,Röhrigshof,Unterneurode
 Landkreis Hersfeld-Rotenburg|Ronshausen|Machtlos,Machtlos (Ronshausen),Ziebach
-Landkreis Hersfeld-Rotenburg|Rotenburg a.d.Fulda|Atzelrode,Braach,Dankerode,Erkshausen,Lispenhausen,Mündershausen,Rotenburg an der Fulda,Schwarzenhasel,Seifertshausen,Wüstefeld
+Landkreis Hersfeld-Rotenburg|Rotenburg a.d.Fulda|Atzelrode,Braach,Dankerode,Erkshausen,Lispenhausen,Mündershausen,Schwarzenhasel,Seifertshausen,Wüstefeld
 Landkreis Hersfeld-Rotenburg|Schenklengsfeld|Dinkelrode,Erdmannrode,Hilmes,Konrode,Lampertsfeld,Landershausen,Malkomes,Oberlengsfeld,Schenksolz,Unterweisenborn,Wehrshausen,Wippershain,Wüstfeld
 Landkreis Hersfeld-Rotenburg|Wildeck|Bosserode,Hönebach,Obersuhl,Raßdorf,Richelsdorf
 Landkreis Hildburghausen|Auengrund|Brattendorf,Crock,Merbelsrod,Oberwind,Poppenwind,Wiedersbach
@@ -3411,7 +3404,6 @@ Landkreis Hildburghausen|Reurieth|Siegritz,Trostadt
 Landkreis Hildburghausen|Römhild|Bedheim,Eicha,Gleichamberg,Gleicherwiesen,Hindfeld,Mendhausen,Milz,Simmershausen,Westenfeld,Zeilfeld
 Landkreis Hildburghausen|Schleusegrund|Biberau,Biberschlag,Engenau,Engenstein,Ernstthal,Gabel,Gabel b. Frauenwald,Gießübel,Obergabel,Oberneubrunn,Tellerhammer,Untergabel,Unterneubrunn
 Landkreis Hildburghausen|Schleusingen|Altendambach,Geisenhöhn,Gethles,Gottfriedsberg,Heckengereuth,Hinternah,Rappelsdorf,Ratscher,Rindermannshof,Sankt Kilian,Schleusingerneundorf,Sensenhammer,Silbach,Stutenhaus,Thomasmühle,Waldau,Zollbrück
-Landkreis Hildburghausen|St. Bernhard|Sankt Bernhard
 Landkreis Hildburghausen|Straufhain|Adelhausen,Eishausen,Massenhausen,Massenhausen (Straufhain),Seidingstadt,Sophienthal,Stressenhausen,Streufdorf
 Landkreis Hildburghausen|Themar|Tachbach,Wachenbrunn
 Landkreis Hildburghausen|Veilsdorf|Goßmannsrod,Hetschbach,Heßberg,Kloster Veilsdorf
@@ -3436,7 +3428,7 @@ Landkreis Hildesheim|Sarstedt|Giften,Gödringen,Heisede,Hotteln,Ruthe,Schliekum
 Landkreis Hildesheim|Schellerten|Ahstedt,Bettmar,Dingelbe,Dinklar,Farmsen,Garbolzum,Garmissen,Kemme,Oedelum,Ottbergen,Wendhausen,Wöhle
 Landkreis Hildesheim|Sibbesse|Adenstedt,Almstedt,Eberholzen,Grafelde,Hönze,Möllensen,Petze,Segeste,Sellenstedt,Westfeld,Wrisbergholzen
 Landkreis Hildesheim|Söhlde|Bettrum,Feldbergen,Groß Himstedt,Helmersen,Hoheneggelsen,Klein Himstedt,Mölme,Nettlingen,Steinbrück
-Landkreis Hochtaunuskreis|Bad Homburg v.d.Höhe|Bad Homburg vor der Höhe,Gonzenheim,Kirdorf,Ober Eschbach,Ober-Erlenbach
+Landkreis Hochtaunuskreis|Bad Homburg v.d.Höhe|Gonzenheim,Kirdorf,Ober Eschbach,Ober-Erlenbach
 Landkreis Hochtaunuskreis|Friedrichsdorf|Burgholzhausen,Köppern,Seulberg
 Landkreis Hochtaunuskreis|Glashütten|Oberems,Schloßborn
 Landkreis Hochtaunuskreis|Grävenwiesbach|Hundstadt,Mönstadt,Naunstadt
@@ -3467,8 +3459,8 @@ Landkreis Hof|Oberkotzau|Autengrün,Fattigau,Haideck,Wustuben
 Landkreis Hof|Regnitzlosau|Draisendorf,Förtschenbach,Henriettenlust,Kirchbrünnlein,Mittelhammer,Nentschau,Oberprex,Oberschwesendorf,Oberzech,Osseck am Wald,Prex,Raitschin,Schwesendorf,Trogenau,Unterhammer,Vierschau,Weinzlitz,Zech
 Landkreis Hof|Rehau|Degenreuth,Dobeneck,Eulenhammer,Faßmannsreuth,Fohrenreuth,Heinersberg,Kühschwitz,Ludwigsbrunn,Pilgramsreuth,Rosenbühl,Schönlind,Sigmundsgrün,Woja,Wurlitz,Wüstenbrunn
 Landkreis Hof|Schauenstein|Adlanz,Haidengrün,Haueisen,Pinzig,Uschertsgrün,Volkmannsgrün,Windischengrün
-Landkreis Hof|Schwarzenbach a.Wald|Bernstein am Wald,Breitengrund,Dorschenmühle,Döbra,Gemeinreuth,Gottsmannsgrün,Grubenberg,Hohenzorn,Hühnergrund,Kleindöbra,Löhmarmühle,Meierhof,Oberleupoldsberg,Pillmersreuth,Poppengrün,Rauschengrund,Rodeck,Rodecker Forst-Ost,Räumlas,Schwarzenbach am Wald,Schwarzenstein,Schübelhammer,Sorg,Straßdorf,Straßhaus,Süßengut,Thiemitz,Thron,Unterleupoldsberg,Viceburg,Äußera
-Landkreis Hof|Schwarzenbach a.d.Saale|Albertsberg,Baumersreuth,Birkenbühl,Fletschenreuth,Förbau,Förmitz,Gottfriedsreuth,Götzmannsgrün,Hallerstein,Holzfeld,Höferberg,Lamitzgrund,Lamitzmühle,Martinlamitz,Nonnenwald,Posterlitz,Quellenreuth,Schieda,Schwarzenbach an der Saale,Schwarzenbach-Schwingen,Schwingen,Seulbitz,Stobersreuth,Stollen,Tannenlohe,Völkenreuth
+Landkreis Hof|Schwarzenbach a.Wald|Bernstein am Wald,Breitengrund,Dorschenmühle,Döbra,Gemeinreuth,Gottsmannsgrün,Grubenberg,Hohenzorn,Hühnergrund,Kleindöbra,Löhmarmühle,Meierhof,Oberleupoldsberg,Pillmersreuth,Poppengrün,Rauschengrund,Rodeck,Rodecker Forst-Ost,Räumlas,Schwarzenstein,Schübelhammer,Sorg,Straßdorf,Straßhaus,Süßengut,Thiemitz,Thron,Unterleupoldsberg,Viceburg,Äußera
+Landkreis Hof|Schwarzenbach a.d.Saale|Albertsberg,Baumersreuth,Birkenbühl,Fletschenreuth,Förbau,Förmitz,Gottfriedsreuth,Götzmannsgrün,Hallerstein,Holzfeld,Höferberg,Lamitzgrund,Lamitzmühle,Martinlamitz,Nonnenwald,Posterlitz,Quellenreuth,Schieda,Schwarzenbach-Schwingen,Schwingen,Seulbitz,Stobersreuth,Stollen,Tannenlohe,Völkenreuth
 Landkreis Hof|Selbitz|Dörnthal,Hüttung,Kohlbühl,Rodesgrün,Sellanger,Stegenwaldhaus,Wachholderbusch,Weidesgrün
 Landkreis Hof|Sparneck|Einöden,Germersreuth,Immerseiben,Reinersreuth,Stockenroth
 Landkreis Hof|Stammbach|Fleisnitz,Förstenreuth,Gundlitz,Hampelshof,Horlachen,Metzlesdorf,Querenbach,Tennersreuth,Weickenreuth,Ölschnitz
@@ -3623,7 +3615,7 @@ Landkreis Kelheim|Kelheim|Affecking,Gronsdorf,Großberghofen,Gundelshausen,Herrn
 Landkreis Kelheim|Kirchdorf|Allhofen,Allmersdorf,Jauchshofen,Mantelkirchen,Obermantelkirchen,Pickenbach
 Landkreis Kelheim|Langquaid|Adlhausen,Gitting,Günzenhofen,Hellring,Kaltenberg,Kitzenhofen,Leitenhausen,Mitterschneidhart,Niederleierndorf,Oberleierndorf,Oberschneidhart,Paring,Schneidhart,Unterschneidhart
 Landkreis Kelheim|Mainburg|Ebrantshausen,Holzmannshausen,Kleingundertshausen,Leitenbach,Lindkirchen,Lohmühle,Marzill,Massenhausen,Meilenhausen,Meilenhofen,Niederhornbach,Oberempfenbach,Puttenhausen,Sandelzhausen,Schleißbach,Schüßelhausen,Unterempfenbach,Unterwangenbach,Wambach,Wolfertshausen
-Landkreis Kelheim|Neustadt a.d.Donau|Arresting,Bad Gögging,Eining,Forstdürnbuch,Geibenstetten,Hienheim,Irnsing,Marching,Neustadt an der Donau,Niederulrain,Oberulrain,Sittling,Umbertshausen,Wöhr
+Landkreis Kelheim|Neustadt a.d.Donau|Arresting,Bad Gögging,Eining,Forstdürnbuch,Geibenstetten,Hienheim,Irnsing,Marching,Niederulrain,Oberulrain,Sittling,Umbertshausen,Wöhr
 Landkreis Kelheim|Painten|Mantlach,Netzstall,Neulohe,Rothenbügl
 Landkreis Kelheim|Riedenburg|Altmühlmünster,Deising,Dieterzhofen,Echendorf,Echenried,Eggersberg,Flügelsberg,Frauenberghausen,Georgenbuch,Gundlfing,Haidhof,Harlanden,Hattenhausen,Jachenhausen,Keilsdorf,Meihern,Neuenkehrsdorf,Nußhausen,Oberhofen,Otterzhofen,Perletzhofen,Prunn,Sankt Gregor,Schaitdorf,Thann,Untereggersberg
 Landkreis Kelheim|Rohr i.NB|Alzhausen,Bachl,Gressau,Helchenbach,Högetsing,Kalteneck,Laaberberg,Oberbuch,Obereulenbach,Obergrünbach,Sallingberg,Schmiddorf,See,Ursbach,Waselsdorf
@@ -3645,7 +3637,6 @@ Landkreis Kitzingen|Prichsenstadt|Altenschönbach,Bimbach,Brünnau,Ilmbach,Järk
 Landkreis Kitzingen|Rödelsee|Fröhstockheim
 Landkreis Kitzingen|Schwarzach a.Main|Düllstadt,Gerlachshausen,Hörblach,Münsterschwarzach,Schwarzenau,Stadtschwarzach
 Landkreis Kitzingen|Seinsheim|Iffigheim,Tiefenstockheim,Wässerndorf
-Landkreis Kitzingen|Sulzfeld a.Main|Sulzfeld am Main
 Landkreis Kitzingen|Volkach|Astheim,Eichfeld,Escherndorf,Fahr,Gaibach,Hallburg,Köhler,Obervolkach,Oettershausen
 Landkreis Kitzingen|Wiesentheid|Geesdorf,Reupelsdorf,Untersambach
 Landkreis Kitzingen|Willanzheim|Herrnsheim,Hüttenheim
@@ -3676,7 +3667,7 @@ Landkreis Kronach|Mitwitz|Bächlein,Hassenberg,Hof an der Steinach,Horb an der S
 Landkreis Kronach|Nordhalben|Heinersberg,Ködelberg
 Landkreis Kronach|Pressig|Brauersdorf,Eila,Friedersdorf,Förtschendorf,Grössau,Marienroth,Posseck in Bayern,Rothenkirchen,Welitsch
 Landkreis Kronach|Schneckenlohe|Beikheim,Mödlitz
-Landkreis Kronach|Steinbach a.Wald|Steinbach am Wald,Windheim
+Landkreis Kronach|Steinbach a.Wald|Windheim
 Landkreis Kronach|Steinwiesen|Neufang,Nurn,Schlegelhaid
 Landkreis Kronach|Stockheim|Burggrub,Haig,Haßlach bei Kronach,Mostholz,Neukenroth,Reitsch
 Landkreis Kronach|Tettau|Alexanderhütte,Kleintettau,Sattelgrund,Schauberg
@@ -3808,7 +3799,7 @@ Landkreis Landshut|Baierbach|Altweg,Fahring,Oberhausbach,Oberschneitberg,Schlott
 Landkreis Landshut|Bayerbach b.Ergoldsbach|Feuchten,Gerabach,Greilsberg,Hölskofen,Mausham,Penk,Pram
 Landkreis Landshut|Bodenkirchen|Aich,Altfaltersberg,Bauernseiboldsdorf,Binabiburg,Binastorf,Bonbruck,Erdmannsdorf,Geratsfurt,Grienzing,Hainzing,Haunzenbergersöll,Hilling,Jesenkofen,Kolbing,Kresham,Langquart,Lehing,Litzelkirchen,Margarethen,Michlbach,Niederaich,Oberscheuern,Pfistersham,Psallersöd,Raffolding,Rothenwörth,Treidlkofen,Wifling,Willaberg
 Landkreis Landshut|Bruckberg|Almosenbachhorn,Bachhorn,Beutelhausen,Bruckbergerau,Edlkofen,Eggersdorf,Engelsdorf,Gündlkofen,Kreut,Oberlenghart,Pörndorf,Reichersdorf,Tondorf,Unterlenghart,Widdersdorf
-Landkreis Landshut|Buch a.Erlbach|Buch am Erlbach,Dirnaibach,Forstaibach,Freidling,Garnzell,Gastorf,Hartbeckerforst,Holzhäuseln,Niedererlbach,Obererlbach,Stünzbach,Thann,Vatersdorf
+Landkreis Landshut|Buch a.Erlbach|Dirnaibach,Forstaibach,Freidling,Garnzell,Gastorf,Hartbeckerforst,Holzhäuseln,Niedererlbach,Obererlbach,Stünzbach,Thann,Vatersdorf
 Landkreis Landshut|Eching|Berghofen,Haselfurth,Haunwang,Hofham,Kronwinkl,Thal,Viecht,Weixerau
 Landkreis Landshut|Ergolding|Albing,Hader,Kopfham,Kottingrohr,Käufelhofen,Oberglaim,Oberwaltenkofen,Pfarrkofen,Piflas,Unterglaim,Unterwaltenkofen
 Landkreis Landshut|Ergoldsbach|Dürrenhettenbach,Einkreut,Frauenwies,Iffelkofen,Jellenkofen,Kienoden,Kläham,Langenhettenbach,Martinshaun,Oberdörnbach,Osterhaun,Paindlkofen,Pfellnkofen,Prinkhofen,Reicherstetten,Siegensdorf,Stocka,Unterdörnbach,Wölflkofen
@@ -3825,7 +3816,7 @@ Landkreis Landshut|Niederaichbach|Gadham,Goldern,Hüttenkofen,Niederaichbacherau
 Landkreis Landshut|Obersüßbach|Haslau,Martinszell,Niedermünchen,Niedersüßbach,Obermünchen,Traich,Ulrichsried,Unterviecht,Zieglreuth
 Landkreis Landshut|Pfeffenhausen|Baldershausen,Dürnwind,Ebenhausen,Egglhausen,Engelsdorf,Hackendorf,Hintlaber,Koppenwall,Leitendorf,Ludmannsdorf,Lutzmannsdorf,Oberlauterbach,Pfaffendorf,Rainertshausen,Tabakried,Weikersdorf
 Landkreis Landshut|Postau|Armannsberg,Grießenbach,Hofberg,Irlsbrunn,Moosthann,Oberköllnbach,Unholzing,Unterköllnbach
-Landkreis Landshut|Rottenburg a.d.Laaber|Allgramsdorf,Bogenhausen,Eschenloh,Gebersdorf,Gisseltshausen,Högldorf,Inkofen,Kreuzthann,Muckendorf,Niedereulenbach,Niederhatzkofen,Niederroning,Oberhatzkofen,Oberroning,Pattendorf,Pfeffendorf,Pfifferling,Plunderdorf,Rahstorf,Ramersdorf,Rottenburg an der Laaber,Schaltdorf,Schirmbach,Schlamberg,Thomaszell,Unterlauterbach,Unterotterbach,Wolferthau
+Landkreis Landshut|Rottenburg a.d.Laaber|Allgramsdorf,Bogenhausen,Eschenloh,Gebersdorf,Gisseltshausen,Högldorf,Inkofen,Kreuzthann,Muckendorf,Niedereulenbach,Niederhatzkofen,Niederroning,Oberhatzkofen,Oberroning,Pattendorf,Pfeffendorf,Pfifferling,Plunderdorf,Rahstorf,Ramersdorf,Schaltdorf,Schirmbach,Schlamberg,Thomaszell,Unterlauterbach,Unterotterbach,Wolferthau
 Landkreis Landshut|Schalkham|Allersbach,Eggenpoint,Guntersdorf,Johannesbrunn,Leberskirchen,Möllersdorf,Westerskirchen
 Landkreis Landshut|Tiefenbach|Appersdorf,Ast,Binsham,Gütersdorf,Heidenkam,Mittergolding,Oberast,Oberbachham,Obergolding,Stachersdorf,Unterast,Unterbachham,Untergolding,Zweikirchen
 Landkreis Landshut|Velden|Alteberspoint,Atzmannsdorf,Babing,Biedenbach,Biedersdorf,Eberspoint,Egglsor,Erzmannsdorf,Geratsfurth,Grünzing,Hackelsberg,Hintelsberg,Hub,Kleinvelden,Kreuz,Maiersdorf,Mariaberg,Martinsberg,Nehaid,Oberensbach,Obervilslern,Raffelberg,Ruprechtsberg,Stockham,Untervilslern,Vilssöhl
@@ -3834,7 +3825,6 @@ Landkreis Landshut|Vilsheim|Freiing,Gundihausen,Kapfing,Kemoden,Kesselbach,Lange
 Landkreis Landshut|Weihmichl|Edenland,Gabisreuth,Halshorn,Oberneuhausen,Schachten,Stollnried,Unterneuhausen,Unterschwendt,Vorthan
 Landkreis Landshut|Weng|Hinzlbach,Hörmannsdorf,Hösacker,Moosberg,Pestendorf,Veitsbuch
 Landkreis Landshut|Wurmsham|Antholzen,Birkenstuhl,Eggersdorfen,Giftthal,Harham,Hasenreit,Lehrhub,Müllerthann,Niederwurmsham,Ostenthann,Pauluszell,Rammelsberg,Schleichwies,Seifriedswörth,Stockham,Vielhub
-Landkreis Landshut|Wörth a.d.Isar|Wörth an der Isar
 Landkreis Leer|Borkum|Ostland,Reede,Tüßkendör
 Landkreis Leer|Brinkum|Meerhausen
 Landkreis Leer|Bunde|Beschotenweg,Boen,Bunderhammrich,Bunderhee,Bunderhohehee,Ditzumerhammrich,Ditzumerverlaat,Heerenland,Heinitzpolder,Kloster Dünebroek,Landschaftspolder,Lüttjeloog,Wymeer
@@ -3885,10 +3875,10 @@ Landkreis Lichtenfels|Altenkunstadt|Burkheim,Maineck,Pfaffendorf,Prügel,Röhrig
 Landkreis Lichtenfels|Bad Staffelstein|Altenbanz,Banz,End,Grundfeld,Horsdorf,Kaider,Krögelhof,Kümmersreuth,Loffeld,Nedensdorf,Neubanz,Püchitz,Romansthal,Schwabthal,Serkendorf,Stadel,Stublang,Uetzing,Unnersdorf,Unterzettlitz,Vierzehnheiligen,Weisbrem,Wolfsdorf,Zilgendorf
 Landkreis Lichtenfels|Burgkunstadt|Eben,Ebneth,Flurholz,Gärtenroth,Hainweiher,Hainzendorf,Kaltenreuth,Kirchlein,Mainklein,Mainroth,Meuselsberg,Neuses am Main,Pfaffeggetten,Theisau,Weidnitz,Wildenroth
 Landkreis Lichtenfels|Ebensfeld|Dittersbrunn,Draisdorf,Döringstadt,Eggenbach,Erlhof,Kleukheim,Kutzenberg,Kümmel,Messenfeld,Neudorf bei Ebensfeld,Oberbrunn,Oberküps,Peusenhof,Pferdsfeld,Prächting,Sträublingshof,Ummersberg,Unterbrunn,Unterküps,Unterneuses
-Landkreis Lichtenfels|Hochstadt a.Main|Hochstadt am Main,Obersdorf,Thelitz,Wolfsloch
+Landkreis Lichtenfels|Hochstadt a.Main|Obersdorf,Thelitz,Wolfsloch
 Landkreis Lichtenfels|Lichtenfels|Buch am Forst,Degendorf,Eichig,Gnellenroth,Isling,Klosterlangheim,Kösten,Köttel,Lahm,Mistelfeld,Mönchkröttendorf,Oberlangheim,Oberwallenstadt,Reundorf,Rothmannsthal,Schney,Schönsreuth,Seubelsdorf,Stöcken,Tiefenroth,Trieb,Unterwallenstadt
 Landkreis Lichtenfels|Michelau i.OFr.|Lettenreuth,Neuensee,Oberreuth,Schwürbitz
-Landkreis Lichtenfels|Redwitz a.d.Rodach|Mannsgereuth,Obristfeld,Redwitz an der Rodach,Trainau,Unterlangenstadt
+Landkreis Lichtenfels|Redwitz a.d.Rodach|Mannsgereuth,Obristfeld,Trainau,Unterlangenstadt
 Landkreis Lichtenfels|Weismain|Bernreuth,Buckendorf,Erlach,Fesselsdorf,Geutenreuth,Giechkröttendorf,Großziegenfeld,Görau,Kaltenhausen b. Fesselsdorf,Kaspauer,Kleinziegenfeld,Krassach,Modschiedel,Mosenberg,Niesten,Schammendorf,Siedamsdorf,Wallersberg,Weiden b. Modschiedel,Wohnsig,Wunkendorf
 Landkreis Limburg-Weilburg|Bad Camberg|Dombach,Kuhbett,Oberselters,Schwickershausen,Würges
 Landkreis Limburg-Weilburg|Beselich|Christianshütte,Heckholzhausen,Schupbach
@@ -3898,7 +3888,7 @@ Landkreis Limburg-Weilburg|Elbtal|Dorchheim,Elbgrund,Hangenmeilingen,Mühlbach,W
 Landkreis Limburg-Weilburg|Elz|Malmeneich
 Landkreis Limburg-Weilburg|Hadamar|Niederhadamar,Niederweyer,Niederzeuzheim,Oberweyer,Oberzeuzheim
 Landkreis Limburg-Weilburg|Hünfelden|Dauborn,Eufingen,Hof Gnadenthal,Kirberg,Mensfelden,Neesbach,Ohren
-Landkreis Limburg-Weilburg|Limburg a.d.Lahn|Ahlbach,Dietkirchen,Eschhofen,Limburg an der Lahn,Lindenholzhausen,Linter,Offheim,Staffel
+Landkreis Limburg-Weilburg|Limburg a.d.Lahn|Ahlbach,Dietkirchen,Eschhofen,Lindenholzhausen,Linter,Offheim,Staffel
 Landkreis Limburg-Weilburg|Löhnberg|Niedershausen,Obershausen
 Landkreis Limburg-Weilburg|Mengerskirchen|Dillhausen,Probbach,Waldernbach,Winkels
 Landkreis Limburg-Weilburg|Merenberg|Barig,Barig-Selbenhausen,Reichenborn,Rückershausen,Selbenhausen
@@ -4173,14 +4163,13 @@ Landkreis Main-Kinzig-Kreis|Sinntal|Altengronau,Aspen Hütte,Breunings,Dietersho
 Landkreis Main-Kinzig-Kreis|Steinau an der Straße|Barackenhöfe,Bellings,Elisabethenhof,Hintersteinau,Klesberg,Marborn,Marjoß,Neustall,Oberullrichsberg,Rebsdorf,Sarrod,Seidenroth,Ulmbach,Unterullrichsberg,Wannhof,Ürzell
 Landkreis Main-Kinzig-Kreis|Wächtersbach|Aufenau,Hesseldorf,Leisenwald,Waldensberg,Weilers,Wittgenborn
 Landkreis Main-Spessart|Arnstein|Altbessingen,Binsbach,Büchold,Dattensoll,Gänheim,Halsheim,Müdesheim,Neubessingen,Reuchelheim,Ruppertzaint,Sachserhof,Schwebenried
-Landkreis Main-Spessart|Aura i.Sinngrund|Aura im Sinngrund,Deutelbach
+Landkreis Main-Spessart|Aura i.Sinngrund|Deutelbach
 Landkreis Main-Spessart|Birkenfeld|Billingshausen
-Landkreis Main-Spessart|Erlenbach b.Marktheidenfeld|Erlenbach bei Marktheidenfeld
 Landkreis Main-Spessart|Esselbach|Kredenbach,Steinmark
 Landkreis Main-Spessart|Eußenheim|Aschfeld,Bühler,Obersfeld,Schönarts
 Landkreis Main-Spessart|Fellen|Rengersbrunn,Wohnrod
 Landkreis Main-Spessart|Frammersbach|Habichsthal
-Landkreis Main-Spessart|Gemünden a.Main|Adelsberg,Aschenroth,Gemünden am Main,Harrbach,Kleingemünden,Kleinwernfeld,Langenprozelten,Massenbuch,Neutzenbrunn,Reichenbuch,Schaippach,Seifriedsburg,Wernfeld
+Landkreis Main-Spessart|Gemünden a.Main|Adelsberg,Aschenroth,Harrbach,Kleingemünden,Kleinwernfeld,Langenprozelten,Massenbuch,Neutzenbrunn,Reichenbuch,Schaippach,Seifriedsburg,Wernfeld
 Landkreis Main-Spessart|Gräfendorf|Eidenbacherhof,Michelau an der Saale,Schonderfeld,Weickersgrüben,Wolfsmünster
 Landkreis Main-Spessart|Hafenlohr|Einsiedel,Windheim
 Landkreis Main-Spessart|Hasloch|Barthelsmühle,Eisenhammer
@@ -4188,10 +4177,10 @@ Landkreis Main-Spessart|Karbach|Haghof
 Landkreis Main-Spessart|Karlstadt|Gambach,Heßlar,Karlburg,Mühlbach,Rettersbach
 Landkreis Main-Spessart|Karsbach|Höllrich,Weyersfeld
 Landkreis Main-Spessart|Kreuzwertheim|Röttbach,Unterwittbach,Wiebelbach
-Landkreis Main-Spessart|Lohr a.Main|Lohr am Main,Mariabuchen,Pflochsbach,Ruppertshütten,Sackenbach,Sendelbach,Sommerhof,Wombach
+Landkreis Main-Spessart|Lohr a.Main|Mariabuchen,Pflochsbach,Ruppertshütten,Sackenbach,Sendelbach,Sommerhof,Wombach
 Landkreis Main-Spessart|Marktheidenfeld|Altfeld,Eichenfürst,Glasofen,Marienbrunn,Michelrieth,Oberwittbach
 Landkreis Main-Spessart|Neuendorf|Nantenbach
-Landkreis Main-Spessart|Neustadt a.Main|Erlach,Neustadt am Main
+Landkreis Main-Spessart|Neustadt a.Main|Erlach
 Landkreis Main-Spessart|Obersinn|Emmerichsthal
 Landkreis Main-Spessart|Rothenfels|Bergrothenfels
 Landkreis Main-Spessart|Steinfeld|Waldzell
@@ -4461,7 +4450,7 @@ Landkreis Merzig-Wadern|Weiskirchen|Konfeld,Rappweiler,Thailen,Weierweiler,Zwalb
 Landkreis Miesbach|Bad Wiessee|Abwinkl,Alt Wiessee,Holz,Rohbogen,Sankt Quirin
 Landkreis Miesbach|Bayrischzell|Geitau,Hochkreut,Kloo,Riedler
 Landkreis Miesbach|Fischbachau|Achau,Ahrain,Aich,Auerberg,Birkenstein,Brunnfeld,Buchberg,Deisenried,Drachenthal,Durham,Dürnbach,Eben,Effenstädt,Elbach,Endstall,Faistenau,Grabenau,Grandau,Greisbach,Hagnberg,Hauserbichl,Holz,Hub,Hundham,Kogl,Lehen,Mühlkreit,Neumaier,Oppenried,Point,Pötzing,Sandbichl,Schreiern,Sonnenreuth,Stauden,Steingraben,Stipfing,Trach,Unteröd,Weißenbach,Wörnsmühl
-Landkreis Miesbach|Gmund a.Tegernsee|Am See,Antenloh,Buchleiten,Dürnbach,Eben,Festenbach,Finsterwald,Gasse,Giglberg,Gmund am Tegernsee,Kaltenbrunn,Kreuzstraße,Laffenthal,Lehen,Moosrain,Mühlthal,Oed,Ostin,Schuß
+Landkreis Miesbach|Gmund a.Tegernsee|Am See,Antenloh,Buchleiten,Dürnbach,Eben,Festenbach,Finsterwald,Gasse,Giglberg,Kaltenbrunn,Kreuzstraße,Laffenthal,Lehen,Moosrain,Mühlthal,Oed,Ostin,Schuß
 Landkreis Miesbach|Hausham|Agatharied,Bodenrain,Fehn,Freudenreich,Gschwendt,Hausruck,Holz,Kasten,Lehen,Leiten,Poschmühl,Tratberg
 Landkreis Miesbach|Holzkirchen|Asberg,Erlkam,Fellach,Föching,Großhartpenning,Haid,Heignkam,Inselkam,Kleinhartpenning,Kurzenberg,Marschall,Roggersdorf,Sufferloh,Thann
 Landkreis Miesbach|Irschenberg|Ahrain,Auerschmied,Aufham,Bernrain,Eyrain,Frauenried,Grundbach,Hackling,Heimberg,Hilgenrain,Hinterholz,Hofreuth,Imbuchs,Jedling,Karrenhub,Kirchsteig,Loiderding,Niederhasling,Niklasreuth,Oberhasling,Obholz,Oed,Pfisterer,Ponleiten,Radthal,Reichersdorf,Riedgasteig,Rieding,Salzhub,Schlachtham,Schwammham,Sinnetsbichl,Starzberg,Untermoos,Wendling,Wöllkam
@@ -4479,22 +4468,20 @@ Landkreis Miltenberg|Amorbach|Beuchen,Boxbrunn
 Landkreis Miltenberg|Collenberg|Fechenbach,Kirschfurt,Reistenhausen
 Landkreis Miltenberg|Eichenbühl|Guggenberg,Heppdiel,Pfohlbach,Riedern,Windischbuchen
 Landkreis Miltenberg|Elsenfeld|Eichelsbach,Himmelthal,Rück,Schippach
-Landkreis Miltenberg|Erlenbach a.Main|Erlenbach am Main,Mechenhard,Streit
+Landkreis Miltenberg|Erlenbach a.Main|Mechenhard,Streit
 Landkreis Miltenberg|Eschau|Hobbach,Hofwildensee,Oberaulenbach,Unteraulenbach,Wildensee,Wildenstein
 Landkreis Miltenberg|Faulbach|Gußhof
 Landkreis Miltenberg|Großheubach|Klotzenhof
 Landkreis Miltenberg|Kirchzell|Breitenbuch,Dörnbach,Ottorfszell,Preunschen,Watterbach
-Landkreis Miltenberg|Klingenberg a.Main|Klingenberg am Main,Röllfeld,Trennfurt
+Landkreis Miltenberg|Klingenberg a.Main|Röllfeld,Trennfurt
 Landkreis Miltenberg|Leidersbach|Volkersbrunn
 Landkreis Miltenberg|Miltenberg|Berndiel,Breitendiel,Mainbullau,Monbrunn,Schippach,Wenschdorf
 Landkreis Miltenberg|Mönchberg|Schmachtenberg
 Landkreis Miltenberg|Neunkirchen|Richelbach,Umpfenbach
-Landkreis Miltenberg|Obernburg a.Main|Obernburg am Main
 Landkreis Miltenberg|Schneeberg|Hambrunn,Zittenfelden
 Landkreis Miltenberg|Stadtprozelten|Hofthiergarten,Neuenbuch
-Landkreis Miltenberg|Sulzbach a.Main|Dornau,Soden,Sulzbach am Main
+Landkreis Miltenberg|Sulzbach a.Main|Dornau,Soden
 Landkreis Miltenberg|Weilbach|Eisenhammer,Reuenthal,Weckbach
-Landkreis Miltenberg|Wörth a.Main|Wörth am Main
 Landkreis Mittelsachsen|Augustusburg|Erdmannsdorf,Hennersdorf,Kunnersdorf
 Landkreis Mittelsachsen|Bobritzsch-Hilbersdorf|Niederbobritzsch,Oberbobritzsch,Sohra
 Landkreis Mittelsachsen|Brand-Erbisdorf|Buschhäuser,Erbisdorf,Gränitz,Himmelsfürst,Sankt Michaelis
@@ -4585,7 +4572,7 @@ Landkreis Märkisch-Oderland|Wriezen|Altgaul,Altkietz,Altwriezen,Beauregard,Bies
 Landkreis Märkisch-Oderland|Zechin|Baiersberg,Buschdorf,Eichenhof,Friedrichsaue,Gerickensberg,Lehmannshöfel,Siedlung,Zechiner Loose
 Landkreis Märkisch-Oderland|Zeschdorf|Alt Zeschdorf,Döbberin,Hohenjesar,Neuzeschdorf
 Landkreis Mühldorf a.Inn|Ampfing|Bubing,Dirlafing,Eichheim,Faitzenham,Heisting,Notzen,Salmannskirchen,Wimpasing
-Landkreis Mühldorf a.Inn|Aschau a.Inn|Aschau am Inn,Aschau-Werk,Bergham,Fraham,Howaschen,Kemating,Litzlkirchen,Roßessing,Thal,Thann,Troibach,Tödtenberg,Wolfgrub
+Landkreis Mühldorf a.Inn|Aschau a.Inn|Aschau-Werk,Bergham,Fraham,Howaschen,Kemating,Litzlkirchen,Roßessing,Thal,Thann,Troibach,Tödtenberg,Wolfgrub
 Landkreis Mühldorf a.Inn|Buchbach|Bonbruck,Eiching,Einstetting,Ella,Ellaberg,Endsgraben,Engolding,Felizenzell,Gumpolding,Hohending,Iglberg,Kagen,Kienrathing,Konrading,Langenloh,Loiperding,Niederloh,Odering,Peitzing,Ranoldsberg,Steeg,Sterneck,Witzling,Ziegelstadel
 Landkreis Mühldorf a.Inn|Egglkofen|Fürstberg,Harpolden,Hub,Piesenkofen,Rieberseck,Tegernbach
 Landkreis Mühldorf a.Inn|Erharting|Frixing,Günzkofen,Hart,Maxing,Vorberg
@@ -4594,7 +4581,7 @@ Landkreis Mühldorf a.Inn|Haag i.OB|Haag in Oberbayern,Lerchenberg,Sinkenbach,St
 Landkreis Mühldorf a.Inn|Heldenstein|Attenberg,Etzham,Friesenham,Glatzberg,Goldau,Haigerloh,Harting,Kühham,Niederheldenstein,Oberheldenstein,Söllerstadt
 Landkreis Mühldorf a.Inn|Jettenbach|Grafengars,Piesenham
 Landkreis Mühldorf a.Inn|Kirchdorf|Asen,Diezmanning,Fürholzen,Leimgruben,Moosham,Obermoosham,Rainbach,Untermoosham
-Landkreis Mühldorf a.Inn|Kraiburg a.Inn|Auersdorf,Bruckhäusln,Grieshäuseln,Gundelprechting,Guttenburg,Kolbing,Kraiburg am Inn,Lohen,Mauerschwang,Maximilian,Reiching,Reith,Schützenau,Trospeding,Untermenzing
+Landkreis Mühldorf a.Inn|Kraiburg a.Inn|Auersdorf,Bruckhäusln,Grieshäuseln,Gundelprechting,Guttenburg,Kolbing,Lohen,Mauerschwang,Maximilian,Reiching,Reith,Schützenau,Trospeding,Untermenzing
 Landkreis Mühldorf a.Inn|Lohkirchen|Brodfurt,Habersam,Hinkerding,Kriegstett,Oberrott,Sametsham,Wimpasing
 Landkreis Mühldorf a.Inn|Maitenbeth|Gassen,Innach,Lacken,Marsmeier,Niesberg,Straßmaier,Thal
 Landkreis Mühldorf a.Inn|Mettenheim|Amering,Ernsting,Gumattenkirchen,Hart,Langenstegham,Lochheim,Thal
@@ -4619,7 +4606,7 @@ Landkreis München|Aschheim|Dornach
 Landkreis München|Aying|Blindham,Dürrnhaar,Graß,Großhelfendorf,Göggenhofen,Heimathshofen,Kaltenbrunn,Kaps,Kleinhelfendorf,Kleinkarolinenfeld,Loibersdorf,Neuhelfendorf,Peiß,Trautshofen
 Landkreis München|Baierbrunn|Birg (Hohenschäftlarn),Buchenhain
 Landkreis München|Brunnthal|Faistenhaar,Hofolding,Kirchstockach,Otterloh,Portenläng
-Landkreis München|Garching b.München|Dirnismaning,Garching bei München,Hochbrück,Hochschul- und Forschungszentrum Garching,Kreuzstraße
+Landkreis München|Garching b.München|Dirnismaning,Hochbrück,Hochschul- und Forschungszentrum Garching,Kreuzstraße
 Landkreis München|Grasbrunn|Keferloh,Möschenfeld,Neukeferloh
 Landkreis München|Gräfelfing|Lochham
 Landkreis München|Grünwald|Brunnhaus,Geiselgasteig,Neugrünwald,Oberdill,Sauschütt,Wörnbrunn
@@ -4627,14 +4614,14 @@ Landkreis München|Haar|Gronsdorf,Ottendichl,Salmdorf
 Landkreis München|Hohenbrunn|Riemerling
 Landkreis München|Höhenkirchen-Siegertsbrunn|Siegertsbrunn,Wächterhof
 Landkreis München|Ismaning|Fischerhäuser,Rudolf-Steiner-Schule Ismaning
-Landkreis München|Kirchheim b.München|Heimstetten,Kirchheim bei München
+Landkreis München|Kirchheim b.München|Heimstetten
 Landkreis München|Neubiberg|Unterbiberg
 Landkreis München|Neuried|Forsthaus Kasten,Kasten
 Landkreis München|Oberhaching|Deisenhofen,Gerblinghausen,Jettenhausen,Kreuzpullach,Laufzorn,Oberbiberg,Ödenpullach
 Landkreis München|Oberschleißheim|Badersfeld,Bergl,Fasanerie,Hochmutting,Kreuzstraße,Lustheim,Mittenheim,Neuherberg,Siedlung Mittenheimer Straße 23 in Oberschleißheim (D-1-84-135-39#1),Siedlung Mittenheimer Straße 25 in Oberschleißheim (D-1-84-135-39#2),Siedlung Mittenheimer Straße 31 in Oberschleißheim (D-1-84-135-39#4)
 Landkreis München|Ottobrunn|Ottobrunn bei München
 Landkreis München|Planegg|Martinsried
-Landkreis München|Pullach i.Isartal|Adolf-Wenz-Siedlung,Großhesselohe,Höllriegelskreuth,Pullach im Isartal
+Landkreis München|Pullach i.Isartal|Adolf-Wenz-Siedlung,Großhesselohe,Höllriegelskreuth
 Landkreis München|Putzbrunn|Oedenstockach,Solalinden
 Landkreis München|Sauerlach|Altkirchen,Am Brand,Arget,Großeichenhausen,Gumpertsham,Gumpertshausen,Kleineichenhausen,Lanzenhaar,Lochhofen,Walchstatt
 Landkreis München|Schäftlarn|Ebenhausen,Hohenschäftlarn,Unterschäftlarn
@@ -4674,7 +4661,7 @@ Landkreis Neu-Ulm|Illertissen|Betlinshausen,Binsengraben,Dornweiler,Jedesheim
 Landkreis Neu-Ulm|Nersingen|Leibi,Oberfahlheim,Straß,Unterfahlheim
 Landkreis Neu-Ulm|Neu-Ulm|Breithofen,Burlafingen,Gerlenhofen,Harzerhof,Holzschwang,Häuserhof,Jedelhausen,Lindenhof b. Neu-Ulm,Ludwigsfeld,Pfuhl,Reutti,Riedhöfe,Schwaighofen,Stadtmitte,Werzlen,Weststadt
 Landkreis Neu-Ulm|Oberroth|Schalkshofen
-Landkreis Neu-Ulm|Pfaffenhofen a.d.Roth|Balmertshofen,Biberberg,Diepertshofen,Erbishofen,Hirbishofen,Kadeltshofen,Luippen,Pfaffenhofen an der Roth,Raunertshofen,Remmeltshofen,Volkertshofen
+Landkreis Neu-Ulm|Pfaffenhofen a.d.Roth|Balmertshofen,Biberberg,Diepertshofen,Erbishofen,Hirbishofen,Kadeltshofen,Luippen,Raunertshofen,Remmeltshofen,Volkertshofen
 Landkreis Neu-Ulm|Roggenburg|Ingstetten,Meßhofen,Schießen,Schleebuch
 Landkreis Neu-Ulm|Senden|Aufheim,Ay an der Iller,Freudenegg,Hittistetten,Witzighausen,Wullenstetten
 Landkreis Neu-Ulm|Unterroth|Galgen,Matzenhofen
@@ -4691,7 +4678,7 @@ Landkreis Neuburg-Schrobenhausen|Karlshuld|Grasheim,Jägersbühl,Kleinhohenried,
 Landkreis Neuburg-Schrobenhausen|Karlskron|Adelshausen,Aschelsried,Bofzheim,Brautlach,Deubling,Frankenmoosen,Grillheim,Josephenburg,Karlsruh,Mändlfeld,Pobenhausen,Probfeld,Walding
 Landkreis Neuburg-Schrobenhausen|Königsmoos|Klingsmoos,Ludwigsmoos,Obergrasheim,Obermaxfeld,Rosing,Stengelheim
 Landkreis Neuburg-Schrobenhausen|Langenmosen|Malzhausen,Winkelhausen
-Landkreis Neuburg-Schrobenhausen|Neuburg a.d.Donau|Altmannstetten,Bittenbrunn,Bürgerschwaige,Gietlhausen,Gnadenfeld,Heinrichsheim,Hessellohe,Joshofen,Laisacker,Marienheim,Maxweiler,Neuburg an der Donau,Ried b. Neuburg/Donau,Rohrenfeld,Röhrenhof,Sehensand,Untermaxfeld
+Landkreis Neuburg-Schrobenhausen|Neuburg a.d.Donau|Altmannstetten,Bittenbrunn,Bürgerschwaige,Gietlhausen,Gnadenfeld,Heinrichsheim,Hessellohe,Joshofen,Laisacker,Marienheim,Maxweiler,Ried b. Neuburg/Donau,Rohrenfeld,Röhrenhof,Sehensand,Untermaxfeld
 Landkreis Neuburg-Schrobenhausen|Oberhausen|Isenhofen,Kreut,Sinning,Stelzhof,Unterhausen
 Landkreis Neuburg-Schrobenhausen|Rennertshofen|Altstetten,Ammerfeld,Asbrunn,Bertoldsheim,Dittenfeld,Dünsberg,Ellenbrunn,Emskeim,Hatzenhofen,Hütting,Riedensheim,Siglohe,Stepperg,Treidelheim,Trugenhofen
 Landkreis Neuburg-Schrobenhausen|Rohrenfels|Ballersdorf,Doferhof,Ergertshausen,Wagenhofen
@@ -4748,8 +4735,8 @@ Landkreis Neustadt a.d.Aisch-Bad Windsheim|Markt Nordheim|Ulsenheim,Wüstphül
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Markt Taschendorf|Hombeer,Lachheim,Lerchenhöchstadt,Obersteinbach,Obertaschendorf,Wilhelminenberg
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Marktbergel|Bergel,Ermetzhof
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Münchsteinach|Abtsgreuth,Altershausen,Mittelsteinach,Neuebersbach,Pirkachshof
-Landkreis Neustadt a.d.Aisch-Bad Windsheim|Neuhof a.d.Zenn|Hirschneuses,Neuhof an der Zenn,Neukatterbach,Neuselingsbach,Neuziegenrück,Oberfeldbrecht,Rothenhof,Unterfeldbrecht,Vockenroth
-Landkreis Neustadt a.d.Aisch-Bad Windsheim|Neustadt a.d.Aisch|Chausseehaus,Eggensee,Hasenlohe,Herrnneuses,Kleinerlbach,Neustadt an der Aisch,Obernesselbach,Oberschweinach,Oberstrahlbach,Riedfeld,Schauerheim,Schellert,Unternesselbach,Unterschweinach,Unterstrahlbach,Virnsbergerhaag,Weiherhof
+Landkreis Neustadt a.d.Aisch-Bad Windsheim|Neuhof a.d.Zenn|Hirschneuses,Neukatterbach,Neuselingsbach,Neuziegenrück,Oberfeldbrecht,Rothenhof,Unterfeldbrecht,Vockenroth
+Landkreis Neustadt a.d.Aisch-Bad Windsheim|Neustadt a.d.Aisch|Chausseehaus,Eggensee,Hasenlohe,Herrnneuses,Kleinerlbach,Obernesselbach,Oberschweinach,Oberstrahlbach,Riedfeld,Schauerheim,Schellert,Unternesselbach,Unterschweinach,Unterstrahlbach,Virnsbergerhaag,Weiherhof
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Oberickelsheim|Geißlingen,Rodheim
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Obernzenn|Esbach,Hechelbach,Hörhof,Oberaltenbernheim,Rappenau,Straßenhof,Unteraltenbernheim,Unternzenn,Urphertshofen,Wessachhof,Wimmelbach
 Landkreis Neustadt a.d.Aisch-Bad Windsheim|Oberscheinfeld|Appenfelden,Herper,Herpersdorf,Herrnberg,Krettenbach,Mannhof,Oberambach,Prühl,Seufertshof,Stierhöfstetten
@@ -4777,7 +4764,7 @@ Landkreis Neustadt a.d.Waldnaab|Leuchtenberg|Bernrieth,Döllnitz,Hermannsberg,Kl
 Landkreis Neustadt a.d.Waldnaab|Luhe-Wildenau|Gelpertsricht,Glaubenwies,Grünau,Meisthof,Neudorf bei Luhe,Neumaierhof,Oberwildenau,Schwanhof,Seibertshof,Sperlhammer,Unterwildenau
 Landkreis Neustadt a.d.Waldnaab|Mantel|Rupprechtsreuth,Steinfels,Untermantel
 Landkreis Neustadt a.d.Waldnaab|Moosbach|Burgtreswitz,Etzgersrieth,Gaisheim,Gebhardsreuth,Gröbenstädt,Heumaden,Isgier,Niederland,Ragenwies,Rückersrieth,Saubersrieth,Tröbes,Ödpielmannsberg
-Landkreis Neustadt a.d.Waldnaab|Neustadt a.d.Waldnaab|Bergmühle,Neustadt an der Waldnaab,Radschinmühle
+Landkreis Neustadt a.d.Waldnaab|Neustadt a.d.Waldnaab|Bergmühle,Radschinmühle
 Landkreis Neustadt a.d.Waldnaab|Neustadt am Kulm|Baumgartenhof,Filchendorf,Firkenhof,Lämmershof,Mockersdorf,Scheckenhof,Tremau
 Landkreis Neustadt a.d.Waldnaab|Parkstein|Dorfhammerles,Hammerles,Niederndorf,Schwand,Sogritz
 Landkreis Neustadt a.d.Waldnaab|Pirk|Engleshof,Enzenrieth,Matzlesberg,Pischeldorf,Zeißau
@@ -4787,7 +4774,7 @@ Landkreis Neustadt a.d.Waldnaab|Püchersreuth|Auerberg,Botzersreuth,Eppenreuth,I
 Landkreis Neustadt a.d.Waldnaab|Schlammersdorf|Ernstfeld,Holzmühle,Menzlas,Naslitz,Starkenacker
 Landkreis Neustadt a.d.Waldnaab|Schwarzenbach|Pechhof
 Landkreis Neustadt a.d.Waldnaab|Speinshart|Barbaraberg,Dobertshof,Haselbrunn,Münchsreuth,Seitenthal,Tremmersdorf
-Landkreis Neustadt a.d.Waldnaab|Störnstein|Altenstadt an der Waldnaab,Ernsthof,Reiserdorf,Wöllershof
+Landkreis Neustadt a.d.Waldnaab|Störnstein|Ernsthof,Reiserdorf,Wöllershof
 Landkreis Neustadt a.d.Waldnaab|Theisseil|Aich,Edeldorf,Görnitz,Hammerharlesberg,Harlesberg,Letzau,Remmelberg,Roschau,Schammesrieth,Wilchenreuth
 Landkreis Neustadt a.d.Waldnaab|Trabitz|Burkhardsreuth,Bärnwinkel,Drahthammer,Feilersdorf,Feilershammer,Hub,Kurbersdorf,Pichlberg,Preißach,Weihersberg,Zessau
 Landkreis Neustadt a.d.Waldnaab|Tännesberg|Fischerhammer,Großenschwand,Kaufnitz,Kleinschwand,Pilchau,Voitsberg,Weinrieth,Woppenrieth
@@ -4988,7 +4975,7 @@ Landkreis Northeim|Northeim|Berwartshausen,Bühle,Denkershausen,Hammenstedt,Hohn
 Landkreis Northeim|Nörten-Hardenberg|Angerstein,Bishausen,Elvese,Langfast,Lütgenrode,Marienstein,Parensen,Rodetal,Sudershausen,Wolbrechtshausen
 Landkreis Northeim|Uslar|Ahlbershausen,Bollensen,Delliehausen,Dinkelhausen,Fürstenhagen,Gierswalde,Haje,Kammerborn,Offensen,Schlarpe,Schönhagen,Sohlingen,Vahle,Verliehausen,Volpriehausen,Wiensen
 Landkreis Nürnberger Land|Alfeld|Kauerheim,Lieritzhofen,Nonnhof,Pollanden,Seiboldstetten,Waller,Wettersberg
-Landkreis Nürnberger Land|Altdorf b.Nürnberg|Adelheim,Altdorf bei Nürnberg,Eismannsberg,Grünsberg,Hagenhausen,Hegnenberg,Ludersheim,Oberwellitzleithen,Prackenfels,Pühlheim,Rasch,Raschbach,Röthenbach bei Altdorf,Stürzelhof,Unterrieden,Unterwellitzleithen,Wappeltshofen,Weinhof,Ziegelhütte
+Landkreis Nürnberger Land|Altdorf b.Nürnberg|Adelheim,Eismannsberg,Grünsberg,Hagenhausen,Hegnenberg,Ludersheim,Oberwellitzleithen,Prackenfels,Pühlheim,Rasch,Raschbach,Röthenbach bei Altdorf,Stürzelhof,Unterrieden,Unterwellitzleithen,Wappeltshofen,Weinhof,Ziegelhütte
 Landkreis Nürnberger Land|Burgthann|Dörlbach,Ezelsdorf,Heinleinshof,Mimberg,Oberferrieden,Pattenhofen,Peunting,Rübleinshof,Schafhof,Unterferrieden,Westhaid
 Landkreis Nürnberger Land|Engelthal|Kruppach,Peuerling,Prosberg,Sendelbach
 Landkreis Nürnberger Land|Feucht|Hahnhof,Weiherhaus
@@ -4996,15 +4983,15 @@ Landkreis Nürnberger Land|Happurg|Deckersberg,Förrenbach,Gotzenberg,Hartenberg
 Landkreis Nürnberger Land|Hartenstein|Enzendorf,Großmeinfeld,Grünreuth,Güntersthal,Kleinmeinfeld,Loch,Lungsdorf,Neuensorg,Rupprechtstegen
 Landkreis Nürnberger Land|Hersbruck|Altensittenbach,Ellenbach,Großviehberg,Weiher
 Landkreis Nürnberger Land|Kirchensittenbach|Algersdorf,Aspertshofen,Dietershofen,Entmersberg,Kleedorf,Kreppling,Menschhof,Morsbrunn,Oberkrumbach,Siglitzhof,Steinensittenbach,Stöppach,Treuf,Unterkrumbach,Wallsdorf
-Landkreis Nürnberger Land|Lauf a.d.Pegnitz|Beerbach,Bullach,Dehnberg,Günthersbühl,Heuchling,Hub,Höflas,Kotzenhof,Kuhnhof,Lauf an der Pegnitz,Letten,Neunhof,Oedenberg,Rudolfshof,Seiboldshof,Simmelberg,Simonshofen,Tauchersreuth,Veldershof,Vogelhof,Weigenhofen
+Landkreis Nürnberger Land|Lauf a.d.Pegnitz|Beerbach,Bullach,Dehnberg,Günthersbühl,Heuchling,Hub,Höflas,Kotzenhof,Kuhnhof,Letten,Neunhof,Oedenberg,Rudolfshof,Seiboldshof,Simmelberg,Simonshofen,Tauchersreuth,Veldershof,Vogelhof,Weigenhofen
 Landkreis Nürnberger Land|Leinburg|Diepersdorf,Entenberg,Ernhofen,Gersberg,Oberhaidelbach,Pötzling,Scheerau,Unterhaidelbach,Weihersberg,Winn
-Landkreis Nürnberger Land|Neuhaus a.d.Pegnitz|Bärnhof,Finstermühle,Hammerschrott,Krottensee,Mosenberg,Neuhaus an der Pegnitz,Oberbrand,Rothenbruck
-Landkreis Nürnberger Land|Neunkirchen a.Sand|Kersbach,Neunkirchen am Sand,Rollhofen,Speikern,Weißenbach,Wolfshöhe
+Landkreis Nürnberger Land|Neuhaus a.d.Pegnitz|Bärnhof,Finstermühle,Hammerschrott,Krottensee,Mosenberg,Oberbrand,Rothenbruck
+Landkreis Nürnberger Land|Neunkirchen a.Sand|Kersbach,Rollhofen,Speikern,Weißenbach,Wolfshöhe
 Landkreis Nürnberger Land|Offenhausen|Egensbach,Hallershof,Hinterhaslach,Ittelshofen,Klingenhof,Kucha,Püscheldorf,Schrotsdorf
 Landkreis Nürnberger Land|Ottensoos|Rüblanden
 Landkreis Nürnberger Land|Pommelsbrunn|Appelsberg,Arzlohe,Bürtel,Fischbrunn,Guntersrieth,Hartmannshof,Hegendorf,Heldmannsberg,Heuchling,Hubmersberg,Hunas,Kleinviehberg,Mittelburg,Reckenberg,Stallbaum,Waizenfeld,Wüllersdorf
 Landkreis Nürnberger Land|Reichenschwand|Hansgörgl,Leuzenberg
-Landkreis Nürnberger Land|Röthenbach a.d.Pegnitz|Haimendorf,Himmelgarten,Renzenhof,Rockenbrunn,Röthenbach an der Pegnitz,Schnackenhof
+Landkreis Nürnberger Land|Röthenbach a.d.Pegnitz|Haimendorf,Himmelgarten,Renzenhof,Rockenbrunn,Schnackenhof
 Landkreis Nürnberger Land|Rückersdorf|Strengenberg
 Landkreis Nürnberger Land|Schnaittach|Bernhof,Engenthal,Enzenreuth,Franzenhammer,Freiröttenbach,Frohnhof,Germersberg,Großbellhofen,Götzlesberg,Haidling,Hedersdorf,Hormersdorf,Kirchröttenbach,Kleinbellhofen,Kreuzbühl,Lillinghof,Lochhof,Osternohe,Poppenhof,Rabenshof,Reingrub,Schloßberg,Siegersdorf,Untersdorf
 Landkreis Nürnberger Land|Schwaig b.Nürnberg|Behringersdorf,Malmsbach,Mittelbüg
@@ -5025,7 +5012,7 @@ Landkreis Oberallgäu|Dietmannsried|Atzenberg,Eichholz,Gemeinderied,Grasgrub,Hen
 Landkreis Oberallgäu|Durach|Bachtel,Bechen,Bodelsberg,Bubenberg,Fahls,Feuerschwenden,Furtenbach,Halde,Hermannsberg,Kottern,Linggen,Miesenbach,Rothen
 Landkreis Oberallgäu|Fischen i.Allgäu|Bad Au,Burgegg,Langenwang,Maderhalm,Oberthalhofen,Unterthalhofen
 Landkreis Oberallgäu|Haldenwang|Börwang,Fleschützen,Hinterkindberg,Oberwengen,Ottisried,Stielings,Unterwengen,Vocken,Vorderkindberg,Woldang
-Landkreis Oberallgäu|Immenstadt i.Allgäu|Adelharz,Akams,Bauhof,Bräunlings,Bühl am Alpsee,Diepolz,Dietzen,Eckarts,Flecken,Freibrechts,Freundpolz,Gnadenberg,Göhlenbühl,Hochreute,Hub,Immenstadt im Allgäu,Knottenried,Luitharz,Obereinharz,Ratholz,Rauhenzell,Reuter,See,Thanners,Trieblings,Untereinharz,Untergießen,Werdenstein,Zaumberg
+Landkreis Oberallgäu|Immenstadt i.Allgäu|Adelharz,Akams,Bauhof,Bräunlings,Bühl am Alpsee,Diepolz,Dietzen,Eckarts,Flecken,Freibrechts,Freundpolz,Gnadenberg,Göhlenbühl,Hochreute,Hub,Knottenried,Luitharz,Obereinharz,Ratholz,Rauhenzell,Reuter,See,Thanners,Trieblings,Untereinharz,Untergießen,Werdenstein,Zaumberg
 Landkreis Oberallgäu|Lauben|Ellensberg,Heising,Winklers
 Landkreis Oberallgäu|Missen-Wilhams|Aigis,Börlas,Geratsried,Wiederhofen
 Landkreis Oberallgäu|Obermaiselstein|Oberdorf
@@ -5290,7 +5277,7 @@ Landkreis Ostallgäu|Oberostendorf|Unterostendorf
 Landkreis Ostallgäu|Osterzell|Oberzell,Stocken,Ödwang
 Landkreis Ostallgäu|Pforzen|Hammerschmiede,Irpisdorf,Leinau
 Landkreis Ostallgäu|Pfronten|Halden,Heitlern,Kreuzegg,Meilingen,Rehbichel,Röfleuten,Ösch
-Landkreis Ostallgäu|Rettenbach a.Auerberg|Frankau,Meggenried,Rettenbach am Auerberg
+Landkreis Ostallgäu|Rettenbach a.Auerberg|Frankau,Meggenried
 Landkreis Ostallgäu|Rieden|Zellerberg
 Landkreis Ostallgäu|Rieden am Forggensee|Dietringen,Osterreinen
 Landkreis Ostallgäu|Ronsberg|Dingisweiler,Neuenried,Zadels
@@ -5299,7 +5286,7 @@ Landkreis Ostallgäu|Ruderatshofen|Apfeltrang,Geisenhofen,Heimenhofen,Hiemenhofe
 Landkreis Ostallgäu|Rückholz|Batzengschwenden,Eiterberg,Goldhasen,Guggemoosen,Holz,Holzleuten,Schönewald
 Landkreis Ostallgäu|Schwangau|Alterschrofen,Hohenschwangau,Horn b. Waltenhofen
 Landkreis Ostallgäu|Seeg|Albatsried,Aufmberg,Dederles,Engelbolz,Enzenstetten,Felben,Hack,Hitzleried,Hörmatzen,Kirchthal,Laich,Lobach,Oberreuten,Rennbothen,Riedegg,Seeger Schweinegg,Seeweiler,Unterreuten,Wiesleuten
-Landkreis Ostallgäu|Stötten a.Auerberg|Bachtal,Burgleiten,Dattenried,Echt,Geisenhofen,Heggen,Hofstatt,Löchlers,Mösten,Remnatsried,Riedhof,Salchenried,Settele,Stötten am Auerberg,Wies
+Landkreis Ostallgäu|Stötten a.Auerberg|Bachtal,Burgleiten,Dattenried,Echt,Geisenhofen,Heggen,Hofstatt,Löchlers,Mösten,Remnatsried,Riedhof,Salchenried,Settele,Wies
 Landkreis Ostallgäu|Stöttwang|Gennachhausen,Thalhofen
 Landkreis Ostallgäu|Unterthingau|Eichelschwang,Eschenau,Heuwang,Oberthingau,Reinhardsried
 Landkreis Ostallgäu|Untrasried|Eschers,Hinterschmalholz,Hopferbach,Hufschlag,Maneberg,Ostenried,Remmelsberg,Simmerberg,Sonderried,Waizenried
@@ -5343,7 +5330,7 @@ Landkreis Passau|Bad Griesbach i.Rottal|Adlmörting,Afham,Amsham,Aunham,Birchau,
 Landkreis Passau|Beutelsbach|Anham,Langenbruck,Obertillbach,Thal,Unterbeutelsbach,Unterholzen,Wimpassing
 Landkreis Passau|Breitenberg|Gollnerberg,Jägerbild,Obernstein,Sonningersteig
 Landkreis Passau|Büchlberg|Bärnreuth,Denkhof,Draxing,Eberhardsberg,Germannsberg,Gutwiesen,Haizing,Hartingerhof,Kammerwetzdorf,Manzenberg,Mitterbrünst,Nirsching,Oberkatzendorf,Praßreuth,Saderreut,Schwieging,Schwolgau,Tannöd,Unterkatzendorf,Windpassing,Witzingerreut,Wotzing
-Landkreis Passau|Eging a.See|Altenreit,Eging am See,Hörmannsdorf,Jederschwing,Loipfering,Rannetsreit
+Landkreis Passau|Eging a.See|Altenreit,Hörmannsdorf,Jederschwing,Loipfering,Rannetsreit
 Landkreis Passau|Fürstenstein|Birket,Einzenberg,Fälsching,Kapfham,Kollnberg,Nammering,Obernammering,Oberpolling,Peigerting,Sanzenhof,Steining,Unternammering,Unterpolling,Wendlberg
 Landkreis Passau|Fürstenzell|Aspertsham,Ausham,Bad Höhenstadt,Endau,Engertsham,Fünfeichen,Gadham,Gimplarn,Gurlarn,Hillermeier,Hörbertsham,Irsham,Kemating,Moosbauer,Munzing,Obersimbach,Obervoglarn,Parzham,Pfalsau,Reisching,Scheuereck,Untervoglarn,Wallham,Wartmanning,Würfelsdobl
 Landkreis Passau|Haarbach|Edt,Englöd,Eschlbach,Freiling,Grongörgen,Holzhäuser,Hötzenham,Kemauthen,Kroißen,Kronholz,Lerchen,Machham,Nussertsham,Oberthambach,Oberuttlau,Rainding,Riedertsham,Sachsenham,Schmelzenholzham,Schnellertsham,Unteruttlau,Winkl,Wolfakirchen
@@ -5354,7 +5341,7 @@ Landkreis Passau|Kirchham|Angloh,Ausbäck,Ort,Osterholzen,Reith,Schambach,Tuttin
 Landkreis Passau|Kößlarn|Brunndobl,Danglöd,Ebertsfelden,Griesingsreith,Hofreith,Holzhäuser,Hubreith,Malgertsham,Oed,Ragern,Thanham
 Landkreis Passau|Malching|Aigner,Bergham,Biberg,Bullarn,Engertsöd,Halmstein,Harham,Jetzenau,Niederhof,Nündorf,Reith,Urfar
 Landkreis Passau|Neuburg a.Inn|Aubach,Dommelstadl,Kopfsberg,Leithen,Neukirchen am Inn,Pfenningbach,Schmelzing,Steinhügel
-Landkreis Passau|Neuhaus a.Inn|Afham,Auggenthal,Höchfelden,Mattau,Mittich,Neuhaus am Inn,Niederschärding,Pumstetten,Reding,Vornbach,Weihmörting
+Landkreis Passau|Neuhaus a.Inn|Afham,Auggenthal,Höchfelden,Mattau,Mittich,Niederschärding,Pumstetten,Reding,Vornbach,Weihmörting
 Landkreis Passau|Neukirchen vorm Wald|Büchl,Dettenbachhof,Döttlmühle,Ferzing,Feuerschwendt,Fratzendorf,Friebersdorf,Geierhof,Geiermühle,Grubhof,Gstöcket,Götzendorf,Höherberg,Hötzendorf,Klessing,Kolomann,Loosing,Möging,Neppersdorf,Niesberg,Pilling,Pirking,Renning,Richting,Saag,Sanzing,Sickenthal,Stallham,Steinhof,Stelzmühle,Streifing,Vocking,Waldenreut,Waldenreuthermühle,Watzing,Weg,Weisching,Witzling
 Landkreis Passau|Obernzell|Ederlsdorf,Hinterhammer,Leopoldsdorf,Matzenberg,Nottau,Rackling
 Landkreis Passau|Ortenburg|Aisterham,Berghof,Bindering,Blasen,Blindham,Dorfbach,Göbertsham,Jaging,Kamm,Leingart,Maierhof,Moosham,Niederham,Oberiglbach,Parschalling,Sammerei,Schlott,Söldenau,Unteraicha,Unteriglbach,Vorderhainberg,Vorderschloß,Weweck,Wolfa,Würding
@@ -5389,14 +5376,14 @@ Landkreis Pfaffenhofen a.d.Ilm|Ilmmünster|Ilmried
 Landkreis Pfaffenhofen a.d.Ilm|Jetzendorf|Badershausen,Habertshausen,Hirschenhausen,Kemmoden,Lampertshausen,Priel,Thann,Volkersdorf
 Landkreis Pfaffenhofen a.d.Ilm|Manching|Niederstimm,Oberstimm,Pichl,Westenhausen
 Landkreis Pfaffenhofen a.d.Ilm|Münchsmünster|Forstpriel,Mitterwöhr,Niederwöhr,Oberwöhr,Wöhr
-Landkreis Pfaffenhofen a.d.Ilm|Pfaffenhofen a.d.Ilm|Angkofen,Bachappen,Eberstetten,Eckersberg,Eja,Eutenhofen,Förnbach,Fürholzen,Gittenbach,Griesbach,Gundamsried,Göbelsbach,Haimpertshofen,Heißmanning,Holzried,Kienhöfe,Kleinreichertshofen,Langenwiesen,Menzenbach,Niederscheyern,Pfaffenhofen an der Ilm,Radlhöfe,Schabenberg,Seugen,Siebenecken,Streitdorf,Tegernbach,Uttenhofen,Walkersbach,Weihern,Wolfsberg
+Landkreis Pfaffenhofen a.d.Ilm|Pfaffenhofen a.d.Ilm|Angkofen,Bachappen,Eberstetten,Eckersberg,Eja,Eutenhofen,Förnbach,Fürholzen,Gittenbach,Griesbach,Gundamsried,Göbelsbach,Haimpertshofen,Heißmanning,Holzried,Kienhöfe,Kleinreichertshofen,Langenwiesen,Menzenbach,Niederscheyern,Radlhöfe,Schabenberg,Seugen,Siebenecken,Streitdorf,Tegernbach,Uttenhofen,Walkersbach,Weihern,Wolfsberg
 Landkreis Pfaffenhofen a.d.Ilm|Pörnbach|Oberkreut,Puch,Raitbach
 Landkreis Pfaffenhofen a.d.Ilm|Reichertshausen|Bärnhausen,Gründholm,Gurnöbach,Haunstetten,Holzhof,Kreut,Langwaid,Lausham,Oberpaindorf,Paindorf,Pischelsdorf,Salmading
 Landkreis Pfaffenhofen a.d.Ilm|Reichertshofen|Agelsberg,Au am Aign,Dörfl,Gotteshofen,Hög,Langenbruck,Ronnweg,Sankt Kastl,Starkertshofen,Stöffel,Winden am Aign,Wolnhofen
 Landkreis Pfaffenhofen a.d.Ilm|Rohrbach|Buchersried,Fahlenbach,Fürholzen,Gambach,Ossenzhausen,Ottersried,Rinnberg
 Landkreis Pfaffenhofen a.d.Ilm|Scheyern|Durchschlacht,Edersberg,Euernbach,Fernhag,Gneisdorf,Grainstetten,Großenhag,Kreutenbach,Mitterscheyern,Oberdumeltshausen,Oberschnatterbach,Plöcking,Schmidhausen,Triefing,Unterschnatterbach,Vieth,Voglried,Winden bei Scheyern,Ziegelnöbach
 Landkreis Pfaffenhofen a.d.Ilm|Schweitenkirchen|Ampertshausen,Aufham,Dietersdorf,Dürnzhausen,Frickendorf,Girgenhausen,Großarreshausen,Gundelshausen,Güntersdorf,Hirschhausen,Holzhäuseln,Jetzelmaierhöfe,Kleinarreshausen,Loipersdorf,Loipertshausen,Niederthann,Oberthann,Preinersdorf,Preinerszell,Raffenstetten,Reisdorf,Schaching,Schelleneck,Schmiedhausen,Sünzhausen,Weikenhausen
-Landkreis Pfaffenhofen a.d.Ilm|Vohburg a.d.Donau|Auhöfe,Dünzing,Hartacker,Irsching,Knodorf,Menning,Oberdünzing,Oberhartheim,Pleiling,Rockolding,Vohburg an der Donau
+Landkreis Pfaffenhofen a.d.Ilm|Vohburg a.d.Donau|Auhöfe,Dünzing,Hartacker,Irsching,Knodorf,Menning,Oberdünzing,Oberhartheim,Pleiling,Rockolding
 Landkreis Pfaffenhofen a.d.Ilm|Wolnzach|Beigelswinden,Eschelbach an der Ilm,Gebrontshausen,Geroldshausen in der Hallertau,Gosseltshausen,Hagertshausen,Haushausen,Hirnsberg,Hüll,Jebertshausen,Kemnathen,Larsbach,Lehen,Lohwinden,Niedergeroldshausen,Niederlauterbach,Obergeroldshausen,Oberlauterbach,Stadelhof,Starzhausen,Stockberg,Straßhöfe,Thongräben
 Landkreis Potsdam-Mittelmark|Bad Belzig|Dippmannsdorf,Egelinde,Groß Briesen,Hagelberg,Hohenspringe,Klein Briesen,Klein Glien,Kuhlowitz,Lübnitz,Lüsse,Lütte,Neschholz,Preußnitz,Ragösen,Verlorenwasser,Weitzgrund,Werbig
 Landkreis Potsdam-Mittelmark|Beelitz|Beelitz-Heilstätten,Birkhorst,Busendorf,Elsholz,Fichtenwalde,Kanin,Klaistow,Körzin,Rieben,Salzbrunn,Schlunkendorf,Schäpe,Wittbrietzen,Zauchwitz
@@ -5522,7 +5509,7 @@ Landkreis Regen|Frauenau|Dörfl,Flanitz,Glaserhäuser,Lüfteneck,Moosau,Oberfrau
 Landkreis Regen|Geiersthal|Altnußberg,Fernsdorf,Frankenried,Hinterberg,Höfing,Kammersdorf,Oberberging,Oberleiten,Piflitz,Unterberging,Viertlweggrub
 Landkreis Regen|Gotteszell|Hochgart,Tafertsried
 Landkreis Regen|Kirchberg i.Wald|Berneck,Dösingerried,Ebertsried,Hangenleithen,Hintberg,Höllmannsried,Kaltenbrunn,Laiflitz,Mitterbichl,Obernaglbach,Raindorf,Reichertsried,Schleeberg,Sommersberg,Untermitterdorf,Unternaglbach,Unterneumais,Wolfau
-Landkreis Regen|Kirchdorf i.Wald|Abtschlag,Kirchdorf im Wald,Schlag,Trametsried
+Landkreis Regen|Kirchdorf i.Wald|Abtschlag,Schlag,Trametsried
 Landkreis Regen|Kollnburg|Allersdorf,Ayrhof,Baierweg,Bramersberg,Dörfl,Einweging,Fellerhof,Göttlhof,Haiderhof,Hinterberg,Hinterviechtach bei Kollnburg,Händlern,Kirchaitnach,Liebhof,Maierhof,Müllersdorf,Münchshöfen,Neidling,Nößling,Oberhofen,Ogleinsmais,Ramersdorf,Rechertsried,Reichsdorf,Rieglkopf,Schwarzgrub,Schweinberg,Sedlhof,Taging,Tanzstadl,Vorderau,Weinhartsau,Winklern
 Landkreis Regen|Langdorf|Außenried,Brandten,Kohlnberg,Nebelberg
 Landkreis Regen|Lindberg|Altpocher,Beihof,Buchenau,Jungmaierhütte,Lehen,Lindbergmühle,Ludwigsthal,Oberlindbergmühle,Oberzwieselau,Pochermühle,Regenhütte,Schleicher,Spiegelhütte,Unterzwieselau,Zwieslerwaldhaus
@@ -5536,7 +5523,7 @@ Landkreis Regen|Zachenberg|Fratersdorf,Giggenreid,Gottlesried,Hinterdietzberg,Kl
 Landkreis Regen|Zwiesel|Bärnzell,Glasberg,Glaserhütte,Griesbach,Innenried,Klautzenbach,Lichtenthal,Reisachmühle,Theresienthal,Zwieselberg
 Landkreis Regensburg|Altenthann|Forstmühle,Gottesberg,Göppenbach,Haid,Heuweg,Oberlichtenwald,Orhalm,Pfaffenfang,Röhren,Spitz,Stubenthal,Unterlichtenwald,Willmannsberg
 Landkreis Regensburg|Aufhausen|Gansbach,Hellkofen,Irnkofen,Niederhinkofen,Petzkofen,Triftlfing
-Landkreis Regensburg|Bach a.d.Donau|Bach an der Donau,Demling,Frengkofen
+Landkreis Regensburg|Bach a.d.Donau|Demling,Frengkofen
 Landkreis Regensburg|Barbing|Altach,Auburg,Eltheim,Friesheim,Illkofen,Mitterheising,Sarching
 Landkreis Regensburg|Beratzhausen|Aichhof,Beilnstein,Buxlohe,Dettenhofen,Grünschlag,Haderlsdorf,Hatzenhof,Hinterkreith,Hinterthann,Illkofen,Mausheim,Mitterkreith,Neuhöfl,Niesaß,Oberpfraundorf,Paarstadl,Rechberg,Rufenried,Schrotzhofen,Schwarzenthonhausen,Unterlichtenberg,Unterpfraundorf,Uttenhof,Vorderkreith
 Landkreis Regensburg|Bernhardswald|Adlmannstein,Bosruck,Dingstetten,Ebenpaint,Grubberg,Hackenberg,Hauzendorf,Hinterappendorf,Klammer,Kürn,Lambertsneukirchen,Lehen,Löchl,Obermeißling,Pettenreuth,Pillmannsberg,Plitting,Rammersberg,Reiting,Samberg,Schneckenreuth,Seibersdorf,Weg,Wolferszwing,Wulkersdorf
@@ -5547,7 +5534,7 @@ Landkreis Regensburg|Donaustauf|Reiflding,Sulzbach an der Donau
 Landkreis Regensburg|Duggendorf|Auf’nberg,Gessendorf,Girnitz,Grossduggendorf,Heitzenhofen,Judenberg,Kleinduggendorf,Kleinheitzenhofen,Schwarzhöfe,Weichseldorf,Wischenhofen
 Landkreis Regensburg|Hagelstadt|Gailsbach,Langenerling
 Landkreis Regensburg|Hemau|Aichkirchen,Altenlohe,Altmannshof,Arnest,Berletzhof,Bügerl,Bügerleithen,Eckertshof,Eibrunn,Eichlberg,Eiersdorf,Einöd,Flinksberg,Grafenstadl,Gundelshofen,Gänsbügl,Haid,Hamberg,Hennhüll,Hohenschambach,Klapfenberg,Klingen,Kochenthal,Kollersried,Kumpfhof,Langenkreith,Laufenthal,Lautersee,Mungenhofen,Oberhöfen,Oberreiselberg,Pellndorf,Pittmannsdorf,Rieb,Schacha,Schneckenhof,Schneitbügl,Stadla,Thonlohe,Tiefenhüll,Wachenhofen,Wangsaß,Winkl,Wollmannsdorf
-Landkreis Regensburg|Holzheim a.Forst|Brunoder,Bubach am Forst,Holzheim am Forst,Irnhüll,Traidenloh,Trischlberg,Unterbrunn,Widlthal
+Landkreis Regensburg|Holzheim a.Forst|Brunoder,Bubach am Forst,Irnhüll,Traidenloh,Trischlberg,Unterbrunn,Widlthal
 Landkreis Regensburg|Kallmünz|Dallackenried,Dinau,Großheitzenhofen,Karolinenhütte,Krachenhausen,Mühlschlag,Oberwahrberg,Schirndorf,Traidendorf
 Landkreis Regensburg|Köfering|Egglfing
 Landkreis Regensburg|Laaber|Bergstetten,Edlhausen,Endlfeld,Endorf,Großetzenberg,Hinterzhof,Kleinetzenberg,Polzhausen,Schaggenhofen,Schernried,Schrammlhof,Waldetzenberg,Weißenkirchen,Windschnur
@@ -5571,7 +5558,7 @@ Landkreis Regensburg|Thalmassing|Luckenpaint,Neueglofsheim,Obermassing,Obersandi
 Landkreis Regensburg|Wenzenbach|Fußenberg,Grünthal,Hauzenstein,Oberlindhof,Probstberg,Roith,Thanhausen
 Landkreis Regensburg|Wiesent|Dietersweg,Ettersdorf,Kruckenberg,Waffenschmiede
 Landkreis Regensburg|Wolfsegg|Maisthal,Sachsenhofen,Sillen,Wall
-Landkreis Regensburg|Wörth a.d.Donau|Hintergrub,Hofdorf,Hornau,Hungersacker,Hungersdorf,Kiefenholz,Oberachdorf,Pfraumbaum,Vordergrub,Waxenberg,Weihern,Wörth an der Donau,Zinzendorf
+Landkreis Regensburg|Wörth a.d.Donau|Hintergrub,Hofdorf,Hornau,Hungersacker,Hungersdorf,Kiefenholz,Oberachdorf,Pfraumbaum,Vordergrub,Waxenberg,Weihern,Zinzendorf
 Landkreis Regensburg|Zeitlarn|Laub,Pentlhof,Regendorf,Riesen,Sandheim
 Landkreis Region Hannover|Barsinghausen|Bantorf,Barrigsen,Eckerde,Groß Munzel,Großgoltern,Göxe,Hohenbostel,Holtensen bei Wunstorf,Landringhausen,Langreder,Luttringhausen,Nordgoltern,Ostermunzel,Wichtringhausen,Winninghausen
 Landkreis Region Hannover|Burgdorf|Ahrbeck,Beinhorn,Dachtmissen,Ehlershausen,Heeßel,Hülptingsen,Klein Otze,Klein Schillerslage,Otze,Ramlingen,Schillerslage,Sorgensen,Weferlingsen
@@ -5729,7 +5716,7 @@ Landkreis Rhein-Neckar-Kreis|Schriesheim|Altenbach,Ursenbach
 Landkreis Rhein-Neckar-Kreis|Schönau|Altneudorf
 Landkreis Rhein-Neckar-Kreis|Schönbrunn|Allemühl,Moosbrunn,Ober-Haag,Oberallemühl,Oberschönbrunn,Unterallemühl,Unterhaag,Unterschönbrunn
 Landkreis Rhein-Neckar-Kreis|Sinsheim|Adersbach,Dühren,Ehrstädt,Eschelbach,Hilsbach,Hoffenheim,Reihen,Steinsfurt,Waldangelloch
-Landkreis Rhein-Neckar-Kreis|St. Leon-Rot|Sankt Leon,Sankt Leon-Rot
+Landkreis Rhein-Neckar-Kreis|St. Leon-Rot|Sankt Leon
 Landkreis Rhein-Neckar-Kreis|Waibstadt|Daisbach
 Landkreis Rhein-Neckar-Kreis|Weinheim|Großsachsen,Heiligkreuz,Hohensachsen,Lützelsachsen,Nächstenbach,Oberflockenbach,Oberkunzenbach,Rippenweier,Ritschweier,Rittenweier,Steinklingen,Wünschmichelbach
 Landkreis Rhein-Neckar-Kreis|Wiesenbach|Langenzell
@@ -5757,10 +5744,10 @@ Landkreis Rheingau-Taunus-Kreis|Schlangenbad|Bärstadt,Georgenborn,Hausen vor de
 Landkreis Rheingau-Taunus-Kreis|Taunusstein|Bleidenstadt,Niederlibbach,Orlen,Seitzenhahn,Watzhahn,Wehen,Wingsbach
 Landkreis Rheingau-Taunus-Kreis|Waldems|Bermbach,Niederems,Reinborn,Steinfischbach,Wüstems
 Landkreis Rheingau-Taunus-Kreis|Walluf|Niederwalluf,Oberwalluf
-Landkreis Rhön-Grabfeld|Bad Königshofen i.Grabfeld|Althausen,Bad Königshofen im Grabfeld,Eyershausen,Gabolshausen,Ipthausen,Merkershausen,Untereßfeld
-Landkreis Rhön-Grabfeld|Bad Neustadt a.d.Saale|Bad Neuhaus an der Saale,Bad Neustadt an der Saale,Brendlorenzen,Dürrnhof,Herschfeld,Lebenhan,Löhrieth,Mühlbach,Schweinhof
+Landkreis Rhön-Grabfeld|Bad Königshofen i.Grabfeld|Althausen,Eyershausen,Gabolshausen,Ipthausen,Merkershausen,Untereßfeld
+Landkreis Rhön-Grabfeld|Bad Neustadt a.d.Saale|Bad Neuhaus an der Saale,Brendlorenzen,Dürrnhof,Herschfeld,Lebenhan,Löhrieth,Mühlbach,Schweinhof
 Landkreis Rhön-Grabfeld|Bastheim|Braidbach,Geckenau,Reyersbach,Rödles,Simonshof,Unterwaldbehrungen,Wechterswinkel
-Landkreis Rhön-Grabfeld|Bischofsheim i.d.Rhön|Bischofsheim in der Rhön,Klosterkreuzberg,Oberweißenbrunn,Unterweißenbrunn,Wegfurt
+Landkreis Rhön-Grabfeld|Bischofsheim i.d.Rhön|Klosterkreuzberg,Oberweißenbrunn,Unterweißenbrunn,Wegfurt
 Landkreis Rhön-Grabfeld|Fladungen|Brüchs,Heufurt,Leubach,Oberfladungen,Rüdenschwinden,Sands,Weimarschmieden
 Landkreis Rhön-Grabfeld|Großbardorf|Rügshof
 Landkreis Rhön-Grabfeld|Großeibstadt|Kleineibstadt
@@ -5776,26 +5763,23 @@ Landkreis Rhön-Grabfeld|Nordheim v.d.Rhön|Neustädtles
 Landkreis Rhön-Grabfeld|Oberelsbach|Ginolfs,Sondernau,Unterelsbach,Weisbach
 Landkreis Rhön-Grabfeld|Oberstreu|Mittelstreu
 Landkreis Rhön-Grabfeld|Ostheim v.d.Rhön|Oberwaldbehrungen
-Landkreis Rhön-Grabfeld|Saal a.d.Saale|Saal an der Saale
 Landkreis Rhön-Grabfeld|Sandberg|Kilianshof,Langenleiten,Schmalwasser,Waldberg
-Landkreis Rhön-Grabfeld|Schönau a.d.Brend|Burgwallbach,Kollertshof,Schönau an der Brend
-Landkreis Rhön-Grabfeld|Sondheim v.d.Rhön|Sondheim vor der Rhön
+Landkreis Rhön-Grabfeld|Schönau a.d.Brend|Burgwallbach,Kollertshof
 Landkreis Rhön-Grabfeld|Strahlungen|Reinfeldshof
-Landkreis Rhön-Grabfeld|Sulzdorf a.d.Lederhecke|Brennhausen,Obereßfeld,Schwanhausen,Serrfeld,Sternberg im Grabfeld,Sulzdorf an der Lederhecke,Zimmerau
+Landkreis Rhön-Grabfeld|Sulzdorf a.d.Lederhecke|Brennhausen,Obereßfeld,Schwanhausen,Serrfeld,Sternberg im Grabfeld,Zimmerau
 Landkreis Rhön-Grabfeld|Sulzfeld|Kleinbardorf
 Landkreis Rhön-Grabfeld|Trappstadt|Alsleben b. Trappstadt
 Landkreis Rhön-Grabfeld|Willmars|Oberfilke,Unterfilke,Völkershausen
 Landkreis Rhön-Grabfeld|Wülfershausen a.d.Saale|Eichenhausen
 Landkreis Rosenheim|Albaching|Kalteneck,Schacha,Thal,Utzenbichl
 Landkreis Rosenheim|Amerang|Achen,Asham,Durrhausen,Ellerding,Evenhausen,Halfurt,Hinterholzmühle,Kammer,Kirchensur,Meilham,Moosham,Oberratting,Obersur,Oed,Scherer,Spittersberg,Stacherding,Taiding,Thalham,Ullerting,Unterratting,Wolfsberg
-Landkreis Rosenheim|Aschau i.Chiemgau|Achen,Aschach,Aschau im Chiemgau,Aufham,Brückl,Einfang,Engerndorf,Fellerer,Grattenbach,Grenzhub,Hainbach,Haindorf,Hammerbach,Hohenaschau im Chiemgau,Huben,Innerwald,Mitterleiten,Oberweidach,Pölching,Sachrang,Schoßrinn,Schwarzenstein,Stockham,Weidach,Weidachwies
+Landkreis Rosenheim|Aschau i.Chiemgau|Achen,Aschach,Aufham,Brückl,Einfang,Engerndorf,Fellerer,Grattenbach,Grenzhub,Hainbach,Haindorf,Hammerbach,Hohenaschau im Chiemgau,Huben,Innerwald,Mitterleiten,Oberweidach,Pölching,Sachrang,Schoßrinn,Schwarzenstein,Stockham,Weidach,Weidachwies
 Landkreis Rosenheim|Babensham|Allersing,Altbabensham,Bergham,Brudersham,Bärnham,Gumpertsham,Herbstham,Hopfgarten,Irlham,Kirchloibersdorf,Kling,Loibersdorf,Mernham,Neudeck,Oberbierwang,Odelsham,Puttenham,Reichertsham,Sankt Leonhard,Schambach,Sillerding,Stürzlham,Titlmoos,Tötzham,Weikertsham,Würmertsham
 Landkreis Rosenheim|Bad Aibling|Adlfurt,Berbling,Ellmosen,Fachendorf,Gröben,Heimathsberg,Heinrichsdorf,Markfeld,Mietraching,Mitterham,Thalacker,Thürham,Unterheufeld,Weg,Westerham,Willing,Wilpasing
 Landkreis Rosenheim|Bad Endorf|Antwort,Bergham,Dorfbach,Eisenbartling,Engling,Hemberg,Hemhof,Hirnsberg,Hofham,Holzberg,Jolling,Kurf,Landing,Letten,Mauerkirchen im Chiemgau,Moosen,Pelham,Stauden,Stock,Ströbing,Teisenham,Thal,Thalkirchen,Ulperting,Unterachthal
 Landkreis Rosenheim|Bad Feilnbach|Achthal,Altofing,Au bei Bad Aibling,Bindham,Blindenried,Brettschleipfen,Brodhub,Derndorf,Dettendorf,Eckersberg,Eulenau,Eulenthal,Forsting,Gottschalling,Gundelsberg,Jenbach,Kemathen,Kronwitt,Kutterling,Lippertskirchen,Litzldorf,Moosbichl,Oberhofen,Schweigfeld,Sonnenham,Thalham,Wiechs
-Landkreis Rosenheim|Bernau a.Chiemsee|Bernau am Chiemsee,Giebing,Hittenkirchen,Irschen,Schörging,Weisham,Westerham
+Landkreis Rosenheim|Bernau a.Chiemsee|Giebing,Hittenkirchen,Irschen,Schörging,Weisham,Westerham
 Landkreis Rosenheim|Brannenburg|Aich,Antritt,Biber,Degerndorf am Inn,Erlach,Gmain bei Weidach,Grießenbach,Großbrannenberg,Kirchbach,Milbing,Mooseck,Steg,Unterflintsbach,Weidach,Wiesenhausen
-Landkreis Rosenheim|Breitbrunn a.Chiemsee|Breitbrunn am Chiemsee
 Landkreis Rosenheim|Bruckmühl|Ginsham,Götting,Heufeld,Hinrichssegen,Hornau,Högling,Kirchdorf am Haunpold,Maxhofen,Menkhofen,Mittenkirchen,Noderwiechs,Oberholzham,Oberleiten,Oberstaudhausen,Oberwall,Orthofen,Sonnenwiechs,Thalham,Unterholzham,Unterstaudhausen,Unterwall,Waith,Weidach,Weihenlinden,Wiechs
 Landkreis Rosenheim|Chiemsee|Frauenchiemsee,Herrnchiemsee
 Landkreis Rosenheim|Edling|Allmannsberg,Attelthal,Brandstätt,Breitmoos,Hart,Oberunterach,Oberübermoos,Roßhart,Rudering,Steppach,Unterhub,Unterubermoos,Unterunterach,Wolfrain,Ötz
@@ -5806,23 +5790,23 @@ Landkreis Rosenheim|Flintsbach a.Inn|Asten,Burg Unter-Falkenstein,Einöden,Hafna
 Landkreis Rosenheim|Frasdorf|Acherting,Brandenberg,Dösdorf,Ebnat,Ginnerting,Greimelberg,Hendenham,Laiming,Leitenberg,Niesberg,Pfannstiel,Pfifferloh,Riedlach,Ruckerting,Stupfa,Stätt,Tauern,Thal,Umrathshausen,Walkerting,Wessen,Westerndorf,Wildenwart
 Landkreis Rosenheim|Griesstätt|Bergham,Goßmaning,Haid,Kettenham,Kolbing,Kornau,Laiming,Moosham,Raming,Schmiding,Straß,Untermühle,Viehhausen,Wechselberg,Weichselbaum,Wörlham
 Landkreis Rosenheim|Großkarolinenfeld|Alsterloh,Ametsbichl,Auberg,Buchrain,Deutlstätt,Ester,Filzen,Gröben,Haslau,Hilperting,Hohenaich,Hub,Jarezöd,Kirchsteig,Kolberg,Krabichl,Mühlbach,Oed,Petzenbichl,Schlimmerstätt,Tattenhausen,Thann,Thonbichl,Vogl,Zweckstätt,Ödenhub
-Landkreis Rosenheim|Gstadt a.Chiemsee|Gollenshausen am Chiemsee,Gstadt am Chiemsee,Lienzing,Mitterndorf,Preinersdorf
+Landkreis Rosenheim|Gstadt a.Chiemsee|Gollenshausen am Chiemsee,Lienzing,Mitterndorf,Preinersdorf
 Landkreis Rosenheim|Halfing|Eberloh,Fahrtbichl,Forchtenegg,Gehersberg,Gunzenham,Hangendobl,Hofbau,Holzham,Immling,Irlach,Lungham,Racherting,Rundorf,Sonnendorf,Wölkham
 Landkreis Rosenheim|Höslwang|Almertsham,Arxtham,Dielstein,Gachensolden,Guntersberg,Obergebertsham,Sonnering,Straß,Stürzlham,Untergebertsham,Unterhöslwang,Zunham
 Landkreis Rosenheim|Kiefersfelden|Blaikofen,Dörfl,Hödenau,Kiefer,Kohlstatt,Kurz,Mühlbach,Oberköln,Rechenau,Schwaighof,Unterköln,Wildgrub
 Landkreis Rosenheim|Kolbermoor|Aiblingerau,Lohholz,Mitterhart,Oberhart,Willingerau
 Landkreis Rosenheim|Neubeuern|Altenbeuern,Fröschenthal,Gasteig,Hinterhör,Holzham,Neuwöhr,Pinswang,Saxenkam,Schlecht,Winkl
-Landkreis Rosenheim|Nußdorf a.Inn|Buchberg,Entbach,Gritschen,Haus,Labach,Nußdorf am Inn,Sonnhart,Windshausen,Überfilzen
+Landkreis Rosenheim|Nußdorf a.Inn|Buchberg,Entbach,Gritschen,Haus,Labach,Sonnhart,Windshausen,Überfilzen
 Landkreis Rosenheim|Oberaudorf|Agg,Antritt,Buchau,Fahrenberg,Hocheck,Niederaudorf,Rechenau,Regau,Riedleiten,Schweinsteig,Wall,Watschöd,Wechselberg,Zimmerau
 Landkreis Rosenheim|Pfaffing|Eschlbach,Farrach,Faßrain,Filzen,Forsting,Giglberg,Hilgen,Reith,Rettenbach b. Pfaffing,Springlbach,Steinhart,Thal,Untermoos,Werfling
-Landkreis Rosenheim|Prien a.Chiemsee|Arbing,Atzing,Bachham,Bauernberg,Eglwiesen,Elperting,Ernsdorf,Hallwang,Harras,Herrnberg,Kaltenbach,Leiten,Mitterweg,Munzing,Mupferting,Mühlthal,Osternach,Prien am Chiemsee,Prutdorf,Siegharting,Siggenham,Stock,Trautersdorf,Urschalling,Westernach
+Landkreis Rosenheim|Prien a.Chiemsee|Arbing,Atzing,Bachham,Bauernberg,Eglwiesen,Elperting,Ernsdorf,Hallwang,Harras,Herrnberg,Kaltenbach,Leiten,Mitterweg,Munzing,Mupferting,Mühlthal,Osternach,Prutdorf,Siegharting,Siggenham,Stock,Trautersdorf,Urschalling,Westernach
 Landkreis Rosenheim|Prutting|Aich,Altstein,Bamham,Haberspoint,Haidbichl,Haidham,Inzenham,Irlach,Langhausen,Niedernburg,Rotterstetten,Salmering,Spieln,Wolkering
 Landkreis Rosenheim|Ramerberg|Sendling,Zellerreit
 Landkreis Rosenheim|Raubling|Aich,Breiteich,Fernöd,Großholzhausen,Grünthal,Hochstraß,Holz,Huben,Kleinholzhausen,Nicklheim,Pfraundorf,Redenfelden,Reischenhart,Sonnenholz,Spöck,Steinbruck,Stocka,Taigscheid,Thalreit
 Landkreis Rosenheim|Riedering|Abersdorf,Ackersdorf,Anisag,Bergham,Beuerberg,Daxlberg,Ecking,Esbaum,Farnach,Gögging,Irnkam,Kohlstatt,Mangolding,Mühlham,Niedermoosen,Oberachthal,Oberputting,Parnsberg,Patting,Persdorf,Petzgersdorf,Pfaffenbichl,Pietzenkirchen,Pietzing,Reitl,Schmidham,Schralling,Siegharting,Stadl,Stuhlrain,Söllhuben,Thalham,Tinning,Untermoosen,Unterputting,Wall,Wolferkam,Wurmsdorf
 Landkreis Rosenheim|Rimsting|Burgersdorf,Dirnsberg,Greimharting,Gänsbach,Haimling,Hitzing,Hochstätt,Hörzing,Hötzelsberg,Oberhuben,Otterkring,Pinswang,Ratzing,Unterhuben,Weiher,Zacking
 Landkreis Rosenheim|Rohrdorf|Achenmühle,Entbuch,Geiging,Gmein,Hetzenbichl,Holling,Höhenmoos,Immelberg,Oberapfelkam,Osterkam,Ranhartstetten,Schaurain,Speckbach,Thalham,Thalmann,Thansau,Unterapfelkam
-Landkreis Rosenheim|Rott a.Inn|Arbing,Dinding,Dobl,Ferchen,Katzbach,Leiten,Manglham,Meiling,Oberlohen,Ritzmehring,Rott am Inn,Sargau,Unterlohen,Unterwöhrn,Wurzach,Zainach
+Landkreis Rosenheim|Rott a.Inn|Arbing,Dinding,Dobl,Ferchen,Katzbach,Leiten,Manglham,Meiling,Oberlohen,Ritzmehring,Sargau,Unterlohen,Unterwöhrn,Wurzach,Zainach
 Landkreis Rosenheim|Samerberg|Anker,Eiding,Eßbaum,Fading,Friesing,Geisenkam,Grainbach,Haus,Hilgen,Holzmann,Hundham,Kohlgrub,Lauberg,Mitterhof,Mühlthal,Oberleiten,Ried im Winkl,Roßholzen,Sattelberg,Schadhub,Schilding,Schweibern,Schweinsteig,Siegharting,Törwang,Weickersing
 Landkreis Rosenheim|Schechen|Deutelhausen,Friesing,Geharting,Haidach,Hart,Heiming,Hochstätt,Kaps,Kobel,Lochberg,Lohen,Mintsberg,Mühlstätt,Oberwöhrn,Pfaffenhofen a. Inn,Zoss
 Landkreis Rosenheim|Schonstett|Achen,Frieberting,Helperting,Murn,Neubau,Rieperting,Weiher,Zillham
@@ -5831,7 +5815,7 @@ Landkreis Rosenheim|Stephanskirchen|Eitzing,Gehering,Grasweg,Haiden,Haidholzen,H
 Landkreis Rosenheim|Söchtenau|Dingbuch,Grölking,Hafendorf,Haid,Hayng,Innthal,Krottenmühl,Könparn,Lampersberg,Lohen,Osterfing,Rachelsberg,Schwabering,Siferling,Straß,Stucksdorf,Ullerting,Untershofen,Unterthal,Wilperting
 Landkreis Rosenheim|Tuntenhausen|Antersberg,Aubenhausen,Beyharting,Biberg,Bolkam,Brettschleipfen,Dettendorf,Eisenbartling,Emling,Harrain,Haus,Holzbichl,Hopfen,Höglhaus,Hörmating,Innerthann,Jakobsberg,Karlsried,Lampferding,Mailing,Maxlrain,Nordhof,Oberrain,Ostermünchen,Schmidhausen,Schweizerberg,Seisrain,Sindlhausen,Söhl,Thal,Weiching
 Landkreis Rosenheim|Vogtareuth|Aign,Benning,Eglham,Entfelden,Holzleiten,Hölking,Oberwindering,Pirach,Reipersberg,Straßöd,Sunkenrot,Tödtenberg,Untersee,Unterwindering,Viehhausen,Wall,Weikering,Zaisering,Zaißberg
-Landkreis Rosenheim|Wasserburg a.Inn|Attel,Gabersee,Kornberg,Reisach,Reitmehring,Seewies,Viehhausen,Wasserburg am Inn,Weikertsham
+Landkreis Rosenheim|Wasserburg a.Inn|Attel,Gabersee,Kornberg,Reisach,Reitmehring,Seewies,Viehhausen,Weikertsham
 Landkreis Rostock|Admannshagen-Bargeshagen|Admannshagen Ausbau,Bargeshagen,Rabenhorst,Steinbeck
 Landkreis Rostock|Alt Bukow|Bantow,Neu Teschow,Questin,Teschow
 Landkreis Rostock|Alt Sührkow|Hohen Mistorf,Pohnstorf
@@ -6015,7 +5999,7 @@ Landkreis Rottal-Inn|Geratskirchen|Asenherschbaum,Braunsberg,Breitendorf,Großeg
 Landkreis Rottal-Inn|Hebertsfelden|Edhof,Holzhamm,Höllkronöd,Kainzl,Niedernkirchen,Obereisbeck,Oberhausbach,Prienbach,Rottenstuben,Schildmannsberg,Spanberg,Straß,Unterhausbach,Weidelsberg,Wenigau
 Landkreis Rottal-Inn|Johanniskirchen|Ammersdorf,Dummeldorf,Eggersdorf,Emmersdorf,Gerbersdorf,Haidendorf,Kraham,Krohstorf,Mödlsbach,Oberstadl,Sarzen,Schuhöd,Schwaigeröd,Stockham,Unterbubach,Unterstadl,Weihern
 Landkreis Rottal-Inn|Julbach|Hart,Höll,Kollberg,Mehlmäusl,Niederndorf,Oberjulbach,Reith
-Landkreis Rottal-Inn|Kirchdorf a.Inn|Armeding,Atzing,Bergham,Deindorf,Dobl,Hitzenau,Kirchdorf am Inn,Machendorf,Oberlankersberg,Ramerding,Ritzing,Seibersdorf,Strohham,Stölln,Weier
+Landkreis Rottal-Inn|Kirchdorf a.Inn|Armeding,Atzing,Bergham,Deindorf,Dobl,Hitzenau,Machendorf,Oberlankersberg,Ramerding,Ritzing,Seibersdorf,Strohham,Stölln,Weier
 Landkreis Rottal-Inn|Malgersdorf|Bleickersdorf,Großwimm,Kenoden,Willersöd
 Landkreis Rottal-Inn|Massing|Anzenberg,Froschau,Geratsdorf,Gottholbing,Hochholding,Keilroßbach,Kollersaich,Moosvogl,Morolding,Oberdietfurt,Pirach,Trauperting
 Landkreis Rottal-Inn|Mitterskirchen|Atzberg,Biedersberg,Eggersbach,Fraundorf,Hirtl,Hofau,Holzham,Krandsberg,Leitenbach,Lidorf,Mayrhof,Oberham,Oberwendling,Poppenberg,Sauersberg,Siebengattern,Thal,Unterwendling,Winiham
@@ -6025,7 +6009,7 @@ Landkreis Rottal-Inn|Reut|Braunsberg,Ebenhof,Edermanning,Egging,Garneck,Knogl,Ma
 Landkreis Rottal-Inn|Rimbach|Dietring,Mitterrohrbach,Oberellbach,Oberrohrbach,Rattenbach,Sallach,Unterrohrbach,Vogging
 Landkreis Rottal-Inn|Roßbach|Dellendorf,Ehrnstorf,Esterndorf,Münchsdorf,Obergrafendorf,Reisawimm,Roisenberg,Schillöd,Schlüpfing,Schmiedorf,Siegelsdorf,Steinerskirchen,Untergrafendorf,Unterpfaffing,Unterradlsbach
 Landkreis Rottal-Inn|Schönau|Bachham,Bergham,Heidelsberg,Kleinmünchen,Marschalling,Pledorf,Schlottham,Unterhöft,Unterzeitlarn,Voglsam,Wehenöd,Weichselbaum
-Landkreis Rottal-Inn|Simbach a.Inn|Antersdorf,Beingarten,Dietmaning,Eggstetten,Ellersberg,Erlach,Grub bei Eggstetten,Gutlersberg,Holzham,Irging,Kirchberg am Inn,Kottigstelzham,Mitternberg,Mooseck,Obersimbach,Oberweinberg,Ranzenberg,Satzenberg,Simbach am Inn,Wadenberg,Winklham
+Landkreis Rottal-Inn|Simbach a.Inn|Antersdorf,Beingarten,Dietmaning,Eggstetten,Ellersberg,Erlach,Grub bei Eggstetten,Gutlersberg,Holzham,Irging,Kirchberg am Inn,Kottigstelzham,Mitternberg,Mooseck,Obersimbach,Oberweinberg,Ranzenberg,Satzenberg,Wadenberg,Winklham
 Landkreis Rottal-Inn|Stubenberg|Fürstberg,Maierhof,Prienbach
 Landkreis Rottal-Inn|Tann|Ameringshub,Eiberg,Eichhornseck,Forster,Grasensee,Hiltraching,Hörathal,Jetzelsberg,Krottenbach,Schachten,Scheften,Walburgskirchen
 Landkreis Rottal-Inn|Triftern|Anzenkirchen,Brunning,Bärnsham,Elsling,Garham,Geretsham,Godlsham,Gumping,Hoisching,Hundshaupten,Immelsham,Kauflanden,Lengsham,Linding,Loderham,Neukirchen bei Pfarrkirchen,Nuppling,Oberplaika,Pelkering,Rabensham,Unterplaika,Unterreitzing,Voglarn,Walksham,Wiesing,Willing
@@ -6090,7 +6074,6 @@ Landkreis Saale-Holzland-Kreis|Schöps|Jägersdorf
 Landkreis Saale-Holzland-Kreis|Seitenroda|Leuchtenburg
 Landkreis Saale-Holzland-Kreis|Serba|Klengel,Trotz
 Landkreis Saale-Holzland-Kreis|Silbitz|Seifartsdorf
-Landkreis Saale-Holzland-Kreis|St. Gangloff|Sankt Gangloff
 Landkreis Saale-Holzland-Kreis|Stadtroda|Bollberg,Dorna,Gernewitz,Hainbücht,Podelsatz,Quirla
 Landkreis Saale-Holzland-Kreis|Sulza|Rutha,Schiebelau
 Landkreis Saale-Holzland-Kreis|Tissa|Ulrichswalde
@@ -6189,7 +6172,7 @@ Landkreis Saarpfalz-Kreis|Gersheim|Bliesdalheim,Herbitzheim,Medelsheim,Niedergai
 Landkreis Saarpfalz-Kreis|Homburg|Altbreitenfelderhof,Beeden,Bruchhof,Einöd,Homburg-Nord,Ingweiler,Jägersburg,Kirrberg,Neubreitenfelderhof,Sanddorf,Schwarzenacker,Websweiler,Wörschweiler
 Landkreis Saarpfalz-Kreis|Kirkel|Altstadt,Bliesbergrhof,Kohlhof
 Landkreis Saarpfalz-Kreis|Mandelbachtal|Bebelsheim,Bliesmengen,Bliesmengen-Bolchen,Bolchen,Ehlingen,Erfweiler-Ehlingen,Gräfinthal,Habkirchen,Heckendalheim,Ommersheim,Ormesheim,Wittersheim
-Landkreis Saarpfalz-Kreis|St. Ingbert|Oberwürzbach,Reichenbrunn,Rentrisch,Sankt Ingbert,Schüren,Sengscheid
+Landkreis Saarpfalz-Kreis|St. Ingbert|Oberwürzbach,Reichenbrunn,Rentrisch,Schüren,Sengscheid
 Landkreis Salzlandkreis|Alsleben (Saale)|Gnölbzig
 Landkreis Salzlandkreis|Aschersleben|Drohndorf,Freckleben,Groß-Schierstedt,Johannis-Vorstadt,Klein-Schierstedt,Mehringen,Neu Königsaue,Schackenthal,Schackstedt,Westdorf,Wilsleben
 Landkreis Salzlandkreis|Barby|Breitenhagen,Döben,Gnadau,Groß Rosenburg,Klein Rosenburg,Lödderitz,Monplaisir,Patzetz,Pömmelte,Rajoch,Saalhorn,Sachsendorf,Tornitz,Werkleitz,Wespen,Zuchau
@@ -6302,7 +6285,7 @@ Landkreis Schwandorf|Oberviechtach|Antelsdorf,Dietersdorf,Eigelsberg,Gartenried,
 Landkreis Schwandorf|Pfreimd|Döllnitz,Fuchsendorf,Gnötzendorf,Hohentreswitz,Löffelsberg,Nessating,Oberpfreimd,Pamsendorf,Rappenberg,Untersteinbach,Weiherhäusl,Weihern,Ziegelhütte
 Landkreis Schwandorf|Schmidgaden|Gösselsdorf,Hartenricht,Hohersdorf,Inzendorf,Legendorf,Littenhof,Trisching,Wolfsbach
 Landkreis Schwandorf|Schwandorf|Bubach an der Naab,Büchelkühn,Charlottenhof,Dachelhofen,Dauching,Egidiberg,Ettmannsdorf,Freihöls,Fronberg,Grain,Gögglbach,Hartenricht,Höflarn,Irlaching,Klardorf,Kreith,Krondorf,Kronstetten,Krumlengenfeld,Lindenloh,Löllsanlage,Münchshöf,Naabeck,Naabsiegenhofen,Nattermoos,Niederhof,Obersitzenhof,Prissath,Richt,Schwandorf in Bayern,Sitzenhof,Spielberg,Strießendorf,Waltenhof,Wiefelsdorf,Wöllmannsbach,Zielheim
-Landkreis Schwandorf|Schwarzach b.Nabburg|Altfalter,Dietstätt,Oed,Richt,Schwarzach bei Nabburg,Unterauerbach,Wölsendorf
+Landkreis Schwandorf|Schwarzach b.Nabburg|Altfalter,Dietstätt,Oed,Richt,Unterauerbach,Wölsendorf
 Landkreis Schwandorf|Schwarzenfeld|Deislkühn,Frotzersricht,Hohenirlach,Irrenlohe,Kögl,Pretzabruck,Raffach,Sonnenried,Traunricht,Zilchenricht
 Landkreis Schwandorf|Schwarzhofen|Altenhammer,Demeldorf,Denglarn,Geratshofen,Girnitz,Grasdorf,Haag bei Schwarzhofen,Häuslern,Krimling,Meischendorf,Raggau,Schwarzeneck,Uckersdorf,Zangenstein
 Landkreis Schwandorf|Schönsee|Bebenburg,Dietersdorf,Friedrichshäng,Gaisthal,Laub,Mitterlangau,Rackenthal,Schwand,Weberhäuser
@@ -6381,7 +6364,7 @@ Landkreis Schwäbisch Hall|Rot am See|Beimbach,Bemberg,Brettenfeld,Brettheim,Hau
 Landkreis Schwäbisch Hall|Satteldorf|Auhof,Beeghof,Birkelbach,Bronnholzheim,Burleswagen,Bölgental,Ellrichshausen,Gersbach (Satteldorf),Helmshofen,Rockhalden,Sattelweiler,Schleehardshof,Triftshausen,Volkershausen
 Landkreis Schwäbisch Hall|Schrozberg|Bartenstein,Bossendorf,Bovenzenweiler,Böhmweiler,Eichholz,Eichswiesen,Enzenweiler,Ettenhausen,Funkstatt,Ganertshausen,Gemmhagen,Großbärenweiler,Gütbach,Hechelein,Heiligenbronn,Hirschbronn,Hornungshof,Hummertsweiler,Kleinbärenweiler,Klopfhof,Krailshausen,Kreuzfeld,Kälberbach,Könbronn,Leuzendorf,Lindlein,Mäusberg,Obereichenrot,Reichertswiesen,Reupoldsrot,Schmalfelden,Sigisweiler,Speckheim,Spielbach,Spindelbach,Standorf,Untereichenrot,Windisch-Bockenfeld,Wittmersklingen,Wolfskreut
 Landkreis Schwäbisch Hall|Schwäbisch Hall|Bibersfeld,Dörrenzimmern,Eltershofen,Erlach,Gailenkirchen,Gelbingen,Gottwollshausen,Hessental,Hohenholz,Jagstrot,Kleincomburg,Matheshörlebach,Ramsbach,Rötenhof,Schwarzenlache,Sittenhardt,Stadel,Starkholzbach,Teurershof,Tüngental,Unterlimpurg,Veinau,Wackershofen,Weckrieden,Wielandsweiler,Wolpertsdorf
-Landkreis Schwäbisch Hall|Stimpfach|Bautzenhof,Connenweiler,Eichishof,Gerbertshofen,Hörbühl,Hübnershof,Siglershofen,Sperrhof,Steinbach am Wald,Weipertshofen
+Landkreis Schwäbisch Hall|Stimpfach|Bautzenhof,Connenweiler,Eichishof,Gerbertshofen,Hörbühl,Hübnershof,Siglershofen,Sperrhof,Weipertshofen
 Landkreis Schwäbisch Hall|Sulzbach-Laufen|Aichenrain,Altschmiedelfeld,Brünst,Eckenberg,Grauhöfle,Heerberg,Hägeleshöfle,Knollenberg,Kohlwald,Krasberg,Laufen am Kocher,Mühlenberg,Rübgarten,Schmiedelfeld,Schönbronn,Sulzbach am Kocher,Wengen
 Landkreis Schwäbisch Hall|Untermünkheim|Enslingen,Gaisdorf,Haagen,Kupfer,Leipoldsweiler,Obermünkheim,Steigenhaus,Suhlburg,Übrigshausen
 Landkreis Schwäbisch Hall|Vellberg|Eschenau,Großaltdorf,Kleinaltdorf,Lorenzenzimmern,Schneckenweiler,Stöckenburg
@@ -6450,7 +6433,7 @@ Landkreis St. Wendel|Namborn|Baltersweiler,Bornerhof,Eisweiler,Furschweiler,Gehw
 Landkreis St. Wendel|Nohfelden|Bosen,Bosen-Eckelhausen,Eckelhausen,Eisen,Eiweiler,Gonnesweiler,Mosberg,Obersötern,Richweiler,Sötern,Türkismühle,Waldbach,Wolfersweiler
 Landkreis St. Wendel|Nonnweiler|Bierfeld,Braunshausen,Mariahütte,Mettnich,Mühlfeld,Otzenhausen,Primstal,Sitzerath
 Landkreis St. Wendel|Oberthal|Deckenhardt,Gronig,Güdesweiler,Imweiler,Osenbach,Steinberg-Deckenhardt
-Landkreis St. Wendel|St. Wendel|Alsfassen,Bliesen,Breiten,Hoof,Langenfelderhof,Leitersweiler,Niederlinxweiler,Oberlinxweiler,Osterbrücken,Remmesweiler,Sankt Wendel,Urweiler,Werschweiler,Wurzelbach
+Landkreis St. Wendel|St. Wendel|Alsfassen,Bliesen,Breiten,Hoof,Langenfelderhof,Leitersweiler,Niederlinxweiler,Oberlinxweiler,Osterbrücken,Remmesweiler,Urweiler,Werschweiler,Wurzelbach
 Landkreis St. Wendel|Tholey|Dautweiler,Hasborn-Dautweiler,Lindscheid,Neipel,Sotzweiler,Theley,Überroth-Niederhofen
 Landkreis Stade|Ahlerstedt|Ahrensmoor,Ahrensmoor Nord,Ahrenswohlde,Doosthof,Hohenhausen,Kakerbeck,Klein Wangersen,Klethen,Kohlenhausen,Ost Ahrensmoor,Wangersen,West Ahrensmoor
 Landkreis Stade|Apensen|Grundoldendorf
@@ -6491,8 +6474,8 @@ Landkreis Starnberg|Berg|Allmannshausen,Assenbuch,Assenhausen,Aufkirchen,Bachhau
 Landkreis Starnberg|Feldafing|Wieling
 Landkreis Starnberg|Gauting|Buchendorf,Grubmühl,Oberbrunn,Stockdorf,Unterbrunn
 Landkreis Starnberg|Gilching|Argelsried,Geisenbrunn,Neugilching,Rottenried,Sankt Gilgen,Steinlach
-Landkreis Starnberg|Herrsching a.Ammersee|Ellwang,Herrsching am Ammersee,Lochschwab,Mühlfeld,Rausch,Wartaweil,Widdersberg
-Landkreis Starnberg|Inning a.Ammersee|Arzla,Bachern,Inning am Ammersee,Schlagenhofen
+Landkreis Starnberg|Herrsching a.Ammersee|Ellwang,Lochschwab,Mühlfeld,Rausch,Wartaweil,Widdersberg
+Landkreis Starnberg|Inning a.Ammersee|Arzla,Bachern,Schlagenhofen
 Landkreis Starnberg|Krailling|Frohnloh,Hüll,Pentenried
 Landkreis Starnberg|Pöcking|Aschering,Maising,Maxhof,Niederpöcking,Possenhofen
 Landkreis Starnberg|Seefeld|Delling,Drößling,Güntering,Hechendorf am Pilsensee,Meiling,Oberalting,Tiefenbrunn,Unering
@@ -6684,12 +6667,12 @@ Landkreis Tirschenreuth|Neusorg|Riglasreuth,Schwarzenreuth,Stockau,Stöcken,Wern
 Landkreis Tirschenreuth|Pechbrunn|Groschlattengrün
 Landkreis Tirschenreuth|Plößberg|Albernhof,Beidl,Dreihöf,Dürnkonreuth,Erkersreuth,Geisleithen,Honnersreuth,Krähenhaus,Leichau,Liebenstein,Prommenhof,Schirnbrunn,Schleif,Schönficht,Schönkirch,Schönthan,Stein bei Plößberg,Streißenreuth,Wildenau,Wurmsgefäll,Ödschönlind
 Landkreis Tirschenreuth|Pullenreuth|Arnoldsreuth,Dechantsees,Dreihäuser,Friedersreuth,Haid,Harlachberg,Haselbrunn,Höll,Kreuzweiher,Kunzenlohe,Langentheilen,Leimgruben,Lochau,Mengersreuth,Neuköslarn,Pilgramsreuth,Rothenfurth,Schindellohe,Trevesen,Trevesenhammer
-Landkreis Tirschenreuth|Reuth b.Erbendorf|Drahthammer,Eiglasdorf,Erlhammer,Escheldorf,Hasen,Josephshof,Letten,Premenreuth,Rechenlohe,Reuth bei Erbendorf,Röthenbach am Steinwald
+Landkreis Tirschenreuth|Reuth b.Erbendorf|Drahthammer,Eiglasdorf,Erlhammer,Escheldorf,Hasen,Josephshof,Letten,Premenreuth,Rechenlohe,Röthenbach am Steinwald
 Landkreis Tirschenreuth|Tirschenreuth|Großklenau,Gründlbach,Hohenwald,Kleinklenau,Kleinkonreuth,Lengenfeld bei Tirschenreuth,Lohnsitz,Marchaney,Matzersreuth,Mooslohe,Pilmersreuth am Wald,Pilmersreuth an der Straße,Rosall,Wondreb,Wondrebhammer
 Landkreis Tirschenreuth|Waldershof|Buchlohhäuser,Bärnest,Hard,Harlachhammer,Hohenhard,Kaltenlohe,Kössain,Masch,Poppenreuth,Rodenzenreuth,Rosenhammer,Schafbruck,Schurbach,Stieglmühle,Walbenreuth,Wolfersreuth
 Landkreis Tirschenreuth|Waldsassen|Egerteich,Groppenheim,Hatzenreuth,Kondrau,Mammersreuth,Münchenreuth,Netzstahl,Pechtnersreuth,Querenbach,Schloppach,Wolfsbühl
 Landkreis Tirschenreuth|Wiesau|Hurtingöd,Kornthan,Leugas,Muckenthal,Mühlhof,Schönhaid,Tirschnit,Triebendorf
-Landkreis Traunstein|Altenmarkt a.d.Alz|Altenmarkt an der Alz,Angermühle,Baumburg,Frühling,Hundsöd,Neustadl,Offling,Rabenden,Rupertsdorf,Stumpfering,Thalham,Weiglpoint
+Landkreis Traunstein|Altenmarkt a.d.Alz|Angermühle,Baumburg,Frühling,Hundsöd,Neustadl,Offling,Rabenden,Rupertsdorf,Stumpfering,Thalham,Weiglpoint
 Landkreis Traunstein|Bergen|Bernhaupten,Maximilianshütte,Mühlwinkl,Pattenberg,Rumgraben,Stocka,Weißachen
 Landkreis Traunstein|Chieming|Arlaching,Egerer,Fehling,Grilling,Hart,Ising,Kainrading,Knesing,Laimgrub,Manholding,Oberhochstätt,Stöttham,Tabing,Thauernhausen,Weidach
 Landkreis Traunstein|Engelsberg|Beck,Bennoberg,Eiting,Lupperting,Maisenberg,Offenham,Schabing,Starfling,Wiesmühl,Wölkham
@@ -6714,14 +6697,14 @@ Landkreis Traunstein|Siegsdorf|Adelholzen,Alzing,Eisenärzt,Hörgering,Knappenfe
 Landkreis Traunstein|Staudach-Egerndach|Bayern,Egerndach
 Landkreis Traunstein|Surberg|Ettendorf,Hallabruck,Hufschlag,Thunstetten
 Landkreis Traunstein|Tacherting|Altenham,Arfling,Buchöster,Eberting,Emertsham,Galgenpoint,Hirschham,Hörzing,Hütting,Kirchstätt,Laab,Leiten,Lengloh,Liebharten,Lohen,Maierlreith,Maierstetten,Mittermühle,Mussenmühle,Oberbrunnham,Peterskirchen,Pinzgau,Reicherting,Schalchen,Schweinberg,Schörging,Straß,Unterbrunnham,Wajon,Wartmoning
-Landkreis Traunstein|Taching a.See|Gessenhausen,Haus,Hörgassing,Limberg,Mauerham,Mollstätten,Obertaching,Taching am See,Tengling,Untertaching,Weitgassing
+Landkreis Traunstein|Taching a.See|Gessenhausen,Haus,Hörgassing,Limberg,Mauerham,Mollstätten,Obertaching,Tengling,Untertaching,Weitgassing
 Landkreis Traunstein|Tittmoning|Abtenham,Allmoning,Alterfing,Asten,Bergham,Dandlberg,Diepling,Dunsting,Froschham,Gramsham,Grassach,Guggenberg,Gunzenberg,Hainach,Harmoning,Helmberg,Hörzing,Inzing,Kay,Kuglthal,Lanzing,Laufing,Leitgering,Lohen,Mayerhofen,Meggenthal,Mühlham,Münichham,Nonnreit,Ollerding,Piesenberg,Ponlach,Ramsdorf,Ranharting,Salling,Schlichten,Schmerbach,Stackendorf,Stockham,Traßmiething,Törring,Waldering,Wallmoning,Weilham,Wies,Wiesmühl
 Landkreis Traunstein|Traunreut|Anning,Biebing,Frauenhurt,Frühling,Haßmoning,Hölzl,Hörpolding,Hörzing,Mais,Matzing,Niedling,Nunhausen,Oberwalchen,Roitham,Sankt Georgen,Stein an der Traun,Traunwalchen,Walding,Weisbrunn,Zweckham
 Landkreis Traunstein|Traunstein|Alterfing,Einham,Empfing,Gerating,Höpperding,Kaltenbach,Kammer,Reichsberg,Traunstorf,Trenkmoos,Wolkersdorf
 Landkreis Traunstein|Trostberg|Armuthsham,Aspertsham,Benetsham,Bergham,Deinting,Deisenham,Dieding,Engertsham,Gainharting,Gerharding,Gumpertsham,Gunerfing,Günzelham,Heiligkreuz,Hilling,Hofstett,Irschenham,Kaltenbrunn,Kaps,Moosham,Mögling,Oberfeldkirchen,Perating,Pirach,Rohrigham,Schedling,Schwarzau,Schönreit,Tinning,Trostberg an der Alz,Viehhausen,Weikertsham,Willertsham
 Landkreis Traunstein|Unterwössen|Hadergaß,Hinterwössen,Kruchenhausen,Oberwössen
 Landkreis Traunstein|Vachendorf|Hasperting,Spielwang,Wimpasing,Wörglham
-Landkreis Traunstein|Waging a.See|Bicheln,Dieperting,Fisching,Freimann,Gaden,Garscham,Großscherzhausen,Kammering,Krautenberg,Nirnharting,Steppach,Tettelham,Tettenberg,Tettenhausen,Unteraschau,Waging am See
+Landkreis Traunstein|Waging a.See|Bicheln,Dieperting,Fisching,Freimann,Gaden,Garscham,Großscherzhausen,Kammering,Krautenberg,Nirnharting,Steppach,Tettelham,Tettenberg,Tettenhausen,Unteraschau
 Landkreis Traunstein|Wonneberg|Egerdach,Enzersdorf,Sankt Leonhard am Wonneberg,Weibhausen
 Landkreis Traunstein|Übersee|Almau,Feldwies,Hinterbichl,Seethal,Stegenhäuser
 Landkreis Trier-Saarburg|Aach|Hohensonne
@@ -7003,7 +6986,7 @@ Landkreis Vorpommern-Greifswald|Groß Kiesow|Groß Kiesow Meierei,Kessin,Klein K
 Landkreis Vorpommern-Greifswald|Groß Polzin|Klein Polzin,Konsages,Pätschow,Quilow
 Landkreis Vorpommern-Greifswald|Görmin|Alt Jargenow,Böken,Groß Zastrow,Göslow,Neu Jargenow,Trissow
 Landkreis Vorpommern-Greifswald|Gützkow|Breechen,Dargezin,Dargezin-Vorwerk,Fritzow,Kölzin,Meierei,Owstin,Pentin,Upatel
-Landkreis Vorpommern-Greifswald|Hammer a.d.Uecker|Bauernort,Hammer an der Uecker
+Landkreis Vorpommern-Greifswald|Hammer a.d.Uecker|Bauernort
 Landkreis Vorpommern-Greifswald|Hanshagen|Fliederberg
 Landkreis Vorpommern-Greifswald|Heringsdorf|Alt Sallenthin,Bansin,Bansin-Dorf,Gothen,Neu Sallenthin,Seebad Heringsdorf,Vorwerk Steinberg
 Landkreis Vorpommern-Greifswald|Hinrichshagen|Chausseesiedlung,Feldsiedlung,Heimsiedlung,Hinrichshagen Hof Eins,Hinrichshagen Hof I,Hinrichshagen Hof II,Hinrichshagen Hof Zwei,Hohenmühl,Neu Ungnade
@@ -7246,7 +7229,7 @@ Landkreis Waldshut|Laufenburg (Baden)|Binzgen,Grunholz,Hochsal,Loch,Luttingen,Rh
 Landkreis Waldshut|Lottstetten|Balm
 Landkreis Waldshut|Murg|Diegeringen,Hänner,Im Sood,Murghammer,Niederhof,Zechenwihl
 Landkreis Waldshut|Rickenbach|Altenschwand,Bergalingen,Jungholz,Ledergaß,Rüttehof,Schweikhof,Strick,Wieladingen,Willaringen
-Landkreis Waldshut|St. Blasien|Immeneich,Menzenschwand,Menzenschwand-Hinterdorf,Menzenschwand-Vorderdorf,Niedermühle,Sankt Blasien,Schlageten,Unterkutterau
+Landkreis Waldshut|St. Blasien|Immeneich,Menzenschwand,Menzenschwand-Hinterdorf,Menzenschwand-Vorderdorf,Niedermühle,Schlageten,Unterkutterau
 Landkreis Waldshut|Stühlingen|Bettmaringen,Blumegg,Eberfingen,Grimmelshofen,Im Weiler,Lausheim,Mauchen,Oberwangen,Schwaningen,Sparrenberg,Unterwangen,Weizen
 Landkreis Waldshut|Todtmoos|Berghütte,Hintertodtmoos,Höfle,Lehen,Mättle,Prestenberg,Rütte,Vordertodtmoos,Weg
 Landkreis Waldshut|Waldshut-Tiengen|Aispel,Allmut,Breitenfeld,Detzeln,Gaiß,Gurtweil,Gutenburg,Indlekofen,Krenkingen,Lauffenmühle,Oberalpfen,Schmitzingen,Tiengen,Witznau
@@ -7259,7 +7242,6 @@ Landkreis Wartburgkreis|Amt Creuzburg|Buchenau,Creuzburg,Ebenau,Ebenshausen,Esch
 Landkreis Wartburgkreis|Bad Liebenstein|Bairoda,Glücksbrunn,Marienthal,Meimers,Schweina,Sorga,Wolfsberg
 Landkreis Wartburgkreis|Bad Salzungen|Dönges,Ettenhausen,Etterwinden,Frauensee,Gumpelstadt,Hohleborn,Hüttenhof,Kloster Allendorf,Kupfersuhl,Möhra,Nitzendorf,Oberrohn,Obersorghof,Ringelstein,Sankt Pauli,Springen,Tiefenort,Unterrohn,Untersorghof,Waldfisch,Weißendiez,Wildprechtroda,Witzelroda
 Landkreis Wartburgkreis|Barchfeld-Immelborn|Ettmarshausen,Immelborn,Übelroda
-Landkreis Wartburgkreis|Berka v.d.Hainich|Berka vor der Hainich
 Landkreis Wartburgkreis|Buttlar|Bermbach,Borbels,Mieswarz,Wenigentaft
 Landkreis Wartburgkreis|Dermbach|Bernshausen,Brunnhartshausen,Daßlitz,Föhlritz,Gehaus,Hartschwinden,Lindigshof,Mebritz,Mückenhof,Neidhartshausen,Oberalba,Stadtlengsfeld,Unteralba,Urnshausen
 Landkreis Wartburgkreis|Eisenach|Berteroda,Ehrensteig,Göringen,Hörschel,Hötzelsroda,Landstreit,Madelungen,Marienhöhe,Mittelshof,Neuenhof,Ramsborn,Rothenhof,Stedtfeld,Stregda,Trenkelhof,Wartha
@@ -7343,7 +7325,7 @@ Landkreis Weißenburg-Gunzenhausen|Heidenheim|Degersheim,Gärtnershof,Hechlingen
 Landkreis Weißenburg-Gunzenhausen|Höttingen|Fiegenstall,Göppersdorf,Ottmarsfeld,Reisach,Weiboldshausen
 Landkreis Weißenburg-Gunzenhausen|Langenaltheim|Altheimersberg,Büttelbronn,Langenaltheimer Haardt,Lohhof,Neuherberg
 Landkreis Weißenburg-Gunzenhausen|Meinheim|Kurzenaltheim,Wolfsbronn
-Landkreis Weißenburg-Gunzenhausen|Muhr a.See|Muhr am See,Stadeln,Wehlenberg
+Landkreis Weißenburg-Gunzenhausen|Muhr a.See|Stadeln,Wehlenberg
 Landkreis Weißenburg-Gunzenhausen|Nennslingen|Wengen
 Landkreis Weißenburg-Gunzenhausen|Pappenheim|Bieswang,Geislohe,Mittelmarterhof,Niederpappenheim,Ochsenhart,Osterdorf,Übermatzhofen
 Landkreis Weißenburg-Gunzenhausen|Pfofeld|Gundelshalm,Langlau,Langlau b. Plofeld,Rehenbühl
@@ -7443,7 +7425,7 @@ Landkreis Wetteraukreis|Ortenberg|Bergheim (Ortenberg),Bleichenbach,Eckartsborn,
 Landkreis Wetteraukreis|Ranstadt|Bellmuth,Bobenhausen I,Dauernheim,Ober-Mockstadt
 Landkreis Wetteraukreis|Reichelsheim (Wetterau)|Beienheim,Blofeld,Dorn Assenheim,Weckesheim
 Landkreis Wetteraukreis|Rockenberg|Oppershofen
-Landkreis Wetteraukreis|Rosbach v.d.Höhe|Nieder-Rosbach,Niederrosbach,Ober-Rosbach,Rodheim,Rodheim vor der Höhe,Rosbach vor der Höhe
+Landkreis Wetteraukreis|Rosbach v.d.Höhe|Nieder-Rosbach,Niederrosbach,Ober-Rosbach,Rodheim,Rodheim vor der Höhe
 Landkreis Wetteraukreis|Wölfersheim|Berstadt,Melbach,Södel,Wohnbach
 Landkreis Wetteraukreis|Wöllstadt|Nieder-Wöllstadt,Ober-Wöllstadt
 Landkreis Wittenberg|Annaburg|Axien,Bethau,Gehmen,Gertrudshof,Groß Naundorf,Hirschmühle,Kolonie Naundorf,Kähnitzsch,Labrun,Lebien,Lichtenburg,Löben,Meuselko,Plossig,Premsendorf,Prettin,Purzien,Trift,Weinberg
@@ -7496,8 +7478,8 @@ Landkreis Wolfenbüttel|Winnigstedt|Groß Winnigstedt,Klein Winnigstedt,Mattierz
 Landkreis Wolfenbüttel|Wolfenbüttel|Adersheim,Ahlum,Atzum,Auguststadt,Fümmelse,Groß Stöckheim,Halchter,Heinrichstadt,Leinde,Okertalsiedlung,Salzdahlum,Wendessen
 Landkreis Wunsiedel i.Fichtelgebirge|Arzberg|Bergnersreuth,Dirnhart,Elisenfels,Garmersreuth,Haid,Heiligenfurt,Oschwitz,Preisdorf,Rosenbühl,Sandmühle,Schlottenhof,Seußen
 Landkreis Wunsiedel i.Fichtelgebirge|Bad Alexandersbad|Dünkelhammer,Kleinwendern,Sichersreuth
-Landkreis Wunsiedel i.Fichtelgebirge|Hohenberg a.d.Eger|Freundschaft,Hohenberg an der Eger,Neuhaus an der Eger
-Landkreis Wunsiedel i.Fichtelgebirge|Höchstädt i.Fichtelgebirge|Braunersgrün,Hofmühle,Höchstädt im Fichtelgebirge,Rügersgrün
+Landkreis Wunsiedel i.Fichtelgebirge|Hohenberg a.d.Eger|Freundschaft,Neuhaus an der Eger
+Landkreis Wunsiedel i.Fichtelgebirge|Höchstädt i.Fichtelgebirge|Braunersgrün,Hofmühle,Rügersgrün
 Landkreis Wunsiedel i.Fichtelgebirge|Kirchenlamitz|Buchhaus,Dörflas bei Kirchenlamitz,Fahrenbühl,Fichtenhammer,Großschloppen,Hohenbuch,Kleinschloppen,Mittelschieda,Niederlamitz,Niederlamitzhammer,Oberschieda,Raumetengrün,Reicholdsgrün,Unterschieda
 Landkreis Wunsiedel i.Fichtelgebirge|Marktleuthen|Großwendern,Habnith,Hebanz,Holzmühl,Karolinenhain,Leuthenforst,Neudes,Neumühle,Wendenhammer
 Landkreis Wunsiedel i.Fichtelgebirge|Marktredwitz|Brand bei Marktredwitz,Dörflas bei Marktredwitz,Fridau,Katharinenhöhe,Korbersdorf,Leutendorf,Lorenzreuth,Manzenberg,Meußelsdorf,Oberredwitz,Oberthölau,Pfaffenreuth,Rathaushütte,Reutlas,Unterthölau,Wölsau,Wölsauerhammer,Ziegelhütte
@@ -7541,7 +7523,6 @@ Landkreis Würzburg|Sonderhofen|Bolzhausen
 Landkreis Würzburg|Unterpleichfeld|Burggrumbach,Hilpertshausen,Rupprechtshausen
 Landkreis Würzburg|Veitshöchheim|Schleehof
 Landkreis Würzburg|Waldbüttelbrunn|Mädelhofen,Roßbrunn
-Landkreis Würzburg|Zell a.Main|Zell am Main
 Landkreis Zollernalbkreis|Albstadt|Burgfelden,Ebingen,Ehestetten,Laufen an der Eyach,Lautlingen,Margrethausen,Onstmettingen,Pfeffingen,Tailfingen,Truchtelfingen
 Landkreis Zollernalbkreis|Balingen|Engstlatt,Erzingen,Frommern,Heselwangen,Ostdorf,Roßwangen,Stockenhausen,Streichen,Weilstetten,Ziegelwasen,Zillhausen
 Landkreis Zollernalbkreis|Bisingen|Julienhütte,Steinhofen,Thanheim,Wessingen
@@ -7583,7 +7564,7 @@ Landkreis Zwickau|Oberwiera|Harthau,Niederwiera,Röhrsdorf,Wickersdorf
 Landkreis Zwickau|Reinsdorf|Friedrichsgrün,Vielau,Wilhelmshöhe
 Landkreis Zwickau|Remse|Kertzsch,Kleinchursdorf,Oertelshain,Weidensdorf
 Landkreis Zwickau|Schönberg|Oberdorf,Pfaffroda,Wünschendorf
-Landkreis Zwickau|St. Egidien|Hintergrumbach,Kuhschnappel,Lobsdorf,Sankt Egidien,Tirschheim
+Landkreis Zwickau|St. Egidien|Hintergrumbach,Kuhschnappel,Lobsdorf,Tirschheim
 Landkreis Zwickau|Waldenburg|Altstadt Waldenburg,Dürrenuhlsdorf,Eichlaide,Franken,Grünfeld,Niederwinkel,Oberwinkel,Schlagwitz,Schwaben
 Landkreis Zwickau|Werdau|Kleinhessen,Langenhessen,Leubnitz,Leubnitz Forst,Pleißenhaus,Sorge,Steinpleis,Vorhäuser
 Landkreis Zwickau|Wildenfels|An der Weinleite,Härtensdorf,NeueSorge,Neumühle

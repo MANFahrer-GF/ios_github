@@ -63,6 +63,16 @@ def main():
             i += 1
         return False
 
+    # Amtliche Kurzformen ausgeschrieben („Altenstadt a.d.Waldnaab“ = GeoNames „Altenstadt an der Waldnaab“, eigene
+    # Gemeinde und kein Ortsteil von Störnstein; Prüfer 14.11.2026).
+    def long_form(name):
+        import re
+        for short, full in (('a.d.', ' an der '), ('i.d.', ' in der '), ('v.d.', ' vor der '), ('a.', ' am '), ('i.', ' im '),
+                            ('b.', ' bei '), ('st.', ' sankt ')):
+            name = name.replace(short, full)
+        return re.sub(r'[\s.]+', ' ', name).strip()
+    long_names = {long_form(n) for n in municipality_names}
+
     sources = []
     with open(TSV, encoding='utf-8') as f:
         sources += [('geonames',) + tuple(line.rstrip('\n').split('\t')[::2]) for line in f]
@@ -78,7 +88,7 @@ def main():
         if ags not in places:
             stats[f'{source}: ohne Gemeinde'] += 1
             continue
-        if shadowed(fold(name)) or fold(name.split(' (')[0]) == fold(places[ags][1]):
+        if shadowed(fold(name)) or fold(name.split(' (')[0]) == fold(places[ags][1]) or long_form(fold(name)) in long_names:
             stats[f'{source}: heißt wie eine Gemeinde'] += 1
             continue
         if ',' in name or '|' in name or len(fold(name)) < 3:

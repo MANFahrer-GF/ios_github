@@ -79,7 +79,8 @@ struct SourceWizardView: View {
             .navigationDestination(isPresented: $showCoverage) {
                 CoverageView(onChoose: { entry in
                     showCoverage = false
-                    choose(entry)
+                    // Aus „Geht mein Ort?“ gilt der dort gesuchte Ort, nicht der Suchtext dieser Seite – keine Vorauswahl.
+                    choose(entry, preselect: false)
                 }, onPasteLink: {
                     // Blatt und Dateiauswahl hängen am NavigationStack und öffnen auch über „Geht mein Ort?“.
                     showLinkSheet = true
@@ -226,12 +227,12 @@ struct SourceWizardView: View {
         return text
     }
 
-    private func choose(_ item: CatalogEntry) {
+    private func choose(_ item: CatalogEntry, preselect: Bool = true) {
         entry = item
         provider = ProviderFactory.make(kind: item.kind, serviceKey: item.serviceKey)
         selections = []
         typedIndices = []
-        preselectPlace = query.isEmpty ? nil : ProviderCatalog.servedPlace(for: item, query: query)
+        preselectPlace = query.isEmpty || !preselect ? nil : ProviderCatalog.servedPlace(for: item, query: query)
         locationName = location?.name ?? ""
         Task { await loadNextStep() }
     }

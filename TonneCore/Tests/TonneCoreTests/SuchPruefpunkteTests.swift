@@ -28,8 +28,8 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertNil(ProviderCatalog.placeNote(for: try entry("Evs"), query: "Saarbrücken"))
         // Der Kreis-Eintrag nennt die Stadt nur im Titel – dort bleibt die Aussage (Thomas' Fall Karlsruhe).
         XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.k4systems.abfallappka"), query: "Karlsruhe"), "Führt Karlsruhe nicht")
-        // Namensvetter in einem anderen Kreis: der Ludwigslust-Parchimer Ortsteil „Heide“ ist nicht Heide in Dithmarschen
-        XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("lwl"), query: "Heide"), "Führt Heide nicht")
+        // Nennt der Eintrag den gesuchten Namen selbst, kein „nicht“ – auch wenn es ein Namensvetter sein könnte (Heide)
+        XCTAssertNil(ProviderCatalog.placeNote(for: try entry("lwl"), query: "Heide"))
     }
 
     /// Allgemeine Ortsteilnamen („Thal“ in 36 Gemeinden, „Altstadt“ in 30) liefern allein keine Gemeinden.
@@ -82,5 +82,51 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertNil(SelectionStep(title: SelectionStep.streetTitle, options: options).preselection(for: "Karlsruhe"))
         XCTAssertNil(SelectionStep(title: L10n.t("Abfuhrbezirk", "Collection district"), options: options).preselection(for: "Karlsruhe"))
         XCTAssertNil(SelectionStep(title: SelectionStep.cityTitle, options: options).preselection(for: "Singen (Hohentwiel)"))
+    }
+
+    /// Prüfer 14.11.: „Führt X nicht“ stand unter dem Eintrag, der die Stadt führt – bei Namensvettern mit Zusatz und bei
+    /// Einträgen, die den getippten Ort selbst nennen.
+    func testKeinNichtBeiNamensvetternOderEigenemOrt() throws {
+        let cases: [(String, String)] = [
+            ("frankenthal", "Frankenthal"), ("https://ruedesheim.mein-abfallkalender.online", "Rüdesheim"),
+            ("Efb", "Friedberg"), ("de.k4systems.abfallhr", "Borken"),
+            ("de.idcontor.abfalllu", "Ludwigshafen"), ("rlk_nastaetten_lautert", "Münchenroth"),
+        ]
+        for (key, query) in cases {
+            let note = ProviderCatalog.placeNote(for: try entry(key), query: query)
+            XCTAssertFalse(note?.hasSuffix("nicht") ?? false, "\(query): \(note ?? "nil")")
+        }
+    }
+
+    /// Prüfer 14.11.: „Halle Saale“, „Winsen Luhe“ … landeten beim gleichnamigen Ort ohne Zusatz (Rückschritt zu 2.0.10).
+    func testZusatzWaehltDenRichtigenNamensvetter() {
+        func names(_ query: String) -> [String] { ProviderCatalog.municipalities(matching: query).map(\.name) }
+        XCTAssertEqual(names("Halle Saale"), ["Halle (Saale)"])
+        XCTAssertEqual(names("Halle (S"), ["Halle (Saale)"])
+        XCTAssertEqual(names("Winsen Luhe"), ["Winsen (Luhe)"])
+        XCTAssertEqual(names("Frankenthal Pfalz"), ["Frankenthal (Pfalz)"])
+        XCTAssertEqual(names("Halle Westfalen"), ["Halle (Westf.)"])
+        // Rechts eine eigene Gemeinde oder ein Kreiswort: keine Gemeinde, die Volltextsuche übernimmt
+        for query in ["Darmstadt-Dieburg", "Lüchow-Dannenberg", "München Landkreis", "Weimar Lahn"] {
+            XCTAssertEqual(names(query), [], query)
+        }
+        XCTAssertEqual(ProviderCatalog.search("Lüchow-Dannenberg").first?.title, "Landkreis Lüchow-Dannenberg")
+        XCTAssertEqual(ProviderCatalog.search("Weimar Lahn").first?.title, "Gemeinde Weimar (Lahn) – Abfallkalender")
+        XCTAssertEqual(ProviderCatalog.search("Halle Saale").first?.title, "Halle (Saale) – HWS Entsorgungskalender")
+    }
+
+    /// Prüfer 14.11.: Voller Kreisname trifft nur diesen Kreis.
+    func testVollerKreisnameNurDieserKreis() throws {
+        XCTAssertEqual(ProviderCatalog.districts(matching: "stadtkreis karlsruhe"), ["Stadtkreis Karlsruhe"])
+        XCTAssertFalse(ProviderCatalog.search("Stadtkreis Karlsruhe").contains(try entry("de.k4systems.abfallappka")))
+        XCTAssertEqual(ProviderCatalog.districts(matching: "kreis karlsruhe"), ["Landkreis Karlsruhe", "Stadtkreis Karlsruhe"])
+    }
+
+    /// Prüfer 14.11.: Gemeinden in Langform („Altenstadt an der Waldnaab“) sind keine Ortsteile von Nachbargemeinden.
+    func testLangformFindetDieGemeinde() {
+        XCTAssertEqual(ProviderCatalog.municipalities(matching: "Altenstadt an der Waldnaab").map(\.name), ["Altenstadt a.d.Waldnaab"])
+        XCTAssertEqual(ProviderCatalog.municipalities(matching: "Garching bei München").map(\.name), ["Garching b.München"])
+        XCTAssertFalse(ProviderCatalog.municipalityHint(for: "Altenstadt an der Waldnaab")?.contains("Störnstein") ?? false)
+        XCTAssertNil(LocalityIndex.byName["altenstadt an der waldnaab"])
     }
 }

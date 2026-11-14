@@ -80,8 +80,10 @@ public extension ProviderCatalog {
         guard let prefix = prefixes.first(where: { needle.hasPrefix($0) }) else { return [] }
         let core = needle.dropFirst(prefix.count).trimmingCharacters(in: .whitespaces)
         guard core.count >= 3 else { return [] }
+        // Voller Kreisname trifft nur diesen Kreis („Stadtkreis Karlsruhe“ nicht auch den Landkreis)
+        if let exact = DistrictIndex.folded[needle] { return [exact] }
         return Set(DistrictIndex.folded.filter { folded, _ in
-            folded == needle || prefixes.contains { folded == $0 + core }
+            prefixes.contains { folded == $0 + core }
         }.map(\.value))
     }
 
@@ -109,6 +111,10 @@ public extension ProviderCatalog {
         guard needle.count >= 3 else { return ([], nil) }
         let direct = municipalityHits(needle)
         if !direct.isEmpty { return (direct, nil) }
+        // Ausgeschriebene Kurzform: „Altenstadt an der Waldnaab“ = „Altenstadt a.d.Waldnaab“
+        if let items = MunicipalityIndex.byLongForm[MunicipalityIndex.longForm(needle)] {
+            return (items.map { (name: $0.name, district: $0.district) }, nil)
+        }
         if let items = LocalityIndex.byName[needle] {
             // Allgemeine Ortsteilnamen („Altstadt“, „Thal“ in 36 Gemeinden) allein liefern keine Gemeinde, sonst stünden
             // beliebige Kreise in der Trefferliste; der Hinweis bittet um „Gemeinde Ortsteil“.
@@ -117,6 +123,8 @@ public extension ProviderCatalog {
             guard places.count <= LocalityIndex.maxMunicipalities else { return ([], items[0].name) }
             return (places.map { (name: $0.municipality, district: $0.district) }, items[0].name)
         }
+        // Ein Kreisname ohne Vorsilbe („Darmstadt-Dieburg“, „Lüchow-Dannenberg“) ist keine Gemeinde mit Ortsteil.
+        if DistrictIndex.cores.contains(needle) { return ([], nil) }
         // Zusammengesetzte Eingabe: an jedem Trenner von hinten nach vorn in „Gemeinde“ und „Ortsteil“ teilen.
         let separators: Set<Character> = [" ", "-", ",", "/", "("]
         for cut in needle.indices.reversed() where separators.contains(needle[cut]) {
@@ -130,7 +138,17 @@ public extension ProviderCatalog {
             let exact = municipality.filter { fold($0.name) == left }
             let fitting = municipality.filter { locals.contains("\($0.district)|\($0.name)") }
             if !fitting.isEmpty { return (fitting, LocalityIndex.byName[right]?.first?.name) }
-            if !exact.isEmpty { return (exact, nil) }
+            // Rechts genau eine eigene Gemeinde oder ein Kreiswort („Weimar Lahn“, „München Landkreis“): kein Zusatz zur
+            // Gemeinde links, die Volltextsuche findet den Eintrag.
+            let rightIsPlace = ["landkreis", "kreis", "stadt", "lk"].contains(right) || municipalityHits(right).contains { fold($0.name) == right }
+            if !rightIsPlace, let initial = right.first {
+                // Rechts der Zusatz eines Namensvetters: „Halle Saale“ → „Halle (Saale)“, nicht „Halle“ in Niedersachsen
+                let suffixed = MunicipalityIndex.namesakes(left).filter {
+                    $0.folded.dropFirst(left.count).first(where: \.isLetter) == initial
+                }
+                if !suffixed.isEmpty { return (suffixed.map { (name: $0.name, district: $0.district) }, nil) }
+                if !exact.isEmpty { return (exact, nil) }
+            }
             // „Erfelden (Riedstadt)“: links der Ortsteil, rechts seine Gemeinde
             let reversed = (LocalityIndex.byName[left] ?? []).filter { fold($0.municipality).hasPrefix(right) }
             if !reversed.isEmpty { return (reversed.map { (name: $0.municipality, district: $0.district) }, reversed[0].name) }
@@ -198,10 +216,13 @@ public extension ProviderCatalog {
         guard hits.count == 1, let proven = PlaceMapIndex.entryIDs["\(hits[0].district)|\(hits[0].name)"], !proven.contains(entry.id) else { return nil }
         // Nennt der Eintrag die Gemeinde selbst unter seinen Orten und liegt im selben Kreis (oder hat keinen), widerspricht
         // er der Zuordnung – dann lieber nichts behaupten (Messung 14.11.: 2 von 9.794, „Reutlingen“ der TBR-App).
-        let districts = CatalogRegions.entryDistricts[entry.id] ?? []
-        if (SearchIndex.places[entry.id] ?? []).contains(fold(hits[0].name)), districts.isEmpty || districts.contains(hits[0].district) {
-            return nil
-        }
+        let name = fold(hits[0].name), needle = fold(query)
+        // Namensvettern mit Zusatz („Frankenthal“ → auch „Frankenthal (Pfalz)“, „Borken“ → „Borken (Hessen)“): die Eingabe
+        // meint nicht sicher diese Gemeinde.
+        if !MunicipalityIndex.namesakes(name).isEmpty || !MunicipalityIndex.namesakes(needle).isEmpty { return nil }
+        // Nennt der Eintrag die Eingabe oder die Gemeinde selbst unter seinen Orten, widerspricht er der Zuordnung.
+        let places = SearchIndex.places[entry.id] ?? []
+        if places.contains(name) || places.contains(needle) { return nil }
         return L10n.t("Führt \(hits[0].name) nicht", "Does not cover \(hits[0].name)")
     }
 
@@ -245,6 +266,44 @@ enum MunicipalityIndex {
 
     /// Positionen in `all`, nach gefaltetem Namen sortiert (für die Suche nach Anfang).
     static let sortedOffsets: [Int] = all.indices.sorted { all[$0].folded < all[$1].folded }
+
+    /// Gemeinden, deren Name mit `needle` und einem Zusatz beginnt („halle“ → „Halle (Saale)“, „Halle (Westf.)“).
+    static func namesakes(_ needle: String) -> [Item] {
+        var low = 0, high = sortedOffsets.count
+        while low < high {
+            let mid = (low + high) / 2
+            if all[sortedOffsets[mid]].folded < needle { low = mid + 1 } else { high = mid }
+        }
+        var result: [Item] = []
+        while low < sortedOffsets.count, all[sortedOffsets[low]].folded.hasPrefix(needle) {
+            let item = all[sortedOffsets[low]]
+            if item.folded.count > needle.count, !item.folded[item.folded.index(item.folded.startIndex, offsetBy: needle.count)].isLetter {
+                result.append(item)
+            }
+            low += 1
+        }
+        return result
+    }
+
+    /// Amtliche Kurzformen ausgeschrieben, Punkte und Leerraum vereinheitlicht („lohr a.main“ → „lohr am main“).
+    static func longForm(_ folded: String) -> String {
+        var text = folded
+        for (short, full) in [("a.d.", " an der "), ("i.d.", " in der "), ("v.d.", " vor der "), ("a.", " am "), ("i.", " im "),
+                              ("b.", " bei "), ("st.", " sankt ")] {
+            text = text.replacingOccurrences(of: short, with: full)
+        }
+        return text.split(whereSeparator: { $0 == " " || $0 == "." }).joined(separator: " ")
+    }
+
+    /// Nur Gemeinden mit Kurzform im Namen, unter ihrer Langform.
+    static let byLongForm: [String: [Item]] = {
+        var result: [String: [Item]] = [:]
+        for item in all where item.folded.contains(".") {
+            let long = longForm(item.folded)
+            if long != item.folded { result[long, default: []].append(item) }
+        }
+        return result
+    }()
 }
 
 /// Ortsteile mit Gemeinde und Landkreis, einmalig aus `CatalogLocalities.localities` gelesen. Gesucht wird nur genau
@@ -279,6 +338,15 @@ enum LocalityIndex {
 enum DistrictIndex {
     static let folded: [String: String] = Dictionary(CatalogRegions.districtStates.keys.map { (ProviderCatalog.fold($0), $0) },
                                                      uniquingKeysWith: { first, _ in first })
+
+    /// Kreisnamen ohne Vorsilbe („darmstadt-dieburg“); „Landkreis Konstanz“ → „konstanz“ zählt nicht, weil es eine Gemeinde ist.
+    static let cores: Set<String> = Set(folded.keys.compactMap { name in
+        for prefix in ["landkreis ", "kreisfreie stadt ", "stadtkreis ", "kreis ", "regionalverband ", "region "] where name.hasPrefix(prefix) {
+            let core = String(name.dropFirst(prefix.count))
+            return MunicipalityIndex.all.contains { $0.folded == core } ? nil : core
+        }
+        return nil
+    })
 }
 
 /// Belegte Gemeinden je Eintrag („Landkreis|Gemeinde“), umgekehrt aus `PlaceMapIndex.entryIDs`.
