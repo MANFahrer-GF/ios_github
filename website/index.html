@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=12">
+<link rel="stylesheet" href="assets/site.css?v=13">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -261,12 +261,44 @@
         <li>Jeden 1. Montag im Monat</li>
         <li>Jeden letzten Freitag im Monat</li>
       </ul>
+      <figure class="notif center reveal" aria-label="So sieht die Erinnerung an einen eigenen Termin aus">
+        <div class="nb">
+          <img src="img/icon-180.png" alt="" width="38" height="38">
+          <div>
+            <p class="nh"><span>Tonne &amp; Torte</span><span>09:30</span></p>
+            <p class="nt">📌 Heute um 10:30: Zahnarzt</p>
+            <p class="nx">Dienstag, 17. November 2026</p>
+          </div>
+        </div>
+        <ul class="na">
+          <li>✅ Erledigt</li>
+          <li>⏰ In 1 Stunde nochmal</li>
+        </ul>
+      </figure>
       <div class="termine reveal">
-        <div><h3>Mit Uhrzeit oder ganztägig.</h3><p>Termine mit Uhrzeit melden sich mit einstellbarem Vorlauf, ganztägige zur Uhrzeit deiner Wahl.</p></div>
+        <div><h3>Mit Uhrzeit oder ganztägig.</h3><p>Termine mit Uhrzeit melden sich vorher, standardmäßig eine Stunde. Ganztägige um 9 Uhr.</p></div>
         <div><h3>Auch am Vortag.</h3><p>Auf Wunsch zusätzlich eine Erinnerung am Tag davor.</p></div>
         <div><h3>Erledigt oder später.</h3><p>Direkt in der Mitteilung „Erledigt“ tippen oder „In 1 Stunde nochmal“.</p></div>
         <div><h3>Mit eigenem Symbol.</h3><p>Aus über 70 Symbolen, nach Themen sortiert, damit du Termine auf einen Blick erkennst.</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="zeiten">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="zeiten" class="headline">Wann erinnert die App?</h2>
+        <p class="sub">So ist es voreingestellt. Jede Uhrzeit lässt sich ändern, jede Erinnerung abschalten.</p>
+      </div>
+      <ol class="zeiten reveal">
+        <li><span class="zt">19:00</span><strong>Am Vorabend</strong><span>Welche Tonne morgen dran ist.</span></li>
+        <li><span class="zt">21:00</span><strong>Zweite Erinnerung</strong><span>Nur, wenn noch nicht „Erledigt“ getippt wurde.</span></li>
+        <li><span class="zt">07:00</span><strong>Am Abholtag morgens</strong><span>Auf Wunsch zusätzlich am Morgen.</span></li>
+        <li><span class="zt">17:00</span><strong>Tonne reinholen</strong><span>Am Abholtag, nur für Tonnen.</span></li>
+        <li><span class="zt">09:00</span><strong>Geburtstage</strong><span>Am Tag selbst und bei Vorab-Erinnerungen.</span></li>
+        <li><span class="zt">09:00</span><strong>Eigene Termine</strong><span>Ganztägige um 9 Uhr, mit Uhrzeit eine Stunde vorher.</span></li>
+      </ol>
+      <p class="zeiten-hinweis reveal">Uhrzeiten und Vorlauf stellst du unter Mehr › Einstellungen ein.</p>
     </div>
   </section>
 

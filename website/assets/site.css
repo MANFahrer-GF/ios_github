@@ -415,3 +415,13 @@ footer a { color: var(--ink); opacity: .8; }
 .termine p { margin-top: 10px; color: var(--muted); }
 @media (max-width: 980px) { .termine { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .termine { grid-template-columns: 1fr; gap: 14px; } }
+
+.notif.center { margin: 44px auto 0; width: min(380px, 100%); text-align: left; }
+/* Überblick der Erinnerungszeiten */
+.zeiten { list-style: none; padding: 0; margin: 48px auto 0; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; text-align: left; }
+.zeiten li { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; align-items: baseline; background: var(--tile); border-radius: 20px; padding: 20px 22px; }
+.zeiten .zt { grid-row: span 2; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.zeiten strong { font-size: 1.1rem; }
+.zeiten li > span:last-child { color: var(--muted); font-size: .98rem; }
+.zeiten-hinweis { margin-top: 22px; color: var(--muted); }
+@media (max-width: 700px) { .zeiten { grid-template-columns: 1fr; } }
