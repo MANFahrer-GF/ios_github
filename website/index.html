@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=11">
+<link rel="stylesheet" href="assets/site.css?v=12">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -213,19 +213,59 @@
   <section class="sec" aria-labelledby="torte">
     <div class="wrap">
       <div class="reveal">
-        <h2 id="torte" class="headline">Und die Torte.</h2>
-        <p class="sub">Geburtstage und eigene Termine, gleich mit dabei.</p>
+        <h2 id="torte" class="headline">Und die <span class="grad">Torte.</span></h2>
+        <p class="sub">Kein Geburtstag rutscht mehr durch. Mit Alter, Jahrgang und Sternzeichen.</p>
       </div>
       <div class="bday">
         <ul class="points reveal">
-          <li><strong>Aus den Kontakten.</strong>Geburtstage übernehmen, nur die, die du auswählst. Mit Alter, Jahrgang und Sternzeichen.</li>
-          <li><strong>Rechtzeitig erinnert.</strong>Am Tag und auf Wunsch eine Woche vorher, runde Geburtstage inklusive. Mehrere an einem Tag kommen in einer Mitteilung.</li>
+          <li><strong>Aus den Kontakten.</strong>Geburtstage übernehmen, nur die, die du auswählst.</li>
+          <li><strong>Runde Geburtstage.</strong>Die App weiß, wer 30, 50 oder 80 wird, und sagt es dir.</li>
+          <li><strong>Pünktlich erinnert.</strong>Am Geburtstag um 9 Uhr, auf Wunsch zusätzlich einen Tag, eine Woche, zwei Wochen oder einen Monat vorher.</li>
           <li><strong>Direkt gratulieren.</strong>Aus der Mitteilung anrufen oder einen Glückwunsch schreiben. In der Liste reicht ein Wisch.</li>
-          <li><strong>Geschenkideen.</strong>Notieren, in der Vorab-Erinnerung wiederfinden und die Liste als CSV oder PDF exportieren.</li>
-          <li><strong>Eigene Termine.</strong>Mit Uhrzeit oder ganztägig, wiederkehrend bis „jeden letzten Freitag im Monat“, mit eigenem Symbol.</li>
-          <li><strong>Eigene Zeiten.</strong>Geburtstage und Termine haben jeweils eigene Uhrzeiten für die Erinnerung am Tag und vorab.</li>
+          <li><strong>Geschenkideen.</strong>Notieren und in der Vorab-Erinnerung wiederfinden. Die Liste geht auch als CSV oder PDF raus.</li>
+          <li><strong>Mehrere an einem Tag.</strong>Dann kommt eine gemeinsame Mitteilung statt vieler einzelner.</li>
         </ul>
-        <div class="phone reveal"><img src="img/app-geburtstage.webp" alt="Geburtstagsliste der App" width="640" height="1391" loading="lazy"></div>
+        <div class="bday-visual reveal">
+          <div class="phone"><img src="img/app-geburtstage.webp" alt="Geburtstagsliste der App" width="640" height="1391" loading="lazy"></div>
+          <figure class="notif float" aria-label="So sieht die Geburtstags-Mitteilung aus">
+            <div class="nb">
+              <img src="img/icon-180.png" alt="" width="38" height="38">
+              <div>
+                <p class="nh"><span>Tonne &amp; Torte</span><span>09:00</span></p>
+                <p class="nt">🎂 Oma Erika hat heute Geburtstag</p>
+                <p class="nx">Oma Erika wird heute 80 – ein runder Geburtstag! 🎉</p>
+              </div>
+            </div>
+            <ul class="na">
+              <li>📞 Anrufen</li>
+              <li>💬 Glückwunsch schreiben</li>
+            </ul>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="termine">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="termine" class="headline">Und alles, was sonst wiederkommt.</h2>
+        <p class="sub">Eigene Termine mit derselben Erinnerung wie bei der Tonne.</p>
+      </div>
+      <ul class="chips light reveal" aria-label="Beispiele für Wiederholungen">
+        <li>Einmalig</li>
+        <li>Jede Woche</li>
+        <li>Alle 2 Wochen</li>
+        <li>Jeden Monat</li>
+        <li>Jedes Jahr</li>
+        <li>Jeden 1. Montag im Monat</li>
+        <li>Jeden letzten Freitag im Monat</li>
+      </ul>
+      <div class="termine reveal">
+        <div><h3>Mit Uhrzeit oder ganztägig.</h3><p>Termine mit Uhrzeit melden sich mit einstellbarem Vorlauf, ganztägige zur Uhrzeit deiner Wahl.</p></div>
+        <div><h3>Auch am Vortag.</h3><p>Auf Wunsch zusätzlich eine Erinnerung am Tag davor.</p></div>
+        <div><h3>Erledigt oder später.</h3><p>Direkt in der Mitteilung „Erledigt“ tippen oder „In 1 Stunde nochmal“.</p></div>
+        <div><h3>Mit eigenem Symbol.</h3><p>Aus über 70 Symbolen, nach Themen sortiert, damit du Termine auf einen Blick erkennst.</p></div>
       </div>
     </div>
   </section>
