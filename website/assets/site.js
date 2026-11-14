@@ -17,12 +17,25 @@
 (function () {
   var sec = document.getElementById('bewertungen');
   if (!sec || !window.fetch) return;
-  fetch('api/bewertungen.php?v=7').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+  // Sterne eindeutig zeichnen: volle ★, leere ☆, beim Durchschnitt ein anteilig gefüllter Stern.
+  function sterne(el, wert) {
+    el.textContent = '';
+    for (var i = 1; i <= 5; i++) {
+      var s = document.createElement('span');
+      if (wert >= i) { s.className = 'v'; s.textContent = '★'; }
+      else if (wert > i - 1) { s.className = 't'; s.textContent = '★'; s.style.setProperty('--pct', Math.round((wert - i + 1) * 100) + '%'); }
+      else { s.className = 'l'; s.textContent = '☆'; }
+      s.setAttribute('aria-hidden', 'true');
+      el.appendChild(s);
+    }
+    el.setAttribute('role', 'img');
+  }
+  fetch('api/bewertungen.php?v=8').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (!d || !d.ok || !d.anzahl) return;
     var de = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); };
     sec.querySelector('[data-avg]').textContent = de(d.schnitt);
     var st = sec.querySelector('[data-stars]');
-    st.style.setProperty('--pct', (d.schnitt / 5 * 100) + '%');
+    sterne(st, d.schnitt);
     st.setAttribute('aria-label', de(d.schnitt) + ' von 5 Sternen');
     sec.querySelector('[data-count]').textContent = d.anzahl + (d.anzahl === 1 ? ' Bewertung' : ' Bewertungen') + ' im App Store';
     var box = sec.querySelector('[data-reviews]');
@@ -38,8 +51,8 @@
       var dt = r.datum ? new Date(r.datum + 'T12:00:00').toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
       by.textContent = dt;
       var top = document.createElement('div'); top.className = 'top'; top.append(h, by);
-      var s = document.createElement('span'); s.className = 'stars sm'; s.textContent = '★★★★★';
-      s.style.setProperty('--pct', (r.sterne / 5 * 100) + '%'); s.setAttribute('aria-label', r.sterne + ' von 5 Sternen');
+      var s = document.createElement('span'); s.className = 'stars sm'; sterne(s, r.sterne);
+      s.setAttribute('aria-label', r.sterne + ' von 5 Sternen');
       var au = document.createElement('p'); au.className = 'by'; au.textContent = r.autor;
       var p = document.createElement('p'); p.className = 't'; p.textContent = r.text;
       a.append(top, s, au, p);
