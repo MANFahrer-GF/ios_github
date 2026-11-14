@@ -329,3 +329,15 @@ footer a { color: var(--ink); opacity: .8; }
 .review p.t { color: var(--ink); opacity: .86; font-size: 1rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .review .by { margin-top: auto; padding-top: 8px; color: var(--muted); font-size: .9rem; }
 .ratings .src { margin-top: 8px; color: var(--muted); font-size: .9rem; }
+
+/* Weiche Übergänge in und aus den schwarzen Abschnitten */
+.sec.dark { --fade: clamp(120px, 16vw, 220px); padding-top: calc(110px + var(--fade) * .6); padding-bottom: calc(110px + var(--fade) * .6);
+  background: linear-gradient(to bottom,
+    var(--vor, #000) 0,
+    color-mix(in srgb, var(--vor, #000) 62%, #000) calc(var(--fade) * .28),
+    color-mix(in srgb, var(--vor, #000) 22%, #000) calc(var(--fade) * .6),
+    #000 var(--fade), #000 calc(100% - var(--fade)),
+    color-mix(in srgb, var(--nach, #000) 22%, #000) calc(100% - var(--fade) * .6),
+    color-mix(in srgb, var(--nach, #000) 62%, #000) calc(100% - var(--fade) * .28),
+    var(--nach, #000) 100%); }
+@media (max-width: 734px) { .sec.dark { padding-top: calc(72px + var(--fade) * .5); padding-bottom: calc(72px + var(--fade) * .5); } }
