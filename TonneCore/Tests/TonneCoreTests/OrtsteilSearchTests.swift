@@ -62,7 +62,9 @@ final class OrtsteilSearchTests: XCTestCase {
             let pair = "\(item.district)|\(item.municipality)"
             if !gemeinden.contains(pair) { failures.append("unbekannte Gemeinde \(pair)"); continue }
             let alone = ProviderCatalog.municipalities(matching: item.name).map { "\($0.district)|\($0.name)" }
-            if !alone.contains(pair) && (LocalityIndex.byName[ProviderCatalog.fold(item.name)]?.count ?? 0) <= 30 {
+            // Allgemeine Namen in mehr als 8 Gemeinden liefern allein bewusst nichts (SuchPruefpunkteTests).
+            let places = Set((LocalityIndex.byName[ProviderCatalog.fold(item.name)] ?? []).map { "\($0.district)|\($0.municipality)" })
+            if !alone.contains(pair) && places.count <= LocalityIndex.maxMunicipalities {
                 failures.append("\(item.name) → \(alone)")
             }
             let query = "\(item.municipality)-\(item.name)"

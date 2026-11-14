@@ -352,7 +352,7 @@ struct SourceWizardView: View {
                 // Gesuchte Gemeinde im ersten Schritt gleich wählen (nur einmal, „Zurück“ zeigt die volle Liste).
                 if selections.isEmpty, let place = preselectPlace {
                     preselectPlace = nil
-                    if let option = step.options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) {
+                    if let option = step.preselection(for: place) {
                         selections.append(option)
                         await loadNextStep()
                         return

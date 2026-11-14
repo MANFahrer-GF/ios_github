@@ -23,6 +23,18 @@ public extension ProviderCatalog {
             let l = ranks[lhs.id] ?? 2, r = ranks[rhs.id] ?? 2
             return l != r ? l < r : lhs.title < rhs.title
         }
+        // Kreisname („Landkreis Konstanz“, „Kreis Konstanz“): dazu alle Einträge, die belegt Orte dieses Kreises führen –
+        // die Müllmann-App heißt nicht mehr nach dem Kreis, gehört aber zu ihm.
+        let namedDistricts = districts(matching: needle)
+        if !namedDistricts.isEmpty {
+            let known = Set(ranked.map(\.id))
+            let extra = entries.filter { entry in
+                !known.contains(entry.id) && ((EntryPlacesIndex.pairs[entry.id] ?? []).contains {
+                    namedDistricts.contains(String($0.split(separator: "|", maxSplits: 1)[0]))
+                } || (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: namedDistricts.contains))
+            }.sorted { $0.title < $1.title }
+            return ranked + extra
+        }
         let hits = municipalities(matching: query)
         let districts = Set(hits.map(\.district))
         guard !districts.isEmpty else { return ranked }
@@ -61,6 +73,18 @@ public extension ProviderCatalog {
         return (strong + viaDistrict + rest).filter { !boundToUnavailable($0) }
     }
 
+    /// Kreise, die die Eingabe genau nennt: voller Name („Landkreis Konstanz“) oder mit anderer Kreis-Vorsilbe
+    /// („Kreis Konstanz“). Ein bloßer Ortsname („Konstanz“) nennt keinen Kreis.
+    static func districts(matching needle: String) -> Set<String> {
+        let prefixes = ["landkreis ", "kreis ", "kreisfreie stadt ", "stadtkreis ", "lk "]
+        guard let prefix = prefixes.first(where: { needle.hasPrefix($0) }) else { return [] }
+        let core = needle.dropFirst(prefix.count).trimmingCharacters(in: .whitespaces)
+        guard core.count >= 3 else { return [] }
+        return Set(DistrictIndex.folded.filter { folded, _ in
+            folded == needle || prefixes.contains { folded == $0 + core }
+        }.map(\.value))
+    }
+
     /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.
     private static func rank(_ entry: CatalogEntry, needle: String) -> Int {
         if (SearchIndex.text[entry.id] ?? entry.searchText).hasPrefix(needle) { return 0 }
@@ -86,7 +110,12 @@ public extension ProviderCatalog {
         let direct = municipalityHits(needle)
         if !direct.isEmpty { return (direct, nil) }
         if let items = LocalityIndex.byName[needle] {
-            return (items.prefix(30).map { (name: $0.municipality, district: $0.district) }, items[0].name)
+            // Allgemeine Ortsteilnamen („Altstadt“, „Thal“ in 36 Gemeinden) allein liefern keine Gemeinde, sonst stünden
+            // beliebige Kreise in der Trefferliste; der Hinweis bittet um „Gemeinde Ortsteil“.
+            var seen = Set<String>()
+            let places = items.filter { seen.insert("\($0.district)|\($0.municipality)").inserted }
+            guard places.count <= LocalityIndex.maxMunicipalities else { return ([], items[0].name) }
+            return (places.map { (name: $0.municipality, district: $0.district) }, items[0].name)
         }
         // Zusammengesetzte Eingabe: an jedem Trenner von hinten nach vorn in „Gemeinde“ und „Ortsteil“ teilen.
         let separators: Set<Character> = [" ", "-", ",", "/", "("]
@@ -109,7 +138,7 @@ public extension ProviderCatalog {
         return ([], nil)
     }
 
-    private static func municipalityHits(_ needle: String) -> [(name: String, district: String)] {
+    static func municipalityHits(_ needle: String) -> [(name: String, district: String)] {
         // Über die sortierte Liste statt alle 11.000 Gemeinden je Aufruf; Reihenfolge der Treffer wie in der Gemeindeliste.
         let all = MunicipalityIndex.all, sorted = MunicipalityIndex.sortedOffsets
         var low = 0, high = sorted.count
@@ -167,13 +196,23 @@ public extension ProviderCatalog {
         }
         // Nur eine gesuchte Gemeinde mit belegter Zuordnung, die diesen Eintrag nicht nennt
         guard hits.count == 1, let proven = PlaceMapIndex.entryIDs["\(hits[0].district)|\(hits[0].name)"], !proven.contains(entry.id) else { return nil }
+        // Nennt der Eintrag die Gemeinde selbst unter seinen Orten und liegt im selben Kreis (oder hat keinen), widerspricht
+        // er der Zuordnung – dann lieber nichts behaupten (Messung 14.11.: 2 von 9.794, „Reutlingen“ der TBR-App).
+        let districts = CatalogRegions.entryDistricts[entry.id] ?? []
+        if (SearchIndex.places[entry.id] ?? []).contains(fold(hits[0].name)), districts.isEmpty || districts.contains(hits[0].district) {
+            return nil
+        }
         return L10n.t("Führt \(hits[0].name) nicht", "Does not cover \(hits[0].name)")
     }
 
     /// Kurzer Hinweis für die Suche, z. B. „Nostorf liegt im Landkreis Ludwigslust-Parchim.“
     static func municipalityHint(for query: String) -> String? {
         let (hits, locality) = resolve(fold(query))
-        guard let first = hits.first else { return nil }
+        guard let first = hits.first else {
+            guard let locality else { return nil }
+            return L10n.t("\(locality) gibt es in vielen Gemeinden – bitte mit Gemeinde suchen, z. B. „Riedstadt Erfelden“.",
+                          "\(locality) exists in many municipalities – please add the municipality, e.g. “Riedstadt Erfelden”.")
+        }
         if let locality, hits.count == 1 {
             return L10n.t("\(locality) gehört zu \(first.name) (\(first.district)).", "\(locality) is part of \(first.name) (\(first.district)).")
         }
@@ -213,6 +252,9 @@ enum MunicipalityIndex {
 enum LocalityIndex {
     struct Item { let name: String; let municipality: String; let district: String }
 
+    /// Mehr Gemeinden mit gleichnamigem Ortsteil liefert ein Ortsteilname allein nicht (Stand 14.11.: 112 Namen > 8).
+    static let maxMunicipalities = 8
+
     static let all: [Item] = CatalogLocalities.localities.split(separator: "\n").flatMap { line -> [Item] in
         let parts = line.split(separator: "|", maxSplits: 2)
         guard parts.count == 3 else { return [] }
@@ -231,6 +273,12 @@ enum LocalityIndex {
         }
         return result
     }()
+}
+
+/// Alle Kreisnamen gefaltet → Originalname.
+enum DistrictIndex {
+    static let folded: [String: String] = Dictionary(CatalogRegions.districtStates.keys.map { (ProviderCatalog.fold($0), $0) },
+                                                     uniquingKeysWith: { first, _ in first })
 }
 
 /// Belegte Gemeinden je Eintrag („Landkreis|Gemeinde“), umgekehrt aus `PlaceMapIndex.entryIDs`.

@@ -49,6 +49,19 @@ public struct SelectionStep: Hashable {
     public static var districtTitle: String { L10n.t("Ortsteil", "District") }
     public static var streetTitle: String { L10n.t("Straße", "Street") }
     public static var houseNumberTitle: String { L10n.t("Hausnummer", "House number") }
+
+    /// Schritt, in dem eine Gemeinde gewählt wird (Titel wie bei den Anbietern) – nur hier darf die Suche vorauswählen.
+    public var isPlaceStep: Bool {
+        [Self.cityTitle, L10n.t("Gemeinde", "Municipality"), L10n.t("Ortschaft", "Town"), L10n.t("Ortsgemeinde", "Municipality"),
+         L10n.t("Stadt / Gemeinde", "Town / municipality"), L10n.t("Stadt / Verbandsgemeinde", "Municipality"),
+         L10n.t("Verbandsgemeinde / Stadt", "Municipality")].contains(title)
+    }
+
+    /// Option, die zur gesuchten Gemeinde passt – nur im Gemeinde-Schritt und bei genau gleichem Namen.
+    public func preselection(for place: String) -> SelectionOption? {
+        guard isPlaceStep else { return nil }
+        return options.first { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }
+    }
 }
 
 /// Ein Abholtermin aus einer Online-Quelle.
