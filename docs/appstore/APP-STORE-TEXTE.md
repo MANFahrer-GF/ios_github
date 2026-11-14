@@ -40,7 +40,17 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
 
-### Neu in dieser Version – 2.0.10 (eingereicht 12.11.2026, Build 14)
+### Neu in dieser Version – 2.0.11 (Build 15)
+
+```
+Ortsteile finden
+Die Suche kennt jetzt rund 60.000 Ortsteile. Gib einfach „Erfelden“, „Riedstadt-Erfelden“ oder „Bonn-Beuel“ ein – die App zeigt, zu welcher Gemeinde der Ort gehört, und führt dich zum passenden Entsorger. Wo möglich wählt sie den Ort im nächsten Schritt gleich vor.
+• In der Trefferliste steht jetzt, ob ein Entsorger deinen Ort führt, zum Beispiel „Führt Karlsruhe · auch 14 Orte im Landkreis Konstanz“
+• Suche nach dem Kreis, etwa „Landkreis Konstanz“, zeigt alle Entsorger, die dort Orte führen
+• Neu: Bischofsheim (Kreis Groß-Gerau) mit eigenem Abfallkalender
+```
+
+### Neu in Version 2.0.10 (freigegeben, Build 14)
 
 ```
 Tonnendienst im Rhythmus
