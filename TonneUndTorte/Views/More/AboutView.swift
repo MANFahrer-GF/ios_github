@@ -43,7 +43,7 @@ struct AboutView: View {
                     }
                 }
                 card(title: "Danke", symbol: "heart.fill") {
-                    Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.")
+                    Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Ortsteile: GeoNames (geonames.org), Lizenz CC BY 4.0. Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.")
                 }
                 VStack(spacing: 4) {
                     Text("Mit ❤️ gebaut in Gifhorn")

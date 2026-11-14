@@ -903,12 +903,12 @@
         }
       }
     },
-    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet." : {
+    "Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Ortsteile: GeoNames (geonames.org), Lizenz CC BY 4.0. Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Symbols: Apple SF Symbols, bins and bag hand-drawn."
+            "value" : "The list of providers is based on the open-source project hacs_waste_collection_schedule (MIT licence). Localities: GeoNames (geonames.org), licence CC BY 4.0. Symbols: Apple SF Symbols, bins and bag hand-drawn."
           }
         }
       }
