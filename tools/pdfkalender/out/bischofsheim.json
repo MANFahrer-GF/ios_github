@@ -1,0 +1,2026 @@
+{
+ "key": "bischofsheim",
+ "title": "Gemeinde Bischofsheim",
+ "source": "https://www.bischofsheim.de/rathaus-und-politik/uebersicht-der-verwaltung/fachbereich-bauen-und-bauhof/fachdienst-bauen/abfall/abfallkalender.html",
+ "stand": "2026-11-14",
+ "years": [
+  2026
+ ],
+ "groupTitle": null,
+ "stepTitle": "Straße",
+ "notice": "Sperrmüll nicht enthalten – er wird nur auf Abruf mit der Sperrkarte abgefahren.",
+ "areas": [
+  {
+   "id": "alemannenweg",
+   "title": "Alemannenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_alten_gerauer_weg_bis_beethovenstrasse",
+   "title": "Am Alten Gerauer Weg (bis Beethovenstraße)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_alten_gerauer_weg_von_beethovenstrasse_bis_im_attich",
+   "title": "Am Alten Gerauer Weg (von Beethovenstraße bis Im Attich)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_alten_kostheimer_weg",
+   "title": "Am Alten Kostheimer Weg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_bauschheimer_weg",
+   "title": "Am Bauschheimer Weg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_flurgraben",
+   "title": "Am Flurgraben",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_himmelspfad",
+   "title": "Am Himmelspfad",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_kirschbaum",
+   "title": "Am Kirschbaum",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "am_mainweg",
+   "title": "Am Mainweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_rampen_bahnhof",
+   "title": "Am Rampen (Bahnhof)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "am_schindberg",
+   "title": "Am Schindberg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "an_den_sportstaetten",
+   "title": "An den Sportstätten",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "an_der_bahn",
+   "title": "An der Bahn",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "an_der_kreuzlache",
+   "title": "An der Kreuzlache",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "an_der_steinlach",
+   "title": "An der Steinlach",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "auf_dem_buegen",
+   "title": "Auf dem Bügen",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_dem_farrweg",
+   "title": "Auf dem Farrweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_dem_goern",
+   "title": "Auf dem Goern",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "auf_dem_woerth",
+   "title": "Auf dem Wörth",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "august_bebel_strasse_bis_rheinstrasse",
+   "title": "August-Bebel-Straße (bis Rheinstraße)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "august_bebel_strasse_von_rheinstrasse_bis_ginsheimer_strasse",
+   "title": "August-Bebel-Straße (von Rheinstraße bis Ginsheimer Straße)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "bahnhofstrasse",
+   "title": "Bahnhofstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "beethovenstrasse",
+   "title": "Beethovenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "berliner_strasse",
+   "title": "Berliner Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "birkenhof",
+   "title": "Birkenhof",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "birkenweg",
+   "title": "Birkenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "bismarckstrasse",
+   "title": "Bismarckstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "breslauer_strasse",
+   "title": "Breslauer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "dammstrasse",
+   "title": "Dammstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "danziger_strasse",
+   "title": "Danziger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "darmstaedter_strasse_ab_rheinstrasse_bis_friedhof",
+   "title": "Darmstädter Straße (ab Rheinstraße bis Friedhof)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "darmstaedter_strasse_bis_rheinstrasse",
+   "title": "Darmstädter Straße (bis Rheinstraße)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dr_hans_boeckler_platz",
+   "title": "Dr.-Hans-Böckler-Platz",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dr_hans_boeckler_strasse",
+   "title": "Dr.-Hans-Böckler-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dreihaeusergasse",
+   "title": "Dreihäusergasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "dresdner_strasse",
+   "title": "Dresdner Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "doerrwiese",
+   "title": "Dörrwiese",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "eifelweg",
+   "title": "Eifelweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "eleonorenstrasse",
+   "title": "Eleonorenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "erlenweg",
+   "title": "Erlenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "feldbergstrasse",
+   "title": "Feldbergstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "floersheimer_strasse",
+   "title": "Flörsheimer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "frankenweg",
+   "title": "Frankenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "frankfurter_strasse",
+   "title": "Frankfurter Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "franz_schubert_strasse",
+   "title": "Franz-Schubert-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "freiligrathstrasse",
+   "title": "Freiligrathstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "friedrich_ebert_strasse",
+   "title": "Friedrich-Ebert-Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "friedrichstrasse",
+   "title": "Friedrichstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "frohnseestrasse_ab_friedrich_ebert_strasse_bis_im_attich",
+   "title": "Frohnseestraße (ab Friedrich-Ebert-Straße bis Im Attich)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "frohnseestrasse_bis_bismarckstrasse",
+   "title": "Frohnseestraße (bis Bismarckstraße)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "frohnseestrasse_bis_friedrich_ebert_strasse",
+   "title": "Frohnseestraße (bis Friedrich-Ebert-Straße)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gabelsberger_strasse",
+   "title": "Gabelsberger Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "gartenstrasse",
+   "title": "Gartenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "geibelstrasse",
+   "title": "Geibelstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "georg_fischer_strasse",
+   "title": "Georg-Fischer-Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ginsheimer_landstrasse",
+   "title": "Ginsheimer Landstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ginsheimer_strasse_bis_roemerstrasse",
+   "title": "Ginsheimer Straße (bis Römerstraße)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ginsheimer_strasse_uebriger_teil",
+   "title": "Ginsheimer Straße (übriger Teil)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "goethestrasse",
+   "title": "Goethestraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "gustavsburger_strasse",
+   "title": "Gustavsburger Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "gutenbergstrasse",
+   "title": "Gutenbergstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hans_dorr_allee",
+   "title": "Hans-Dorr-Allee",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "heinrich_huenerkopf_weg",
+   "title": "Heinrich-Hünerkopf-Weg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hessenring",
+   "title": "Hessenring",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hinterm_eulensee",
+   "title": "Hinterm Eulensee",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "hochheimer_strasse",
+   "title": "Hochheimer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "hunsrueckweg",
+   "title": "Hunsrückweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_apfelgarten",
+   "title": "Im Apfelgarten",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_attich",
+   "title": "Im Attich",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_dornbusch",
+   "title": "Im Dornbusch",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_espital",
+   "title": "Im Espital",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_forst",
+   "title": "Im Forst",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_griesboehl",
+   "title": "Im Griesböhl",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_kappesgarten",
+   "title": "Im Kappesgarten",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_klinker",
+   "title": "Im Klinker",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_moenchbruch",
+   "title": "Im Mönchbruch",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_pfeiffersgrund",
+   "title": "Im Pfeiffersgrund",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "im_schlanken",
+   "title": "Im Schlanken",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "im_wuesten_forst",
+   "title": "Im Wüsten Forst",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_den_sternaeckern",
+   "title": "In den Sternäckern",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "in_der_hochgewann",
+   "title": "In der Hochgewann",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "in_der_nachtweide",
+   "title": "In der Nachtweide",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kantstrasse",
+   "title": "Kantstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "karlsbader_strasse",
+   "title": "Karlsbader Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "kasteler_strasse",
+   "title": "Kasteler Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "keltenweg",
+   "title": "Keltenweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "koenigsberger_strasse",
+   "title": "Königsberger Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "lindenweg",
+   "title": "Lindenweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "ludwigstrasse",
+   "title": "Ludwigstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mainstrasse",
+   "title": "Mainstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mainzer_strasse_gerade_hausnummern",
+   "title": "Mainzer Straße (gerade Hausnummern)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "mainzer_strasse_ungerade_hausnummern",
+   "title": "Mainzer Straße (ungerade Hausnummern)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "margarethenhof",
+   "title": "Margarethenhof",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mittelgasse",
+   "title": "Mittelgasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mittelgewann",
+   "title": "Mittelgewann",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "mozartstrasse",
+   "title": "Mozartstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "neben_dem_muehlweg",
+   "title": "Neben dem Mühlweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "odenwaldweg",
+   "title": "Odenwaldweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "parkweg",
+   "title": "Parkweg",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "peking",
+   "title": "Peking",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "pfaelzerweg",
+   "title": "Pfälzerweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "platanenstrasse",
+   "title": "Platanenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "raunheimer_strasse",
+   "title": "Raunheimer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "rheingauweg",
+   "title": "Rheingauweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "rheinstrasse",
+   "title": "Rheinstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "rhoenweg",
+   "title": "Rhönweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "riedweg",
+   "title": "Riedweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ringstrasse",
+   "title": "Ringstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "roemerstrasse",
+   "title": "Römerstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "roentgenstrasse",
+   "title": "Röntgenstraße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ruesselsheimer_strasse",
+   "title": "Rüsselsheimer Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "sackgasse",
+   "title": "Sackgasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schillerstrasse",
+   "title": "Schillerstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schlichtergasse",
+   "title": "Schlichtergasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schulstrasse_ab_friedrich_ebert_strasse_bis_darmstaedter_strasse",
+   "title": "Schulstraße (ab Friedrich-Ebert-Straße bis Darmstädter Straße)",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "schulstrasse_bis_friedrich_ebert_strasse",
+   "title": "Schulstraße (bis Friedrich-Ebert-Straße)",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "schwarzwaldweg",
+   "title": "Schwarzwaldweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "spelzengasse",
+   "title": "Spelzengasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "spessartweg",
+   "title": "Spessartweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "tannenhof",
+   "title": "Tannenhof",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "taunusstrasse",
+   "title": "Taunusstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "treburer_strasse",
+   "title": "Treburer Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "ulmenstrasse",
+   "title": "Ulmenstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "untergasse",
+   "title": "Untergasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "vogelsbergweg",
+   "title": "Vogelsbergweg",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "vor_der_pforte",
+   "title": "Vor der Pforte",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "weisenauer_gasse",
+   "title": "Weisenauer Gasse",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "wielandhof",
+   "title": "Wielandhof",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "wiesbadener_strasse",
+   "title": "Wiesbadener Straße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "wiesenecker_strasse",
+   "title": "Wiesenecker Straße",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "wilhelmstrasse",
+   "title": "Wilhelmstraße",
+   "group": null,
+   "plan": "p2"
+  },
+  {
+   "id": "wingertspfad",
+   "title": "Wingertspfad",
+   "group": null,
+   "plan": "p1"
+  },
+  {
+   "id": "zur_pappelallee",
+   "title": "Zur Pappelallee",
+   "group": null,
+   "plan": "p2"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2026-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-05",
+    "Biomüll"
+   ],
+   [
+    "2026-01-05",
+    "Restmüll"
+   ],
+   [
+    "2026-01-07",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-01-09",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-12",
+    "Altpapier"
+   ],
+   [
+    "2026-01-12",
+    "Biomüll"
+   ],
+   [
+    "2026-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-19",
+    "Biomüll"
+   ],
+   [
+    "2026-01-19",
+    "Restmüll"
+   ],
+   [
+    "2026-01-26",
+    "Altpapier"
+   ],
+   [
+    "2026-01-26",
+    "Biomüll"
+   ],
+   [
+    "2026-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-31",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-02-02",
+    "Biomüll"
+   ],
+   [
+    "2026-02-02",
+    "Restmüll"
+   ],
+   [
+    "2026-02-09",
+    "Altpapier"
+   ],
+   [
+    "2026-02-09",
+    "Biomüll"
+   ],
+   [
+    "2026-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-16",
+    "Biomüll"
+   ],
+   [
+    "2026-02-16",
+    "Restmüll"
+   ],
+   [
+    "2026-02-23",
+    "Altpapier"
+   ],
+   [
+    "2026-02-23",
+    "Biomüll"
+   ],
+   [
+    "2026-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-02",
+    "Biomüll"
+   ],
+   [
+    "2026-03-02",
+    "Restmüll"
+   ],
+   [
+    "2026-03-04",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-03-05",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-09",
+    "Altpapier"
+   ],
+   [
+    "2026-03-09",
+    "Biomüll"
+   ],
+   [
+    "2026-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-16",
+    "Biomüll"
+   ],
+   [
+    "2026-03-16",
+    "Restmüll"
+   ],
+   [
+    "2026-03-23",
+    "Altpapier"
+   ],
+   [
+    "2026-03-23",
+    "Biomüll"
+   ],
+   [
+    "2026-03-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-28",
+    "Biomüll"
+   ],
+   [
+    "2026-03-28",
+    "Restmüll"
+   ],
+   [
+    "2026-04-07",
+    "Altpapier"
+   ],
+   [
+    "2026-04-07",
+    "Biomüll"
+   ],
+   [
+    "2026-04-08",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-04-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-13",
+    "Biomüll"
+   ],
+   [
+    "2026-04-13",
+    "Restmüll"
+   ],
+   [
+    "2026-04-20",
+    "Altpapier"
+   ],
+   [
+    "2026-04-20",
+    "Biomüll"
+   ],
+   [
+    "2026-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-27",
+    "Biomüll"
+   ],
+   [
+    "2026-04-27",
+    "Restmüll"
+   ],
+   [
+    "2026-05-02",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-05-04",
+    "Altpapier"
+   ],
+   [
+    "2026-05-04",
+    "Biomüll"
+   ],
+   [
+    "2026-05-06",
+    "Grünschnitt"
+   ],
+   [
+    "2026-05-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-11",
+    "Biomüll"
+   ],
+   [
+    "2026-05-11",
+    "Restmüll"
+   ],
+   [
+    "2026-05-18",
+    "Altpapier"
+   ],
+   [
+    "2026-05-18",
+    "Biomüll"
+   ],
+   [
+    "2026-05-20",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-05-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-26",
+    "Biomüll"
+   ],
+   [
+    "2026-05-26",
+    "Restmüll"
+   ],
+   [
+    "2026-06-01",
+    "Altpapier"
+   ],
+   [
+    "2026-06-01",
+    "Biomüll"
+   ],
+   [
+    "2026-06-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-08",
+    "Biomüll"
+   ],
+   [
+    "2026-06-08",
+    "Restmüll"
+   ],
+   [
+    "2026-06-15",
+    "Altpapier"
+   ],
+   [
+    "2026-06-15",
+    "Biomüll"
+   ],
+   [
+    "2026-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-22",
+    "Biomüll"
+   ],
+   [
+    "2026-06-22",
+    "Restmüll"
+   ],
+   [
+    "2026-06-29",
+    "Altpapier"
+   ],
+   [
+    "2026-06-29",
+    "Biomüll"
+   ],
+   [
+    "2026-07-01",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-06",
+    "Biomüll"
+   ],
+   [
+    "2026-07-06",
+    "Restmüll"
+   ],
+   [
+    "2026-07-13",
+    "Altpapier"
+   ],
+   [
+    "2026-07-13",
+    "Biomüll"
+   ],
+   [
+    "2026-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-20",
+    "Biomüll"
+   ],
+   [
+    "2026-07-20",
+    "Restmüll"
+   ],
+   [
+    "2026-07-27",
+    "Altpapier"
+   ],
+   [
+    "2026-07-27",
+    "Biomüll"
+   ],
+   [
+    "2026-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-03",
+    "Biomüll"
+   ],
+   [
+    "2026-08-03",
+    "Restmüll"
+   ],
+   [
+    "2026-08-10",
+    "Altpapier"
+   ],
+   [
+    "2026-08-10",
+    "Biomüll"
+   ],
+   [
+    "2026-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-15",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-08-17",
+    "Biomüll"
+   ],
+   [
+    "2026-08-17",
+    "Restmüll"
+   ],
+   [
+    "2026-08-24",
+    "Altpapier"
+   ],
+   [
+    "2026-08-24",
+    "Biomüll"
+   ],
+   [
+    "2026-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-31",
+    "Biomüll"
+   ],
+   [
+    "2026-08-31",
+    "Restmüll"
+   ],
+   [
+    "2026-09-02",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-09-03",
+    "Grünschnitt"
+   ],
+   [
+    "2026-09-09",
+    "Altpapier"
+   ],
+   [
+    "2026-09-09",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-14",
+    "Biomüll"
+   ],
+   [
+    "2026-09-14",
+    "Restmüll"
+   ],
+   [
+    "2026-09-21",
+    "Altpapier"
+   ],
+   [
+    "2026-09-21",
+    "Biomüll"
+   ],
+   [
+    "2026-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-28",
+    "Biomüll"
+   ],
+   [
+    "2026-09-28",
+    "Restmüll"
+   ],
+   [
+    "2026-09-30",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-10-05",
+    "Altpapier"
+   ],
+   [
+    "2026-10-05",
+    "Biomüll"
+   ],
+   [
+    "2026-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-12",
+    "Biomüll"
+   ],
+   [
+    "2026-10-12",
+    "Restmüll"
+   ],
+   [
+    "2026-10-19",
+    "Altpapier"
+   ],
+   [
+    "2026-10-19",
+    "Biomüll"
+   ],
+   [
+    "2026-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-26",
+    "Biomüll"
+   ],
+   [
+    "2026-10-26",
+    "Restmüll"
+   ],
+   [
+    "2026-10-29",
+    "Grünschnitt"
+   ],
+   [
+    "2026-10-31",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-11-02",
+    "Altpapier"
+   ],
+   [
+    "2026-11-02",
+    "Biomüll"
+   ],
+   [
+    "2026-11-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-09",
+    "Biomüll"
+   ],
+   [
+    "2026-11-09",
+    "Restmüll"
+   ],
+   [
+    "2026-11-16",
+    "Altpapier"
+   ],
+   [
+    "2026-11-16",
+    "Biomüll"
+   ],
+   [
+    "2026-11-18",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-23",
+    "Biomüll"
+   ],
+   [
+    "2026-11-23",
+    "Restmüll"
+   ],
+   [
+    "2026-11-30",
+    "Altpapier"
+   ],
+   [
+    "2026-11-30",
+    "Biomüll"
+   ],
+   [
+    "2026-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-07",
+    "Biomüll"
+   ],
+   [
+    "2026-12-07",
+    "Restmüll"
+   ],
+   [
+    "2026-12-14",
+    "Altpapier"
+   ],
+   [
+    "2026-12-14",
+    "Biomüll"
+   ],
+   [
+    "2026-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-19",
+    "Biomüll"
+   ],
+   [
+    "2026-12-19",
+    "Restmüll"
+   ],
+   [
+    "2026-12-28",
+    "Altpapier"
+   ],
+   [
+    "2026-12-28",
+    "Biomüll"
+   ],
+   [
+    "2026-12-31",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p2": [
+   [
+    "2026-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-06",
+    "Biomüll"
+   ],
+   [
+    "2026-01-06",
+    "Restmüll"
+   ],
+   [
+    "2026-01-07",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-01-09",
+    "Weihnachtsbäume"
+   ],
+   [
+    "2026-01-13",
+    "Altpapier"
+   ],
+   [
+    "2026-01-13",
+    "Biomüll"
+   ],
+   [
+    "2026-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-20",
+    "Biomüll"
+   ],
+   [
+    "2026-01-20",
+    "Restmüll"
+   ],
+   [
+    "2026-01-27",
+    "Altpapier"
+   ],
+   [
+    "2026-01-27",
+    "Biomüll"
+   ],
+   [
+    "2026-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-01-31",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-02-03",
+    "Biomüll"
+   ],
+   [
+    "2026-02-03",
+    "Restmüll"
+   ],
+   [
+    "2026-02-10",
+    "Altpapier"
+   ],
+   [
+    "2026-02-10",
+    "Biomüll"
+   ],
+   [
+    "2026-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-02-17",
+    "Biomüll"
+   ],
+   [
+    "2026-02-17",
+    "Restmüll"
+   ],
+   [
+    "2026-02-24",
+    "Altpapier"
+   ],
+   [
+    "2026-02-24",
+    "Biomüll"
+   ],
+   [
+    "2026-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-03",
+    "Biomüll"
+   ],
+   [
+    "2026-03-03",
+    "Restmüll"
+   ],
+   [
+    "2026-03-04",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-03-05",
+    "Grünschnitt"
+   ],
+   [
+    "2026-03-10",
+    "Altpapier"
+   ],
+   [
+    "2026-03-10",
+    "Biomüll"
+   ],
+   [
+    "2026-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-17",
+    "Biomüll"
+   ],
+   [
+    "2026-03-17",
+    "Restmüll"
+   ],
+   [
+    "2026-03-24",
+    "Altpapier"
+   ],
+   [
+    "2026-03-24",
+    "Biomüll"
+   ],
+   [
+    "2026-03-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-03-30",
+    "Biomüll"
+   ],
+   [
+    "2026-03-30",
+    "Restmüll"
+   ],
+   [
+    "2026-04-08",
+    "Altpapier"
+   ],
+   [
+    "2026-04-08",
+    "Biomüll"
+   ],
+   [
+    "2026-04-08",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-04-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-14",
+    "Biomüll"
+   ],
+   [
+    "2026-04-14",
+    "Restmüll"
+   ],
+   [
+    "2026-04-21",
+    "Altpapier"
+   ],
+   [
+    "2026-04-21",
+    "Biomüll"
+   ],
+   [
+    "2026-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-04-28",
+    "Biomüll"
+   ],
+   [
+    "2026-04-28",
+    "Restmüll"
+   ],
+   [
+    "2026-05-02",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-05-05",
+    "Altpapier"
+   ],
+   [
+    "2026-05-05",
+    "Biomüll"
+   ],
+   [
+    "2026-05-06",
+    "Grünschnitt"
+   ],
+   [
+    "2026-05-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-12",
+    "Biomüll"
+   ],
+   [
+    "2026-05-12",
+    "Restmüll"
+   ],
+   [
+    "2026-05-19",
+    "Altpapier"
+   ],
+   [
+    "2026-05-19",
+    "Biomüll"
+   ],
+   [
+    "2026-05-20",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-05-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-05-27",
+    "Biomüll"
+   ],
+   [
+    "2026-05-27",
+    "Restmüll"
+   ],
+   [
+    "2026-06-02",
+    "Altpapier"
+   ],
+   [
+    "2026-06-02",
+    "Biomüll"
+   ],
+   [
+    "2026-06-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-09",
+    "Biomüll"
+   ],
+   [
+    "2026-06-09",
+    "Restmüll"
+   ],
+   [
+    "2026-06-16",
+    "Altpapier"
+   ],
+   [
+    "2026-06-16",
+    "Biomüll"
+   ],
+   [
+    "2026-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-06-23",
+    "Biomüll"
+   ],
+   [
+    "2026-06-23",
+    "Restmüll"
+   ],
+   [
+    "2026-06-30",
+    "Altpapier"
+   ],
+   [
+    "2026-06-30",
+    "Biomüll"
+   ],
+   [
+    "2026-07-01",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-07",
+    "Biomüll"
+   ],
+   [
+    "2026-07-07",
+    "Restmüll"
+   ],
+   [
+    "2026-07-14",
+    "Altpapier"
+   ],
+   [
+    "2026-07-14",
+    "Biomüll"
+   ],
+   [
+    "2026-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-07-21",
+    "Biomüll"
+   ],
+   [
+    "2026-07-21",
+    "Restmüll"
+   ],
+   [
+    "2026-07-28",
+    "Altpapier"
+   ],
+   [
+    "2026-07-28",
+    "Biomüll"
+   ],
+   [
+    "2026-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-04",
+    "Biomüll"
+   ],
+   [
+    "2026-08-04",
+    "Restmüll"
+   ],
+   [
+    "2026-08-11",
+    "Altpapier"
+   ],
+   [
+    "2026-08-11",
+    "Biomüll"
+   ],
+   [
+    "2026-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-08-15",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-08-18",
+    "Biomüll"
+   ],
+   [
+    "2026-08-18",
+    "Restmüll"
+   ],
+   [
+    "2026-08-25",
+    "Altpapier"
+   ],
+   [
+    "2026-08-25",
+    "Biomüll"
+   ],
+   [
+    "2026-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-01",
+    "Biomüll"
+   ],
+   [
+    "2026-09-01",
+    "Restmüll"
+   ],
+   [
+    "2026-09-02",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-09-03",
+    "Grünschnitt"
+   ],
+   [
+    "2026-09-10",
+    "Altpapier"
+   ],
+   [
+    "2026-09-10",
+    "Biomüll"
+   ],
+   [
+    "2026-09-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-15",
+    "Biomüll"
+   ],
+   [
+    "2026-09-15",
+    "Restmüll"
+   ],
+   [
+    "2026-09-22",
+    "Altpapier"
+   ],
+   [
+    "2026-09-22",
+    "Biomüll"
+   ],
+   [
+    "2026-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-09-29",
+    "Biomüll"
+   ],
+   [
+    "2026-09-29",
+    "Restmüll"
+   ],
+   [
+    "2026-09-30",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-10-06",
+    "Altpapier"
+   ],
+   [
+    "2026-10-06",
+    "Biomüll"
+   ],
+   [
+    "2026-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-13",
+    "Biomüll"
+   ],
+   [
+    "2026-10-13",
+    "Restmüll"
+   ],
+   [
+    "2026-10-20",
+    "Altpapier"
+   ],
+   [
+    "2026-10-20",
+    "Biomüll"
+   ],
+   [
+    "2026-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-10-27",
+    "Biomüll"
+   ],
+   [
+    "2026-10-27",
+    "Restmüll"
+   ],
+   [
+    "2026-10-29",
+    "Grünschnitt"
+   ],
+   [
+    "2026-10-31",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 12.00–13.30 Uhr"
+   ],
+   [
+    "2026-11-03",
+    "Altpapier"
+   ],
+   [
+    "2026-11-03",
+    "Biomüll"
+   ],
+   [
+    "2026-11-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-10",
+    "Biomüll"
+   ],
+   [
+    "2026-11-10",
+    "Restmüll"
+   ],
+   [
+    "2026-11-17",
+    "Altpapier"
+   ],
+   [
+    "2026-11-17",
+    "Biomüll"
+   ],
+   [
+    "2026-11-18",
+    "Schadstoffmobil",
+    "Parkplatz Berliner Straße (hinter dem Friedhof), 16.00–18.30 Uhr"
+   ],
+   [
+    "2026-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-11-24",
+    "Biomüll"
+   ],
+   [
+    "2026-11-24",
+    "Restmüll"
+   ],
+   [
+    "2026-12-01",
+    "Altpapier"
+   ],
+   [
+    "2026-12-01",
+    "Biomüll"
+   ],
+   [
+    "2026-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-08",
+    "Biomüll"
+   ],
+   [
+    "2026-12-08",
+    "Restmüll"
+   ],
+   [
+    "2026-12-15",
+    "Altpapier"
+   ],
+   [
+    "2026-12-15",
+    "Biomüll"
+   ],
+   [
+    "2026-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2026-12-21",
+    "Biomüll"
+   ],
+   [
+    "2026-12-21",
+    "Restmüll"
+   ],
+   [
+    "2026-12-29",
+    "Altpapier"
+   ],
+   [
+    "2026-12-29",
+    "Biomüll"
+   ],
+   [
+    "2026-12-31",
+    "Gelbe Tonne"
+   ]
+  ]
+ }
+}

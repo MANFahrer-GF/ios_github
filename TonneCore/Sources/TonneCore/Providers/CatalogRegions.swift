@@ -662,6 +662,7 @@ Stadtkreis Ulm|Ulm
         "insertIT:Mannheim:Mannheim": ["Stadtkreis Mannheim"],
         "insertIT:Offenbach:Offenbach am Main (ESO)": ["Kreisfreie Stadt Offenbach am Main"],
         "jahresdaten:ansbach:Stadt Ansbach": ["Kreisfreie Stadt Ansbach"],
+        "jahresdaten:bischofsheim:Gemeinde Bischofsheim": ["Landkreis Groß-Gerau"],
         "jahresdaten:florstadt:Gemeinde Florstadt": ["Landkreis Wetteraukreis"],
         "jahresdaten:hirzenhain:Gemeinde Hirzenhain": ["Landkreis Wetteraukreis"],
         "jahresdaten:rlk_aar_einrich_allendorf:VG Aar-Einrich (Allendorf, Berndroth, Dörsdorf u. a.)": ["Landkreis Rhein-Lahn-Kreis"],

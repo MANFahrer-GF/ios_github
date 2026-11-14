@@ -12,7 +12,8 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 KEYS = ['ansbach', 'saaleholzland', 'rahden', 'stemwede', 'mainhausen', 'sontra', 'liederbach', 'gaienhofen', 'oehningen',
-        'buesingen', 'hirzenhain', 'rlk', 'rockenberg', 'florstadt']
+        'buesingen', 'hirzenhain', 'rlk', 'rockenberg', 'florstadt',
+        'bischofsheim']
 # orte/huellhorst.py bleibt als Werkzeug (Abgleich PDF ↔ ICS), Hüllhorst läuft live über die ICS der Gemeinde:
 #   /usr/bin/python3 -I -c "import sys; sys.path.insert(0, 'tools/pdfkalender'); from orte import huellhorst; huellhorst.run()"
 

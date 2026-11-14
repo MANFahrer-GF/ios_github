@@ -48,6 +48,7 @@ Die neuen PDFs erscheinen meist Mitte November bis Januar. Je Ort:
 | `liederbach` | liederbach.eu → „Abfall & Entsorgung“ → „Liederbacher Müllkalender“ | Kürzel; „RM“ nach Kastenfarbe (14-tägl. / 1,1 m³) → zwei Auswahlpunkte Tonne / Container | 20 min |
 | `gaienhofen` | gaienhofen.de/de/rathaus/entsorgung-umwelt/abfall | Text in der Zelle | 15 min |
 | `oehningen` | oehningen.de/buergerservice/wohnen/abfall | Text in der Zelle | 15 min |
+| `bischofsheim` | bischofsheim.de → Rathaus → Fachdienst Bauen → Abfall → Abfallkalender (Kalender-PDF + abfuhrbezirke.pdf) | Kalender nur Bild, Termine von Hand in `orte/bischofsheim.py` (Wochentag-, Bezirks- und Taktprobe); Straßen je Bezirk aus abfuhrbezirke.pdf | 45 min |
 | `buesingen` | buesingen.de/de/Rathaus/Abfallentsorgung („Abholtermine“, 2 Halbjahres-PDFs) | Tage × Monate ohne Wochentag | 15 min |
 
 Hüllhorst ist nicht in den Jahresdaten: Die Gemeinde stellt eine ICS-Datei bereit, die App bindet sie live an.

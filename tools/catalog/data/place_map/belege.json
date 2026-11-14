@@ -22771,8 +22771,10 @@
 "code": "064330002002",
 "kreis": "Landkreis Groß-Gerau",
 "gemeinde": "Bischofsheim",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jahresdaten:bischofsheim:Gemeinde Bischofsheim"
+]
 },
 {
 "code": "064330003003",

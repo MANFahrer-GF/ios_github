@@ -1246,5 +1246,18 @@
    "Landkreis Wetteraukreis"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "bischofsheim",
+  "title": "Gemeinde Bischofsheim",
+  "website": "https://www.bischofsheim.de/rathaus-und-politik/uebersicht-der-verwaltung/fachbereich-bauen-und-bauhof/fachdienst-bauen/abfall/abfallkalender.html",
+  "places": [
+   "Bischofsheim"
+  ],
+  "districts": [
+   "Landkreis Groß-Gerau"
+  ],
+  "onlyDistricts": true
  }
 ]
