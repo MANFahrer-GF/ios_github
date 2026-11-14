@@ -187,6 +187,13 @@ final class TonneUITests: XCTestCase {
 
         // Wischen: Gratulieren und Anrufen (mit Nachfrage)
         let row = app.cells.containing(.staticText, identifier: "Test Person").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5), "Zeile „Test Person“ fehlt")
+        // Unten liegt die schwebende Tab-Leiste über der Liste: Zeile erst in die obere Bildhälfte schieben, sonst trifft das
+        // Wischen die Leiste (iPhone 18 Pro, 14.11.2026).
+        for _ in 0..<4 where row.frame.midY > app.frame.height * 0.6 {
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.6))
+            start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -200)))
+        }
         if row.exists {
             row.swipeRight()
             XCTAssertTrue(app.buttons["Gratulieren"].waitForExistence(timeout: 3))
