@@ -11,7 +11,7 @@ Alles zum Hineinkopieren.
 ```
 Nie wieder die Tonne vergessen – und keinen Geburtstag mehr verpassen.
 
-Tonne & Torte holt die Abfuhrtermine direkt vom Portal deines Entsorgers und erinnert dich am Vorabend: „Morgen: Gelber Sack und Restmüll“. Ein Tipp auf „Erledigt“, und die Sache ist abgehakt. Am Abholtag erinnert dich die App, die Tonnen wieder reinzuholen – Gelbe Säcke und Grünschnitt lässt sie dabei außen vor.
+Tonne & Torte holt die Abfuhrtermine direkt vom Portal deines Entsorgers und erinnert dich am Vorabend: „Gelber Sack und Restmüll – heute Abend rausstellen.“ Ein Tipp auf „Erledigt“, und die Sache ist abgehakt. Am Abholtag erinnert dich die App, die Tonnen wieder reinzuholen – Gelbe Säcke und Grünschnitt lässt sie dabei außen vor.
 
 ABFUHRTERMINE FÜR FAST GANZ DEUTSCHLAND
 • Über 380 Landkreise und kreisfreie Städte – von Hamburg bis München, von Aachen bis Görlitz
@@ -26,7 +26,7 @@ ERINNERUNGEN, DIE PASSEN
 • Live-Aktivität auf dem Sperrbildschirm und in der Dynamic Island
 • Widgets für Home- und Sperrbildschirm mit „Erledigt“-Knopf
 • Apple Watch mit App und Komplikationen
-• Siri und Kurzbefehle: „Wann kommt die Müllabfuhr?“
+• Siri und Kurzbefehle: „Wann kommt der Müll in Tonne und Torte?“
 
 GEBURTSTAGE UND EIGENE TERMINE
 • Geburtstage aus den Kontakten übernehmen – nur die, die du auswählst
@@ -39,6 +39,8 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
+
+Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
 ### Neu in dieser Version – 2.0.11 (eingereicht 14.11.2026, Build 15)
 
@@ -118,12 +120,12 @@ Müllabfuhr,Abfallkalender,Müll,Gelber Sack,Abfall,Mülltonne,Biotonne,Geburtst
 
 ### Support-URL (Pflicht)
 
-`https://manfahrer-gf.github.io/ios_github/appstore/support.html`
-(GitHub Pages, siehe unten „Seiten auf GitHub veröffentlichen“)
+`https://tonne.kant.ovh/support.html`
+(eigene Webseite, Quelltext in `website/`; seit 14.11.2026 in 2.0.11 eingetragen, vorher GitHub Pages)
 
 ### Marketing-URL (optional)
 
-leer lassen
+`https://tonne.kant.ovh/`
 
 ---
 
@@ -157,8 +159,8 @@ Ergebnis: **4+**
 
 ### Datenschutzrichtlinien-URL (Pflicht)
 
-`https://manfahrer-gf.github.io/ios_github/appstore/datenschutz.html`
-(GitHub Pages, siehe unten „Seiten auf GitHub veröffentlichen“)
+`https://tonne.kant.ovh/datenschutz.html`
+(seit 14.11.2026 unter App-Datenschutz eingetragen, wird mit 2.0.11 veröffentlicht; vorher GitHub Pages)
 
 ### Datenerfassung
 
@@ -179,7 +181,7 @@ Frage: „Werden Daten zum Tracking verwendet?“ → **Nein**
 
 ---
 
-## 4. Seiten auf GitHub veröffentlichen (einmalig)
+## 4. Seiten auf GitHub veröffentlichen (alt, nur noch bis 2.0.11 im Store ist; danach siehe `website/ABLAUF-REPO-PRIVAT.md`)
 
 1. Repo öffentlich machen: GitHub → `ios_github` → **Settings → General → Danger Zone → Change visibility → Public**
    (GitHub Pages gibt es bei privaten Repos nur mit einem Bezahl-Tarif).
