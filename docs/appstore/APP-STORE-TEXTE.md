@@ -40,7 +40,7 @@ Keine Werbung, kein Tracking, kein Konto. Deine Daten bleiben auf deinen Geräte
 Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr – im Zweifel gilt der Abfuhrkalender deines Entsorgers.
 ```
 
-### Neu in dieser Version – 2.0.11 (Build 15)
+### Neu in dieser Version – 2.0.11 (eingereicht 14.11.2026, Build 15)
 
 ```
 Ortsteile finden
@@ -106,7 +106,7 @@ Zuverlässiger
 Neu: Jede Müllart mit eigenem Schalter, damit keine Abfuhr fehlt. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.
 ```
 
-(Seit 2.0.10: „Neu: Tonnendienst im Rhythmus – erinnert nur, wenn du dran bist. Über 800 Entsorger geprüft, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Davor 166 Zeichen, seit 2.0.9. Vorher: „Neu: Mein Tonnendienst – Erinnerungen nur, wenn du dran bist. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Eine neue Version übernimmt den Werbetext nicht, er muss jedes Mal neu eingetragen werden. Der Werbetext lässt sich jederzeit ohne neue Version ändern.)
+(Seit 2.0.11: „Neu: Ortsteile finden – „Erfelden“ führt zu Riedstadt. Über 800 Entsorger geprüft, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ (144 Zeichen). 2.0.10: „Neu: Tonnendienst im Rhythmus – erinnert nur, wenn du dran bist. Über 800 Entsorger geprüft, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Davor 166 Zeichen, seit 2.0.9. Vorher: „Neu: Mein Tonnendienst – Erinnerungen nur, wenn du dran bist. Abfuhrtermine für über 380 Landkreise, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“ Eine neue Version übernimmt den Werbetext nicht, er muss jedes Mal neu eingetragen werden. Der Werbetext lässt sich jederzeit ohne neue Version ändern.)
 
 ### Schlüsselwörter (Pflicht, max. 100 Zeichen, ohne Leerzeichen nach Kommas)
 
