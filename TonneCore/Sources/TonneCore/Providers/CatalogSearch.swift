@@ -33,15 +33,29 @@ public extension ProviderCatalog {
                     namedDistricts.contains(String($0.split(separator: "|", maxSplits: 1)[0]))
                 } || (CatalogRegions.entryDistricts[entry.id] ?? []).contains(where: namedDistricts.contains))
             }.sorted { $0.title < $1.title }
-            return ranked + extra
+            // Mit Vorsilbe („Kreis Ansbach“): Titel-Treffer zuerst, dann die Einträge des Kreises
+            if DistrictIndex.cores[needle] == nil { return ranked + extra }
+            // Ohne Vorsilbe („Friesland“): Titel-Treffer mit ganzen Wörtern, dann die Einträge des Kreises, dann bloße Wortteile
+            // („Nordfriesland“)
+            let whole = ranked.filter {
+                (ranks[$0.id] ?? 2) < 2 || Self.containsWholeWords(SearchIndex.text[$0.id] ?? $0.searchText, words, wordStartOnly: true)
+            }
+            let wholeIDs = Set(whole.map(\.id))
+            return whole + extra + ranked.filter { !wholeIDs.contains($0.id) }
         }
         let hits = municipalities(matching: query)
         let districts = Set(hits.map(\.district))
         guard !districts.isEmpty else { return ranked }
         // Entsorger des Kreises, in dem der gesuchte Ort liegt, vor bloßen Wortteil-Treffern
         // („Bergen“ → erst Landkreis Celle, dann „Bergenhusen“ in Schleswig-Flensburg).
-        let strong = ranked.filter { (ranks[$0.id] ?? 2) < 2 }
-        let weak = ranked.filter { (ranks[$0.id] ?? 2) >= 2 }
+        // Ist die Eingabe kein Gemeindename (Ortsteil, „Gemeinde Ortsteil“) oder hat sie mehrere Wörter, zählen Einträge, deren
+        // Titel oder Orte alle Wörter ganz enthalten, wie in 2.0.10 zuerst („Bebra Solz“, „Ammerland“, „Bergstraße“).
+        let wholeWordsCount = words.count > 1 || municipalityHits(needle).isEmpty
+        let isStrong = { (entry: CatalogEntry) in
+            (ranks[entry.id] ?? 2) < 2 || (wholeWordsCount && Self.containsWholeWords(SearchIndex.text[entry.id] ?? entry.searchText, words))
+        }
+        let strong = ranked.filter(isStrong)
+        let weak = ranked.filter { !isStrong($0) }
         // Kreisweite Entsorger des Kreises – Gemeinde-Einträge (z. B. Mein-Abfallkalender einer Stadt) nur für genau diese Gemeinde.
         let pairs = Set(hits.map { "\($0.district)|\($0.name)" })
         // Gemeinden mit belegter Zuordnung zeigen nur die Einträge, die sie führen (Neuss → AWL Neuss, nicht jeden
@@ -77,7 +91,8 @@ public extension ProviderCatalog {
     /// („Kreis Konstanz“). Ein bloßer Ortsname („Konstanz“) nennt keinen Kreis.
     static func districts(matching needle: String) -> Set<String> {
         let prefixes = ["landkreis ", "kreis ", "kreisfreie stadt ", "stadtkreis ", "lk "]
-        guard let prefix = prefixes.first(where: { needle.hasPrefix($0) }) else { return [] }
+        // Kreisname ohne Vorsilbe, der keine Gemeinde ist („Friesland“, „Ammerland“, „Darmstadt-Dieburg“)
+        guard let prefix = prefixes.first(where: { needle.hasPrefix($0) }) else { return DistrictIndex.cores[needle] ?? [] }
         let core = needle.dropFirst(prefix.count).trimmingCharacters(in: .whitespaces)
         guard core.count >= 3 else { return [] }
         // Voller Kreisname trifft nur diesen Kreis („Stadtkreis Karlsruhe“ nicht auch den Landkreis)
@@ -85,6 +100,20 @@ public extension ProviderCatalog {
         return Set(DistrictIndex.folded.filter { folded, _ in
             prefixes.contains { folded == $0 + core }
         }.map(\.value))
+    }
+
+    /// Jedes Wort steht als ganzes Wort im Text (Nicht-Buchstabe oder Rand davor und dahinter; mit `wordStartOnly` nur davor).
+    static func containsWholeWords(_ text: String, _ words: [String], wordStartOnly: Bool = false) -> Bool {
+        words.allSatisfy { word in
+            var from = text.startIndex
+            while let range = text.range(of: word, range: from..<text.endIndex) {
+                let before = range.lowerBound == text.startIndex || !text[text.index(before: range.lowerBound)].isLetter
+                let after = wordStartOnly || range.upperBound == text.endIndex || !text[range.upperBound].isLetter
+                if before && after { return true }
+                from = text.index(after: range.lowerBound)
+            }
+            return false
+        }
     }
 
     /// 0: Titel beginnt mit der Eingabe · 1: ein Ort heißt so (oder beginnt so, gefolgt von Leerzeichen/Klammer) · 2: nur Wortteil.
@@ -115,6 +144,8 @@ public extension ProviderCatalog {
         if let items = MunicipalityIndex.byLongForm[MunicipalityIndex.longForm(needle)] {
             return (items.map { (name: $0.name, district: $0.district) }, nil)
         }
+        // Ein Kreisname ohne Vorsilbe („Friesland“, „Lüchow-Dannenberg“) ist weder Ortsteil noch Gemeinde mit Ortsteil.
+        if DistrictIndex.cores[needle] != nil { return ([], nil) }
         if let items = LocalityIndex.byName[needle] {
             // Allgemeine Ortsteilnamen („Altstadt“, „Thal“ in 36 Gemeinden) allein liefern keine Gemeinde, sonst stünden
             // beliebige Kreise in der Trefferliste; der Hinweis bittet um „Gemeinde Ortsteil“.
@@ -123,8 +154,6 @@ public extension ProviderCatalog {
             guard places.count <= LocalityIndex.maxMunicipalities else { return ([], items[0].name) }
             return (places.map { (name: $0.municipality, district: $0.district) }, items[0].name)
         }
-        // Ein Kreisname ohne Vorsilbe („Darmstadt-Dieburg“, „Lüchow-Dannenberg“) ist keine Gemeinde mit Ortsteil.
-        if DistrictIndex.cores.contains(needle) { return ([], nil) }
         // Zusammengesetzte Eingabe: an jedem Trenner von hinten nach vorn in „Gemeinde“ und „Ortsteil“ teilen.
         let separators: Set<Character> = [" ", "-", ",", "/", "("]
         for cut in needle.indices.reversed() where separators.contains(needle[cut]) {
@@ -363,13 +392,19 @@ enum DistrictIndex {
                                                      uniquingKeysWith: { first, _ in first })
 
     /// Kreisnamen ohne Vorsilbe („darmstadt-dieburg“); „Landkreis Konstanz“ → „konstanz“ zählt nicht, weil es eine Gemeinde ist.
-    static let cores: Set<String> = Set(folded.keys.compactMap { name in
-        for prefix in ["landkreis ", "kreisfreie stadt ", "stadtkreis ", "kreis ", "regionalverband ", "region "] where name.hasPrefix(prefix) {
-            let core = String(name.dropFirst(prefix.count))
-            return MunicipalityIndex.all.contains { $0.folded == core } ? nil : core
+    static let cores: [String: Set<String>] = {
+        let names = Set(MunicipalityIndex.all.map(\.folded))
+        var result: [String: Set<String>] = [:]
+        for (name, original) in folded {
+            for prefix in ["landkreis ", "kreisfreie stadt ", "stadtkreis ", "kreis ", "regionalverband ", "region "] where name.hasPrefix(prefix) {
+                let core = String(name.dropFirst(prefix.count))
+                // „Harburg“, „Leer“ bleiben Gemeinden („Harburg (Schwaben)“, „Leer (Ostfriesland)“)
+                if !names.contains(core), MunicipalityIndex.namesakes(core).isEmpty { result[core, default: []].insert(original) }
+                break
+            }
         }
-        return nil
-    })
+        return result
+    }()
 }
 
 /// Belegte Gemeinden je Eintrag („Landkreis|Gemeinde“), umgekehrt aus `PlaceMapIndex.entryIDs`.

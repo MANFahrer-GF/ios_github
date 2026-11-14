@@ -161,4 +161,18 @@ final class SuchPruefpunkteTests: XCTestCase {
         let notes = ProviderCatalog.entries.compactMap { ProviderCatalog.placeNote(for: $0, query: "Lingen") }
         XCTAssertTrue(notes.contains("Führt Lingen (Ems) nicht"), "\(Set(notes))")
     }
+
+    /// Vergleich mit 2.0.10 (14.11.): Kreisnamen ohne Vorsilbe und ganze Titelwörter behalten ihren Eintrag oben.
+    func testKreisnameOhneVorsilbeUndGanzeTitelwoerter() {
+        XCTAssertEqual(ProviderCatalog.districts(matching: "friesland"), ["Landkreis Friesland"])
+        XCTAssertTrue(ProviderCatalog.districts(matching: "konstanz").isEmpty)
+        XCTAssertNil(ProviderCatalog.municipalityHint(for: "Friesland"))
+        XCTAssertEqual(ProviderCatalog.search("Friesland").first?.title, "MyMüll-App")
+        XCTAssertEqual(ProviderCatalog.search("Ammerland").first?.title, "AWB Ammerland")
+        XCTAssertEqual(ProviderCatalog.search("Bergstraße").first?.title, "Kreis Bergstraße")
+        XCTAssertEqual(ProviderCatalog.search("Bebra Solz").first?.title, "Bebra: Solz (MZV)")
+        XCTAssertEqual(ProviderCatalog.search("Darmstadt-Dieburg").first?.title, "Darmstadt-Dieburg (ZAW)")
+        // Bloßer Gemeindename wie in 2.0.10: Kreis-Einträge nicht vor die belegten
+        XCTAssertEqual(ProviderCatalog.search("Karlsruhe").first?.title, "Müllmann-App")
+    }
 }

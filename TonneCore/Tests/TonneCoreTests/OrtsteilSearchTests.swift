@@ -64,7 +64,9 @@ final class OrtsteilSearchTests: XCTestCase {
             let alone = ProviderCatalog.municipalities(matching: item.name).map { "\($0.district)|\($0.name)" }
             // Allgemeine Namen in mehr als 8 Gemeinden liefern allein bewusst nichts (SuchPruefpunkteTests).
             let places = Set((LocalityIndex.byName[ProviderCatalog.fold(item.name)] ?? []).map { "\($0.district)|\($0.municipality)" })
-            if !alone.contains(pair) && places.count <= LocalityIndex.maxMunicipalities {
+            // Heißt der Ortsteil wie ein Kreis („Lippe“, „Friesland“), meint die Eingabe allein den Kreis.
+            let isDistrict = DistrictIndex.cores[ProviderCatalog.fold(item.name)] != nil
+            if !alone.contains(pair) && places.count <= LocalityIndex.maxMunicipalities && !isDistrict {
                 failures.append("\(item.name) → \(alone)")
             }
             let query = "\(item.municipality)-\(item.name)"
