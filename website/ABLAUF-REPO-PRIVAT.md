@@ -18,6 +18,8 @@ Die neue Seite leitet die alten Pfade schon um: `tonne.kant.ovh/appstore/support
 
 **Stand 14.11.2026:** Schritte 1 und 2 sind erledigt, ohne 2.0.11 zurückzuziehen (Metadaten sind bei „Warten auf Prüfung“ änderbar). Support- und Marketing-URL stehen in 2.0.11, die Datenschutz-URL wird mit 2.0.11 veröffentlicht. Für Schritt 3 reicht also, dass **2.0.11** im Store ist.
 
+**Freigabe von Thomas (14.11.2026):** „wenn live dann Github privat“. Sobald 2.0.11 „Bereit für Vertrieb“ ist und Schritt 4 passt, wird Schritt 5 ausgeführt.
+
 1. **Jetzt möglich (nach Thomas' Okay):** In App Store Connect › App-Informationen die Datenschutz-URL auf
    `https://tonne.kant.ovh/datenschutz.html` stellen und sichern.
 2. **Mit der nächsten Version (2.0.12):** In der Version die Support-URL auf `https://tonne.kant.ovh/support.html` setzen,
