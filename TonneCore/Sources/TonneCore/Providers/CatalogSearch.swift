@@ -74,13 +74,54 @@ public extension ProviderCatalog {
     }
 
     /// Gemeinden, deren Name der Eingabe entspricht oder mit ihr beginnt (z. B. „Lauenburg“ → „Lauenburg/Elbe“).
+    /// Trifft keine Gemeinde, gilt die Eingabe als Ortsteil: „Erfelden“, „Riedstadt-Erfelden“, „Riedstadt Erfelden“
+    /// und „Erfelden (Riedstadt)“ führen zu Riedstadt.
     static func municipalities(matching query: String) -> [(name: String, district: String)] {
-        let needle = fold(query)
-        guard needle.count >= 3 else { return [] }
-        let exact = MunicipalityIndex.all.filter { $0.folded == needle }
-        let hits = exact.isEmpty ? MunicipalityIndex.all.filter { item in
-            guard item.folded.hasPrefix(needle) else { return false }
-            if item.folded.count == needle.count { return true }
+        resolve(fold(query)).hits
+    }
+
+    /// Gemeinden zur Eingabe und, wenn sie über einen Ortsteil gefunden wurden, dessen Name.
+    private static func resolve(_ needle: String) -> (hits: [(name: String, district: String)], locality: String?) {
+        guard needle.count >= 3 else { return ([], nil) }
+        let direct = municipalityHits(needle)
+        if !direct.isEmpty { return (direct, nil) }
+        if let items = LocalityIndex.byName[needle] {
+            return (items.prefix(30).map { (name: $0.municipality, district: $0.district) }, items[0].name)
+        }
+        // Zusammengesetzte Eingabe: an jedem Trenner von hinten nach vorn in „Gemeinde“ und „Ortsteil“ teilen.
+        let separators: Set<Character> = [" ", "-", ",", "/", "("]
+        for cut in needle.indices.reversed() where separators.contains(needle[cut]) {
+            // Links bleibt eine schließende Klammer stehen („Gronau (Westf.)-Epe“).
+            let left = needle[..<cut].trimmingCharacters(in: CharacterSet(charactersIn: " -,/("))
+            let right = needle[cut...].trimmingCharacters(in: CharacterSet(charactersIn: " -,/()"))
+            guard left.count >= 3, !right.isEmpty else { continue }
+            let locals = Set((LocalityIndex.byName[right] ?? []).map { "\($0.district)|\($0.municipality)" })
+            // „Riedstadt-Erfelden“: links die Gemeinde (genau, oder Anfang wie „Frankfurt“, wenn rechts ihr Ortsteil steht)
+            let municipality = municipalityHits(left)
+            let exact = municipality.filter { fold($0.name) == left }
+            let fitting = municipality.filter { locals.contains("\($0.district)|\($0.name)") }
+            if !fitting.isEmpty { return (fitting, LocalityIndex.byName[right]?.first?.name) }
+            if !exact.isEmpty { return (exact, nil) }
+            // „Erfelden (Riedstadt)“: links der Ortsteil, rechts seine Gemeinde
+            let reversed = (LocalityIndex.byName[left] ?? []).filter { fold($0.municipality).hasPrefix(right) }
+            if !reversed.isEmpty { return (reversed.map { (name: $0.municipality, district: $0.district) }, reversed[0].name) }
+        }
+        return ([], nil)
+    }
+
+    private static func municipalityHits(_ needle: String) -> [(name: String, district: String)] {
+        // Über die sortierte Liste statt alle 11.000 Gemeinden je Aufruf; Reihenfolge der Treffer wie in der Gemeindeliste.
+        let all = MunicipalityIndex.all, sorted = MunicipalityIndex.sortedOffsets
+        var low = 0, high = sorted.count
+        while low < high {
+            let mid = (low + high) / 2
+            if all[sorted[mid]].folded < needle { low = mid + 1 } else { high = mid }
+        }
+        var offsets: [Int] = []
+        while low < sorted.count, all[sorted[low]].folded.hasPrefix(needle) { offsets.append(sorted[low]); low += 1 }
+        let candidates = offsets.sorted().map { all[$0] }
+        let exact = candidates.filter { $0.folded == needle }
+        let hits = exact.isEmpty ? candidates.filter { item in
             let next = item.folded[item.folded.index(item.folded.startIndex, offsetBy: needle.count)]
             return !next.isLetter
         } : exact
@@ -96,8 +137,11 @@ public extension ProviderCatalog {
 
     /// Kurzer Hinweis für die Suche, z. B. „Nostorf liegt im Landkreis Ludwigslust-Parchim.“
     static func municipalityHint(for query: String) -> String? {
-        let hits = municipalities(matching: query)
+        let (hits, locality) = resolve(fold(query))
         guard let first = hits.first else { return nil }
+        if let locality, hits.count == 1 {
+            return L10n.t("\(locality) gehört zu \(first.name) (\(first.district)).", "\(locality) is part of \(first.name) (\(first.district)).")
+        }
         let districts = Array(Set(hits.map(\.district))).sorted()
         if districts.count == 1 {
             return L10n.t("\(first.name) liegt im \(districts[0]).", "\(first.name) is in \(districts[0]).")
@@ -120,6 +164,34 @@ enum MunicipalityIndex {
             for name in parts[1].split(separator: ",") {
                 let text = String(name)
                 result.append(Item(name: text, folded: ProviderCatalog.fold(text), district: district))
+            }
+        }
+        return result
+    }()
+
+    /// Positionen in `all`, nach gefaltetem Namen sortiert (für die Suche nach Anfang).
+    static let sortedOffsets: [Int] = all.indices.sorted { all[$0].folded < all[$1].folded }
+}
+
+/// Ortsteile mit Gemeinde und Landkreis, einmalig aus `CatalogLocalities.localities` gelesen. Gesucht wird nur genau
+/// (gefaltet, „Albertsdorf (Fehmarn)“ auch als „Albertsdorf“), damit kein Tastendruck 60.000 Namen durchläuft.
+enum LocalityIndex {
+    struct Item { let name: String; let municipality: String; let district: String }
+
+    static let all: [Item] = CatalogLocalities.localities.split(separator: "\n").flatMap { line -> [Item] in
+        let parts = line.split(separator: "|", maxSplits: 2)
+        guard parts.count == 3 else { return [] }
+        return parts[2].split(separator: ",").map { Item(name: String($0), municipality: String(parts[1]), district: String(parts[0])) }
+    }
+
+    static let byName: [String: [Item]] = {
+        var result: [String: [Item]] = [:]
+        for item in all {
+            let folded = ProviderCatalog.fold(item.name)
+            result[folded, default: []].append(item)
+            if let open = folded.range(of: " (") {
+                let base = String(folded[..<open.lowerBound])
+                if base != folded { result[base, default: []].append(item) }
             }
         }
         return result
