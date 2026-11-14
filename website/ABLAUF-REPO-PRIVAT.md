@@ -37,7 +37,10 @@ zur Ablehnung führen.
 - Kontaktformular `api/kontakt.php` schickt an `thomas@kant.ovh`, Absender `noreply@tonne.kant.ovh`.
   Braucht bei OVH SPF (`tonne` TXT `v=spf1 +a -all`) und DKIM (`default._domainkey.tonne`), weil `kant.ovh` DMARC `p=reject` hat.
   Testmodus ohne Versand: Datei `/var/www/vhosts/tonne.kant.ovh/private/kontakt-testmodus` anlegen.
-- Bewertungen `api/bewertungen.php`: holt Sterne und Rezensionen bei Apple (iTunes-Lookup + RSS), Zwischenspeicher 6 h in `private/`.
+- Bewertungen `api/bewertungen.php`: Rezensionen samt Antworten über die App Store Connect API (Rückfall: Store-Seite, RSS), Sterne über iTunes-Lookup, Zwischenspeicher 6 h in `private/`.
+- Downloads/Updates `api/zahlen.php`: Verkaufsberichte (Anbieter-Nr. 94916679), Berichte dauerhaft in `private/berichte/`.
+- API-Schlüssel: Teamschlüssel „tonne.kant.ovh Webseite“ (`LY864RT3RF`, Rollen Verkauf und Berichte + Kundendienst), Datei nur in `private/` (600), Konfiguration `private/asc.json`. Der erste Schlüssel `R4T3M8BD83` ist widerrufen.
+- DNS bei OVH: A `tonne` → 217.154.70.243, AAAA `tonne` → 2a01:239:385:900::1, TXT SPF und DKIM (siehe oben). Plesk-Abo hat beide IPs.
 - Logs: täglich rotiert, 14 Dateien (DSGVO-Angabe „spätestens nach 15 Tagen“). Webstatistik aus.
 - Nach Freigabe von 2.0.11: Startseite „Bis in die Gemeinde.“ wieder auf „Bis in den Ortsteil.“, Ortsteil-Kachel ohne „mit dem nächsten Update“, Hinweis unter der Ortssuche kürzen.
 - Ortsdaten für die Live-Suche nach Katalog-Änderungen neu erzeugen: `python3 website/tools/orte_export.py`, dann ausliefern.
