@@ -66,3 +66,21 @@
     } else rv.forEach(function (el) { el.classList.add('in'); });
   }).catch(function () {});
 })();
+
+// Downloads und Updates aus App Store Connect (über den eigenen Server, siehe api/zahlen.php).
+(function () {
+  var sec = document.getElementById('bewertungen');
+  if (!sec || !window.fetch) return;
+  fetch('api/zahlen.php?v=1').then(function (r) { return r.ok ? r.json() : null; }).then(function (z) {
+    if (!z || !z.ok) return;
+    var n = function (x) { return x.toLocaleString('de-DE'); };
+    sec.querySelector('[data-dl]').textContent = n(z.downloads);
+    sec.querySelector('[data-up]').textContent = n(z.updates);
+    sec.querySelectorAll('[data-zahl]').forEach(function (e) { e.hidden = false; });
+    if (z.stand) {
+      var st = sec.querySelector('[data-stand]');
+      st.textContent = 'Stand ' + new Date(z.stand + 'T12:00:00').toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) + ', Zahlen aus App Store Connect';
+      st.hidden = false;
+    }
+  }).catch(function () {});
+})();

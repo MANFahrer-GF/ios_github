@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=10">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -149,9 +149,23 @@
         <article class="tile big reveal">
           <div>
             <h3>Am Vorabend. Und am Morgen nochmal.</h3>
-            <p>„Morgen: Gelber Sack und Restmüll.“ Ein Tipp auf „Erledigt“, und die Sache ist abgehakt. Sonst kommt eine zweite Erinnerung, auf Wunsch auch morgens am Abholtag. Oder du tippst „In 1 Stunde nochmal“.</p>
+            <p>Ein Tipp auf „Erledigt“, und die Sache ist abgehakt. Sonst kommt eine zweite Erinnerung, auf Wunsch auch morgens am Abholtag. Oder du tippst „In 1 Stunde nochmal“.</p>
           </div>
-          <p class="note"><small>Morgen</small>Gelber Sack und Restmüll</p>
+          <figure class="notif" aria-label="So sieht die Mitteilung am Vorabend aus">
+            <div class="nb">
+              <img src="img/icon-180.png" alt="" width="38" height="38">
+              <div>
+                <p class="nh"><span>Tonne &amp; Torte</span><span>19:00</span></p>
+                <p class="nt">Morgen wird abgeholt</p>
+                <p class="nx">Gelber Sack und Restmüll – heute Abend rausstellen.</p>
+              </div>
+            </div>
+            <ul class="na">
+              <li>✅ Erledigt – steht draußen</li>
+              <li>⏰ In 1 Stunde nochmal</li>
+              <li>🚫 Diesmal nicht rausstellen</li>
+            </ul>
+          </figure>
         </article>
         <article class="tile side reveal">
           <h3>Tonne wieder reinholen.</h3>
@@ -249,14 +263,13 @@
 
   <section class="sec ratings" id="bewertungen" aria-labelledby="sterne" hidden>
     <div class="wrap reveal">
-      <h2 id="sterne" class="headline">Das sagen andere.</h2>
-      <div class="score">
-        <p class="avg" data-avg>4,2</p>
-        <div class="meta">
-          <span class="stars" data-stars role="img" aria-label="Sterne">★★★★★</span>
-          <p data-count></p>
-        </div>
+      <h2 id="sterne" class="headline">Schon im Einsatz.</h2>
+      <div class="kpis">
+        <div class="kpi" data-zahl hidden><p class="kn grad" data-dl></p><p class="kl">Downloads</p></div>
+        <div class="kpi" data-zahl hidden><p class="kn grad" data-up></p><p class="kl">Updates installiert</p></div>
+        <div class="kpi"><p class="kn" data-avg>4,2</p><span class="stars" data-stars role="img" aria-label="Sterne">★★★★★</span><p class="kl" data-count></p></div>
       </div>
+      <p class="kpi-stand" data-stand hidden></p>
     </div>
     <p class="neueste wrap" data-neueste>Die neuesten Bewertungen <span>aus dem deutschen App Store</span></p>
     <div class="reviews" role="region" data-reviews aria-label="Rezensionen aus dem App Store"></div>
@@ -339,7 +352,7 @@
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=7" defer></script>
+<script src="assets/site.js?v=9" defer></script>
 <script src="assets/ortsuche.js?v=8" defer></script>
 </body>
 </html>
