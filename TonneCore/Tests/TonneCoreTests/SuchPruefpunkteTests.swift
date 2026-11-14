@@ -28,8 +28,8 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertNil(ProviderCatalog.placeNote(for: try entry("Evs"), query: "Saarbrücken"))
         // Der Kreis-Eintrag nennt die Stadt nur im Titel – dort bleibt die Aussage (Thomas' Fall Karlsruhe).
         XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.k4systems.abfallappka"), query: "Karlsruhe"), "Führt Karlsruhe nicht")
-        // Nennt der Eintrag den gesuchten Namen selbst, kein „nicht“ – auch wenn es ein Namensvetter sein könnte (Heide)
-        XCTAssertNil(ProviderCatalog.placeNote(for: try entry("lwl"), query: "Heide"))
+        // Namensvetter in einem anderen Kreis: der Ludwigslust-Parchimer Ortsteil „Heide“ ist nicht Heide in Dithmarschen
+        XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("lwl"), query: "Heide"), "Führt Heide nicht")
     }
 
     /// Allgemeine Ortsteilnamen („Thal“ in 36 Gemeinden, „Altstadt“ in 30) liefern allein keine Gemeinden.
@@ -93,8 +93,7 @@ final class SuchPruefpunkteTests: XCTestCase {
             ("de.idcontor.abfalllu", "Ludwigshafen"), ("rlk_nastaetten_lautert", "Münchenroth"),
         ]
         for (key, query) in cases {
-            let note = ProviderCatalog.placeNote(for: try entry(key), query: query)
-            XCTAssertFalse(note?.hasSuffix("nicht") ?? false, "\(query): \(note ?? "nil")")
+            XCTAssertNil(ProviderCatalog.placeNote(for: try entry(key), query: query), query)
         }
     }
 
@@ -102,12 +101,13 @@ final class SuchPruefpunkteTests: XCTestCase {
     func testZusatzWaehltDenRichtigenNamensvetter() {
         func names(_ query: String) -> [String] { ProviderCatalog.municipalities(matching: query).map(\.name) }
         XCTAssertEqual(names("Halle Saale"), ["Halle (Saale)"])
-        XCTAssertEqual(names("Halle (S"), ["Halle (Saale)"])
         XCTAssertEqual(names("Winsen Luhe"), ["Winsen (Luhe)"])
         XCTAssertEqual(names("Frankenthal Pfalz"), ["Frankenthal (Pfalz)"])
         XCTAssertEqual(names("Halle Westfalen"), ["Halle (Westf.)"])
         // Rechts eine eigene Gemeinde oder ein Kreiswort: keine Gemeinde, die Volltextsuche übernimmt
-        for query in ["Darmstadt-Dieburg", "Lüchow-Dannenberg", "München Landkreis", "Weimar Lahn"] {
+        XCTAssertEqual(names("Weimar Lahn"), ["Weimar (Lahn)"])
+        XCTAssertEqual(names("Langenfeld Rheinland"), ["Langenfeld (Rhld.)"])
+        for query in ["Darmstadt-Dieburg", "Lüchow-Dannenberg", "München Landkreis"] {
             XCTAssertEqual(names(query), [], query)
         }
         XCTAssertEqual(ProviderCatalog.search("Lüchow-Dannenberg").first?.title, "Landkreis Lüchow-Dannenberg")
@@ -128,5 +128,37 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertEqual(ProviderCatalog.municipalities(matching: "Garching bei München").map(\.name), ["Garching b.München"])
         XCTAssertFalse(ProviderCatalog.municipalityHint(for: "Altenstadt an der Waldnaab")?.contains("Störnstein") ?? false)
         XCTAssertNil(LocalityIndex.byName["altenstadt an der waldnaab"])
+    }
+
+    /// Nachprüfung 14.11.: Ortsteile, die wie eine andere Gemeinde heißen, führen weiter zur Gemeinde links; Namensvetter nur
+    /// bei ganz passendem Zusatz, nicht beim Anfangsbuchstaben.
+    func testGemeindeOrtsteilUndGanzerZusatz() {
+        func names(_ query: String) -> [String] { ProviderCatalog.municipalities(matching: query).map(\.name) }
+        for (query, city) in [("Berlin-Lichtenberg", "Berlin"), ("Hamburg-Eppendorf", "Hamburg"), ("Hamburg Eppendorf", "Hamburg"),
+                              ("Duisburg-Rheinhausen", "Duisburg"), ("Hannover-Linden", "Hannover"), ("Dortmund Brackel", "Dortmund"),
+                              ("Aachen-Brand", "Aachen"), ("Hamm Schmehausen", "Hamm"), ("Hamm S", "Hamm"), ("Borken H", "Borken")] {
+            let found = names(query)
+            XCTAssertTrue(!found.isEmpty && found.allSatisfy { $0 == city }, "\(query) → \(found)")
+            XCTAssertFalse(ProviderCatalog.search(query).isEmpty, query)
+        }
+        XCTAssertEqual(names("Neustadt Weinstraße"), ["Neustadt an der Weinstraße"])
+        XCTAssertEqual(names("Neustadt Holstein"), ["Neustadt in Holstein"])
+        XCTAssertEqual(names("Neustadt Donau"), ["Neustadt a.d.Donau"])
+        XCTAssertEqual(names("Landau Isar"), ["Landau a.d.Isar"])
+        XCTAssertEqual(names("Aschau Inn"), ["Aschau a.Inn"])
+        XCTAssertEqual(names("Königstein Taunus"), ["Königstein im Taunus"])
+        XCTAssertFalse(names("Frankfurt Osthafen").contains("Frankfurt (Oder)"))
+        XCTAssertEqual(names("Borken Singlis"), ["Borken (Hessen)"])
+        XCTAssertEqual(names("Kirchheim Teck"), ["Kirchheim unter Teck"])
+        XCTAssertEqual(names("Haag OB"), ["Haag i.OB"])
+        XCTAssertEqual(names("Rothenburg Tauber"), ["Rothenburg ob der Tauber"])
+    }
+
+    /// Nachprüfung 14.11.: Trifft die Eingabe genau einen Namensvetter mit Zusatz, bleibt „Führt X nicht“ möglich.
+    func testNichtBeiEindeutigemZusatz() {
+        let hits = ProviderCatalog.municipalities(matching: "Lingen")
+        XCTAssertEqual(hits.map(\.name), ["Lingen (Ems)"])
+        let notes = ProviderCatalog.entries.compactMap { ProviderCatalog.placeNote(for: $0, query: "Lingen") }
+        XCTAssertTrue(notes.contains("Führt Lingen (Ems) nicht"), "\(Set(notes))")
     }
 }

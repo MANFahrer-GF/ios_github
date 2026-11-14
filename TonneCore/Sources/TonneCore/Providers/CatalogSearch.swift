@@ -134,21 +134,21 @@ public extension ProviderCatalog {
             guard left.count >= 3, !right.isEmpty else { continue }
             let locals = Set((LocalityIndex.byName[right] ?? []).map { "\($0.district)|\($0.municipality)" })
             // „Riedstadt-Erfelden“: links die Gemeinde (genau, oder Anfang wie „Frankfurt“, wenn rechts ihr Ortsteil steht)
-            let municipality = municipalityHits(left)
-            let exact = municipality.filter { fold($0.name) == left }
-            let fitting = municipality.filter { locals.contains("\($0.district)|\($0.name)") }
+            let exact = municipalityHits(left).filter { fold($0.name) == left }
+            let namesakes = MunicipalityIndex.namesakes(left)
+            let candidates = exact + namesakes.map { (name: $0.name, district: $0.district) }
+            // „Riedstadt-Erfelden“, „Borken Singlis“: links die Gemeinde (auch ein Namensvetter mit Zusatz), rechts ihr Ortsteil
+            let fitting = candidates.filter { locals.contains("\($0.district)|\($0.name)") }
             if !fitting.isEmpty { return (fitting, LocalityIndex.byName[right]?.first?.name) }
-            // Rechts genau eine eigene Gemeinde oder ein Kreiswort („Weimar Lahn“, „München Landkreis“): kein Zusatz zur
-            // Gemeinde links, die Volltextsuche findet den Eintrag.
-            let rightIsPlace = ["landkreis", "kreis", "stadt", "lk"].contains(right) || municipalityHits(right).contains { fold($0.name) == right }
-            if !rightIsPlace, let initial = right.first {
-                // Rechts der Zusatz eines Namensvetters: „Halle Saale“ → „Halle (Saale)“, nicht „Halle“ in Niedersachsen
-                let suffixed = MunicipalityIndex.namesakes(left).filter {
-                    $0.folded.dropFirst(left.count).first(where: \.isLetter) == initial
-                }
-                if !suffixed.isEmpty { return (suffixed.map { (name: $0.name, district: $0.district) }, nil) }
-                if !exact.isEmpty { return (exact, nil) }
-            }
+            // Kreiswort rechts („München Landkreis“): an dieser Stelle nicht teilen, die Volltextsuche findet den Eintrag
+            if ["landkreis", "kreis", "lk"].contains(right) { continue }
+            // Rechts der ganze Zusatz eines Namensvetters: „Halle Saale“ → „Halle (Saale)“, „Halle Westfalen“ → „Halle (Westf.)“,
+            // „Neustadt Weinstraße“ → „Neustadt an der Weinstraße“; ein bloßer Anfangsbuchstabe reicht nicht („Hamm S“).
+            let suffixed = namesakes.filter { MunicipalityIndex.suffix(of: $0.folded, after: left, matches: right) }
+            if !suffixed.isEmpty { return (suffixed.map { (name: $0.name, district: $0.district) }, nil) }
+            // Sonst gilt die Gemeinde links („Berlin-Lichtenberg“, „Stuttgart Vaihingen“, auch wenn der Ortsteil wie eine
+            // andere Gemeinde heißt und deshalb nicht in der Ortsteil-Tabelle steht).
+            if !exact.isEmpty { return (exact, nil) }
             // „Erfelden (Riedstadt)“: links der Ortsteil, rechts seine Gemeinde
             let reversed = (LocalityIndex.byName[left] ?? []).filter { fold($0.municipality).hasPrefix(right) }
             if !reversed.isEmpty { return (reversed.map { (name: $0.municipality, district: $0.district) }, reversed[0].name) }
@@ -219,10 +219,14 @@ public extension ProviderCatalog {
         let name = fold(hits[0].name), needle = fold(query)
         // Namensvettern mit Zusatz („Frankenthal“ → auch „Frankenthal (Pfalz)“, „Borken“ → „Borken (Hessen)“): die Eingabe
         // meint nicht sicher diese Gemeinde.
-        if !MunicipalityIndex.namesakes(name).isEmpty || !MunicipalityIndex.namesakes(needle).isEmpty { return nil }
-        // Nennt der Eintrag die Eingabe oder die Gemeinde selbst unter seinen Orten, widerspricht er der Zuordnung.
-        let places = SearchIndex.places[entry.id] ?? []
-        if places.contains(name) || places.contains(needle) { return nil }
+        let others = (MunicipalityIndex.namesakes(name) + MunicipalityIndex.namesakes(needle)).filter {
+            $0.name != hits[0].name || $0.district != hits[0].district
+        }
+        if !others.isEmpty { return nil }
+        // Nennt der Eintrag die Eingabe oder die Gemeinde selbst unter seinen Orten und liegt im selben Kreis (oder hat keinen),
+        // widerspricht er der Zuordnung. Ein Namensvetter in einem anderen Kreis bleibt „nicht“ (Ortsteil Heide ≠ Heide in Dithmarschen).
+        let places = SearchIndex.places[entry.id] ?? [], districts = CatalogRegions.entryDistricts[entry.id] ?? []
+        if places.contains(name) || places.contains(needle), districts.isEmpty || districts.contains(hits[0].district) { return nil }
         return L10n.t("Führt \(hits[0].name) nicht", "Does not cover \(hits[0].name)")
     }
 
@@ -283,6 +287,25 @@ enum MunicipalityIndex {
             low += 1
         }
         return result
+    }
+
+    /// Passt der Zusatz eines Namensvetters ganz zur Eingabe rechts? Füllwörter („an der“, „am“, „in“) zählen nicht, Abkürzungen
+    /// dürfen Buchstaben auslassen („westf“ ⊂ „westfalen“, „rhld“ ⊂ „rheinland“), der erste Buchstabe muss gleich sein.
+    static func suffix(of folded: String, after left: String, matches right: String) -> Bool {
+        let fillers: Set<String> = ["an", "der", "am", "im", "in", "bei", "ob", "vor", "vorm", "unter", "dem", "den", "zu", "zum", "auf"]
+        // Das letzte Wort zählt nie als Füllwort („Haag i.OB“: „ob“ = Oberbayern, „Rothenburg ob der Tauber“: Füllwort)
+        func core(_ text: String) -> [Character] {
+            let words = longForm(text).split(whereSeparator: { !$0.isLetter }).map(String.init)
+            return Array(words.enumerated().filter { $0.offset == words.count - 1 || !fillers.contains($0.element) }.map(\.element).joined())
+        }
+        let wanted = core(String(folded.dropFirst(left.count))), given = core(right)
+        guard let first = wanted.first, first == given.first else { return false }
+        var index = given.startIndex
+        for character in wanted {
+            guard let found = given[index...].firstIndex(of: character) else { return false }
+            index = given.index(after: found)
+        }
+        return true
     }
 
     /// Amtliche Kurzformen ausgeschrieben, Punkte und Leerraum vereinheitlicht („lohr a.main“ → „lohr am main“).
