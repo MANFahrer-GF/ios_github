@@ -17,7 +17,7 @@
 (function () {
   var sec = document.getElementById('bewertungen');
   if (!sec || !window.fetch) return;
-  fetch('api/bewertungen.php').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+  fetch('api/bewertungen.php?v=4').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (!d || !d.ok || !d.anzahl) return;
     var de = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); };
     sec.querySelector('[data-avg]').textContent = de(d.schnitt);
@@ -26,16 +26,31 @@
     st.setAttribute('aria-label', de(d.schnitt) + ' von 5 Sternen');
     sec.querySelector('[data-count]').textContent = d.anzahl + (d.anzahl === 1 ? ' Bewertung' : ' Bewertungen') + ' im App Store';
     var box = sec.querySelector('[data-reviews]');
-    (d.rezensionen || []).filter(function (r) { return r.sterne >= 4 && r.text; }).slice(0, 8).forEach(function (r) {
+    (d.rezensionen || []).filter(function (r) { return r.text || r.titel; }).slice(0, 12).forEach(function (r) {
       var a = document.createElement('article'); a.className = 'review';
+      var h = document.createElement('h3'); h.textContent = r.titel;
+      var by = document.createElement('p'); by.className = 'by';
+      var dt = r.datum ? new Date(r.datum + 'T12:00:00').toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+      by.textContent = dt;
+      var top = document.createElement('div'); top.className = 'top'; top.append(h, by);
       var s = document.createElement('span'); s.className = 'stars sm'; s.textContent = '★★★★★';
       s.style.setProperty('--pct', (r.sterne / 5 * 100) + '%'); s.setAttribute('aria-label', r.sterne + ' von 5 Sternen');
-      var h = document.createElement('h3'); h.textContent = r.titel;
+      var au = document.createElement('p'); au.className = 'by'; au.textContent = r.autor;
       var p = document.createElement('p'); p.className = 't'; p.textContent = r.text;
-      var by = document.createElement('p'); by.className = 'by';
-      var dt = r.datum ? new Date(r.datum + 'T12:00:00').toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-      by.textContent = r.autor + (dt ? ', ' + dt : '');
-      a.append(s, h, p, by); box.appendChild(a);
+      a.append(top, s, au, p);
+      if (r.antwort && r.antwort.text) {
+        var ant = document.createElement('div'); ant.className = 'answer';
+        var ah = document.createElement('p'); ah.className = 'ah';
+        var ad = r.antwort.datum ? new Date(r.antwort.datum + 'T12:00:00').toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }) : '';
+        ah.textContent = 'Antwort des Entwicklers' + (ad ? ', ' + ad : '');
+        var at = document.createElement('p'); at.className = 'at'; at.textContent = r.antwort.text;
+        ant.append(ah, at); a.appendChild(ant);
+      }
+      var mehr = document.createElement('button'); mehr.type = 'button'; mehr.className = 'mehr'; mehr.textContent = 'mehr';
+      mehr.addEventListener('click', function () { var o = a.classList.toggle('open'); mehr.textContent = o ? 'weniger' : 'mehr'; });
+      a.appendChild(mehr);
+      box.appendChild(a);
+      setTimeout(function () { var lang = [].some.call(a.querySelectorAll('p.t, .at'), function (x) { return x.scrollHeight > x.clientHeight + 2; }); if (!lang) mehr.remove(); }, 0);
     });
     if (!box.children.length) box.remove();
     sec.hidden = false;
