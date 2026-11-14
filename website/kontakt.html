@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kontakt · Tonne &amp; Torte</title>
+<meta name="description" content="Frage, Fehler, Wunsch oder dein Ort fehlt? Schreib dem Entwickler von Tonne &amp; Torte.">
+<link rel="canonical" href="https://tonne.kant.ovh/kontakt.html">
+<link rel="icon" href="img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<header class="nav">
+  <div class="wide">
+    <a class="brand" href="./"><img src="img/icon-180.png" alt="" width="26" height="26">Tonne &amp; Torte</a>
+    <nav aria-label="Hauptmenü">
+      <ul>
+        <li class="hide-sm"><a href="./#funktionen">Funktionen</a></li>
+        <li><a href="support.html">Hilfe</a></li>
+        <li><a href="kontakt.html" aria-current="page">Kontakt</a></li>
+      </ul>
+    </nav>
+    <a class="pill" href="https://apps.apple.com/de/app/tonne-torte/id6820155038">Laden</a>
+  </div>
+</header>
+
+<main id="inhalt" class="contact-page">
+  <div class="wrap narrow">
+    <h1>Schreib mir.</h1>
+    <p class="lead">Frage, Fehler, Wunsch oder dein Ort fehlt? Ich lese jede Nachricht selbst und antworte, so schnell ich kann.</p>
+
+    <form id="kontakt" class="form" action="api/kontakt.php" method="post" novalidate>
+      <fieldset class="topics">
+        <legend>Worum geht es?</legend>
+        <label><input type="radio" name="thema" value="Frage" checked><span>Frage</span></label>
+        <label><input type="radio" name="thema" value="Fehler"><span>Fehler</span></label>
+        <label><input type="radio" name="thema" value="Ort fehlt"><span>Ort fehlt</span></label>
+        <label><input type="radio" name="thema" value="Wunsch"><span>Wunsch</span></label>
+        <label><input type="radio" name="thema" value="Lob"><span>Lob</span></label>
+      </fieldset>
+
+      <div class="row2">
+        <div class="field">
+          <label for="f-name">Name <span class="opt">(freiwillig)</span></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80">
+        </div>
+        <div class="field">
+          <label for="f-email">E-Mail</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="160" required aria-describedby="e-email">
+          <p class="err" id="e-email"></p>
+        </div>
+      </div>
+
+      <div class="field ort" hidden>
+        <label for="f-ort">Welcher Ort fehlt?</label>
+        <input id="f-ort" name="ort" type="text" maxlength="160" placeholder="z. B. Landkreis Gifhorn, Gemeinde Meinersen" aria-describedby="h-ort e-ort">
+        <p class="help" id="h-ort">Landkreis und Gemeinde, und falls bekannt die Internetseite deines Entsorgers.</p>
+        <p class="err" id="e-ort"></p>
+      </div>
+
+      <div class="field">
+        <label for="f-text">Nachricht</label>
+        <textarea id="f-text" name="nachricht" rows="7" maxlength="5000" required aria-describedby="h-text e-nachricht"></textarea>
+        <p class="help" id="h-text"><span id="zaehler">0</span> / 5000 Zeichen</p>
+        <p class="err" id="e-nachricht"></p>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="f-web">Webseite</label>
+        <input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="t" id="f-t">
+
+      <p class="hint">Mit dem Absenden geht deine Nachricht per E-Mail an mich. Gespeichert wird sie auf dem Server nicht. Mehr in der <a href="datenschutz.html#kontaktformular">Datenschutzerklärung</a>.</p>
+      <p class="form-err" role="alert"></p>
+      <button class="btn send" type="submit"><span>Senden</span></button>
+    </form>
+
+    <div class="done" hidden tabindex="-1">
+      <div class="check" aria-hidden="true"></div>
+      <h2>Danke, ist angekommen.</h2>
+      <p>Ich melde mich per E-Mail bei dir.</p>
+      <a class="more" href="./">Zur Startseite</a>
+    </div>
+
+    <p class="alt-mail">Lieber direkt per E-Mail? <a href="mailto:thomas@kant.ovh">thomas@kant.ovh</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="fine">Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers.</p>
+    <div class="row">
+      <span>Tonne &amp; Torte · Thomas Kant, Gifhorn</span>
+      <ul>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="support.html">Hilfe</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script src="assets/kontakt.js" defer></script>
+</body>
+</html>
