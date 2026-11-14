@@ -710,6 +710,33 @@ final class TonneUITests: XCTestCase {
         assertDisabled(greenName, false)
     }
 
+    /// Riedstadt-Erfelden (Meldung 14.11.2026): Der Ortsteil findet den Kreis Groß-Gerau, die Trefferliste nennt Riedstadt,
+    /// der Ort-Schritt wählt Riedstadt vor, die Straßen von Riedstadt kommen gleich und am Ende stehen Müllarten.
+    func testWizard7ErfeldenOrtsteil() {
+        newWizard()
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 20))
+        field.tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { field.tap() }
+        field.typeText("Erfelden")
+        let hint = app.staticTexts["Erfelden gehört zu Riedstadt (Landkreis Groß-Gerau)."]
+        XCTAssertTrue(hint.waitForExistence(timeout: 10), "Hinweis zum Ortsteil fehlt")
+        let kreis = element(app.buttons, prefix: "Kreis Groß-Gerau")
+        XCTAssertTrue(kreis.waitForExistence(timeout: 10), "Kreis Groß-Gerau fehlt in den Treffern")
+        XCTAssertTrue(kreis.label.contains("Führt Riedstadt"), kreis.label)
+        snap("7-erfelden-treffer")
+        kreis.tap()
+        // Ohne Vorauswahl stünde jetzt die Ortsliste da und „Erfelder“ fände nichts
+        choose("Erfelder Straße", search: "Erfelder")
+        if !app.switches.firstMatch.waitForExistence(timeout: 30), app.searchFields.firstMatch.exists {
+            // Hausnummernschritt: ersten Eintrag nehmen
+            dump("7-erfelden-hausnummer")
+            app.cells.buttons.firstMatch.tap()
+        }
+        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 30), "Müllarten für Erfelden kommen nicht")
+        dump("7-erfelden-muellarten")
+    }
+
     /// Leipzig (Thomas, 11.11.2026): Die Suche „Hamburger Str.“ hat genau einen Treffer. Er muss sichtbar sein (früher still
     /// gewählt), auch nach „Zurück“ aus der Hausnummer, und der Name enthält den Suchtext nicht („Hamburger Str., Hamburger Straße, 10“).
     func testWizard6LeipzigSingleMatchAndName() {
