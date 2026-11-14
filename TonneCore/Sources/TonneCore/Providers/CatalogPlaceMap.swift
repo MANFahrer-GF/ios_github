@@ -805,7 +805,7 @@ enum CatalogPlaceMap {
         "portalsSuedwest:heidenheim:Abfallwirtschaft Landkreis Heidenheim",
         "portalsSuedwest:kelkheim:Stadt Kelkheim (Taunus)",
         "portalsSuedwest:kreiskassel:Abfallentsorgung Kreis Kassel",
-        "portalsSuedwest:muellmann:Müllmann-App (Landkreis Konstanz, Karlsruhe)",
+        "portalsSuedwest:muellmann:Müllmann-App",
         "portalsSuedwest:reso:RESO Odenwaldkreis",
         "portalsSuedwest:staedteservice:Städteservice Raunheim Rüsselsheim",
         "portalsSuedwest:stuttgart:Abfallwirtschaft Stuttgart (AWS)",

@@ -47,6 +47,8 @@ struct SourceWizardView: View {
     /// „Verwenden“ im Blatt: der Link wird in `onDismiss` geladen.
     @State private var useLinkOnDismiss = false
     @State private var hint: String?
+    /// Gesuchte Gemeinde, die der gewählte Eintrag führt – wird im ersten Schritt vorausgewählt (Karlsruhe in der Müllmann-App).
+    @State private var preselectPlace: String?
 
     var body: some View {
         NavigationStack {
@@ -212,6 +214,10 @@ struct SourceWizardView: View {
 
     private func catalogSubtitle(_ item: CatalogEntry) -> String {
         var text = item.kind.displayName
+        // Bezug zur Eingabe zuerst: „Führt Karlsruhe · auch 14 Orte im Landkreis Konstanz“ statt „Aach, Allensbach …“
+        if !query.isEmpty, let note = ProviderCatalog.placeNote(for: item, query: query) {
+            return text + " · " + note
+        }
         if !item.places.isEmpty {
             text += " · "
             text += item.places.prefix(3).joined(separator: ", ")
@@ -225,6 +231,7 @@ struct SourceWizardView: View {
         provider = ProviderFactory.make(kind: item.kind, serviceKey: item.serviceKey)
         selections = []
         typedIndices = []
+        preselectPlace = query.isEmpty ? nil : ProviderCatalog.servedPlace(for: item, query: query)
         locationName = location?.name ?? ""
         Task { await loadNextStep() }
     }
@@ -341,6 +348,15 @@ struct SourceWizardView: View {
                     selections.append(step.options[0])
                     await loadNextStep()
                     return
+                }
+                // Gesuchte Gemeinde im ersten Schritt gleich wählen (nur einmal, „Zurück“ zeigt die volle Liste).
+                if selections.isEmpty, let place = preselectPlace {
+                    preselectPlace = nil
+                    if let option = step.options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) {
+                        selections.append(option)
+                        await loadNextStep()
+                        return
+                    }
                 }
                 stepIndex = OptionSearch(step.options)
                 currentStep = step

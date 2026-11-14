@@ -135,6 +135,41 @@ public extension ProviderCatalog {
         checkPlace(query).filter { !$0.isCovered }
     }
 
+    /// Gesuchte Gemeinde, die der Eintrag belegt führt (für die Vorauswahl im ersten Schritt), sonst nil.
+    static func servedPlace(for entry: CatalogEntry, query: String) -> String? {
+        let pairs = Set(EntryPlacesIndex.pairs[entry.id] ?? [])
+        return municipalities(matching: query).first { pairs.contains("\($0.district)|\($0.name)") }?.name
+    }
+
+    /// Zusatz für den Untertitel in der Trefferliste, bezogen auf die Eingabe: „Führt Karlsruhe · auch 14 Orte im
+    /// Landkreis Konstanz“ oder „Führt Karlsruhe nicht“. Nur aus der belegten Zuordnung, sonst nil.
+    static func placeNote(for entry: CatalogEntry, query: String) -> String? {
+        let hits = municipalities(matching: query)
+        guard !hits.isEmpty else { return nil }
+        let pairs = EntryPlacesIndex.pairs[entry.id] ?? []
+        let matched = hits.filter { pairs.contains("\($0.district)|\($0.name)") }
+        if let place = matched.first {
+            let matchedPairs = Set(matched.map { "\($0.district)|\($0.name)" })
+            let others = pairs.filter { !matchedPairs.contains($0) }
+            let districts = Set(others.map { $0.split(separator: "|", maxSplits: 1)[0] })
+            switch (others.count, districts.count) {
+            case (0, _):
+                return L10n.t("Führt \(place.name)", "Covers \(place.name)")
+            case (1, _):
+                let other = others[0].split(separator: "|", maxSplits: 1)[1]
+                return L10n.t("Führt \(place.name) · auch \(other)", "Covers \(place.name) · also \(other)")
+            case (let count, 1):
+                let district = districts.first!
+                return L10n.t("Führt \(place.name) · auch \(count) Orte im \(district)", "Covers \(place.name) · also \(count) places in \(district)")
+            case (let count, _):
+                return L10n.t("Führt \(place.name) · auch \(count) weitere Orte", "Covers \(place.name) · also \(count) other places")
+            }
+        }
+        // Nur eine gesuchte Gemeinde mit belegter Zuordnung, die diesen Eintrag nicht nennt
+        guard hits.count == 1, let proven = PlaceMapIndex.entryIDs["\(hits[0].district)|\(hits[0].name)"], !proven.contains(entry.id) else { return nil }
+        return L10n.t("Führt \(hits[0].name) nicht", "Does not cover \(hits[0].name)")
+    }
+
     /// Kurzer Hinweis für die Suche, z. B. „Nostorf liegt im Landkreis Ludwigslust-Parchim.“
     static func municipalityHint(for query: String) -> String? {
         let (hits, locality) = resolve(fold(query))
@@ -195,6 +230,15 @@ enum LocalityIndex {
             }
         }
         return result
+    }()
+}
+
+/// Belegte Gemeinden je Eintrag („Landkreis|Gemeinde“), umgekehrt aus `PlaceMapIndex.entryIDs`.
+enum EntryPlacesIndex {
+    static let pairs: [String: [String]] = {
+        var out: [String: [String]] = [:]
+        for (pair, ids) in PlaceMapIndex.entryIDs { for id in ids { out[id, default: []].append(pair) } }
+        return out.mapValues { $0.sorted() }
     }()
 }
 

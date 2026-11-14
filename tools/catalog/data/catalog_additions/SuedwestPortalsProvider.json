@@ -35,7 +35,7 @@
    "places": ["Bad König", "Brensbach", "Breuberg", "Brombachtal", "Erbach", "Fränkisch-Crumbach", "Höchst i.Odw.", "Lützelbach",
               "Michelstadt", "Mossautal", "Oberzent", "Reichelsheim (Odenwald)"],
    "districts": ["Landkreis Odenwaldkreis"]},
-  {"kind": "portalsSuedwest", "key": "muellmann", "title": "Müllmann-App (Landkreis Konstanz, Karlsruhe)",
+  {"kind": "portalsSuedwest", "key": "muellmann", "title": "Müllmann-App",
    "website": "https://muellmann-app.de/",
    "places": ["Aach", "Allensbach", "Bodman-Ludwigshafen", "Gailingen am Hochrhein", "Hohenfels", "Karlsruhe", "Konstanz", "Moos",
               "Mühlhausen-Ehingen", "Mühlingen", "Orsingen-Nenzingen", "Radolfzell am Bodensee", "Reichenau", "Singen (Hohentwiel)", "Stockach"],
