@@ -9,6 +9,7 @@
   var formErr = f.querySelector('.form-err');
   var btn = f.querySelector('.send');
   var start = performance.now();
+  var MAIL = ['thomas', 'kant.ovh'].join('@');
   // Vorbelegung aus der Ortssuche („Ort melden“): kontakt.html?thema=Ort%20fehlt&ort=…
   var q = new URLSearchParams(location.search);
   if (q.get('thema')) { var r = f.querySelector('input[name="thema"][value="' + q.get('thema').replace(/"/g, '') + '"]'); if (r) r.checked = true; }
@@ -59,9 +60,9 @@
           return;
         }
         markiere(d.felder);
-        formErr.textContent = d.fehler || 'Das hat leider nicht geklappt. Bitte direkt an thomas@kant.ovh schreiben.';
+        formErr.textContent = d.fehler || 'Das hat leider nicht geklappt. Bitte direkt an ' + MAIL + ' schreiben.';
       })
-      .catch(function () { formErr.textContent = 'Keine Verbindung. Bitte später noch einmal versuchen oder direkt an thomas@kant.ovh schreiben.'; })
+      .catch(function () { formErr.textContent = 'Keine Verbindung. Bitte später noch einmal versuchen oder direkt an ' + MAIL + ' schreiben.'; })
       .finally(function () { btn.disabled = false; btn.classList.remove('busy'); });
   });
 })();
