@@ -34,14 +34,15 @@
     });
     d.ef = d.e.map(function (e) { return fold(e[0]); });
     d.kreisG = d.k.map(function () { return [0, 0]; });
-    d.g.forEach(function (g) { d.kreisG[g[1]][0]++; if (g[2].length) d.kreisG[g[1]][1]++; });
+    // Wie die App (CatalogCoverage): gemeindefreie Gebiete (Feld 5) zählen nicht als Gemeinde
+    d.g.forEach(function (g) { if (g[4]) return; d.kreisG[g[1]][0]++; if (g[2].length) d.kreisG[g[1]][1]++; });
     return d;
   }
 
   function holen() {
     if (!laden) {
       status.textContent = 'Orte werden geladen …';
-      laden = fetch('data/orte.json').then(function (r) { return r.json(); }).then(function (d) { D = vorbereiten(d); status.textContent = ''; return D; })
+      laden = fetch('data/orte.json?v=2').then(function (r) { return r.json(); }).then(function (d) { D = vorbereiten(d); status.textContent = ''; return D; })
         .catch(function () { status.textContent = 'Die Ortsliste konnte gerade nicht geladen werden.'; laden = null; });
     }
     return laden;
@@ -126,7 +127,10 @@
         var kopf = el('p', 't'); kopf.textContent = x.ortsteil ? x.ortsteil : g[0];
         var unter = el('p', 'd', (x.ortsteil ? 'Ortsteil von ' + g[0] + ', ' : '') + kreisName(g[1]));
         li.append(kopf, unter);
-        if (g[2].length) {
+        if (g[4] && !g[2].length) {
+          li.appendChild(el('p', 'badge no', 'Gemeindefreies Gebiet'));
+          li.appendChild(el('p', 'src', 'Keine eigene Gemeinde, zum Beispiel ein Forst oder See.'));
+        } else if (g[2].length) {
           li.classList.add('ok');
           var namen = g[2].slice(0, 2).map(function (i) { return D.e[i][0]; }).join(' · ');
           var mehr = g[2].length > 2 ? ' und ' + (g[2].length - 2) + ' weitere' : '';

@@ -22,7 +22,14 @@ function bericht(string $art, string $datum, string $dir): ?array {
     [$code, $raw] = asc_get('/v1/salesReports?filter[frequency]=' . $art . '&filter[reportType]=SALES&filter[reportSubType]=SUMMARY'
         . '&filter[vendorNumber]=' . VENDOR . '&filter[reportDate]=' . $datum . '&filter[version]=1_0', 'application/a-gzip');
     $text = $code === 200 ? @gzdecode($raw) : false;
-    if ($text === false) return null;
+    if ($text === false) {
+        // „There were no sales for the date specified“: Tage, die älter als 3 Tage sind, als leer merken
+        if ($code === 404 && str_contains($raw, 'no sales') && strtotime($datum) < time() - 3 * 86400) {
+            @file_put_contents($datei, '{}', LOCK_EX);
+            return [];
+        }
+        return null;
+    }
     $zeilen = array_map(fn($l) => explode("\t", $l), array_filter(explode("\n", $text)));
     $kopf = array_flip(array_shift($zeilen) ?: []);
     $summe = [];

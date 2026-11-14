@@ -41,6 +41,13 @@ for line in raw_block(regions, "municipalities"):
         gindex[f"{kreis}|{n}"] = len(gemeinden)
         gemeinden.append([n, k, [], ""])
 
+# Gemeindefreie Gebiete (Forste, Seen): zählen wie in der App nicht als bewohnte Gemeinde (CatalogCoverage.swift)
+m = re.search(r"static let unincorporated: Set<String> = \[\n(.*?)\n    \]", regions, re.S)
+for pair in re.findall(r'"((?:[^"\\]|\\.)*)"', m.group(1) if m else ""):
+    g = gindex.get(pair)
+    if g is not None:
+        gemeinden[g].append(1)
+
 pm = (P / "CatalogPlaceMap.swift").read_text()
 pm_ids = str_array(pm, "entryIDs")
 for line in raw_block(pm, "places"):
@@ -80,4 +87,7 @@ data = {"k": districts, "e": entries, "g": gemeinden, "o": ortsteile}
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
 abgedeckt = sum(1 for g in gemeinden if g[2])
+frei = sum(1 for g in gemeinden if len(g) > 4)
+komplett = sum(1 for k in range(len(districts)) if all(g[2] for g in gemeinden if g[1] == k and len(g) == 4) and any(g[1] == k and len(g) == 4 for g in gemeinden))
+print(f"gemeindefrei {frei}, Kreise komplett {komplett} von {len(districts)}")
 print(f"{len(districts)} Kreise, {len(gemeinden)} Gemeinden ({abgedeckt} mit Entsorger), {len(ortsteile)} Ortsteile, {len(entries)} Entsorger -> {OUT} ({OUT.stat().st_size // 1024} KB)")
