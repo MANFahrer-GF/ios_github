@@ -40,9 +40,34 @@ if (!$app) {
     exit;
 }
 
-// 1. Quelle: Store-Webseite (enthält auch die Antworten des Entwicklers), eingebettete Seitendaten.
+// 1. Quelle: offizielle App Store Connect API (Rezensionen samt Antworten des Entwicklers, deutscher Store).
+require __DIR__ . '/lib/asc.php';
 $rezensionen = [];
-$ctx = stream_context_create(['http' => ['timeout' => 5, 'header' => "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15\r\nAccept-Language: de-DE\r\n"]]);
+[$code, $raw] = asc_get('/v1/apps/' . APP_ID . '/customerReviews?filter[territory]=DEU&sort=-createdDate&limit=50&include=response');
+$api = $code === 200 ? json_decode($raw, true) : null;
+if (is_array($api['data'] ?? null)) {
+    $antworten = [];
+    foreach ($api['included'] ?? [] as $inc) {
+        if (($inc['type'] ?? '') === 'customerReviewResponses' && ($inc['attributes']['state'] ?? 'PUBLISHED') === 'PUBLISHED') $antworten[$inc['id']] = $inc['attributes'];
+    }
+    foreach ($api['data'] as $d) {
+        $at = $d['attributes'] ?? [];
+        $rid = $d['relationships']['response']['data']['id'] ?? null;
+        $ant = $rid && isset($antworten[$rid]) ? ['text' => (string)($antworten[$rid]['responseBody'] ?? ''), 'datum' => substr((string)($antworten[$rid]['lastModifiedDate'] ?? ''), 0, 10)] : null;
+        $rezensionen[] = [
+            'sterne' => (int)($at['rating'] ?? 0),
+            'titel' => (string)($at['title'] ?? ''),
+            'text' => (string)($at['body'] ?? ''),
+            'autor' => (string)($at['reviewerNickname'] ?? ''),
+            'datum' => substr((string)($at['createdDate'] ?? ''), 0, 10),
+            'antwort' => $ant && $ant['text'] !== '' ? $ant : null,
+        ];
+    }
+}
+
+// 2. Rückfall: Store-Webseite (enthält auch die Antworten des Entwicklers), eingebettete Seitendaten.
+if (!$rezensionen) {
+    $ctx = stream_context_create(['http' => ['timeout' => 5, 'header' => "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15\r\nAccept-Language: de-DE\r\n"]]);
 $seite = @file_get_contents('https://apps.apple.com/de/app/tonne-torte/id' . APP_ID . '?see-all=reviews', false, $ctx);
 if ($seite !== false && preg_match('~<script[^>]*id="serialized-server-data"[^>]*>(.*?)</script>~s', $seite, $m)) {
     $daten = json_decode($m[1], true);
@@ -69,7 +94,9 @@ if ($seite !== false && preg_match('~<script[^>]*id="serialized-server-data"[^>]
     }
 }
 
-// 2. Rückfall: RSS-Feed (ohne Antworten), falls die Webseite nichts liefert.
+}
+
+// 3. Rückfall: RSS-Feed (ohne Antworten), falls API und Webseite nichts liefern.
 if (!$rezensionen) {
     $eintraege = $feed['feed']['entry'] ?? [];
     if (isset($eintraege['id'])) $eintraege = [$eintraege];
