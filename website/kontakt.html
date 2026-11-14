@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/kontakt.html">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=7">
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -71,9 +71,10 @@
         <label for="f-web">Webseite</label>
         <input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <input type="hidden" name="t" id="f-t">
+      <input type="hidden" name="dauer" id="f-t" value="0">
 
       <p class="hint">Mit dem Absenden geht deine Nachricht per E-Mail an mich. Gespeichert wird sie auf dem Server nicht. Mehr in der <a href="datenschutz.html#kontaktformular">Datenschutzerklärung</a>.</p>
+      <noscript><p class="form-err">Das Formular braucht JavaScript. Schreib sonst gern direkt an <a href="mailto:thomas@kant.ovh">thomas@kant.ovh</a>.</p></noscript>
       <p class="form-err" role="alert"></p>
       <button class="btn send" type="submit"><span>Senden</span></button>
     </form>
@@ -103,6 +104,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/kontakt.js?v=5" defer></script>
+<script src="assets/kontakt.js?v=7" defer></script>
 </body>
 </html>

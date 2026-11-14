@@ -34,6 +34,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.47 var(--font); letter-spacing: -0.022em; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; height: auto; display: block; }
@@ -292,7 +293,7 @@ footer a { color: var(--ink); opacity: .8; }
 .help { color: var(--muted); font-size: .9rem; }
 .err { color: #d70015; font-size: .92rem; font-weight: 500; }
 .err:empty { display: none; }
-@media (prefers-color-scheme: dark) { .err { color: #ff6961; } .field [aria-invalid="true"] { border-color: #ff6961; } }
+@media (prefers-color-scheme: dark) { .err, .form-err { color: #ff6961; } .field [aria-invalid="true"] { border-color: #ff6961; } }
 .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .hint { color: var(--muted); font-size: .92rem; }
 .form-err { color: #d70015; font-weight: 500; }
@@ -322,15 +323,15 @@ footer a { color: var(--ink); opacity: .8; }
 .score .meta p { color: var(--muted); margin-top: 6px; font-weight: 500; }
 .stars { --pct: 0%; display: inline-block; font-size: 1.7rem; letter-spacing: 3px; line-height: 1; background: linear-gradient(90deg, #ff9f0a var(--pct), var(--line) var(--pct)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .stars.sm { font-size: 1rem; letter-spacing: 2px; }
-.reviews { margin: 48px auto 0; width: min(1100px, 100% - 44px); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; align-items: start; }
+.reviews { margin: 20px auto 0; width: min(1100px, 100% - 44px); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; align-items: stretch; }
 @media (max-width: 760px) { .reviews { grid-template-columns: 1fr; } }
 .review { background: var(--alt); border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 10px; }
 .review h3 { font-size: 1.15rem; line-height: 1.25; }
-.review p.t { color: var(--ink); opacity: .86; font-size: 1rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.review p.t { color: var(--ink); opacity: .86; font-size: 1rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .review .by { padding-top: 4px; color: var(--muted); font-size: .9rem; }
 .review .answer { margin-top: 8px; padding: 16px 18px; border-radius: 16px; background: var(--page); border-left: 3px solid var(--accent); }
 .review .ah { font-size: .85rem; font-weight: 600; color: var(--accent-text); }
-.review .at { margin-top: 6px; font-size: .95rem; line-height: 1.45; color: var(--ink); opacity: .86; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; }
+.review .at { margin-top: 6px; font-size: .95rem; line-height: 1.45; color: var(--ink); opacity: .86; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .ratings .src { margin-top: 8px; color: var(--muted); font-size: .9rem; }
 
 /* Dunkle Abschnitte als abgerundete Flächen auf der hellen Seite */
@@ -344,5 +345,34 @@ footer a { color: var(--ink); opacity: .8; }
 .review .top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
 .review .top .by { padding: 0; text-align: right; white-space: nowrap; }
 .review.open p.t, .review.open .at { -webkit-line-clamp: unset; display: block; }
-.review .mehr { align-self: flex-start; background: none; border: 0; padding: 0; font: inherit; font-size: .95rem; color: var(--accent-text); cursor: pointer; }
+.review .mehr { margin-top: auto; padding-top: 6px; align-self: flex-start; background: none; border: 0; padding: 0; font: inherit; font-size: .95rem; color: var(--accent-text); cursor: pointer; }
 .review .mehr:hover { text-decoration: underline; }
+
+/* Live-Ortssuche */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.ortsuche { margin: 44px auto 0; max-width: 720px; text-align: left; }
+.searchbox { position: relative; }
+.searchbox input { width: 100%; font: inherit; font-size: 1.2rem; color: var(--ink); background: var(--tile); border: 1px solid transparent; border-radius: 18px; padding: 18px 20px 18px 54px; transition: border-color .2s, box-shadow .2s, background .2s; -webkit-appearance: none; appearance: none; }
+.searchbox input::placeholder { color: var(--muted); }
+.searchbox input:focus { outline: none; background: var(--page); border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent), 0 20px 40px -24px rgb(0 0 0 / .3); }
+.lupe { position: absolute; left: 21px; top: 50%; width: 17px; height: 17px; margin-top: -11px; border: 2.5px solid var(--muted); border-radius: 50%; pointer-events: none; }
+.lupe::after { content: ""; position: absolute; width: 8px; height: 2.5px; background: var(--muted); right: -7px; bottom: -4px; transform: rotate(45deg); border-radius: 2px; }
+.ortsuche .status { margin-top: 12px; color: var(--muted); }
+.ortsuche .status:empty { display: none; }
+.results { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
+.results li { background: var(--tile); border-radius: 18px; padding: 16px 20px; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; row-gap: 2px; align-items: center; }
+@media (prefers-reduced-motion: no-preference) { .results li { animation: rise .35s cubic-bezier(.16,1,.3,1) both; } }
+.results .t { font-weight: 600; font-size: 1.1rem; grid-column: 1; }
+.results .d { color: var(--muted); font-size: .95rem; grid-column: 1; }
+.results .badge { grid-column: 2; grid-row: 1 / span 2; font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 980px; white-space: nowrap; }
+.results .badge.ok { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent-text); }
+.results .badge.part { background: color-mix(in srgb, #ff9f0a 18%, transparent); color: #b25e00; }
+.results .badge.no { background: color-mix(in srgb, #8e8e93 18%, transparent); color: var(--muted); }
+@media (prefers-color-scheme: dark) { .results .badge.part { color: #ffb340; } }
+.results .src { grid-column: 1 / -1; margin-top: 8px; color: var(--muted); font-size: .9rem; }
+.results .more { grid-column: 1 / -1; margin-top: 6px; font-size: .95rem; }
+.results li.none { grid-template-columns: 1fr; }
+.ort-hinweis { margin-top: 16px; color: var(--muted); font-size: .85rem; }
+@media (max-width: 560px) { .results li { grid-template-columns: 1fr; } .results .badge { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; } }
+.ratings .neueste { margin-top: 48px; font-size: 1.3rem; font-weight: 600; }
+.ratings .neueste span { color: var(--muted); font-weight: 500; }

@@ -17,7 +17,7 @@
 (function () {
   var sec = document.getElementById('bewertungen');
   if (!sec || !window.fetch) return;
-  fetch('api/bewertungen.php?v=4').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+  fetch('api/bewertungen.php?v=7').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (!d || !d.ok || !d.anzahl) return;
     var de = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); };
     sec.querySelector('[data-avg]').textContent = de(d.schnitt);
@@ -26,7 +26,12 @@
     st.setAttribute('aria-label', de(d.schnitt) + ' von 5 Sternen');
     sec.querySelector('[data-count]').textContent = d.anzahl + (d.anzahl === 1 ? ' Bewertung' : ' Bewertungen') + ' im App Store';
     var box = sec.querySelector('[data-reviews]');
-    (d.rezensionen || []).filter(function (r) { return r.text || r.titel; }).slice(0, 12).forEach(function (r) {
+    var alle = (d.rezensionen || []).filter(function (r) { return r.text || r.titel; });
+    // Zwei Spalten: höchstens 8 und immer eine gerade Anzahl (bei nur einer Bewertung diese eine)
+    var anz = Math.min(8, alle.length); if (anz > 1 && anz % 2) anz--;
+    var neu = alle.slice(0, anz);
+    var nh = sec.querySelector('[data-neueste]'); if (nh) nh.firstChild.textContent = neu.length === 1 ? 'Die neueste Bewertung ' : 'Die ' + neu.length + ' neuesten Bewertungen ';
+    neu.forEach(function (r) {
       var a = document.createElement('article'); a.className = 'review';
       var h = document.createElement('h3'); h.textContent = r.titel;
       var by = document.createElement('p'); by.className = 'by';

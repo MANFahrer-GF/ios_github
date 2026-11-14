@@ -39,4 +39,6 @@ zur Ablehnung führen.
   Testmodus ohne Versand: Datei `/var/www/vhosts/tonne.kant.ovh/private/kontakt-testmodus` anlegen.
 - Bewertungen `api/bewertungen.php`: holt Sterne und Rezensionen bei Apple (iTunes-Lookup + RSS), Zwischenspeicher 6 h in `private/`.
 - Logs: täglich rotiert, 14 Dateien (DSGVO-Angabe „spätestens nach 15 Tagen“). Webstatistik aus.
-- Ortsteil-Zahl „rund 60.000 … ab Version 2.0.11“ auf der Startseite: nach Freigabe von 2.0.11 den Zusatz „ab Version 2.0.11“ streichen.
+- Nach Freigabe von 2.0.11: Startseite „Bis in die Gemeinde.“ wieder auf „Bis in den Ortsteil.“, Ortsteil-Kachel ohne „mit dem nächsten Update“, Hinweis unter der Ortssuche kürzen.
+- Ortsdaten für die Live-Suche nach Katalog-Änderungen neu erzeugen: `python3 website/tools/orte_export.py`, dann ausliefern.
+- nginx-Zusatz (Gzip, Sicherheits-Header) liegt in `/var/www/vhosts/system/tonne.kant.ovh/conf/vhost_nginx.conf`.

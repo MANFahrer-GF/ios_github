@@ -12,13 +12,18 @@ header('Cache-Control: public, max-age=300');
 $dir = dirname(__DIR__, 2) . '/private';
 $cache = $dir . '/bewertungen.json';
 
+// Spam-Sperre des Kontaktformulars: Einträge leben höchstens 24 Stunden. Wurde die Datei so lange nicht
+// mehr geschrieben, sind alle Einträge abgelaufen; jeder Seitenaufruf räumt sie dann weg.
+$limitDatei = $dir . '/kontakt-limit.json';
+if (is_file($limitDatei) && time() - filemtime($limitDatei) >= 86400) @unlink($limitDatei);
+
 if (is_file($cache) && time() - filemtime($cache) < TTL) {
     readfile($cache);
     exit;
 }
 
 function holen(string $url): ?array {
-    $ctx = stream_context_create(['http' => ['timeout' => 8, 'header' => "User-Agent: tonne.kant.ovh\r\n"]]);
+    $ctx = stream_context_create(['http' => ['timeout' => 5, 'header' => "User-Agent: tonne.kant.ovh\r\n"]]);
     $raw = @file_get_contents($url, false, $ctx);
     if ($raw === false) return null;
     $data = json_decode($raw, true);
@@ -31,13 +36,13 @@ $app = $lookup['results'][0] ?? null;
 
 if (!$app) {
     // Apple nicht erreichbar: letzten Stand weiter ausliefern, sonst leer.
-    if (is_file($cache)) { readfile($cache); } else { http_response_code(503); echo '{"ok":false}'; }
+    if (is_file($cache)) { readfile($cache); } else { header('Cache-Control: no-store'); http_response_code(503); echo '{"ok":false}'; }
     exit;
 }
 
 // 1. Quelle: Store-Webseite (enthält auch die Antworten des Entwicklers), eingebettete Seitendaten.
 $rezensionen = [];
-$ctx = stream_context_create(['http' => ['timeout' => 10, 'header' => "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15\r\nAccept-Language: de-DE\r\n"]]);
+$ctx = stream_context_create(['http' => ['timeout' => 5, 'header' => "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15\r\nAccept-Language: de-DE\r\n"]]);
 $seite = @file_get_contents('https://apps.apple.com/de/app/tonne-torte/id' . APP_ID . '?see-all=reviews', false, $ctx);
 if ($seite !== false && preg_match('~<script[^>]*id="serialized-server-data"[^>]*>(.*?)</script>~s', $seite, $m)) {
     $daten = json_decode($m[1], true);
@@ -80,6 +85,11 @@ if (!$rezensionen) {
             'antwort' => null,
         ];
     }
+}
+// Beide Quellen leer (Apple kurz nicht erreichbar): die zuletzt gespeicherten Rezensionen behalten.
+if (!$rezensionen && is_file($cache)) {
+    $alt = json_decode((string)file_get_contents($cache), true);
+    $rezensionen = is_array($alt['rezensionen'] ?? null) ? $alt['rezensionen'] : [];
 }
 usort($rezensionen, fn($a, $b) => strcmp($b['datum'], $a['datum']));
 

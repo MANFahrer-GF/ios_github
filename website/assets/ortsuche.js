@@ -96,7 +96,12 @@
       var w = n.split(' ');
       var es = [];
       D.ef.forEach(function (f, i) { if (w.every(function (x) { return f.indexOf(x) >= 0; })) es.push(i); });
-      es.slice(0, 4).forEach(function (i) { out.push({ typ: 'e', e: i }); });
+      // Beginnt der Entsorger-Name mit der Eingabe („ALBA“), steht er vor bloßen Namensanfängen von Orten.
+      var vorn = es.filter(function (i) { return D.ef[i].indexOf(n) === 0; }).slice(0, 3);
+      var hinten = es.filter(function (i) { return vorn.indexOf(i) < 0; }).slice(0, 4 - vorn.length);
+      var exaktOrt = out.filter(function (r) { return r.typ !== 'g' || D.gf[r.g] === n || (r.ortsteil && fold(r.ortsteil) === n); });
+      var rest = out.filter(function (r) { return exaktOrt.indexOf(r) < 0; });
+      out = exaktOrt.concat(vorn.map(function (i) { return { typ: 'e', e: i }; }), rest, hinten.map(function (i) { return { typ: 'e', e: i }; }));
     }
     return out.slice(0, 12);
   }

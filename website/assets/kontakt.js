@@ -8,7 +8,11 @@
   var zaehler = document.getElementById('zaehler');
   var formErr = f.querySelector('.form-err');
   var btn = f.querySelector('.send');
-  f.querySelector('#f-t').value = String(Date.now());
+  var start = performance.now();
+  // Vorbelegung aus der Ortssuche („Ort melden“): kontakt.html?thema=Ort%20fehlt&ort=…
+  var q = new URLSearchParams(location.search);
+  if (q.get('thema')) { var r = f.querySelector('input[name="thema"][value="' + q.get('thema').replace(/"/g, '') + '"]'); if (r) r.checked = true; }
+  if (q.get('ort')) f.ort.value = q.get('ort').slice(0, 160);
 
   function themaWahl() {
     var istOrt = f.thema.value === 'Ort fehlt';
@@ -45,6 +49,7 @@
     var fe = pruefe();
     markiere(fe);
     if (Object.keys(fe).length) return;
+    f.querySelector('#f-t').value = String(Math.round(performance.now() - start));
     btn.disabled = true; btn.classList.add('busy');
     fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'X-Requested-With': 'fetch' } })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
