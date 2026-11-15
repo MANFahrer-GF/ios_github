@@ -101,7 +101,7 @@ struct InitialsBadge: View {
     var body: some View {
         ZStack {
             Circle().fill(LinearGradient(colors: [Color(hex: colorHex), Color(hex: colorHex).opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Text(initials).font(.system(size: size * 0.36, weight: .bold)).foregroundStyle(.white)
+            Text(initials).tonneFont(fixed: size * 0.36, .bold).foregroundStyle(.white)
         }
         .frame(width: size, height: size)
     }
@@ -168,7 +168,7 @@ struct PaletteColorPicker: View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(Palette.colors, id: \.self) { hex in
                 Circle().fill(Color(hex: hex)).frame(width: 36, height: 36)
-                    .overlay { if hex.uppercased() == colorHex.uppercased() { Image(systemName: "checkmark").font(.caption.weight(.bold)).foregroundStyle(.white) } }
+                    .overlay { if hex.uppercased() == colorHex.uppercased() { Image(systemName: "checkmark").tonneFont(.caption, .bold).foregroundStyle(.white) } }
                     .onTapGesture { colorHex = hex }
             }
             ColorPicker("", selection: Binding(get: { Color(hex: colorHex) }, set: { colorHex = $0.hexString })).labelsHidden().frame(width: 36, height: 36)
@@ -186,7 +186,7 @@ struct SymbolPicker: View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(symbols, id: \.self) { symbol in
                 SymbolTile(isSelected: symbol == symbolName, colorHex: colorHex) {
-                    Image(systemName: symbol).font(.title3)
+                    Image(systemName: symbol).tonneFont(.title3)
                 }
                 .onTapGesture { symbolName = symbol }
             }
@@ -226,7 +226,7 @@ struct WasteSymbolPicker: View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(WasteGlyph.pickerSymbols, id: \.self) { symbol in
                 SymbolTile(isSelected: WasteGlyph.matches(symbol, current: symbolName, name: wasteName), colorHex: colorHex) {
-                    Image.waste(symbol).font(.title3)
+                    Image.waste(symbol).tonneFont(.title3)
                 }
                 .onTapGesture { symbolName = symbol }
             }
@@ -335,7 +335,7 @@ enum EventEditTarget: Identifiable {
 private struct EventEditorSheet: ViewModifier {
     @Binding var target: EventEditTarget?
     func body(content: Content) -> some View {
-        content.sheet(item: $target) { item in
+        content.sheet(item: $target) { item in Group {
             switch item {
             case .person(let person): BirthdayEditView(person: person)
             case .event(let event): CustomEventEditView(event: event)
@@ -346,7 +346,7 @@ private struct EventEditorSheet: ViewModifier {
                         .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.t("Fertig", "Done")) { target = nil } } }
                 }
             }
-        }
+        }.appTypography() }
     }
 }
 
@@ -394,7 +394,7 @@ struct InfoTag: View {
     var size: CGFloat = 12
     @Environment(\.colorScheme) private var scheme
     var body: some View {
-        Text(text).font(KlarStyle.font(size, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+        Text(text).tonneFont(size: size, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
             .padding(.horizontal, 7).padding(.vertical, 3)
             .background(Color(.tertiarySystemFill), in: Capsule())
     }
@@ -439,21 +439,21 @@ struct EventItemCard: View {
                 HStack(spacing: 12) {
                     leading
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(EventText.title(event)).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                        Text(EventText.title(event)).tonneFont(size: 17, .heavy).foregroundStyle(KlarStyle.text(scheme))
                             .strikethrough(event.notPutOut)
                             .lineLimit(2).fixedSize(horizontal: false, vertical: true)
                         if event.notPutOut {
                             Label(dropOff ? L10n.t("Diesmal nicht hinbringen", "Skipping this time") : L10n.t("Bleibt diesmal drin", "Staying in this time"),
                                   systemImage: "hand.raised.fill")
-                                .font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                                .tonneFont(size: 13, .bold).foregroundStyle(KlarStyle.muted(scheme))
                         } else if event.offDuty {
                             Label(L10n.t("Du bist nicht dran", "Not your turn"), systemImage: "person.2.fill")
-                                .font(KlarStyle.font(13, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                                .tonneFont(size: 13, .bold).foregroundStyle(KlarStyle.muted(scheme))
                         }
                         InfoTags(tags: EventText.tags(event, person: person, showLocation: showLocation))
                         // Zeit/Ort beim Schadstoffmobil – ganzer Satz, darf umbrechen
                         if let note = event.note {
-                            Label(note, systemImage: "mappin.and.ellipse").font(KlarStyle.font(14, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                            Label(note, systemImage: "mappin.and.ellipse").tonneFont(size: 14, .bold).foregroundStyle(KlarStyle.muted(scheme))
                                 .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -471,7 +471,7 @@ struct EventItemCard: View {
                     } label: {
                         Text(event.notPutOut ? (dropOff ? L10n.t("Doch hin", "Go after all") : L10n.t("Doch raus", "Put out after all"))
                                              : (dropOff ? L10n.t("Auslassen", "Skip") : L10n.t("Bleibt drin", "Keep in")))
-                            .font(KlarStyle.font(13, .heavy))
+                            .tonneFont(size: 13, .heavy)
                     }
                     .buttonStyle(.bordered).buttonBorderShape(.capsule).controlSize(.small)
                     .accessibilityLabel(event.notPutOut ? L10n.t("\(event.title) doch rausstellen", "Put \(event.title) out after all")
@@ -506,7 +506,7 @@ struct EventItemCard: View {
 
     private func actionButton(_ symbol: String, label: String, color: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Label(label, systemImage: symbol).font(KlarStyle.font(15, .heavy)).foregroundStyle(.white)
+            Label(label, systemImage: symbol).tonneFont(size: 15, .heavy).foregroundStyle(.white)
                 .frame(maxWidth: .infinity).padding(.vertical, 10)
                 .background(color, in: Capsule())
         }

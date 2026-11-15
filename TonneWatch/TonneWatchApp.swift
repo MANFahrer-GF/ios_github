@@ -8,7 +8,7 @@ struct TonneWatchApp: App {
 
     var body: some Scene {
         WindowGroup {
-            WatchContentView()
+            WatchContentView().tonneTypography(maxSize: .xxLarge)
         }
     }
 }

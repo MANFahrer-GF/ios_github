@@ -24,8 +24,8 @@ struct WasteDetailView: View {
                 HStack(spacing: 16) {
                     SymbolBadge(symbolName: type.displaySymbol, colorHex: type.colorHex, size: 56, wasteName: type.name)
                     VStack(alignment: .leading, spacing: 4) {
-                        TextField("Name", text: $type.name).font(.title3.weight(.semibold))
-                        if let location = type.location { Label(location.name, systemImage: location.symbolName).font(.caption).foregroundStyle(.secondary) }
+                        TextField("Name", text: $type.name).tonneFont(.title3, .semibold)
+                        if let location = type.location { Label(location.name, systemImage: location.symbolName).tonneFont(.caption).foregroundStyle(.secondary) }
                     }
                 }
                 .padding(.vertical, 4)
@@ -57,10 +57,10 @@ struct WasteDetailView: View {
                         Text(DateText.short(date))
                         if type.isDone(on: date) { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green) }
                         if type.isNotPutOut(on: date) {
-                            Text(type.handling == .bringTo ? "Ausgelassen" : "Bleibt drin").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                            Text(type.handling == .bringTo ? "Ausgelassen" : "Bleibt drin").tonneFont(.caption, .semibold).foregroundStyle(.secondary)
                         }
                         Spacer()
-                        Text(DateText.countdown(date)).font(.subheadline).foregroundStyle(.secondary)
+                        Text(DateText.countdown(date)).tonneFont(.subheadline).foregroundStyle(.secondary)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) { type.skip(date); save() } label: { Label("Fällt aus", systemImage: "xmark.circle") }
@@ -85,7 +85,7 @@ struct WasteDetailView: View {
                         HStack {
                             Text(DateText.short(date)).strikethrough().foregroundStyle(.secondary)
                             Spacer()
-                            Button("Wiederherstellen") { type.unskip(date); save() }.font(.subheadline)
+                            Button("Wiederherstellen") { type.unskip(date); save() }.tonneFont(.subheadline)
                         }
                     }
                 }
@@ -100,10 +100,10 @@ struct WasteDetailView: View {
         }
         .navigationTitle(type.name.isEmpty ? L10n.t("Müllart", "Waste type") : type.name)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showAddDate) { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }
-        .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) {
+        .sheet(isPresented: $showAddDate) { Group { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }.appTypography() }
+        .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) { Group {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }
-        }
+        }.appTypography() }
         .onChange(of: type.intervalWeeks) { _, _ in save() }
         .onChange(of: type.isActive) { _, _ in save() }
         .onChange(of: type.remindersEnabled) { _, _ in save() }
@@ -139,8 +139,8 @@ struct WasteABCView: View {
                 HStack(spacing: 12) {
                     SymbolBadge(symbolName: entry.category.symbolName, colorHex: entry.category.colorHex, size: 36, wasteName: entry.category.name)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(entry.name).font(.body.weight(.semibold))
-                        Text(entry.category.name + (entry.hint.map { " · \($0)" } ?? "")).font(.caption).foregroundStyle(.secondary)
+                        Text(entry.name).tonneFont(.body, .semibold)
+                        Text(entry.category.name + (entry.hint.map { " · \($0)" } ?? "")).tonneFont(.caption).foregroundStyle(.secondary)
                     }
                 }
             }

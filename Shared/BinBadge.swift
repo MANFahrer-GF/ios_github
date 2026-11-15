@@ -56,7 +56,7 @@ struct BinTile: View {
         VStack(spacing: 3) {
             BinBadge(symbolName: bin.symbolName, colorHex: bin.colorHex, name: bin.name, size: size)
             Text(name)
-                .font(.system(size: 10, weight: .semibold))
+                .tonneFont(size: 10, .semibold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
         }

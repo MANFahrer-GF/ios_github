@@ -167,10 +167,10 @@ struct OverviewView: View {
 
     private var permissionBanner: some View {
         HStack(spacing: 12) {
-            Image(systemName: "bell.slash.fill").font(.title2).foregroundStyle(.orange)
+            Image(systemName: "bell.slash.fill").tonneFont(.title2).foregroundStyle(.orange)
             VStack(alignment: .leading, spacing: 2) {
-                Text("Erinnerungen sind aus").font(.subheadline.weight(.semibold))
-                Text("Erlaube Mitteilungen, damit du keinen Gelben Sack mehr verpasst.").font(.caption).foregroundStyle(.secondary)
+                Text("Erinnerungen sind aus").tonneFont(.subheadline, .semibold)
+                Text("Erlaube Mitteilungen, damit du keinen Gelben Sack mehr verpasst.").tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             Button(notifications.authorizationStatus == .denied ? "Einstellungen" : "Erlauben") {
@@ -184,10 +184,10 @@ struct OverviewView: View {
 
     private var changesBanner: some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: "calendar.badge.exclamationmark").font(.title2).foregroundStyle(.orange)
+            Image(systemName: "calendar.badge.exclamationmark").tonneFont(.title2).foregroundStyle(.orange)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Termine wurden verschoben").font(.subheadline.weight(.semibold))
-                ForEach(model.recentChanges.prefix(3), id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
+                Text("Termine wurden verschoben").tonneFont(.subheadline, .semibold)
+                ForEach(model.recentChanges.prefix(3), id: \.self) { Text($0).tonneFont(.caption).foregroundStyle(.secondary) }
             }
             Spacer()
             Button { model.recentChanges = [] } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.tertiary) }
@@ -197,15 +197,15 @@ struct OverviewView: View {
 
     private func bringInCard(_ bringIn: (day: Date, names: [String])) -> some View {
         HStack(spacing: 12) {
-            Image(systemName: "house.circle.fill").font(.title2).foregroundStyle(.tint)
+            Image(systemName: "house.circle.fill").tonneFont(.title2).foregroundStyle(.tint)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(bringIn.names.count == 1 ? L10n.t("\(bringIn.names[0]) wieder reinholen", "Bring the \(bringIn.names[0]) back in")
                                               : L10n.t("Tonnen wieder reinholen", "Bring the bins back in"))
-                    .font(.subheadline.weight(.semibold))
+                    .tonneFont(.subheadline, .semibold)
                 Text(bringIn.names.count == 1 ? L10n.t("Die Abfuhr war heute.", "Collection was today.")
                                               : ReminderPlanner.joinNames(bringIn.names))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             Button {
@@ -230,14 +230,14 @@ struct OverviewView: View {
         let allNotOut = shown.isEmpty
         return HStack(spacing: 12) {
             Image(systemName: allNotOut ? "hand.raised.fill" : done ? "checkmark.circle.fill" : "clock.badge.questionmark")
-                .font(.title2).foregroundStyle(allNotOut ? Color.secondary : done ? KlarStyle.done : .orange)
+                .tonneFont(.title2).foregroundStyle(allNotOut ? Color.secondary : done ? KlarStyle.done : .orange)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
-                Text(L10n.t("Heute: \(names)", "Today: \(names)")).font(.subheadline.weight(.semibold)).lineLimit(2)
+                Text(L10n.t("Heute: \(names)", "Today: \(names)")).tonneFont(.subheadline, .semibold).lineLimit(2)
                 Text(allNotOut ? L10n.t("Bleibt diesmal drin.", "Staying in this time.")
                           : done ? (today.events.contains { $0.handling == .bringTo } ? L10n.t("Erledigt.", "Done.") : L10n.t("Erledigt – stand draußen.", "Done – it was out."))
                           : L10n.t("Nicht als erledigt bestätigt.", "Not confirmed as done."))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             Button {
@@ -272,7 +272,7 @@ struct OverviewView: View {
         return VStack(alignment: .leading, spacing: 0) {
             if big.isEmpty && later.isEmpty {
                 Text(locations.isEmpty ? "Lege unter „Müll“ einen Standort an – die Termine kommen automatisch." : L10n.t("In den nächsten 60 Tagen steht nichts an.", "Nothing coming up in the next 60 days."))
-                    .font(KlarStyle.font(15, .semibold)).foregroundStyle(KlarStyle.muted(scheme))
+                    .tonneFont(size: 15, .semibold).foregroundStyle(KlarStyle.muted(scheme))
             } else {
                 ForEach(Array(big.enumerated()), id: \.element.id) { index, group in
                     if index > 0 { Divider().padding(.vertical, 16) }
@@ -309,10 +309,10 @@ struct OverviewView: View {
         return VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .bottom, spacing: 10) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(PickupWords.eyebrow(date: group.day, location: place)).font(KlarStyle.font(12, .heavy)).tracking(0.8)
+                    Text(PickupWords.eyebrow(date: group.day, location: place)).tonneFont(size: 12, .heavy).tracking(0.8)
                         .foregroundStyle(eyebrowColor).lineLimit(1)
                     Text(DateText.countdown(group.day))
-                        .font(KlarStyle.font(primary ? 36 : 24, .black)).foregroundStyle(KlarStyle.text(scheme))
+                        .tonneFont(size: primary ? 36 : 24, .black).foregroundStyle(KlarStyle.text(scheme))
                         .lineLimit(1).minimumScaleFactor(0.6)
                 }
                 Spacer(minLength: 0)
@@ -336,9 +336,9 @@ struct OverviewView: View {
         let layout = stacked ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8)) : AnyLayout(HStackLayout(alignment: .top, spacing: 14))
         return layout {
             VStack(alignment: .leading, spacing: 1) {
-                Text(PickupWords.eyebrow(date: group.day)).font(KlarStyle.font(11, .heavy)).tracking(0.6)
+                Text(PickupWords.eyebrow(date: group.day)).tonneFont(size: 11, .heavy).tracking(0.6)
                     .foregroundStyle(group.waste.first.map { $0.offDuty ? KlarStyle.muted(scheme) : KlarStyle.ink($0.colorHex, scheme) } ?? .pink).lineLimit(1)
-                Text(DateText.countdown(group.day)).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme))
+                Text(DateText.countdown(group.day)).tonneFont(size: 17, .black).foregroundStyle(KlarStyle.text(scheme))
                     .lineLimit(1).minimumScaleFactor(0.8)
             }
             .frame(width: stacked ? nil : 112, alignment: .leading)
@@ -351,11 +351,11 @@ struct OverviewView: View {
                             HStack(spacing: 8) {
                                 BinLine(name: event.title, symbolName: event.symbolName, colorHex: event.colorHex, dot: 26, fontSize: 15)
                                 if locations.count > 1, let location = event.locationName {
-                                    Text(location).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                                    Text(location).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                                 }
                             }
                             if let note = event.note {
-                                Text(note).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                                Text(note).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme))
                                     .lineLimit(2).fixedSize(horizontal: false, vertical: true).padding(.leading, 34)
                             }
                         }
@@ -376,7 +376,7 @@ struct OverviewView: View {
                             // Name oben, Angaben als Schildchen darunter – geordnet wie in der großen Karte
                             // Volle Restbreite – sonst rechnet SwiftUI die Spalte zu schmal und die Schildchen stapeln sich
                             VStack(alignment: .leading, spacing: 3) {
-                                Text(event.title).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                                Text(event.title).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(scheme))
                                     .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                                 InfoTags(tags: EventText.tags(event, person: person(for: event)), size: 11)
                             }
@@ -407,7 +407,7 @@ struct OverviewView: View {
             }
         } label: {
             Label(done ? "Rückgängig" : "Erledigt", systemImage: done ? "arrow.uturn.backward" : "checkmark")
-                .font(KlarStyle.font(15, .heavy))
+                .tonneFont(size: 15, .heavy)
                 .foregroundStyle(done ? .white : KlarStyle.buttonForeground(scheme))
                 .padding(.horizontal, 14).padding(.vertical, 10)
                 .background(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme), in: Capsule())
@@ -429,16 +429,16 @@ struct OverviewView: View {
         let stats = model.statistics()
         return HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(stats.total)").font(.title2.weight(.bold))
-                Text("Abholungen dieses Jahr").font(.caption).foregroundStyle(.secondary)
+                Text("\(stats.total)").tonneFont(.title2, .bold)
+                Text("Abholungen dieses Jahr").tonneFont(.caption).foregroundStyle(.secondary)
             }
             Divider().frame(height: 36)
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(stats.confirmed)").font(.title2.weight(.bold)).foregroundStyle(.green)
-                Text("davon bestätigt").font(.caption).foregroundStyle(.secondary)
+                Text("\(stats.confirmed)").tonneFont(.title2, .bold).foregroundStyle(.green)
+                Text("davon bestätigt").tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            Image(systemName: stats.total > 0 && stats.confirmed == stats.total ? "flame.fill" : "chart.bar.fill").font(.title2).foregroundStyle(.orange)
+            Image(systemName: stats.total > 0 && stats.confirmed == stats.total ? "flame.fill" : "chart.bar.fill").tonneFont(.title2).foregroundStyle(.orange)
         }
         .card()
     }

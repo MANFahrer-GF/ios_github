@@ -175,7 +175,7 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Einstellungen")
-        .sheet(item: $sendingCrashReport) { CrashReportSendSheet(report: $0) }
+        .sheet(item: $sendingCrashReport) { CrashReportSendSheet(report: $0).appTypography() }
         .onChange(of: eveningEnabled) { _, _ in refresh() }
         .onChange(of: eveningMinutes) { _, _ in refresh() }
         .onChange(of: escalationEnabled) { _, _ in refresh() }

@@ -11,6 +11,8 @@ enum SettingsKeys {
     /// Ablage aller Einstellungen. Im Oberflächen-Test eine eigene Ablage – echte Einstellungen bleiben unberührt.
     static let store: UserDefaults = TonneUndTorteApp.isUITesting ? (UserDefaults(suiteName: uiTestSuite) ?? .standard) : .standard
     static let uiTestSuite = "de.manfahrer.TonneUndTorte.uitests"
+    /// Schrift-Einstellung: in der App-Gruppe, damit Widget und Watch sie lesen (im Oberflächen-Test die Test-Ablage).
+    static var typographyStore: UserDefaults { TonneUndTorteApp.isUITesting ? store : SnapshotStore.defaults }
     static let onboardingDone = "app.onboardingDone"
     static let dutyTipDismissed = "tip.dutyDismissed"
     static let eveningEnabled = "reminder.evening.enabled"

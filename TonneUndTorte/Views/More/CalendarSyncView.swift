@@ -192,7 +192,7 @@ struct CalendarTargetPicker: View {
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(choice.title).foregroundStyle(.primary)
-                    Text(choice.subtitle).font(.caption).foregroundStyle(.secondary)
+                    Text(choice.subtitle).tonneFont(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 if isCurrent(choice) { Image(systemName: "checkmark").foregroundStyle(Color.accentColor) }

@@ -16,8 +16,8 @@ struct PlaceGapSection: View {
         Section {
             Label {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(gap.headline).font(.subheadline.weight(.semibold))
-                    Text(gap.explanation(for: check.name)).font(.subheadline).foregroundStyle(.secondary)
+                    Text(gap.headline).tonneFont(.subheadline, .semibold)
+                    Text(gap.explanation(for: check.name)).tonneFont(.subheadline).foregroundStyle(.secondary)
                 }
             } icon: {
                 Image(systemName: gap.isUnavailable ? "xmark.circle.fill" : "exclamationmark.circle.fill").foregroundStyle(.orange)
@@ -100,7 +100,7 @@ private struct MissingPlaceActions: View {
         } label: {
             Text(L10n.t("Weitere Möglichkeiten", "More options"))
         }
-        .font(.subheadline)
+        .tonneFont(.subheadline)
         .accessibilityIdentifier("placeGapMore")
     }
 }

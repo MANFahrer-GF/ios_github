@@ -8,6 +8,7 @@ import TonneCore
 final class WatchSync: NSObject, WCSessionDelegate {
     static let shared = WatchSync()
     static let snapshotKey = "snapshot"
+    static let typographyKey = "typography"
     static let doneKey = "doneDayKey"
     static let updatedNotification = Notification.Name("de.manfahrer.TonneUndTorte.watchSnapshotUpdated")
 
@@ -35,7 +36,14 @@ final class WatchSync: NSObject, WCSessionDelegate {
         #if os(iOS)
         guard session.isPaired, session.isWatchAppInstalled else { return }
         #endif
-        try? session.updateApplicationContext([WatchSync.snapshotKey: data])
+        // Der Application Context wird immer als Ganzes ersetzt: Snapshot und Schrift reisen darum zusammen.
+        let typography = TypographySettings(defaults: SnapshotStore.defaults).family.rawValue
+        try? session.updateApplicationContext([WatchSync.snapshotKey: data, WatchSync.typographyKey: typography])
+    }
+
+    /// iPhone: nach einer Änderung der Schrift die Watch mitziehen (mit dem zuletzt gesicherten Snapshot).
+    func resendTypography() {
+        if let snapshot = SnapshotStore.load() { send(snapshot) }
     }
 
     /// Watch: „Erledigt“ ans iPhone melden.
@@ -102,6 +110,16 @@ final class WatchSync: NSObject, WCSessionDelegate {
     }
 
     private func apply(context: [String: Any]) {
+        #if os(watchOS)
+        // Schrift vor dem Snapshot übernehmen: sie gilt auch, wenn der Snapshot nicht lesbar ist.
+        if let raw = context[WatchSync.typographyKey] as? String, let family = TypographySettings.Family(rawValue: raw),
+           family != TypographySettings(defaults: SnapshotStore.defaults).family {
+            DispatchQueue.main.async {
+                TypographySettings(family: family).write(to: SnapshotStore.defaults)
+                SnapshotStore.reloadWidgets()
+            }
+        }
+        #endif
         guard let data = context[WatchSync.snapshotKey] as? Data, let snapshot = try? WidgetSnapshot.decode(data) else { return }
         #if os(watchOS)
         // Auf dem iPhone zurückgenommen: alten „Erledigt“-Zeitpunkt der Watch verwerfen

@@ -102,26 +102,115 @@ final class TonneUITests: XCTestCase {
 
     /// Jede Seite einmal fotografieren – zum Prüfen, ob auf dem iPhone etwas abgeschnitten ist.
     func testScreenshotsAllPages() {
-        tab("Übersicht"); sleep(1); snap("01-uebersicht-oben")
-        app.swipeUp(); sleep(1); snap("02-uebersicht-unten")
-        tab("Kalender"); sleep(1); snap("03-kalender")
-        app.swipeUp(); sleep(1); snap("04-kalender-tag")
-        tab("Müll"); sleep(1); snap("05-muell")
-        tab("Termine"); app.buttons["Geburtstage"].firstMatch.tap(); sleep(1); snap("06-geburtstage")
-        app.swipeUp(); sleep(1); snap("07-geburtstage-unten")
+        walkAllPages(prefix: "")
+    }
+
+    /// Schriftwahl: jede Seite in jeder Schriftart, hell und dunkel. Nur auf Wunsch (TEST_RUNNER_TONNE_TYPO=1), rund 10 Minuten.
+    func testTypographyMatrix() throws {
+        guard ProcessInfo.processInfo.environment["TONNE_TYPO"] == "1" else { throw XCTSkip("nur auf Wunsch: Schrift-Screenshot-Reihe") }
+        let only = ProcessInfo.processInfo.environment["TONNE_TYPO_ONLY"]
+        for appearance in [XCUIDevice.Appearance.light, .dark] {
+            XCUIDevice.shared.appearance = appearance
+            for family in ["rounded", "standard", "serif"] {
+                let variant = "\(appearance == .dark ? "dunkel" : "hell")-\(family)"
+                if let only, !variant.contains(only) { continue }
+                app.terminate()
+                app.launchArguments = ["-uiTesting", "-uiTestingSeed", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE",
+                                       "-typography", family]
+                app.launch()
+                XCTAssertTrue(tabButton("Übersicht").waitForExistence(timeout: 10), "App startet nicht (\(variant))")
+                walkAllPages(prefix: variant + "-")
+            }
+        }
+        XCUIDevice.shared.appearance = .light
+    }
+
+    /// Widgets in jeder Schriftart: Schrift in der App wählen (echte App-Gruppe, darum ohne -uiTesting),
+    /// dann auf dem Home-Bildschirm die Widget-Galerie öffnen und fotografieren. Nur auf Wunsch (TEST_RUNNER_TONNE_WIDGET=1).
+    func testWidgetGalleryFonts() throws {
+        guard ProcessInfo.processInfo.environment["TONNE_WIDGET"] == "1" else { throw XCTSkip("nur auf Wunsch: Widget-Galerie") }
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        for (family, label) in [("rounded", "Abgerundet"), ("standard", "Standard (SF Pro)"), ("serif", "Serif (New York)")] {
+            app.terminate()
+            app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+            app.launch()
+            tab("Mehr")
+            app.buttons["Schrift"].firstMatch.tap()
+            XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 5))
+            app.buttons[label].tap()
+            sleep(1)
+            XCUIDevice.shared.press(.home)
+            sleep(1)
+            springboard.press(forDuration: 1.5)
+            let edit = springboard.buttons["Bearbeiten"].firstMatch
+            if edit.waitForExistence(timeout: 3) { edit.tap() }
+            let add = springboard.buttons["Widget hinzufügen"].firstMatch
+            XCTAssertTrue(add.waitForExistence(timeout: 5), "„Widget hinzufügen“ fehlt")
+            add.tap()
+            let search = springboard.searchFields.firstMatch
+            XCTAssertTrue(search.waitForExistence(timeout: 5))
+            search.tap(); search.typeText("Tonne")
+            let entry = springboard.cells.containing(.staticText, identifier: "Tonne & Torte").firstMatch
+            if entry.waitForExistence(timeout: 5) { entry.tap() } else { springboard.staticTexts["Tonne & Torte"].firstMatch.tap() }
+            sleep(3); snap("widget-\(family)-1")
+            springboard.swipeLeft(); sleep(2); snap("widget-\(family)-2")
+            springboard.swipeLeft(); sleep(2); snap("widget-\(family)-3")
+            XCUIDevice.shared.press(.home); sleep(1); XCUIDevice.shared.press(.home); sleep(1)
+        }
+        // Wieder auf Grundeinstellung
+        app.terminate(); app.launch(); tab("Mehr"); app.buttons["Schrift"].firstMatch.tap(); app.buttons["Abgerundet"].tap()
+    }
+
+    private func tabButton(_ name: String) -> XCUIElement {
+        app.tabBars.buttons[name].exists ? app.tabBars.buttons[name] : app.buttons[name].firstMatch
+    }
+
+    /// Alle Seiten der Reihe nach; robust auch bei sehr großer Schrift (Ziele werden notfalls hochgewischt).
+    private func walkAllPages(prefix: String) {
+        func open(_ element: XCUIElement) {
+            var tries = 0
+            while !element.isHittable && tries < 6 { app.swipeUp(); tries += 1 }
+            element.tap()
+        }
+        tab("Übersicht"); sleep(1); snap(prefix + "01-uebersicht-oben")
+        app.swipeUp(); sleep(1); snap(prefix + "02-uebersicht-unten")
+        tab("Kalender"); sleep(1); snap(prefix + "03-kalender")
+        app.swipeUp(); sleep(1); snap(prefix + "04-kalender-tag")
+        tab("Müll"); sleep(1); snap(prefix + "05-muell")
+        tab("Termine"); app.buttons["Geburtstage"].firstMatch.tap(); sleep(1); snap(prefix + "06-geburtstage")
+        app.swipeUp(); sleep(1); snap(prefix + "07-geburtstage-unten")
         app.swipeDown(); app.swipeDown()
-        text("Test Person").firstMatch.tap(); sleep(1); snap("08-geburtstag-bearbeiten")
-        app.swipeUp(); sleep(1); snap("09-geburtstag-bearbeiten-unten")
+        open(text("Test Person").firstMatch); sleep(1); snap(prefix + "08-geburtstag-bearbeiten")
+        app.swipeUp(); sleep(1); snap(prefix + "09-geburtstag-bearbeiten-unten")
         app.navigationBars["Geburtstag"].buttons["Abbrechen"].tap()
-        app.buttons["Eigene Termine"].firstMatch.tap(); sleep(1); snap("10-eigene-termine")
-        text("Testtermin").tap(); sleep(1); snap("11-termin-bearbeiten")
-        app.swipeUp(); sleep(1); snap("12-termin-bearbeiten-unten")
+        app.swipeDown(); app.swipeDown()
+        app.buttons["Eigene Termine"].firstMatch.tap(); sleep(1); snap(prefix + "10-eigene-termine")
+        open(text("Testtermin")); sleep(1); snap(prefix + "11-termin-bearbeiten")
+        app.swipeUp(); sleep(1); snap(prefix + "12-termin-bearbeiten-unten")
         app.navigationBars["Termin"].buttons["Abbrechen"].tap()
-        tab("Mehr"); sleep(1); snap("13-mehr")
-        app.buttons["Einstellungen"].tap(); sleep(1); snap("14-einstellungen")
-        app.swipeUp(); sleep(1); snap("15-einstellungen-2")
-        app.swipeUp(); sleep(1); snap("16-einstellungen-3")
-        app.swipeUp(); sleep(1); snap("17-einstellungen-4")
+        tab("Mehr"); sleep(1); snap(prefix + "13-mehr")
+        open(app.buttons["Schrift"].firstMatch); sleep(1); snap(prefix + "18-schrift")
+        app.navigationBars.buttons.firstMatch.tap(); sleep(1)
+        open(app.buttons["Einstellungen"].firstMatch); sleep(1); snap(prefix + "14-einstellungen")
+        app.swipeUp(); sleep(1); snap(prefix + "15-einstellungen-2")
+        app.swipeUp(); sleep(1); snap(prefix + "16-einstellungen-3")
+        app.swipeUp(); sleep(1); snap(prefix + "17-einstellungen-4")
+    }
+
+    /// Die Einstellung „Schrift“: Grundeinstellung „Abgerundet“, Wahl wirkt sofort und lässt sich zurückwählen.
+    func testTypographySettings() {
+        tab("Mehr")
+        app.buttons["Schrift"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Schrift"].waitForExistence(timeout: 3), "Seite „Schrift“ fehlt")
+        XCTAssertTrue(app.buttons["Abgerundet"].isSelected, "Grundeinstellung ist nicht „Abgerundet“")
+        app.buttons["Serif (New York)"].tap()
+        XCTAssertTrue(app.buttons["Serif (New York)"].isSelected)
+        XCTAssertFalse(app.buttons["Abgerundet"].isSelected)
+        snap("typo-serif")
+        app.buttons["Standard (SF Pro)"].tap()
+        XCTAssertTrue(app.buttons["Standard (SF Pro)"].isSelected)
+        app.buttons["Abgerundet"].tap()
+        XCTAssertTrue(app.buttons["Abgerundet"].isSelected, "Zurückwählen wirkt nicht")
     }
 
     /// Bilder für App Store Connect: Übersicht und Geburtstage, ohne Wischen/Öffnen – genau so, wie die App startet.

@@ -31,6 +31,11 @@ struct TonneUndTorteApp: App {
         if TonneUndTorteApp.isUITesting {
             SettingsKeys.store.removePersistentDomain(forName: SettingsKeys.uiTestSuite)
             SettingsKeys.store.set(true, forKey: SettingsKeys.onboardingDone)
+            // Schriftart für die Screenshot-Reihe: -typography serif
+            let args = ProcessInfo.processInfo.arguments
+            if let i = args.firstIndex(of: "-typography"), i + 1 < args.count, let family = TypographySettings.Family(rawValue: args[i + 1]) {
+                TypographySettings(family: family).write(to: SettingsKeys.store)
+            }
             #if DEBUG
             CrashReportCollector.seedForUITests()
             CrashReportCenter.shared.reload()
@@ -48,6 +53,8 @@ struct TonneUndTorteApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .modifier(NavigationBarTypographySync())
+                .appTypography()
                 .defaultAppStorage(SettingsKeys.store)
                 .environmentObject(model)
                 .environmentObject(CrashReportCenter.shared)

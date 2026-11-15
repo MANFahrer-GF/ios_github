@@ -97,18 +97,18 @@ struct SourceWizardView: View {
                 useLinkOnDismiss = false
                 showCoverage = false
                 chooseICS()
-            }) {
+            }) { Group {
                 ICSLinkSheet(url: $icsURL) {
                     useLinkOnDismiss = true
                     showLinkSheet = false
                 }
-            }
-            .sheet(isPresented: $showImport) {
+            }.appTypography() }
+            .sheet(isPresented: $showImport) { Group {
                 ICSImportView(pickups: importPickups, location: location, makeLocation: makeImportLocation) {
                     model.onboardingDone = true
                     dismiss()
                 }
-            }
+            }.appTypography() }
             .onChange(of: query) { _, _ in updateResults() }
             .onChange(of: region.suggestions.map(\.id)) { _, _ in updateResults() }
             .onAppear(perform: updateResults)
@@ -149,9 +149,9 @@ struct SourceWizardView: View {
                     }
                 }
                 if let place = region.placeName, !region.suggestions.isEmpty {
-                    Text("Vorschläge für \(place)").font(.caption).foregroundStyle(.secondary)
+                    Text("Vorschläge für \(place)").tonneFont(.caption).foregroundStyle(.secondary)
                 }
-                if let message = region.errorMessage { Text(message).font(.caption).foregroundStyle(.secondary) }
+                if let message = region.errorMessage { Text(message).tonneFont(.caption).foregroundStyle(.secondary) }
                 Button { showCoverage = true } label: {
                     Label(L10n.t("Geht mein Ort?", "Is my town covered?"), systemImage: "map")
                 }
@@ -167,13 +167,13 @@ struct SourceWizardView: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.title).foregroundStyle(.primary)
                             Text(catalogSubtitle(item))
-                                .font(.caption).foregroundStyle(.secondary)
+                                .tonneFont(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
                 if !query.isEmpty && results.isEmpty {
                     Text("Kein Entsorger gefunden. Versuche den Landkreis oder nutze unten einen ICS-Link.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .tonneFont(.footnote).foregroundStyle(.secondary)
                 }
             } header: {
                 Text(resultsHeader)
@@ -277,7 +277,7 @@ struct SourceWizardView: View {
     private var stepStage: some View {
         List {
             if !selections.isEmpty {
-                Section { Text(selections.map(\.title).joined(separator: " › ")).font(.caption).foregroundStyle(.secondary) }
+                Section { Text(selections.map(\.title).joined(separator: " › ")).tonneFont(.caption).foregroundStyle(.secondary) }
             }
             if let step = currentStep, step.input == .text {
                 Section(step.title) {
@@ -290,7 +290,7 @@ struct SourceWizardView: View {
             } else if let step = currentStep {
                 let filtered = stepSearch.isEmpty ? step.options : stepIndex.filter(query: stepSearch)
                 if let hint = step.hint {
-                    Section { Text(hint).font(.footnote).foregroundStyle(.secondary) }
+                    Section { Text(hint).tonneFont(.footnote).foregroundStyle(.secondary) }
                 }
                 Section(step.title) {
                     ForEach(filtered) { option in
@@ -298,16 +298,16 @@ struct SourceWizardView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(option.title).foregroundStyle(.primary)
-                                    if let subtitle = option.subtitle { Text(subtitle).font(.caption).foregroundStyle(.secondary) }
+                                    if let subtitle = option.subtitle { Text(subtitle).tonneFont(.caption).foregroundStyle(.secondary) }
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
+                                Image(systemName: "chevron.right").tonneFont(.caption).foregroundStyle(.tertiary)
                             }
                         }
                     }
                     if filtered.isEmpty {
                         Text("Nichts gefunden.").foregroundStyle(.secondary)
-                        if let hint = step.noMatchHint { Text(hint).font(.footnote).foregroundStyle(.secondary) }
+                        if let hint = step.noMatchHint { Text(hint).tonneFont(.footnote).foregroundStyle(.secondary) }
                     }
                 }
             }
@@ -427,8 +427,8 @@ struct SourceWizardView: View {
                         HStack(spacing: 12) {
                             SymbolBadge(symbolName: bin.category.symbolName, colorHex: bin.category.colorHex, size: 36, wasteName: bin.name)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(bin.name).font(.body.weight(.semibold)).lineLimit(2)
-                                Text(L10n.dates(bin.count)).font(.caption).foregroundStyle(.secondary)
+                                Text(bin.name).tonneFont(.body, .semibold).lineLimit(2)
+                                Text(L10n.dates(bin.count)).tonneFont(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -472,8 +472,8 @@ struct SourceWizardView: View {
 
     private var doneStage: some View {
         VStack(spacing: 20) {
-            Image(systemName: "checkmark.seal.fill").font(.system(size: 64)).foregroundStyle(.green)
-            Text("Alles eingerichtet!").font(.title.weight(.bold))
+            Image(systemName: "checkmark.seal.fill").tonneFont(size: 64, .regular).foregroundStyle(.green)
+            Text("Alles eingerichtet!").tonneFont(.title, .bold)
             Text(L10n.t("\(L10n.dates(pickups.count)) \(pickups.count == 1 ? "ist" : "sind") da. Die App erinnert dich am Vorabend – und aktualisiert die Termine jede Woche automatisch.", "\(L10n.dates(pickups.count)) loaded. The app reminds you the evening before – and refreshes the dates every week."))
                 .multilineTextAlignment(.center).foregroundStyle(.secondary).padding(.horizontal)
             Button { dismiss() } label: { Text("Los geht’s").frame(maxWidth: .infinity) }

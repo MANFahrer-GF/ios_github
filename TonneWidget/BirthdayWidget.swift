@@ -44,7 +44,7 @@ struct BirthdayTimelineProvider: TimelineProvider {
 struct BirthdayWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "de.manfahrer.TonneUndTorte.birthday", provider: BirthdayTimelineProvider()) { entry in
-            BirthdayWidgetView(entry: entry)
+            BirthdayWidgetView(entry: entry).tonneTypography(maxSize: .xLarge)
         }
         .configurationDisplayName("Nächster Geburtstag")
         .description("Wer hat als Nächstes Geburtstag? Mit Alter und Countdown.")
@@ -81,9 +81,9 @@ struct BirthdayWidgetView: View {
 
     private func top(_ title: String) -> some View {
         HStack {
-            Text(title).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(ink).lineLimit(1)
+            Text(title).tonneFont(size: 11, .heavy).tracking(0.6).foregroundStyle(ink).lineLimit(1)
             Spacer(minLength: 4)
-            Text("🎂").font(.system(size: 17))
+            Text("🎂").tonneFont(size: 17, .regular)
         }
     }
 
@@ -97,8 +97,8 @@ struct BirthdayWidgetView: View {
         HStack(spacing: 8) {
             KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
             VStack(alignment: .leading, spacing: 0) {
-                Text(birthday.name).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
-                Text(detail(birthday)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                Text(birthday.name).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(detail(birthday)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
             }
         }
     }
@@ -107,8 +107,8 @@ struct BirthdayWidgetView: View {
         VStack(alignment: .leading, spacing: 4) {
             top(L10n.t("GEBURTSTAG", "BIRTHDAY"))
             Spacer(minLength: 0)
-            Text(L10n.t("Keine Geburtstage", "No birthdays")).font(KlarStyle.font(16, .black)).foregroundStyle(KlarStyle.text(scheme))
-            Text(L10n.t("In der App unter „Geburtstage“ eintragen.", "Add them under “Birthdays” in the app.")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(2)
+            Text(L10n.t("Keine Geburtstage", "No birthdays")).tonneFont(size: 16, .black).foregroundStyle(KlarStyle.text(scheme))
+            Text(L10n.t("In der App unter „Geburtstage“ eintragen.", "Add them under “Birthdays” in the app.")).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(2)
         }
     }
 
@@ -124,14 +124,14 @@ struct BirthdayWidgetView: View {
                     KlarAvatarStack(people: avatars, size: nextDay.count > 1 ? 36 : 42).padding(.top, 8)
                     Spacer(minLength: 4)
                     if nextDay.count == 1 {
-                        Text(next.name).font(KlarStyle.font(16, .black)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                        Text(next.name).tonneFont(size: 16, .black).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
                         HStack(spacing: 4) {
                             if let years = next.years {
                                 Text(L10n.t("wird \(years) ·", "turns \(years) ·")).foregroundStyle(KlarStyle.muted(scheme))
                             }
                             Text(DateText.countdown(next.date)).foregroundStyle(ink)
                         }
-                        .font(KlarStyle.font(12, .heavy))
+                        .tonneFont(size: 12, .heavy)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                         .padding(.top, 1)
@@ -142,9 +142,9 @@ struct BirthdayWidgetView: View {
                             nameLine(birthday, size: 13)
                         }
                         if nextDay.count > shown {
-                            Text(L10n.t("+\(nextDay.count - shown) weitere", "+\(nextDay.count - shown) more")).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                            Text(L10n.t("+\(nextDay.count - shown) weitere", "+\(nextDay.count - shown) more")).tonneFont(size: 11, .heavy).foregroundStyle(KlarStyle.muted(scheme))
                         }
-                        Text(DateText.countdown(next.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(ink).padding(.top, 2)
+                        Text(DateText.countdown(next.date)).tonneFont(size: 12, .heavy).foregroundStyle(ink).padding(.top, 2)
                     }
                 }
             } else {
@@ -158,9 +158,9 @@ struct BirthdayWidgetView: View {
     /// „Oma Erika · 80“ in einer Zeile.
     private func nameLine(_ birthday: WidgetSnapshot.BirthdayItem, size: CGFloat) -> some View {
         HStack(spacing: 4) {
-            Text(birthday.name).font(KlarStyle.font(size, .black)).foregroundStyle(KlarStyle.text(scheme))
+            Text(birthday.name).tonneFont(size: size, .black).foregroundStyle(KlarStyle.text(scheme))
             if let years = birthday.years {
-                Text("· \(years)").font(KlarStyle.font(size - 2, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                Text("· \(years)").tonneFont(size: size - 2, .bold).foregroundStyle(KlarStyle.muted(scheme))
             }
         }
         .lineLimit(1)
@@ -178,8 +178,8 @@ struct BirthdayWidgetView: View {
                             HStack(spacing: 10) {
                                 KlarAvatar(initials: next.initials, colorHex: next.colorHex, size: 42)
                                 VStack(alignment: .leading, spacing: 1) {
-                                    Text(next.name).font(KlarStyle.font(17, .black)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
-                                    Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                                    Text(next.name).tonneFont(size: 17, .black).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                                    Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                                 }
                             }
                         } else {
@@ -190,12 +190,12 @@ struct BirthdayWidgetView: View {
                                         nameLine(birthday, size: 14)
                                     }
                                     if nextDay.count > 3 {
-                                        Text(L10n.t("+\(nextDay.count - 2) weitere", "+\(nextDay.count - 2) more")).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                                        Text(L10n.t("+\(nextDay.count - 2) weitere", "+\(nextDay.count - 2) more")).tonneFont(size: 11, .heavy).foregroundStyle(KlarStyle.muted(scheme))
                                     }
                                 }
                             }
                         }
-                        Text(DateText.countdown(next.date)).font(KlarStyle.font(22, .black)).foregroundStyle(ink).lineLimit(1).minimumScaleFactor(0.7).padding(.top, 8)
+                        Text(DateText.countdown(next.date)).tonneFont(size: 22, .black).foregroundStyle(ink).lineLimit(1).minimumScaleFactor(0.7).padding(.top, 8)
                     }
                 } else {
                     empty
@@ -204,10 +204,10 @@ struct BirthdayWidgetView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             Rectangle().fill(KlarStyle.hairline(scheme)).frame(width: 1).padding(.horizontal, 14)
             VStack(alignment: .leading, spacing: 9) {
-                Text(L10n.t("DANACH", "UP NEXT")).font(KlarStyle.font(10, .heavy)).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
+                Text(L10n.t("DANACH", "UP NEXT")).tonneFont(size: 10, .heavy).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
                 ForEach(Array(later.prefix(3).enumerated()), id: \.offset) { _, birthday in row(birthday) }
                 if later.isEmpty {
-                    Text(L10n.t("Keine weiteren", "None further")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                    Text(L10n.t("Keine weiteren", "None further")).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme))
                 }
                 Spacer(minLength: 0)
             }
@@ -231,8 +231,8 @@ struct BirthdayWidgetView: View {
         ZStack {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
-                Text("🎂").font(.title3)
-                Text(next.map { Days.until($0.date) }.map { $0 == 0 ? L10n.t("heute", "today") : "\($0) T." } ?? "–").font(.caption2.weight(.semibold))
+                Text("🎂").tonneFont(.title3)
+                Text(next.map { Days.until($0.date) }.map { $0 == 0 ? L10n.t("heute", "today") : "\($0) T." } ?? "–").tonneFont(.caption2, .semibold)
             }
         }
         .containerBackground(for: .widget) { Color.clear }
@@ -241,15 +241,15 @@ struct BirthdayWidgetView: View {
     private var rectangular: some View {
         VStack(alignment: .leading, spacing: 1) {
             if let next {
-                Text("🎂 \(nextDay.names())").font(.headline).lineLimit(1)
+                Text("🎂 \(nextDay.names())").tonneFont(.headline).lineLimit(1)
                 if nextDay.count == 1 {
-                    Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).font(.caption).lineLimit(1)
+                    Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).tonneFont(.caption).lineLimit(1)
                 } else {
-                    Text(L10n.t("\(nextDay.count) Geburtstage · \(DateText.short(next.date))", "\(nextDay.count) birthdays · \(DateText.short(next.date))")).font(.caption).lineLimit(1)
+                    Text(L10n.t("\(nextDay.count) Geburtstage · \(DateText.short(next.date))", "\(nextDay.count) birthdays · \(DateText.short(next.date))")).tonneFont(.caption).lineLimit(1)
                 }
-                Text(DateText.countdown(next.date)).font(.caption2).opacity(0.8)
+                Text(DateText.countdown(next.date)).tonneFont(.caption2).opacity(0.8)
             } else {
-                Text(L10n.t("Keine Geburtstage", "No birthdays")).font(.headline)
+                Text(L10n.t("Keine Geburtstage", "No birthdays")).tonneFont(.headline)
             }
         }
         .containerBackground(for: .widget) { Color.clear }

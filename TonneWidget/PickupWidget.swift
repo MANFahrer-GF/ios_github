@@ -76,7 +76,7 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
 struct PickupWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "de.manfahrer.TonneUndTorte.pickup", intent: PickupWidgetConfiguration.self, provider: PickupTimelineProvider()) { entry in
-            PickupWidgetView(entry: entry)
+            PickupWidgetView(entry: entry).tonneTypography(maxSize: .xLarge)
         }
         .configurationDisplayName("Nächste Abholung")
         .description("Was wird als Nächstes abgeholt? Mit „Erledigt“-Knopf.")
@@ -147,7 +147,7 @@ struct PickupWidgetView: View {
     private func header(titleSize: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 6) {
-                Text(eyebrow).font(KlarStyle.font(11, .heavy)).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
+                Text(eyebrow).tonneFont(size: 11, .heavy).tracking(0.6).foregroundStyle(eyebrowColor).lineLimit(1)
                 Spacer(minLength: 4)
                 if let bringInAction {
                     Button(intent: MarkBroughtInIntent(dayKey: Days.iso(bringInAction.date))) { KlarCheckButtonLabel(done: false, symbol: "house.fill") }
@@ -158,7 +158,7 @@ struct PickupWidgetView: View {
                 }
             }
             .frame(minHeight: 28)
-            Text(headline).font(KlarStyle.font(titleSize, .black)).foregroundStyle(KlarStyle.text(scheme))
+            Text(headline).tonneFont(size: titleSize, .black).foregroundStyle(KlarStyle.text(scheme))
                 .lineLimit(1).minimumScaleFactor(0.6)
         }
     }
@@ -185,7 +185,7 @@ struct PickupWidgetView: View {
                 BinLine(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, dot: dot, fontSize: font)
             }
             if rest > 0 {
-                Text(L10n.t("+\(rest) weitere", "+\(rest) more")).font(KlarStyle.font(font - 1, .heavy)).foregroundStyle(KlarStyle.muted(scheme))
+                Text(L10n.t("+\(rest) weitere", "+\(rest) more")).tonneFont(size: font - 1, .heavy).foregroundStyle(KlarStyle.muted(scheme))
                     .frame(height: dot)
             }
         }
@@ -193,7 +193,7 @@ struct PickupWidgetView: View {
     }
 
     private var hintView: some View {
-        Text(hint).font(KlarStyle.font(12, .bold))
+        Text(hint).tonneFont(size: 12, .bold)
             .foregroundStyle(bringInAction != nil ? KlarStyle.text(scheme) : KlarStyle.muted(scheme))
             .lineLimit(1).minimumScaleFactor(0.8).padding(.top, 1)
     }
@@ -202,8 +202,8 @@ struct PickupWidgetView: View {
         HStack(spacing: 7) {
             MiniDots(hexes: day.items.map(\.colorHex))
             VStack(alignment: .leading, spacing: 0) {
-                Text(DateText.short(day.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
-                Text(names(day, max: maxNames)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                Text(DateText.short(day.date)).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(names(day, max: maxNames)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
             }
         }
     }
@@ -212,8 +212,8 @@ struct PickupWidgetView: View {
         HStack(spacing: 8) {
             KlarAvatar(initials: birthday.initials, colorHex: KlarStyle.birthday, size: size)
             VStack(alignment: .leading, spacing: 0) {
-                Text(birthday.name).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
-                Text(birthdayDetail(birthday)).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
+                Text(birthday.name).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
+                Text(birthdayDetail(birthday)).tonneFont(size: 11, .heavy).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
             }
         }
     }
@@ -227,8 +227,8 @@ struct PickupWidgetView: View {
             HStack(spacing: 8) {
                 KlarAvatarStack(people: day.map { ($0.initials, KlarStyle.birthday) }, size: 24)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(day.names()).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
-                    Text(DateText.countdown(first.date)).font(KlarStyle.font(11, .heavy)).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
+                    Text(day.names()).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
+                    Text(DateText.countdown(first.date)).tonneFont(size: 11, .heavy).foregroundStyle(KlarStyle.birthdayInk(scheme)).lineLimit(1)
                 }
             }
         }
@@ -241,7 +241,7 @@ struct PickupWidgetView: View {
     }
 
     private func caption(_ text: String) -> some View {
-        Text(text).font(KlarStyle.font(10, .heavy)).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
+        Text(text).tonneFont(size: 10, .heavy).tracking(1).foregroundStyle(KlarStyle.muted(scheme))
     }
 
     private var divider: some View { Rectangle().fill(KlarStyle.hairline(scheme)).frame(height: 1) }
@@ -273,7 +273,7 @@ struct PickupWidgetView: View {
                 caption(L10n.t("DANACH", "UP NEXT"))
                 ForEach(Array(later.prefix(2).enumerated()), id: \.offset) { _, day in laterLine(day, maxNames: 2) }
                 if later.isEmpty {
-                    Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                    Text(L10n.t("Keine weiteren Termine", "No further pickups")).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme))
                 }
                 Spacer(minLength: 0)
                 if !entry.snapshot.birthdays.isEmpty {
@@ -310,14 +310,14 @@ struct PickupWidgetView: View {
                     ForEach(Array(later.prefix(3).enumerated()), id: \.offset) { _, day in
                         HStack(spacing: 8) {
                             MiniDots(hexes: day.items.map(\.colorHex))
-                            Text(DateText.short(day.date)).font(KlarStyle.font(12, .heavy)).foregroundStyle(KlarStyle.text(scheme)).frame(width: 62, alignment: .leading).lineLimit(1)
-                            Text(names(day, max: 3)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            Text(DateText.short(day.date)).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).frame(width: 62, alignment: .leading).lineLimit(1)
+                            Text(names(day, max: 3)).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                             Spacer(minLength: 4)
-                            Text(DateText.countdown(day.date)).font(KlarStyle.font(11, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+                            Text(DateText.countdown(day.date)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
                         }
                     }
                     if later.isEmpty {
-                        Text(L10n.t("Keine weiteren Termine", "No further pickups")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                        Text(L10n.t("Keine weiteren Termine", "No further pickups")).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme))
                     }
                 }
         }
@@ -332,7 +332,7 @@ struct PickupWidgetView: View {
                 VStack(alignment: .leading, spacing: 7) {
                     ForEach(Array(entry.snapshot.birthdays.prefix(largeBirthdayRows).enumerated()), id: \.offset) { _, birthday in birthdayLine(birthday) }
                     if entry.snapshot.birthdays.isEmpty {
-                        Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                        Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet")).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme))
                     }
                 }
         }
@@ -352,8 +352,8 @@ struct PickupWidgetView: View {
         ZStack {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
-                Image.waste(next?.items.first?.displaySymbol ?? "trash.fill", name: next?.items.first?.name ?? "").font(.title3)
-                Text(days.map { $0 == 0 ? "heute" : $0 == 1 ? "morgen" : "\($0) T." } ?? "–").font(.caption2.weight(.semibold))
+                Image.waste(next?.items.first?.displaySymbol ?? "trash.fill", name: next?.items.first?.name ?? "").tonneFont(.title3)
+                Text(days.map { $0 == 0 ? "heute" : $0 == 1 ? "morgen" : "\($0) T." } ?? "–").tonneFont(.caption2, .semibold)
             }
         }
         .containerBackground(for: .widget) { Color.clear }
@@ -363,24 +363,24 @@ struct PickupWidgetView: View {
         VStack(alignment: .leading, spacing: 1) {
             if let next {
                 if next.items.count == 1, let item = next.items.first {
-                    Text("\(Image.waste(item.displaySymbol, name: item.name)) \(DateText.countdown(next.date))").font(.headline).lineLimit(1)
-                    Text(item.name).font(.caption).lineLimit(1)
+                    Text("\(Image.waste(item.displaySymbol, name: item.name)) \(DateText.countdown(next.date))").tonneFont(.headline).lineLimit(1)
+                    Text(item.name).tonneFont(.caption).lineLimit(1)
                     if let bringInAction {
-                        Text(bringInText(bringInAction)).font(.caption2).lineLimit(1)
+                        Text(bringInText(bringInAction)).tonneFont(.caption2).lineLimit(1)
                     } else if let second = entry.snapshot.pickupDays.first(where: { $0.date > next.date }) {
-                        Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").font(.caption2).opacity(0.8).lineLimit(1)
+                        Text("\(DateText.countdown(second.date)): \(names(second, max: 2))").tonneFont(.caption2).opacity(0.8).lineLimit(1)
                     }
                 } else {
-                    Text(DateText.countdown(next.date)).font(.headline).lineLimit(1)
+                    Text(DateText.countdown(next.date)).tonneFont(.headline).lineLimit(1)
                     ForEach(Array(next.items.prefix(2).enumerated()), id: \.offset) { _, item in
-                        Text("\(Image.waste(item.displaySymbol, name: item.name)) \(item.name)").font(.caption).lineLimit(1)
+                        Text("\(Image.waste(item.displaySymbol, name: item.name)) \(item.name)").tonneFont(.caption).lineLimit(1)
                     }
                     if next.items.count > 2 {
-                        Text("+\(next.items.count - 2) weitere").font(.caption2).opacity(0.8)
+                        Text("+\(next.items.count - 2) weitere").tonneFont(.caption2).opacity(0.8)
                     }
                 }
             } else {
-                Text("Keine Abholung").font(.headline)
+                Text("Keine Abholung").tonneFont(.headline)
             }
         }
         .containerBackground(for: .widget) { Color.clear }

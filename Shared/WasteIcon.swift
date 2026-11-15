@@ -14,7 +14,7 @@ struct WasteIcon: View {
 
     var body: some View {
         // Die eigenen Symbole haben nur eine Strichstärke; `weight` wirkt beim SF-Rückfall.
-        (waste ? Image.waste(symbolName, name: name) : Image(systemName: symbolName)).font(.system(size: size, weight: weight))
+        (waste ? Image.waste(symbolName, name: name) : Image(systemName: symbolName)).tonneFont(fixed: size, weight)
     }
 }
 

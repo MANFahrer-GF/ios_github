@@ -21,18 +21,18 @@ struct OnboardingView: View {
                 .scrollBounceBehavior(.basedOnSize)
             }
         }
-        .sheet(isPresented: $showWizard, onDismiss: requestNotifications) { SourceWizardView(location: nil).environmentObject(model) }
-        .sheet(isPresented: $showManual, onDismiss: requestNotifications) { NewLocationSheet { _ in }.environmentObject(model) }
+        .sheet(isPresented: $showWizard, onDismiss: requestNotifications) { Group { SourceWizardView(location: nil).environmentObject(model) }.appTypography() }
+        .sheet(isPresented: $showManual, onDismiss: requestNotifications) { Group { NewLocationSheet { _ in }.environmentObject(model) }.appTypography() }
     }
 
     private var content: some View {
         VStack(spacing: 28) {
             Spacer()
             VStack(spacing: 10) {
-                Text("🗑️🎂").font(.system(size: 72))
-                Text("Tonne & Torte").font(.largeTitle.weight(.bold))
+                Text("🗑️🎂").tonneFont(size: 72, .regular)
+                Text("Tonne & Torte").tonneFont(.largeTitle, .bold)
                 Text("Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen.")
-                    .multilineTextAlignment(.center).font(.title3).opacity(0.9)
+                    .multilineTextAlignment(.center).tonneFont(.title3).opacity(0.9)
                     .fixedSize(horizontal: false, vertical: true)
             }
             VStack(alignment: .leading, spacing: 14) {
@@ -45,10 +45,10 @@ struct OnboardingView: View {
             Spacer()
             VStack(spacing: 12) {
                 Button { showWizard = true } label: {
-                    Text("Entsorger finden").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
+                    Text("Entsorger finden").tonneFont(.headline).frame(maxWidth: .infinity).padding(.vertical, 6)
                 }
                 .buttonStyle(.borderedProminent).tint(.white).foregroundStyle(Color(hex: "#2F6FED")).controlSize(.large)
-                Button("Ohne Entsorger starten") { showManual = true }.foregroundStyle(.white.opacity(0.9)).font(.subheadline)
+                Button("Ohne Entsorger starten") { showManual = true }.foregroundStyle(.white.opacity(0.9)).tonneFont(.subheadline)
             }
         }
         .foregroundStyle(.white)
@@ -57,8 +57,8 @@ struct OnboardingView: View {
 
     private func feature(_ symbol: String, _ text: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: symbol).font(.title3).frame(width: 28)
-            Text(text).font(.subheadline).fixedSize(horizontal: false, vertical: true)
+            Image(systemName: symbol).tonneFont(.title3).frame(width: 28)
+            Text(text).tonneFont(.subheadline).fixedSize(horizontal: false, vertical: true)
         }
     }
 

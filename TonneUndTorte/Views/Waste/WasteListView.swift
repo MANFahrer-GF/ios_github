@@ -51,9 +51,9 @@ struct WasteListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) { addMenu }
             }
-            .sheet(isPresented: $showWizard) { SourceWizardView(location: nil).environmentObject(model) }
-            .sheet(isPresented: $showManualLocation) { NewLocationSheet { path.append($0) } }
-            .sheet(item: $newTypeLocation) { NewWasteTypeSheet(location: $0) }
+            .sheet(isPresented: $showWizard) { Group { SourceWizardView(location: nil).environmentObject(model) }.appTypography() }
+            .sheet(isPresented: $showManualLocation) { NewLocationSheet { path.append($0) }.appTypography() }
+            .sheet(item: $newTypeLocation) { NewWasteTypeSheet(location: $0).appTypography() }
             .alert("Hinweis", isPresented: showMessage) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -67,19 +67,19 @@ struct WasteListView: View {
     private func dutyTip(_ location: Location) -> some View {
         Section {
             HStack(alignment: .top, spacing: 12) {
-                Image(systemName: "person.2.fill").foregroundStyle(.tint).font(.title3)
+                Image(systemName: "person.2.fill").foregroundStyle(.tint).tonneFont(.title3)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(L10n.t("Wechselt ihr euch mit den Tonnen ab?", "Taking turns with the bins?")).font(.subheadline.weight(.semibold))
+                    Text(L10n.t("Wechselt ihr euch mit den Tonnen ab?", "Taking turns with the bins?")).tonneFont(.subheadline, .semibold)
                     Text(L10n.t("Tippe auf deinen Standort und trage unter „Mein Tonnendienst“ deine Zeiträume ein. Dann erinnert dich die App nur, wenn du dran bist.",
                                 "Tap your location and add your periods under “My bin duty”. The app then only reminds you when it's your turn."))
-                        .font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                        .tonneFont(.footnote).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                     Button(L10n.t("Tonnendienst einrichten", "Set up bin duty")) { path.append(location) }
-                        .font(.footnote.weight(.semibold)).buttonStyle(.borderless).padding(.top, 2)
+                        .tonneFont(.footnote, .semibold).buttonStyle(.borderless).padding(.top, 2)
                         .accessibilityIdentifier("dutyTip.open")
                 }
                 Spacer(minLength: 0)
                 Button { dutyTipDismissed = true } label: {
-                    Image(systemName: "xmark").font(.caption.weight(.bold)).foregroundStyle(.secondary)
+                    Image(systemName: "xmark").tonneFont(.caption, .bold).foregroundStyle(.secondary)
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel(L10n.t("Hinweis schließen", "Dismiss tip"))
@@ -181,10 +181,10 @@ private struct LocationRow: View {
             HStack(spacing: 12) {
                 SymbolBadge(symbolName: location.symbolName, colorHex: location.colorHex, size: 44)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(location.name).font(.headline)
-                    Text(location.sourceDescription).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    Text(location.name).tonneFont(.headline)
+                    Text(location.sourceDescription).tonneFont(.caption).foregroundStyle(.secondary).lineLimit(1)
                     if let updated = updatedText {
-                        Text(updated).font(.caption2).foregroundStyle(.tertiary)
+                        Text(updated).tonneFont(.caption2).foregroundStyle(.tertiary)
                     }
                 }
                 Spacer()
@@ -193,7 +193,7 @@ private struct LocationRow: View {
                         ProgressView()
                     } else {
                         Button(action: onSync) {
-                            Image(systemName: "arrow.triangle.2.circlepath").font(.body.weight(.semibold))
+                            Image(systemName: "arrow.triangle.2.circlepath").tonneFont(.body, .semibold)
                         }
                         .buttonStyle(.borderless)
                     }
@@ -216,11 +216,11 @@ struct WasteTypeRow: View {
         HStack(spacing: 12) {
             SymbolBadge(symbolName: type.displaySymbol, colorHex: type.colorHex, size: 40, wasteName: type.name).opacity(type.isActive ? 1 : 0.4)
             VStack(alignment: .leading, spacing: 2) {
-                Text(type.name).font(.body.weight(.semibold)).foregroundStyle(type.isActive ? .primary : .secondary)
-                Text(subtitle).font(.caption).foregroundStyle(.secondary)
+                Text(type.name).tonneFont(.body, .semibold).foregroundStyle(type.isActive ? .primary : .secondary)
+                Text(subtitle).tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            if !type.remindersEnabled { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.tertiary) }
+            if !type.remindersEnabled { Image(systemName: "bell.slash").tonneFont(.caption).foregroundStyle(.tertiary) }
         }
     }
     private var subtitle: String {

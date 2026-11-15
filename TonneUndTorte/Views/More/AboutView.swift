@@ -47,9 +47,9 @@ struct AboutView: View {
                 }
                 VStack(spacing: 4) {
                     Text("Mit ❤️ gebaut in Gifhorn")
-                        .font(.system(size: 15, weight: .heavy, design: .rounded))
+                        .tonneFont(size: 15, .heavy)
                     Text("Version \(version)")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .tonneFont(.footnote).foregroundStyle(.secondary)
                 }
                 .padding(.top, 4)
             }
@@ -72,11 +72,11 @@ struct AboutView: View {
     /// Die Visitenkarte des Machers.
     private var madeBy: some View {
         VStack(spacing: 10) {
-            Text("❤️").font(.system(size: 40))
+            Text("❤️").tonneFont(size: 40, .regular)
             Text("Gebaut von Thomas Kant")
-                .font(.system(size: 22, weight: .black, design: .rounded))
+                .tonneFont(size: 22, .black)
             Text("Mit Herz aus Gifhorn – damit keine Tonne mehr stehen bleibt und keine Torte vergessen wird.")
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .tonneFont(size: 15, .semibold)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
         }
@@ -97,17 +97,17 @@ struct AboutView: View {
                 .frame(width: 96, height: 96)
                 .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 .shadow(color: .black.opacity(0.18), radius: 12, x: 0, y: 6)
-            Text("Tonne & Torte").font(.title.weight(.black)).tracking(-0.5)
+            Text("Tonne & Torte").tonneFont(.title, .black).tracking(-0.5)
             Text("Nie wieder den Gelben Sack verpassen.\nNie wieder einen Geburtstag vergessen.")
-                .font(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                .tonneFont(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
         }
         .padding(.top, 8)
     }
 
     private func card<Content: View>(title: LocalizedStringKey, symbol: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label(title, systemImage: symbol).font(.headline)
-            content().font(.subheadline).foregroundStyle(.primary)
+            Label(title, systemImage: symbol).tonneFont(.headline)
+            content().tonneFont(.subheadline).foregroundStyle(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card()
@@ -115,7 +115,7 @@ struct AboutView: View {
 
     private func bullet(_ text: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "checkmark.circle.fill").foregroundStyle(.green).font(.subheadline)
+            Image(systemName: "checkmark.circle.fill").foregroundStyle(.green).tonneFont(.subheadline)
             Text(text)
         }
     }

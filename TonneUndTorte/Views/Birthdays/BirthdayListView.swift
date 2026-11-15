@@ -80,15 +80,15 @@ struct BirthdayListView: View {
     private func nextBirthdayCard(day: Date, entries: [(person: Person, next: Date, years: Int?)]) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(L10n.t("NÄCHSTER GEBURTSTAG · ", "NEXT BIRTHDAY · ") + PickupWords.eyebrow(date: day)).font(KlarStyle.font(12, .heavy)).tracking(0.8).foregroundStyle(.pink)
-                Text(DateText.countdown(day)).font(KlarStyle.font(32, .black)).foregroundStyle(.primary)
+                Text(L10n.t("NÄCHSTER GEBURTSTAG · ", "NEXT BIRTHDAY · ") + PickupWords.eyebrow(date: day)).tonneFont(size: 12, .heavy).tracking(0.8).foregroundStyle(.pink)
+                Text(DateText.countdown(day)).tonneFont(size: 32, .black).foregroundStyle(.primary)
             }
             ForEach(entries, id: \.person.id) { entry in
                 Button { sheet = .person(entry.person) } label: {
                     HStack(spacing: 14) {
                         PersonAvatar(person: entry.person, initials: entry.person.initials, colorHex: entry.person.colorHex, size: 56)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(entry.person.name).font(KlarStyle.font(19, .heavy)).foregroundStyle(.primary)
+                            Text(entry.person.name).tonneFont(size: 19, .heavy).foregroundStyle(.primary)
                                 .lineLimit(2).fixedSize(horizontal: false, vertical: true)
                             InfoTags(tags: ([entry.years.map { (AnnualDate.isMilestone($0) ? "🎉 " : "🎂 ") + L10n.t("wird \($0)", "turns \($0)") }, entry.person.knownYear.map { L10n.t("Jg. \($0)", "b. \($0)") }, entry.person.zodiacLabel] as [String?]).compactMap { $0 }, size: 13)
                                 .padding(.top, 2)
@@ -162,7 +162,7 @@ struct BirthdayListView: View {
                 Button(L10n.t("Anrufen", "Call")) { if let url = CallLink.url(callPerson?.phone) { openURL(url) } }
                 Button(L10n.t("Abbrechen", "Cancel"), role: .cancel) {}
             }
-            .sheet(item: $sheet) { kind in
+            .sheet(item: $sheet) { kind in Group {
                 switch kind {
                 case .newPerson: BirthdayEditView(person: nil)
                 case .person(let person): BirthdayEditView(person: person)
@@ -170,7 +170,7 @@ struct BirthdayListView: View {
                 case .newEvent: CustomEventEditView(event: nil)
                 case .event(let event): CustomEventEditView(event: event)
                 }
-            }
+            }.appTypography() }
             .onChange(of: model.personToOpen, initial: true) { _, id in
                 guard let id else { return }
                 model.personToOpen = nil
@@ -223,7 +223,7 @@ struct BirthdayListView: View {
                                     Task { await model.refreshAll() }
                                 }
                             } header: {
-                                Text(section.title).font(KlarStyle.font(13, .heavy)).tracking(0.6)
+                                Text(section.title).tonneFont(size: 13, .heavy).tracking(0.6)
                             }
                         }
                     }
@@ -245,9 +245,9 @@ struct BirthdayRow: View {
             PersonAvatar(person: person, initials: person.initials, colorHex: person.colorHex, size: 42)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
-                    Text(person.name).font(KlarStyle.font(17, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                    Text(person.name).tonneFont(size: 17, .heavy).foregroundStyle(KlarStyle.text(scheme))
                         .lineLimit(3).fixedSize(horizontal: false, vertical: true)
-                    if !person.remindersEnabled { Image(systemName: "bell.slash").font(.caption).foregroundStyle(.tertiary) }
+                    if !person.remindersEnabled { Image(systemName: "bell.slash").tonneFont(.caption).foregroundStyle(.tertiary) }
                 }
                 InfoTags(tags: tags, size: 11).padding(.top, 2)
             }
@@ -274,16 +274,16 @@ struct BirthdayRow: View {
         VStack(alignment: .trailing, spacing: 1) {
             switch daysLeft {
             case 0:
-                Text(L10n.t("Heute 🎉", "Today 🎉")).font(KlarStyle.font(16, .heavy)).foregroundStyle(.pink)
+                Text(L10n.t("Heute 🎉", "Today 🎉")).tonneFont(size: 16, .heavy).foregroundStyle(.pink)
             case 1:
-                Text(L10n.t("Morgen", "Tomorrow")).font(KlarStyle.font(16, .heavy)).foregroundStyle(KlarStyle.text(scheme))
+                Text(L10n.t("Morgen", "Tomorrow")).tonneFont(size: 16, .heavy).foregroundStyle(KlarStyle.text(scheme))
             default:
                 HStack(alignment: .firstTextBaseline, spacing: 3) {
-                    Text("\(daysLeft)").font(KlarStyle.font(20, .black)).foregroundStyle(KlarStyle.text(scheme))
-                    Text(L10n.t("Tage", "days")).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme))
+                    Text("\(daysLeft)").tonneFont(size: 20, .black).foregroundStyle(KlarStyle.text(scheme))
+                    Text(L10n.t("Tage", "days")).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme))
                 }
             }
-            Text(DateText.short(next)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
+            Text(DateText.short(next)).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
         }
         .fixedSize()
     }
@@ -330,7 +330,7 @@ struct BirthdayEditView: View {
                                 Button(role: .destructive) { photoData = nil; photoItem = nil } label: { Label(L10n.t("Foto entfernen", "Remove photo"), systemImage: "trash") }
                             } else if person?.contactIdentifier != nil {
                                 Text(L10n.t("Ohne eigenes Foto wird das Foto aus dem Kontakt gezeigt.", "Without a photo of its own, the contact photo is shown."))
-                                    .font(.caption).foregroundStyle(.secondary)
+                                    .tonneFont(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -617,7 +617,7 @@ struct ContactsImportView: View {
         if access != .full && !isLoading {
             Section {
                 Button { pickContacts() } label: {
-                    Label("Personen auswählen", systemImage: "person.crop.circle.badge.plus").font(.body.weight(.semibold))
+                    Label("Personen auswählen", systemImage: "person.crop.circle.badge.plus").tonneFont(.body, .semibold)
                 }
                 Button { openSettings() } label: { Label("Allen Kontakten Zugriff geben (Einstellungen)", systemImage: "gearshape") }
                 DisclosureGroup {
@@ -649,7 +649,7 @@ struct ContactsImportView: View {
             Text("„Personen auswählen“ öffnet die Kontaktliste von iOS selbst. Die App bekommt dabei nur die Personen, die du anhakst – sonst nichts aus deinem Adressbuch.")
             Text("Lieber alle auf einmal? Dann in den Einstellungen unter Apps › Tonne & Torte › Kontakte „Vollständiger Zugriff“ wählen.")
         }
-        .font(.subheadline)
+        .tonneFont(.subheadline)
         .foregroundStyle(.secondary)
         .padding(.vertical, 4)
     }
@@ -691,13 +691,13 @@ struct ContactsImportView: View {
                     .foregroundStyle(isSelected ? Color.accentColor : .secondary)
                 VStack(alignment: .leading) {
                     Text(candidate.name).foregroundStyle(.primary)
-                    Text("\(candidate.day).\(candidate.month).\(candidate.year.map { "\($0)" } ?? "")").font(.caption).foregroundStyle(.secondary)
+                    Text("\(candidate.day).\(candidate.month).\(candidate.year.map { "\($0)" } ?? "")").tonneFont(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 if already {
-                    Text(isSelected ? "wird aktualisiert" : "schon drin").font(.caption).foregroundStyle(.secondary)
+                    Text(isSelected ? "wird aktualisiert" : "schon drin").tonneFont(.caption).foregroundStyle(.secondary)
                 } else if matching.duplicates.contains(candidate.identifier) {
-                    Text("doppelt?").font(.caption).foregroundStyle(.orange)
+                    Text("doppelt?").tonneFont(.caption).foregroundStyle(.orange)
                 }
             }
         }

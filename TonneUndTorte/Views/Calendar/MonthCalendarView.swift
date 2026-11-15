@@ -89,11 +89,11 @@ struct MonthCalendarView: View {
 
     private var monthHeader: some View {
         HStack {
-            Button { shiftMonth(by: -1) } label: { Image(systemName: "chevron.left").font(.headline).frame(width: 36, height: 36) }
+            Button { shiftMonth(by: -1) } label: { Image(systemName: "chevron.left").tonneFont(.headline).frame(width: 36, height: 36) }
             Spacer()
-            Text(DateText.monthYear(monthStart)).font(.title3.weight(.bold))
+            Text(DateText.monthYear(monthStart)).tonneFont(.title3, .bold)
             Spacer()
-            Button { shiftMonth(by: 1) } label: { Image(systemName: "chevron.right").font(.headline).frame(width: 36, height: 36) }
+            Button { shiftMonth(by: 1) } label: { Image(systemName: "chevron.right").tonneFont(.headline).frame(width: 36, height: 36) }
         }
         .padding(.top, 4)
     }
@@ -102,7 +102,7 @@ struct MonthCalendarView: View {
         VStack(spacing: 6) {
             LazyVGrid(columns: columns, spacing: 4) {
                 // Kennung ist die Position: „M“, „D“ und „S“ kommen doppelt vor (Mo/Mi, Di/Do, Sa/So).
-                ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { Text($0.element).font(.caption2.weight(.semibold)).foregroundStyle(.secondary) }
+                ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { Text($0.element).tonneFont(.caption2, .semibold).foregroundStyle(.secondary) }
             }
             LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(Array(gridDays.enumerated()), id: \.offset) { _, day in
@@ -122,14 +122,14 @@ struct MonthCalendarView: View {
         let wasteColors = events.filter { $0.kind == .waste }.map { $0.offDuty ? $0.color.opacity(0.3) : $0.color }
         return VStack(spacing: 4) {
             Text("\(calendar.component(.day, from: day))")
-                .font(.subheadline.weight(isToday ? .bold : .regular))
+                .tonneFont(.subheadline, isToday ? .bold : .regular)
                 .frame(width: 30, height: 30)
                 .background(Circle().fill(isSelected ? Color.accentColor : (isToday ? Color.accentColor.opacity(0.15) : .clear)))
                 .foregroundStyle(isSelected ? .white : (isToday ? Color.accentColor : .primary))
             HStack(spacing: 3) {
                 ForEach(Array(wasteColors.prefix(4).enumerated()), id: \.offset) { _, color in Circle().fill(color).frame(width: 6, height: 6) }
-                if events.contains(where: { $0.kind == .birthday }) { Image(systemName: "birthday.cake.fill").font(.system(size: 8)).foregroundStyle(.pink) }
-                if events.contains(where: { $0.kind == .custom }) { Image(systemName: "pin.fill").font(.system(size: 8)).foregroundStyle(.purple) }
+                if events.contains(where: { $0.kind == .birthday }) { Image(systemName: "birthday.cake.fill").tonneFont(size: 8, .regular).foregroundStyle(.pink) }
+                if events.contains(where: { $0.kind == .custom }) { Image(systemName: "pin.fill").tonneFont(size: 8, .regular).foregroundStyle(.purple) }
             }
             .frame(height: 10)
         }
@@ -142,13 +142,13 @@ struct MonthCalendarView: View {
         let events = eventsByDay[selectedDay] ?? []
         return VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text(DateText.long(selectedDay)).font(.headline)
+                Text(DateText.long(selectedDay)).tonneFont(.headline)
                 Spacer()
-                Text(DateText.countdown(selectedDay)).font(.subheadline).foregroundStyle(.secondary)
+                Text(DateText.countdown(selectedDay)).tonneFont(.subheadline).foregroundStyle(.secondary)
             }
             .padding(.leading, 4)
             if events.isEmpty {
-                Text("Nichts geplant – freier Tag für die Tonne.").font(.subheadline).foregroundStyle(.secondary).card()
+                Text("Nichts geplant – freier Tag für die Tonne.").tonneFont(.subheadline).foregroundStyle(.secondary).card()
             } else {
                 // Dieselbe Zeile wie in der Übersicht: Foto, Alter, Jahrgang, Sternzeichen, Anrufen/Nachricht; Tippen öffnet
                 VStack(spacing: 8) {

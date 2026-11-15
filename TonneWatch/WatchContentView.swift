@@ -52,15 +52,15 @@ private struct PickupPage: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 Text(eyebrow)
-                    .font(KlarStyle.font(12, .heavy)).tracking(0.6)
+                    .tonneFont(size: 12, .heavy).tracking(0.6)
                     .foregroundStyle(eyebrowColor)
                     .lineLimit(1)
                 Text(PickupWords.headline(days: days, done: done))
-                    .font(KlarStyle.font(30, .black))
+                    .tonneFont(size: 30, .black)
                     .foregroundStyle(KlarStyle.text(.dark))
                     .lineLimit(1).minimumScaleFactor(0.6)
                 Text(PickupWords.subline(days: days, done: done, day: next))
-                    .font(KlarStyle.font(13, .bold))
+                    .tonneFont(size: 13, .bold)
                     .foregroundStyle(KlarStyle.muted(.dark))
                     .lineLimit(1).minimumScaleFactor(0.8)
 
@@ -76,7 +76,7 @@ private struct PickupPage: View {
                     if let days, days <= 1 { actionButton(next).padding(.top, 14) }
                 } else if snapshot == nil {
                     Text("Öffne Tonne & Torte auf dem iPhone, dann erscheinen hier deine Termine.")
-                        .font(KlarStyle.font(13, .semibold))
+                        .tonneFont(size: 13, .semibold)
                         .foregroundStyle(KlarStyle.muted(.dark))
                         .padding(.top, 10)
                 }
@@ -100,7 +100,7 @@ private struct PickupPage: View {
                 reload()
             } label: {
                 Label(L10n.t("Rückgängig", "Undo"), systemImage: "arrow.uturn.backward")
-                    .font(KlarStyle.font(16, .heavy))
+                    .tonneFont(size: 16, .heavy)
                     .frame(maxWidth: .infinity)
             }
             .tint(KlarStyle.done)
@@ -111,7 +111,7 @@ private struct PickupPage: View {
                 reload()
             } label: {
                 Label(L10n.t("Erledigt", "Done"), systemImage: "checkmark")
-                    .font(KlarStyle.font(16, .heavy))
+                    .tonneFont(size: 16, .heavy)
                     .foregroundStyle(Color(hex: "#111114"))
                     .frame(maxWidth: .infinity)
             }
@@ -134,19 +134,19 @@ private struct UpcomingPage: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 Text(L10n.t("DANACH", "UP NEXT"))
-                    .font(KlarStyle.font(11, .heavy)).tracking(1)
+                    .tonneFont(size: 11, .heavy).tracking(1)
                     .foregroundStyle(KlarStyle.muted(.dark))
                 if later.isEmpty {
                     Text(L10n.t("Keine weiteren Termine", "No further pickups"))
-                        .font(KlarStyle.font(14, .bold))
+                        .tonneFont(size: 14, .bold)
                         .foregroundStyle(KlarStyle.muted(.dark))
                 }
                 ForEach(Array(later.prefix(10).enumerated()), id: \.offset) { _, day in
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
-                            Text(DateText.countdown(day.date)).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(.dark))
+                            Text(DateText.countdown(day.date)).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(.dark))
                             Spacer(minLength: 4)
-                            Text(DateText.short(day.date)).font(KlarStyle.font(12, .bold)).foregroundStyle(KlarStyle.muted(.dark))
+                            Text(DateText.short(day.date)).tonneFont(size: 12, .bold).foregroundStyle(KlarStyle.muted(.dark))
                         }
                         ForEach(Array(day.items.enumerated()), id: \.offset) { _, item in
                             BinLine(name: item.name, symbolName: item.displaySymbol, colorHex: item.colorHex, dot: 18, fontSize: 13)
@@ -179,27 +179,27 @@ private struct BirthdayPage: View {
                 HStack(spacing: 6) {
                     Text("🎂")
                     Text(L10n.t("GEBURTSTAGE", "BIRTHDAYS"))
-                        .font(KlarStyle.font(11, .heavy)).tracking(1)
+                        .tonneFont(size: 11, .heavy).tracking(1)
                         .foregroundStyle(KlarStyle.birthdayInk(.dark))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 if birthdays.isEmpty {
                     Text(L10n.t("Keine Geburtstage eingetragen", "No birthdays yet"))
-                        .font(KlarStyle.font(14, .bold))
+                        .tonneFont(size: 14, .bold)
                         .foregroundStyle(KlarStyle.muted(.dark))
                 }
                 ForEach(Array(birthdays.prefix(10).enumerated()), id: \.offset) { _, birthday in
                     HStack(spacing: 10) {
                         KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 32)
                         VStack(alignment: .leading, spacing: 1) {
-                            Text(birthday.name).font(KlarStyle.font(15, .heavy)).foregroundStyle(KlarStyle.text(.dark)).lineLimit(1)
+                            Text(birthday.name).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(.dark)).lineLimit(1)
                             HStack(spacing: 4) {
                                 if let years = birthday.years {
                                     Text(L10n.t("wird \(years) ·", "turns \(years) ·")).foregroundStyle(KlarStyle.muted(.dark))
                                 }
                                 Text(DateText.countdown(birthday.date)).foregroundStyle(KlarStyle.birthdayInk(.dark))
                             }
-                            .font(KlarStyle.font(12, .heavy))
+                            .tonneFont(size: 12, .heavy)
                             .lineLimit(1).minimumScaleFactor(0.8)
                         }
                     }

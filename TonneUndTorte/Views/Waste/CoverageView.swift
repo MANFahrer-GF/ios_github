@@ -55,7 +55,7 @@ struct CoverageView: View {
                 .foregroundStyle(.green)
             Text(L10n.t("Gib oben deinen Ort ein – du siehst sofort, welcher Entsorger ihn bedient und ob es Einschränkungen gibt.",
                         "Enter your town above – you will see right away which provider serves it and whether there are any limitations."))
-                .font(.subheadline).foregroundStyle(.secondary)
+                .tonneFont(.subheadline).foregroundStyle(.secondary)
         }
     }
 
@@ -89,7 +89,7 @@ struct CoverageView: View {
                     if !item.missingPlaces.isEmpty {
                         Text(L10n.count(item.missingPlaces.count, "Gemeinde ohne abrufbaren Online-Kalender", "Gemeinden ohne abrufbaren Online-Kalender",
                                         "municipality without an online calendar", "municipalities without an online calendar"))
-                            .font(.caption).foregroundStyle(.secondary)
+                            .tonneFont(.caption).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -166,9 +166,9 @@ struct CoverageView: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.title).foregroundStyle(.primary)
-                Text(entry.kind.displayName).font(.caption).foregroundStyle(.secondary)
+                Text(entry.kind.displayName).tonneFont(.caption).foregroundStyle(.secondary)
                 if let restriction {
-                    Text(restriction).font(.caption).foregroundStyle(.secondary).lineLimit(4)
+                    Text(restriction).tonneFont(.caption).foregroundStyle(.secondary).lineLimit(4)
                 }
             }
         }
@@ -223,9 +223,9 @@ private struct DistrictEntriesView: View {
     private func content(_ entry: CatalogEntry) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(entry.title).foregroundStyle(.primary)
-            Text(entry.kind.displayName).font(.caption).foregroundStyle(.secondary)
+            Text(entry.kind.displayName).tonneFont(.caption).foregroundStyle(.secondary)
             if let restriction = ProviderCatalog.restriction(for: entry) {
-                Text(restriction).font(.caption).foregroundStyle(.secondary)
+                Text(restriction).tonneFont(.caption).foregroundStyle(.secondary)
             }
         }
     }

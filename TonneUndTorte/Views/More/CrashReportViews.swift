@@ -28,7 +28,7 @@ struct CrashReportPrompt: View {
             .sheet(item: $offer, onDismiss: {
                 center.markOffered(offeredIDs)
                 offerNext()
-            }) { CrashReportOfferSheet(report: $0) }
+            }) { CrashReportOfferSheet(report: $0).appTypography() }
     }
 
     /// Was während des offenen Sheets dazukommt, wird nicht mit abgehakt und danach eigens angeboten.

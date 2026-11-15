@@ -27,7 +27,7 @@ struct MoreView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Kalender-Abgleich")
                                 Text(syncSubtitle)
-                                    .font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                    .tonneFont(.caption).foregroundStyle(.secondary).lineLimit(1)
                             }
                         } icon: {
                             Image(systemName: "calendar")
@@ -40,6 +40,7 @@ struct MoreView: View {
                 }
                 Section {
                     NavigationLink { SiriView() } label: { Label("Siri & Kurzbefehle", systemImage: "waveform") }
+                    NavigationLink { TypographyView() } label: { Label(L10n.t("Schrift", "Font"), systemImage: "textformat.size") }
                     NavigationLink { SettingsView() } label: { Label("Einstellungen", systemImage: "gearshape.fill") }
                 }
             }
@@ -78,13 +79,13 @@ struct CustomEventsView: View {
                     HStack(spacing: 12) {
                         SymbolBadge(symbolName: event.symbolName, colorHex: event.colorHex, size: 40)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(event.title).font(.body.weight(.semibold)).foregroundStyle(.primary)
-                            Text(event.recurrence.label + (event.nextOccurrence.map { " · \(DateText.short($0))" } ?? "") + (event.timeText.map { " · \($0)" } ?? "")).font(.caption).foregroundStyle(.secondary)
+                            Text(event.title).tonneFont(.body, .semibold).foregroundStyle(.primary)
+                            Text(event.recurrence.label + (event.nextOccurrence.map { " · \(DateText.short($0))" } ?? "") + (event.timeText.map { " · \($0)" } ?? "")).tonneFont(.caption).foregroundStyle(.secondary)
                         }
                         Spacer()
                         if isDone {
                             Label(L10n.t("Erledigt", "Done"), systemImage: "checkmark.circle.fill").labelStyle(.iconOnly).foregroundStyle(.green)
-                        } else if let next { Text(DateText.countdown(next)).font(.subheadline.weight(.semibold)).foregroundStyle(.secondary) }
+                        } else if let next { Text(DateText.countdown(next)).tonneFont(.subheadline, .semibold).foregroundStyle(.secondary) }
                     }
                 }
                 .buttonStyle(.plain)

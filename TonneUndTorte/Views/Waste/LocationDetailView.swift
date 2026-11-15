@@ -42,16 +42,16 @@ struct LocationDetailView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(item: $editingDuty) { period in
+        .sheet(item: $editingDuty) { period in Group {
             let isNew = !location.dutyPeriods.contains { $0.id == period.id }
             if period.rhythm != nil {
                 DutyRhythmEditor(period: period, isNew: isNew, others: location.dutyPeriods.filter { $0.id != period.id }, onSave: saveDuty, onDelete: deleteDuty)
             } else {
                 DutyPeriodEditor(period: period, isNew: isNew, onSave: saveDuty, onDelete: deleteDuty)
             }
-        }
-        .sheet(isPresented: $showWizard) { SourceWizardView(location: location).environmentObject(model) }
-        .sheet(isPresented: $showImport) { ICSImportView(pickups: importPickups, location: location) }
+        }.appTypography() }
+        .sheet(isPresented: $showWizard) { Group { SourceWizardView(location: location).environmentObject(model) }.appTypography() }
+        .sheet(isPresented: $showImport) { Group { ICSImportView(pickups: importPickups, location: location) }.appTypography() }
         .fileImporter(isPresented: $showFileImporter, allowedContentTypes: Self.importTypes, onCompletion: handleFile)
         .alert("Hinweis", isPresented: showMessage) {
             Button("OK", role: .cancel) {}
@@ -80,13 +80,13 @@ struct LocationDetailView: View {
         Section {
             if let status = dutyStatusLine {
                 Label(status.text, systemImage: status.symbol)
-                    .font(.subheadline.weight(.semibold))
+                    .tonneFont(.subheadline, .semibold)
                     .foregroundStyle(status.warning ? Color.orange : Color.secondary)
             }
             ForEach(location.dutyPeriods) { period in
                 Button { editingDuty = period } label: {
                     LabeledContent {
-                        Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+                        Image(systemName: "chevron.right").tonneFont(.caption, .semibold).foregroundStyle(.tertiary)
                     } label: {
                         if let rhythm = period.rhythm {
                             Label(DutyRhythmEditor.title(rhythm), systemImage: "arrow.triangle.2.circlepath").foregroundStyle(.primary)
@@ -159,10 +159,10 @@ struct LocationDetailView: View {
                 LabeledContent("Letzter Abgleich", value: last.formatted(date: .abbreviated, time: .shortened))
             }
             if let status = location.lastSyncMessage {
-                Text(status).font(.footnote).foregroundStyle(.secondary)
+                Text(status).tonneFont(.footnote).foregroundStyle(.secondary)
             }
             if let notice = location.source.flatMap({ ProviderFactory.make($0).notice }) {
-                Label(notice, systemImage: "info.circle").font(.footnote).foregroundStyle(.secondary)
+                Label(notice, systemImage: "info.circle").tonneFont(.footnote).foregroundStyle(.secondary)
             }
             Button {
                 showWizard = true
@@ -362,9 +362,9 @@ private struct MappingRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(mapping.summary).font(.body.weight(.semibold))
+                Text(mapping.summary).tonneFont(.body, .semibold)
                 Spacer()
-                Text("\(mapping.count)×").font(.caption).foregroundStyle(.secondary)
+                Text("\(mapping.count)×").tonneFont(.caption).foregroundStyle(.secondary)
             }
             Picker(L10n.t("Ziel", "Target"), selection: $mapping.target) {
                 Text(L10n.t("Ignorieren", "Ignore")).tag(SyncService.Target.ignore)
@@ -413,12 +413,12 @@ private struct DutyPreview: View {
     var body: some View {
         let next = DutySchedule.upcoming(periods, from: Days.today(), count: 3)
         VStack(alignment: .leading, spacing: 4) {
-            Text(L10n.t("Deine nächsten Dienste", "Your next turns")).font(.subheadline.weight(.semibold))
+            Text(L10n.t("Deine nächsten Dienste", "Your next turns")).tonneFont(.subheadline, .semibold)
             if next.isEmpty {
-                Text(L10n.t("Keine", "None")).font(.subheadline).foregroundStyle(.secondary)
+                Text(L10n.t("Keine", "None")).tonneFont(.subheadline).foregroundStyle(.secondary)
             }
             ForEach(next, id: \.start) { block in
-                Text(DutyRhythmEditor.rangeText(block.start, block.end)).font(.subheadline).foregroundStyle(.secondary)
+                Text(DutyRhythmEditor.rangeText(block.start, block.end)).tonneFont(.subheadline).foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 2)

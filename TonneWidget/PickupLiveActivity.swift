@@ -7,7 +7,7 @@ import TonneCore
 struct PickupLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: PickupActivityAttributes.self) { context in
-            lockScreen(context)
+            lockScreen(context).tonneTypography(maxSize: .xLarge)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
@@ -15,21 +15,21 @@ struct PickupLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     if !context.state.done {
-                        Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "checkmark.circle.fill").font(.title2) }.buttonStyle(.plain).tint(.green)
+                        Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "checkmark.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.green)
                     } else {
-                        Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "arrow.uturn.backward.circle.fill").font(.title2) }.buttonStyle(.plain).tint(.secondary)
+                        Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "arrow.uturn.backward.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.secondary)
                     }
                 }
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 2) {
-                        Text(headline(context)).font(.headline)
-                        Text(ReminderPlanner.joinNames(shownNames(context))).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                        Text(headline(context)).tonneFont(.headline)
+                        Text(ReminderPlanner.joinNames(shownNames(context))).tonneFont(.caption).foregroundStyle(.secondary).lineLimit(1)
                     }
                 }
             } compactLeading: {
                 BinStack(bins: bins(context), size: 18)
             } compactTrailing: {
-                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).font(.caption2.weight(.semibold))
+                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).tonneFont(.caption2, .semibold)
             } minimal: {
                 if context.state.done {
                     Image(systemName: "checkmark.circle.fill")
@@ -69,20 +69,20 @@ struct PickupLiveActivity: Widget {
         return HStack(spacing: 14) {
             BinStack(bins: bins(context), size: 40)
             VStack(alignment: .leading, spacing: 3) {
-                Text(headline(context)).font(.headline)
-                Text(subtitle).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
+                Text(headline(context)).tonneFont(.headline)
+                Text(subtitle).tonneFont(.subheadline).foregroundStyle(.secondary).lineLimit(2)
             }
             Spacer()
             if !context.state.done {
                 Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) {
-                    Label("Erledigt", systemImage: "checkmark.circle.fill").font(.subheadline.weight(.semibold))
+                    Label("Erledigt", systemImage: "checkmark.circle.fill").tonneFont(.subheadline, .semibold)
                         .padding(.horizontal, 12).padding(.vertical, 8)
                         .background(color.opacity(0.25), in: Capsule())
                 }
                 .buttonStyle(.plain)
             } else {
                 Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) {
-                    Label("Rückgängig", systemImage: "arrow.uturn.backward").font(.caption.weight(.semibold))
+                    Label("Rückgängig", systemImage: "arrow.uturn.backward").tonneFont(.caption, .semibold)
                         .padding(.horizontal, 10).padding(.vertical, 6)
                         .background(.secondary.opacity(0.2), in: Capsule())
                 }

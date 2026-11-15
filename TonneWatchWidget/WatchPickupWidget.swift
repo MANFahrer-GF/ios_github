@@ -39,7 +39,7 @@ struct WatchPickupProvider: TimelineProvider {
 struct WatchPickupWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "de.manfahrer.TonneUndTorte.watch.pickup", provider: WatchPickupProvider()) { entry in
-            WatchPickupView(entry: entry)
+            WatchPickupView(entry: entry).tonneTypography(maxSize: .large)
         }
         .configurationDisplayName("Nächste Abholung")
         .description("Was wird als Nächstes abgeholt?")
@@ -71,7 +71,7 @@ struct WatchPickupView: View {
             Text("\(Image.waste(symbol, name: items.first?.name ?? "")) \(next == nil ? names : "\(DateText.countdown(next!.date)): \(names)")")
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryCorner:
-            Image.waste(symbol, name: items.first?.name ?? "").font(.title3).widgetAccentable()
+            Image.waste(symbol, name: items.first?.name ?? "").tonneFont(.title3).widgetAccentable()
                 .widgetLabel { Text(next == nil ? "–" : "\(shortWhen) · \(names)") }
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryRectangular:
@@ -82,11 +82,11 @@ struct WatchPickupView: View {
                 AccessoryWidgetBackground()
                 VStack(spacing: 0) {
                     if items.count > 1 {
-                        Text("\(items.count)").font(.system(size: 18, weight: .black, design: .rounded)).widgetAccentable()
+                        Text("\(items.count)").tonneFont(size: 18, .black).widgetAccentable()
                     } else {
-                        Image.waste(symbol, name: items.first?.name ?? "").font(.title3).widgetAccentable()
+                        Image.waste(symbol, name: items.first?.name ?? "").tonneFont(.title3).widgetAccentable()
                     }
-                    Text(shortWhen).font(.system(size: 11, weight: .heavy, design: .rounded))
+                    Text(shortWhen).tonneFont(size: 11, .heavy)
                 }
             }
             .containerBackground(for: .widget) { Color.clear }
@@ -98,20 +98,20 @@ struct WatchPickupView: View {
         VStack(alignment: .leading, spacing: 1) {
             HStack(spacing: 4) {
                 Text(next == nil ? L10n.t("Nichts offen", "Nothing due") : DateText.countdown(next!.date))
-                    .font(.system(size: 15, weight: .heavy, design: .rounded))
+                    .tonneFont(size: 15, .heavy)
                     .widgetAccentable()
                 if let next, next.done {
-                    Image(systemName: "checkmark.circle.fill").font(.caption).foregroundStyle(.green)
+                    Image(systemName: "checkmark.circle.fill").tonneFont(.caption).foregroundStyle(.green)
                 }
             }
             ForEach(Array(items.prefix(2).enumerated()), id: \.offset) { _, item in
                 HStack(spacing: 4) {
-                    Image.waste(item.displaySymbol, name: item.name).font(.caption2).foregroundStyle(Color(hex: item.colorHex))
-                    Text(item.name).font(.system(size: 13, weight: .bold, design: .rounded)).lineLimit(1)
+                    Image.waste(item.displaySymbol, name: item.name).tonneFont(.caption2).foregroundStyle(Color(hex: item.colorHex))
+                    Text(item.name).tonneFont(size: 13, .bold).lineLimit(1)
                 }
             }
             if items.count > 2 {
-                Text(L10n.t("+\(items.count - 2) weitere", "+\(items.count - 2) more")).font(.system(size: 11, weight: .semibold, design: .rounded)).foregroundStyle(.secondary)
+                Text(L10n.t("+\(items.count - 2) weitere", "+\(items.count - 2) more")).tonneFont(size: 11, .semibold).foregroundStyle(.secondary)
             }
         }
     }

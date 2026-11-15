@@ -87,7 +87,7 @@ struct BinTileView: View {
                 .strokeBorder(.white.opacity(0.18), lineWidth: 1)
             VStack(spacing: 3) {
                 WasteIcon(symbolName: symbolName, name: name, size: width * 0.42)
-                Text(ShortName.bin(name)).font(.system(size: max(7, width * 0.2), weight: .heavy)).tracking(0.3).lineLimit(1).minimumScaleFactor(0.7)
+                Text(ShortName.bin(name)).tonneFont(fixed: max(7, width * 0.2), .heavy).tracking(0.3).lineLimit(1).minimumScaleFactor(0.7)
             }
             .foregroundStyle(HexLuma.glyphColor(on: colorHex))
             .padding(.horizontal, 2)
@@ -107,7 +107,7 @@ struct MoreTileView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: width * 0.3, style: .continuous).fill(DesignColor.tileMore(scheme))
-            Text("+\(count)").font(.system(size: width * 0.32, weight: .heavy)).foregroundStyle(DesignColor.text(scheme))
+            Text("+\(count)").tonneFont(fixed: width * 0.32, .heavy).foregroundStyle(DesignColor.text(scheme))
         }
         .frame(width: width, height: height)
     }
@@ -167,7 +167,7 @@ struct InitialsAvatar: View {
                 .fill(LinearGradient(colors: [color, color.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
             RoundedRectangle(cornerRadius: size * 0.32, style: .continuous)
                 .fill(LinearGradient(colors: [.white.opacity(0.25), .clear], startPoint: .top, endPoint: .center))
-            Text(initials).font(.system(size: size * 0.36, weight: .black)).foregroundStyle(.white)
+            Text(initials).tonneFont(fixed: size * 0.36, .black).foregroundStyle(.white)
         }
         .frame(width: size, height: size)
         .shadow(color: color.opacity(0.35), radius: size * 0.18, x: 0, y: size * 0.1)
@@ -183,7 +183,7 @@ struct CheckCircleLabel: View {
         ZStack {
             Circle().fill(DesignColor.button(scheme))
             if scheme == .dark { Circle().strokeBorder(.white.opacity(0.16), lineWidth: 1) }
-            Image(systemName: "checkmark").font(.system(size: size * 0.4, weight: .heavy)).foregroundStyle(.white)
+            Image(systemName: "checkmark").tonneFont(fixed: size * 0.4, .heavy).foregroundStyle(.white)
         }
         .frame(width: size, height: size)
     }
@@ -194,7 +194,7 @@ struct BirthdayPill: View {
     let text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 10, weight: .heavy)).tracking(0.5)
+            .tonneFont(size: 10, .heavy).tracking(0.5)
             .foregroundStyle(.white)
             .padding(.horizontal, 10).padding(.vertical, 6)
             .background(LinearGradient(colors: [Color(hex: DesignColor.birthday), Color(hex: DesignColor.birthdayWarm)], startPoint: .leading, endPoint: .trailing), in: Capsule())
@@ -341,7 +341,7 @@ struct TrashBinView: View {
                 .padding(.horizontal, width * 0.2)
                 .padding(.vertical, width * 0.16)
                 Text(ShortName.bin(name))
-                    .font(.system(size: max(7, width * 0.19), weight: .black))
+                    .tonneFont(fixed: max(7, width * 0.19), .black)
                     .tracking(0.3)
                     .foregroundStyle(label)
                     .lineLimit(1)
@@ -380,7 +380,7 @@ struct TrashBinRow: View {
             }
             if rest > 0 {
                 Text("+\(rest)")
-                    .font(.system(size: width * 0.34, weight: .black))
+                    .tonneFont(fixed: width * 0.34, .black)
                     .foregroundStyle(.white)
                     .frame(width: width * 0.8, height: width * 1.26)
             }
@@ -473,7 +473,7 @@ struct BinLine: View {
     var body: some View {
         HStack(spacing: dot * 0.36) {
             BinDot(symbolName: symbolName, colorHex: colorHex, name: name, size: dot)
-            Text(name).font(KlarStyle.font(fontSize, .heavy)).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.75)
+            Text(name).tonneFont(size: fontSize, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.75)
         }
     }
 }
@@ -507,7 +507,7 @@ struct KlarCheckButtonLabel: View {
         ZStack {
             Circle().fill(done ? KlarStyle.done : KlarStyle.buttonBackground(scheme))
             Image(systemName: symbol)
-                .font(.system(size: size * 0.42, weight: .heavy))
+                .tonneFont(fixed: size * 0.42, .heavy)
                 .foregroundStyle(done ? .white : KlarStyle.buttonForeground(scheme))
         }
         .frame(width: size, height: size)
@@ -524,7 +524,7 @@ struct KlarAvatar: View {
         let color = Color(hex: colorHex)
         ZStack {
             Circle().fill(LinearGradient(colors: [color, HexLuma.scaled(colorHex, by: 1.0).opacity(0.75)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Text(initials).font(KlarStyle.font(size * 0.38, .black)).foregroundStyle(.white)
+            Text(initials).tonneFont(fixed: size * 0.38, .black).foregroundStyle(.white)
         }
         .frame(width: size, height: size)
     }

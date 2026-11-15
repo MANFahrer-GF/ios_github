@@ -8,7 +8,7 @@ struct SiriView: View {
             Section {
                 // Eigener Hinweis statt SiriTipView: Apples Baustein holt den Satz erst beim Siri-Dienst ab und erscheint verzögert
                 Label("Sag: „Wann kommt der Müll in Tonne und Torte?“", systemImage: "waveform")
-                    .font(.headline)
+                    .tonneFont(.headline)
             } footer: {
                 Text("Apple verlangt, dass in Siri-Befehlen einer App der App-Name vorkommt – sonst weiß Siri nicht, welche App gemeint ist, und antwortet selbst. Sag dafür einfach „Tonne und Torte“. Ohne App-Namen geht es mit einem eigenen Kurzbefehl (ganz unten).")
             }
@@ -105,7 +105,7 @@ struct SiriView: View {
 
     private func tip(_ number: String, _ text: LocalizedStringKey) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text(number).font(.subheadline.weight(.bold)).foregroundStyle(.white)
+            Text(number).tonneFont(.subheadline, .bold).foregroundStyle(.white)
                 .frame(width: 22, height: 22).background(Circle().fill(.orange))
             Text(text)
         }
@@ -113,7 +113,7 @@ struct SiriView: View {
 
     private func step(_ number: Int, _ text: LocalizedStringKey) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text("\(number)").font(.subheadline.weight(.bold)).foregroundStyle(.white)
+            Text("\(number)").tonneFont(.subheadline, .bold).foregroundStyle(.white)
                 .frame(width: 22, height: 22).background(Circle().fill(.tint))
             Text(text)
         }
