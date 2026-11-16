@@ -126,15 +126,17 @@ final class TonneUITests: XCTestCase {
         XCUIDevice.shared.appearance = .light
     }
 
-    /// Widgets in jeder Schriftart: Schrift in der App wählen (echte App-Gruppe, darum ohne -uiTesting),
-    /// dann auf dem Home-Bildschirm die Widget-Galerie öffnen und fotografieren. Nur auf Wunsch (TEST_RUNNER_TONNE_WIDGET=1).
-    func testWidgetGalleryFonts() throws {
-        guard ProcessInfo.processInfo.environment["TONNE_WIDGET"] == "1" else { throw XCTSkip("nur auf Wunsch: Widget-Galerie") }
+    /// Widget auf dem Home-Bildschirm folgt der Schriftart: Widget einmal ablegen, dann je Schriftart in der App wählen
+    /// (echte App-Gruppe, darum ohne -uiTesting) und den Widget-Bereich fotografieren. Abgerundet und Serif müssen sich
+    /// unterscheiden, zwei Aufnahmen derselben Schrift gleichen sich (Gegenprobe). Die Galerie-Vorschau taugt dafür nicht:
+    /// iOS zeigt dort ein zwischengespeichertes Bild (16.11.2026: alle drei Schriftarten sahen gleich aus, Test war trotzdem grün).
+    /// Nur auf Wunsch (TEST_RUNNER_TONNE_WIDGET=1).
+    func testHomeScreenWidgetFollowsFont() throws {
+        guard ProcessInfo.processInfo.environment["TONNE_WIDGET"] == "1" else { throw XCTSkip("nur auf Wunsch: Widget auf dem Home-Bildschirm") }
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        for (family, label) in [("rounded", "Abgerundet"), ("standard", "Standard (SF Pro)"), ("serif", "Serif (New York)")] {
+        func choose(_ label: String) {
             app.terminate()
             app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
-            // Sonst bleibt der Testmodus aus dem Setup an: die Schrift landet in der Test-Ablage, das Widget liest die App-Gruppe
             app.launchEnvironment["TONNE_UITESTING"] = nil
             app.launch()
             tab("Mehr")
@@ -143,25 +145,55 @@ final class TonneUITests: XCTestCase {
             app.buttons[label].tap()
             sleep(1)
             XCUIDevice.shared.press(.home)
-            sleep(1)
-            springboard.press(forDuration: 1.5)
-            let edit = springboard.buttons["Bearbeiten"].firstMatch
-            if edit.waitForExistence(timeout: 3) { edit.tap() }
-            let add = springboard.buttons["Widget hinzufügen"].firstMatch
-            XCTAssertTrue(add.waitForExistence(timeout: 5), "„Widget hinzufügen“ fehlt")
-            add.tap()
-            let search = springboard.searchFields.firstMatch
-            XCTAssertTrue(search.waitForExistence(timeout: 5))
-            search.tap(); search.typeText("Tonne")
-            let entry = springboard.cells.containing(.staticText, identifier: "Tonne & Torte").firstMatch
-            if entry.waitForExistence(timeout: 5) { entry.tap() } else { springboard.staticTexts["Tonne & Torte"].firstMatch.tap() }
-            sleep(3); snap("widget-\(family)-1")
-            springboard.swipeLeft(); sleep(2); snap("widget-\(family)-2")
-            springboard.swipeLeft(); sleep(2); snap("widget-\(family)-3")
-            XCUIDevice.shared.press(.home); sleep(1); XCUIDevice.shared.press(.home); sleep(1)
+            sleep(6) // Widget lädt nach `reloadAllTimelines` neu
         }
-        // Wieder auf Grundeinstellung
-        app.terminate(); app.launch(); tab("Mehr"); app.buttons["Schrift"].firstMatch.tap(); app.buttons["Abgerundet"].tap()
+        /// Oberer Teil des Home-Bildschirms ohne Statuszeile (Uhrzeit ändert sich), dort liegt das abgelegte Widget.
+        func widgetArea(_ name: String) -> [UInt8] {
+            let shot = XCUIScreen.main.screenshot()
+            let attachment = XCTAttachment(screenshot: shot); attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+            let image = shot.image.cgImage!
+            let rect = CGRect(x: 0, y: CGFloat(image.height) * 0.08, width: CGFloat(image.width), height: CGFloat(image.height) * 0.30)
+            let crop = image.cropping(to: rect)!
+            var pixels = [UInt8](repeating: 0, count: crop.width * crop.height * 4)
+            let context = CGContext(data: &pixels, width: crop.width, height: crop.height, bitsPerComponent: 8, bytesPerRow: crop.width * 4,
+                                    space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            context.draw(crop, in: CGRect(x: 0, y: 0, width: crop.width, height: crop.height))
+            return pixels
+        }
+        /// Anteil sichtbar abweichender Pixel (ein Kanal > 32). Bytegleich taugt nicht: Glas-Hintergrund rauscht minimal.
+        /// Gemessen 16.11.2026: gleiche Schrift 0 %, Serif gegen Abgerundet 1,7 %.
+        func changed(_ a: [UInt8], _ b: [UInt8]) -> Double {
+            guard a.count == b.count, !a.isEmpty else { return 1 }
+            var n = 0
+            for i in stride(from: 0, to: a.count, by: 4) where (0..<3).contains(where: { abs(Int(a[i + $0]) - Int(b[i + $0])) > 32 }) { n += 1 }
+            return Double(n) / Double(a.count / 4)
+        }
+
+        choose("Abgerundet")
+        springboard.press(forDuration: 1.5)
+        let edit = springboard.buttons["Bearbeiten"].firstMatch
+        if edit.waitForExistence(timeout: 3) { edit.tap() }
+        let addButton = springboard.buttons["Widget hinzufügen"].firstMatch
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5), "„Widget hinzufügen“ fehlt")
+        addButton.tap()
+        let search = springboard.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        search.tap(); search.typeText("Tonne")
+        let entry = springboard.cells.containing(.staticText, identifier: "Tonne & Torte").firstMatch
+        if entry.waitForExistence(timeout: 5) { entry.tap() } else { springboard.staticTexts["Tonne & Torte"].firstMatch.tap() }
+        sleep(2)
+        // In der Galerie steht ein Symbolzeichen vor dem Text („ Widget hinzufügen“)
+        springboard.buttons.matching(NSPredicate(format: "label CONTAINS 'Widget hinzufügen'")).firstMatch.tap()
+        sleep(2)
+        XCUIDevice.shared.press(.home); sleep(2)
+
+        let rounded = widgetArea("widget-home-rounded")
+        choose("Serif (New York)")
+        let serif = widgetArea("widget-home-serif")
+        choose("Abgerundet")
+        let roundedAgain = widgetArea("widget-home-rounded-2")
+        XCTAssertLessThan(changed(rounded, roundedAgain), 0.001, "Gegenprobe: gleiche Schrift, gleiches Bild – sonst misst der Vergleich nichts")
+        XCTAssertGreaterThan(changed(rounded, serif), 0.005, "Widget auf dem Home-Bildschirm zeigt Serif wie Abgerundet")
     }
 
     private func tabButton(_ name: String) -> XCUIElement {
