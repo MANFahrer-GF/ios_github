@@ -68,6 +68,9 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .awido, serviceKey: "fulda", title: "Landkreis Fulda", website: "https://www.landkreis-fulda.de/"),
         CatalogEntry(kind: .awido, serviceKey: "fulda-stadt", title: "Stadt Fulda", website: "https://www.fulda.de/"),
         CatalogEntry(kind: .awido, serviceKey: "lra-ab", title: "Landkreis Aschaffenburg", website: "https://www.landkreis-aschaffenburg.de/"),
+        // Stadt Aschaffenburg: AWIDO-Kunde der Stadtwerke (16.11.2026: 768 Straßen, Termine bis Ende 2027); die MyMüll-App
+        // führt die Stadt, liefert aber für keine ihrer 25 Flächen einen Termin.
+        CatalogEntry(kind: .awido, serviceKey: "stwab", title: "Stadtwerke Aschaffenburg", website: "https://www.stwab.de/Abfall-Stadtreinigung/Muellabfuhr/", places: ["Aschaffenburg"]),
         CatalogEntry(kind: .awido, serviceKey: "lra-mue", title: "Landkreis Mühldorf a. Inn", website: "https://www.lra-mue.de/"),
         CatalogEntry(kind: .awido, serviceKey: "roth", title: "Landkreis Roth", website: "https://www.landratsamt-roth.de/"),
         CatalogEntry(kind: .awido, serviceKey: "lra-regensburg", title: "Landratsamt Regensburg", website: "https://www.landkreis-regensburg.de/"),

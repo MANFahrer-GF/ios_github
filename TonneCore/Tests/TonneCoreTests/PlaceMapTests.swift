@@ -314,6 +314,17 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertTrue(falkensee.entries.contains { $0.serviceKey == "de.albagroup.app" })
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: Die MyMüll-App führt Aschaffenburg, liefert aber für keine Fläche der Stadt einen Termin.
+    /// Die Stadtwerke haben einen eigenen AWIDO-Kunden („stwab“).
+    func testAschaffenburgCityIsServedByTheStadtwerke() throws {
+        let city = try XCTUnwrap(ProviderCatalog.checkPlace("Aschaffenburg").first { $0.district == "Kreisfreie Stadt Aschaffenburg" })
+        XCTAssertEqual(city.entries.map(\.serviceKey), ["stwab"])
+        XCTAssertEqual(city.entries.first?.kind, .awido)
+        // Gegenprobe: der Landkreis bleibt beim Kreis-AWIDO
+        let alzenau = try XCTUnwrap(ProviderCatalog.checkPlace("Alzenau").first)
+        XCTAssertTrue(alzenau.entries.contains { $0.serviceKey == "lra-ab" })
+    }
+
     func testUnavailablePortalIsToldHonestly() throws {
         let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
         XCTAssertFalse(wildungen.isCovered)
