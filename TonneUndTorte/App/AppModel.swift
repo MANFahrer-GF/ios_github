@@ -303,13 +303,13 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive {
             if let locationID, type.location?.id != locationID { continue }
             let duty = type.dutyPeriods
-            let quota = quotaLine(for: type)
+            let quota = quotaLines(for: type)
             for date in type.pickupDates(from: from, to: to) {
                 // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
                 // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
                 result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id,
                                             note: type.note(on: date), handling: type.handling, notPutOut: type.isNotPutOut(on: date), offDuty: !DutySchedule.isOnDuty(on: date, periods: duty),
-                                            quotaLine: quota))
+                                            quotaLine: quota(date)))
             }
         }
         for person in allPeople() {
@@ -346,11 +346,11 @@ final class AppModel: ObservableObject {
         let doneTimes = SnapshotStore.doneTimes()
         return allWasteTypes().filter(\.isActive).flatMap { type in
             let duty = type.dutyPeriods
-            let quota = quotaLine(for: type)
+            let quota = quotaLines(for: type)
             return type.pickupDates(from: today, to: horizon).map {
                 PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol,
                               remindersEnabled: type.remindersEnabled && DutySchedule.isOnDuty(on: $0, periods: duty), done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)), note: type.note(on: $0), handling: type.handling, doneAt: doneTimes[Days.iso($0)],
-                              skipped: type.isNotPutOut(on: $0), quotaTypeID: type.isCounted ? type.id.uuidString : nil, quotaLine: quota)
+                              skipped: type.isNotPutOut(on: $0), quotaTypeID: type.isCounted ? type.id.uuidString : nil, quotaLine: quota($0))
             }
         }
     }
@@ -503,6 +503,20 @@ final class AppModel: ObservableObject {
         return PickupQuota.freeLine(type.quotaSummary(period: type.quotaPeriod(containing: Days.today())))
     }
 
+    /// Dieselbe Zeile je Abholtag, im Zeitraum des Abholtags: Am 30.12. mit 12 von 12 genutzt
+    /// zeigt die Abholung am 2.1. „12 von 12 frei“, nicht „alle genutzt“. Je Zeitraum nur einmal gerechnet.
+    func quotaLines(for type: WasteType) -> (Date) -> String? {
+        guard type.isCounted else { return { _ in nil } }
+        var cache: [Date: String?] = [:]
+        return { day in
+            let period = type.quotaPeriod(containing: day)
+            if let hit = cache[period.start] { return hit }
+            let line = PickupQuota.freeLine(type.quotaSummary(period: period))
+            cache[period.start] = line
+            return line
+        }
+    }
+
     /// Statistik als CSV: laufender und vorheriger Zeitraum aller (bzw. eines Standorts) Müllarten, vergangene Termine.
     func statisticsCSV(locationID: UUID? = nil) -> String {
         let today = Days.today()
@@ -577,7 +591,7 @@ final class AppModel: ObservableObject {
         var messages: [String] = []
         for location in allLocations() where location.canSync {
             // Kurzer Vorlauf (mitlaufendes Fenster wie SBAZV) → alle 2 Tage, sonst wöchentlich
-            let lastKnown = (location.wasteTypes ?? []).filter { $0.sourceKey != nil }.compactMap { $0.explicitDates.max() }.max()
+            let lastKnown = SyncRhythm.lastKnownPickup(latestPerType: (location.wasteTypes ?? []).filter { $0.isActive && $0.sourceKey != nil }.compactMap { $0.explicitDates.max() })
             let due = force || SyncRhythm.isDue(lastSync: location.lastSyncAt, lastKnownPickup: lastKnown)
             guard due else { continue }
             let name = location.name

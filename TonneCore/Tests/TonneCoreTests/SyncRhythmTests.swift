@@ -7,6 +7,16 @@ final class SyncRhythmTests: XCTestCase {
     private let now = Date(timeIntervalSince1970: 1_800_000_000)
     private func days(_ n: Double) -> Date { now.addingTimeInterval(n * 86_400) }
 
+    /// Prüfbefund 16.11.: Das Maximum über alle Müllarten ließ einen einzelnen fernen Termin das kurze Fenster überdecken.
+    func testShortestFutureEndOfTypesCounts() {
+        let lead = SyncRhythm.lastKnownPickup(latestPerType: [days(42), days(70), days(-30)], now: now)
+        XCTAssertEqual(lead, days(42))
+        XCTAssertTrue(SyncRhythm.isDue(lastSync: days(-2.1), lastKnownPickup: lead, now: now))
+        // Keine künftigen Termine: wie „nichts bekannt“ → kurz
+        XCTAssertNil(SyncRhythm.lastKnownPickup(latestPerType: [days(-5)], now: now))
+        XCTAssertNil(SyncRhythm.lastKnownPickup(latestPerType: [], now: now))
+    }
+
     func testNeverSyncedIsDue() {
         XCTAssertTrue(SyncRhythm.isDue(lastSync: nil, lastKnownPickup: days(200), now: now))
     }

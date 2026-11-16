@@ -141,7 +141,8 @@ struct StatisticsView: View {
         var now = 0, before = 0
         for item in items {
             now += item.summary.used
-            before += item.type.quotaSummary(period: PickupQuota.previous(item.summary.period, anchor: item.type.quotaStart), today: lastYearToday).used
+            let previous = PickupQuota.previous(item.summary.period, anchor: item.type.quotaStart).through(lastYearToday)
+            before += item.type.quotaSummary(period: previous, today: lastYearToday).used
         }
         guard before > 0 || now > 0 else { return nil }
         return L10n.t("Bis zum gleichen Tag im Vorjahr: \(before) \(before == 1 ? "Leerung" : "Leerungen") (jetzt \(now))",
@@ -242,7 +243,8 @@ struct QuotaCard: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(PickupQuota.headline(summary)).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(scheme))
                         .accessibilityIdentifier("quotaHeadline-\(type.name)")
-                    if editable {
+                    // Nur ohne Kontingent: Im Vorjahr einer gezählten Müllart fehlt es nur für diesen Zeitraum
+                    if editable && !type.isCounted {
                         Button(L10n.t("Kontingent einrichten", "Set up included collections"), action: onSettings)
                             .tonneFont(.subheadline, .semibold)
                             .accessibilityIdentifier("quotaSetup-\(type.name)")
@@ -468,6 +470,11 @@ struct QuotaSettingsView: View {
     @State private var price = ""
     @State private var askBaseline = false
     @State private var baselineText = ""
+    // Erst bei „Fertig“ ins Modell – „Abbrechen“ nimmt alles zurück
+    @State private var countOffDuty = false
+    @State private var baseline: Int?
+    @State private var baselineDate: Date?
+    @State private var askedOnFinish = false
     private let wasCounted: Bool
 
     init(type: WasteType) {
@@ -478,6 +485,9 @@ struct QuotaSettingsView: View {
         _ownYear = State(initialValue: type.quotaStart != nil)
         _cutoff = State(initialValue: type.quotaStart ?? Days.today())
         _price = State(initialValue: type.pricePerExtra.map { $0.formatted(.number.precision(.fractionLength(2))) } ?? "")
+        _countOffDuty = State(initialValue: type.countOffDuty)
+        _baseline = State(initialValue: type.quotaBaseline)
+        _baselineDate = State(initialValue: type.quotaBaselineDate)
     }
 
     var body: some View {
@@ -510,17 +520,17 @@ struct QuotaSettingsView: View {
                     } footer: { Text(L10n.t("Optional, z. B. 4,20.", "Optional, e.g. 4.20.")) }
                     if !type.dutyPeriods.isEmpty {
                         Section {
-                            Toggle(L10n.t("Leerungen zählen auch, wenn ich nicht dran bin", "Count collections when it's not my turn"), isOn: $type.countOffDuty)
+                            Toggle(L10n.t("Leerungen zählen auch, wenn ich nicht dran bin", "Count collections when it's not my turn"), isOn: $countOffDuty)
                         } footer: {
                             Text(L10n.t("Für eine geteilte Tonne: Die Tage der anderen stehen dann zum Nachtragen bereit.",
                                         "For a shared bin: the other days are then listed to catch up."))
                         }
                     }
-                    if let baseline = type.quotaBaseline, let date = type.quotaBaselineDate {
+                    if let baseline, let date = baselineDate {
                         Section(L10n.t("Startwert", "Starting value")) {
                             LabeledContent(L10n.t("bis \(DateText.short(date)) laut Angabe", "until \(DateText.short(date)) as entered"), value: "\(baseline)")
                             Button(L10n.t("Startwert ändern", "Change starting value")) { baselineText = "\(baseline)"; askBaseline = true }
-                            Button(L10n.t("Startwert entfernen", "Remove starting value"), role: .destructive) { type.quotaBaseline = nil; type.quotaBaselineDate = nil }
+                            Button(L10n.t("Startwert entfernen", "Remove starting value"), role: .destructive) { self.baseline = nil; baselineDate = nil }
                         }
                     } else {
                         Section {
@@ -538,12 +548,12 @@ struct QuotaSettingsView: View {
                 TextField(L10n.t("Anzahl", "Number"), text: $baselineText).keyboardType(.numberPad)
                 Button(L10n.t("Übernehmen", "Save")) {
                     if let value = Int(baselineText.trimmingCharacters(in: .whitespaces)), value >= 0 {
-                        type.quotaBaseline = value
-                        type.quotaBaselineDate = Days.today()
+                        baseline = value
+                        baselineDate = Days.today()
                     }
-                    save()
+                    if askedOnFinish { apply(); save() }
                 }
-                Button(L10n.t("Einzeln nachtragen", "Enter one by one"), role: .cancel) { save() }
+                Button(L10n.t("Einzeln nachtragen", "Enter one by one"), role: .cancel) { if askedOnFinish { apply(); save() } }
             } message: {
                 Text(L10n.t("Die Zahl gilt als Startwert bis heute. Du kannst vergangene Termine auch einzeln in der Leiste nachtragen.",
                             "The number counts as the starting value until today. You can also enter past dates one by one in the strip."))
@@ -552,17 +562,26 @@ struct QuotaSettingsView: View {
     }
 
     private func finish() {
-        type.setIncluded(enabled ? included : nil)
-        type.quotaStart = enabled && ownYear ? Days.start(of: cutoff) : nil
-        type.pricePerExtra = enabled ? Double(price.replacingOccurrences(of: ",", with: ".").trimmingCharacters(in: .whitespaces)) : nil
         // Mitten im Zeitraum eingeschaltet: einmal nach dem bisherigen Stand fragen
-        let period = type.quotaPeriod(containing: Days.today())
-        if enabled && !wasCounted && type.quotaBaseline == nil && Days.between(period.start, Days.today()) > 7 {
+        let period = PickupQuota.period(containing: Days.today(), anchor: enabled && ownYear ? Days.start(of: cutoff) : nil)
+        if enabled && !wasCounted && baseline == nil && Days.between(period.start, Days.today()) > 7 {
             baselineText = ""
+            askedOnFinish = true
             askBaseline = true
             return
         }
+        apply()
         save()
+    }
+
+    /// Alle Eingaben des Blatts auf einmal ins Modell.
+    private func apply() {
+        type.setIncluded(enabled ? included : nil)
+        type.quotaStart = enabled && ownYear ? Days.start(of: cutoff) : nil
+        type.pricePerExtra = enabled ? Double(price.replacingOccurrences(of: ",", with: ".").trimmingCharacters(in: .whitespaces)) : nil
+        type.countOffDuty = countOffDuty
+        type.quotaBaseline = baseline
+        type.quotaBaselineDate = baselineDate
     }
 
     private func save() {

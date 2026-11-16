@@ -19,6 +19,19 @@ final class PickupQuotaTests: XCTestCase {
 
     // MARK: - Zeitraum, Jahreswechsel, Stichtag
 
+    /// Prüfbefund 16.11.: „Bis zum gleichen Tag im Vorjahr“ zählte das ganze Vorjahr (12 statt 4).
+    func testPreviousYearCountsOnlyUpToSameDay() {
+        let input = QuotaInput(scheduled: biweekly2026, done: Array(biweekly2026.prefix(12)), included: 26)
+        let lastYearToday = d(2026, 3, 1)
+        let clipped = year(2026).through(lastYearToday, calendar: calendar)
+        XCTAssertEqual(clipped.end, d(2026, 3, 2))
+        XCTAssertEqual(PickupQuota.summary(input, period: clipped, today: lastYearToday, calendar: calendar).used, 4)
+        // Gegenprobe: ganzer Zeitraum zählt alle 12
+        XCTAssertEqual(PickupQuota.summary(input, period: year(2026), today: lastYearToday, calendar: calendar).used, 12)
+        // Stichtag vor Beginn: leerer Zeitraum, nie Ende vor Anfang
+        XCTAssertEqual(year(2026).through(d(2025, 6, 1), calendar: calendar).end, d(2026, 1, 1))
+    }
+
     func testCalendarYearAndYearChange() {
         let period = year(2026)
         XCTAssertEqual(period.start, d(2026, 1, 1))
@@ -233,6 +246,27 @@ final class PickupQuotaTests: XCTestCase {
         var plain = input
         plain.included = nil
         XCTAssertTrue(PickupQuota.catchUp(plain, today: today, calendar: calendar).isEmpty, "ohne Kontingent keine Karte")
+    }
+
+    /// Prüfbefund 16.11.: Am Einrichtungstag (Startwert von heute) fragte die Karte nach Terminen, die im Startwert stecken.
+    func testCatchUpRespectsBaselineSetToday() {
+        let today = d(2026, 4, 20)
+        let input = QuotaInput(scheduled: biweekly2026, included: 12, baseline: 7, baselineDate: today)
+        XCTAssertTrue(PickupQuota.catchUp(input, today: today, calendar: calendar).isEmpty)
+        // Gegenprobe: am Tag danach liegt nichts Neues dazwischen, ohne Startwert fragt sie nach 2.4. und 16.4.
+        var plain = input
+        plain.baseline = nil
+        XCTAssertEqual(PickupQuota.catchUp(plain, today: today, calendar: calendar).map(\.date), [d(2026, 4, 16), d(2026, 4, 2)].sorted())
+    }
+
+    /// Prüfbefund 16.11.: Die Zeile zur Abholung zählt im Zeitraum des Abholtags. Am 30.12. alle 12 genutzt,
+    /// die Abholung am 2.1. liegt im neuen Jahr und hat wieder 12 frei.
+    func testFreeLineUsesPeriodOfPickupDay() {
+        let done = Array(biweekly2026.prefix(12))
+        let input = QuotaInput(scheduled: biweekly2026, done: done, included: 12)
+        let today = d(2026, 12, 30)
+        XCTAssertEqual(PickupQuota.freeLine(PickupQuota.summary(input, period: year(2026), today: today, calendar: calendar)), "alle 12 genutzt")
+        XCTAssertEqual(PickupQuota.freeLine(PickupQuota.summary(input, period: year(2027), today: today, calendar: calendar)), "noch 12 von 12 frei")
     }
 
     // MARK: - CSV

@@ -71,6 +71,11 @@ public struct QuotaPeriod: Hashable, Sendable {
 
     public func contains(_ day: Date) -> Bool { day >= start && day < end }
 
+    /// Nur bis einschließlich `day` – für „bis zum gleichen Tag im Vorjahr“, sonst zählen spätere Markierungen mit.
+    public func through(_ day: Date, calendar: Calendar = .current) -> QuotaPeriod {
+        QuotaPeriod(start: start, end: min(end, max(start, Days.add(1, to: calendar.startOfDay(for: day), calendar: calendar))))
+    }
+
     /// „2026“ beim Kalenderjahr, sonst „2026/27“.
     public func label(calendar: Calendar = .current) -> String {
         let c = calendar.dateComponents([.year, .month, .day], from: start)
@@ -239,9 +244,10 @@ public enum PickupQuota {
     public static func catchUp(_ input: QuotaInput, today: Date, calendar: Calendar = .current) -> [QuotaEntry] {
         guard input.included != nil else { return [] }
         let today = calendar.startOfDay(for: today)
-        let window = QuotaPeriod(start: Days.add(-catchUpDays, to: today, calendar: calendar), end: today)
+        // Fenster schließt heute ein: Ein Startwert von heute (Einrichtungstag) deckt sonst nichts ab
+        let window = QuotaPeriod(start: Days.add(-catchUpDays, to: today, calendar: calendar), end: Days.add(1, to: today, calendar: calendar))
         return summary(input, period: window, today: today, calendar: calendar).entries
-            .filter { !$0.upcoming && !$0.coveredByBaseline && ($0.mark == .open || $0.bulkConfirmed) }
+            .filter { $0.date < today && !$0.upcoming && !$0.coveredByBaseline && ($0.mark == .open || $0.bulkConfirmed) }
     }
 
     // MARK: - Bestätigen je Müllart
