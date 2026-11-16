@@ -55,10 +55,14 @@ public struct PlannedPickup: Hashable {
     /// „Diesmal nicht rausstellen“ – die Abfuhr kommt, aber diese Müllart bleibt drin (z. B. Sack nach dem Urlaub leer).
     /// Keine Erinnerung, kein Nachhaken, kein „wieder reinholen“.
     public var skipped: Bool
+    /// Gezählte Müllart (mit Kontingent): ihre ID – an Tagen mit weiteren Müllarten fragt die Mitteilung je Müllart.
+    public var quotaTypeID: String?
+    /// „noch 5 von 12 frei“ für die Vorabend-Mitteilung.
+    public var quotaLine: String?
 
-    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false, note: String? = nil, handling: WasteHandling? = nil, doneAt: Date? = nil, skipped: Bool = false) {
+    public init(date: Date, name: String, locationName: String? = nil, colorHex: String = "#5B6470", symbolName: String = "trash.fill", remindersEnabled: Bool = true, done: Bool = false, broughtIn: Bool = false, note: String? = nil, handling: WasteHandling? = nil, doneAt: Date? = nil, skipped: Bool = false, quotaTypeID: String? = nil, quotaLine: String? = nil) {
         self.date = date; self.name = name; self.locationName = locationName; self.colorHex = colorHex; self.symbolName = symbolName; self.remindersEnabled = remindersEnabled; self.done = done; self.broughtIn = broughtIn
-        self.note = note; self.handling = handling; self.doneAt = doneAt; self.skipped = skipped
+        self.note = note; self.handling = handling; self.doneAt = doneAt; self.skipped = skipped; self.quotaTypeID = quotaTypeID; self.quotaLine = quotaLine
     }
 
     /// Eine Tonne, die nach der Abfuhr wieder hereingeholt wird.
@@ -119,10 +123,13 @@ public struct PlannedNotification: Hashable {
     public var phone: String?
     /// Abholtag mit Hinbringen (Schadstoffmobil, auch gemischt) – Knopf „Erledigt“ ohne „steht draußen“.
     public var bringOnly: Bool
+    /// Tag mit gezählter und weiteren Müllarten: Aktionen „Alles raus“ / „Ohne <Name>“ statt eines pauschalen „Erledigt“.
+    public var choiceTypeID: String?
+    public var choiceName: String?
 
-    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String, targetID: String? = nil, personName: String? = nil, phone: String? = nil, bringOnly: Bool = false) {
+    public init(identifier: String, fireDate: Date, title: String, body: String, category: Category, threadIdentifier: String, dayKey: String, targetID: String? = nil, personName: String? = nil, phone: String? = nil, bringOnly: Bool = false, choiceTypeID: String? = nil, choiceName: String? = nil) {
         self.identifier = identifier; self.fireDate = fireDate; self.title = title; self.body = body; self.category = category; self.threadIdentifier = threadIdentifier; self.dayKey = dayKey
-        self.targetID = targetID; self.personName = personName; self.phone = phone; self.bringOnly = bringOnly
+        self.targetID = targetID; self.personName = personName; self.phone = phone; self.bringOnly = bringOnly; self.choiceTypeID = choiceTypeID; self.choiceName = choiceName
     }
 }
 
@@ -283,6 +290,12 @@ public enum ReminderPlanner {
             PickupWording.Item(name: multiLocation && item.locationName != nil ? "\(item.name) (\(item.locationName!))" : item.name,
                                handling: handling(item), note: item.note)
         }
+        // Gezählte Müllart an einem Tag mit weiteren: die Mitteilung fragt „Alles raus“ / „Ohne <Name>“
+        func choice(_ items: [PlannedPickup]) -> (id: String, name: String)? {
+            guard PickupQuota.needsChoice(counted: items.map { $0.quotaTypeID != nil }),
+                  let counted = items.first(where: { $0.quotaTypeID != nil }), let id = counted.quotaTypeID else { return nil }
+            return (id, counted.name)
+        }
         var byDay: [Date: [PlannedPickup]] = [:]
         // Morgen-Erinnerung: offene Müllarten plus Hinbringen, auch wenn der Tag am Vorabend schon „erledigt“ ist –
         // wer abends die Tonne rausstellt und „Erledigt“ tippt, muss morgens trotzdem noch zum Schadstoffmobil.
@@ -301,9 +314,11 @@ public enum ReminderPlanner {
             let wording = PickupWording(items.map(wordingItem))
             if settings.morningEnabled, let fire = Days.at(minutes: settings.morningMinutes, on: day, calendar: calendar), fire > now {
                 let text = morningText(wording)
+                let pick = choice(items.filter { !$0.done })
                 result.append(PlannedNotification(
                     identifier: "waste-morning-\(key)", fireDate: fire, title: text.title, body: text.body,
-                    category: .wasteMorning, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty))
+                    category: .wasteMorning, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty,
+                    choiceTypeID: pick?.id, choiceName: pick?.name))
             }
         }
         for (day, items) in byDay {
@@ -312,17 +327,22 @@ public enum ReminderPlanner {
             let key = Days.iso(day, calendar: calendar)
             if settings.eveningEnabled, let fire = Days.at(minutes: settings.eveningMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
                 let text = eveningText(wording)
+                // „Restmüll · noch 5 von 12 frei“ – nur bei gezählten Müllarten, sonst bleibt der Text wie bisher
+                let quota = items.compactMap { item in item.quotaLine.map { "\(wordingItem(item).name) · \($0)" } }
+                let pick = choice(items)
                 result.append(PlannedNotification(
-                    identifier: "waste-evening-\(key)", fireDate: fire, title: text.title, body: text.body,
-                    category: .wasteEvening, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty))
+                    identifier: "waste-evening-\(key)", fireDate: fire, title: text.title, body: ([text.body] + quota).joined(separator: "\n"),
+                    category: .wasteEvening, threadIdentifier: "waste", dayKey: key, bringOnly: !wording.bringNames.isEmpty,
+                    choiceTypeID: pick?.id, choiceName: pick?.name))
             }
             // Nachhaken „Steht … draußen?“ nur, wenn überhaupt etwas rausgestellt wird
             if settings.eveningEnabled, settings.escalationEnabled, settings.escalationMinutes > settings.eveningMinutes, !wording.onlyBringTo,
                let fire = Days.at(minutes: settings.escalationMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now {
                 let text = escalationText(wording)
+                let pick = choice(items)
                 result.append(PlannedNotification(
                     identifier: "waste-escalation-\(key)", fireDate: fire, title: text.title, body: text.body,
-                    category: .wasteEscalation, threadIdentifier: "waste", dayKey: key))
+                    category: .wasteEscalation, threadIdentifier: "waste", dayKey: key, choiceTypeID: pick?.id, choiceName: pick?.name))
             }
         }
 
