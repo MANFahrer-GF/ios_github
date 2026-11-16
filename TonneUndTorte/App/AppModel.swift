@@ -193,7 +193,7 @@ final class AppModel: ObservableObject {
         NotificationCenter.default.addObserver(forName: SnapshotStore.notificationName, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.applyPendingDoneMarkers() }
         }
-        // Auf einem anderen Gerät geänderter Tonnendienst: sonst gälten die alten Mitteilungen bis zum nächsten Öffnen
+        // Auf einem anderen Gerät geänderter Tonnendienst oder „Erledigt“: sonst gälten alte Mitteilungen und Wecker bis zum nächsten Öffnen
         NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: .main) { [weak self] _ in
             Task { self?.recheckDutyAfterImport() }
         }
@@ -259,12 +259,13 @@ final class AppModel: ObservableObject {
         await CalendarExport.autoSyncIfEnabled(items: calendarExportItems())
     }
 
-    /// Stand der Tonnendienste, nach dem zuletzt geplant wurde.
+    /// Stand, nach dem zuletzt geplant wurde: Tonnendienste und Termine samt „Erledigt“/„Diesmal nicht“.
     private func dutyFingerprint() -> [String] {
-        allLocations().map { "\($0.id)|\($0.dutyPeriodsJSON)" }.sorted()
+        allLocations().map { "\($0.id)|\($0.dutyPeriodsJSON)" }.sorted() + ReminderPlanner.replanFingerprint(pickups: plannedPickups())
     }
 
-    /// iCloud liefert in Schüben: Erst nach kurzer Ruhe prüfen und nur bei geänderten Zeiträumen neu planen.
+    /// iCloud liefert in Schüben: Erst nach kurzer Ruhe prüfen und nur bei geändertem Stand neu planen
+    /// (Tonnendienst oder „Erledigt“/„Diesmal nicht“ von einem anderen Gerät).
     private func recheckDutyAfterImport() {
         dutyRecheck?.cancel()
         dutyRecheck = Task { [weak self] in

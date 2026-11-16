@@ -241,8 +241,8 @@ struct SettingsView: View {
                 }
             }
         } header: { Text(L10n.t("Wecker", "Alarm")) } footer: {
-            Text(L10n.t("Klingelt wie ein Wecker – auch wenn das iPhone stumm ist oder ein Fokus läuft. Nur an Abenden vor einer Abholung mit etwas zum Rausstellen; nach „Erledigt“ oder „Diesmal nicht“ fällt er weg. Für einzelne Müllarten abschalten: dort „Erinnerungen“ aus.",
-                        "Rings like an alarm clock – even when your iPhone is silenced or a Focus is on. Only on evenings before a collection with something to put out; it's cancelled after “Done” or “Not this time”. To leave out a waste type, turn off its “Reminders”."))
+            Text(L10n.t("Klingelt wie ein Wecker – auch wenn das iPhone stumm ist oder ein Fokus läuft. Nur an Abenden vor einer Abholung mit etwas zum Rausstellen; nach „Erledigt“ oder „Diesmal nicht“ fällt er weg – auf einem anderen Gerät markiert erst, wenn dieses iPhone den Stand aus iCloud hat (spätestens beim Öffnen der App). Für einzelne Müllarten abschalten: dort „Erinnerungen“ aus.",
+                        "Rings like an alarm clock – even when your iPhone is silenced or a Focus is on. Only on evenings before a collection with something to put out; it's cancelled after “Done” or “Not this time” – if marked on another device, once this iPhone has the change from iCloud (at the latest when you open the app). To leave out a waste type, turn off its “Reminders”."))
         }
     }
 

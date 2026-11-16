@@ -1,7 +1,7 @@
 import XCTest
 @testable import TonneCore
 
-/// Abgleich vorhandener Wecker mit dem Plan: was storniert wird und was liegen bleibt.
+/// Abgleich vorhandener Wecker mit dem Plan: was storniert wird, was liegen bleibt, wann neu geplant wird.
 final class AlarmReconcileTests: XCTestCase {
     private let tue = PlannedAlarm.id(dayKey: "2026-11-17")!
     private let wed = PlannedAlarm.id(dayKey: "2026-11-18")!
@@ -24,5 +24,17 @@ final class AlarmReconcileTests: XCTestCase {
         let stored = [AlarmReconcile.titleKey(tue), AlarmReconcile.titleKey(wed), AlarmReconcile.titleKey(thu), "alarmEnabled", "alarmMinutes"]
         XCTAssertEqual(AlarmReconcile.staleTitleKeys(stored: stored, keeping: [wed]), [AlarmReconcile.titleKey(thu), AlarmReconcile.titleKey(tue)].sorted())
         XCTAssertEqual(AlarmReconcile.staleTitleKeys(stored: stored, keeping: [tue, wed, thu]), [])
+    }
+
+    /// Befund 8: „Erledigt“ oder „Diesmal nicht“ von einem anderen Gerät muss die Neuplanung auslösen.
+    func testFingerprintChangesWithDoneAndNotPutOut() {
+        let day = Date(timeIntervalSince1970: 1_795_000_000)
+        let open = [PlannedPickup(date: day, name: "Restmüll")]
+        let done = [PlannedPickup(date: day, name: "Restmüll", done: true)]
+        let notPutOut = [PlannedPickup(date: day, name: "Restmüll", skipped: true)]
+        let base = ReminderPlanner.replanFingerprint(pickups: open)
+        XCTAssertNotEqual(base, ReminderPlanner.replanFingerprint(pickups: done))
+        XCTAssertNotEqual(base, ReminderPlanner.replanFingerprint(pickups: notPutOut))
+        XCTAssertEqual(base, ReminderPlanner.replanFingerprint(pickups: open), "gleicher Stand → keine Neuplanung")
     }
 }

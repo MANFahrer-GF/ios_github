@@ -24,3 +24,14 @@ public enum AlarmReconcile {
         return stored.filter { $0.hasPrefix(titleKeyPrefix) && !keep.contains($0) }.sorted()
     }
 }
+
+extension ReminderPlanner {
+    /// Fingerabdruck der Termine, aus denen Mitteilungen und Wecker entstehen. Ändert er sich nach einem iCloud-Import
+    /// (etwa „Erledigt“ oder „Diesmal nicht“ von einem anderen Gerät), wird neu geplant – sonst klingelte der Wecker trotzdem.
+    public static func replanFingerprint(pickups: [PlannedPickup], calendar: Calendar = .current) -> [String] {
+        pickups.map { pickup in
+            [Days.iso(pickup.date, calendar: calendar), pickup.name, pickup.locationName ?? "",
+             pickup.handling.map { "\($0)" } ?? "", "\(pickup.remindersEnabled)", "\(pickup.done)", "\(pickup.skipped)"].joined(separator: "|")
+        }.sorted()
+    }
+}
