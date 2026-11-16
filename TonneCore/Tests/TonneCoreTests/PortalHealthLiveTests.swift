@@ -242,10 +242,29 @@ final class PortalHealthLiveTests: XCTestCase {
                let parent = try await parentOption(of: wanted, in: step.options, after: selections, provider: provider, localities: localities) {
                 selections.append(parent); continue
             }
+            // Sammelort mit dem Kreisnamen (Ostprignitz-Ruppin: 48 Orte und „Ostprignitz-Ruppin“, darunter Dreetz, Dabergotz …
+            // als Einträge): steht weder die Gemeinde noch ein Ortsteil in der Liste, dort nachsehen
+            if let wanted, !placeFound, step.isPlaceStep, let district = job.district,
+               let collective = step.options.first(where: { ProviderCatalog.fold($0.title) == Self.districtCore(district) }),
+               !step.options.contains(where: { matches($0, wanted) || isLocality($0, localities) }),
+               let parent = try await parentOption(of: wanted, in: [collective], after: selections, provider: provider, localities: localities) {
+                selections.append(parent); continue
+            }
             selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound,
                                    localities: placeFound ? [] : localities))
         }
         return (selections, sawPlaceStep || placeFound ? placeFound : nil, numberIndex == selections.count - 1)
+    }
+
+    /// „Landkreis Ostprignitz-Ruppin“ → „ostprignitz-ruppin“ (gefaltet, ohne Vorsilbe).
+    static func districtCore(_ district: String) -> String {
+        let folded = ProviderCatalog.fold(district)
+        for prefix in ["landkreis ", "kreis "] where folded.hasPrefix(prefix) { return String(folded.dropFirst(prefix.count)) }
+        return folded
+    }
+
+    static func isLocality(_ option: SelectionOption, _ localities: [String]) -> Bool {
+        localities.contains { ProviderCatalog.fold($0) == ProviderCatalog.fold(searchName(option.title)) }
     }
 
     /// Ortsteile je Gemeinde („Landkreis|Gemeinde“ → Namen) aus `CatalogLocalities`.

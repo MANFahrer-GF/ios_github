@@ -162,15 +162,22 @@ final class PortalHealthWalkTests: XCTestCase {
         func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
     }
 
-    /// Ostprignitz-Ruppin: eine lange Ortsliste (49 Orte) mit Ortsteilen statt Gemeinden – Breddin steht dort als „Damelack“.
+    /// Ostprignitz-Ruppin: eine lange Ortsliste (49 Orte) mit Ortsteilen statt Gemeinden – Breddin steht dort als „Damelack“,
+    /// weitere Orte stehen unter dem Sammelort „Ostprignitz-Ruppin“.
     private struct LocalityStub: WasteProvider {
         let kind = ProviderKind.sitepark
         let serviceKey = "stub"
         let displayName = "Stub"
         func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
-            guard selections.isEmpty else { return nil }
-            let names = (1...44).map { "Ort \($0)" } + ["Damelack"]
-            return SelectionStep(title: SelectionStep.cityTitle, options: names.sorted().map { SelectionOption(id: $0, title: $0) })
+            switch selections.first?.title {
+            case nil:
+                let names = (1...44).map { "Ort \($0)" } + ["Damelack", "Ostprignitz-Ruppin"]
+                return SelectionStep(title: SelectionStep.cityTitle, options: names.sorted().map { SelectionOption(id: $0, title: $0) })
+            case "Ostprignitz-Ruppin" where selections.count == 1:
+                // Sammelort: weitere Orte des Kreises als Einträge
+                return SelectionStep(title: SelectionStep.streetTitle, options: ["Dabergotz", "Dreetz", "Seebeck", "Vielitz"].map { SelectionOption(id: $0, title: $0) })
+            default: return nil
+            }
         }
         func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
     }
@@ -200,5 +207,22 @@ final class PortalHealthWalkTests: XCTestCase {
         let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: LocalityStub())
         XCTAssertEqual(titles(selections), ["Damelack"])
         XCTAssertEqual(placeFound, true)
+    }
+
+    func testPlaceUnderTheCollectiveEntryOfTheDistrictIsFound() async throws {
+        for (place, expected) in [("Dreetz", "Dreetz"), ("Vielitzsee", "Seebeck")] {
+            let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .sitepark, serviceKey: "stub", title: "Stub"),
+                                                district: "Landkreis Ostprignitz-Ruppin", place: place)
+            let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: LocalityStub())
+            XCTAssertEqual(selections.first?.title, "Ostprignitz-Ruppin", place)
+            XCTAssertEqual(placeFound, true, place)
+            if place == "Dreetz" { XCTAssertEqual(selections.last?.title, expected) }
+            else { XCTAssertTrue(["Seebeck", "Vielitz"].contains(selections.last?.title ?? ""), place) }
+        }
+        // Ortsteil in der Liste geht vor dem Sammelort
+        let breddin = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .sitepark, serviceKey: "stub", title: "Stub"),
+                                                district: "Landkreis Ostprignitz-Ruppin", place: "Breddin")
+        let (selections, _, _) = try await PortalHealthLiveTests.walk(breddin, calendar: .current, provider: LocalityStub())
+        XCTAssertEqual(titles(selections), ["Damelack"])
     }
 }
