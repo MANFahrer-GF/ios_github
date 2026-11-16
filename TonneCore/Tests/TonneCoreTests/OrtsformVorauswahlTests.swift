@@ -137,6 +137,21 @@ final class OrtsformVorauswahlTests: XCTestCase {
         }
     }
 
+    /// In allen früheren Ständen falsch: Ein Ortsteil, der den Gemeindenamen trägt, wählte die Gemeinde
+    /// („Amt Wachsenburg Wachsenburg“, „Storbeck-Frankendorf Frankendorf (Storbeck-Frankendorf)“). Dieselbe Gemeinde in
+    /// anderer Schreibung als Ortsteil („Alt Mölln“) wählt weiter die Gemeinde.
+    func testLocalityCarryingTheMunicipalityNameShowsTheList() {
+        for (municipality, locality, query) in [("Amt Wachsenburg", "Wachsenburg", "Amt Wachsenburg Wachsenburg"),
+                                                ("Amt Creuzburg", "Creuzburg", "Amt Creuzburg Creuzburg"),
+                                                ("Storbeck-Frankendorf", "Frankendorf (Storbeck-Frankendorf)", "Storbeck-Frankendorf Frankendorf (Storbeck-Frankendorf)")] {
+            XCTAssertTrue((LocalityIndex.byName[ProviderCatalog.fold(locality)] ?? []).contains { $0.municipality == municipality }, locality)
+            XCTAssertNil(cityStep([municipality, locality]).preselection(for: municipality, query: query), query)
+            XCTAssertEqual(cityStep([municipality, locality]).preselection(for: municipality, query: municipality)?.title, municipality, "Gegenprobe")
+        }
+        XCTAssertTrue((LocalityIndex.byName[ProviderCatalog.fold("Alt Mölln")] ?? []).contains { $0.municipality == "Alt-Mölln" })
+        XCTAssertEqual(cityStep(["Alt-Mölln", "Alt Mölln"]).preselection(for: "Alt-Mölln", query: "Alt-Mölln Alt Mölln")?.title, "Alt-Mölln")
+    }
+
     /// Prüfbefund C zu Paket E: Ein einzelner Buchstabe ohne Punkt („Rieden a“) wählte die Gemeinde, obwohl der Eintrag auch
     /// „Rieden am Forggensee“ führt. Echte Kette über die belegten Orte der Einträge; mit Punkt kam schon die Liste.
     func testSingleLetterWithoutDotIsNoExtraWord() throws {

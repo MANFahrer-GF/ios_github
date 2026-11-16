@@ -193,13 +193,20 @@ public struct SelectionStep: Hashable {
         let named = (!extra.isEmpty || !rest.isEmpty) && options.contains { option in
             guard option.id != exact.id else { return false }
             let words = wordsOf(option.title)
+            // Auch mit dem Gemeindenamen in der Option: „Amt Wachsenburg Wachsenburg“, „Storbeck-Frankendorf Frankendorf
+            // (Storbeck-Frankendorf)“. Nicht bei derselben Gemeinde in anderer Schreibung: gleich geschrieben („Alt Mölln“
+            // für „Alt-Mölln“) oder gleicher Kern mit dem Zusatz der Gemeinde („Heppenheim an der Bergstrasse“).
+            let addition = meaningful(option.title).subtracting(wordsOf(placeCore))
+            let samePlace = spell(option.title) == spell(place)
+                || (Self.placeCore(option.title) == placeCore && !addition.isEmpty && addition.isSubset(of: form([place])))
+            let halfNamed = !rest.isEmpty && rest.allSatisfy(words.contains) && !samePlace
+                && (LocalityIndex.byName[fold(option.title)] ?? []).contains { fold($0.municipality) == fold(place) }
+            if halfNamed { return true }
             if coreWords.allSatisfy(words.contains) {
                 return !extra.isEmpty && extra.allSatisfy { word in words.contains { $0.hasPrefix(word) } }
             }
             let own = meaningful(option.title)
-            if !own.isEmpty, own.isSubset(of: extra) { return true }
-            return !rest.isEmpty && rest.allSatisfy(words.contains)
-                && (LocalityIndex.byName[fold(option.title)] ?? []).contains { fold($0.municipality) == fold(place) }
+            return !own.isEmpty && own.isSubset(of: extra)
         }
         return named ? nil : exact
     }
