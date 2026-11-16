@@ -211,10 +211,13 @@ public extension ProviderCatalog {
         checkPlace(query).filter { !$0.isCovered }
     }
 
-    /// Gesuchte Gemeinde, die der Eintrag belegt führt (für die Vorauswahl im ersten Schritt), sonst nil.
+    /// Gesuchte Gemeinde, die der Eintrag belegt führt (für die Vorauswahl im ersten Schritt), sonst nil. Passt die Suche
+    /// auf mehrere geführte Gemeinden („Rutsweiler“ am Glan / an der Lauter, Ortsteil „Zahrensdorf“ in zwei Gemeinden),
+    /// ebenfalls nil: Der Assistent zeigt dann die Liste statt still die erste (Prüfbefund 3, 16.11.2026).
     static func servedPlace(for entry: CatalogEntry, query: String) -> String? {
         let pairs = Set(EntryPlacesIndex.pairs[entry.id] ?? [])
-        return municipalities(matching: query).first { pairs.contains("\($0.district)|\($0.name)") }?.name
+        let served = Set(municipalities(matching: query).filter { pairs.contains("\($0.district)|\($0.name)") }.map(\.name))
+        return served.count == 1 ? served.first : nil
     }
 
     /// Zusatz für den Untertitel in der Trefferliste, bezogen auf die Eingabe: „Führt Karlsruhe · auch 14 Orte im

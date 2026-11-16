@@ -232,7 +232,9 @@ final class SuchPruefpunkteTests: XCTestCase {
         }
         XCTAssertEqual(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler am Glan"), "Rutsweiler am Glan")
         XCTAssertEqual(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler an der Lauter"), "Rutsweiler an der Lauter")
-        XCTAssertNotNil(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler"))
+        XCTAssertNil(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler"), "zwei geführte Gemeinden: keine still wählen")
+        // Auch wenn eine Gemeinde ankommt, wählt die Kurzform bei zwei Optionen gleichen Kerns nichts vor
+        XCTAssertNil(step.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler"))
         XCTAssertNil(chain("Rutsweiler"))
         XCTAssertEqual(chain("Rutsweiler am Glan"), "Rutsweiler/Glan")
         XCTAssertEqual(chain("Rutsweiler an der Lauter"), "Rutsweiler/Lauter")
@@ -241,8 +243,9 @@ final class SuchPruefpunkteTests: XCTestCase {
         let duew = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "awb-duerkheim" })
         let weisenheim = SelectionStep(title: SelectionStep.cityTitle, options: ["Weisenheim am Berg", "Weisenheim am Sand", "Bad Dürkheim"]
             .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
-        let place = try XCTUnwrap(ProviderCatalog.servedPlace(for: duew, query: "Weisenheim"))
-        XCTAssertNil(weisenheim.preselection(for: place, query: "Weisenheim"))
+        XCTAssertNil(ProviderCatalog.servedPlace(for: duew, query: "Weisenheim"))
+        XCTAssertEqual(ProviderCatalog.servedPlace(for: duew, query: "Weisenheim am Berg"), "Weisenheim am Berg")
+        XCTAssertNil(weisenheim.preselection(for: "Weisenheim am Berg", query: "Weisenheim"))
         XCTAssertEqual(weisenheim.preselection(for: "Weisenheim am Sand", query: "Weisenheim am Sand")?.title, "Weisenheim am Sand")
     }
 }

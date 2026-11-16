@@ -64,5 +64,15 @@ final class OrtsteilVorauswahlTests: XCTestCase {
             }
         }
         XCTAssertGreaterThan(checked, 100)
+        // Bloßer Name ohne Zusatz („Zahrensdorf“, „Tessin“, „Holzendorf“): passt er auf mehrere geführte Gemeinden, keine Vorauswahl
+        let pairs = Set(EntryPlacesIndex.pairs[lwl.id] ?? [])
+        var twins = 0
+        for bare in Set(titles.map { title in [" (", " + ", "/"].reduce(title) { $0.components(separatedBy: $1)[0] } }) {
+            let served = Set(ProviderCatalog.municipalities(matching: bare).filter { pairs.contains("\($0.district)|\($0.name)") }.map(\.name))
+            guard served.count > 1 else { continue }
+            twins += 1
+            XCTAssertNil(ProviderCatalog.servedPlace(for: lwl, query: bare), "„\(bare)“ passt auf \(served.sorted())")
+        }
+        print("LWL-Namen mit mehreren geführten Gemeinden: \(twins)")
     }
 }
