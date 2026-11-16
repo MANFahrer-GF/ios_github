@@ -185,6 +185,14 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
   Gesprochene Siri-Sätze mit „Tonne“ bleiben zusätzlich erhalten (eingeübte Befehle).
 - QS: Claude + Codex 7 Runden auf die eigenen Korrekturen, 354 Logik-Tests (neue Tests per Gegenprobe rot ohne Korrektur).
 
+## 5f. 2.1.0 (Build 16) – vor dem Einreichen: CloudKit-Schema nach Production
+
+Die Leerungs-Statistik bringt neun neue Felder in `WasteType` (`CD_includedPerYear`, `CD_quotaStart`, `CD_quotaBaseline`,
+`CD_quotaBaselineDate`, `CD_pricePerExtra`, `CD_countOffDuty`, `CD_extraPickupDates`, `CD_bulkConfirmedDates`, `CD_quotaChangesJSON`).
+**Vor dem Upload:** Debug-Build auf einem Gerät mit iCloud starten, bei einer Müllart ein Kontingent mit Startwert, Preis und einer
+Zusatzleerung speichern, dann im CloudKit-Dashboard „Deploy Schema Changes…“. Ohne das scheitert der iCloud-Abgleich der Müllarten
+in TestFlight und App Store. Danach im Dashboard unter Production → Record Types → `CD_WasteType` nachsehen, ob die neun Felder da sind.
+
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 
 - **„Tonne wieder reinholen“:**
