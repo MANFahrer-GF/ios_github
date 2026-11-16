@@ -37,6 +37,8 @@ enum SettingsKeys {
     static let overviewCustom = "overview.showCustom"
     static let overviewDays = "overview.days"
     static let overviewStats = "overview.showStats"
+    /// Tag (ISO), an dem die Nachtragen-Karte weggewischt wurde.
+    static let catchUpDismissed = "quota.catchUpDismissed"
 
     /// „Erledigt“ für eigene Termine: je Vorkommen „<id>|<Tag>“. Nur auf diesem Gerät – es unterdrückt Erinnerungen,
     /// damit ist kein neues Feld im iCloud-Schema nötig. Ältere Einträge als 60 Tage fallen beim Speichern heraus.
@@ -124,6 +126,8 @@ struct CalendarEvent: Identifiable, Hashable {
     var notPutOut: Bool = false
     /// Tonnendienst: An diesem Tag ist jemand anderes dran.
     var offDuty: Bool = false
+    /// Gezählte Müllart: „noch 5 von 12 frei“.
+    var quotaLine: String? = nil
     /// Nichts mehr zu tun: erledigt, bewusst drin gelassen oder nicht zuständig.
     var settled: Bool { done || notPutOut || offDuty }
     var color: Color { Color(hex: colorHex) }
@@ -299,11 +303,13 @@ final class AppModel: ObservableObject {
         for type in allWasteTypes() where type.isActive {
             if let locationID, type.location?.id != locationID { continue }
             let duty = type.dutyPeriods
+            let quota = quotaLine(for: type)
             for date in type.pickupDates(from: from, to: to) {
                 // displaySymbol kann ein eigenes Piktogramm („tt.sack“) sein. Im Schnappschuss für Widgets und Watch
                 // landet es in PickupItem.glyphName, symbolName bleibt dort ein SF-Name für ältere Watch-Versionen.
                 result.append(CalendarEvent(id: "waste-\(type.id)-\(Days.iso(date))", date: date, kind: .waste, title: type.name, subtitle: type.location?.name ?? "Abholung", colorHex: type.colorHex, symbolName: type.displaySymbol, locationID: type.location?.id, locationName: type.location?.name, years: nil, done: type.isDone(on: date), wasteTypeID: type.id,
-                                            note: type.note(on: date), handling: type.handling, notPutOut: type.isNotPutOut(on: date), offDuty: !DutySchedule.isOnDuty(on: date, periods: duty)))
+                                            note: type.note(on: date), handling: type.handling, notPutOut: type.isNotPutOut(on: date), offDuty: !DutySchedule.isOnDuty(on: date, periods: duty),
+                                            quotaLine: quota))
             }
         }
         for person in allPeople() {
@@ -340,10 +346,11 @@ final class AppModel: ObservableObject {
         let doneTimes = SnapshotStore.doneTimes()
         return allWasteTypes().filter(\.isActive).flatMap { type in
             let duty = type.dutyPeriods
+            let quota = quotaLine(for: type)
             return type.pickupDates(from: today, to: horizon).map {
                 PlannedPickup(date: $0, name: type.name, locationName: type.location?.name, colorHex: type.colorHex, symbolName: type.displaySymbol,
                               remindersEnabled: type.remindersEnabled && DutySchedule.isOnDuty(on: $0, periods: duty), done: type.isDone(on: $0), broughtIn: broughtIn.contains(Days.iso($0)), note: type.note(on: $0), handling: type.handling, doneAt: doneTimes[Days.iso($0)],
-                              skipped: type.isNotPutOut(on: $0))
+                              skipped: type.isNotPutOut(on: $0), quotaTypeID: type.isCounted ? type.id.uuidString : nil, quotaLine: quota)
             }
         }
     }
@@ -392,18 +399,48 @@ final class AppModel: ObservableObject {
 
     // MARK: - Erledigt
 
-    func markDone(dayKey: String) async {
+    /// Die Müllarten, die ein „Erledigt“ an diesem Tag markiert.
+    private func doneCandidates(day: Date) -> [WasteType] {
+        allWasteTypes().filter { $0.isActive && !$0.isNotPutOut(on: day) && $0.isOnDuty(on: day) && $0.pickupDates(from: day, to: day).contains(day) }
+    }
+
+    /// Braucht „Erledigt“ an diesem Tag das Blatt je Müllart? Nur mit gezählter und weiterer Müllart (sonst ein Tipp wie bisher).
+    func needsDoneChoice(day: Date) -> Bool {
+        PickupQuota.needsChoice(counted: doneChoiceTypes(day: day).map(\.isCounted))
+    }
+
+    /// Müllarten für das Blatt „Was stand draußen?“.
+    func doneChoiceTypes(day: Date) -> [WasteType] { doneCandidates(day: day).filter { !$0.isDone(on: day) } }
+
+    /// „Erledigt“ für einen Tag. `leftIn`: ausdrücklich gewählt (Blatt) – diese Müllarten blieben drin. Ohne Angabe gilt
+    /// eine in der Mitteilung abgelegte Wahl („Alles raus“ / „Ohne …“), sonst ist es ein pauschaler Tipp (Widget, Watch,
+    /// Live-Aktivität, Kurzbefehl): Der markiert wie bisher alles, ein Tag mit gezählter Müllart wird aber nachgefragt.
+    func markDone(dayKey: String, leftIn: Set<UUID>? = nil) async {
         guard let day = Days.parse(dayKey) else { return }
         // Zeitpunkt: aus dem Widget/der Watch schon gemerkt (ausstehende Markierung) – sonst jetzt
         let pendingFromWidget = SnapshotStore.doneDays().contains(dayKey)
         SnapshotStore.recordDoneTime(dayKey: dayKey, overwrite: !pendingFromWidget)
-        for type in allWasteTypes() where type.isActive && !type.isNotPutOut(on: day) && type.isOnDuty(on: day) && type.pickupDates(from: day, to: day).contains(day) {
-            type.markDone(on: day)
+        let types = doneCandidates(day: day)
+        let choice = leftIn.map { Set($0.map(\.uuidString)) } ?? SnapshotStore.choice(dayKey: dayKey)
+        let resolution = PickupQuota.resolve(choice.map { .chosen(left: $0) } ?? .blanket, types: types.map { (id: $0.id.uuidString, counted: $0.isCounted) })
+        for type in types {
+            let id = type.id.uuidString
+            if resolution.notOut.contains(id) {
+                type.setNotPutOut(true, on: day)
+            } else if resolution.out.contains(id), !type.isDone(on: day) {
+                // Schon Erledigtes bleibt, wie es ist: Ein zweiter Durchlauf (Mitteilung + ausstehende Markierung) macht
+                // eine ausdrückliche Wahl nicht nachträglich pauschal
+                type.markDone(on: day)
+                if resolution.bulk.contains(id) { type.markBulk(on: day) } else { type.clearBulk(on: day) }
+            } else if choice != nil {
+                type.clearBulk(on: day)
+            }
         }
         // Nicht gespeichert: Markierung aus Widget/Watch liegen lassen, beim nächsten Mal erneut versuchen
         guard save() else { return }
         notifications.cancelWasteReminders(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
+        SnapshotStore.clearChoice(dayKey: dayKey)
         await refreshAll()
     }
 
@@ -412,12 +449,73 @@ final class AppModel: ObservableObject {
         guard let day = Days.parse(dayKey) else { return }
         for type in allWasteTypes() where type.isDone(on: day) {
             type.unmarkDone(on: day)
+            type.clearBulk(on: day)
         }
         guard save() else { return }
         SnapshotStore.clearDoneTime(dayKey: dayKey)
         SnapshotStore.clearUndo(dayKey: dayKey)
         SnapshotStore.clearDone(dayKey: dayKey)
         await refreshAll()
+    }
+
+    // MARK: - Leerungs-Statistik
+
+    /// Ein Termin einer gezählten Müllart (Nachtragen-Karte, Statistik).
+    struct QuotaItem: Identifiable {
+        let type: WasteType
+        let date: Date
+        let bulk: Bool
+        var id: String { "\(type.id)-\(Days.iso(date))" }
+    }
+
+    /// Zustand eines Termins setzen (raus, nicht raus, offen) – auch an Tagen, an denen jemand anderes dran ist.
+    func setPickupMark(_ mark: PickupMark, wasteTypeID: UUID, day: Date) async {
+        guard let type = allWasteTypes().first(where: { $0.id == wasteTypeID }) else { return }
+        type.setPickupMark(mark, on: day)
+        guard save() else { return }
+        objectWillChange.send()
+        await refreshAll()
+    }
+
+    /// Nachtragen-Karte: offene oder pauschal bestätigte Termine gezählter Müllarten aus den letzten 30 Tagen.
+    func catchUpItems(locationID: UUID? = nil) -> [QuotaItem] {
+        let today = Days.today()
+        return allWasteTypes().filter { $0.isActive && $0.isCounted && (locationID == nil || $0.location?.id == locationID) }
+            .flatMap { type in type.catchUpEntries(today: today).map { QuotaItem(type: type, date: $0.date, bulk: $0.bulkConfirmed) } }
+            .sorted { ($0.date, $0.type.sortOrder) < ($1.date, $1.type.sortOrder) }
+    }
+
+    /// Alle offenen oder pauschal bestätigten Termine des laufenden Zeitraums (Statistik „3 Termine offen – nachtragen“).
+    func openItems(locationID: UUID? = nil) -> [QuotaItem] {
+        let today = Days.today()
+        return allWasteTypes().filter { $0.isActive && (locationID == nil || $0.location?.id == locationID) }
+            .flatMap { type in
+                type.quotaSummary(period: type.quotaPeriod(containing: today), today: today).entries
+                    .filter { !$0.upcoming && !$0.coveredByBaseline && ($0.mark == .open || $0.bulkConfirmed) }
+                    .map { QuotaItem(type: type, date: $0.date, bulk: $0.bulkConfirmed) }
+            }
+            .sorted { ($0.date, $0.type.sortOrder) > ($1.date, $1.type.sortOrder) }
+    }
+
+    /// „noch 5 von 12 frei“ für eine gezählte Müllart (laufender Zeitraum), sonst nil.
+    func quotaLine(for type: WasteType) -> String? {
+        guard type.isCounted else { return nil }
+        return PickupQuota.freeLine(type.quotaSummary(period: type.quotaPeriod(containing: Days.today())))
+    }
+
+    /// Statistik als CSV: laufender und vorheriger Zeitraum aller (bzw. eines Standorts) Müllarten, vergangene Termine.
+    func statisticsCSV(locationID: UUID? = nil) -> String {
+        let today = Days.today()
+        var rows: [PickupQuota.CSVRow] = []
+        for type in allWasteTypes() where type.isActive && (locationID == nil || type.location?.id == locationID) {
+            let current = type.quotaPeriod(containing: today)
+            for period in [PickupQuota.previous(current, anchor: type.quotaStart), current] {
+                for entry in type.quotaSummary(period: period, today: today).entries where !entry.upcoming {
+                    rows.append(PickupQuota.CSVRow(date: entry.date, location: type.location?.name ?? "", wasteType: type.name, mark: entry.mark, isExtra: entry.isExtra))
+                }
+            }
+        }
+        return PickupQuota.csv(rows)
     }
 
     // MARK: - Diesmal nicht rausstellen

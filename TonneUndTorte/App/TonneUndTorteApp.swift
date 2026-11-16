@@ -221,6 +221,17 @@ struct TonneUndTorteApp: App {
         hazardous.dayNotes = [Days.iso(hazardousDay): "Rathausplatz Gifhorn (09:00 - 11:00)"]
         hazardous.location = location
         context.insert(hazardous)
+        // Leerungs-Statistik (Startschalter -uiTestingQuota): Restmüll mit drei vergangenen Terminen, morgen zusammen mit dem Gelben Sack
+        if ProcessInfo.processInfo.arguments.contains("-uiTestingQuota") {
+            let rest = WasteType(name: "Restmüll", category: .residual, sortOrder: 1)
+            rest.explicitDates = [-6, -4, -2, 1, 15].map { Days.add($0, to: Days.today()) }
+            rest.location = location
+            context.insert(rest)
+            let yellow = WasteType(name: "Gelber Sack", category: .packaging, sortOrder: 2)
+            yellow.explicitDates = [Days.add(1, to: Days.today())]
+            yellow.location = location
+            context.insert(yellow)
+        }
         try? context.save()
     }
 }

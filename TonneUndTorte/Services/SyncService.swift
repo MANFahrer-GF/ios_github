@@ -121,7 +121,8 @@ enum SyncService {
                 target.dayNotes = [:]
             }
             if replace {
-                let allDays = days.union(kept)
+                // Vergangene Termine bleiben stehen: sonst verschwänden unmarkierte still aus der Leerungs-Statistik
+                let allDays = days.union(kept).union(PickupQuota.pastDatesKeptOnSync(old: target.explicitDates, today: Days.today()))
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(allDays))
                 if !target.explicitDates.isEmpty {
                     // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert

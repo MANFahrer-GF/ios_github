@@ -22,6 +22,9 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     static let bringInAction = "PICKUP_BROUGHT_IN"
     static let customDoneAction = "CUSTOM_DONE"
     static let skipAction = "PICKUP_SKIP"
+    /// Tag mit gezählter und weiteren Müllarten: „Ohne <Müllart>“ (die gezählte blieb drin).
+    static let withoutAction = "PICKUP_WITHOUT"
+    static let quotaCategoryPrefix = "WASTE_QUOTA_"
 
     /// Was ein Tipp auf eine Geburtstags- oder Termin-Mitteilung öffnet.
     enum OpenTarget { case birthdays, person(UUID), event(UUID) }
@@ -45,6 +48,10 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     private override init() {
         super.init()
     }
+
+    /// Feste Kategorien; die für gezählte Müllarten („Ohne Restmüll“) kommen beim Planen dazu.
+    private var baseCategories: Set<UNNotificationCategory> = []
+    private var quotaCategoryIDs: Set<String> = []
 
     func configure() {
         center.delegate = self
@@ -70,7 +77,26 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         let customDone = UNNotificationAction(identifier: NotificationManager.customDoneAction, title: L10n.t("✅ Erledigt", "✅ Done"), options: [])
         let customLater = UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ In 1 Stunde nochmal", "⏰ Remind me in 1 hour"), options: [])
         let custom = UNNotificationCategory(identifier: "CUSTOM", actions: [customDone, customLater], intentIdentifiers: [], options: [])
-        center.setNotificationCategories([waste, dropOff, bringIn, birthdayPhone, birthday, birthdayPre, birthdayGroup, custom])
+        baseCategories = [waste, dropOff, bringIn, birthdayPhone, birthday, birthdayPre, birthdayGroup, custom]
+        center.setNotificationCategories(baseCategories)
+    }
+
+    /// Je gezählter Müllart eine Kategorie mit „Alles raus“ / „Ohne <Name>“ / „Später“ – Aktionstitel sind je Kategorie fest.
+    /// `setNotificationCategories` ersetzt die ganze Menge, darum immer alle zusammen setzen (nur bei Änderung).
+    private func registerQuotaCategories(_ plan: [PlannedNotification]) {
+        var quota: [String: String] = [:]
+        for item in plan { if let id = item.choiceTypeID, let name = item.choiceName { quota[id] = name } }
+        let ids = Set(quota.map { "\($0.key)|\($0.value)" })
+        guard ids != quotaCategoryIDs, !baseCategories.isEmpty else { return }
+        quotaCategoryIDs = ids
+        let categories = quota.map { id, name in
+            UNNotificationCategory(identifier: NotificationManager.quotaCategoryPrefix + id, actions: [
+                UNNotificationAction(identifier: NotificationManager.doneAction, title: L10n.t("✅ Alles raus", "✅ All out"), options: []),
+                UNNotificationAction(identifier: NotificationManager.withoutAction, title: L10n.t("🚫 Ohne \(name)", "🚫 Without \(name)"), options: []),
+                UNNotificationAction(identifier: NotificationManager.snoozeAction, title: L10n.t("⏰ Später", "⏰ Later"), options: []),
+            ], intentIdentifiers: [], options: [])
+        }
+        center.setNotificationCategories(baseCategories.union(categories))
     }
 
     func refreshStatus() async {
@@ -115,6 +141,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         // Zuerst nur entfernen, was im neuen Plan nicht mehr vorkommt (macht Platz im iOS-Limit von 64). Alles andere bleibt
         // stehen und wird durch die gleichnamige neue Anfrage ersetzt – scheitert das Anlegen, gilt die alte weiter.
         center.removePendingNotificationRequests(withIdentifiers: pending.filter { !$0.contains("-snooze-") && !keep.contains($0) })
+        registerQuotaCategories(chosen)
         for item in chosen {
             let content = UNMutableNotificationContent()
             content.title = item.title
@@ -125,10 +152,11 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             info["targetID"] = item.targetID
             info["name"] = item.personName
             info["phone"] = item.phone
+            info["withoutID"] = item.choiceTypeID
             content.userInfo = info
             switch item.category {
             case .wasteEvening, .wasteMorning, .wasteEscalation:
-                content.categoryIdentifier = item.bringOnly ? "WASTE_BRING" : "WASTE"
+                content.categoryIdentifier = item.choiceTypeID.map { NotificationManager.quotaCategoryPrefix + $0 } ?? (item.bringOnly ? "WASTE_BRING" : "WASTE")
                 content.interruptionLevel = item.category == .wasteEscalation ? .timeSensitive : .active
             case .wasteBringIn:
                 content.categoryIdentifier = "WASTE_BRINGIN"
@@ -224,8 +252,17 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             center.removePendingNotificationRequests(withIdentifiers: pending)
             await MainActor.run { self.onCustomDone?(targetID, dayKey) }
         case NotificationManager.doneAction:
+            // In der Kategorie einer gezählten Müllart heißt der Knopf „Alles raus“: ausdrücklich, nichts nachzufragen
+            let explicit = response.notification.request.content.categoryIdentifier.hasPrefix(NotificationManager.quotaCategoryPrefix)
             await MainActor.run {
-                SnapshotStore.markDone(dayKey: dayKey)
+                if explicit { SnapshotStore.markDone(dayKey: dayKey, leftIn: []) } else { SnapshotStore.markDone(dayKey: dayKey) }
+                self.onPickupDone?(dayKey)
+            }
+        case NotificationManager.withoutAction:
+            // „Ohne Restmüll“: alles andere raus, die gezählte Müllart blieb drin (zählt als „nicht raus“)
+            guard let without = userInfo["withoutID"] as? String else { break }
+            await MainActor.run {
+                SnapshotStore.markDone(dayKey: dayKey, leftIn: [without])
                 self.onPickupDone?(dayKey)
             }
         case NotificationManager.skipAction:

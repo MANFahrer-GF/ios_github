@@ -222,6 +222,12 @@ struct LocationDetailView: View {
             ForEach(location.sortedWasteTypes) { type in
                 NavigationLink(value: type) { WasteTypeRow(type: type) }
             }
+            if !location.sortedWasteTypes.isEmpty {
+                // Leerungs-Statistik dieses Standorts: Kontingent je Müllart, Jahresleiste, Nachtragen
+                NavigationLink { StatisticsView(locationID: location.id) } label: {
+                    Label(L10n.t("Leerungen & Kontingent", "Collections & included"), systemImage: "chart.bar.fill")
+                }
+            }
         }
     }
 
