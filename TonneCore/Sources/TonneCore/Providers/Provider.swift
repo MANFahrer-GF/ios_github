@@ -63,7 +63,8 @@ public struct SelectionStep: Hashable {
         guard isPlaceStep else { return nil }
         if let exact = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) { return exact }
         let core = Self.placeCore(place)
-        let hits = options.filter { Self.placeCore($0.title) == core }
+        // „Lambrecht ohne Iptestal und Dörrental“ schließt Teile der Gemeinde aus: nur bei genau gleichem Namen (Prüfbefund 14)
+        let hits = options.filter { Self.placeCore($0.title) == core && !ProviderCatalog.fold($0.title).contains(" ohne ") }
         guard !core.isEmpty else { return nil }
         return hits.count == 1 ? hits[0] : Self.suffixMatch(hits, place: place)
     }
@@ -102,24 +103,44 @@ public struct SelectionStep: Hashable {
         return kept.joined(separator: " ")
     }
 
-    /// Wie `preselection(for:)`, kennt aber „Ort / Ortsteil“ (C-Trace Groß-Gerau): Die Suche „Erfelden“ oder
-    /// „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“, ebenso einen Ortsteil, der allein in der Liste steht („Damelack“
-    /// für Breddin). Ohne passenden Ortsteil keine Vorauswahl – dann die Liste.
+    /// Wie `preselection(for:)`, kennt aber die Suche selbst (Prüfbefunde 1–3, 16.11.2026):
+    /// - Mehrdeutige Kurzform: „Rutsweiler“ passt auf „Rutsweiler/Glan“ und „Rutsweiler/Lauter“, „Weisenheim“ auf „am Berg“
+    ///   und „am Sand“ – keine Vorauswahl, auch wenn die gefundene Gemeinde genau in der Liste steht.
+    /// - Gesuchter Ortsteil mit eigener Option schlägt seine Gemeinde: „Kummer“ wählt „Kummer“, nicht „Ludwigslust“
+    ///   (Gemos „Gemeinde / Ortsteil“), „Damelack“ für Breddin (Ostprignitz-Ruppin); bei gleichnamigen Ortsteilen der mit dem
+    ///   Zusatz der Gemeinde („Zahrensdorf (Kloster Tempzin)“), ohne eindeutige Option („Klein Krams + Ausbau“) die Liste.
+    /// - „Ort / Ortsteil“ (C-Trace Groß-Gerau): „Erfelden“ oder „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“.
     public func preselection(for place: String, query: String) -> SelectionOption? {
-        if let exact = preselection(for: place) { return exact }
         guard isPlaceStep else { return nil }
-        let words = Set(ProviderCatalog.fold(query).split { !$0.isLetter && !$0.isNumber }.map(String.init))
+        let fold = ProviderCatalog.fold
+        let searched = fold(query), placeCore = Self.placeCore(place)
+        if searched != fold(place), Self.placeCore(query) == placeCore, !placeCore.isEmpty,
+           options.filter({ Self.placeCore($0.title) == placeCore }).count > 1 { return nil }
+        let locality = fold(ProviderCatalog.resolve(searched).locality ?? query)
+        let localityCore = Self.placeCore(locality)
+        if !localityCore.isEmpty, localityCore != placeCore {
+            let own = options.filter { Self.placeCore($0.title) == localityCore || fold($0.title).hasPrefix(locality + " ") }
+            if !own.isEmpty {
+                // Nur wenn der Ortsteil laut Ortsteil-Liste zur gesuchten Gemeinde gehört (Kränzlin ist nicht Breddin)
+                guard (LocalityIndex.byName[locality] ?? []).contains(where: { fold($0.municipality) == fold(place) }) else { return nil }
+                let withPlace = own.filter { Self.bracketSuffix($0.title) == fold(place) }
+                if withPlace.count == 1 { return withPlace[0] }
+                return own.count == 1 && fold(own[0].title) == locality ? own[0] : nil
+            }
+        }
+        if let exact = preselection(for: place) { return exact }
+        let words = Set(searched.split { !$0.isLetter && !$0.isNumber }.map(String.init))
         let hits = options.filter {
             let parts = $0.title.components(separatedBy: " / ")
-            return parts.count == 2 && ProviderCatalog.fold(parts[0]) == ProviderCatalog.fold(place) && words.contains(ProviderCatalog.fold(parts[1]))
+            return parts.count == 2 && fold(parts[0]) == fold(place) && words.contains(fold(parts[1]))
         }
-        if hits.count == 1 { return hits[0] }
-        // Ortsteil als eigener Eintrag (Ostprignitz-Ruppin führt Breddin als „Damelack“): die Suche „Damelack“ wählt ihn,
-        // wenn er laut Ortsteil-Liste wirklich zur gesuchten Gemeinde gehört (Gemeinde-Prüfung 16.11.2026)
-        let folded = ProviderCatalog.fold(query)
-        guard (LocalityIndex.byName[folded] ?? []).contains(where: { ProviderCatalog.fold($0.municipality) == ProviderCatalog.fold(place) }) else { return nil }
-        let own = options.filter { ProviderCatalog.fold($0.title) == folded }
-        return own.count == 1 ? own[0] : nil
+        return hits.count == 1 ? hits[0] : nil
+    }
+
+    /// Zusatz in Klammern am Ende: „Zahrensdorf (Kloster Tempzin)“ → „kloster tempzin“.
+    static func bracketSuffix(_ title: String) -> String? {
+        guard let open = title.lastIndex(of: "("), let close = title.lastIndex(of: ")"), open < close else { return nil }
+        return ProviderCatalog.fold(String(title[title.index(after: open)..<close]))
     }
 }
 

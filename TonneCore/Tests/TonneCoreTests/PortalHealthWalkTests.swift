@@ -96,6 +96,22 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertFalse(found && picked.title == "Neustadt am Kulm", "mehrdeutiger Kern darf nicht als Fund gelten")
     }
 
+    /// Prüfbefunde 3 und 14 ändern nur die Vorauswahl der App, nicht „Ort gefunden“ des Prüfwerkzeugs (Punkt-6-Auswertung).
+    func testPickStaysWhenTheAppNoLongerPreselects() {
+        var found = false
+        let duew = ["Lambrecht ohne Iptestal und Dörrental", "Lindenberg mit Lambrecht-Dörrental", "Weisenheim am Berg", "Weisenheim am Sand"]
+            .map { SelectionOption(id: $0, title: $0) }
+        XCTAssertEqual(PortalHealthLiveTests.pick(duew, wanted: "Lambrecht (Pfalz)", found: &found).title, "Lambrecht ohne Iptestal und Dörrental")
+        XCTAssertTrue(found)
+        found = false
+        XCTAssertEqual(PortalHealthLiveTests.pick(duew, wanted: "Weisenheim am Sand", found: &found).title, "Weisenheim am Sand")
+        XCTAssertTrue(found)
+        found = false
+        let kusel = ["Kusel", "Rutsweiler/Glan", "Rutsweiler/Lauter"].map { SelectionOption(id: $0, title: $0) }
+        XCTAssertEqual(PortalHealthLiveTests.pick(kusel, wanted: "Rutsweiler am Glan", found: &found).title, "Rutsweiler/Glan")
+        XCTAssertTrue(found)
+    }
+
     func testLaterAttemptsTryADistrictOfThePlace() {
         let options = ["Zell (Mosel)", "Zell (Mosel) – Zell-Barl", "Zell (Mosel) – Zell-Stadt", "Zellertal"].map { SelectionOption(id: $0, title: $0) }
         var found = false

@@ -111,14 +111,15 @@ final class SuchPruefpunkteTests: XCTestCase {
             .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
         XCTAssertEqual(lambrecht.preselection(for: "Altleiningen")?.title, "Altleiningen mit Neuleiningen Tal")
         XCTAssertEqual(lambrecht.preselection(for: "Frankeneck")?.title, "Frankeneck mit Iptestal Erfenstein und Sattelmühle")
-        XCTAssertEqual(lambrecht.preselection(for: "Lambrecht (Pfalz)")?.title, "Lambrecht ohne Iptestal und Dörrental")
+        // „ohne“ schließt Teile der Gemeinde aus (Dörrental liegt bei „Lindenberg mit Lambrecht-Dörrental“): Liste (Prüfbefund 14)
+        XCTAssertNil(lambrecht.preselection(for: "Lambrecht (Pfalz)"))
+        XCTAssertEqual(lambrecht.preselection(for: "Lambrecht ohne Iptestal und Dörrental")?.title, "Lambrecht ohne Iptestal und Dörrental")
         XCTAssertEqual(lambrecht.preselection(for: "Neuleiningen")?.title, "Neuleiningen")
         // Gleicher Kern, Zusatz nach „/“ entscheidet (Kusel)
         let rutsweiler = SelectionStep(title: L10n.t("Ortsgemeinde", "Municipality"), options: ["Rutsweiler/Glan", "Rutsweiler/Lauter", "Kusel"]
             .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
         XCTAssertEqual(rutsweiler.preselection(for: "Rutsweiler am Glan")?.title, "Rutsweiler/Glan")
         XCTAssertEqual(rutsweiler.preselection(for: "Rutsweiler an der Lauter")?.title, "Rutsweiler/Lauter")
-        XCTAssertNil(rutsweiler.preselection(for: "Rutsweiler"))
         var found = false
         XCTAssertEqual(PortalHealthLiveTests.pick(rutsweiler.options, wanted: "Rutsweiler an der Lauter", found: &found).title, "Rutsweiler/Lauter")
         // Gegenproben: mehrdeutiger Kern und Ortsteil mit Bindestrich wählen nichts vor
@@ -218,5 +219,30 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertEqual(ProviderCatalog.search("Darmstadt-Dieburg").first?.title, "Darmstadt-Dieburg (ZAW)")
         // Bloßer Gemeindename wie in 2.0.10: Kreis-Einträge nicht vor die belegten
         XCTAssertEqual(ProviderCatalog.search("Karlsruhe").first?.title, "Müllmann-App")
+    }
+
+    /// Prüfbefund 3: echte Kette `servedPlace` → `preselection`. Die bloße Suche „Rutsweiler“ passt auf zwei Gemeinden;
+    /// `servedPlace` liefert eine davon, die Vorauswahl darf sie nicht still wählen.
+    func testAmbiguousSearchThroughTheRealChainShowsTheList() throws {
+        let kusel = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "kusel" })
+        let step = SelectionStep(title: L10n.t("Ortsgemeinde", "Municipality"), options: ["Kusel", "Rutsweiler/Glan", "Rutsweiler/Lauter"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        func chain(_ query: String) -> String? {
+            ProviderCatalog.servedPlace(for: kusel, query: query).flatMap { step.preselection(for: $0, query: query)?.title }
+        }
+        XCTAssertEqual(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler am Glan"), "Rutsweiler am Glan")
+        XCTAssertEqual(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler an der Lauter"), "Rutsweiler an der Lauter")
+        XCTAssertNotNil(ProviderCatalog.servedPlace(for: kusel, query: "Rutsweiler"))
+        XCTAssertNil(chain("Rutsweiler"))
+        XCTAssertEqual(chain("Rutsweiler am Glan"), "Rutsweiler/Glan")
+        XCTAssertEqual(chain("Rutsweiler an der Lauter"), "Rutsweiler/Lauter")
+        XCTAssertEqual(chain("Kusel"), "Kusel")
+        // Bad Dürkheim: „Weisenheim“ = am Berg oder am Sand
+        let duew = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "awb-duerkheim" })
+        let weisenheim = SelectionStep(title: SelectionStep.cityTitle, options: ["Weisenheim am Berg", "Weisenheim am Sand", "Bad Dürkheim"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        let place = try XCTUnwrap(ProviderCatalog.servedPlace(for: duew, query: "Weisenheim"))
+        XCTAssertNil(weisenheim.preselection(for: place, query: "Weisenheim"))
+        XCTAssertEqual(weisenheim.preselection(for: "Weisenheim am Sand", query: "Weisenheim am Sand")?.title, "Weisenheim am Sand")
     }
 }

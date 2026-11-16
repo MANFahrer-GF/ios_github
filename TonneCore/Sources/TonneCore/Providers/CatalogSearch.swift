@@ -136,7 +136,7 @@ public extension ProviderCatalog {
     }
 
     /// Gemeinden zur Eingabe und, wenn sie über einen Ortsteil gefunden wurden, dessen Name.
-    private static func resolve(_ needle: String) -> (hits: [(name: String, district: String)], locality: String?) {
+    internal static func resolve(_ needle: String) -> (hits: [(name: String, district: String)], locality: String?) {
         guard needle.count >= 3 else { return ([], nil) }
         let direct = municipalityHits(needle)
         if !direct.isEmpty { return (direct, nil) }
