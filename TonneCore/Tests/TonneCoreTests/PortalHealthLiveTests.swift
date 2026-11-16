@@ -246,7 +246,7 @@ final class PortalHealthLiveTests: XCTestCase {
             // als Einträge): steht weder die Gemeinde noch ein Ortsteil in der Liste, dort nachsehen
             if let wanted, !placeFound, step.isPlaceStep, let district = job.district,
                let collective = step.options.first(where: { ProviderCatalog.fold($0.title) == Self.districtCore(district) }),
-               !step.options.contains(where: { matches($0, wanted) || isLocality($0, localities) }),
+               !step.options.contains(where: { matches($0, wanted) || isNamePart($0, of: wanted) || isLocality($0, localities) }),
                let parent = try await parentOption(of: wanted, in: [collective], after: selections, provider: provider, localities: localities) {
                 selections.append(parent); continue
             }
@@ -261,6 +261,11 @@ final class PortalHealthLiveTests: XCTestCase {
         let folded = ProviderCatalog.fold(district)
         for prefix in ["landkreis ", "kreis "] where folded.hasPrefix(prefix) { return String(folded.dropFirst(prefix.count)) }
         return folded
+    }
+
+    /// Teil eines Doppelnamens: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“.
+    static func isNamePart(_ option: SelectionOption, of wanted: String) -> Bool {
+        wanted.lowercased().hasPrefix(searchName(option.title).lowercased() + "-")
     }
 
     static func isLocality(_ option: SelectionOption, _ localities: [String]) -> Bool {
@@ -293,7 +298,7 @@ final class PortalHealthLiveTests: XCTestCase {
             }
             if let hit = OptionSearch(options).filter(query: wanted).first { found = true; return hit }
             // Doppelname: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“
-            if let part = options.first(where: { wanted.lowercased().hasPrefix(searchName($0.title).lowercased() + "-") }) { found = true; return part }
+            if let part = options.first(where: { isNamePart($0, of: wanted) }) { found = true; return part }
             // Liste der Ortsteile (Landkreis Göttingen: „Klein Wiershausen“ statt „Gleichen“): wie ein Nutzer seinen Ortsteil wählen
             let folded = Set(localities.map(ProviderCatalog.fold))
             let parts = options.filter { folded.contains(ProviderCatalog.fold(searchName($0.title))) }
@@ -325,7 +330,8 @@ final class PortalHealthLiveTests: XCTestCase {
         for option in options {
             guard let next = try? await provider.nextStep(after: selections + [option]), next.input == .list else { continue }
             if next.options.contains(where: { matches($0, wanted) }) { named.append(option) }
-            let score = next.options.filter { matches($0, wanted) || folded.contains(ProviderCatalog.fold(searchName($0.title))) }.count
+            // Doppelname zählt mit (Sammelort Ostprignitz-Ruppin führt Stüdenitz-Schönermark als „Stüdenitz“)
+            let score = next.options.filter { matches($0, wanted) || isNamePart($0, of: wanted) || folded.contains(ProviderCatalog.fold(searchName($0.title))) }.count
             if score > 0 { scored.append((option, score)) }
         }
         if named.count == 1 { return named[0] }
@@ -333,7 +339,8 @@ final class PortalHealthLiveTests: XCTestCase {
         if named.count > 1 { scored = scored.filter { candidate in named.contains { $0.id == candidate.option.id } } }
         let best = scored.map(\.score).max() ?? 0
         let top = scored.filter { $0.score == best }
-        return !folded.isEmpty && top.count == 1 ? top[0].option : nil
+        // Ohne Ortsteile nur beim einzigen Kandidaten (Sammelort), sonst wäre ein bloßer Doppelname-Teil zu schwach
+        return top.count == 1 && (!folded.isEmpty || options.count == 1) ? top[0].option : nil
     }
 
     /// Sperre, Drosselung, Server- oder Zeitfehler: sagt nichts über die Gemeinde. Solche Ergebnisse werden nicht

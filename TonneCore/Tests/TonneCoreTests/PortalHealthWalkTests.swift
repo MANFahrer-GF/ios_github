@@ -175,7 +175,7 @@ final class PortalHealthWalkTests: XCTestCase {
                 return SelectionStep(title: SelectionStep.cityTitle, options: names.sorted().map { SelectionOption(id: $0, title: $0) })
             case "Ostprignitz-Ruppin" where selections.count == 1:
                 // Sammelort: weitere Orte des Kreises als Einträge
-                return SelectionStep(title: SelectionStep.streetTitle, options: ["Dabergotz", "Dreetz", "Seebeck", "Vielitz"].map { SelectionOption(id: $0, title: $0) })
+                return SelectionStep(title: SelectionStep.streetTitle, options: ["Dabergotz", "Dreetz", "Seebeck", "Stüdenitz", "Vielitz"].map { SelectionOption(id: $0, title: $0) })
             default: return nil
             }
         }
@@ -210,13 +210,13 @@ final class PortalHealthWalkTests: XCTestCase {
     }
 
     func testPlaceUnderTheCollectiveEntryOfTheDistrictIsFound() async throws {
-        for (place, expected) in [("Dreetz", "Dreetz"), ("Vielitzsee", "Seebeck")] {
+        for (place, expected) in [("Dreetz", "Dreetz"), ("Vielitzsee", "Seebeck"), ("Stüdenitz-Schönermark", "Stüdenitz")] {
             let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .sitepark, serviceKey: "stub", title: "Stub"),
                                                 district: "Landkreis Ostprignitz-Ruppin", place: place)
             let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: LocalityStub())
             XCTAssertEqual(selections.first?.title, "Ostprignitz-Ruppin", place)
             XCTAssertEqual(placeFound, true, place)
-            if place == "Dreetz" { XCTAssertEqual(selections.last?.title, expected) }
+            if place != "Vielitzsee" { XCTAssertEqual(selections.last?.title, expected, place) }
             else { XCTAssertTrue(["Seebeck", "Vielitz"].contains(selections.last?.title ?? ""), place) }
         }
         // Ortsteil in der Liste geht vor dem Sammelort
