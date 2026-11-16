@@ -628,8 +628,18 @@ public struct RheinlandPfalzPortalsProvider: WasteProvider {
         html = try await client.string(url)
         let hidden = HTMLText.hiddenInputs(in: html).filter { $0.name == "ICS_DOWNLOAD" || $0.name == "REQUEST_TOKEN" }
         guard hidden.count == 2 else { throw ProviderError.noDataGeneric }
-        let data = try await client.postForm(url, fields: hidden.map { ($0.name, $0.value) })
-        return Self.icsPickups(HTTPClient.text(from: data), calendar: calendar)
+        // Ohne „Sec-Fetch-Site: same-origin“ antwortet das Portal seit Herbst 2026 mit HTTP 400 (alle Gemeinden scheiterten).
+        let data = try await client.postForm(url, fields: hidden.map { ($0.name, $0.value) }, headers: ["Sec-Fetch-Site": "same-origin"])
+        return Self.icsPickups(HTTPClient.text(from: data), calendar: calendar).map(Self.germersheimSplitNote)
+    }
+
+    /// „Problemmüll 11:00 - 13:00 Uhr, Kandel, Stadionvorplatz“ → Müllart „Problemmüll“, Uhrzeit und Ort als Hinweis
+    /// (sonst entstünde je Standort eine eigene Müllart).
+    static func germersheimSplitNote(_ pickup: Pickup) -> Pickup {
+        guard let range = pickup.name.range(of: #"\s+\d{1,2}:\d{2}"#, options: .regularExpression), range.lowerBound > pickup.name.startIndex
+        else { return pickup }
+        let note = pickup.name[range.lowerBound...].trimmingCharacters(in: .whitespaces)
+        return Pickup(date: pickup.date, name: String(pickup.name[..<range.lowerBound]), note: note)
     }
 
     // MARK: - Stadtwerke Speyer
