@@ -168,10 +168,18 @@ public struct SelectionStep: Hashable {
         // Wörter der Suche über Gemeinde und gewählte Option hinaus („Ziegelscheune“), die alle als Wortanfang in einer anderen
         // Option stehen: Die Suche meint vermutlich diese, also keine Vorauswahl. Ein Ortsteil ohne eigene Option
         // („Stuttgart Vaihingen“) wählt weiter die Gemeinde. Die Ortsform selbst ist kein Zusatz: „am“ vor „Amerang“,
-        // „a.“ vor „Aldenhoven“ lösten die Sicherung aus (Prüfbefund 1 zu Paket D).
+        // „a.“ vor „Aldenhoven“ lösten die Sicherung aus (Prüfbefund 1 zu Paket D). Als Wortanfang zählt ein Zusatz nur in
+        // Optionen, die auch die Gemeinde nennen („Grabow Ziegel“ → „Grabow Ziegelscheune“). Eine Option ohne die Gemeinde
+        // muss die Suche ganz nennen („Grabow Ziegelscheune“ → „Ziegelscheune“): „Brunsbüttel Nord“ meint nicht
+        // „Nordermeldorf“, „Groß Grönau Klein Grönau“ nicht „Klein Wesenberg“.
         let extra = meaningful(query).subtracting(form([place, exact.title]))
+        let coreWords = wordsOf(placeCore)
         let named = !extra.isEmpty && options.contains { option in
-            option.id != exact.id && extra.allSatisfy { word in wordsOf(option.title).contains { $0.hasPrefix(word) } }
+            guard option.id != exact.id else { return false }
+            let words = wordsOf(option.title)
+            if coreWords.allSatisfy(words.contains) { return extra.allSatisfy { word in words.contains { $0.hasPrefix(word) } } }
+            let own = meaningful(option.title)
+            return !own.isEmpty && own.isSubset(of: extra)
         }
         return named ? nil : exact
     }

@@ -50,6 +50,17 @@ final class OrtsformVorauswahlTests: XCTestCase {
         XCTAssertNil(cityStep(["Mühldorf a.Inn", "Mühldorf Altmühldorf"]).preselection(for: "Mühldorf a.Inn", query: "Mühldorf am Inn Altmühl"))
     }
 
+    /// Messung „Gemeinde Ortsteil“ (Ortsteil ohne eigene Option, Optionen = Gemeinden des Kreises): 296 von 59.795 Suchen
+    /// verloren die Gemeinde, weil ein Zusatzwort nur Wortanfang einer fremden Gemeinde war („Nord“ in „Nordermeldorf“).
+    func testLocalityWordIsNoPrefixOfAForeignOption() {
+        XCTAssertEqual(cityStep(["Brunsbüttel", "Nordermeldorf"]).preselection(for: "Brunsbüttel", query: "Brunsbüttel Brunsbüttel-Nord")?.title, "Brunsbüttel")
+        XCTAssertEqual(cityStep(["Groß Grönau", "Klein Wesenberg"]).preselection(for: "Groß Grönau", query: "Groß Grönau Klein Grönau")?.title, "Groß Grönau")
+        XCTAssertEqual(cityStep(["Hemmingstedt", "Hellschen-Heringsand-Unterschaar"]).preselection(for: "Hemmingstedt", query: "Hemmingstedt Op de Hell")?.title, "Hemmingstedt")
+        // Gegenproben: Die Suche nennt eine fremde Option ganz, oder den Wortanfang einer Option mit der Gemeinde
+        XCTAssertNil(cityStep(["Sankt Annen", "Neufeld"]).preselection(for: "Sankt Annen", query: "Sankt Annen Sankt Annen-Neufeld"))
+        XCTAssertNil(cityStep(["Grabow", "Ziegelscheune"]).preselection(for: "Grabow", query: "Grabow Ziegelscheune"))
+    }
+
     /// Näherung über alle Gemeinden mit amtlicher Kurzform (Optionen = Gemeinden des Kreises): Die Langform-Suche wählt die
     /// Gemeinde, ebenso die Kurzform-Suche bei amtlicher Langform. Nie eine andere Option.
     func testEveryLongAndShortFormOfAMunicipalityIsPreselected() {
