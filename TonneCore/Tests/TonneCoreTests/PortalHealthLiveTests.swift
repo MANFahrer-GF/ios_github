@@ -38,6 +38,8 @@ final class PortalHealthLiveTests: XCTestCase {
         var error: String?
     }
 
+    /// Freie Hausnummern der Reihe nach, wie ein Nutzer mit seiner echten Nummer.
+    static let houseNumbers = ["1", "2", "3", "5", "10", "20"]
     private static let probes = ["Haupt", "Bahnhof", "Kirch", "Schul", "Garten", "Berg", "Ring", "Weg", "Str", "Dorf", "Markt"]
     private static let timeout: UInt64 = 120
 
@@ -122,7 +124,8 @@ final class PortalHealthLiveTests: XCTestCase {
                 let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
                 // Freie Hausnummer: Manche Portale kennen „1“ in der Straße nicht und liefern dann nur Sammeltermine
                 // (Cochem-Zell). Wie ein Nutzer mit seiner echten Nummer: weitere Nummern derselben Straße versuchen.
-                let numbers = typedNumber ? ["1", "2", "3", "5", "10", "20"] : [""]
+                // `walk` hat schon die erste Nummer gesucht, die das Portal kennt (München AWM): ab dieser weiter
+                let numbers = typedNumber ? Array(houseNumbers.drop(while: { $0 != selections.last?.id })) : [""]
                 var lastError: Error?
                 for (index, number) in numbers.enumerated() {
                     if !number.isEmpty { selections[selections.count - 1] = SelectionOption(id: number, title: number) }
@@ -173,19 +176,30 @@ final class PortalHealthLiveTests: XCTestCase {
     /// Straßenwörtern sondieren; freie Hausnummer „1“.
     /// `variant`: 0 = mittlerer Eintrag, 1 = bei einem Drittel, 2 = bei zwei Dritteln (für den zweiten und dritten Versuch).
     /// Drittes Ergebnis: Der letzte Schritt war eine frei eingegebene Hausnummer (siehe `check`).
-    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar) async throws -> ([SelectionOption], Bool?, Bool) {
-        let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
+    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar, provider: WasteProvider? = nil) async throws -> ([SelectionOption], Bool?, Bool) {
+        let provider = provider ?? ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
         var selections: [SelectionOption] = []
         var placeFound = false, sawPlaceStep = false
         var numberIndex: Int?
         let wanted = job.place.map(searchName)
         let localities = job.place.map { Self.localities["\(job.district)|\($0)"] ?? [] } ?? []
-        while let step = try await provider.nextStep(after: selections) {
+        walking: while true {
+            let step: SelectionStep
+            do {
+                guard let next = try await provider.nextStep(after: selections) else { break walking }
+                step = next
+            } catch let error as ProviderError where numberIndex == selections.count - 1 {
+                // Das Portal prüft die Nummer schon im nächsten Schritt (München AWM: „Adresse konnte nicht gefunden
+                // werden“ für Kronwinkler Str. 1, 2, 3, 5; 10 geht): die nächste Nummer versuchen
+                guard let index = houseNumbers.firstIndex(of: selections[selections.count - 1].id), index + 1 < houseNumbers.count else { throw error }
+                selections[selections.count - 1] = SelectionOption(id: houseNumbers[index + 1], title: houseNumbers[index + 1])
+                continue
+            }
             if selections.count > 7 { throw WalkError("mehr als 7 Schritte") }
             if step.input == .text {
                 if step.title == SelectionStep.houseNumberTitle {
                     numberIndex = selections.count
-                    selections.append(SelectionOption(id: "1", title: "1")); continue
+                    selections.append(SelectionOption(id: houseNumbers[0], title: houseNumbers[0])); continue
                 }
                 // Ein Ortsfeld mit dem Gemeindenamen füllen, ein Straßenfeld sondieren
                 // Je Versuch andere Suchwörter zuerst: „Haupt“ traf in Bremerhaven nur „Auswanderer Haus“ (ohne Plan)
@@ -194,7 +208,16 @@ final class PortalHealthLiveTests: XCTestCase {
                 var found: [SelectionOption] = []
                 for text in texts {
                     let probe = selections + [SelectionOption(id: text, title: text)]
-                    if let next = try? await provider.nextStep(after: probe), next.input == .list, !next.options.isEmpty {
+                    let next: SelectionStep?
+                    do { next = try await provider.nextStep(after: probe) } catch { continue }
+                    // Fertig nach dem Suchwort: Müllmax springt bei genau einem Straßentreffer direkt zur Formatwahl
+                    // (Allendorf (Lumda), „Garten“ → 122 Termine) – wie ein Nutzer das Suchwort übernehmen
+                    guard let next else {
+                        selections = probe
+                        if text == wanted { placeFound = true }
+                        break walking
+                    }
+                    if next.input == .list, !next.options.isEmpty {
                         selections = probe; found = next.options
                         if text == wanted { placeFound = true }
                         break

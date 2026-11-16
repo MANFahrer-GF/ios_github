@@ -84,4 +84,53 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "x antwortete mit HTTP 404.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("warnung", "HTTP 429")))
     }
+
+    // MARK: Gemeinde-Prüfung 16.11.2026, Teil 9: Hausnummer und Suchwort
+
+    /// München AWM: Straße → freie Hausnummer; das Portal prüft die Nummer im nächsten Schritt und kennt nur 10.
+    private struct NumberStub: WasteProvider {
+        let kind = ProviderKind.awmMuenchen
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+            switch selections.count {
+            case 0: return SelectionStep(title: SelectionStep.streetTitle, options: [SelectionOption(id: "k", title: "Kronwinkler Str.")])
+            case 1: return .text(title: SelectionStep.houseNumberTitle)
+            default:
+                guard selections[1].id == "10" else { throw ProviderError.invalidSelection("Die Adresse konnte nicht gefunden werden.") }
+                return nil
+            }
+        }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
+    /// Müllmax: Straßen-Suchfeld; bei genau einem Treffer („Garten“) ist das Portal sofort fertig, sonst keine Liste.
+    private struct SearchStub: WasteProvider {
+        let kind = ProviderKind.muellmax
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+            guard let last = selections.last else { return .text(title: SelectionStep.streetTitle) }
+            if last.id == "Garten" { return nil }
+            throw ProviderError.noData("Keine Straße gefunden.")
+        }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
+    private func job(_ kind: ProviderKind) -> PortalHealthLiveTests.Job {
+        PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: kind, serviceKey: "stub", title: "Stub"), district: nil, place: nil)
+    }
+
+    func testHouseNumberRejectedByTheNextStepTriesTheFollowingNumbers() async throws {
+        let (selections, _, typedNumber) = try await PortalHealthLiveTests.walk(job(.awmMuenchen), calendar: .current, provider: NumberStub())
+        XCTAssertEqual(titles(selections), ["Kronwinkler Str.", "10"])
+        XCTAssertTrue(typedNumber)
+        // `check` macht ab der gefundenen Nummer weiter, nicht wieder bei 1
+        XCTAssertEqual(Array(PortalHealthLiveTests.houseNumbers.drop(while: { $0 != selections.last?.id })), ["10", "20"])
+    }
+
+    func testSearchWordAfterWhichThePortalIsFinishedIsTaken() async throws {
+        let (selections, _, _) = try await PortalHealthLiveTests.walk(job(.muellmax), calendar: .current, provider: SearchStub())
+        XCTAssertEqual(titles(selections), ["Garten"])
+    }
 }
