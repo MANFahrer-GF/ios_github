@@ -262,6 +262,16 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertTrue(kaarst.entries.contains { $0.title.contains("Schönmackers") })
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: SBAZV führt „Krausnick-Groß Wasserburg“ in der Ortsliste, aber ohne eine einzige Straße –
+    /// Termine gibt es nur bei KAEV („Krausnick“, „Groß Wasserburg“). Ein Neulauf von place_coverage.py darf SBAZV nicht zurückbringen.
+    func testKrausnickIsOnlyServedByKAEV() throws {
+        let place = try XCTUnwrap(ProviderCatalog.checkPlace("Krausnick-Groß Wasserburg").first { $0.district == "Landkreis Dahme-Spreewald" })
+        XCTAssertEqual(place.entries.map(\.serviceKey), ["kaev"])
+        // Gegenprobe: Baruth/Mark führt SBAZV weiter
+        let baruth = try XCTUnwrap(ProviderCatalog.checkPlace("Baruth/Mark").first)
+        XCTAssertTrue(baruth.entries.contains { $0.serviceKey == "suedbrandenburg" })
+    }
+
     func testUnavailablePortalIsToldHonestly() throws {
         let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
         XCTAssertFalse(wildungen.isCovered)
