@@ -117,6 +117,7 @@ final class PortalHealthLiveTests: XCTestCase {
             var attempt = result
             do {
                 var (selections, placeFound, typedNumber) = try await withTimeout(timeout) { try await walk(job, variant: variant, calendar: calendar) }
+                // nil: Der Eintrag hat keinen Ortsschritt (eigener Ortseintrag, Jahresdaten, Straßenfeld) – nichts zu finden
                 attempt.placeFound = job.place == nil ? nil : placeFound
                 let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
                 // Freie Hausnummer: Manche Portale kennen „1“ in der Straße nicht und liefern dann nur Sammeltermine
@@ -133,7 +134,9 @@ final class PortalHealthLiveTests: XCTestCase {
                         if probe.status != "fehler" || index == numbers.count - 1 { attempt = probe; lastError = nil; break }
                     } catch {
                         lastError = error
-                        if error is TimeoutError { break }
+                        // Zeitüberschreitung, Sperre oder Serverfehler: eine andere Nummer hilft nicht und verschärft nur die Drosselung
+                        let message = (error as? LocalizedError)?.errorDescription ?? String(describing: error)
+                        if error is TimeoutError || message.contains("HTTP 4") || message.contains("HTTP 5") { break }
                     }
                 }
                 attempt.path = selections.map(\.title)
@@ -170,12 +173,13 @@ final class PortalHealthLiveTests: XCTestCase {
     /// Straßenwörtern sondieren; freie Hausnummer „1“.
     /// `variant`: 0 = mittlerer Eintrag, 1 = bei einem Drittel, 2 = bei zwei Dritteln (für den zweiten und dritten Versuch).
     /// Drittes Ergebnis: Der letzte Schritt war eine frei eingegebene Hausnummer (siehe `check`).
-    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar) async throws -> ([SelectionOption], Bool, Bool) {
+    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar) async throws -> ([SelectionOption], Bool?, Bool) {
         let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
         var selections: [SelectionOption] = []
-        var placeFound = false
+        var placeFound = false, sawPlaceStep = false
         var numberIndex: Int?
         let wanted = job.place.map(searchName)
+        let localities = job.place.map { Self.localities["\(job.district)|\($0)"] ?? [] } ?? []
         while let step = try await provider.nextStep(after: selections) {
             if selections.count > 7 { throw WalkError("mehr als 7 Schritte") }
             if step.input == .text {
@@ -186,7 +190,7 @@ final class PortalHealthLiveTests: XCTestCase {
                 // Ein Ortsfeld mit dem Gemeindenamen füllen, ein Straßenfeld sondieren
                 // Je Versuch andere Suchwörter zuerst: „Haupt“ traf in Bremerhaven nur „Auswanderer Haus“ (ohne Plan)
                 var texts = Array(probes.dropFirst(variant * 2) + probes.prefix(variant * 2))
-                if let wanted, !placeFound, step.title == SelectionStep.cityTitle { texts = [wanted] + probes }
+                if let wanted, !placeFound, step.title == SelectionStep.cityTitle { texts = [wanted] + probes; sawPlaceStep = true }
                 var found: [SelectionOption] = []
                 for text in texts {
                     let probe = selections + [SelectionOption(id: text, title: text)]
@@ -197,10 +201,11 @@ final class PortalHealthLiveTests: XCTestCase {
                     }
                 }
                 guard !found.isEmpty else { throw WalkError("Suchfeld „\(step.title)“ findet nichts (Suchwörter: \(texts.prefix(4).joined(separator: ", ")) …)") }
-                selections.append(pick(found, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound))
+                selections.append(pick(found, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound, localities: localities))
                 continue
             }
             guard !step.options.isEmpty else { throw WalkError("leere Auswahl bei „\(step.title)“") }
+            if step.isPlaceStep { sawPlaceStep = true }
             // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene
             // tiefer. Wie ein Nutzer, der seine VG kennt: die VG wählen, unter der die Gemeinde steht. Ebenso ein erster
             // Schritt „Bundesland“ (Lobbe: Battenberg (Eder) steht unter Hessen).
@@ -209,13 +214,25 @@ final class PortalHealthLiveTests: XCTestCase {
                let parent = try await parentOption(of: wanted, in: step.options, after: selections, provider: provider) {
                 selections.append(parent); continue
             }
-            selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound))
+            selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound,
+                                   localities: placeFound ? [] : localities))
         }
-        return (selections, placeFound, numberIndex == selections.count - 1)
+        return (selections, sawPlaceStep || placeFound ? placeFound : nil, numberIndex == selections.count - 1)
     }
 
+    /// Ortsteile je Gemeinde („Landkreis|Gemeinde“ → Namen) aus `CatalogLocalities`.
+    static let localities: [String: [String]] = {
+        var out: [String: [String]] = [:]
+        for line in CatalogLocalities.localities.split(separator: "\n") {
+            let parts = line.split(separator: "|", maxSplits: 2).map(String.init)
+            guard parts.count == 3 else { continue }
+            out["\(parts[0])|\(parts[1])"] = parts[2].split(separator: ",").map(String.init)
+        }
+        return out
+    }()
+
     /// Gemeinde bevorzugt (genau, dann Suchtreffer), sonst der mittlere Eintrag.
-    static func pick(_ options: [SelectionOption], wanted: String?, variant: Int = 0, found: inout Bool) -> SelectionOption {
+    static func pick(_ options: [SelectionOption], wanted: String?, variant: Int = 0, found: inout Bool, localities: [String] = []) -> SelectionOption {
         if let wanted {
             // 2. und 3. Versuch: ein Ortsteil des Orts (Zell (Mosel): echte Straßen nur unter „Zell (Mosel) – Zell-Stadt“,
             // Aurich: unter „Aurich / Aurich-Stadt“; der bloße Ort hat dort nur Platzhalter wie „dummystrasse“)
@@ -225,6 +242,10 @@ final class PortalHealthLiveTests: XCTestCase {
             if let hit = OptionSearch(options).filter(query: wanted).first { found = true; return hit }
             // Doppelname: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“
             if let part = options.first(where: { wanted.lowercased().hasPrefix(searchName($0.title).lowercased() + "-") }) { found = true; return part }
+            // Liste der Ortsteile (Landkreis Göttingen: „Klein Wiershausen“ statt „Gleichen“): wie ein Nutzer seinen Ortsteil wählen
+            let folded = Set(localities.map(ProviderCatalog.fold))
+            let parts = options.filter { folded.contains(ProviderCatalog.fold(searchName($0.title))) }
+            if !parts.isEmpty { found = true; return parts[min(parts.count - 1, variant * parts.count / 3)] }
         }
         switch variant {
         case 1: return options[options.count / 3]
@@ -237,7 +258,8 @@ final class PortalHealthLiveTests: XCTestCase {
     /// („Graach an der Mosel“ ↔ Portal „Graach“, „Kirchheim an der Weinstraße“ ↔ „Kirchheim“).
     static func matches(_ option: SelectionOption, _ wanted: String) -> Bool {
         let title = searchName(option.title).lowercased(), plain = wanted.lowercased()
-        return title == plain || plain.hasPrefix(title + " ")
+        // Kernname wie die Vorauswahl der App: „Gemeinde Saal“ ↔ „Saal a.d.Donau“, „Brünn“ ↔ „Brünn/Thür.“
+        return title == plain || plain.hasPrefix(title + " ") || SelectionStep.placeCore(option.title) == SelectionStep.placeCore(wanted)
     }
 
     /// Die Option des Ortsschritts, unter der die gesuchte Gemeinde eine Ebene tiefer steht (nil, wenn keine eindeutig passt).

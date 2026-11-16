@@ -24,7 +24,8 @@ final class SuchPruefpunkteTests: XCTestCase {
     /// „Führt X nicht“ nur, wenn der Eintrag die Gemeinde nicht selbst unter seinen Orten im selben Kreis nennt
     /// (Messung 14.11.: 2 Widersprüche bei 9.794 Gemeinden – TBR-App „Reutlingen“, EVS „Saarbrücken“).
     func testKeinNichtGegenEigeneOrtsangabe() throws {
-        XCTAssertNil(ProviderCatalog.placeNote(for: try entry("de.abfallplus.tbrapp"), query: "Reutlingen"))
+        // Seit 16.11. belegt die Zuordnung die TBR-App für Reutlingen (das Kreisportal führt die Stadt ohne Straßen)
+        XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.abfallplus.tbrapp"), query: "Reutlingen"), "Führt Reutlingen")
         XCTAssertNil(ProviderCatalog.placeNote(for: try entry("Evs"), query: "Saarbrücken"))
         // Der Kreis-Eintrag nennt die Stadt nur im Titel – dort bleibt die Aussage (Thomas' Fall Karlsruhe).
         XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.k4systems.abfallappka"), query: "Karlsruhe"), "Führt Karlsruhe nicht")
@@ -82,6 +83,30 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertNil(SelectionStep(title: SelectionStep.streetTitle, options: options).preselection(for: "Karlsruhe"))
         XCTAssertNil(SelectionStep(title: L10n.t("Abfuhrbezirk", "Collection district"), options: options).preselection(for: "Karlsruhe"))
         XCTAssertNil(SelectionStep(title: SelectionStep.cityTitle, options: options).preselection(for: "Singen (Hohentwiel)"))
+    }
+
+    /// Gemeinde-Prüfung 16.11.2026: Portale schreiben den Ort mit Vorsilbe oder ohne amtlichen Zusatz. Die Suche wählte
+    /// „Saal a.d.Donau“ in Kelheims Liste („Gemeinde Saal“) nicht vor, der Nutzer musste selbst suchen.
+    func testVorauswahlKenntVorsilbenUndZusaetze() {
+        let kelheim = SelectionStep(title: SelectionStep.cityTitle, options: ["Gemeinde Saal", "Stadt Neustadt", "Markt Bad Abbach", "Stadt Kelheim"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        XCTAssertEqual(kelheim.preselection(for: "Saal a.d.Donau")?.title, "Gemeinde Saal")
+        XCTAssertEqual(kelheim.preselection(for: "Neustadt a.d.Donau")?.title, "Stadt Neustadt")
+        XCTAssertEqual(kelheim.preselection(for: "Bad Abbach")?.title, "Markt Bad Abbach")
+        let landshut = SelectionStep(title: SelectionStep.cityTitle, options: ["Neufahrn i. Ndb.", "Bayerbach b. Erg.", "Ergoldsbach"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        XCTAssertEqual(landshut.preselection(for: "Neufahrn i.NB")?.title, "Neufahrn i. Ndb.")
+        XCTAssertEqual(landshut.preselection(for: "Bayerbach b.Ergoldsbach")?.title, "Bayerbach b. Erg.")
+        let hildburghausen = SelectionStep(title: SelectionStep.cityTitle, options: [SelectionOption(id: "1", title: "Brünn"), SelectionOption(id: "2", title: "Eisfeld")])
+        XCTAssertEqual(hildburghausen.preselection(for: "Brünn/Thür.")?.title, "Brünn")
+        // Potsdam-Mittelmark: Schritt „Gemeinde / Ortsteil“ ist ein Ortsschritt
+        let apm = SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: [SelectionOption(id: "1", title: "Beelitz (Stadt)"), SelectionOption(id: "2", title: "Beelitz-Heilstätten")])
+        XCTAssertEqual(apm.preselection(for: "Beelitz")?.title, "Beelitz (Stadt)")
+        // Gegenproben: mehrdeutiger Kern und Ortsteil mit Bindestrich wählen nichts vor
+        let kusel = SelectionStep(title: SelectionStep.cityTitle, options: [SelectionOption(id: "1", title: "Stadt Breitenbach"), SelectionOption(id: "2", title: "Gemeinde Breitenbach")])
+        XCTAssertNil(kusel.preselection(for: "Breitenbach a.Herzberg"))
+        let glan = SelectionStep(title: SelectionStep.cityTitle, options: [SelectionOption(id: "1", title: "Altenglan - Mühlbach")])
+        XCTAssertNil(glan.preselection(for: "Altenglan"))
     }
 
     /// Prüfer 14.11.: „Führt X nicht“ stand unter dem Eintrag, der die Stadt führt – bei Namensvettern mit Zusatz und bei

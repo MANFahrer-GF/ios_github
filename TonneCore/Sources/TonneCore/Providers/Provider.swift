@@ -54,13 +54,36 @@ public struct SelectionStep: Hashable {
     public var isPlaceStep: Bool {
         [Self.cityTitle, L10n.t("Gemeinde", "Municipality"), L10n.t("Ortschaft", "Town"), L10n.t("Ortsgemeinde", "Municipality"),
          L10n.t("Stadt / Gemeinde", "Town / municipality"), L10n.t("Stadt / Verbandsgemeinde", "Municipality"),
-         L10n.t("Verbandsgemeinde / Stadt", "Municipality")].contains(title)
+         L10n.t("Verbandsgemeinde / Stadt", "Municipality"), L10n.t("Gemeinde / Ortsteil", "Town / district")].contains(title)
     }
 
-    /// Option, die zur gesuchten Gemeinde passt – nur im Gemeinde-Schritt und bei genau gleichem Namen.
+    /// Option, die zur gesuchten Gemeinde passt – nur im Gemeinde-Schritt: bei genau gleichem Namen, sonst bei gleichem
+    /// Kernnamen, wenn genau eine Option ihn trägt (Kelheim „Gemeinde Saal“ für „Saal a.d.Donau“, siehe `placeCore`).
     public func preselection(for place: String) -> SelectionOption? {
         guard isPlaceStep else { return nil }
-        return options.first { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }
+        if let exact = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) { return exact }
+        let core = Self.placeCore(place)
+        let hits = options.filter { Self.placeCore($0.title) == core }
+        return !core.isEmpty && hits.count == 1 ? hits[0] : nil
+    }
+
+    /// Ortsname ohne Verwaltungs-Vorsilbe und amtlichen Zusatz, wie Portale ihn verschieden schreiben (Gemeinde-Prüfung
+    /// 16.11.2026): „Gemeinde Saal“ / „Saal a.d.Donau“ → „saal“, „Stadt Bingen“ / „Bingen am Rhein“ → „bingen“,
+    /// „Brünn/Thür.“ → „brunn“, „Neufahrn i. Ndb.“ → „neufahrn“, „Beelitz (Stadt)“ → „beelitz“. Ortsteile mit
+    /// Bindestrich („Altenglan - Mühlbach“) bleiben ganz.
+    static func placeCore(_ name: String) -> String {
+        var text = ProviderCatalog.fold(name)
+        for cut in ["(", "/", ","] { if let range = text.range(of: cut) { text = String(text[..<range.lowerBound]) } }
+        for prefix in ["verbandsgemeinde ", "samtgemeinde ", "gemeinden ", "gemeinde ", "stadt ", "markt ", "amt "] where text.hasPrefix(prefix) {
+            text = String(text.dropFirst(prefix.count)); break
+        }
+        let joins: Set<Substring> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "a.", "i.", "b."]
+        var kept: [Substring] = []
+        for word in text.split(separator: " ") {
+            if !kept.isEmpty, joins.contains(word) || word.contains(".") { break }
+            kept.append(word)
+        }
+        return kept.joined(separator: " ")
     }
 
     /// Wie `preselection(for:)`, kennt aber „Ort / Ortsteil“ (C-Trace Groß-Gerau): Die Suche „Erfelden“ oder
