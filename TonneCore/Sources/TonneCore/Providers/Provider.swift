@@ -209,17 +209,34 @@ public struct SourceConfiguration: Hashable, Codable {
 
 public extension SourceConfiguration {
     /// Andere Adresse als bisher? Ein Eintragswechsel an derselben Adresse (Kreisportal Reutlingen → TBR-App, beide
-    /// „Hauptstraße, 5“) ist keiner (Prüfbefund 9). Verglichen werden die Wörter der gewählten Titel: Die Adresse gilt nur
-    /// als gleich, wenn alle Wörter der kürzeren (mindestens zwei) in der anderen stehen – ein Ortsschritt mehr oder weniger
-    /// schadet nicht, „Hauptstraße 1“ gegen „10“, „12“ gegen „12a“ oder ein anderer Ort schon. Im Zweifel „geändert“:
+    /// „Hauptstraße, 5“) ist keiner (Prüfbefund 9). Adresse = Ort + Straße/Nummer: Der Ort muss auf beiden Seiten bestimmbar
+    /// und gleich sein (`addressPlace`), die Wörter der übrigen Titel müssen genau übereinstimmen – „Hauptstraße 1“ gegen
+    /// „10“, „12“ gegen „12a“ oder ein anderer bzw. unbekannter Ort zählen als Wechsel (Nachprüfung N2). Im Zweifel „geändert“:
     /// Dann bleiben nur markierte vergangene Termine stehen (`ScheduleEngine.datesAfterReplacingSync`).
     static func addressChanged(from old: SourceConfiguration?, to new: SourceConfiguration) -> Bool {
         guard let old else { return true }
         if old.providerKind == new.providerKind, old.serviceKey == new.serviceKey, old.selections.map(\.id) == new.selections.map(\.id) { return false }
-        let a = addressWords(old.selections), b = addressWords(new.selections)
-        let (small, large) = a.count <= b.count ? (a, b) : (b, a)
-        return small.count < 2 || !small.isSubset(of: large)
+        guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
+        let words = addressWords(a.rest)
+        return words.isEmpty || words != addressWords(b.rest)
     }
+
+    /// Ort der Adresse (Kern wie `SelectionStep.placeCore`) und die übrigen Titel: Ist der erste gewählte Titel eine
+    /// Gemeinde („Reutlingen“ im Kreisportal), gilt er; sonst der einzige Ort, den der Katalogeintrag belegt führt (TBR-App:
+    /// nur Reutlingen). Sonst nil – der Ort ist unbekannt.
+    private func addressPlace() -> (place: String, rest: [SelectionOption])? {
+        if let first = selections.first, Self.municipalityCores.contains(SelectionStep.placeCore(first.title)) {
+            return (SelectionStep.placeCore(first.title), Array(selections.dropFirst()))
+        }
+        let entries = ProviderCatalog.entries.filter { $0.kind == providerKind && $0.serviceKey == serviceKey }
+        let mapped = Set(entries.flatMap { EntryPlacesIndex.pairs[$0.id] ?? [] }.map { SelectionStep.placeCore(String($0.split(separator: "|", maxSplits: 1).last ?? "")) })
+        let listed = Set(entries.flatMap(\.places).map(SelectionStep.placeCore).filter(Self.municipalityCores.contains))
+        let places = mapped.isEmpty ? listed : mapped
+        return places.count == 1 ? (places.first!, selections) : nil
+    }
+
+    /// Kernnamen aller Gemeinden, einmal berechnet.
+    private static let municipalityCores: Set<String> = Set(MunicipalityIndex.all.map { SelectionStep.placeCore($0.name) })
 
     /// „Hauptstr.“, „Hauptstraße“ → „hauptstr“; getippte Suchtexte („Haupt“ vor „Hauptstraße“) fallen als Wortanfang weg.
     private static func addressWords(_ selections: [SelectionOption]) -> Set<String> {
