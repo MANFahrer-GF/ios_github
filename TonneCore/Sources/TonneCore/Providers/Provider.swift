@@ -94,14 +94,17 @@ public struct SelectionStep: Hashable {
         // „St.Johann“ (KAW Mainz-Bingen) = „Sankt Johann“
         if text.hasPrefix("st.") || text.hasPrefix("st ") { text = "sankt " + text.dropFirst(3).trimmingCharacters(in: .whitespaces) }
         // „mit“/„ohne“: AWB Bad Dürkheim „Altleiningen mit Neuleiningen Tal“, „Lambrecht ohne Iptestal und Dörrental“
-        let joins: Set<Substring> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "mit", "ohne", "a.", "i.", "b."]
         var kept: [Substring] = []
         for word in text.split(separator: " ") {
-            if !kept.isEmpty, joins.contains(word) || word.contains(".") { break }
+            if !kept.isEmpty, placeJoins.contains(String(word)) || word.contains(".") { break }
             kept.append(word)
         }
         return kept.joined(separator: " ")
     }
+
+    /// Bindewörter der Ortsform („Wasserburg am Inn“, „Neufahrn in Niederbayern“), Abkürzungen wie „a.“, „i.d.“ erkennt
+    /// `placeCore` am Punkt. Einzige Liste dafür; die Zusatzwort-Sicherung in `preselection(for:query:)` nutzt sie mit.
+    static let placeJoins: Set<String> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "mit", "ohne"]
 
     /// Gefaltet und ohne Unterschied zwischen Bindestrich und Leerzeichen, wie Portale und Suchende Ortsteile verschieden
     /// schreiben (Nachprüfung N1, 16.11.2026): „Dabel-Woland“ = „Dabel Woland“, „Hagenow Heide“ = „Hagenow-Heide“,
@@ -124,7 +127,17 @@ public struct SelectionStep: Hashable {
         guard isPlaceStep else { return nil }
         let fold = ProviderCatalog.fold, spell = Self.spelling
         let searched = fold(query), placeCore = Self.placeCore(place)
-        if searched != fold(place), Self.placeCore(query) == placeCore, !placeCore.isEmpty,
+        // Wörter der Suche und Ortsform der Gemeinde: Bindewörter, Artikel und Wörter unter drei Buchstaben zählen nicht
+        // („am“, „a.d.“), die Lang- und Kurzform zählt mit („Wasserburg am Inn“ = „Wasserburg a.Inn“, Prüfbefund 1 zu Paket D).
+        func wordsOf(_ text: String) -> [String] { spell(text).split { !$0.isLetter && !$0.isNumber }.map(String.init) }
+        func meaningful(_ text: String) -> Set<String> {
+            Set(wordsOf(text).filter { $0.count >= 3 && !Self.placeJoins.union(["der", "den", "dem"]).contains($0) })
+        }
+        func form(_ names: [String]) -> Set<String> { Set(names.flatMap { wordsOf($0) + wordsOf(MunicipalityIndex.longForm(fold($0))) }) }
+        // Mehrdeutige Kurzform – außer die Suche nennt den Zusatz der Gemeinde („Rutsweiler am Glan“, „Schwarzenbach am Wald“)
+        let suffix = meaningful(query).subtracting(wordsOf(Self.placeCore(query)))
+        let namesSuffix = !suffix.isEmpty && suffix.isSubset(of: form([place]))
+        if searched != fold(place), Self.placeCore(query) == placeCore, !placeCore.isEmpty, !namesSuffix,
            options.filter({ Self.placeCore($0.title) == placeCore }).count > 1 { return nil }
         let found = fold(ProviderCatalog.resolve(searched).locality ?? query)
         let locality = spell(found), typed = spell(query)
@@ -154,9 +167,9 @@ public struct SelectionStep: Hashable {
         guard let exact = preselection(for: place) else { return nil }
         // Wörter der Suche über Gemeinde und gewählte Option hinaus („Ziegelscheune“), die alle als Wortanfang in einer anderen
         // Option stehen: Die Suche meint vermutlich diese, also keine Vorauswahl. Ein Ortsteil ohne eigene Option
-        // („Stuttgart Vaihingen“) wählt weiter die Gemeinde.
-        func wordsOf(_ text: String) -> [String] { spell(text).split { !$0.isLetter && !$0.isNumber }.map(String.init) }
-        let extra = Set(wordsOf(query)).subtracting(wordsOf(place)).subtracting(wordsOf(exact.title))
+        // („Stuttgart Vaihingen“) wählt weiter die Gemeinde. Die Ortsform selbst ist kein Zusatz: „am“ vor „Amerang“,
+        // „a.“ vor „Aldenhoven“ lösten die Sicherung aus (Prüfbefund 1 zu Paket D).
+        let extra = meaningful(query).subtracting(form([place, exact.title]))
         let named = !extra.isEmpty && options.contains { option in
             option.id != exact.id && extra.allSatisfy { word in wordsOf(option.title).contains { $0.hasPrefix(word) } }
         }
