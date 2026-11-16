@@ -66,7 +66,10 @@ public struct AbfallIOLegacyProvider: WasteProvider {
         return nil
     }
 
-    private static let noDataForSelection = ProviderError.noData("Für diese Auswahl führt das AbfallPlus-Portal keine Abfuhrdaten. Bitte einen anderen Ortsteil wählen oder beim Entsorger nachfragen.")
+    private static var noDataForSelection: ProviderError {
+        .noData(L10n.t("Für diese Auswahl führt das AbfallPlus-Portal keine Abfuhrdaten. Bitte einen anderen Ortsteil wählen oder beim Entsorger nachfragen.",
+                       "The AbfallPlus portal has no collection data for this selection. Please choose another district or ask your waste company."))
+    }
 
     private static func hasWasteTypes(_ html: String) -> Bool {
         !HTMLText.matches(#"name="f_id_abfalltyp_(\d+)"[^>]*value="(\d+)""#, in: html).isEmpty

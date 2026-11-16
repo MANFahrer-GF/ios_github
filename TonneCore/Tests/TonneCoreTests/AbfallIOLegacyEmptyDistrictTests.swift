@@ -8,6 +8,8 @@ final class AbfallIOLegacyEmptyDistrictTests: XCTestCase {
     private let provider = AbfallIOLegacyProvider(key: "test", client: HTTPClient(session: LegacyEmptyDistrictStub.session()))
 
     func testDistrictWithoutWasteTypesSaysThePortalHasNoData() async throws {
+        L10n.forcedLanguage = "de"
+        defer { L10n.forcedLanguage = nil }
         do {
             _ = try await provider.nextStep(after: [SelectionOption(id: "f_id_bezirk:1", title: "Klosterbeuren")])
             XCTFail("Bezirk ohne Abfallarten muss gemeldet werden")
@@ -21,6 +23,18 @@ final class AbfallIOLegacyEmptyDistrictTests: XCTestCase {
             XCTAssertTrue(error.errorDescription?.contains("keine Abfuhrdaten") == true, error.errorDescription ?? "")
         }
         XCTAssertFalse(LegacyEmptyDistrictStub.exportCalled, "export_ics hätte HTTP 404 geliefert")
+    }
+
+    /// Prüfbefund 12: Die Meldung folgt der Sprache der Oberfläche.
+    func testNoDataMessageIsEnglishInEnglishUI() async throws {
+        L10n.forcedLanguage = "en"
+        defer { L10n.forcedLanguage = nil }
+        do {
+            _ = try await provider.nextStep(after: [SelectionOption(id: "f_id_bezirk:1", title: "Klosterbeuren")])
+            XCTFail("Bezirk ohne Abfallarten muss gemeldet werden")
+        } catch let error as ProviderError {
+            XCTAssertTrue(error.errorDescription?.contains("no collection data") == true, error.errorDescription ?? "")
+        }
     }
 
     func testDistrictWithWasteTypesIsFinishedAndFirstStepStillOffersDistricts() async throws {
