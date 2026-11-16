@@ -234,6 +234,12 @@ final class PortalHealthLiveTests: XCTestCase {
                 throw WalkError(selections.isEmpty ? "leere erste Auswahl bei „\(step.title)“ (Abfragegrenze)" : "leere Auswahl bei „\(step.title)“")
             }
             if step.isPlaceStep { sawPlaceStep = true }
+            // Bundesland und Kreis zuerst (Abfall+ Wecker: „Niedersachsen“ → „Kreis Osterode am Harz“ → Ort): wie ein Nutzer, der
+            // Land und Kreis kennt. Ohne das prüfte die Gemeinde-Prüfung für Osterode eine Adresse in Rheinland-Pfalz.
+            if let wanted, !placeFound, let district = job.district, !step.options.contains(where: { matches($0, wanted) }),
+               let region = Self.regionOption(in: step.options, district: district, place: wanted, first: selections.isEmpty) {
+                selections.append(region); continue
+            }
             // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene
             // tiefer. Wie ein Nutzer, der seine VG kennt: die VG wählen, unter der die Gemeinde steht. Ebenso ein erster
             // Schritt „Bundesland“ (Lobbe: Battenberg (Eder) steht unter Hessen).
@@ -266,6 +272,16 @@ final class PortalHealthLiveTests: XCTestCase {
     /// Teil eines Doppelnamens: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“.
     static func isNamePart(_ option: SelectionOption, of wanted: String) -> Bool {
         wanted.lowercased().hasPrefix(searchName(option.title).lowercased() + "-")
+    }
+
+    /// Im ersten Schritt das Bundesland des Kreises; sonst ein Kreis nach dem Ort (Altkreis „Kreis Osterode am Harz“), dann
+    /// der Kreis selbst („Kreis Göttingen“). nil, wenn keine Option so heißt.
+    static func regionOption(in options: [SelectionOption], district: String, place: String, first: Bool) -> SelectionOption? {
+        if first, let state = CatalogRegions.districtStates[district],
+           let hit = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(state) }) { return hit }
+        let kreise = options.filter { option in ["landkreis ", "kreis "].contains { ProviderCatalog.fold(option.title).hasPrefix($0) } }
+        return kreise.first { districtCore($0.title) == ProviderCatalog.fold(place) }
+            ?? kreise.first { districtCore($0.title) == districtCore(district) }
     }
 
     static func isLocality(_ option: SelectionOption, _ localities: [String]) -> Bool {
