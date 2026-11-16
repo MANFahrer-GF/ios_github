@@ -14,6 +14,23 @@ final class SyncReplaceDatesTests: XCTestCase {
         calendar.date(from: DateComponents(year: y, month: m, day: day))!
     }
 
+    /// Prüfbefund 9: Eintragswechsel an derselben Adresse ist kein Adresswechsel. Auswahl wie bei der AbfallPlus-App:
+    /// Kreis-App mit Ortsschritt und Suchtext, TBR-App ohne Ortsschritt.
+    func testAddressChangedComparesTheAddressNotTheSource() {
+        func source(_ key: String, _ titles: [String]) -> SourceConfiguration {
+            SourceConfiguration(providerKind: .abfallPlusApp, serviceKey: key, selections: titles.enumerated().map { SelectionOption(id: "\(key)-\($0.offset)", title: $0.element) }, label: "")
+        }
+        let kreis = source("de.k4systems.abfallkreisrt", ["Reutlingen", "Haupt", "Hauptstraße", "12"])
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: kreis, to: source("de.abfallplus.tbrapp", ["Hauptstr", "Hauptstr.", "12"])))
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: kreis, to: kreis), "gleiche Auswahl")
+        // Gegenproben: andere Nummer, Zusatz, anderer Ort, zu wenig zum Vergleichen, keine alte Quelle
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: kreis, to: source("de.abfallplus.tbrapp", ["Hauptstraße", "1"])))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: kreis, to: source("de.abfallplus.tbrapp", ["Hauptstraße", "12a"])))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: kreis, to: source("de.k4systems.abfallkreisrt", ["Pfullingen", "Hauptstraße", "12"])))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: kreis, to: source("x", ["Reutlingen"])))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: nil, to: kreis))
+    }
+
     /// Alte (falsche) Straße: 5.3. rausgestellt, 12.3. nicht rausgestellt, 19.3. nichts getippt, 2.4. kommend.
     private var old: [Date] { [d(2026, 3, 5), d(2026, 3, 12), d(2026, 3, 19), d(2026, 4, 2)] }
     private var marked: [Date] { [d(2026, 3, 5), d(2026, 3, 12)] }

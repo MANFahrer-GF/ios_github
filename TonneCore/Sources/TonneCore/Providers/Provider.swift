@@ -182,6 +182,30 @@ public struct SourceConfiguration: Hashable, Codable {
 }
 
 public extension SourceConfiguration {
+    /// Andere Adresse als bisher? Ein Eintragswechsel an derselben Adresse (Kreisportal Reutlingen → TBR-App, beide
+    /// „Hauptstraße, 5“) ist keiner (Prüfbefund 9). Verglichen werden die Wörter der gewählten Titel: Die Adresse gilt nur
+    /// als gleich, wenn alle Wörter der kürzeren (mindestens zwei) in der anderen stehen – ein Ortsschritt mehr oder weniger
+    /// schadet nicht, „Hauptstraße 1“ gegen „10“, „12“ gegen „12a“ oder ein anderer Ort schon. Im Zweifel „geändert“:
+    /// Dann bleiben nur markierte vergangene Termine stehen (`ScheduleEngine.datesAfterReplacingSync`).
+    static func addressChanged(from old: SourceConfiguration?, to new: SourceConfiguration) -> Bool {
+        guard let old else { return true }
+        if old.providerKind == new.providerKind, old.serviceKey == new.serviceKey, old.selections.map(\.id) == new.selections.map(\.id) { return false }
+        let a = addressWords(old.selections), b = addressWords(new.selections)
+        let (small, large) = a.count <= b.count ? (a, b) : (b, a)
+        return small.count < 2 || !small.isSubset(of: large)
+    }
+
+    /// „Hauptstr.“, „Hauptstraße“ → „hauptstr“; getippte Suchtexte („Haupt“ vor „Hauptstraße“) fallen als Wortanfang weg.
+    private static func addressWords(_ selections: [SelectionOption]) -> Set<String> {
+        let words = selections.flatMap { option -> [String] in
+            ProviderCatalog.fold(option.title).replacingOccurrences(of: "ß", with: "ss")
+                .replacingOccurrences(of: #"str(asse|\.)"#, with: "str", options: .regularExpression)
+                .components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
+        }
+        let set = Set(words)
+        return set.filter { word in !word.allSatisfy(\.isLetter) || !set.contains { $0 != word && $0.hasPrefix(word) } }
+    }
+
     /// Bis 2.0.9 enthielt der Name bei diesen Anbietern den getippten Suchtext („Hamburger Str., Hamburger Straße, 10“).
     /// Liefert den neuen Namen, wenn der gespeicherte noch genau der alte automatische ist – sonst nil (selbst benannt oder schon richtig).
     func repairedSearchTextLabel() -> String? {

@@ -52,10 +52,12 @@ enum SyncService {
 
     /// Übernimmt Termine. `replace` ersetzt die bisherigen Einzeltermine (Abgleich), sonst werden sie ergänzt.
     /// `activeNames` (Einrichtungs-Assistent): Genau diese Titel sind danach eingeschaltet, alle anderen aus.
-    /// `sourceChanged` (Einrichtungs-Assistent): Der Standort liest ab jetzt aus einer anderen Quelle oder Adresse.
+    /// `sourceChanged` (Einrichtungs-Assistent): Der Standort liest ab jetzt aus einer anderen Quelle.
+    /// `addressChanged`: … und für eine andere Adresse (`SourceConfiguration.addressChanged`); nur dann fallen
+    /// unmarkierte vergangene Termine weg. Ein Eintragswechsel an derselben Adresse behält sie (Prüfbefund 9).
     /// `keepingMissingYears` (automatischer Abgleich): siehe `ScheduleEngine.datesKeptOnSync`.
     @discardableResult
-    static func apply(pickups: [Pickup], mappings: [Mapping], location: Location?, context: ModelContext, replace: Bool, activeNames: Set<String>? = nil, sourceChanged: Bool = false, keepingMissingYears: Bool = false) -> Result {
+    static func apply(pickups: [Pickup], mappings: [Mapping], location: Location?, context: ModelContext, replace: Bool, activeNames: Set<String>? = nil, sourceChanged: Bool = false, addressChanged: Bool = false, keepingMissingYears: Bool = false) -> Result {
         let grouped = Dictionary(grouping: pickups, by: \.name)
         var imported = 0
         var changes: [String] = []
@@ -76,7 +78,7 @@ enum SyncService {
                 // Unmarkierte vergangene Termine der alten Adresse stünden nach dem Wiedereinschalten als „offen“ da
                 let today = Days.today()
                 type.explicitDates = ScheduleEngine.datesAfterReplacingSync(old: type.explicitDates, new: type.explicitDates.filter { $0 >= today }, kept: [],
-                                                                            marked: type.markedDates, sourceChanged: true, today: today)
+                                                                            marked: type.markedDates, sourceChanged: addressChanged, today: today)
             }
         }
 
@@ -127,7 +129,7 @@ enum SyncService {
             if replace {
                 // Vergangene Termine bleiben stehen (bei neuer Adresse nur die markierten), siehe ScheduleEngine.datesAfterReplacingSync
                 let allDays = Set(ScheduleEngine.datesAfterReplacingSync(old: target.explicitDates, new: Array(days), kept: kept, marked: target.markedDates,
-                                                                         sourceChanged: sourceChanged, today: Days.today()))
+                                                                         sourceChanged: addressChanged, today: Days.today()))
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(allDays))
                 if !target.explicitDates.isEmpty {
                     // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert

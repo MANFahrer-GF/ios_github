@@ -80,7 +80,7 @@ public enum ScheduleEngine {
 
     /// Einzeltermine einer Müllart nach einem ersetzenden Abgleich: die neuen (`new`), die stehen gelassenen (`kept`,
     /// siehe `datesKeptOnSync`) und die vergangenen. Vergangene bleiben, sonst verschwänden unmarkierte still aus der
-    /// Leerungs-Statistik – außer bei anderer Quelle oder Adresse (`sourceChanged`): Dann gehörten sie zur falschen
+    /// Leerungs-Statistik – außer bei anderer Adresse (`sourceChanged`, siehe `SourceConfiguration.addressChanged`): Dann gehörten sie zur falschen
     /// Straße, und nur die vom Nutzer markierten (`marked`: rausgestellt, nicht rausgestellt) bleiben stehen.
     public static func datesAfterReplacingSync(old: [Date], new: [Date], kept: [Date], marked: [Date], sourceChanged: Bool,
                                                today: Date, calendar: Calendar = .current) -> [Date] {

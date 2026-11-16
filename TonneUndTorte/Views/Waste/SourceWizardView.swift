@@ -457,10 +457,11 @@ struct SourceWizardView: View {
         if target.name.isEmpty { target.name = locationName }
         let newSource = SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: selections, label: provider.label(for: selections).isEmpty ? entry.title : provider.label(for: selections))
         let sourceChanged = target.source != newSource
+        let addressChanged = SourceConfiguration.addressChanged(from: target.source, to: newSource)
         target.source = newSource
         let active = Set(activeNames.filter { $0.value }.map(\.key))
         let mappings = SyncService.suggestMappings(for: pickups, location: target)
-        let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeNames: active, sourceChanged: sourceChanged)
+        let result = SyncService.apply(pickups: pickups, mappings: mappings, location: target, context: context, replace: true, activeNames: active, sourceChanged: sourceChanged, addressChanged: addressChanged)
         target.lastSyncAt = Date()
         target.lastSyncMessage = L10n.t("\(L10n.dates(result.importedCount)) übernommen", "\(L10n.dates(result.importedCount)) imported")
         guard model.save() else { return }
