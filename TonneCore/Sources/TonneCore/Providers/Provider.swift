@@ -87,7 +87,8 @@ public struct SelectionStep: Hashable {
     }
 
     /// Wie `preselection(for:)`, kennt aber „Ort / Ortsteil“ (C-Trace Groß-Gerau): Die Suche „Erfelden“ oder
-    /// „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“. Ohne passenden Ortsteil keine Vorauswahl – dann die Liste.
+    /// „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“, ebenso einen Ortsteil, der allein in der Liste steht („Damelack“
+    /// für Breddin). Ohne passenden Ortsteil keine Vorauswahl – dann die Liste.
     public func preselection(for place: String, query: String) -> SelectionOption? {
         if let exact = preselection(for: place) { return exact }
         guard isPlaceStep else { return nil }
@@ -96,7 +97,13 @@ public struct SelectionStep: Hashable {
             let parts = $0.title.components(separatedBy: " / ")
             return parts.count == 2 && ProviderCatalog.fold(parts[0]) == ProviderCatalog.fold(place) && words.contains(ProviderCatalog.fold(parts[1]))
         }
-        return hits.count == 1 ? hits[0] : nil
+        if hits.count == 1 { return hits[0] }
+        // Ortsteil als eigener Eintrag (Ostprignitz-Ruppin führt Breddin als „Damelack“): die Suche „Damelack“ wählt ihn,
+        // wenn er laut Ortsteil-Liste wirklich zur gesuchten Gemeinde gehört (Gemeinde-Prüfung 16.11.2026)
+        let folded = ProviderCatalog.fold(query)
+        guard (LocalityIndex.byName[folded] ?? []).contains(where: { ProviderCatalog.fold($0.municipality) == ProviderCatalog.fold(place) }) else { return nil }
+        let own = options.filter { ProviderCatalog.fold($0.title) == folded }
+        return own.count == 1 ? own[0] : nil
     }
 }
 
