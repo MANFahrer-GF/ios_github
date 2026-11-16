@@ -300,6 +300,7 @@ public enum PickupQuota {
         if let included = summary.included {
             return L10n.t("\(summary.used) von \(included)", "\(summary.used) of \(included)")
         }
+        if summary.pastCount == 0 { return L10n.t("Noch kein Termin vorbei", "No collection yet") }
         return L10n.t("\(summary.outCount) von \(summary.pastCount) Terminen rausgestellt", "\(summary.outCount) of \(summary.pastCount) collections put out")
     }
 

@@ -101,6 +101,9 @@ final class PickupQuotaTests: XCTestCase {
         XCTAssertNil(PickupQuota.freeLine(plain))
         XCTAssertEqual(plain.prognosis, .none)
         XCTAssertEqual(PickupQuota.headline(plain), "2 von 5 Terminen rausgestellt")
+        // Noch kein Termin vorbei (nur künftige): kein „0 von 0 Terminen rausgestellt“
+        let none = PickupQuota.summary(QuotaInput(scheduled: [d(2026, 12, 1)]), period: year(2026), today: today, calendar: calendar)
+        XCTAssertEqual(PickupQuota.headline(none), "Noch kein Termin vorbei")
     }
 
     // MARK: - Tag mit zwei Müllarten
