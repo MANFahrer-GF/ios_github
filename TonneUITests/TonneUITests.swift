@@ -133,6 +133,8 @@ final class TonneUITests: XCTestCase {
         for (family, label) in [("rounded", "Abgerundet"), ("standard", "Standard (SF Pro)"), ("serif", "Serif (New York)")] {
             app.terminate()
             app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+            // Sonst bleibt der Testmodus aus dem Setup an: die Schrift landet in der Test-Ablage, das Widget liest die App-Gruppe
+            app.launchEnvironment["TONNE_UITESTING"] = nil
             app.launch()
             tab("Mehr")
             app.buttons["Schrift"].firstMatch.tap()

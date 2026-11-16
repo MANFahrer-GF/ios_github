@@ -1,4 +1,5 @@
 import SwiftUI
+import TonneCore
 import AppIntents
 
 /// Erklärt die Siri-Befehle und wie man eigene Sätze ohne App-Namen anlegt.
