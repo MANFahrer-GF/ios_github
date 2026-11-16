@@ -2,7 +2,17 @@ import Foundation
 
 /// Gesprochene Antworten für Siri – rein funktional, damit sie testbar sind.
 public enum SpokenSummary {
-    /// „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Mi., 12. Okt.“
+    /// Beispiel für die Siri-Seite, mit echtem Datum gerechnet (ein festes Beispiel nannte einen falschen Wochentag).
+    public static func birthdayExample(now: Date = Date(), calendar: Calendar = .current) -> String {
+        let today = calendar.startOfDay(for: now)
+        func day(_ offset: Int) -> Date { calendar.date(byAdding: .day, value: offset, to: today) ?? today }
+        return birthdays([
+            WidgetSnapshot.BirthdayItem(date: day(1), name: "Oma Erika", years: 80, colorHex: "#FF5FA2", initials: "OE"),
+            WidgetSnapshot.BirthdayItem(date: day(9), name: "Paul", years: nil, colorHex: "#2F6FED", initials: "P"),
+        ], now: now, calendar: calendar)
+    }
+
+    /// „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Sa., 17. Okt.“
     public static func birthdays(_ items: [WidgetSnapshot.BirthdayItem], now: Date = Date(), calendar: Calendar = .current) -> String {
         let today = calendar.startOfDay(for: now)
         let upcoming = items.filter { calendar.startOfDay(for: $0.date) >= today }.sorted { $0.date < $1.date }

@@ -46,7 +46,7 @@ struct SiriView: View {
             } header: {
                 Label("Geburtstage", systemImage: "birthday.cake.fill")
             } footer: {
-                Text("Siri sagt z. B.: „Oma Erika wird morgen 80. Danach: Paul in 9 Tagen, am Mi., 17. Okt.“")
+                Text(L10n.t("Siri sagt z. B.: „\(SpokenSummary.birthdayExample())“", "Siri says e.g.: “\(SpokenSummary.birthdayExample())”"))
             }
 
             Section {
