@@ -49,6 +49,12 @@ final class SyncReplaceDatesTests: XCTestCase {
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source(kreis, ["Pfullingen", "Bergstraße", "3"]), to: try source(kreis, ["Reutlingen", "Bergstraße", "3"])))
         // Ort auf einer Seite nicht bestimmbar (Eintrag führt mehrere Orte, kein Ortsschritt): geändert
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source(kreis, ["Bergstraße", "3"]), to: try source(tbr, ["Bergstraße", "3"])))
+        // Orte gleichen Kerns sind verschiedene Orte (Rutsweiler/Glan ≠ Rutsweiler/Lauter, Weisenheim am Berg ≠ am Sand)
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("kusel", ["Rutsweiler/Glan", "Hauptstraße", "1"]), to: try source("kusel", ["Rutsweiler/Lauter", "Hauptstraße", "1"])))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source(kreis, ["Weisenheim am Berg", "Hauptstraße", "1"]), to: try source(kreis, ["Weisenheim am Sand", "Hauptstraße", "1"])))
+        // Führt der Eintrag genau einen Ort, gilt dieser – auch wenn ein getippter Suchtext wie eine Gemeinde heißt („Berg“)
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("elchingen", ["Berg", "Bergstraße", "3"]), to: try source("nersingen", ["Berg", "Bergstraße", "3"])))
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("elchingen", ["Berg", "Bergstraße", "3"]), to: try source("elchingen", ["Bergstraße", "3"])))
         // Befund 9 bleibt: Kreisportal mit Ort Reutlingen → TBR-App (führt nur Reutlingen), gleiche Straße und Nummer
         XCTAssertFalse(SourceConfiguration.addressChanged(from: try source(kreis, ["Reutlingen", "Berliner Straße", "7"]), to: try source(tbr, ["Berliner Str.", "7"])))
         XCTAssertFalse(SourceConfiguration.addressChanged(from: try source(kreis, ["Reutlingen", "Am Markt"]), to: try source(tbr, ["Am Markt"])))

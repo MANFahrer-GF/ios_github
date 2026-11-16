@@ -221,18 +221,20 @@ public extension SourceConfiguration {
         return words.isEmpty || words != addressWords(b.rest)
     }
 
-    /// Ort der Adresse (Kern wie `SelectionStep.placeCore`) und die übrigen Titel: Ist der erste gewählte Titel eine
-    /// Gemeinde („Reutlingen“ im Kreisportal), gilt er; sonst der einzige Ort, den der Katalogeintrag belegt führt (TBR-App:
-    /// nur Reutlingen). Sonst nil – der Ort ist unbekannt.
+    /// Ort der Adresse (ganzer Name, `SelectionStep.spelling`) und die übrigen Titel. Führt der Katalogeintrag belegt genau
+    /// einen Ort (TBR-App: nur Reutlingen), gilt dieser; ein erster Titel gleichen Namens fällt weg. Sonst gilt der erste
+    /// gewählte Titel, wenn er eine Gemeinde ist („Reutlingen“ im Kreisportal) – erkannt am Kern, verglichen am ganzen Namen,
+    /// denn „Rutsweiler/Glan“ und „Rutsweiler/Lauter“ teilen den Kern. Sonst nil: Der Ort ist unbekannt.
     private func addressPlace() -> (place: String, rest: [SelectionOption])? {
-        if let first = selections.first, Self.municipalityCores.contains(SelectionStep.placeCore(first.title)) {
-            return (SelectionStep.placeCore(first.title), Array(selections.dropFirst()))
-        }
         let entries = ProviderCatalog.entries.filter { $0.kind == providerKind && $0.serviceKey == serviceKey }
-        let mapped = Set(entries.flatMap { EntryPlacesIndex.pairs[$0.id] ?? [] }.map { SelectionStep.placeCore(String($0.split(separator: "|", maxSplits: 1).last ?? "")) })
-        let listed = Set(entries.flatMap(\.places).map(SelectionStep.placeCore).filter(Self.municipalityCores.contains))
-        let places = mapped.isEmpty ? listed : mapped
-        return places.count == 1 ? (places.first!, selections) : nil
+        let mapped = Set(entries.flatMap { EntryPlacesIndex.pairs[$0.id] ?? [] }.map { SelectionStep.spelling(String($0.split(separator: "|", maxSplits: 1).last ?? "")) })
+        let listed = Set(entries.flatMap(\.places).filter { Self.municipalityCores.contains(SelectionStep.placeCore($0)) }.map(SelectionStep.spelling))
+        let first = selections.first.map { SelectionStep.spelling($0.title) }
+        if let only = (mapped.isEmpty ? listed : mapped).first, (mapped.isEmpty ? listed : mapped).count == 1 {
+            return (only, first == only ? Array(selections.dropFirst()) : selections)
+        }
+        if let first, Self.municipalityCores.contains(SelectionStep.placeCore(first)) { return (first, Array(selections.dropFirst())) }
+        return nil
     }
 
     /// Kernnamen aller Gemeinden, einmal berechnet.
