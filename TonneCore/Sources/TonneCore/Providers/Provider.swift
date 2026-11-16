@@ -69,7 +69,8 @@ public struct SelectionStep: Hashable {
 
     /// Ortsname ohne Verwaltungs-Vorsilbe und amtlichen Zusatz, wie Portale ihn verschieden schreiben (Gemeinde-Prüfung
     /// 16.11.2026): „Gemeinde Saal“ / „Saal a.d.Donau“ → „saal“, „Stadt Bingen“ / „Bingen am Rhein“ → „bingen“,
-    /// „Brünn/Thür.“ → „brunn“, „Neufahrn i. Ndb.“ → „neufahrn“, „Beelitz (Stadt)“ → „beelitz“. Ortsteile mit
+    /// „Brünn/Thür.“ → „brunn“, „Neufahrn i. Ndb.“ → „neufahrn“, „Beelitz (Stadt)“ → „beelitz“, „St.Johann“ → „sankt johann“,
+    /// „Altleiningen mit Neuleiningen Tal“ → „altleiningen“. Ortsteile mit
     /// Bindestrich („Altenglan - Mühlbach“) bleiben ganz.
     static func placeCore(_ name: String) -> String {
         var text = ProviderCatalog.fold(name)
@@ -77,7 +78,10 @@ public struct SelectionStep: Hashable {
         for prefix in ["verbandsgemeinde ", "samtgemeinde ", "gemeinden ", "gemeinde ", "stadt ", "markt ", "amt "] where text.hasPrefix(prefix) {
             text = String(text.dropFirst(prefix.count)); break
         }
-        let joins: Set<Substring> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "a.", "i.", "b."]
+        // „St.Johann“ (KAW Mainz-Bingen) = „Sankt Johann“
+        if text.hasPrefix("st.") || text.hasPrefix("st ") { text = "sankt " + text.dropFirst(3).trimmingCharacters(in: .whitespaces) }
+        // „mit“/„ohne“: AWB Bad Dürkheim „Altleiningen mit Neuleiningen Tal“, „Lambrecht ohne Iptestal und Dörrental“
+        let joins: Set<Substring> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "mit", "ohne", "a.", "i.", "b."]
         var kept: [Substring] = []
         for word in text.split(separator: " ") {
             if !kept.isEmpty, joins.contains(word) || word.contains(".") { break }

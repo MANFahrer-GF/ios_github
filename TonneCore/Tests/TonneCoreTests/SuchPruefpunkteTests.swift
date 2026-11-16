@@ -102,6 +102,17 @@ final class SuchPruefpunkteTests: XCTestCase {
         // Potsdam-Mittelmark: Schritt „Gemeinde / Ortsteil“ ist ein Ortsschritt
         let apm = SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: [SelectionOption(id: "1", title: "Beelitz (Stadt)"), SelectionOption(id: "2", title: "Beelitz-Heilstätten")])
         XCTAssertEqual(apm.preselection(for: "Beelitz")?.title, "Beelitz (Stadt)")
+        // Punkt 6: „St.“ für „Sankt“ (KAW Mainz-Bingen), Zusatz mit „mit“/„ohne“ (AWB Bad Dürkheim)
+        let kaw = SelectionStep(title: SelectionStep.cityTitle, options: ["Sprendlingen", "St.Johann", "Welgesheim"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        XCTAssertEqual(kaw.preselection(for: "Sankt Johann")?.title, "St.Johann")
+        let lambrecht = SelectionStep(title: SelectionStep.cityTitle, options: ["Altleiningen mit Neuleiningen Tal", "Frankeneck mit Iptestal Erfenstein und Sattelmühle",
+                                                                                 "Lambrecht ohne Iptestal und Dörrental", "Lindenberg mit Lambrecht-Dörrental", "Neuleiningen"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        XCTAssertEqual(lambrecht.preselection(for: "Altleiningen")?.title, "Altleiningen mit Neuleiningen Tal")
+        XCTAssertEqual(lambrecht.preselection(for: "Frankeneck")?.title, "Frankeneck mit Iptestal Erfenstein und Sattelmühle")
+        XCTAssertEqual(lambrecht.preselection(for: "Lambrecht (Pfalz)")?.title, "Lambrecht ohne Iptestal und Dörrental")
+        XCTAssertEqual(lambrecht.preselection(for: "Neuleiningen")?.title, "Neuleiningen")
         // Gegenproben: mehrdeutiger Kern und Ortsteil mit Bindestrich wählen nichts vor
         let kusel = SelectionStep(title: SelectionStep.cityTitle, options: [SelectionOption(id: "1", title: "Stadt Breitenbach"), SelectionOption(id: "2", title: "Gemeinde Breitenbach")])
         XCTAssertNil(kusel.preselection(for: "Breitenbach a.Herzberg"))
