@@ -21,4 +21,13 @@ final class HyphenationTests: XCTestCase {
         let out = Hyphenation.soft("Geburtstagsfeier", english: false)
         XCTAssertFalse(out.hasPrefix("G\(shy)") || out.hasSuffix("\(shy)r"), out)
     }
+
+    /// Sichtprüfung 16.11.: „Gabriele Grundhö-“ / „fer-Kantorowicz“ bei normaler Schrift. Teile eines Bindestrich-Worts
+    /// bleiben ganz, die Zeile bricht am Bindestrich; ein langes Wort daneben wird weiter getrennt.
+    func testHyphenatedCompoundKeepsItsParts() {
+        XCTAssertTrue(Hyphenation.soft("Gabriele Grundhöfer-Kantorowicz", english: false).hasSuffix(" Grundhöfer-Kantorowicz"))
+        let mixed = Hyphenation.soft("Grundhöfer-Kantorowicz Geburtstagsfeier", english: false)
+        XCTAssertTrue(mixed.hasPrefix("Grundhöfer-Kantorowicz "), mixed)
+        XCTAssertTrue(mixed.contains(shy), "freistehendes langes Wort wird getrennt: \(mixed)")
+    }
 }

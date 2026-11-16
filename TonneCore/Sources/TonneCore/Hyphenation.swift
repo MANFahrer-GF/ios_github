@@ -7,19 +7,26 @@ public enum Hyphenation {
     public static let softHyphen: Character = "\u{00AD}"
 
     /// Setzt an jeder Trennstelle der Sprache einen weichen Trennstrich, nur in Wörtern ab `minLength` Buchstaben.
+    /// Teile eines Bindestrich-Worts („Grundhöfer-Kantorowicz“) bleiben ganz: Dort bricht die Zeile am Bindestrich,
+    /// sonst zöge der Textsatz „Grundhö-“ / „fer-Kantorowicz“ vor.
     public static func soft(_ text: String, english: Bool = L10n.isEnglish, minLength: Int = 8) -> String {
         let locale = Locale(identifier: english ? "en_US" : "de_DE") as CFLocale
         guard CFStringIsHyphenationAvailableForLocale(locale) else { return text }
         var result = ""
         var word = ""
-        func flush() {
-            result += word.count >= minLength ? hyphenate(word, locale: locale) : word
+        var afterHyphen = false
+        func flush(before next: Character?) {
+            let compound = afterHyphen || next == "-"
+            result += word.count >= minLength && !compound ? hyphenate(word, locale: locale) : word
             word = ""
         }
         for ch in text {
-            if ch.isLetter { word.append(ch) } else { flush(); result.append(ch) }
+            if ch.isLetter { word.append(ch); continue }
+            flush(before: ch)
+            result.append(ch)
+            afterHyphen = ch == "-"
         }
-        flush()
+        flush(before: nil)
         return result
     }
 
