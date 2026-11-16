@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=16">
+<link rel="stylesheet" href="assets/site.css?v=17">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -24,6 +24,7 @@
     <a class="brand" href="./"><img src="img/icon-180.png" alt="" width="26" height="26">Tonne &amp; Torte</a>
     <nav aria-label="Hauptmenü">
       <ul>
+        <li class="hide-sm"><a href="#neu">Neu</a></li>
         <li class="hide-sm"><a href="#funktionen">Funktionen</a></li>
         <li class="hide-sm"><a href="#ort-pruefen">Ort prüfen</a></li>
         <li><a href="support.html">Hilfe</a></li>
@@ -53,6 +54,58 @@
     <div class="hero-phones rise" style="--i:5">
       <div class="phone"><img src="img/app-uebersicht.webp" alt="Übersicht der App: heute Oma Erikas 80. Geburtstag, morgen Gelber Sack und Restmüll" width="640" height="1391" fetchpriority="high"></div>
       <div class="phone"><img src="img/app-geburtstage.webp" alt="Geburtstagsliste der App mit Alter, Jahrgang und Sternzeichen" width="640" height="1391" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="sec neu" id="neu" aria-labelledby="neu-titel">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="kicker">Kommt mit Version 2.1.0</p>
+        <h2 id="neu-titel" class="headline">Ihr habt es euch gewünscht.<br><span class="grad">Jetzt kommt es.</span></h2>
+        <p class="sub">Die zwei größten Neuerungen in 2.1.0 kamen aus euren Mails. Danke dafür, wir lesen jede Nachricht.</p>
+      </div>
+
+      <article class="feature reveal" aria-labelledby="neu-statistik">
+        <div class="feature-text">
+          <p class="wish">Ein Wunsch aus der Community</p>
+          <h3 id="neu-statistik">Leerungs-Statistik.</h3>
+          <p class="lead">Wie oft war welche Tonne draußen? Und wie viele Leerungen sind noch frei? Für alle, deren Gebühr nur eine bestimmte Zahl an Leerungen im Jahr enthält.</p>
+          <ul class="checks">
+            <li><strong>Abhaken, was rausging.</strong> „Erledigt“ zählt als Leerung. Vergessene Termine trägst du mit „Raus“ oder „Nicht raus“ nach.</li>
+            <li><strong>Freie Leerungen im Blick.</strong> Trag ein, wie viele Leerungen inklusive sind, etwa 12 im Jahr. Bei jedem Abholtermin steht dann „noch 10 frei“.</li>
+            <li><strong>Reicht es bis Jahresende?</strong> Die App rechnet mit deinem Tempo und vergleicht mit dem Vorjahr bis zum gleichen Tag.</li>
+            <li><strong>Nur, was zählt.</strong> Kein Kontingent fürs Schadstoffmobil? Ein Tipp auf „Kein Kontingent“, und die Müllart verschwindet aus der Statistik.</li>
+            <li><strong>Dein Gebührenjahr.</strong> Eigener Stichtag, Preis je Zusatzleerung, Export als CSV.</li>
+          </ul>
+        </div>
+        <div class="phone"><img src="img/app-statistik.webp" alt="Leerungs-Statistik der App: Restmüll 2 von 12, noch 10 frei, bei gleichem Tempo reicht es bis zum Jahresende; unten 2 Müllarten ohne Kontingent ausgeblendet" width="640" height="1391" loading="lazy"></div>
+      </article>
+
+      <article class="feature flip reveal" aria-labelledby="neu-schrift">
+        <div class="feature-text">
+          <p class="wish">Ein Wunsch aus der Community</p>
+          <h3 id="neu-schrift">Schrift nach Wahl.</h3>
+          <p class="lead">Abgerundet, SF Pro oder Serif. Die Schrift gilt in der ganzen App und auch in den Widgets auf dem Home-Bildschirm.</p>
+          <ul class="checks">
+            <li><strong>Große Schrift, ganze Wörter.</strong> Bei sehr großer Textgröße werden lange Wörter sauber getrennt, statt mitten im Wort umzubrechen.</li>
+          </ul>
+        </div>
+        <div class="fonts" aria-label="Die drei Schriftarten im Vergleich">
+          <div class="font f-round"><span class="fn">Abgerundet</span><span class="fs">Morgen: Restmüll</span><span class="fx">Heute Abend rausstellen.</span></div>
+          <div class="font f-sf"><span class="fn">SF Pro</span><span class="fs">Morgen: Restmüll</span><span class="fx">Heute Abend rausstellen.</span></div>
+          <div class="font f-serif"><span class="fn">Serif</span><span class="fs">Morgen: Restmüll</span><span class="fx">Heute Abend rausstellen.</span></div>
+        </div>
+      </article>
+
+      <h3 class="more-head reveal">Und außerdem.</h3>
+      <div class="tiles">
+        <article class="tile third reveal"><h3>Mehr Orte.</h3><p>Riedstadt und Trebur im Kreis Groß-Gerau: Die App fragt jetzt den Ortsteil ab, etwa Erfelden. Dazu weitere Orte mit den richtigen Straßen und dem richtigen Entsorger.</p></article>
+        <article class="tile third reveal"><h3>Öfter abgeglichen.</h3><p>Liefert ein Portal nur wenige Wochen im Voraus, gleicht die App alle zwei Tage ab statt einmal pro Woche. Neue Termine sind so schneller da.</p></article>
+        <article class="tile third reveal"><h3>Umzug ohne Verlust.</h3><p>Ziehst du um, bleiben deine abgehakten Leerungen in der Statistik erhalten.</p></article>
+        <article class="tile third reveal"><h3>Hilfe in der App.</h3><p>Hilfe und Kontakt unter „Mehr“ führen direkt auf diese Seite.</p></article>
+      </div>
+
+      <p class="wunsch reveal">Was fehlt dir noch? <a href="kontakt.html">Schreib uns deinen Wunsch</a>, vielleicht steht er im nächsten Update.</p>
     </div>
   </section>
 

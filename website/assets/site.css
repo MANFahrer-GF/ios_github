@@ -55,13 +55,14 @@ p { margin: 0; }
 .brand:hover { text-decoration: none; }
 .brand img { width: 26px; height: 26px; border-radius: 6px; }
 .nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
-.nav ul a { color: var(--ink); opacity: .82; font-size: .8rem; letter-spacing: -0.01em; }
+.nav ul a { color: var(--ink); opacity: .82; font-size: .8rem; letter-spacing: -0.01em; white-space: nowrap; }
+@media (max-width: 760px) { .nav ul { gap: 16px; } }
 .nav ul a:hover, .nav ul a[aria-current="page"] { opacity: 1; text-decoration: none; }
 .nav ul a[aria-current="page"] { color: var(--accent-text); }
 .pill { display: inline-block; background: var(--accent); color: var(--on-accent); border-radius: 980px; font-size: .8rem; font-weight: 500; padding: 5px 13px; white-space: nowrap; transition: background .2s; }
 .pill:hover { background: var(--accent-hover); text-decoration: none; color: var(--on-accent); }
 .pill:active { transform: scale(.97); }
-@media (max-width: 600px) { .nav .hide-sm { display: none; } .nav ul { gap: 16px; } .brand { font-size: 1.1rem; } }
+@media (max-width: 720px) { .nav .hide-sm { display: none; } .nav ul { gap: 16px; } .brand { font-size: 1.1rem; } }
 
 /* Knöpfe und Badge */
 .btn { display: inline-block; background: var(--accent); color: var(--on-accent); border-radius: 980px; padding: 12px 24px; font-size: 1.06rem; font-weight: 400; transition: background .2s, transform .2s; }
@@ -443,4 +444,40 @@ footer a { color: var(--ink); opacity: .8; }
   .notif .nh, .tile.big .notif .nh { color: rgb(235 235 245 / .6); }
   .notif .nt, .notif .nx, .tile.big .notif p { color: #f5f5f7; }
   .notif .na li + li { border-top-color: rgb(235 235 245 / .14); }
+}
+
+/* Neu in 2.1.0 */
+.neu .kicker { color: var(--accent-text); font-size: clamp(1rem, 1.6vw, 1.25rem); font-weight: 600; margin: 0 0 8px; }
+.feature { display: grid; grid-template-columns: 1fr auto; gap: clamp(36px, 6vw, 80px); align-items: center; margin-top: clamp(56px, 8vw, 96px); text-align: left; background: var(--tile); border-radius: 36px; padding: clamp(28px, 5vw, 64px); }
+.feature.flip { grid-template-columns: auto 1fr; }
+.feature.flip .feature-text { order: 2; }
+.feature h3 { font-size: clamp(2rem, 4.4vw, 3.2rem); letter-spacing: -0.035em; line-height: 1.05; margin: 10px 0 0; }
+.feature .lead { color: var(--muted); font-size: clamp(1.1rem, 1.8vw, 1.3rem); line-height: 1.4; margin: 16px 0 0; max-width: 46ch; }
+.feature .phone { width: clamp(220px, 24vw, 290px); }
+.wish { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 6px 14px 6px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent-text); font-size: .9rem; font-weight: 600; }
+.wish::before { content: "♥"; font-size: .85rem; }
+.checks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 16px; }
+.checks li { position: relative; padding-left: 30px; color: var(--muted); line-height: 1.42; }
+.checks li::before { content: ""; position: absolute; left: 0; top: .28em; width: 18px; height: 18px; border-radius: 50%; background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.3l2.6 2.6L13 6.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat; }
+.checks strong { color: var(--ink); font-weight: 600; }
+.fonts { display: grid; gap: 14px; width: clamp(240px, 30vw, 360px); }
+.font { display: grid; gap: 4px; background: var(--page); border-radius: 22px; padding: 20px 24px; box-shadow: 0 18px 40px -26px rgb(0 0 0 / .35); }
+.font .fn { font: 600 .8rem/1 var(--font); letter-spacing: .02em; text-transform: uppercase; color: var(--muted); }
+.font .fs { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-top: 6px; }
+.font .fx { color: var(--muted); font-size: 1rem; }
+.f-round .fs, .f-round .fx { font-family: ui-rounded, "SF Pro Rounded", "Nunito", var(--font); }
+.f-sf .fs, .f-sf .fx { font-family: var(--font); }
+.f-serif .fs, .f-serif .fx { font-family: ui-serif, "New York", Georgia, "Times New Roman", serif; letter-spacing: -0.01em; }
+.more-head { margin-top: clamp(64px, 9vw, 104px); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.03em; }
+.neu .tiles { margin-top: 28px; grid-template-columns: repeat(4, 1fr); }
+.neu .tile.third { grid-column: span 2; }
+.wunsch { margin-top: 48px; font-size: 1.2rem; color: var(--muted); }
+.wunsch a { color: var(--accent-text); font-weight: 600; }
+@media (max-width: 860px) {
+  .feature, .feature.flip { grid-template-columns: 1fr; justify-items: center; }
+  .feature.flip .feature-text { order: 0; }
+  .feature-text { justify-self: stretch; }
+  .fonts { width: 100%; }
+  .neu .tiles { grid-template-columns: 1fr; }
+  .neu .tile.third { grid-column: auto; }
 }
