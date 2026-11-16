@@ -40,16 +40,24 @@ public struct BuergerportalProvider: WasteProvider {
         switch selections.count {
         case 0:
             let places: List<Place> = try await client.json("\(api)/OrteMitOrtsteilen")
-            let options = places.d.map { place -> SelectionOption in
-                let title = place.Ortsteilname.map { "\(place.Ortsname) – \($0)" } ?? place.Ortsname
-                return SelectionOption(id: "\(place.OrteId)|\(place.Ortsteilname ?? "")", title: title)
+            // Cochem-Zell führt fast jeden Ort doppelt: „Beuren“ (Alt-Straßen ohne Plan) und „Beuren – Beuren“ (echte Straßen).
+            // Der gleichnamige Ortsteil gehört zum Hauptort – ein Eintrag, dessen Straßenliste beide umfasst (siehe Straßenschritt).
+            var seen = Set<String>()
+            let options = places.d.compactMap { place -> SelectionOption? in
+                let district = place.Ortsteilname.flatMap { $0.isEmpty || $0 == place.Ortsname ? nil : $0 }
+                let id = "\(place.OrteId)|\(district ?? "")"
+                guard seen.insert(id).inserted else { return nil }
+                return SelectionOption(id: id, title: district.map { "\(place.Ortsname) – \($0)" } ?? place.Ortsname)
             }
             return SelectionStep(title: SelectionStep.cityTitle, options: options.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
         case 1:
             let (placeID, district) = Self.split(selections[0].id)
             // Straßen des Hauptorts tragen je nach Datensatz keinen oder einen leeren Ortsteil (Holzheim: 1 ohne, 36 mit leerem).
+            // Hauptort: auch die Straßen des gleichnamigen Ortsteils (Cochem-Zell, siehe Ortsschritt). Gespeicherte Adressen von vor
+            // 2.1.0 („79|Beuren“) laufen über den Ortsteil-Zweig weiter.
+            let place = selections[0].title.replacingOccurrences(of: "'", with: "''")
             let districtFilter = district.isEmpty
-                ? "(OrtsteilName eq null or OrtsteilName eq '')"
+                ? "(OrtsteilName eq null or OrtsteilName eq '' or OrtsteilName eq '\(place)')"
                 : "OrtsteilName eq '\(district.replacingOccurrences(of: "'", with: "''"))'"
             let filter = "Ort/OrteId eq \(placeID) and \(districtFilter)"
             let streets: List<Street> = try await client.json("\(api)/Strassen?$filter=\(HTTPClient.query(filter))&$orderby=\(HTTPClient.query("Name asc"))")
