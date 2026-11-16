@@ -182,7 +182,8 @@ final class PortalHealthLiveTests: XCTestCase {
         var placeFound = false, sawPlaceStep = false
         var numberIndex: Int?
         let wanted = job.place.map(searchName)
-        let localities = job.place.map { Self.localities["\(job.district)|\($0)"] ?? [] } ?? []
+        // `district` ist optional: nicht direkt einsetzen, sonst lautet der Schlüssel „Optional(…)|Gemeinde“ und trifft nie
+        let localities = job.district.flatMap { district in job.place.flatMap { Self.localities["\(district)|\($0)"] } } ?? []
         walking: while true {
             let step: SelectionStep
             do {

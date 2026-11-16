@@ -120,6 +120,19 @@ final class PortalHealthWalkTests: XCTestCase {
         func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
     }
 
+    /// Ostprignitz-Ruppin: eine lange Ortsliste (49 Orte) mit Ortsteilen statt Gemeinden – Breddin steht dort als „Damelack“.
+    private struct LocalityStub: WasteProvider {
+        let kind = ProviderKind.sitepark
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+            guard selections.isEmpty else { return nil }
+            let names = (1...44).map { "Ort \($0)" } + ["Damelack"]
+            return SelectionStep(title: SelectionStep.cityTitle, options: names.sorted().map { SelectionOption(id: $0, title: $0) })
+        }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
     private func job(_ kind: ProviderKind) -> PortalHealthLiveTests.Job {
         PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: kind, serviceKey: "stub", title: "Stub"), district: nil, place: nil)
     }
@@ -135,5 +148,15 @@ final class PortalHealthWalkTests: XCTestCase {
     func testSearchWordAfterWhichThePortalIsFinishedIsTaken() async throws {
         let (selections, _, _) = try await PortalHealthLiveTests.walk(job(.muellmax), calendar: .current, provider: SearchStub())
         XCTAssertEqual(titles(selections), ["Garten"])
+    }
+
+    /// Gemeinde-Prüfung Punkt 6 (16.11.2026): Der Schlüssel „Landkreis|Gemeinde“ wurde mit dem optionalen Landkreis gebaut
+    /// („Optional(…)|Breddin“) und traf nie – alle 12 Gemeinden in Ostprignitz-Ruppin bekamen den mittleren Ort.
+    func testLocalityOfThePlaceIsPickedFromALongList() async throws {
+        let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .sitepark, serviceKey: "stub", title: "Stub"),
+                                            district: "Landkreis Ostprignitz-Ruppin", place: "Breddin")
+        let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: LocalityStub())
+        XCTAssertEqual(titles(selections), ["Damelack"])
+        XCTAssertEqual(placeFound, true)
     }
 }
