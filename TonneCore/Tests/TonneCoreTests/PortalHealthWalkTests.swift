@@ -226,7 +226,7 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertEqual(titles(selections), ["Damelack"])
     }
 
-    /// Abfall+ Wecker: Bundesland → Landkreis (mit Altkreisen) → Ort.
+    /// Abfall+ Wecker: Bundesland → Landkreis (mit leerem Altkreis) → Gemeinde → Ortsteil.
     private struct RegionStub: WasteProvider {
         let kind = ProviderKind.abfallPlusApp
         let serviceKey = "stub"
@@ -236,8 +236,10 @@ final class PortalHealthWalkTests: XCTestCase {
             switch selections.map(\.title) {
             case []: return list("Bundesland", ["Bayern", "Niedersachsen", "Rheinland-Pfalz"])
             case ["Niedersachsen"]: return list("Landkreis", ["Kreis Cuxhaven", "Kreis Göttingen", "Kreis Osterode am Harz"])
-            case ["Niedersachsen", "Kreis Osterode am Harz"]: return list(SelectionStep.cityTitle, ["Bad Lauterberg", "Osterode am Harz"])
-            case ["Niedersachsen", "Kreis Göttingen"]: return list(SelectionStep.cityTitle, ["Gleichen", "Göttingen"])
+            // Altkreis: leere Straßensuche
+            case ["Niedersachsen", "Kreis Osterode am Harz"]: return .text(title: SelectionStep.streetTitle)
+            case ["Niedersachsen", "Kreis Göttingen"]: return list(SelectionStep.cityTitle, ["Gleichen", "Göttingen", "Osterode am Harz"])
+            case ["Niedersachsen", "Kreis Göttingen", "Osterode am Harz"]: return list("Ortsteil", ["Lerbach", "Osterode am Harz"])
             default: return nil
             }
         }
@@ -245,7 +247,7 @@ final class PortalHealthWalkTests: XCTestCase {
     }
 
     func testStateAndDistrictAreChosenBeforeThePlace() async throws {
-        for (place, path) in [("Osterode am Harz", ["Niedersachsen", "Kreis Osterode am Harz", "Osterode am Harz"]),
+        for (place, path) in [("Osterode am Harz", ["Niedersachsen", "Kreis Göttingen", "Osterode am Harz", "Osterode am Harz"]),
                               ("Gleichen", ["Niedersachsen", "Kreis Göttingen", "Gleichen"])] {
             let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .abfallPlusApp, serviceKey: "stub", title: "Stub"),
                                                 district: "Landkreis Göttingen", place: place)

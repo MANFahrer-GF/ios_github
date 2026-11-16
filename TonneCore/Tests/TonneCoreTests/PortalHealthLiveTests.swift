@@ -234,7 +234,7 @@ final class PortalHealthLiveTests: XCTestCase {
                 throw WalkError(selections.isEmpty ? "leere erste Auswahl bei „\(step.title)“ (Abfragegrenze)" : "leere Auswahl bei „\(step.title)“")
             }
             if step.isPlaceStep { sawPlaceStep = true }
-            // Bundesland und Kreis zuerst (Abfall+ Wecker: „Niedersachsen“ → „Kreis Osterode am Harz“ → Ort): wie ein Nutzer, der
+            // Bundesland und Kreis zuerst (Abfall+ Wecker: „Niedersachsen“ → „Kreis Göttingen“ → Ort): wie ein Nutzer, der
             // Land und Kreis kennt. Ohne das prüfte die Gemeinde-Prüfung für Osterode eine Adresse in Rheinland-Pfalz.
             if let wanted, !placeFound, let district = job.district, !step.options.contains(where: { matches($0, wanted) }),
                let region = Self.regionOption(in: step.options, district: district, place: wanted, first: selections.isEmpty) {
@@ -281,14 +281,15 @@ final class PortalHealthLiveTests: XCTestCase {
         wanted.lowercased().hasPrefix(searchName(option.title).lowercased() + "-")
     }
 
-    /// Im ersten Schritt das Bundesland des Kreises; sonst ein Kreis nach dem Ort (Altkreis „Kreis Osterode am Harz“), dann
-    /// der Kreis selbst („Kreis Göttingen“). nil, wenn keine Option so heißt.
+    /// Im ersten Schritt das Bundesland des Kreises; sonst der Kreis selbst („Kreis Göttingen“), erst dann ein Kreis nach dem
+    /// Ort. Abfall+ Wecker führt den Altkreis „Kreis Osterode am Harz“ noch, aber leer (16.11.2026: keine Straße, auch nicht
+    /// „Hauptstraße“); Osterode steht unter „Kreis Göttingen“. nil, wenn keine Option so heißt.
     static func regionOption(in options: [SelectionOption], district: String, place: String, first: Bool) -> SelectionOption? {
         if first, let state = CatalogRegions.districtStates[district],
            let hit = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(state) }) { return hit }
         let kreise = options.filter { option in ["landkreis ", "kreis "].contains { ProviderCatalog.fold(option.title).hasPrefix($0) } }
-        return kreise.first { districtCore($0.title) == ProviderCatalog.fold(place) }
-            ?? kreise.first { districtCore($0.title) == districtCore(district) }
+        return kreise.first { districtCore($0.title) == districtCore(district) }
+            ?? kreise.first { districtCore($0.title) == ProviderCatalog.fold(place) }
     }
 
     /// Verband je Gemeinde („Landkreis|Gemeinde“ → „Wittlich-Land“) aus dem Gemeindeverzeichnis in `tools/catalog/data/geo`
