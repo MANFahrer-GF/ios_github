@@ -287,6 +287,16 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertTrue(try place("Eningen unter Achalm").entries.contains { $0.serviceKey == "15f69fab91c4cae50d9dbb5bcfd383f0" })
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: Der cTrace-Kalender des Kreises Aurich führt auf Baltrum nur „Schiffsentsorgung Baltrum“
+    /// ohne Abfuhrplan; die Termine der Insel liefert die MKW-App (jumomind).
+    func testBaltrumIsOnlyServedByTheMKWApp() throws {
+        let baltrum = try XCTUnwrap(ProviderCatalog.checkPlace("Baltrum").first)
+        XCTAssertEqual(baltrum.entries.map(\.serviceKey), ["lka"])
+        // Gegenprobe: Aurich führt den cTrace-Kalender weiter
+        let aurich = try XCTUnwrap(ProviderCatalog.checkPlace("Aurich").first { $0.district == "Landkreis Aurich" })
+        XCTAssertTrue(aurich.entries.contains { $0.serviceKey == "aurich-abfallkalender" })
+    }
+
     func testUnavailablePortalIsToldHonestly() throws {
         let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
         XCTAssertFalse(wildungen.isCovered)
