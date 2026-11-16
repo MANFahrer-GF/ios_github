@@ -73,6 +73,10 @@ enum SyncService {
         if sourceChanged {
             for type in location?.wasteTypes ?? [] where type.sourceKey != nil && sharedTargets[ObjectIdentifier(type)] == nil {
                 type.isActive = false
+                // Unmarkierte vergangene Termine der alten Adresse stünden nach dem Wiedereinschalten als „offen“ da
+                let today = Days.today()
+                type.explicitDates = ScheduleEngine.datesAfterReplacingSync(old: type.explicitDates, new: type.explicitDates.filter { $0 >= today }, kept: [],
+                                                                            marked: type.markedDates, sourceChanged: true, today: today)
             }
         }
 
@@ -121,8 +125,9 @@ enum SyncService {
                 target.dayNotes = [:]
             }
             if replace {
-                // Vergangene Termine bleiben stehen: sonst verschwänden unmarkierte still aus der Leerungs-Statistik
-                let allDays = days.union(kept).union(PickupQuota.pastDatesKeptOnSync(old: target.explicitDates, today: Days.today()))
+                // Vergangene Termine bleiben stehen (bei neuer Adresse nur die markierten), siehe ScheduleEngine.datesAfterReplacingSync
+                let allDays = Set(ScheduleEngine.datesAfterReplacingSync(old: target.explicitDates, new: Array(days), kept: kept, marked: target.markedDates,
+                                                                         sourceChanged: sourceChanged, today: Days.today()))
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(allDays))
                 if !target.explicitDates.isEmpty {
                     // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert

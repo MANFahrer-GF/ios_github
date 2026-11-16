@@ -78,6 +78,20 @@ public enum ScheduleEngine {
         }
     }
 
+    /// Einzeltermine einer Müllart nach einem ersetzenden Abgleich: die neuen (`new`), die stehen gelassenen (`kept`,
+    /// siehe `datesKeptOnSync`) und die vergangenen. Vergangene bleiben, sonst verschwänden unmarkierte still aus der
+    /// Leerungs-Statistik – außer bei anderer Quelle oder Adresse (`sourceChanged`): Dann gehörten sie zur falschen
+    /// Straße, und nur die vom Nutzer markierten (`marked`: rausgestellt, nicht rausgestellt) bleiben stehen.
+    public static func datesAfterReplacingSync(old: [Date], new: [Date], kept: [Date], marked: [Date], sourceChanged: Bool,
+                                               today: Date, calendar: Calendar = .current) -> [Date] {
+        var past = PickupQuota.pastDatesKeptOnSync(old: old, today: today, calendar: calendar)
+        if sourceChanged {
+            let markedDays = Set(marked.map { calendar.startOfDay(for: $0) })
+            past = past.filter { markedDays.contains($0) }
+        }
+        return Set(new.map { calendar.startOfDay(for: $0) }).union(kept.map { calendar.startOfDay(for: $0) }).union(past).sorted()
+    }
+
     /// Weggefallene Termine samt Ersatz (höchstens 7 Tage daneben), die den eigenen Dienst berühren:
     /// Der alte oder der neue Termin liegt darin. Sonst betrifft die Verschiebung einen nicht.
     public static func dutyRelevantMoves(removed: [Date], added: [Date], isOnDuty: (Date) -> Bool, calendar: Calendar = .current) -> [(old: Date, new: Date?)] {

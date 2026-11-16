@@ -163,6 +163,9 @@ final class WasteType {
 
     func isOnDuty(on date: Date) -> Bool { DutySchedule.isOnDuty(on: date, periods: dutyPeriods) }
 
+    /// Tage, die der Nutzer markiert hat (rausgestellt oder nicht) – ein Adresswechsel lässt sie stehen.
+    var markedDates: [Date] { doneDates + notPutOutDates + bulkConfirmedDates }
+
     func isNotPutOut(on date: Date) -> Bool {
         let day = Days.start(of: date)
         return notPutOutDates.contains { Days.start(of: $0) == day }
