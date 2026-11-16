@@ -445,11 +445,7 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         guard selections.isEmpty else { return nil }
         // Die Ortsliste des Filters enthält nur echte Abfuhrorte (die API kennt auch Straßen-Orte ohne Termine).
         let html = try await client.string(Self.kyffBase + "/kalender/")
-        let segment = html.range(of: #""tribe_venues[]","options":["#).map { String(html[$0.upperBound...].prefix(40_000)) } ?? ""
-        var venues: [(id: String, title: String)] = HTMLText.matches(#"\{"text":"((?:[^"\\]|\\.)*)","id":"(\d+)""#, in: segment).map { groups in
-            let text = (try? JSONDecoder().decode(String.self, from: Data("\"\(groups[0])\"".utf8))) ?? groups[0]
-            return (groups[1], HTMLText.decodeEntities(text).replacingOccurrences(of: "–", with: "-"))
-        }
+        var venues = Self.kyffVenues(in: html)
         guard !venues.isEmpty else { throw ProviderError.noDataGeneric }
         let present = Set(venues.map(\.id))
         let absorbed = Set(Self.kyffMerge.filter { present.contains($0.key) }.values)
@@ -461,6 +457,18 @@ public struct MitteldeutschlandPortalsProvider: WasteProvider {
         var ids: [String: [String]] = [:]
         for venue in venues { ids[venue.title, default: []].append(venue.id) }
         return SelectionStep(title: L10n.t("Ort / Tour", "Town / tour"), options: Self.sortedOptions(ids.map { ($0.value.joined(separator: ","), $0.key) }))
+    }
+
+    /// Orte des Filters „tribe_venues[]“ – nur bis zum Ende dieser Liste. Dahinter folgen die Filter für Behälter und
+    /// Gemeinden („Biotonne“, „Artern“ mit Kennungen ohne eigene Termine, HTTP 400); die las die App früher mit.
+    static func kyffVenues(in html: String) -> [(id: String, title: String)] {
+        guard let start = html.range(of: #""tribe_venues[]","options":["#) else { return [] }
+        let rest = html[start.upperBound...]
+        let segment = String(rest[..<(rest.range(of: "}]")?.upperBound ?? rest.endIndex)])
+        return HTMLText.matches(#"\{"text":"((?:[^"\\]|\\.)*)","id":"(\d+)""#, in: segment).map { groups in
+            let text = (try? JSONDecoder().decode(String.self, from: Data("\"\(groups[0])\"".utf8))) ?? groups[0]
+            return (groups[1], HTMLText.decodeEntities(text).replacingOccurrences(of: "–", with: "-"))
+        }
     }
 
     private func kyffhaeuserPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
