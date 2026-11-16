@@ -42,6 +42,29 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 
 Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
+### Neu in Version 2.1.0 (Vorschlag 16.11.2026, Build 16, noch nicht eingereicht)
+
+```
+Ihr habt es euch gewünscht
+Die zwei größten Neuerungen kamen aus euren Mails. Danke dafür!
+
+Leerungs-Statistik
+Wie oft war welche Tonne draußen, und wie viele Leerungen sind noch frei? „Erledigt“ zählt als Leerung, vergessene Termine trägst du mit „Raus“ oder „Nicht raus“ nach. Trag ein, wie viele Leerungen deine Gebühr enthält, etwa 12 im Jahr – dann steht bei jedem Abholtermin „noch 10 frei“.
+• Prognose bis zum Jahresende und Vergleich mit dem Vorjahr bis zum gleichen Tag
+• Eigenes Gebührenjahr, Preis je Zusatzleerung, Export als CSV
+• „Kein Kontingent“ blendet Müllarten wie das Schadstoffmobil aus der Statistik aus
+
+Schrift nach Wahl
+Abgerundet, SF Pro oder Serif – in der ganzen App und in den Widgets. Bei sehr großer Textgröße werden lange Wörter sauber getrennt.
+
+Außerdem
+• Riedstadt und Trebur (Kreis Groß-Gerau): Die App fragt den Ortsteil ab und findet die Termine direkt
+• Weitere Orte mit den richtigen Straßen und dem richtigen Entsorger
+• Liefert ein Portal nur wenige Wochen voraus, gleicht die App alle zwei Tage ab
+• Beim Umzug bleiben abgehakte Leerungen in der Statistik erhalten
+• Hilfe und Kontakt unter „Mehr“ führen auf die neue Webseite tonne.kant.ovh
+```
+
 ### Neu in dieser Version – 2.0.11 (eingereicht 14.11.2026, Build 15)
 
 ```
