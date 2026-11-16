@@ -64,7 +64,19 @@ public struct SelectionStep: Hashable {
         if let exact = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) { return exact }
         let core = Self.placeCore(place)
         let hits = options.filter { Self.placeCore($0.title) == core }
-        return !core.isEmpty && hits.count == 1 ? hits[0] : nil
+        guard !core.isEmpty else { return nil }
+        return hits.count == 1 ? hits[0] : Self.suffixMatch(hits, place: place)
+    }
+
+    /// Unter gleichen Kernen der mit dem Zusatz des Orts: Kusel „Rutsweiler/Glan“ für „Rutsweiler am Glan“,
+    /// „Rutsweiler/Lauter“ für „Rutsweiler an der Lauter“ (Gemeinde-Prüfung 16.11.2026).
+    static func suffixMatch(_ hits: [SelectionOption], place: String) -> SelectionOption? {
+        guard hits.count > 1, let last = place.split(separator: " ").last.map(String.init), place.contains(" ") else { return nil }
+        let fitting = hits.filter { option in
+            guard let slash = option.title.lastIndex(of: "/") else { return false }
+            return ProviderCatalog.fold(String(option.title[option.title.index(after: slash)...])) == ProviderCatalog.fold(last)
+        }
+        return fitting.count == 1 ? fitting[0] : nil
     }
 
     /// Ortsname ohne Verwaltungs-Vorsilbe und amtlichen Zusatz, wie Portale ihn verschieden schreiben (Gemeinde-Prüfung

@@ -113,6 +113,14 @@ final class SuchPruefpunkteTests: XCTestCase {
         XCTAssertEqual(lambrecht.preselection(for: "Frankeneck")?.title, "Frankeneck mit Iptestal Erfenstein und Sattelmühle")
         XCTAssertEqual(lambrecht.preselection(for: "Lambrecht (Pfalz)")?.title, "Lambrecht ohne Iptestal und Dörrental")
         XCTAssertEqual(lambrecht.preselection(for: "Neuleiningen")?.title, "Neuleiningen")
+        // Gleicher Kern, Zusatz nach „/“ entscheidet (Kusel)
+        let rutsweiler = SelectionStep(title: L10n.t("Ortsgemeinde", "Municipality"), options: ["Rutsweiler/Glan", "Rutsweiler/Lauter", "Kusel"]
+            .enumerated().map { SelectionOption(id: "\($0.offset)", title: $0.element) })
+        XCTAssertEqual(rutsweiler.preselection(for: "Rutsweiler am Glan")?.title, "Rutsweiler/Glan")
+        XCTAssertEqual(rutsweiler.preselection(for: "Rutsweiler an der Lauter")?.title, "Rutsweiler/Lauter")
+        XCTAssertNil(rutsweiler.preselection(for: "Rutsweiler"))
+        var found = false
+        XCTAssertEqual(PortalHealthLiveTests.pick(rutsweiler.options, wanted: "Rutsweiler an der Lauter", found: &found).title, "Rutsweiler/Lauter")
         // Gegenproben: mehrdeutiger Kern und Ortsteil mit Bindestrich wählen nichts vor
         let kusel = SelectionStep(title: SelectionStep.cityTitle, options: [SelectionOption(id: "1", title: "Stadt Breitenbach"), SelectionOption(id: "2", title: "Gemeinde Breitenbach")])
         XCTAssertNil(kusel.preselection(for: "Breitenbach a.Herzberg"))

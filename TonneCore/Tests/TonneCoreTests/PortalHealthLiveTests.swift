@@ -347,7 +347,8 @@ final class PortalHealthLiveTests: XCTestCase {
             // Genauer Name vor Zusatz-/Kerntreffer („Mühlheim am Main“ statt „Mühlheim“), mehrdeutige Kerne gar nicht
             // („Neustadt am Kulm“ und „Neustadt/WN“ für Neustadt a.d.Waldnaab) – wie die Vorauswahl der App.
             let hits = options.filter { matches($0, wanted) }
-            if let exact = hits.first(where: { ProviderCatalog.fold(searchName($0.title)) == ProviderCatalog.fold(wanted) }) ?? (hits.count == 1 ? hits[0] : nil) {
+            if let exact = hits.first(where: { ProviderCatalog.fold(searchName($0.title)) == ProviderCatalog.fold(wanted) }) ?? (hits.count == 1 ? hits[0] : nil)
+                ?? SelectionStep.suffixMatch(hits, place: wanted) {
                 found = true; return exact
             }
             if let hit = OptionSearch(options).filter(query: wanted).first { found = true; return hit }
