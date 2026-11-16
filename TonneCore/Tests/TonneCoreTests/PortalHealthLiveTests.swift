@@ -240,6 +240,13 @@ final class PortalHealthLiveTests: XCTestCase {
                let region = Self.regionOption(in: step.options, district: district, place: wanted, first: selections.isEmpty) {
                 selections.append(region); continue
             }
+            // Der Verband der Gemeinde laut Gemeindeverzeichnis (A.R.T. Trier führt die VGs von vier Kreisen: „Esch“ steht unter
+            // Wittlich-Land und Gerolstein; Helmstedt gruppiert nach Samtgemeinden: Bahrdorf → „Grasleben und Velpke“)
+            if let wanted, !placeFound, step.isPlaceStep || selections.isEmpty, let district = job.district, let place = job.place,
+               !step.options.contains(where: { matches($0, wanted) }),
+               let verband = Self.verbands["\(district)|\(place)"], let option = Self.verbandOption(in: step.options, verband: verband) {
+                selections.append(option); continue
+            }
             // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene
             // tiefer. Wie ein Nutzer, der seine VG kennt: die VG wählen, unter der die Gemeinde steht. Ebenso ein erster
             // Schritt „Bundesland“ (Lobbe: Battenberg (Eder) steht unter Hessen).
@@ -282,6 +289,34 @@ final class PortalHealthLiveTests: XCTestCase {
         let kreise = options.filter { option in ["landkreis ", "kreis "].contains { ProviderCatalog.fold(option.title).hasPrefix($0) } }
         return kreise.first { districtCore($0.title) == ProviderCatalog.fold(place) }
             ?? kreise.first { districtCore($0.title) == districtCore(district) }
+    }
+
+    /// Verband je Gemeinde („Landkreis|Gemeinde“ → „Wittlich-Land“) aus dem Gemeindeverzeichnis in `tools/catalog/data/geo`
+    /// (die ersten 9 Stellen des Gemeindeschlüssels sind der Verband). Verbandsfreie Gemeinden fehlen.
+    static let verbands: [String: String] = {
+        let geo = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+            .deletingLastPathComponent().appendingPathComponent("tools/catalog/data/geo")
+        func rows(_ name: String) -> [[String]] {
+            guard let text = try? String(contentsOf: geo.appendingPathComponent(name), encoding: .utf8) else { return [] }
+            return text.split(whereSeparator: \.isNewline).dropFirst().map { $0.split(separator: ";", omittingEmptySubsequences: false).map(String.init) }
+        }
+        let names = Dictionary(rows("verbaende.csv").filter { $0.count >= 2 }.map { ($0[0], $0[1]) }, uniquingKeysWith: { a, _ in a })
+        var out: [String: String] = [:]
+        for row in rows("gemeinden.csv") where row.count >= 6 && row[4].count == 12 {
+            guard let verband = names[String(row[4].prefix(9))], ProviderCatalog.fold(searchName(verband)) != ProviderCatalog.fold(row[0]) else { continue }
+            out["\(row[2])|\(row[0])"] = searchName(verband)
+        }
+        return out
+    }()
+
+    /// Die eine Option, die den Verband nennt: „VG Wittlich-Land“, „Wittlich-Land“, „Grasleben und Velpke“ (nil bei keiner oder mehreren).
+    static func verbandOption(in options: [SelectionOption], verband: String) -> SelectionOption? {
+        let name = ProviderCatalog.fold(verband)
+        let hits = options.filter { option in
+            let title = ProviderCatalog.fold(option.title)
+            return title == name || title.hasPrefix(name + " ") || title.hasSuffix(" " + name) || title.contains(" " + name + " ")
+        }
+        return hits.count == 1 ? hits[0] : nil
     }
 
     static func isLocality(_ option: SelectionOption, _ localities: [String]) -> Bool {

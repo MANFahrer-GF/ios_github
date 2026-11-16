@@ -254,4 +254,36 @@ final class PortalHealthWalkTests: XCTestCase {
             XCTAssertEqual(placeFound, true, place)
         }
     }
+
+    /// A.R.T. Trier: VGs aus vier Kreisen, „Esch“ gibt es in Wittlich-Land und Gerolstein.
+    private struct ARTStub: WasteProvider {
+        let kind = ProviderKind.portalsRP
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        let tree = ["Gerolstein": ["Esch", "Gerolstein"], "Saarburg-Kell": ["Mannebach"], "Wittlich-Land": ["Dreis", "Esch", "Manderscheid"]]
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+            switch selections.count {
+            case 0: return SelectionStep(title: SelectionStep.cityTitle, options: tree.keys.sorted().map { SelectionOption(id: $0, title: $0) })
+            case 1: return SelectionStep(title: "Ortsgemeinde", options: (tree[selections[0].title] ?? []).map { SelectionOption(id: $0, title: $0) })
+            default: return nil
+            }
+        }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
+    func testAmbiguousMunicipalityIsFoundUnderItsOwnVerband() async throws {
+        XCTAssertEqual(PortalHealthLiveTests.verbands["Landkreis Vulkaneifel|Esch"], "Gerolstein")
+        XCTAssertEqual(PortalHealthLiveTests.verbands["Landkreis Helmstedt|Bahrdorf"], "Velpke")
+        for (district, path) in [("Landkreis Vulkaneifel", ["Gerolstein", "Esch"]), ("Landkreis Bernkastel-Wittlich", ["Wittlich-Land", "Esch"])] {
+            let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .portalsRP, serviceKey: "stub", title: "Stub"), district: district, place: "Esch")
+            let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: ARTStub())
+            XCTAssertEqual(titles(selections), path, district)
+            XCTAssertEqual(placeFound, true, district)
+        }
+        let helmstedt = [SelectionOption(id: "1", title: "Grasleben und Velpke"), SelectionOption(id: "2", title: "Lehre"),
+                         SelectionOption(id: "3", title: "Nord-Elm und Königslutter Ortsteile")]
+        XCTAssertEqual(PortalHealthLiveTests.verbandOption(in: helmstedt, verband: "Velpke")?.title, "Grasleben und Velpke")
+        XCTAssertEqual(PortalHealthLiveTests.verbandOption(in: helmstedt, verband: "Nord-Elm")?.title, "Nord-Elm und Königslutter Ortsteile")
+        XCTAssertNil(PortalHealthLiveTests.verbandOption(in: helmstedt, verband: "Heeseberg"))
+    }
 }
