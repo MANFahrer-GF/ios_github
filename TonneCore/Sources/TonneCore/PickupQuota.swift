@@ -301,6 +301,20 @@ public enum PickupQuota {
         return L10n.t("noch \(summary.free ?? 0) von \(included) frei", "\(summary.free ?? 0) of \(included) left")
     }
 
+    /// `freeLine` je Abholtag, im Zeitraum des Abholtags (nicht im heutigen): Am 30.12. mit 12 von 12 genutzt
+    /// zeigt die Abholung am 2.1. „noch 12 von 12 frei“. Je Zeitraum wird `input` nur einmal gerechnet.
+    public static func freeLines(anchor: Date?, today: Date, calendar: Calendar = .current,
+                                 input: @escaping (QuotaPeriod) -> QuotaInput) -> (Date) -> String? {
+        var cache: [Date: String?] = [:]
+        return { day in
+            let period = period(containing: day, anchor: anchor, calendar: calendar)
+            if let hit = cache[period.start] { return hit }
+            let line = freeLine(summary(input(period), period: period, today: today, calendar: calendar))
+            cache[period.start] = line
+            return line
+        }
+    }
+
     /// „7 von 12“ für den Ring bzw. „18 von 20 Terminen rausgestellt“ ohne Kontingent.
     public static func headline(_ summary: QuotaSummary) -> String {
         if let included = summary.included {

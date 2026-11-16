@@ -269,6 +269,22 @@ final class PickupQuotaTests: XCTestCase {
         XCTAssertEqual(PickupQuota.freeLine(PickupQuota.summary(input, period: year(2027), today: today, calendar: calendar)), "noch 12 von 12 frei")
     }
 
+    /// Dieselbe Wahl über `freeLines`, die `AppModel.quotaLines` aufruft: Rechnete sie im heutigen Zeitraum,
+    /// stünde am 2.1. „alle 12 genutzt“. Je Zeitraum wird nur einmal gerechnet.
+    func testFreeLinesPickPeriodOfPickupDay() {
+        let scheduled = biweekly2026 + [d(2027, 1, 2)]
+        let done = Array(biweekly2026.prefix(12))
+        var calls = 0
+        let line = PickupQuota.freeLines(anchor: nil, today: d(2026, 12, 30), calendar: calendar) { period in
+            calls += 1
+            return QuotaInput(scheduled: scheduled.filter(period.contains), done: done, included: 12)
+        }
+        XCTAssertEqual(line(d(2027, 1, 2)), "noch 12 von 12 frei")
+        XCTAssertEqual(line(d(2026, 12, 31)), "alle 12 genutzt")
+        XCTAssertEqual(line(d(2027, 1, 16)), "noch 12 von 12 frei")
+        XCTAssertEqual(calls, 2, "je Zeitraum einmal")
+    }
+
     // MARK: - CSV
 
     func testCSVExport() {

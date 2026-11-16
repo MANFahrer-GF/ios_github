@@ -507,14 +507,7 @@ final class AppModel: ObservableObject {
     /// zeigt die Abholung am 2.1. „12 von 12 frei“, nicht „alle genutzt“. Je Zeitraum nur einmal gerechnet.
     func quotaLines(for type: WasteType) -> (Date) -> String? {
         guard type.isCounted else { return { _ in nil } }
-        var cache: [Date: String?] = [:]
-        return { day in
-            let period = type.quotaPeriod(containing: day)
-            if let hit = cache[period.start] { return hit }
-            let line = PickupQuota.freeLine(type.quotaSummary(period: period))
-            cache[period.start] = line
-            return line
-        }
+        return PickupQuota.freeLines(anchor: type.quotaStart, today: Days.today()) { type.quotaInput(period: $0) }
     }
 
     /// Statistik als CSV: laufender und vorheriger Zeitraum aller (bzw. eines Standorts) Müllarten, vergangene Termine.
