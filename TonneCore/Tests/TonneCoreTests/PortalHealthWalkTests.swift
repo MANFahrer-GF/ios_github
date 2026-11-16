@@ -84,6 +84,7 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "leere Auswahl bei „Straße“")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "Jumomind hat keine Termine für diese Adresse geliefert.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "x antwortete mit HTTP 404.")))
+        XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "www.muellmax.de antwortete mit HTTP 403.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("warnung", "HTTP 429")))
     }
 

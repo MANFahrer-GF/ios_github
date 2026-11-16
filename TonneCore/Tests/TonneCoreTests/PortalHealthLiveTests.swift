@@ -314,6 +314,8 @@ final class PortalHealthLiveTests: XCTestCase {
         // Altenkirchen, Kusel) sagt nichts über das Portal; „kein Server mit dem Hostnamen“ bleibt ein Befund
         return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht", "Abfragegrenze",
                 "keine Verbindung zum Internet", "Internet connection appears to be offline"].contains { text.contains($0) }
+            // Müllmax sperrt die IP des Prüfrechners mit HTTP 403 (16.11.2026: von gsg/live aus 200, Dillingen 11 Termine)
+            || (result.kind == ProviderKind.muellmax.rawValue && text.contains("HTTP 403"))
     }
 
     /// „Gronau (Westf.)“ → „Gronau“, „Ahaus, Stadt“ → „Ahaus“
