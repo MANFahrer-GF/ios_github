@@ -61,6 +61,21 @@ final class SyncReplaceDatesTests: XCTestCase {
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source(kreis, ["Reutlingen", "Am Markt"]), to: try source(tbr, ["Am Markt", "1"])), "Nummer kam dazu")
     }
 
+    /// Prüfbefund 2 zu Paket D: Gleiche Quelle und gleiche Titel mit neuen IDs (getippter Suchtext als ID) galten als
+    /// „geändert“, wenn der erste Titel ein Ortsteil ist – unmarkierte vergangene Termine derselben Adresse fielen weg.
+    func testSameTitlesWithNewIdsAreTheSameAddress() throws {
+        func source(_ serviceKey: String, _ titles: [String], ids prefix: String) throws -> SourceConfiguration {
+            let entry = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == serviceKey })
+            return SourceConfiguration(providerKind: entry.kind, serviceKey: serviceKey, selections: titles.map { SelectionOption(id: "\(prefix)-\($0)", title: $0) }, label: "")
+        }
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "b")))
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("lwl", ["Dabel-Woland", "Hauptstraße", "1"], ids: "a"), to: try source("lwl", ["Dabel Woland", "Hauptstraße", "1"], ids: "b")))
+        // Gegenproben: andere Nummer, anderer Ortsteil, andere Quelle mit Ortsteil als erstem Titel
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Kummer", "Lindenstraße", "4"], ids: "b")))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Techentin", "Lindenstraße", "3"], ids: "b")))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("de.k4systems.abfallkreisrt", ["Kummer", "Lindenstraße", "3"], ids: "b")))
+    }
+
     /// Alte (falsche) Straße: 5.3. rausgestellt, 12.3. nicht rausgestellt, 19.3. nichts getippt, 2.4. kommend.
     private var old: [Date] { [d(2026, 3, 5), d(2026, 3, 12), d(2026, 3, 19), d(2026, 4, 2)] }
     private var marked: [Date] { [d(2026, 3, 5), d(2026, 3, 12)] }

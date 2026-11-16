@@ -228,7 +228,12 @@ public extension SourceConfiguration {
     /// Dann bleiben nur markierte vergangene Termine stehen (`ScheduleEngine.datesAfterReplacingSync`).
     static func addressChanged(from old: SourceConfiguration?, to new: SourceConfiguration) -> Bool {
         guard let old else { return true }
-        if old.providerKind == new.providerKind, old.serviceKey == new.serviceKey, old.selections.map(\.id) == new.selections.map(\.id) { return false }
+        let sameSource = old.providerKind == new.providerKind && old.serviceKey == new.serviceKey
+        if sameSource, old.selections.map(\.id) == new.selections.map(\.id) { return false }
+        // Gleiche Quelle, gleiche Titel, nur andere IDs (getippter Suchtext als ID, `SourceWizardView`): dieselbe Adresse,
+        // auch wenn der erste Titel ein Ortsteil ist (lwl „Kummer“, Prüfbefund 2 zu Paket D)
+        func shown(_ config: SourceConfiguration) -> [String] { config.selections.map { SelectionStep.spelling($0.title + "|" + ($0.subtitle ?? "")) } }
+        if sameSource, shown(old) == shown(new) { return false }
         guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
         let words = addressWords(a.rest)
         return words.isEmpty || words != addressWords(b.rest)
