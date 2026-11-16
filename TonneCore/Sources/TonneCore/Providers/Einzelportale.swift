@@ -447,8 +447,10 @@ extension NRWPortalsProvider {
         ("Restmüll Tonne", "Restmüll"), ("Gelbe Tonne / Gelbe Säcke", "Gelbe Tonne"), ("Papier-Tonne", "Papiertonne"), ("Bio-Tonne", "Biotonne"),
     ]
 
+    /// Das Contao-Formular lehnt einen POST ohne Origin und Referer mit HTTP 400 ab (Gemeinde-Prüfung 16.11.2026).
     private func wismarResult(_ street: String) async throws -> String {
-        let html = HTTPClient.text(from: try await client.postForm(Self.wismarURL, fields: [("FORM_SUBMIT", "COLLECTION_DATE"), ("REQUEST_TOKEN", ""), ("street", street)]))
+        let html = HTTPClient.text(from: try await client.postForm(Self.wismarURL, fields: [("FORM_SUBMIT", "COLLECTION_DATE"), ("REQUEST_TOKEN", ""), ("street", street)],
+                                                                   headers: ["Origin": "https://www.evb-wismar.de", "Referer": Self.wismarURL]))
         guard let start = html.range(of: "collection-date__result") else { throw ProviderError.noDataGeneric }
         let rest = html[start.upperBound...]
         let end = rest.range(of: "Navigation überspringen")?.lowerBound ?? rest.endIndex
