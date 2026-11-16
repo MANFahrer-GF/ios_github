@@ -79,5 +79,7 @@
   {"kind": "portalsNRW", "key": "ebsdorfergrund", "title": "Gemeinde Ebsdorfergrund – Online-Abfuhrkalender", "website": "https://ebsdorfergrund.de/online-muellabfuhrkalender/",
    "places": ["Ebsdorfergrund"], "districts": ["Landkreis Marburg-Biedenkopf"], "onlyDistricts": true, "partial": true},
   {"kind": "portalsNRW", "key": "brachttal", "title": "Gemeinde Brachttal – Müllkalender", "website": "https://www.brachttal.de/rathaus-buergerschaft/gemeindeverwaltung/abfallentsorgung/",
-   "places": ["Brachttal"], "districts": ["Landkreis Main-Kinzig-Kreis"], "onlyDistricts": true, "partial": true}
+   "places": ["Brachttal"], "districts": ["Landkreis Main-Kinzig-Kreis"], "onlyDistricts": true, "partial": true},
+  {"kind": "portalsNRW", "key": "buehl", "title": "Stadt Bühl – Digitaler Abfallkalender", "website": "https://www.buehl.de/abfallkalender",
+   "places": ["Bühl"], "districts": ["Landkreis Rastatt"], "onlyDistricts": true, "partial": true}
 ]

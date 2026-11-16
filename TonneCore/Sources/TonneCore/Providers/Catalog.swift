@@ -818,6 +818,7 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .portalsNRW, serviceKey: "nersingen", title: "Knittel Entsorgung – Nersingen", website: "https://www.knittel-entsorgung.com/abfuhrkalender-2026/", places: ["Nersingen"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "ebsdorfergrund", title: "Gemeinde Ebsdorfergrund – Online-Abfuhrkalender", website: "https://ebsdorfergrund.de/online-muellabfuhrkalender/", places: ["Ebsdorfergrund"]),
         CatalogEntry(kind: .portalsNRW, serviceKey: "brachttal", title: "Gemeinde Brachttal – Müllkalender", website: "https://www.brachttal.de/rathaus-buergerschaft/gemeindeverwaltung/abfallentsorgung/", places: ["Brachttal"]),
+        CatalogEntry(kind: .portalsNRW, serviceKey: "buehl", title: "Stadt Bühl – Digitaler Abfallkalender", website: "https://www.buehl.de/abfallkalender", places: ["Bühl"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "hamburg", title: "Stadtreinigung Hamburg", website: "https://www.stadtreinigung.hamburg/abfuhrkalender/", places: ["Hamburg", "Altona", "Bergedorf", "Eimsbüttel", "Hamburg-Mitte", "Hamburg-Nord", "Wandsbek", "Hamburg-Harburg"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "bremerhaven", title: "BEG Bremerhaven (Bremerhavener Entsorgungsgesellschaft)", website: "https://beg-bhv.de/", places: ["Bremerhaven", "Cuxhaven"]),
         CatalogEntry(kind: .portalsNord, serviceKey: "kiel", title: "ABK Kiel (Abfallwirtschaftsbetrieb Kiel)", website: "https://abki.de/", places: ["Kiel"]),

@@ -410,6 +410,7 @@ LOCAL_MANUAL={('jumomind','hom'):[('Landkreis Hochtaunuskreis','Bad Homburg v.d.
               ('portalsNRW','nersingen'):[('Landkreis Neu-Ulm','Nersingen')],
               ('portalsNRW','ebsdorfergrund'):[('Landkreis Marburg-Biedenkopf','Ebsdorfergrund')],
               ('portalsNRW','brachttal'):[('Landkreis Main-Kinzig-Kreis','Brachttal')],
+              ('portalsNRW','buehl'):[('Landkreis Rastatt','Bühl')],
               ('jumomind','kbl'):[('Landkreis Offenbach','Langen (Hessen)')]}
 # Gemeinde-Einträge mit mehrdeutigem Namen – per PLZ (Heimat-Info) bzw. Seitentitel (Mein-Abfallkalender) geprüft
 MAK='https://{}.mein-abfallkalender.online'

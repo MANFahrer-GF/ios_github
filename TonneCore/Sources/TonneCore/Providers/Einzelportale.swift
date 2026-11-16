@@ -29,6 +29,7 @@ extension NRWPortalsProvider {
         "giessen": "Stadtreinigung Gießen", "wetzlar": "Stadt Wetzlar", "huerth": "Stadtverkehr Hürth",
         "eppelborn": "AFZE Eppelborn", "waldeck": "Stadt Waldeck", "elchingen": "Knittel Entsorgung (Elchingen)",
         "nersingen": "Knittel Entsorgung (Nersingen)", "ebsdorfergrund": "Gemeinde Ebsdorfergrund", "brachttal": "Gemeinde Brachttal",
+        "buehl": "Stadt Bühl",
     ]
 
     static let einzelportalOrte: [String: String] = [
@@ -36,7 +37,7 @@ extension NRWPortalsProvider {
         "heilbronn": "Heilbronn", "erlensee": "Erlensee", "frankenberg": "Frankenberg (Eder)", "wismar": "Wismar",
         "goettingen": "Göttingen", "giessen": "Gießen", "wetzlar": "Wetzlar", "huerth": "Hürth",
         "eppelborn": "Eppelborn", "waldeck": "Waldeck", "elchingen": "Elchingen", "nersingen": "Nersingen",
-        "ebsdorfergrund": "Ebsdorfergrund", "brachttal": "Brachttal",
+        "ebsdorfergrund": "Ebsdorfergrund", "brachttal": "Brachttal", "buehl": "Bühl",
     ]
 
     /// Gemeinde-Kennung in der Müll App je `serviceKey`.
@@ -61,6 +62,7 @@ extension NRWPortalsProvider {
         case "elchingen", "nersingen": return try await knittelStep(selections)
         case "ebsdorfergrund": return try await ebsdorfergrundStep(selections)
         case "brachttal": return try await brachttalStep(selections)
+        case "buehl": return try await buehlStep(selections)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -84,6 +86,7 @@ extension NRWPortalsProvider {
         case "elchingen", "nersingen": return try await knittelPickups(selections, calendar: calendar)
         case "ebsdorfergrund": return try await ebsdorfergrundPickups(selections, calendar: calendar)
         case "brachttal": return try await brachttalPickups(selections, calendar: calendar)
+        case "buehl": return try await buehlPickups(selections, calendar: calendar)
         default: throw ProviderError.notSupported(L10n.t("Unbekanntes Portal.", "Unknown portal."))
         }
     }
@@ -1007,6 +1010,48 @@ extension NRWPortalsProvider {
     /// Einträge der Datei, die keine Abfuhr sind.
     static func brachttalIsPickup(_ summary: String) -> Bool {
         !["Fälligkeit", "Anmeldeschluss"].contains { summary.localizedCaseInsensitiveContains($0) }
+    }
+
+    // MARK: Bühl (Baden)
+
+    /// Digitaler Abfallkalender der Stadt Bühl (hitcom garbageCalendar): alle Straßen in einer Liste, jede gehört zu einem
+    /// Abfuhrbezirk; der Bezirk führt die Abfuhrtage mit Müllarten. Die Kreis-App Rastatt nennt die Stadt selbst zuständig.
+    static let buehlAPI = "https://www.buehl.de/tools/garbageCalendar/api/v1"
+
+    private struct BuehlRef: Decodable { let _id: Int; let code: String? }
+    private struct BuehlStreet: Decodable { let _id: Int; let name: String; let district: BuehlRef? }
+    private struct BuehlStreets: Decodable { let records: [BuehlStreet] }
+    private struct BuehlType: Decodable { let description: String }
+    private struct BuehlDay: Decodable { let date: String; let garbageTypes: [BuehlType] }
+    private struct BuehlDistrict: Decodable { let collectionDays: [BuehlDay] }
+
+    private func buehlStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {
+        guard selections.isEmpty else { return nil }
+        let streets: BuehlStreets = try await client.json(Self.buehlAPI + "/main.Street?relations[]=district&limit=1000")
+        let options = streets.records.compactMap { street -> SelectionOption? in
+            guard let district = street.district else { return nil }
+            return SelectionOption(id: String(district._id), title: street.name, subtitle: district.code)
+        }
+        guard !options.isEmpty else { throw ProviderError.noDataGeneric }
+        return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
+    }
+
+    private func buehlPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
+        guard let district = selections.first?.id else { throw ProviderError.selectAddressFirst }
+        let record: BuehlDistrict = try await client.json(Self.buehlAPI + "/main.District/\(district)?relations[]=collectionDays.garbageTypes")
+        return Self.buehlPickups(record.collectionDays.map { ($0.date, $0.garbageTypes.map(\.description)) }, fromYear: einzelYear, calendar: calendar)
+    }
+
+    /// „Bioabfall (einpacken in Zeitungspapier …)“ → „Bioabfall“; nur ab dem laufenden Jahr (die Liste beginnt 2019).
+    static func buehlPickups(_ days: [(date: String, types: [String])], fromYear: Int, calendar: Calendar) -> [Pickup] {
+        days.flatMap { day -> [Pickup] in
+            guard let date = ICS.parseDate(day.date.replacingOccurrences(of: "-", with: ""), params: ["VALUE": "DATE"], calendar: calendar),
+                  calendar.component(.year, from: date) >= fromYear else { return [] }
+            return day.types.map { type in
+                let name = type.split(separator: "(", maxSplits: 1).first.map { $0.trimmingCharacters(in: .whitespaces) } ?? type
+                return Pickup(date: date, name: NameCleaner.clean(name))
+            }
+        }
     }
 
     private func brachttalStep(_ selections: [SelectionOption]) async throws -> SelectionStep? {

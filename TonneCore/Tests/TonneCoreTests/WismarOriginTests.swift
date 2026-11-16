@@ -35,3 +35,26 @@ final class WismarStub: URLProtocol {
         client?.urlProtocolDidFinishLoading(self)
     }
 }
+
+/// Gemeinde-Prüfung 16.11.2026: Die Kreis-App Rastatt nennt Bühl selbst zuständig und lieferte dort keine Termine.
+/// Die Stadt hat einen eigenen digitalen Abfallkalender (Straße → Abfuhrbezirk → Abfuhrtage).
+final class BuehlTests: XCTestCase {
+    func testBuehlParsesDaysFromTheCurrentYear() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let pickups = NRWPortalsProvider.buehlPickups([
+            ("2025-12-30", ["Restabfall"]),
+            ("2026-11-20", ["Bioabfall (einpacken in Zeitungspapier ist erlaubt)", "Gelbe Tonne (Verpackungsmaterial)"]),
+        ], fromYear: 2026, calendar: calendar)
+        XCTAssertEqual(pickups.map(\.name).sorted(), ["Bioabfall", "Gelbe Tonne"])
+        XCTAssertEqual(pickups.first.map { calendar.component(.day, from: $0.date) }, 20)
+    }
+
+    func testBuehlIsServedByTheCityCalendar() throws {
+        let buehl = try XCTUnwrap(ProviderCatalog.checkPlace("Bühl").first { $0.district == "Landkreis Rastatt" })
+        XCTAssertEqual(buehl.entries.map(\.serviceKey), ["buehl"])
+        // Gegenprobe: Bühlertal bleibt bei der Kreis-App
+        let buehlertal = try XCTUnwrap(ProviderCatalog.checkPlace("Bühlertal").first)
+        XCTAssertTrue(buehlertal.entries.contains { $0.serviceKey == "de.k4systems.awbrastatt" })
+    }
+}
