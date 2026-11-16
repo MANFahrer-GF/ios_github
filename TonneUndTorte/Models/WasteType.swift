@@ -196,7 +196,7 @@ final class WasteType {
     /// Gezählte Müllart: Ein Kontingent ist eingetragen.
     var isCounted: Bool { includedPerYear != nil }
     /// Nie ein Kontingent gehabt – nur dann gibt es „Kein Kontingent“ (sonst verschwänden Vorjahre mit Kontingent).
-    var neverCounted: Bool { !isCounted && quotaChanges.isEmpty }
+    var neverCounted: Bool { !PickupQuota.everIncluded(current: includedPerYear, changes: quotaChanges) }
     /// Ausgeblendet, solange nie ein Kontingent eingetragen war – ein Kontingent holt die Müllart immer zurück.
     var hidesInStatistics: Bool { hiddenInStatistics && neverCounted }
 

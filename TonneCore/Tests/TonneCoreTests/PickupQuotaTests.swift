@@ -283,6 +283,29 @@ final class PickupQuotaTests: XCTestCase {
         XCTAssertEqual(PickupQuota.freeAndRemainingLine(past, today: d(2027, 2, 1), calendar: calendar), "10 frei geblieben")
     }
 
+    /// Prüfbefund 10: Englisch folgt das Enddatum der Region, nicht fest Monat/Tag; Deutsch bleibt „10.02.“.
+    func testFreeAndRemainingLineDateFollowsRegion() {
+        let today = d(2026, 11, 20)
+        let feeYear = PickupQuota.period(containing: today, anchor: d(2020, 2, 11), calendar: calendar)  // bis 10.02.
+        let summary = PickupQuota.summary(QuotaInput(scheduled: biweekly2026, done: [], included: 12), period: feeYear, today: today, calendar: calendar)
+        XCTAssertTrue(PickupQuota.freeAndRemainingLine(summary, today: today, calendar: calendar).hasSuffix(" bis 10.02."))
+        L10n.forcedLanguage = "en"
+        let gb = PickupQuota.freeAndRemainingLine(summary, today: today, calendar: calendar, locale: Locale(identifier: "en_GB"))
+        let us = PickupQuota.freeAndRemainingLine(summary, today: today, calendar: calendar, locale: Locale(identifier: "en_US"))
+        XCTAssertTrue(gb.hasSuffix(" until 10/02"), gb)
+        XCTAssertTrue(us.hasSuffix(" until 2/10"), us)
+    }
+
+    /// Prüfbefund 11: Einrichten und am selben Tag ausschalten ist kein Kontingent; ein Tag mit Kontingent schon.
+    func testEverIncludedIgnoresQuotaSwitchedOffTheSameDay() {
+        let sameDay = PickupQuota.recording(nil, at: d(2026, 11, 16), into: PickupQuota.recording(12, at: d(2026, 11, 16), into: []))
+        XCTAssertFalse(PickupQuota.everIncluded(current: nil, changes: sameDay))
+        let nextDay = PickupQuota.recording(nil, at: d(2026, 11, 17), into: PickupQuota.recording(12, at: d(2026, 11, 16), into: []))
+        XCTAssertTrue(PickupQuota.everIncluded(current: nil, changes: nextDay), "Vorjahr mit Kontingent bleibt sichtbar")
+        XCTAssertTrue(PickupQuota.everIncluded(current: 12, changes: []))
+        XCTAssertFalse(PickupQuota.everIncluded(current: nil, changes: []))
+    }
+
     /// Dieselbe Wahl über `freeLines`, die `AppModel.quotaLines` aufruft: Rechnete sie im heutigen Zeitraum,
     /// stünde am 2.1. „alle 12 genutzt“. Je Zeitraum wird nur einmal gerechnet.
     func testFreeLinesPickPeriodOfPickupDay() {

@@ -184,6 +184,12 @@ public enum PickupQuota {
         return changes.sorted { $0.from < $1.from }.last { $0.from < period.end }?.included
     }
 
+    /// Je ein Kontingent gehabt: aktuell eins oder eine Änderung mit Kontingent. Einrichten und am selben Tag wieder
+    /// ausschalten hinterlässt nur „ab hier ohne“ (`recording` ersetzt am selben Tag) – das zählt nicht (Prüfbefund 11).
+    public static func everIncluded(current: Int?, changes: [QuotaChange]) -> Bool {
+        current != nil || changes.contains { $0.included != nil }
+    }
+
     /// Neue Änderung eintragen: Am selben Tag ersetzt sie die vorige.
     public static func recording(_ included: Int?, at day: Date, into changes: [QuotaChange], calendar: Calendar = .current) -> [QuotaChange] {
         let day = calendar.startOfDay(for: day)
@@ -303,15 +309,27 @@ public enum PickupQuota {
 
     /// Zeile unter dem Ring: „noch 10 frei · noch 2 Abholtermine bis 31.12.“ (Ende des Zeitraums, auch beim Gebührenjahr).
     /// Ein abgelaufener Zeitraum (Vorjahres-Reiter) sagt nur „2 frei geblieben“ – dort steht nichts mehr an.
-    public static func freeAndRemainingLine(_ summary: QuotaSummary, today: Date, calendar: Calendar = .current) -> String {
+    public static func freeAndRemainingLine(_ summary: QuotaSummary, today: Date, calendar: Calendar = .current, locale: Locale = .current) -> String {
         let free = summary.free ?? 0
         guard calendar.startOfDay(for: today) < summary.period.end else {
             return L10n.t("\(free) frei geblieben", "\(free) left unused")
         }
-        let last = calendar.dateComponents([.day, .month], from: Days.add(-1, to: summary.period.end, calendar: calendar))
-        let date = L10n.t(String(format: "%02d.%02d.", last.day ?? 1, last.month ?? 1), "\(last.month ?? 1)/\(last.day ?? 1)")
+        let lastDay = Days.add(-1, to: summary.period.end, calendar: calendar)
+        let last = calendar.dateComponents([.day, .month], from: lastDay)
+        // Englisch nach der Region des Geräts (en_GB „10/02“, en_US „2/10“), nicht fest Monat/Tag (Prüfbefund 10)
+        let date = L10n.isEnglish ? dayMonth(lastDay, calendar: calendar, locale: locale) : String(format: "%02d.%02d.", last.day ?? 1, last.month ?? 1)
         let left = L10n.count(summary.remaining, "Abholtermin", "Abholtermine", "collection", "collections")
         return L10n.t("noch \(free) frei · noch \(left) bis \(date)", "\(free) left · \(left) to come until \(date)")
+    }
+
+    /// Tag und Monat in der Reihenfolge der Region.
+    static func dayMonth(_ date: Date, calendar: Calendar, locale: Locale) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.setLocalizedDateFormatFromTemplate("dM")
+        return formatter.string(from: date)
     }
 
     /// `freeLine` je Abholtag, im Zeitraum des Abholtags (nicht im heutigen): Am 30.12. mit 12 von 12 genutzt
