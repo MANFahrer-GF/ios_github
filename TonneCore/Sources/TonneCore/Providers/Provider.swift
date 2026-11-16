@@ -235,6 +235,12 @@ public extension SourceConfiguration {
         func shown(_ config: SourceConfiguration) -> [String] { config.selections.map { SelectionStep.spelling($0.title + "|" + ($0.subtitle ?? "")) } }
         if sameSource, shown(old) == shown(new) { return false }
         guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
+        // Andere Quelle: Namensvettern in verschiedenen Kreisen sind verschiedene Orte (Neuenkirchen in Dithmarschen ≠ in
+        // Steinfurt, Prüfbefund 3 zu Paket D). Der Kreis muss auf beiden Seiten bestimmbar sein und übereinstimmen.
+        if !sameSource {
+            let (da, db) = (old.districts(of: a.place), new.districts(of: b.place))
+            guard !da.isEmpty, !db.isEmpty, !da.isDisjoint(with: db) else { return true }
+        }
         let words = addressWords(a.rest)
         return words.isEmpty || words != addressWords(b.rest)
     }
@@ -253,6 +259,19 @@ public extension SourceConfiguration {
         }
         if let first, Self.municipalityCores.contains(SelectionStep.placeCore(first)) { return (first, Array(selections.dropFirst())) }
         return nil
+    }
+
+    /// Kreise, in denen der Katalogeintrag den Ort führt (belegte Paare). Führt er keine, der Kreis der Gemeinde, wenn es
+    /// sie unter diesem Namen nur in einem Kreis gibt. Sonst leer: Der Kreis ist unbestimmbar.
+    private func districts(of place: String) -> Set<String> {
+        let entries = ProviderCatalog.entries.filter { $0.kind == providerKind && $0.serviceKey == serviceKey }
+        let mapped = Set(entries.flatMap { EntryPlacesIndex.pairs[$0.id] ?? [] }.compactMap { pair -> String? in
+            let parts = pair.split(separator: "|", maxSplits: 1).map(String.init)
+            return parts.count == 2 && SelectionStep.spelling(parts[1]) == place ? parts[0] : nil
+        })
+        if !mapped.isEmpty { return mapped }
+        let named = Set(MunicipalityIndex.all.filter { SelectionStep.spelling($0.name) == place }.map(\.district))
+        return named.count == 1 ? named : []
     }
 
     /// Kernnamen aller Gemeinden, einmal berechnet.

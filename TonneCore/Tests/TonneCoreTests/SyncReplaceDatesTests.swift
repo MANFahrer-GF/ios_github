@@ -76,6 +76,26 @@ final class SyncReplaceDatesTests: XCTestCase {
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("de.k4systems.abfallkreisrt", ["Kummer", "Lindenstraße", "3"], ids: "b")))
     }
 
+    /// Prüfbefund 3 zu Paket D: Namensvettern in verschiedenen Kreisen galten als dieselbe Adresse (Neuenkirchen in
+    /// Dithmarschen, AWSH-Eintrag, gegen Neuenkirchen in Steinfurt, abfallIO-Eintrag).
+    func testNamesakesInOtherDistrictsAreAnotherAddress() throws {
+        func source(_ entry: CatalogEntry, _ titles: [String]) -> SourceConfiguration {
+            SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: titles.map { SelectionOption(id: "\(entry.id)-\($0)", title: $0) }, label: "")
+        }
+        func serving(_ district: String, _ kind: ProviderKind) throws -> CatalogEntry {
+            try XCTUnwrap(ProviderCatalog.entries.first { entry in
+                entry.kind == kind && (EntryPlacesIndex.pairs[entry.id] ?? []).count > 1
+                    && (EntryPlacesIndex.pairs[entry.id] ?? []).contains { $0.hasPrefix(district) && $0.hasSuffix("|Neuenkirchen") }
+            }, "\(district) \(kind)")
+        }
+        let dithmarschen = try serving("Kreis Dithmarschen", .awsh), steinfurt = try serving("Kreis Steinfurt", .abfallIOLegacy)
+        let titles = ["Neuenkirchen", "Hauptstraße", "5"]
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: source(dithmarschen, titles), to: source(steinfurt, titles)))
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: source(steinfurt, titles), to: source(dithmarschen, titles)))
+        // Gegenprobe: gleicher Eintrag, gleiche Titel
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: source(dithmarschen, titles), to: source(dithmarschen, titles)))
+    }
+
     /// Alte (falsche) Straße: 5.3. rausgestellt, 12.3. nicht rausgestellt, 19.3. nichts getippt, 2.4. kommend.
     private var old: [Date] { [d(2026, 3, 5), d(2026, 3, 12), d(2026, 3, 19), d(2026, 4, 2)] }
     private var marked: [Date] { [d(2026, 3, 5), d(2026, 3, 12)] }
