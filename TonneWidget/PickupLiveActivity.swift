@@ -11,31 +11,35 @@ struct PickupLiveActivity: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    BinStack(bins: bins(context), size: 28)
+                    BinStack(bins: bins(context), size: 28).tonneTypography(maxSize: .xLarge)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    if !context.state.done {
-                        Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "checkmark.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.green)
-                    } else {
-                        Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "arrow.uturn.backward.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.secondary)
-                    }
+                    Group {
+                        if !context.state.done {
+                            Button(intent: MarkPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "checkmark.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.green)
+                        } else {
+                            Button(intent: UndoPickupDoneIntent(dayKey: context.attributes.dayKey)) { Image(systemName: "arrow.uturn.backward.circle.fill").tonneFont(.title2) }.buttonStyle(.plain).tint(.secondary)
+                        }
+                    }.tonneTypography(maxSize: .xLarge)
                 }
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 2) {
                         Text(headline(context)).tonneFont(.headline)
                         Text(ReminderPlanner.joinNames(shownNames(context))).tonneFont(.caption).foregroundStyle(.secondary).lineLimit(1)
-                    }
+                    }.tonneTypography(maxSize: .xLarge)
                 }
             } compactLeading: {
-                BinStack(bins: bins(context), size: 18)
+                BinStack(bins: bins(context), size: 18).tonneTypography(maxSize: .large)
             } compactTrailing: {
-                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).tonneFont(.caption2, .semibold)
+                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).tonneFont(.caption2, .semibold).tonneTypography(maxSize: .large)
             } minimal: {
-                if context.state.done {
-                    Image(systemName: "checkmark.circle.fill")
-                } else {
-                    WasteIcon(symbolName: context.state.symbolNames.first ?? "trash.fill", name: context.state.names.first ?? "", size: 15)
-                }
+                Group {
+                    if context.state.done {
+                        Image(systemName: "checkmark.circle.fill")
+                    } else {
+                        WasteIcon(symbolName: context.state.symbolNames.first ?? "trash.fill", name: context.state.names.first ?? "", size: 15)
+                    }
+                }.tonneTypography(maxSize: .large)
             }
         }
     }
