@@ -423,7 +423,9 @@ struct OverviewView: View {
                             // Name oben, Angaben als Schildchen darunter – geordnet wie in der großen Karte
                             // Volle Restbreite – sonst rechnet SwiftUI die Spalte zu schmal und die Schildchen stapeln sich
                             VStack(alignment: .leading, spacing: 3) {
-                                Text(event.title).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(scheme))
+                                // Weiche Trennstriche: bei großer Schrift sonst „Hauptuntersuc|hung“
+                                Text(Hyphenation.soft(event.title)).tonneFont(size: 15, .heavy).foregroundStyle(KlarStyle.text(scheme))
+                                    .accessibilityLabel(event.title)
                                     .lineLimit(3).fixedSize(horizontal: false, vertical: true)
                                 InfoTags(tags: EventText.tags(event, person: person(for: event)), size: 11)
                             }
