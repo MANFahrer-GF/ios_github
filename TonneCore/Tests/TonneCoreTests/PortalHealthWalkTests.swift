@@ -92,8 +92,8 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertTrue(found)
         found = false
         let awido = ["Mantel", "Neustadt am Kulm", "Neustadt/WN", "Parkstein"].map { SelectionOption(id: $0, title: $0) }
-        let picked = PortalHealthLiveTests.pick(awido, wanted: "Neustadt a.d.Waldnaab", found: &found)
-        XCTAssertFalse(found && picked.title == "Neustadt am Kulm", "mehrdeutiger Kern darf nicht als Fund gelten")
+        _ = PortalHealthLiveTests.pick(awido, wanted: "Neustadt a.d.Waldnaab", found: &found)
+        XCTAssertFalse(found, "mehrdeutiger Kern darf nicht als Fund gelten")
     }
 
     /// Prüfbefunde 3 und 14 ändern nur die Vorauswahl der App, nicht „Ort gefunden“ des Prüfwerkzeugs (Punkt-6-Auswertung).
@@ -136,7 +136,10 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "www.rsag.de antwortete mit HTTP 429.")))
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "x antwortete mit HTTP 502.")))
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", nil, ["Portal antwortet nicht (über 120 s)"])))
-        XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "leere erste Auswahl bei „Bundesland“ (Abfragegrenze)")))
+        XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "leere erste Auswahl bei „Bundesland“ (Abfragegrenze)")),
+                       "Drosselung nur bei Lobbe belegt")
+        var lobbe = result("fehler", "leere erste Auswahl bei „Bundesland“ (Abfragegrenze)"); lobbe.kind = ProviderKind.lobbe.rawValue
+        XCTAssertTrue(PortalHealthLiveTests.isTransient(lobbe))
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "Verbindung fehlgeschlagen: Es besteht anscheinend keine Verbindung zum Internet.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "Verbindung fehlgeschlagen: Es wurde kein Server mit dem angegebenen Hostnamen gefunden.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "leere Auswahl bei „Straße“")))
@@ -208,6 +211,46 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertTrue(typedNumber)
         // `check` macht ab der gefundenen Nummer weiter, nicht wieder bei 1
         XCTAssertEqual(Array(PortalHealthLiveTests.houseNumbers.drop(while: { $0 != selections.last?.id })), ["10", "20"])
+    }
+
+    /// Erste Liste leer bzw. Ortsliste ohne die Gemeinde (Prüfbefunde 5 und 6).
+    private struct ListStub: WasteProvider {
+        let kind = ProviderKind.awido
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        let first: SelectionStep
+
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? { selections.isEmpty ? first : nil }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
+    private func placeJob(_ kind: ProviderKind = .awido) -> PortalHealthLiveTests.Job {
+        PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: kind, serviceKey: "stub", title: "Stub"), district: nil, place: "Artern")
+    }
+
+    /// Kyffhäuser „Ort / Tour“ ist eine Ortsliste: Fehlt die Gemeinde, darf das Ergebnis nicht „ok“ sein.
+    func testPlaceListWithoutThePlaceIsNotFound() async throws {
+        let options = ["Bad Frankenhausen", "Ebeleben", "Sondershausen"].map { SelectionOption(id: $0, title: $0) }
+        let tour = ListStub(first: SelectionStep(title: L10n.t("Ort / Tour", "Town / tour"), options: options))
+        let (_, found, _) = try await PortalHealthLiveTests.walk(placeJob(), calendar: .current, provider: tour)
+        XCTAssertEqual(found, false)
+        // Gegenprobe: Ein Straßenschritt sagt nichts über die Gemeinde
+        let street = ListStub(first: SelectionStep(title: SelectionStep.streetTitle, options: options))
+        let (_, unknown, _) = try await PortalHealthLiveTests.walk(placeJob(), calendar: .current, provider: street)
+        XCTAssertNil(unknown)
+    }
+
+    /// Leere erste Auswahl: nur bei Lobbe als Abfragegrenze (vorübergehend) gekennzeichnet.
+    func testEmptyFirstListIsOnlyARateLimitAtLobbe() async throws {
+        let empty = ListStub(first: SelectionStep(title: "Bundesland", options: []))
+        for (kind, limit) in [(ProviderKind.awido, false), (.lobbe, true)] {
+            do {
+                _ = try await PortalHealthLiveTests.walk(placeJob(kind), calendar: .current, provider: empty)
+                XCTFail("leere Liste muss scheitern")
+            } catch {
+                XCTAssertEqual(error.localizedDescription.contains("Abfragegrenze"), limit, kind.rawValue)
+            }
+        }
     }
 
     func testSearchWordAfterWhichThePortalIsFinishedIsTaken() async throws {

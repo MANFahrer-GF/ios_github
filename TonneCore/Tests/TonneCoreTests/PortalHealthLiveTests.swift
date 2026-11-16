@@ -229,11 +229,13 @@ final class PortalHealthLiveTests: XCTestCase {
                 continue
             }
             // Leere erste Liste: Lobbe antwortet nach ein paar Gemeinden in Folge mit „[]“ auf die Bundesländer, nach einer
-            // Pause wieder voll (Gemeinde-Prüfung 16.11.2026: 4 ok, 38 leer, 4 ok …; einzeln Vöhl 66 Termine).
+            // Pause wieder voll (Gemeinde-Prüfung 16.11.2026: 4 ok, 38 leer, 4 ok …; einzeln Vöhl 66 Termine). Nur dort ist die
+            // Drosselung belegt; bei anderen Portalen bleibt die leere Liste ein Befund (Prüfbefund 6)
             guard !step.options.isEmpty else {
-                throw WalkError(selections.isEmpty ? "leere erste Auswahl bei „\(step.title)“ (Abfragegrenze)" : "leere Auswahl bei „\(step.title)“")
+                let limit = selections.isEmpty && job.entry.kind == .lobbe ? " (Abfragegrenze)" : ""
+                throw WalkError((selections.isEmpty ? "leere erste Auswahl bei „\(step.title)“" : "leere Auswahl bei „\(step.title)“") + limit)
             }
-            if step.isPlaceStep { sawPlaceStep = true }
+            if step.isPlaceStep || Self.placeListTitles.contains(step.title) { sawPlaceStep = true }
             // Bundesland und Kreis zuerst (Abfall+ Wecker: „Niedersachsen“ → „Kreis Göttingen“ → Ort): wie ein Nutzer, der
             // Land und Kreis kennt. Ohne das prüfte die Gemeinde-Prüfung für Osterode eine Adresse in Rheinland-Pfalz.
             if let wanted, !placeFound, let district = job.district, !step.options.contains(where: { matches($0, wanted) }),
@@ -269,6 +271,14 @@ final class PortalHealthLiveTests: XCTestCase {
                                    localities: placeFound ? [] : localities))
         }
         return (selections, sawPlaceStep || placeFound ? placeFound : nil, numberIndex == selections.count - 1)
+    }
+
+    /// Ortslisten, die die App nicht vorauswählt (`isPlaceStep`), in denen die Gemeinde aber stehen müsste: Kyffhäuser „Ort / Tour“,
+    /// Unstrut-Hainich „Ort / Stadttour“, Brandenburg „Ort / Straße“ (Gemeinden, Ortsteile, Straßen). Fehlt die Gemeinde dort,
+    /// ist das eine Warnung, nicht „ok“ (Prüfbefund 5). „Ortsbereich“ (Knittel) und „Ortsteil / Straße“ führen nur Teile der
+    /// Gemeinde und bleiben draußen.
+    static var placeListTitles: [String] {
+        [L10n.t("Ort / Tour", "Town / tour"), L10n.t("Ort / Stadttour", "Town / tour"), L10n.t("Ort / Straße", "Town / street")]
     }
 
     /// „Landkreis Ostprignitz-Ruppin“ → „ostprignitz-ruppin“ (gefaltet, ohne Vorsilbe).
@@ -405,8 +415,10 @@ final class PortalHealthLiveTests: XCTestCase {
         let text = (result.error ?? "") + " " + result.reasons.joined(separator: " ")
         // Netzausfall auf dem Prüfrechner (Punkt-6-Nachlauf 16.11.2026: 650 Zeilen „keine Verbindung zum Internet“ für Trier,
         // Altenkirchen, Kusel) sagt nichts über das Portal; „kein Server mit dem Hostnamen“ bleibt ein Befund
-        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht", "Abfragegrenze",
+        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht",
                 "keine Verbindung zum Internet", "Internet connection appears to be offline"].contains { text.contains($0) }
+            // Leere erste Auswahl nur bei Lobbe (belegte Drosselung), sonst ein Befund (Prüfbefund 6)
+            || (result.kind == ProviderKind.lobbe.rawValue && text.contains("Abfragegrenze"))
             // Müllmax sperrt die IP des Prüfrechners mit HTTP 403 (16.11.2026: von gsg/live aus 200, Dillingen 11 Termine)
             || (result.kind == ProviderKind.muellmax.rawValue && text.contains("HTTP 403"))
     }
