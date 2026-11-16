@@ -3,8 +3,8 @@
 Stand: 9. Oktober 2026. Repo `MANFahrer-GF/ios_github` (öffentlich), Standard-Branch **`main`** (seit 9. Okt.).
 Der frühere Branch `claude/adoring-ride-nxgrwn` ist veraltet (Stand 936b145) und kann gelöscht werden, sobald sicher nichts mehr darauf verweist.
 
-> **GitHub Pages veröffentlicht aus `main`, Ordner `/docs`** – die Datenschutz- und Support-Seite, die in App Store Connect
-> eingetragen sind. Die Adressen sind unverändert (https://manfahrer-gf.github.io/ios_github/…).
+> **Webseite seit 14.11.2026: https://tonne.kant.ovh** (Quelltext `website/`, IONOS/Plesk). Datenschutz- und Support-Seite,
+> die in App Store Connect eingetragen sind, liegen dort; die alten GitHub-Pages-Pfade leiten um. Ablauf: `website/ABLAUF-REPO-PRIVAT.md`.
 
 ---
 
@@ -26,8 +26,8 @@ Der frühere Branch `claude/adoring-ride-nxgrwn` ist veraltet (Stand 936b145) un
 | App-ID | `6820155038` → https://apps.apple.com/de/app/id6820155038 |
 | Preis | kostenlos, ohne In-App-Käufe, nur deutscher App Store |
 | Status | eingereicht/veröffentlicht (9. Okt. 2026) |
-| Datenschutz-URL | https://manfahrer-gf.github.io/ios_github/appstore/datenschutz.html |
-| Support-URL | https://manfahrer-gf.github.io/ios_github/appstore/support.html |
+| Datenschutz-URL | https://tonne.kant.ovh/datenschutz.html |
+| Support-URL | https://tonne.kant.ovh/support.html |
 | Texte & Antworten | `docs/appstore/APP-STORE-TEXTE.md` |
 | Screenshots | `docs/appstore/screenshots/<Gerät>/` (iPhone 6,9/6,7/6,3/6,1″, iPad 13/12,9″, 4 Watch-Größen). Aus dem Code nachgebaut; Generator in `docs/appstore/screenshots/generator/` (`python3 gen.py && node render.js`, braucht Playwright) |
 | Presse | Mail an iFun (`ifun.de@gmail.com`) ist verschickt |
