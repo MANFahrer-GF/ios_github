@@ -576,7 +576,9 @@ final class AppModel: ObservableObject {
         guard !TonneUndTorteApp.storeUnavailable else { return [] }
         var messages: [String] = []
         for location in allLocations() where location.canSync {
-            let due = force || location.lastSyncAt.map { Date().timeIntervalSince($0) > 7 * 24 * 3600 } ?? true
+            // Kurzer Vorlauf (mitlaufendes Fenster wie SBAZV) → alle 2 Tage, sonst wöchentlich
+            let lastKnown = (location.wasteTypes ?? []).filter { $0.sourceKey != nil }.compactMap { $0.explicitDates.max() }.max()
+            let due = force || SyncRhythm.isDue(lastSync: location.lastSyncAt, lastKnownPickup: lastKnown)
             guard due else { continue }
             let name = location.name
             do {
