@@ -179,7 +179,7 @@ final class PortalHealthLiveTests: XCTestCase {
     static func walk(_ job: Job, variant: Int = 0, calendar: Calendar, provider: WasteProvider? = nil) async throws -> ([SelectionOption], Bool?, Bool) {
         let provider = provider ?? ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
         var selections: [SelectionOption] = []
-        var placeFound = false, sawPlaceStep = false
+        var placeFound = false, sawPlaceStep = false, verbandChosen = false
         var numberIndex: Int?
         let wanted = job.place.map(searchName)
         // `district` ist optional: nicht direkt einsetzen, sonst lautet der Schlüssel „Optional(…)|Gemeinde“ und trifft nie
@@ -242,9 +242,11 @@ final class PortalHealthLiveTests: XCTestCase {
             }
             // Der Verband der Gemeinde laut Gemeindeverzeichnis (A.R.T. Trier führt die VGs von vier Kreisen: „Esch“ steht unter
             // Wittlich-Land und Gerolstein; Helmstedt gruppiert nach Samtgemeinden: Bahrdorf → „Grasleben und Velpke“)
-            if let wanted, !placeFound, step.isPlaceStep || selections.isEmpty, let district = job.district, let place = job.place,
+            // Nur einmal: Unter der VG Daun steht auch der Ort „Daun“ (Dreis-Brück steht dort als „Dreis“ und „Brück“)
+            if let wanted, !placeFound, !verbandChosen, step.isPlaceStep || selections.isEmpty, let district = job.district, let place = job.place,
                !step.options.contains(where: { matches($0, wanted) }),
                let verband = Self.verbands["\(district)|\(place)"], let option = Self.verbandOption(in: step.options, verband: verband) {
+                verbandChosen = true
                 selections.append(option); continue
             }
             // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene

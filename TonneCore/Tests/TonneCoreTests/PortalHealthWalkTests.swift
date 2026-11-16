@@ -262,7 +262,8 @@ final class PortalHealthWalkTests: XCTestCase {
         let kind = ProviderKind.portalsRP
         let serviceKey = "stub"
         let displayName = "Stub"
-        let tree = ["Gerolstein": ["Esch", "Gerolstein"], "Saarburg-Kell": ["Mannebach"], "Wittlich-Land": ["Dreis", "Esch", "Manderscheid"]]
+        let tree = ["Daun": ["Brück", "Daun", "Dreis"], "Gerolstein": ["Esch", "Gerolstein"], "Saarburg-Kell": ["Mannebach"],
+                    "Wittlich-Land": ["Dreis", "Esch", "Manderscheid"]]
         func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
             switch selections.count {
             case 0: return SelectionStep(title: SelectionStep.cityTitle, options: tree.keys.sorted().map { SelectionOption(id: $0, title: $0) })
@@ -282,6 +283,12 @@ final class PortalHealthWalkTests: XCTestCase {
             XCTAssertEqual(titles(selections), path, district)
             XCTAssertEqual(placeFound, true, district)
         }
+        // Unter der VG Daun steht auch der Ort „Daun“: nicht noch einmal den Verband wählen, sondern den Doppelnamen-Teil
+        let dreisBrueck = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .portalsRP, serviceKey: "stub", title: "Stub"),
+                                                    district: "Landkreis Vulkaneifel", place: "Dreis-Brück")
+        let (daun, found, _) = try await PortalHealthLiveTests.walk(dreisBrueck, calendar: .current, provider: ARTStub())
+        XCTAssertEqual(titles(daun), ["Daun", "Dreis"])
+        XCTAssertEqual(found, true)
         let helmstedt = [SelectionOption(id: "1", title: "Grasleben und Velpke"), SelectionOption(id: "2", title: "Lehre"),
                          SelectionOption(id: "3", title: "Nord-Elm und Königslutter Ortsteile")]
         XCTAssertEqual(PortalHealthLiveTests.verbandOption(in: helmstedt, verband: "Velpke")?.title, "Grasleben und Velpke")
