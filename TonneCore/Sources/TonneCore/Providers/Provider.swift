@@ -62,6 +62,19 @@ public struct SelectionStep: Hashable {
         guard isPlaceStep else { return nil }
         return options.first { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }
     }
+
+    /// Wie `preselection(for:)`, kennt aber „Ort / Ortsteil“ (C-Trace Groß-Gerau): Die Suche „Erfelden“ oder
+    /// „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“. Ohne passenden Ortsteil keine Vorauswahl – dann die Liste.
+    public func preselection(for place: String, query: String) -> SelectionOption? {
+        if let exact = preselection(for: place) { return exact }
+        guard isPlaceStep else { return nil }
+        let words = Set(ProviderCatalog.fold(query).split { !$0.isLetter && !$0.isNumber }.map(String.init))
+        let hits = options.filter {
+            let parts = $0.title.components(separatedBy: " / ")
+            return parts.count == 2 && ProviderCatalog.fold(parts[0]) == ProviderCatalog.fold(place) && words.contains(ProviderCatalog.fold(parts[1]))
+        }
+        return hits.count == 1 ? hits[0] : nil
+    }
 }
 
 /// Ein Abholtermin aus einer Online-Quelle.

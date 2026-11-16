@@ -29,6 +29,10 @@ public struct CTraceProvider: WasteProvider {
         var sendsWasteTypes = true
         /// Portal führt keine aktuellen Termine mehr: Hinweis statt Auswahl, die ins Leere führt.
         var retired: (de: String, en: String)?
+        /// Portal fragt Ort → Ortsteil → Straße → Hausnummer (`Ortsteil?ort=`). Ohne Ortsteil liefert es für Orte mit
+        /// mehreren Ortsteilen keine Hausnummern und keinen Plan (Riedstadt, Trebur; Tester Dirk, 15.11.2026).
+        /// Im Ort-Schritt steht dann „Ort / Ortsteil“; Orte mit nur einem Ortsteil bleiben wie bisher.
+        var districts = false
     }
     static let services: [String: Service] = [
         "bremenabfallkalender": Service(subdomain: "web", name: "bremenabfallkalender", icsFile: "cal", fixedCity: "Bremen", lists: .data),
@@ -40,7 +44,7 @@ public struct CTraceProvider: WasteProvider {
         "rheingauleerungen": Service(subdomain: "web", name: "rheingauleerungen", icsFile: "cal", fixedCity: nil, lists: .odata,
                                      retired: ("Das C-Trace-Portal für den Rheingau führt seit Ende 2025 keine Termine mehr. Die Rheingau-Gemeinden veröffentlichen ihre Termine bei Mein-Abfallkalender (z. B. eltville.mein-abfallkalender.online); für den Untertaunus „EAW Rheingau-Taunus-Kreis (Untertaunus)“ wählen.",
                                                      "The C-Trace portal for the Rheingau has had no dates since the end of 2025. The Rheingau towns publish their dates on Mein-Abfallkalender (e.g. eltville.mein-abfallkalender.online); for the Untertaunus choose “EAW Rheingau-Taunus-Kreis (Untertaunus)”.")),
-        "grossgeraulandkreis-abfallkalender": Service(subdomain: "web", name: "grossgeraulandkreis-abfallkalender", icsFile: "cal", fixedCity: nil),
+        "grossgeraulandkreis-abfallkalender": Service(subdomain: "web", name: "grossgeraulandkreis-abfallkalender", icsFile: "cal", fixedCity: nil, districts: true),
         "bayreuthstadt-abfallkalender": Service(subdomain: "web", name: "bayreuthstadt-abfallkalender", icsFile: "cal", fixedCity: "Bayreuth"),
         "arnsberg-abfallkalender": Service(subdomain: "web", name: "arnsberg-abfallkalender", icsFile: "cal", fixedCity: "Arnsberg"),
         "landau": Service(subdomain: "apps", name: "web.landau", icsFile: "downloadcal", fixedCity: "Landau", lists: .odataAll),
@@ -142,7 +146,15 @@ public struct CTraceProvider: WasteProvider {
 
     private func placeNames() async throws -> [String] {
         switch service.lists {
-        case .plain: return try Self.parseNames(try await client.get("\(base)/Orte"))
+        case .plain:
+            let places = try Self.parseNames(try await client.get("\(base)/Orte"))
+            guard service.districts else { return places }
+            var result: [String] = []
+            for place in places {
+                let parts = (try? Self.parseNames(try await client.get("\(base)/Ortsteil?ort=\(HTTPClient.query(place))"))) ?? []
+                result += parts.count > 1 ? parts.map { place + Self.areaSeparator + $0 } : [place]
+            }
+            return result
         case .data: return try Self.parseNames(try await client.get("\(base)/Data/Orte"))
         case .odata:
             let order = service.name.contains("aurich") ? "&$expand=Gebiet&$orderby=Gebiet/Name,Name" : "&$orderby=Name"
@@ -154,7 +166,7 @@ public struct CTraceProvider: WasteProvider {
     private func streetNames(place: String) async throws -> [String] {
         let url: String
         switch service.lists {
-        case .plain: url = "\(base)/Strassen?ort=\(HTTPClient.query(place))"
+        case .plain: url = "\(base)/Strassen?\(placeQuery(place))"
         case .data: url = "\(base)/Data/Strassen?ort=\(HTTPClient.query(place))"
         case .odata:
             let parts = place.components(separatedBy: Self.areaSeparator)
@@ -168,10 +180,17 @@ public struct CTraceProvider: WasteProvider {
         return try Self.parseNames(try await client.get(url))
     }
 
+    /// `ort=…`, bei Portalen mit Ortsteil-Schritt und „Ort / Ortsteil“ zusätzlich `&ortsteil=…`.
+    private func placeQuery(_ place: String) -> String {
+        let parts = place.components(separatedBy: Self.areaSeparator)
+        guard service.districts, parts.count == 2 else { return "ort=\(HTTPClient.query(place))" }
+        return "ort=\(HTTPClient.query(parts[0]))&ortsteil=\(HTTPClient.query(parts[1]))"
+    }
+
     private func houseNumbers(place: String, street: String) async throws -> [String] {
         let url: String
         switch service.lists {
-        case .plain: url = "\(base)/Hausnummern?ort=\(HTTPClient.query(place))&strasse=\(HTTPClient.query(street))"
+        case .plain: url = "\(base)/Hausnummern?\(placeQuery(place))&strasse=\(HTTPClient.query(street))"
         case .data: url = "\(base)/Data/Hausnummern?ort=\(HTTPClient.query(place))&strasse=\(HTTPClient.query(street))"
         case .odata, .odataCurrent, .odataAll:
             var params = ["strasse": street]
@@ -200,6 +219,10 @@ public struct CTraceProvider: WasteProvider {
         }
         let area = values[0].components(separatedBy: Self.areaSeparator)
         var fields = ["Ort": area.last ?? values[0], "Gemeinde": area.first ?? values[0], "Strasse": values[1], "Hausnr": values[2]]
+        if service.districts {
+            fields = ["Ort": area[0], "Strasse": values[1], "Hausnr": values[2]]
+            if area.count == 2 { fields["Ortsteil"] = area[1] }
+        }
         if service.sendsWasteTypes { fields["Abfall"] = (0..<300).map(String.init).joined(separator: "|") }
         let query = fields.map { "\($0.key)=\(HTTPClient.query($0.value))" }.joined(separator: "&")
         let text: String
@@ -208,6 +231,11 @@ public struct CTraceProvider: WasteProvider {
         } catch HTTPError.status(500, _) {
             // C-Trace antwortet mit 500, wenn es zur Adresse keinen Plan gibt; die Portalseite zeigt dann ebenfalls nichts
             // (Bremen „Irisweg 17“, 12.11.2026 – die einzige Hausnummer der Straße in der Portalliste).
+            if service.districts && area.count == 1 {
+                // Vor 2.1.0 gespeichert („Riedstadt“ ohne Ortsteil): Nachbar-Hausnummern helfen hier nie.
+                throw ProviderError.noData(L10n.t("Für diesen Ort braucht das Portal den Ortsteil. Bitte den Standort neu einrichten und den Ort mit Ortsteil wählen (z. B. „\(area[0]) / …“).",
+                                                  "The portal needs the district for this town. Please set up the location again and choose the town with its district (e.g. “\(area[0]) / …”)."))
+            }
             throw ProviderError.noData(L10n.t("Das Portal hat für diese Adresse keinen Abfuhrplan. Bitte eine Nachbar-Hausnummer versuchen oder beim Entsorger nachfragen.",
                                               "The portal has no collection plan for this address. Please try a neighbouring house number or ask the waste company."))
         }
