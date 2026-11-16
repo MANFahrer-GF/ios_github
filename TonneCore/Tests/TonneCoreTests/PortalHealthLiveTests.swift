@@ -165,7 +165,8 @@ final class PortalHealthLiveTests: XCTestCase {
                     selections.append(SelectionOption(id: "1", title: "1")); continue
                 }
                 // Ein Ortsfeld mit dem Gemeindenamen füllen, ein Straßenfeld sondieren
-                var texts = probes
+                // Je Versuch andere Suchwörter zuerst: „Haupt“ traf in Bremerhaven nur „Auswanderer Haus“ (ohne Plan)
+                var texts = Array(probes.dropFirst(variant * 2) + probes.prefix(variant * 2))
                 if let wanted, !placeFound, step.title == SelectionStep.cityTitle { texts = [wanted] + probes }
                 var found: [SelectionOption] = []
                 for text in texts {
@@ -181,6 +182,14 @@ final class PortalHealthLiveTests: XCTestCase {
                 continue
             }
             guard !step.options.isEmpty else { throw WalkError("leere Auswahl bei „\(step.title)“") }
+            // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene
+            // tiefer. Wie ein Nutzer, der seine VG kennt: die VG wählen, unter der die Gemeinde steht. Ebenso ein erster
+            // Schritt „Bundesland“ (Lobbe: Battenberg (Eder) steht unter Hessen).
+            if let wanted, !placeFound, step.isPlaceStep || selections.isEmpty, step.options.count <= 40,
+               !step.options.contains(where: { matches($0, wanted) }),
+               let parent = try await parentOption(of: wanted, in: step.options, after: selections, provider: provider) {
+                selections.append(parent); continue
+            }
             selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound))
         }
         return (selections, placeFound)
@@ -189,15 +198,46 @@ final class PortalHealthLiveTests: XCTestCase {
     /// Gemeinde bevorzugt (genau, dann Suchtreffer), sonst der mittlere Eintrag.
     static func pick(_ options: [SelectionOption], wanted: String?, variant: Int = 0, found: inout Bool) -> SelectionOption {
         if let wanted {
-            let plain = wanted.lowercased()
-            if let exact = options.first(where: { searchName($0.title).lowercased() == plain }) { found = true; return exact }
+            // 2. und 3. Versuch: ein Ortsteil des Orts (Zell (Mosel): echte Straßen nur unter „Zell (Mosel) – Zell-Stadt“,
+            // Aurich: unter „Aurich / Aurich-Stadt“; der bloße Ort hat dort nur Platzhalter wie „dummystrasse“)
+            let districts = options.filter { ($0.title.contains(" – ") || $0.title.contains(" / ")) && $0.title.lowercased().hasPrefix(wanted.lowercased() + " ") }
+            if variant > 0, !districts.isEmpty { found = true; return districts[min(districts.count - 1, (variant - 1) * districts.count / 2)] }
+            if let exact = options.first(where: { matches($0, wanted) }) { found = true; return exact }
             if let hit = OptionSearch(options).filter(query: wanted).first { found = true; return hit }
+            // Doppelname: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“
+            if let part = options.first(where: { wanted.lowercased().hasPrefix(searchName($0.title).lowercased() + "-") }) { found = true; return part }
         }
         switch variant {
         case 1: return options[options.count / 3]
         case 2: return options[min(options.count - 1, options.count * 2 / 3)]
         default: return options[options.count / 2]
         }
+    }
+
+    /// Option ist die gesuchte Gemeinde: gleicher Name, oder der amtliche Name hängt nur einen Zusatz an
+    /// („Graach an der Mosel“ ↔ Portal „Graach“, „Kirchheim an der Weinstraße“ ↔ „Kirchheim“).
+    static func matches(_ option: SelectionOption, _ wanted: String) -> Bool {
+        let title = searchName(option.title).lowercased(), plain = wanted.lowercased()
+        return title == plain || plain.hasPrefix(title + " ")
+    }
+
+    /// Die Option des Ortsschritts, unter der die gesuchte Gemeinde eine Ebene tiefer steht (nil, wenn keine eindeutig passt).
+    static func parentOption(of wanted: String, in options: [SelectionOption], after selections: [SelectionOption],
+                             provider: any WasteProvider) async throws -> SelectionOption? {
+        var hits: [SelectionOption] = []
+        for option in options {
+            guard let next = try? await provider.nextStep(after: selections + [option]), next.input == .list else { continue }
+            if next.options.contains(where: { matches($0, wanted) }) { hits.append(option) }
+        }
+        return hits.count == 1 ? hits[0] : nil
+    }
+
+    /// Sperre, Drosselung, Server- oder Zeitfehler: sagt nichts über die Gemeinde. Solche Ergebnisse werden nicht
+    /// gespeichert, damit ein Fortsetzen sie erneut prüft (sonst stünden sie für immer als „fehler“ in der Datei).
+    static func isTransient(_ result: Result) -> Bool {
+        guard result.status == "fehler" else { return false }
+        let text = (result.error ?? "") + " " + result.reasons.joined(separator: " ")
+        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht"].contains { text.contains($0) }
     }
 
     /// „Gronau (Westf.)“ → „Gronau“, „Ahaus, Stadt“ → „Ahaus“
@@ -273,6 +313,10 @@ final class PortalHealthLiveTests: XCTestCase {
         }
 
         func write(_ result: Result) {
+            if PortalHealthLiveTests.isTransient(result) {
+                print("HEALTH ~ \(result.title)\(result.place.map { " / \($0)" } ?? "") – vorübergehend, nicht gespeichert: \(result.error ?? "")")
+                return
+            }
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
             guard let data = try? encoder.encode(result) else { return }
