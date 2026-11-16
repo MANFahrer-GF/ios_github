@@ -78,6 +78,32 @@ final class SyncReplaceDatesTests: XCTestCase {
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("de.k4systems.abfallkreisrt", ["Kummer", "Lindenstraße", "3"], ids: "b")))
     }
 
+    /// Prüfbefund B zu Paket E: Die Titel hinter dem ersten gingen als gemeinsame Wortmenge ein, Wortanfänge fielen weg. Ein
+    /// Umzug nach „Berg“ vor „Bergstraße“ (Abfall+ Land/Kreis/Ort) oder nach „Steinbach“ vor „Steinbacher Straße“ (Lobbe)
+    /// galt als dieselbe Adresse. Verglichen wird je Schritt, in beiden Richtungen.
+    func testMoveToAPlaceThatStartsTheStreetIsAnotherAddress() throws {
+        func source(_ entry: CatalogEntry, _ titles: [String], ids prefix: String) -> SourceConfiguration {
+            SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: titles.map { SelectionOption(id: "\(prefix)-\($0)", title: $0) }, label: "")
+        }
+        let alarm = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "de.k4systems.muellalarm" })
+        let lobbe = try XCTUnwrap(ProviderCatalog.entries.first { $0.kind == .lobbe })
+        let moves: [(CatalogEntry, [String], [String])] = [
+            (alarm, ["Bayern", "Landkreis Starnberg", "Starnberg", "Bergstraße", "5"], ["Bayern", "Landkreis Starnberg", "Berg", "Bergstraße", "5"]),
+            (alarm, ["Hessen", "Landkreis Gießen", "Gießen", "Lindenstraße", "5"], ["Hessen", "Landkreis Gießen", "Linden", "Lindenstraße", "5"]),
+            (lobbe, ["Nordrhein-Westfalen", "Stein", "Steinbacher Straße"], ["Nordrhein-Westfalen", "Steinbach", "Steinbacher Straße"]),
+            (lobbe, ["Nordrhein-Westfalen", "Eich", "Eichenweg"], ["Nordrhein-Westfalen", "Eichen", "Eichenweg"]),
+        ]
+        for (entry, a, b) in moves {
+            XCTAssertTrue(SourceConfiguration.addressChanged(from: source(entry, a, ids: "a"), to: source(entry, b, ids: "b")), "\(a) → \(b)")
+            XCTAssertTrue(SourceConfiguration.addressChanged(from: source(entry, b, ids: "b"), to: source(entry, a, ids: "a")), "\(b) → \(a)")
+        }
+        // Gegenproben: gleicher Ort, nur der getippte Straßen-Suchtext ist anders oder fehlt
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: source(lobbe, ["Nordrhein-Westfalen", "Iserlohn", "Stein", "Steinbacher Straße"], ids: "a"),
+                                                          to: source(lobbe, ["Nordrhein-Westfalen", "Iserlohn", "Steinb", "Steinbacher Straße"], ids: "b")))
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: source(alarm, ["Bayern", "Landkreis Starnberg", "Berg", "Bergstraße", "5"], ids: "a"),
+                                                          to: source(alarm, ["Bayern", "Landkreis Starnberg", "Berg", "Berg", "Bergstraße", "5"], ids: "b")))
+    }
+
     /// Prüfbefund 3 zu Paket D: Namensvettern in verschiedenen Kreisen galten als dieselbe Adresse (Neuenkirchen in
     /// Dithmarschen, AWSH-Eintrag, gegen Neuenkirchen in Steinfurt, abfallIO-Eintrag).
     func testNamesakesInOtherDistrictsAreAnotherAddress() throws {

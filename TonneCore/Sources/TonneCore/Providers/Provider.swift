@@ -61,6 +61,8 @@ public struct SelectionStep: Hashable {
     /// Kernnamen, wenn genau eine Option ihn trägt (Kelheim „Gemeinde Saal“ für „Saal a.d.Donau“, siehe `placeCore`).
     public func preselection(for place: String) -> SelectionOption? {
         guard isPlaceStep else { return nil }
+        // Genau gleich geschrieben vor gleich gefaltet: „Hüsby“ und „Husby“ falten gleich (beide Schleswig-Flensburg)
+        if let exact = options.first(where: { $0.title == place }) { return exact }
         if let exact = options.first(where: { ProviderCatalog.fold($0.title) == ProviderCatalog.fold(place) }) { return exact }
         let core = Self.placeCore(place)
         // „Lambrecht ohne Iptestal und Dörrental“ schließt Teile der Gemeinde aus: nur bei genau gleichem Namen (Prüfbefund 14)
@@ -130,14 +132,18 @@ public struct SelectionStep: Hashable {
         // Wörter der Suche und Ortsform der Gemeinde: Bindewörter, Artikel und Wörter unter drei Buchstaben zählen nicht
         // („am“, „a.d.“), die Lang- und Kurzform zählt mit („Wasserburg am Inn“ = „Wasserburg a.Inn“, Prüfbefund 1 zu Paket D).
         func wordsOf(_ text: String) -> [String] { spell(text).split { !$0.isLetter && !$0.isNumber }.map(String.init) }
-        func meaningful(_ text: String) -> Set<String> {
-            Set(wordsOf(text).filter { $0.count >= 3 && !Self.placeJoins.union(["der", "den", "dem"]).contains($0) })
+        func meaningfulWords(_ text: String) -> [String] {
+            wordsOf(text).filter { $0.count >= 3 && !Self.placeJoins.union(["der", "den", "dem"]).contains($0) }
         }
+        func meaningful(_ text: String) -> Set<String> { Set(meaningfulWords(text)) }
         func form(_ names: [String]) -> Set<String> { Set(names.flatMap { wordsOf($0) + wordsOf(MunicipalityIndex.longForm(fold($0))) }) }
-        // Mehrdeutige Kurzform – außer die Suche nennt den Zusatz der Gemeinde („Rutsweiler am Glan“, „Schwarzenbach am Wald“)
-        let suffix = meaningful(query).subtracting(wordsOf(Self.placeCore(query)))
+        // Mehrdeutige Kurzform – außer die Suche nennt den Zusatz der Gemeinde („Rutsweiler am Glan“, „Schwarzenbach am Wald“).
+        // Ein einzelner Buchstabe ohne Punkt ist angefangene Ortsform, kein Zusatz: „Rieden a“ = „Rieden a.“ (Prüfbefund C).
+        let coreParts = Self.placeCore(query).split(separator: " ").map(String.init)
+        let queryCore = (coreParts.prefix(1) + coreParts.dropFirst().filter { $0.count > 1 }).joined(separator: " ")
+        let suffix = meaningful(query).subtracting(wordsOf(queryCore))
         let namesSuffix = !suffix.isEmpty && suffix.isSubset(of: form([place]))
-        if searched != fold(place), Self.placeCore(query) == placeCore, !placeCore.isEmpty, !namesSuffix,
+        if searched != fold(place), queryCore == placeCore, !placeCore.isEmpty, !namesSuffix,
            options.filter({ Self.placeCore($0.title) == placeCore }).count > 1 { return nil }
         let found = fold(ProviderCatalog.resolve(searched).locality ?? query)
         let locality = spell(found), typed = spell(query)
@@ -171,15 +177,29 @@ public struct SelectionStep: Hashable {
         // „a.“ vor „Aldenhoven“ lösten die Sicherung aus (Prüfbefund 1 zu Paket D). Als Wortanfang zählt ein Zusatz nur in
         // Optionen, die auch die Gemeinde nennen („Grabow Ziegel“ → „Grabow Ziegelscheune“). Eine Option ohne die Gemeinde
         // muss die Suche ganz nennen („Grabow Ziegelscheune“ → „Ziegelscheune“): „Brunsbüttel Nord“ meint nicht
-        // „Nordermeldorf“, „Groß Grönau Klein Grönau“ nicht „Klein Wesenberg“.
+        // „Nordermeldorf“, „Groß Grönau Klein Grönau“ nicht „Klein Wesenberg“. Bei einem Ortsteil der gesuchten Gemeinde
+        // (Ortsteil-Liste) reicht halb genannt, wenn alles, was die Suche über die Gemeinde hinaus nennt, ganze Wörter der
+        // Option sind (Prüfbefund A): „Dömitz Schmölen“ meint „Groß Schmölen“ oder „Klein Schmölen“; „Wester-Ohrstedt
+        // Ohrstedt“ meint nicht die Gemeinde „Oster-Ohrstedt“. Die Wörter der Gemeinde zählen dabei je einmal:
+        // „Dessau-Roßlau Roßlau (Elbe)“ nennt „Roßlau (Elbe)“, „Neu Poserin OT Groß Poserin“ nennt „Groß Poserin“.
         let extra = meaningful(query).subtracting(form([place, exact.title]))
+        // Abgezogen wird die Schreibweise der Gemeinde, die am meisten wegnimmt („Forst Neustädtlein am Forst“ ist die Langform)
+        let rest: [String] = [place, exact.title].flatMap { [$0, MunicipalityIndex.longForm(fold($0))] }.map { (name: String) -> [String] in
+            var rest = meaningfulWords(query)
+            for word in wordsOf(name) { if let index = rest.firstIndex(of: word) { rest.remove(at: index) } }
+            return rest
+        }.min { $0.count < $1.count } ?? []
         let coreWords = wordsOf(placeCore)
-        let named = !extra.isEmpty && options.contains { option in
+        let named = (!extra.isEmpty || !rest.isEmpty) && options.contains { option in
             guard option.id != exact.id else { return false }
             let words = wordsOf(option.title)
-            if coreWords.allSatisfy(words.contains) { return extra.allSatisfy { word in words.contains { $0.hasPrefix(word) } } }
+            if coreWords.allSatisfy(words.contains) {
+                return !extra.isEmpty && extra.allSatisfy { word in words.contains { $0.hasPrefix(word) } }
+            }
             let own = meaningful(option.title)
-            return !own.isEmpty && own.isSubset(of: extra)
+            if !own.isEmpty, own.isSubset(of: extra) { return true }
+            return !rest.isEmpty && rest.allSatisfy(words.contains)
+                && (LocalityIndex.byName[fold(option.title)] ?? []).contains { fold($0.municipality) == fold(place) }
         }
         return named ? nil : exact
     }
@@ -231,7 +251,7 @@ public struct SourceConfiguration: Hashable, Codable {
 public extension SourceConfiguration {
     /// Andere Adresse als bisher? Ein Eintragswechsel an derselben Adresse (Kreisportal Reutlingen → TBR-App, beide
     /// „Hauptstraße, 5“) ist keiner (Prüfbefund 9). Adresse = Ort + Straße/Nummer: Der Ort muss auf beiden Seiten bestimmbar
-    /// und gleich sein (`addressPlace`), die Wörter der übrigen Titel müssen genau übereinstimmen – „Hauptstraße 1“ gegen
+    /// und gleich sein (`addressPlace`), die übrigen Titel müssen je Schritt übereinstimmen (`sameAddress`) – „Hauptstraße 1“ gegen
     /// „10“, „12“ gegen „12a“ oder ein anderer bzw. unbekannter Ort zählen als Wechsel (Nachprüfung N2). Im Zweifel „geändert“:
     /// Dann bleiben nur markierte vergangene Termine stehen (`ScheduleEngine.datesAfterReplacingSync`).
     static func addressChanged(from old: SourceConfiguration?, to new: SourceConfiguration) -> Bool {
@@ -244,8 +264,7 @@ public extension SourceConfiguration {
         func shown(_ config: SourceConfiguration) -> [String] { config.selections.map { SelectionStep.spelling($0.title + "|" + ($0.subtitle ?? "")) } }
         if sameSource, shown(old) == shown(new) { return false }
         if sameSource, let first = shown(old).first, first == shown(new).first {
-            let rest = addressWords(Array(old.selections.dropFirst()))
-            if !rest.isEmpty, rest == addressWords(Array(new.selections.dropFirst())) { return false }
+            if sameAddress(Array(old.selections.dropFirst()), Array(new.selections.dropFirst())) { return false }
         }
         guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
         // Andere Quelle: Namensvettern in verschiedenen Kreisen sind verschiedene Orte (Neuenkirchen in Dithmarschen ≠ in
@@ -254,8 +273,21 @@ public extension SourceConfiguration {
             let (da, db) = (old.districts(of: a.place), new.districts(of: b.place))
             guard !da.isEmpty, !db.isEmpty, !da.isDisjoint(with: db) else { return true }
         }
-        let words = addressWords(a.rest)
-        return words.isEmpty || words != addressWords(b.rest)
+        return !sameAddress(a.rest, b.rest)
+    }
+
+    /// Gleiche Titel je Schritt, in derselben Reihenfolge, ohne getippte Suchtexte (`addressSteps`). Sieht auf beiden Seiten
+    /// eine andere Gemeinde wie ein Suchtext aus, ist es ein Umzug: „Stein“ → „Steinbach“ vor „Steinbacher Straße“
+    /// (Prüfbefund B). Ist nur eine Seite ein Gemeindename, war sie der Suchtext („Linden“ gegen „Lindenstr“ vor „Lindenstraße“).
+    private static func sameAddress(_ a: [SelectionOption], _ b: [SelectionOption]) -> Bool {
+        let (sa, sb) = (addressSteps(a), addressSteps(b))
+        let kept = sa.filter { !$0.typed }.map(\.words)
+        guard !kept.isEmpty, kept == sb.filter({ !$0.typed }).map(\.words) else { return false }
+        func places(_ steps: [AddressStep]) -> Set<String> {
+            Set(steps.filter { $0.typed && municipalityCores.contains(SelectionStep.placeCore($0.title)) }.map(\.title))
+        }
+        let (pa, pb) = (places(sa), places(sb))
+        return pa.isEmpty || pb.isEmpty || pa == pb
     }
 
     /// Ort der Adresse (ganzer Name, `SelectionStep.spelling`) und die übrigen Titel. Führt der Katalogeintrag belegt genau
@@ -290,15 +322,22 @@ public extension SourceConfiguration {
     /// Kernnamen aller Gemeinden, einmal berechnet.
     private static let municipalityCores: Set<String> = Set(MunicipalityIndex.all.map { SelectionStep.placeCore($0.name) })
 
-    /// „Hauptstr.“, „Hauptstraße“ → „hauptstr“; getippte Suchtexte („Haupt“ vor „Hauptstraße“) fallen als Wortanfang weg.
-    private static func addressWords(_ selections: [SelectionOption]) -> Set<String> {
-        let words = selections.flatMap { option -> [String] in
-            ProviderCatalog.fold(option.title).replacingOccurrences(of: "ß", with: "ss")
+    private typealias AddressStep = (words: Set<String>, title: String, typed: Bool)
+
+    /// Wörter je Schritt: „Hauptstr.“, „Hauptstraße“ → „hauptstr“. Getippter Suchtext ist ein Schritt nur aus
+    /// Buchstabenwörtern, die alle Wortanfang des nächsten Titels sind („Haupt“ vor „Hauptstraße“).
+    private static func addressSteps(_ selections: [SelectionOption]) -> [AddressStep] {
+        let steps = selections.map { option in
+            (Set(ProviderCatalog.fold(option.title).replacingOccurrences(of: "ß", with: "ss")
                 .replacingOccurrences(of: #"str(asse|\.)"#, with: "str", options: .regularExpression)
-                .components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
+                .components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }), SelectionStep.spelling(option.title))
+        }.filter { !$0.0.isEmpty }
+        return steps.indices.map { index in
+            let typed = index + 1 < steps.count && steps[index].0.allSatisfy { word in
+                word.allSatisfy(\.isLetter) && steps[index + 1].0.contains { $0.hasPrefix(word) }
+            }
+            return (steps[index].0, steps[index].1, typed)
         }
-        let set = Set(words)
-        return set.filter { word in !word.allSatisfy(\.isLetter) || !set.contains { $0 != word && $0.hasPrefix(word) } }
     }
 
     /// Bis 2.0.9 enthielt der Name bei diesen Anbietern den getippten Suchtext („Hamburger Str., Hamburger Straße, 10“).

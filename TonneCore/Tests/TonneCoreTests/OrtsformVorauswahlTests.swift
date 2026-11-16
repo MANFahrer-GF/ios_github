@@ -90,4 +90,83 @@ final class OrtsformVorauswahlTests: XCTestCase {
         XCTAssertEqual(missed, [], "Langform/Kurzform ohne Vorauswahl")
         XCTAssertEqual(wrong, [], "andere Option gewählt")
     }
+
+    /// Prüfbefund A zu Paket E: Ein halb genannter Ortsteil wählte die Gemeinde. Echte Kette über die LWL-Liste: „Dömitz
+    /// Schmölen“ meint „Groß Schmölen“ oder „Klein Schmölen“, „Sternberg Raden“ meint „Groß Raden“ – Liste statt Gemeinde.
+    func testHalfNamedLocalityShowsTheList() throws {
+        let file = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("../../../tools/catalog/data/gemos/lwl_places.txt")
+        let titles = try String(contentsOf: file, encoding: .utf8).split(separator: "\n").map { String($0).trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        let lwl = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "lwl" })
+        let step = SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: titles.map { SelectionOption(id: $0, title: $0) })
+        for (query, municipality) in [("Dömitz Schmölen", "Dömitz"), ("Sternberg Raden", "Sternberg"), ("Techentin Hagen", "Techentin"),
+                                      ("Neu Poserin OT Groß Poserin", "Neu Poserin")] {
+            let place = try XCTUnwrap(ProviderCatalog.servedPlace(for: lwl, query: query), query)
+            XCTAssertEqual(place, municipality, query)
+            XCTAssertNil(step.preselection(for: place, query: query), "„\(query)“ wählte die Gemeinde")
+        }
+        // Gegenprobe: die Gemeinde allein und ein Ortsteil ohne eigene Option wählen weiter die Gemeinde
+        XCTAssertEqual(step.preselection(for: "Dömitz", query: "Dömitz")?.title, "Dömitz")
+        XCTAssertEqual(step.preselection(for: "Sternberg", query: "Sternberg Vaihingen")?.title, "Sternberg")
+    }
+
+    /// Gegenprobe zu Prüfbefund A über die echten Gemeinden des Kreises: Halb genannt reicht nur bei einem Ortsteil der
+    /// gesuchten Gemeinde. „Wester-Ohrstedt Ohrstedt“ meint nicht die Gemeinde „Oster-Ohrstedt“. Und „Hüsby“ wählt „Hüsby“,
+    /// nicht das gleich gefaltete „Husby“ (in allen früheren Ständen falsch).
+    func testHalfNamedMunicipalityOfTheDistrictKeepsThePlace() throws {
+        func district(of name: String) throws -> SelectionStep {
+            let item = try XCTUnwrap(MunicipalityIndex.all.first { $0.name == name }, name)
+            return cityStep(MunicipalityIndex.all.filter { $0.district == item.district }.map(\.name))
+        }
+        let nordfriesland = try district(of: "Wester-Ohrstedt")
+        XCTAssertTrue(nordfriesland.options.contains { $0.title == "Oster-Ohrstedt" })
+        XCTAssertEqual(nordfriesland.preselection(for: "Wester-Ohrstedt", query: "Wester-Ohrstedt Ohrstedt")?.title, "Wester-Ohrstedt")
+        let schleswig = try district(of: "Hüsby")
+        XCTAssertTrue(schleswig.options.contains { $0.title == "Husby" })
+        XCTAssertEqual(schleswig.preselection(for: "Hüsby", query: "Hüsby Kroy")?.title, "Hüsby")
+        XCTAssertEqual(schleswig.preselection(for: "Husby")?.title, "Husby")
+    }
+
+    /// Prüfbefund A, zweite Spielart: Die Wörter der Gemeinde zählen in der Suche nur einmal. „Dessau-Roßlau Roßlau (Elbe)“
+    /// nennt den Ortsteil „Roßlau (Elbe)“ ganz (Ortsteile laut Ortsteil-Liste als eigene Optionen).
+    func testMunicipalityWordsCountOnceInTheSearch() throws {
+        for (municipality, locality) in [("Dessau-Roßlau", "Roßlau (Elbe)"), ("Weimar (Lahn)", "Roth (Lahn)")] {
+            XCTAssertTrue((LocalityIndex.byName[ProviderCatalog.fold(locality)] ?? []).contains { $0.municipality == municipality }, locality)
+            let step = cityStep([municipality, locality])
+            XCTAssertNil(step.preselection(for: municipality, query: "\(municipality) \(locality)"), locality)
+            XCTAssertEqual(step.preselection(for: municipality, query: municipality)?.title, municipality, "Gegenprobe")
+        }
+    }
+
+    /// Prüfbefund C zu Paket E: Ein einzelner Buchstabe ohne Punkt („Rieden a“) wählte die Gemeinde, obwohl der Eintrag auch
+    /// „Rieden am Forggensee“ führt. Echte Kette über die belegten Orte der Einträge; mit Punkt kam schon die Liste.
+    func testSingleLetterWithoutDotIsNoExtraWord() throws {
+        for (query, names) in [("Rieden a", ["Rieden", "Rieden am Forggensee"])] {
+            func served(_ entry: CatalogEntry) -> [String] {
+                Array(Set((EntryPlacesIndex.pairs[entry.id] ?? []).map { String($0.split(separator: "|", maxSplits: 1).last ?? "") })).sorted()
+            }
+            let entry = try XCTUnwrap(ProviderCatalog.entries.first { entry in names.allSatisfy(served(entry).contains) }, query)
+            let place = try XCTUnwrap(ProviderCatalog.servedPlace(for: entry, query: query), query)
+            let step = cityStep(served(entry))
+            XCTAssertNil(step.preselection(for: place, query: query), "„\(query)“ (Gemeinde \(place))")
+            XCTAssertNil(step.preselection(for: place, query: query + "."), "mit Punkt")
+            XCTAssertEqual(step.preselection(for: names[1], query: names[1])?.title, names[1], "Gegenprobe Langform")
+        }
+        // Bundesweit gleicher Kern: alle Gemeinden „Simbach …“ bzw. „Neukirch …“ als Optionen
+        for (query, core) in [("Simbach i", "simbach"), ("Neukirch a", "neukirch")] {
+            let names = Array(Set(MunicipalityIndex.all.map(\.name).filter { SelectionStep.placeCore($0) == core })).sorted()
+            let place = try XCTUnwrap(names.first { SelectionStep.spelling($0) == core }, core)
+            XCTAssertGreaterThan(names.count, 1, core)
+            XCTAssertNil(cityStep(names).preselection(for: place, query: query), query)
+            XCTAssertEqual(cityStep(names).preselection(for: place, query: place)?.title, place, "Gegenprobe \(place)")
+        }
+    }
+
+    /// Prüfbefund D zu Paket E: Zusatz nur aus Bindewort oder Abkürzung ist kein Zusatz der Gemeinde (Kusel).
+    func testJoinWordOrAbbreviationAloneKeepsTheList() {
+        let kusel = SelectionStep(title: L10n.t("Ortsgemeinde", "Municipality"), options: ["Kusel", "Rutsweiler/Glan", "Rutsweiler/Lauter"]
+            .map { SelectionOption(id: $0, title: $0) })
+        XCTAssertNil(kusel.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler a."))
+        XCTAssertNil(kusel.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler an der"))
+        XCTAssertEqual(kusel.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler a. Glan")?.title, "Rutsweiler/Glan")
+    }
 }
