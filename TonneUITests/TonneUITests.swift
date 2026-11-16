@@ -26,6 +26,7 @@ final class TonneUITests: XCTestCase {
             return
         }
         app.launchArguments = ["-uiTesting", "-uiTestingSeed", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+            + (name.contains("Leerungs") ? ["-uiTestingQuota"] : [])
         app.launchEnvironment["TONNE_UITESTING"] = "1"
         app.terminate()
         app.launch()
@@ -270,6 +271,104 @@ final class TonneUITests: XCTestCase {
         let overviewFrame = overviewCall.frame
         overviewCall.tap()
         assertCallAsksFirst(name: "Lena Sommer", near: overviewFrame, shot: "anruf-uebersicht")
+    }
+
+    // MARK: - Leerungs-Statistik
+
+    /// Konzept 16.11.2026: Kontingent setzen, zwei Termine markieren, einen nachtragen, Anzeige „3 von 12“ –
+    /// danach „Erledigt“ an einem Tag mit Restmüll und Gelbem Sack: Blatt je Müllart, Restmüll blieb drin und zählt nicht.
+    /// Testdaten (-uiTestingQuota): Restmüll vor 6, 4 und 2 Tagen, morgen zusammen mit dem Gelben Sack.
+    func testLeerungsStatistikAblauf() {
+        func day(_ offset: Int) -> String {
+            let date = Calendar.current.date(byAdding: .day, value: offset, to: Calendar.current.startOfDay(for: Date()))!
+            let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            return String(format: "%04d-%02d-%02d", c.year!, c.month!, c.day!)
+        }
+        func openStatistics() {
+            let card = app.buttons["statsCard"].firstMatch
+            for _ in 0..<5 where !(card.exists && card.isHittable) { app.swipeUp() }
+            card.tap()
+            XCTAssertTrue(app.navigationBars["Leerungen"].waitForExistence(timeout: 5), "Statistik geht nicht auf")
+        }
+        // Ring und Text sind für VoiceOver zu einem Element zusammengefasst („3 von 12, noch 9 frei · …“): die Zahl steht vorn
+        func headline() -> String {
+            String(app.staticTexts["quotaHeadline-Restmüll"].firstMatch.label.split(separator: ",").first ?? "")
+        }
+        func waitHeadline(_ expected: String) -> Bool {
+            let deadline = Date().addingTimeInterval(5)
+            while Date() < deadline { if headline() == expected { return true }; RunLoop.current.run(until: Date().addingTimeInterval(0.2)) }
+            return headline() == expected
+        }
+        // Bildschirmfoto hell und dunkel (normale Schriftgröße)
+        func snapBoth(_ name: String) {
+            XCUIDevice.shared.appearance = .light; sleep(1); snap("\(name)-hell")
+            XCUIDevice.shared.appearance = .dark; sleep(1); snap("\(name)-dunkel")
+            XCUIDevice.shared.appearance = .light
+        }
+        func mark(_ offset: Int) {
+            let dot = app.buttons["dot-Restmüll-\(day(offset))"].firstMatch
+            for _ in 0..<4 where !(dot.exists && dot.isHittable) { app.swipeUp() }
+            XCTAssertTrue(dot.waitForExistence(timeout: 3), "Termin vor \(-offset) Tagen fehlt in der Leiste")
+            dot.tap()
+            XCTAssertTrue(app.buttons["Raus"].waitForExistence(timeout: 3), "Menü am Termin fehlt")
+            app.buttons["Raus"].firstMatch.tap()
+        }
+
+        tab("Übersicht")
+        // Ohne Kontingent keine Nachtragen-Karte
+        XCTAssertFalse(app.descendants(matching: .any)["catchUpCard"].exists)
+        openStatistics()
+        XCTAssertEqual(headline(), "0 von 3 Terminen rausgestellt")
+        let setup = app.buttons["quotaSetup-Restmüll"].firstMatch
+        XCTAssertTrue(setup.waitForExistence(timeout: 3))
+        setup.tap()
+        flip("Leerungen inklusive")
+        XCTAssertTrue(text("12 pro Jahr").waitForExistence(timeout: 3), "Standard 12 fehlt")
+        app.buttons["Fertig"].firstMatch.tap()
+        // Mitten im Jahr eingeschaltet: einmal nach dem bisherigen Stand fragen – hier einzeln nachtragen
+        let ask = app.alerts.firstMatch
+        if ask.waitForExistence(timeout: 3) { ask.buttons["Einzeln nachtragen"].tap() }
+        XCTAssertTrue(app.staticTexts["quotaHeadline-Restmüll"].waitForExistence(timeout: 5))
+        XCTAssertEqual(headline(), "0 von 12")
+
+        mark(-6)
+        mark(-4)
+        XCTAssertTrue(waitHeadline("2 von 12"), "zwei markierte Termine zählen nicht")
+        snapBoth("statistik")
+
+        // Übersicht: der dritte Termin steht zum Nachtragen bereit
+        app.navigationBars.buttons.firstMatch.tap()
+        let card = app.descendants(matching: .any)["catchUpCard"].firstMatch
+        for _ in 0..<4 { app.swipeDown() }
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "Nachtragen-Karte fehlt")
+        XCTAssertTrue(text("1 Leerung nachtragen").exists)
+        snapBoth("nachtragen")
+        app.buttons["catchUpOut-Restmüll-\(day(-2))"].firstMatch.tap()
+        XCTAssertTrue(card.waitForNonExistence(timeout: 5), "Karte bleibt nach dem Nachtragen stehen")
+        // Zeile auf der Übersicht
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'noch 9 von 12 frei'")).firstMatch.waitForExistence(timeout: 5),
+                      "Zeile „noch 9 von 12 frei“ fehlt")
+
+        openStatistics()
+        XCTAssertEqual(headline(), "3 von 12")
+        app.navigationBars.buttons.firstMatch.tap()
+
+        // Morgen Restmüll und Gelber Sack: „Erledigt“ fragt je Müllart
+        for _ in 0..<4 { app.swipeDown() }
+        let done = app.buttons["Erledigt"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 5))
+        done.tap()
+        XCTAssertTrue(app.navigationBars["Was stand draußen?"].waitForExistence(timeout: 5), "Blatt je Müllart fehlt")
+        let rest = app.buttons["choice-Restmüll"].firstMatch
+        XCTAssertEqual(rest.value as? String, "stand draußen", "alle vorausgewählt")
+        XCTAssertEqual(app.buttons["choice-Gelber Sack"].firstMatch.value as? String, "stand draußen")
+        rest.tap()
+        XCTAssertEqual(rest.value as? String, "blieb drin")
+        app.buttons["Fertig"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Was stand draußen?"].waitForNonExistence(timeout: 5))
+        openStatistics()
+        XCTAssertEqual(headline(), "3 von 12", "Restmüll blieb drin und zählt nicht")
+        XCTAssertEqual(app.buttons["dot-Restmüll-\(day(1))"].firstMatch.label.contains("nicht rausgestellt"), true)
     }
 
     // MARK: - Termine › Geburtstage
