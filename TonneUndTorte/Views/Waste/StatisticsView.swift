@@ -19,11 +19,14 @@ struct StatisticsView: View {
     @State private var showCatchUp = false
     @State private var token = 0
 
-    private var types: [WasteType] {
+    private var allTypes: [WasteType] {
         _ = token
         return wasteTypes.filter { $0.isActive && (locationID == nil || $0.location?.id == locationID) }
             .sorted { ($0.location?.sortOrder ?? 0, $0.sortOrder) < ($1.location?.sortOrder ?? 0, $1.sortOrder) }
     }
+    /// Ohne die mit „Kein Kontingent“ ausgeblendeten.
+    private var types: [WasteType] { allTypes.filter { !$0.hidesInStatistics } }
+    private var hiddenTypes: [WasteType] { allTypes.filter(\.hidesInStatistics) }
     private var showLocation: Bool { locationID == nil && locations.count > 1 }
     private var today: Date { Days.today() }
 
@@ -41,17 +44,18 @@ struct StatisticsView: View {
         ScrollView {
             VStack(spacing: 20) {
                 header
-                if types.isEmpty {
+                if allTypes.isEmpty {
                     Text(L10n.t("Noch keine Müllarten. Lege unter „Müll“ einen Standort an.", "No waste types yet. Add a location under “Waste”."))
                         .tonneFont(.subheadline).foregroundStyle(.secondary).card()
                 } else {
-                    if !types.contains(where: \.isCounted) { explanationCard }
+                    if !types.isEmpty && !types.contains(where: \.isCounted) { explanationCard }
                     ForEach(items, id: \.type.id) { item in
                         QuotaCard(type: item.type, summary: item.summary, showLocation: showLocation, editable: true,
                                   onSet: { mark, day in set(mark, item.type, day) },
                                   onRemoveExtra: { day in item.type.removeExtraPickup(day); persist() },
                                   onSettings: { settingsFor = item.type },
-                                  onAddExtra: { extraDate = today; extraFor = item.type })
+                                  onAddExtra: { extraDate = today; extraFor = item.type },
+                                  onHide: { setHidden(true, item.type) })
                     }
                     footer(items)
                 }
@@ -125,6 +129,19 @@ struct StatisticsView: View {
                 .accessibilityIdentifier("statsCatchUp")
             }
             if let comparison { Text(comparison).tonneFont(.footnote).foregroundStyle(.secondary) }
+            if !hiddenTypes.isEmpty {
+                Menu {
+                    Section(L10n.t("Wieder zeigen", "Show again")) {
+                        ForEach(hiddenTypes, id: \.id) { type in
+                            Button(showLocation ? "\(type.name) · \(type.location?.name ?? "")" : type.name) { setHidden(false, type) }
+                        }
+                    }
+                } label: {
+                    Label(L10n.t("\(hiddenTypes.count) ohne Kontingent ausgeblendet", "\(hiddenTypes.count) hidden without included collections"),
+                          systemImage: "eye.slash").tonneFont(.subheadline, .semibold)
+                }
+                .accessibilityIdentifier("statsHidden")
+            }
             ShareLink(item: PickupCSVFile(text: model.statisticsCSV(locationID: locationID), fileName: L10n.t("Leerungen.csv", "Collections.csv")),
                       preview: SharePreview(L10n.t("Leerungen.csv", "Collections.csv"))) {
                 Label(L10n.t("Als CSV exportieren", "Export as CSV"), systemImage: "square.and.arrow.up").tonneFont(.subheadline, .semibold)
@@ -182,6 +199,10 @@ struct StatisticsView: View {
         token += 1
         Task { await model.refreshAll() }
     }
+
+    private func setHidden(_ hidden: Bool, _ type: WasteType) {
+        withAnimation { type.hiddenInStatistics = hidden; model.save(); token += 1 }
+    }
 }
 
 // MARK: - Karte je Müllart
@@ -195,7 +216,22 @@ struct QuotaCard: View {
     var onRemoveExtra: (Date) -> Void
     var onSettings: () -> Void
     var onAddExtra: () -> Void
+    /// „Kein Kontingent“: Müllart aus der Übersicht ausblenden (nil = Knopf fehlt).
+    var onHide: (() -> Void)?
     @Environment(\.colorScheme) private var scheme
+
+    @ViewBuilder private var quotaChoice: some View {
+        Button(L10n.t("Kontingent einrichten", "Set up included collections"), action: onSettings)
+            .tonneFont(.subheadline, .semibold)
+            .accessibilityIdentifier("quotaSetup-\(type.name)")
+        if let onHide {
+            Button(L10n.t("Kein Kontingent", "None included"), action: onHide)
+                .tonneFont(.subheadline, .semibold)
+                .foregroundStyle(KlarStyle.muted(scheme))
+                .accessibilityHint(L10n.t("Blendet \(type.name) in den Leerungen aus", "Hides \(type.name) from collections"))
+                .accessibilityIdentifier("quotaNone-\(type.name)")
+        }
+    }
 
     private var alert: Color { scheme == .dark ? Color(hex: "#FF6B5E") : Color(hex: "#D93025") }
 
@@ -245,9 +281,10 @@ struct QuotaCard: View {
                         .accessibilityIdentifier("quotaHeadline-\(type.name)")
                     // Nur ohne Kontingent: Im Vorjahr einer gezählten Müllart fehlt es nur für diesen Zeitraum
                     if editable && !type.isCounted {
-                        Button(L10n.t("Kontingent einrichten", "Set up included collections"), action: onSettings)
-                            .tonneFont(.subheadline, .semibold)
-                            .accessibilityIdentifier("quotaSetup-\(type.name)")
+                        ViewThatFits(in: .horizontal) {
+                            HStack(spacing: 20) { quotaChoice }
+                            VStack(alignment: .leading, spacing: 8) { quotaChoice }
+                        }
                     }
                 }
             }
@@ -577,6 +614,7 @@ struct QuotaSettingsView: View {
     /// Alle Eingaben des Blatts auf einmal ins Modell.
     private func apply() {
         type.setIncluded(enabled ? included : nil)
+        if enabled { type.hiddenInStatistics = false }
         type.quotaStart = enabled && ownYear ? Days.start(of: cutoff) : nil
         type.pricePerExtra = enabled ? Double(price.replacingOccurrences(of: ",", with: ".").trimmingCharacters(in: .whitespaces)) : nil
         type.countOffDuty = countOffDuty

@@ -187,11 +187,11 @@ der Zeitzone nach Westen um einen Tag – schon vor 2.0.3 so, nicht angefasst.
 
 ## 5f. 2.1.0 (Build 16) – vor dem Einreichen: CloudKit-Schema nach Production
 
-Die Leerungs-Statistik bringt neun neue Felder in `WasteType` (`CD_includedPerYear`, `CD_quotaStart`, `CD_quotaBaseline`,
+Die Leerungs-Statistik bringt zehn neue Felder in `WasteType` (`CD_hiddenInStatistics`, `CD_includedPerYear`, `CD_quotaStart`, `CD_quotaBaseline`,
 `CD_quotaBaselineDate`, `CD_pricePerExtra`, `CD_countOffDuty`, `CD_extraPickupDates`, `CD_bulkConfirmedDates`, `CD_quotaChangesJSON`).
 **Vor dem Upload:** Debug-Build auf einem Gerät mit iCloud starten, bei einer Müllart ein Kontingent mit Startwert, Preis und einer
-Zusatzleerung speichern, dann im CloudKit-Dashboard „Deploy Schema Changes…“. Ohne das scheitert der iCloud-Abgleich der Müllarten
-in TestFlight und App Store. Danach im Dashboard unter Production → Record Types → `CD_WasteType` nachsehen, ob die neun Felder da sind.
+Zusatzleerung speichern, bei einer anderen „Kein Kontingent“ tippen, dann im CloudKit-Dashboard „Deploy Schema Changes…“. Ohne das scheitert der iCloud-Abgleich der Müllarten
+in TestFlight und App Store. Danach im Dashboard unter Production → Record Types → `CD_WasteType` nachsehen, ob die zehn Felder da sind.
 
 ## 6. Zuletzt umgesetzt (zum Einordnen)
 

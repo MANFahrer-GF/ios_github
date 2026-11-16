@@ -49,6 +49,8 @@ final class WasteType {
     var bulkConfirmedDates: [Date] = []
     /// Änderungen des Kontingents als JSON (`[QuotaChange]`), damit eine Änderung erst ab dann gilt.
     var quotaChangesJSON: String = ""
+    /// „Kein Kontingent“: in der Leerungs-Übersicht ausgeblendet (Schadstoffmobil, Gelber Sack …).
+    var hiddenInStatistics: Bool = false
 
     var location: Location?
 
@@ -193,6 +195,8 @@ final class WasteType {
 
     /// Gezählte Müllart: Ein Kontingent ist eingetragen.
     var isCounted: Bool { includedPerYear != nil }
+    /// Ausgeblendet, solange kein Kontingent eingetragen ist – ein Kontingent holt die Müllart immer zurück.
+    var hidesInStatistics: Bool { hiddenInStatistics && !isCounted }
 
     var quotaChanges: [QuotaChange] {
         get { (try? JSONDecoder().decode([QuotaChange].self, from: Data(quotaChangesJSON.utf8))) ?? [] }

@@ -514,7 +514,7 @@ final class AppModel: ObservableObject {
     func statisticsCSV(locationID: UUID? = nil) -> String {
         let today = Days.today()
         var rows: [PickupQuota.CSVRow] = []
-        for type in allWasteTypes() where type.isActive && (locationID == nil || type.location?.id == locationID) {
+        for type in allWasteTypes() where type.isActive && !type.hidesInStatistics && (locationID == nil || type.location?.id == locationID) {
             let current = type.quotaPeriod(containing: today)
             for period in [PickupQuota.previous(current, anchor: type.quotaStart), current] {
                 for entry in type.quotaSummary(period: period, today: today).entries where !entry.upcoming {

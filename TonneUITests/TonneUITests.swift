@@ -347,6 +347,7 @@ final class TonneUITests: XCTestCase {
         }
 
         tab("Übersicht")
+        sleep(2); snap("uebersicht-normal")  // Sichtprüfung: weiche Trennstriche bei normaler Schriftgröße
         // Ohne Kontingent keine Nachtragen-Karte
         XCTAssertFalse(app.descendants(matching: .any)["catchUpCard"].exists)
         openStatistics()
@@ -366,7 +367,27 @@ final class TonneUITests: XCTestCase {
         mark(-6)
         mark(-4)
         XCTAssertTrue(waitHeadline("2 von 12"), "zwei markierte Termine zählen nicht")
+
+        // „Kein Kontingent“ blendet Schadstoffmobil und Gelber Sack aus; die gezählte Müllart hat den Knopf nicht
+        XCTAssertFalse(app.buttons["quotaNone-Restmüll"].exists, "gezählte Müllart bietet „Kein Kontingent“ an")
+        for name in ["Schadstoffmobil", "Gelber Sack"] {
+            let none = app.buttons["quotaNone-\(name)"].firstMatch
+            for _ in 0..<4 where !(none.exists && none.isHittable) { app.swipeUp() }
+            XCTAssertTrue(none.waitForExistence(timeout: 3), "„Kein Kontingent“ fehlt bei \(name)")
+            none.tap()
+            XCTAssertTrue(app.staticTexts["quotaHeadline-\(name)"].waitForNonExistence(timeout: 3), "\(name) bleibt stehen")
+        }
+        for _ in 0..<4 { app.swipeDown() }
         snapBoth("statistik")
+        // Über das Menü unten wieder einblenden
+        let hidden = app.buttons["statsHidden"].firstMatch
+        for _ in 0..<5 where !(hidden.exists && hidden.isHittable) { app.swipeUp() }
+        XCTAssertTrue(hidden.label.contains("2 ohne Kontingent ausgeblendet"), "Menü nennt \(hidden.label)")
+        hidden.tap()
+        app.buttons["Gelber Sack"].firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["quotaHeadline-Gelber Sack"].waitForExistence(timeout: 3), "Gelber Sack kommt nicht zurück")
+        XCTAssertTrue(hidden.label.contains("1 ohne Kontingent ausgeblendet"))
+        for _ in 0..<4 { app.swipeDown() }
 
         // Übersicht: der dritte Termin steht zum Nachtragen bereit
         app.navigationBars.buttons.firstMatch.tap()
