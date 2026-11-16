@@ -86,7 +86,7 @@ public struct SelectionStep: Hashable {
     /// „Altleiningen mit Neuleiningen Tal“ → „altleiningen“. Ortsteile mit
     /// Bindestrich („Altenglan - Mühlbach“) bleiben ganz.
     static func placeCore(_ name: String) -> String {
-        var text = ProviderCatalog.fold(name)
+        var text = spelling(name)
         for cut in ["(", "/", ","] { if let range = text.range(of: cut) { text = String(text[..<range.lowerBound]) } }
         for prefix in ["verbandsgemeinde ", "samtgemeinde ", "gemeinden ", "gemeinde ", "stadt ", "markt ", "amt "] where text.hasPrefix(prefix) {
             text = String(text.dropFirst(prefix.count)); break
@@ -103,6 +103,13 @@ public struct SelectionStep: Hashable {
         return kept.joined(separator: " ")
     }
 
+    /// Gefaltet und ohne Unterschied zwischen Bindestrich und Leerzeichen, wie Portale und Suchende Ortsteile verschieden
+    /// schreiben (Nachprüfung N1, 16.11.2026): „Dabel-Woland“ = „Dabel Woland“, „Hagenow Heide“ = „Hagenow-Heide“,
+    /// „Altenglan - Mühlbach“ → „altenglan muhlbach“. Einzige Stelle dafür; `placeCore` baut darauf auf.
+    static func spelling(_ name: String) -> String {
+        ProviderCatalog.fold(name).replacingOccurrences(of: "-", with: " ").split(separator: " ").joined(separator: " ")
+    }
+
     /// Wie `preselection(for:)`, kennt aber die Suche selbst (Prüfbefunde 1–3, 16.11.2026):
     /// - Mehrdeutige Kurzform: „Rutsweiler“ passt auf „Rutsweiler/Glan“ und „Rutsweiler/Lauter“, „Weisenheim“ auf „am Berg“
     ///   und „am Sand“ – keine Vorauswahl, auch wenn die gefundene Gemeinde genau in der Liste steht.
@@ -110,31 +117,50 @@ public struct SelectionStep: Hashable {
     ///   (Gemos „Gemeinde / Ortsteil“), „Damelack“ für Breddin (Ostprignitz-Ruppin); bei gleichnamigen Ortsteilen der mit dem
     ///   Zusatz der Gemeinde („Zahrensdorf (Kloster Tempzin)“), ohne eindeutige Option („Klein Krams + Ausbau“) die Liste.
     /// - „Ort / Ortsteil“ (C-Trace Groß-Gerau): „Erfelden“ oder „Riedstadt-Erfelden“ wählt „Riedstadt / Erfelden“.
+    /// - Bindestrich und Leerzeichen gelten gleich (`spelling`): „Dabel Woland“ wählt „Dabel-Woland“ (Nachprüfung N1).
+    /// - Nennt die Suche Wörter über die Gemeinde hinaus, die eine andere Option trägt, die aber nicht eindeutig zuzuordnen
+    ///   ist, zeigt der Assistent die Liste statt die Gemeinde: Eine falsche Vorauswahl ist schlimmer als keine.
     public func preselection(for place: String, query: String) -> SelectionOption? {
         guard isPlaceStep else { return nil }
-        let fold = ProviderCatalog.fold
+        let fold = ProviderCatalog.fold, spell = Self.spelling
         let searched = fold(query), placeCore = Self.placeCore(place)
         if searched != fold(place), Self.placeCore(query) == placeCore, !placeCore.isEmpty,
            options.filter({ Self.placeCore($0.title) == placeCore }).count > 1 { return nil }
-        let locality = fold(ProviderCatalog.resolve(searched).locality ?? query)
+        let found = fold(ProviderCatalog.resolve(searched).locality ?? query)
+        let locality = spell(found), typed = spell(query)
         let localityCore = Self.placeCore(locality)
         if !localityCore.isEmpty, localityCore != placeCore {
-            let own = options.filter { Self.placeCore($0.title) == localityCore || fold($0.title).hasPrefix(locality + " ") }
+            let own = options.filter {
+                Self.placeCore($0.title) == localityCore || spell($0.title).hasPrefix(locality + " ") || spell($0.title) == typed
+            }
             if !own.isEmpty {
-                // Nur wenn der Ortsteil laut Ortsteil-Liste zur gesuchten Gemeinde gehört (Kränzlin ist nicht Breddin)
-                guard (LocalityIndex.byName[locality] ?? []).contains(where: { fold($0.municipality) == fold(place) }) else { return nil }
+                // Nur wenn der Ortsteil zur gesuchten Gemeinde gehört (Kränzlin ist nicht Breddin): laut Ortsteil-Liste, unter
+                // dem gesuchten Namen oder dem der Option, oder weil die Option mit dem Gemeindenamen beginnt („Dabel-Woland“).
+                let belongs = ([found] + own.map { fold($0.title) }).contains { name in
+                    (LocalityIndex.byName[name] ?? []).contains { fold($0.municipality) == fold(place) }
+                } || own.contains { spell($0.title).hasPrefix(spell(place) + " ") }
+                guard belongs else { return nil }
                 let withPlace = own.filter { Self.bracketSuffix($0.title) == fold(place) }
                 if withPlace.count == 1 { return withPlace[0] }
-                return own.count == 1 && fold(own[0].title) == locality ? own[0] : nil
+                return own.count == 1 && [locality, typed].contains(spell(own[0].title)) ? own[0] : nil
             }
         }
-        if let exact = preselection(for: place) { return exact }
         let words = Set(searched.split { !$0.isLetter && !$0.isNumber }.map(String.init))
         let hits = options.filter {
             let parts = $0.title.components(separatedBy: " / ")
             return parts.count == 2 && fold(parts[0]) == fold(place) && words.contains(fold(parts[1]))
         }
-        return hits.count == 1 ? hits[0] : nil
+        if hits.count == 1 { return hits[0] }
+        guard let exact = preselection(for: place) else { return nil }
+        // Wörter der Suche über Gemeinde und gewählte Option hinaus („Ziegelscheune“), die alle als Wortanfang in einer anderen
+        // Option stehen: Die Suche meint vermutlich diese, also keine Vorauswahl. Ein Ortsteil ohne eigene Option
+        // („Stuttgart Vaihingen“) wählt weiter die Gemeinde.
+        func wordsOf(_ text: String) -> [String] { spell(text).split { !$0.isLetter && !$0.isNumber }.map(String.init) }
+        let extra = Set(wordsOf(query)).subtracting(wordsOf(place)).subtracting(wordsOf(exact.title))
+        let named = !extra.isEmpty && options.contains { option in
+            option.id != exact.id && extra.allSatisfy { word in wordsOf(option.title).contains { $0.hasPrefix(word) } }
+        }
+        return named ? nil : exact
     }
 
     /// Zusatz in Klammern am Ende: „Zahrensdorf (Kloster Tempzin)“ → „kloster tempzin“.

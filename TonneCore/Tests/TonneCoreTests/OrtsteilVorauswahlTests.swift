@@ -48,22 +48,48 @@ final class OrtsteilVorauswahlTests: XCTestCase {
         XCTAssertNil(twins.preselection(for: "Kloster Tempzin", query: "Zahrensdorf"))
     }
 
+    /// Nachprüfung N1 (16.11.2026): Ortsteil mit eigener Option, aber anders geschrieben – Bindestrich statt Leerzeichen
+    /// oder umgekehrt. Bisher fiel die Suche still auf die Gemeinde zurück.
+    func testOtherSpellingOfTheLocalityNeverChoosesTheMunicipality() {
+        func gemos(_ titles: [String]) -> SelectionStep {
+            SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: titles.map { SelectionOption(id: $0, title: $0) })
+        }
+        XCTAssertEqual(gemos(["Dabel", "Dabel-Woland"]).preselection(for: "Dabel", query: "Dabel Woland")?.title, "Dabel-Woland")
+        XCTAssertEqual(gemos(["Hagenow (einschließlich Hagenow Land)", "Hagenow Heide"]).preselection(for: "Hagenow", query: "Hagenow-Heide")?.title, "Hagenow Heide")
+        XCTAssertEqual(gemos(["Grabow", "Grabow Ziegelscheune"]).preselection(for: "Grabow", query: "Grabow-Ziegelscheune")?.title, "Grabow Ziegelscheune")
+        XCTAssertEqual(gemos(["Beelitz (Stadt)", "Beelitz-Heilstätten"]).preselection(for: "Beelitz", query: "Beelitz Heilstätten")?.title, "Beelitz-Heilstätten")
+        // Sicherung: Die Suche nennt einen Ortsteil, den eine andere Option trägt, aber nicht eindeutig – Liste statt Gemeinde
+        XCTAssertNil(gemos(["Grabow", "Grabow Ziegelscheune", "Grabow Ziegelscheune Ausbau"]).preselection(for: "Grabow", query: "Grabow Ziegel"))
+        XCTAssertNil(gemos(["Grabow", "Grabow/Ziegelscheune"]).preselection(for: "Grabow", query: "Ziegelscheune Grabow"))
+        // Gegenproben: Ortsteil ohne eigene Option oder bloßer Gemeindename wählen weiter die Gemeinde
+        XCTAssertEqual(gemos(["Dabel", "Dabel-Woland"]).preselection(for: "Dabel", query: "Dabel")?.title, "Dabel")
+        XCTAssertEqual(gemos(["Hagenow (einschließlich Hagenow Land)", "Hagenow Heide"]).preselection(for: "Hagenow", query: "Hagenow Land")?.title, "Hagenow (einschließlich Hagenow Land)")
+        XCTAssertEqual(gemos(["Stuttgart", "Esslingen"]).preselection(for: "Stuttgart", query: "Stuttgart Vaihingen")?.title, "Stuttgart")
+    }
+
     /// Echte Kette über die ganze LWL-Liste: Wer einen Ortsteil sucht, der eigene Option ist, bekommt nie die Gemeinde.
     func testNoLwlLocalityIsAnsweredWithItsMunicipality() throws {
         let file = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("../../../tools/catalog/data/gemos/lwl_places.txt")
         let titles = try String(contentsOf: file, encoding: .utf8).split(separator: "\n").map { String($0).trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
         let lwl = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "lwl" })
         let step = SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: titles.map { SelectionOption(id: $0, title: $0) })
-        var checked = 0
+        var checked = 0, variants = 0
         for title in titles {
-            guard let place = ProviderCatalog.servedPlace(for: lwl, query: title),
-                  SelectionStep.placeCore(place) != SelectionStep.placeCore(title) else { continue }
-            checked += 1
-            if let chosen = step.preselection(for: place, query: title) {
-                XCTAssertEqual(SelectionStep.placeCore(chosen.title), SelectionStep.placeCore(title), "Suche „\(title)“ (Gemeinde \(place)) wählte „\(chosen.title)“")
+            // Auch in anderer Schreibweise gesucht (Nachprüfung N1): „Dabel Woland“ für „Dabel-Woland“, „Hagenow-Heide“ für „Hagenow Heide“
+            var queries = [title, title.replacingOccurrences(of: "-", with: " ")]
+            if !title.contains(where: { "(+/".contains($0) }) { queries.append(title.replacingOccurrences(of: " ", with: "-")) }
+            for query in Set(queries) {
+                guard let place = ProviderCatalog.servedPlace(for: lwl, query: query),
+                      SelectionStep.placeCore(place) != SelectionStep.placeCore(title) else { continue }
+                checked += 1
+                if query != title { variants += 1 }
+                if let chosen = step.preselection(for: place, query: query) {
+                    XCTAssertEqual(SelectionStep.placeCore(chosen.title), SelectionStep.placeCore(title), "Suche „\(query)“ (Gemeinde \(place)) wählte „\(chosen.title)“")
+                }
             }
         }
         XCTAssertGreaterThan(checked, 100)
+        XCTAssertGreaterThan(variants, 5)
         // Bloßer Name ohne Zusatz („Zahrensdorf“, „Tessin“, „Holzendorf“): passt er auf mehrere geführte Gemeinden, keine Vorauswahl
         let pairs = Set(EntryPlacesIndex.pairs[lwl.id] ?? [])
         var twins = 0
