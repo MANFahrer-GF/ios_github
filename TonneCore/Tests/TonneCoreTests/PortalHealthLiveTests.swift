@@ -239,7 +239,7 @@ final class PortalHealthLiveTests: XCTestCase {
             // Schritt „Bundesland“ (Lobbe: Battenberg (Eder) steht unter Hessen).
             if let wanted, !placeFound, step.isPlaceStep || selections.isEmpty, step.options.count <= 40,
                !step.options.contains(where: { matches($0, wanted) }),
-               let parent = try await parentOption(of: wanted, in: step.options, after: selections, provider: provider) {
+               let parent = try await parentOption(of: wanted, in: step.options, after: selections, provider: provider, localities: localities) {
                 selections.append(parent); continue
             }
             selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound,
@@ -296,14 +296,25 @@ final class PortalHealthLiveTests: XCTestCase {
     }
 
     /// Die Option des Ortsschritts, unter der die gesuchte Gemeinde eine Ebene tiefer steht (nil, wenn keine eindeutig passt).
+    /// Steht die Gemeinde selbst nicht darunter, zählen ihre Ortsteile: Burgenlandkreis „VerbG An der Finne“ führt
+    /// Finneland als „Borgau“, „Kahlwinkel“ …, Gifhorn „Papenteich“ Schwülper als „Groß Schwülper“ (Punkt 6, 16.11.2026).
+    /// Bei mehreren Kandidaten gewinnt die Option mit den meisten Treffern (Gleina: Unstruttal 4, Elsteraue nur 1).
     static func parentOption(of wanted: String, in options: [SelectionOption], after selections: [SelectionOption],
-                             provider: any WasteProvider) async throws -> SelectionOption? {
-        var hits: [SelectionOption] = []
+                             provider: any WasteProvider, localities: [String] = []) async throws -> SelectionOption? {
+        let folded = Set(localities.map(ProviderCatalog.fold))
+        var named: [SelectionOption] = [], scored: [(option: SelectionOption, score: Int)] = []
         for option in options {
             guard let next = try? await provider.nextStep(after: selections + [option]), next.input == .list else { continue }
-            if next.options.contains(where: { matches($0, wanted) }) { hits.append(option) }
+            if next.options.contains(where: { matches($0, wanted) }) { named.append(option) }
+            let score = next.options.filter { matches($0, wanted) || folded.contains(ProviderCatalog.fold(searchName($0.title))) }.count
+            if score > 0 { scored.append((option, score)) }
         }
-        return hits.count == 1 ? hits[0] : nil
+        if named.count == 1 { return named[0] }
+        // Mehrdeutiger Name: nur unter diesen Kandidaten nach Ortsteilen entscheiden
+        if named.count > 1 { scored = scored.filter { candidate in named.contains { $0.id == candidate.option.id } } }
+        let best = scored.map(\.score).max() ?? 0
+        let top = scored.filter { $0.score == best }
+        return !folded.isEmpty && top.count == 1 ? top[0].option : nil
     }
 
     /// Sperre, Drosselung, Server- oder Zeitfehler: sagt nichts über die Gemeinde. Solche Ergebnisse werden nicht

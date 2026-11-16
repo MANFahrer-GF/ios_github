@@ -34,6 +34,48 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertNil(none)
     }
 
+    /// Burgenlandkreis: Unter der VerbG stehen Ortsteile statt Gemeinden; Gleina gibt es als Ortsteil in zwei Verbänden.
+    private struct VerbGStub: WasteProvider {
+        let kind = ProviderKind.muellabfuhrDeutschland
+        let serviceKey = "stub"
+        let displayName = "Stub"
+        let tree = ["Gemeinde Elsteraue": ["Gleina", "Profen"], "VerbG An der Finne": ["Borgau", "Kahlwinkel", "Saubach"],
+                    "VerbG Unstruttal": ["Baumersroda", "Ebersroda", "Gleina"]]
+        func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
+            switch selections.count {
+            case 0: return SelectionStep(title: SelectionStep.cityTitle, options: tree.keys.sorted().map { SelectionOption(id: $0, title: $0) })
+            case 1: return SelectionStep(title: "Ortsteil oder Straße", options: (tree[selections[0].title] ?? []).map { SelectionOption(id: $0, title: $0) })
+            default: return nil
+            }
+        }
+        func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] { [] }
+    }
+
+    func testMunicipalityIsFoundUnderTheAssociationThatListsItsLocalities() async throws {
+        let options = try await VerbGStub().nextStep(after: [])!.options
+        let finneland = try await PortalHealthLiveTests.parentOption(of: "Finneland", in: options, after: [], provider: VerbGStub(),
+                                                                     localities: ["Borgau", "Kahlwinkel", "Marienroda", "Saubach"])
+        XCTAssertEqual(finneland?.title, "VerbG An der Finne")
+        // Name in zwei Verbänden: der mit den meisten Ortsteilen
+        let gleina = try await PortalHealthLiveTests.parentOption(of: "Gleina", in: options, after: [], provider: VerbGStub(),
+                                                                  localities: ["Baumersroda", "Ebersroda", "Müncheroda"])
+        XCTAssertEqual(gleina?.title, "VerbG Unstruttal")
+        // Ohne Ortsteile bleibt ein doppelter Name unentschieden, ein unbekannter ohnehin
+        let ambiguous = try await PortalHealthLiveTests.parentOption(of: "Gleina", in: options, after: [], provider: VerbGStub())
+        XCTAssertNil(ambiguous)
+        let unknown = try await PortalHealthLiveTests.parentOption(of: "Nirgendwo", in: options, after: [], provider: VerbGStub(), localities: ["Irgendwo"])
+        XCTAssertNil(unknown)
+    }
+
+    func testWalkPicksTheLocalityUnderTheAssociation() async throws {
+        let job = PortalHealthLiveTests.Job(key: "t", entry: CatalogEntry(kind: .muellabfuhrDeutschland, serviceKey: "stub", title: "Stub"),
+                                            district: "Landkreis Burgenlandkreis", place: "Finneland")
+        let (selections, placeFound, _) = try await PortalHealthLiveTests.walk(job, calendar: .current, provider: VerbGStub())
+        XCTAssertEqual(selections.first?.title, "VerbG An der Finne")
+        XCTAssertTrue(["Borgau", "Kahlwinkel", "Saubach"].contains(selections.last?.title ?? ""))
+        XCTAssertEqual(placeFound, true)
+    }
+
     func testOfficialNameWithSuffixMatchesShortPortalName() {
         XCTAssertTrue(PortalHealthLiveTests.matches(SelectionOption(id: "g", title: "Graach"), "Graach an der Mosel"))
         XCTAssertTrue(PortalHealthLiveTests.matches(SelectionOption(id: "a", title: "Ahaus, Stadt"), "Ahaus"))
