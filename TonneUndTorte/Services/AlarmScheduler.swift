@@ -48,15 +48,22 @@ enum AlarmScheduler {
     }
 
     /// Geplante Wecker an den Plan angleichen: Fehlendes und Geändertes neu planen, alles andere entfernen.
-    /// Ohne Erlaubnis (oder ausgeschaltet: leerer Plan) bleibt kein Wecker der App stehen.
+    /// Ohne Erlaubnis (oder ausgeschaltet: leerer Plan) bleibt kein geplanter Wecker der App stehen;
+    /// ein gerade klingelnder bleibt, bis der Nutzer ihn ausmacht.
     static func apply(_ plan: [PlannedAlarm]) async {
         #if canImport(AlarmKit)
         guard #available(iOS 26.0, *) else { return }
         let manager = AlarmManager.shared
         let existing = (try? manager.alarms) ?? []
         let wanted = manager.authorizationState == .authorized ? plan : []
-        let keep = Set(wanted.map(\.id))
-        for alarm in existing where !keep.contains(alarm.id) { try? manager.cancel(id: alarm.id) }
+        let cancel = AlarmReconcile.toCancel(existing: existing.map { ($0.id, runState($0.state)) }, plan: wanted)
+        for id in cancel { try? manager.cancel(id: id) }
+        // Titel nur für Wecker behalten, die geplant sind oder stehen bleiben – die übrigen Schlüssel aufräumen
+        let remaining = Set(existing.map(\.id)).subtracting(cancel).union(wanted.map(\.id))
+        let store = SettingsKeys.store
+        for key in AlarmReconcile.staleTitleKeys(stored: store.dictionaryRepresentation().keys, keeping: remaining) {
+            store.removeObject(forKey: key)
+        }
         let scheduled = Dictionary(existing.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         for item in wanted {
             // Gleicher Zeitpunkt schon geplant: stehen lassen (der Titel ändert sich nur mit den Müllarten – dann neu)
@@ -74,9 +81,20 @@ enum AlarmScheduler {
         #endif
     }
 
-    private static func titleKey(_ id: UUID) -> String { "alarm.title.\(id.uuidString)" }
+    private static func titleKey(_ id: UUID) -> String { AlarmReconcile.titleKey(id) }
 
     #if canImport(AlarmKit)
+    @available(iOS 26.0, *)
+    private static func runState(_ state: Alarm.State) -> AlarmRunState {
+        switch state {
+        case .scheduled: return .scheduled
+        case .countdown: return .countdown
+        case .paused: return .paused
+        case .alerting: return .alerting
+        @unknown default: return .alerting // Unbekannt: lieber stehen lassen als einen laufenden Wecker beenden
+        }
+    }
+
     @available(iOS 26.0, *)
     private static func configuration(for item: PlannedAlarm) -> AlarmManager.AlarmConfiguration<PickupAlarmMetadata> {
         let title = LocalizedStringResource(String.LocalizationValue(item.title))
