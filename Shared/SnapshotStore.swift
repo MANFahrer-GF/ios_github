@@ -110,6 +110,33 @@ enum SnapshotStore {
         }
     }
 
+    // MARK: - Wahl je Müllart aus der Mitteilung („Alles raus“ / „Ohne Restmüll“)
+
+    static let choiceKey = "pickup.choices"
+
+    /// Ausdrücklich gewählt: Diese Müllarten (IDs) blieben drin; leer = alles raus. nil = keine Wahl (pauschaler Tipp).
+    static func choice(dayKey: String) -> Set<String>? {
+        (defaults.dictionary(forKey: choiceKey) as? [String: [String]])?[dayKey].map(Set.init)
+    }
+
+    /// „Erledigt“ mit Wahl ablegen – die App läuft nach dem Tipp evtl. nur im Hintergrund und übernimmt es später.
+    static func markDone(dayKey: String, leftIn: Set<String>) {
+        locked {
+            var choices = defaults.dictionary(forKey: choiceKey) as? [String: [String]] ?? [:]
+            choices[dayKey] = Array(leftIn).sorted()
+            defaults.set(choices, forKey: choiceKey)
+            markDone(dayKey: dayKey)
+        }
+    }
+
+    static func clearChoice(dayKey: String) {
+        locked {
+            var choices = defaults.dictionary(forKey: choiceKey) as? [String: [String]] ?? [:]
+            guard choices.removeValue(forKey: dayKey) != nil else { return }
+            defaults.set(choices, forKey: choiceKey)
+        }
+    }
+
     // MARK: - „Diesmal nicht rausstellen“ aus der Mitteilung (Tag als ISO-String)
 
     static let skipKey = "pickup.skipDays"

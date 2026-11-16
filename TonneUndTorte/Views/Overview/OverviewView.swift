@@ -20,6 +20,8 @@ struct OverviewView: View {
     @AppStorage(SettingsKeys.overviewCustom) private var showCustom = true
     @AppStorage(SettingsKeys.overviewDays) private var previewDays = 60
     @AppStorage(SettingsKeys.overviewStats) private var showStats = true
+    /// Nachtragen-Karte weggewischt: an diesem Tag nicht mehr zeigen.
+    @AppStorage(SettingsKeys.catchUpDismissed, store: SettingsKeys.store) private var catchUpDismissedDay = ""
     @State private var refreshToken = 0
     /// Geburtstag, Termin oder Müllart, die gerade bearbeitet wird – ein einziges Sheet.
     @State private var editing: EventEditTarget?
@@ -153,6 +155,8 @@ struct OverviewView: View {
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshToken += 1 } }
             // Geburtstag oder Termin direkt hier öffnen – nicht in einen anderen Tab springen
             .eventEditorSheet($editing)
+            // Nach dem Blatt „Was stand draußen?“ (oder einer Bearbeitung) neu auswerten
+            .onChange(of: editing?.id) { _, id in if id == nil { refreshToken += 1 } }
         }
     }
 
@@ -162,6 +166,7 @@ struct OverviewView: View {
         // Für die App-Store-Bilder ohne den Hinweis „Erinnerungen sind aus“
         if !notifications.isAuthorized && !TonneUndTorteApp.isDemo { permissionBanner }
         if !model.recentChanges.isEmpty { changesBanner }
+        if showWaste, !catchUp.isEmpty, catchUpDismissedDay != Days.iso(Days.today()) { catchUpCard }
         if let bringIn { bringInCard(bringIn) } else if let todayRecap { todayRecapCard(todayRecap) }
     }
 
@@ -180,6 +185,42 @@ struct OverviewView: View {
             .buttonStyle(.borderedProminent).controlSize(.small)
         }
         .card()
+    }
+
+    /// Offene oder pauschal bestätigte Termine gezählter Müllarten aus den letzten 30 Tagen.
+    private var catchUp: [AppModel.QuotaItem] {
+        _ = refreshToken
+        _ = wasteTypes.count
+        return model.catchUpItems(locationID: LocationFilter.apply(filterID))
+    }
+
+    /// „2 Leerungen nachtragen“: ruhig, höchstens einmal am Tag, lässt sich wegwischen.
+    private var catchUpCard: some View {
+        let items = catchUp
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "questionmark.circle.fill").tonneFont(.title2).foregroundStyle(.orange).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(L10n.t("\(L10n.count(items.count, "Leerung", "Leerungen", "collection", "collections")) nachtragen", "Catch up on \(L10n.count(items.count, "Leerung", "Leerungen", "collection", "collections"))"))
+                        .tonneFont(.subheadline, .semibold)
+                    Text(L10n.t("Stand die Tonne draußen? Das zählt fürs Kontingent.", "Was the bin out? It counts towards your included collections."))
+                        .tonneFont(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                Button { catchUpDismissedDay = Days.iso(Days.today()) } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.tertiary) }
+                    .accessibilityLabel(L10n.t("Für heute ausblenden", "Hide for today"))
+            }
+            CatchUpList(items: items, limit: 3) { refreshToken += 1 }
+            if items.count > 3 {
+                NavigationLink { StatisticsView() } label: {
+                    Text(L10n.t("Alle \(items.count) in der Statistik", "All \(items.count) in statistics")).tonneFont(.caption, .semibold)
+                }
+            }
+        }
+        .card()
+        // Eigener Container: sonst überschreibt die Kennung der Karte die der Knöpfe darin
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("catchUpCard")
     }
 
     private var changesBanner: some View {
@@ -247,7 +288,7 @@ struct OverviewView: View {
                         for event in today.events where event.notPutOut {
                             if let id = event.wasteTypeID { await model.setNotPutOut(false, wasteTypeID: id, dayKey: Days.iso(today.day)) }
                         }
-                    } else if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await model.markDone(dayKey: Days.iso(today.day)) }
+                    } else if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await confirmDone(today.day) }
                     refreshToken += 1
                 }
             } label: {
@@ -324,6 +365,12 @@ struct OverviewView: View {
                 ForEach(group.waste + group.other) { event in
                     EventItemCard(event: event, person: person(for: event), size: badge, showLocation: locations.count > 1 && place == nil,
                                   onToggleNotPutOut: event.kind == .waste && n <= 1 ? { toggleNotPutOut(event) } : nil) { open(event) }
+                }
+                ForEach(group.waste.filter { $0.quotaLine != nil && !$0.notPutOut && !$0.offDuty }) { event in
+                    Label(L10n.t("\(event.title) \(Days.until(group.day) == 1 ? "morgen" : DateText.countdown(group.day)) · \(event.quotaLine ?? "")",
+                                 "\(event.title) \(Days.until(group.day) == 1 ? "tomorrow" : DateText.countdown(group.day)) · \(event.quotaLine ?? "")"),
+                          systemImage: "chart.pie")
+                        .tonneFont(size: 13, .bold).foregroundStyle(KlarStyle.muted(scheme))
                 }
             }
             .padding(.top, 12)
@@ -402,7 +449,7 @@ struct OverviewView: View {
         Button {
             if done { Haptics.tap() } else { Haptics.success() }
             Task {
-                if done { await model.markUndone(dayKey: Days.iso(day)) } else { await model.markDone(dayKey: Days.iso(day)) }
+                if done { await model.markUndone(dayKey: Days.iso(day)) } else { await confirmDone(day) }
                 refreshToken += 1
             }
         } label: {
@@ -415,6 +462,11 @@ struct OverviewView: View {
         .buttonStyle(.plain)
     }
 
+    /// „Erledigt“: Mit gezählter und weiterer Müllart am Tag erst fragen, was draußen stand – sonst ein Tipp wie bisher.
+    private func confirmDone(_ day: Date) async {
+        if model.needsDoneChoice(day: day) { editing = .doneChoice(day) } else { await model.markDone(dayKey: Days.iso(day)) }
+    }
+
     private func toggleNotPutOut(_ event: CalendarEvent) {
         guard let id = event.wasteTypeID else { return }
         Task {
@@ -425,7 +477,15 @@ struct OverviewView: View {
 
     private func open(_ event: CalendarEvent) { editing = EventEditTarget.target(for: event, model: model) }
 
+    /// Antippbar: führt zur Leerungs-Statistik.
     private var statsCard: some View {
+        NavigationLink { StatisticsView() } label: { statsCardContent }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("statsCard")
+            .accessibilityHint(L10n.t("Öffnet die Leerungs-Statistik", "Opens collection statistics"))
+    }
+
+    private var statsCardContent: some View {
         let stats = model.statistics()
         return HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 2) {
@@ -439,7 +499,9 @@ struct OverviewView: View {
             }
             Spacer()
             Image(systemName: stats.total > 0 && stats.confirmed == stats.total ? "flame.fill" : "chart.bar.fill").tonneFont(.title2).foregroundStyle(.orange)
+            Image(systemName: "chevron.right").tonneFont(.footnote, .semibold).foregroundStyle(.tertiary)
         }
+        .contentShape(Rectangle())
         .card()
     }
 }
