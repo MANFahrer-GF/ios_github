@@ -239,9 +239,14 @@ public extension SourceConfiguration {
         let sameSource = old.providerKind == new.providerKind && old.serviceKey == new.serviceKey
         if sameSource, old.selections.map(\.id) == new.selections.map(\.id) { return false }
         // Gleiche Quelle, gleiche Titel, nur andere IDs (getippter Suchtext als ID, `SourceWizardView`): dieselbe Adresse,
-        // auch wenn der erste Titel ein Ortsteil ist (lwl „Kummer“, Prüfbefund 2 zu Paket D)
+        // auch wenn der erste Titel ein Ortsteil ist (lwl „Kummer“, Prüfbefund 2 zu Paket D). Ebenso gleicher erster Titel mit
+        // gleicher Straße und Nummer, wenn der getippte Suchtext anders war („Linden“ / „Lindenstr“ vor „Lindenstraße“).
         func shown(_ config: SourceConfiguration) -> [String] { config.selections.map { SelectionStep.spelling($0.title + "|" + ($0.subtitle ?? "")) } }
         if sameSource, shown(old) == shown(new) { return false }
+        if sameSource, let first = shown(old).first, first == shown(new).first {
+            let rest = addressWords(Array(old.selections.dropFirst()))
+            if !rest.isEmpty, rest == addressWords(Array(new.selections.dropFirst())) { return false }
+        }
         guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
         // Andere Quelle: Namensvettern in verschiedenen Kreisen sind verschiedene Orte (Neuenkirchen in Dithmarschen ≠ in
         // Steinfurt, Prüfbefund 3 zu Paket D). Der Kreis muss auf beiden Seiten bestimmbar sein und übereinstimmen.

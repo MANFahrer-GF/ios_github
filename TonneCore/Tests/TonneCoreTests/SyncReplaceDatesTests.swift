@@ -70,6 +70,8 @@ final class SyncReplaceDatesTests: XCTestCase {
         }
         XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "b")))
         XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("lwl", ["Dabel-Woland", "Hauptstraße", "1"], ids: "a"), to: try source("lwl", ["Dabel Woland", "Hauptstraße", "1"], ids: "b")))
+        // Getippter Straßen-Suchtext anders als beim ersten Mal: gleicher Ortsteil, gleiche Straße und Nummer
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Linden", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Kummer", "Lindenstr", "Lindenstraße", "3"], ids: "b")))
         // Gegenproben: andere Nummer, anderer Ortsteil, andere Quelle mit Ortsteil als erstem Titel
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Kummer", "Lindenstraße", "4"], ids: "b")))
         XCTAssertTrue(SourceConfiguration.addressChanged(from: try source("lwl", ["Kummer", "Lindenstraße", "3"], ids: "a"), to: try source("lwl", ["Techentin", "Lindenstraße", "3"], ids: "b")))
