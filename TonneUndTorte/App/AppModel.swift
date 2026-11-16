@@ -31,6 +31,9 @@ enum SettingsKeys {
     static let customLeadMinutes = "reminder.custom.leadMinutes"
     static let customDayBefore = "reminder.custom.dayBefore"
     static let customDone = "custom.doneOccurrences"
+    /// Wecker am Vorabend (AlarmKit, ab iOS 26) – Standard aus, nur auf diesem Gerät.
+    static let alarmEnabled = "reminder.alarm.enabled"
+    static let alarmMinutes = "reminder.alarm.minutes"
     // Übersicht anpassen
     static let overviewWaste = "overview.showWaste"
     static let overviewBirthdays = "overview.showBirthdays"
@@ -84,6 +87,8 @@ enum SettingsKeys {
         settings.customDayBefore = bool(customDayBefore, false)
         settings.bringInEnabled = bool(bringInEnabled, true)
         settings.bringInMinutes = int(bringInMinutes, 17 * 60)
+        settings.alarmEnabled = AlarmScheduler.isSupported && bool(alarmEnabled, false)
+        settings.alarmMinutes = int(alarmMinutes, 20 * 60)
         return settings
     }
 
@@ -245,9 +250,12 @@ final class AppModel: ObservableObject {
         } else {
             await LiveActivityManager.endAll()
         }
-        let plan = ReminderPlanner.plan(pickups: plannedPickups(), birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: settings)
+        let pickups = plannedPickups()
+        let plan = ReminderPlanner.plan(pickups: pickups, birthdays: plannedBirthdays(), customEvents: plannedCustomEvents(), settings: settings)
             .filter { !($0.category == .wasteEvening && scheduledDays.contains($0.dayKey)) }
         await notifications.apply(plan, offDutyDays: offDutyDayKeys())
+        // Wecker aus denselben Terminen – unabhängig von Live-Aktivität und Abend-Mitteilung
+        await AlarmScheduler.apply(ReminderPlanner.alarms(pickups: pickups, settings: settings))
         await CalendarExport.autoSyncIfEnabled(items: calendarExportItems())
     }
 

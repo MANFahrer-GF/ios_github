@@ -739,7 +739,10 @@ final class TonneUITests: XCTestCase {
         for _ in 0..<8 {
             // Namen vorab festhalten: Elemente aus allElementsBoundByIndex hängen an ihrer Nummer, und nach dem Scrollen
             // beim Umlegen liegt unter derselben Nummer ein anderer (oder kein) Schalter (iPad, Gesamtlauf 11.11.).
-            let labels = app.switches.allElementsBoundByIndex.filter(\.isHittable).map(\.label)
+            // Nur Schalter über der schwebenden Tab-Leiste: darunter gilt einer als „hittable“, der Tipp trifft aber die Leiste
+            // (16.11.: „Eigene Termine“ schaltete nicht um, nachdem der Wecker-Abschnitt die Seite verlängert hatte).
+            let barTop = app.tabBars.firstMatch.exists ? app.tabBars.firstMatch.frame.minY : .greatestFiniteMagnitude
+            let labels = app.switches.allElementsBoundByIndex.filter { $0.isHittable && $0.frame.maxY < barTop }.map(\.label)
             for label in labels where !label.isEmpty && !flipped.contains(label) {
                 flipped.insert(label)
                 flip(label); flip(label)
@@ -748,6 +751,49 @@ final class TonneUITests: XCTestCase {
         }
         XCTAssertGreaterThanOrEqual(flipped.count, 10, "zu wenige Schalter gefunden: \(flipped)")
         XCTAssertEqual(app.state, .runningForeground)
+    }
+
+    /// Wecker am Vorabend (ab iOS 26): Standard aus; eingeschaltet erscheint die Weckzeit.
+    /// Die Erlaubnisabfrage umgeht der Oberflächen-Test (im Simulator lehnt iOS sie ohnehin ab).
+    func testAlarmSettingOffByDefault() throws {
+        guard #available(iOS 26.0, *) else { throw XCTSkip("Wecker gibt es erst ab iOS 26") }
+        tab("Mehr")
+        app.buttons["Einstellungen"].tap()
+        let toggle = app.switches["alarmToggle"]
+        for _ in 0..<8 where !toggle.isHittable { app.swipeUp() }
+        XCTAssertTrue(toggle.isHittable, "Schalter „Wecker am Vorabend“ fehlt")
+        XCTAssertEqual(toggle.value as? String, "0", "Wecker muss standardmäßig aus sein")
+        XCTAssertFalse(text("Weckzeit").exists)
+        func tapToggle() { let inner = toggle.switches.firstMatch; (inner.exists ? inner : toggle).tap() }
+        tapToggle()
+        XCTAssertTrue(text("Weckzeit").waitForExistence(timeout: 5), "Weckzeit erscheint nicht")
+        tapToggle()
+        XCTAssertFalse(text("Weckzeit").waitForExistence(timeout: 2))
+    }
+
+    /// Webseiten-Bild „Wecker am Vorabend“ (nur mit TONNE_MARKETING=1, Beispieldaten): Abschnitt oben, hell und dunkel.
+    /// Legt PNGs in TONNE_SHOT_DIR ab (Simulator schreibt direkt ins Mac-Dateisystem).
+    func testMarketingAlarm() throws {
+        guard #available(iOS 26.0, *) else { throw XCTSkip("Wecker gibt es erst ab iOS 26") }
+        tab("Mehr")
+        app.buttons["Einstellungen"].tap()
+        let toggle = app.switches["alarmToggle"]
+        for _ in 0..<8 where !toggle.isHittable { app.swipeUp() }
+        if toggle.value as? String != "1" { let inner = toggle.switches.firstMatch; (inner.exists ? inner : toggle).tap() }
+        XCTAssertTrue(text("Weckzeit").waitForExistence(timeout: 5))
+        // Schalter auf eine feste Höhe unter der Titelleiste ziehen (Überschrift „Wecker“ steht dann knapp darüber).
+        // Langsam ziehen, damit die Liste nicht nachläuft.
+        let target = app.navigationBars.firstMatch.frame.maxY + 110
+        let origin = app.coordinate(withNormalizedOffset: .zero)
+        let from = origin.withOffset(CGVector(dx: 30, dy: 500))
+        from.press(forDuration: 0.1, thenDragTo: origin.withOffset(CGVector(dx: 30, dy: 500 + target - toggle.frame.midY)), withVelocity: 200, thenHoldForDuration: 0.5)
+        sleep(1)
+        let dir = ProcessInfo.processInfo.environment["TONNE_SHOT_DIR"] ?? NSTemporaryDirectory()
+        for (name, look) in [("hell", XCUIDevice.Appearance.light), ("dunkel", .dark)] {
+            XCUIDevice.shared.appearance = look; sleep(1)
+            try XCUIScreen.main.screenshot().pngRepresentation.write(to: URL(fileURLWithPath: dir).appendingPathComponent("wecker-\(name).png"))
+        }
+        XCUIDevice.shared.appearance = .light
     }
 
     // MARK: - Absturzbericht

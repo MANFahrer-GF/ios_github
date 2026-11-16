@@ -30,8 +30,34 @@ public struct ReminderSettings: Hashable, Codable {
     public var customLeadMinutes: Int = 60
     /// Zusätzlich am Vortag – für Termine, deren Vorab-Erinnerung früher liegt (z. B. TÜV: 2 Wochen und 1 Tag vorher).
     public var customDayBefore: Bool = false
+    /// Wecker am Vorabend (AlarmKit, ab iOS 26) – klingelt wie ein Wecker, auch im Fokus/stumm. Standard aus, nur auf diesem Gerät.
+    public var alarmEnabled: Bool = false
+    public var alarmMinutes: Int = 20 * 60
 
     public init() {}
+}
+
+/// Ein Wecker am Vorabend eines Abholtags (AlarmKit).
+public struct PlannedAlarm: Hashable {
+    /// Stabile Kennung je Abholtag – so ersetzt ein neuer Plan den alten Wecker, und „Erledigt“ findet ihn ohne App-Modell.
+    public var id: UUID
+    public var dayKey: String
+    public var fireDate: Date
+    public var title: String
+
+    public init(id: UUID, dayKey: String, fireDate: Date, title: String) {
+        self.id = id; self.dayKey = dayKey; self.fireDate = fireDate; self.title = title
+    }
+
+    /// „2026-11-17“ → 7A1A0000-0000-4000-8000-000020261117 (nur Ziffern, also gültiges Hex; gleich bei jedem Start).
+    public static func id(dayKey: String) -> UUID? {
+        let digits = dayKey.filter(\.isNumber)
+        guard digits.count == 8 else { return nil }
+        return UUID(uuidString: "7A1A0000-0000-4000-8000-0000\(digits)")
+    }
+
+    /// Gehört ein Wecker zu Tonne & Torte (Abholtag-Kennung)? Andere Wecker der App gibt es nicht, sicher ist sicher.
+    public static func isPickupAlarm(_ id: UUID) -> Bool { id.uuidString.hasPrefix("7A1A0000-0000-4000-8000-0000") }
 }
 
 /// Ein geplanter Termin, aus dem Erinnerungen gebaut werden.
@@ -268,6 +294,38 @@ public enum ReminderPlanner {
         }
         return (L10n.t("🎁 \(joinNames(people.map(\.name))) haben \(when) Geburtstag", "🎁 Birthdays \(when): \(joinNames(people.map(\.name)))"),
                 L10n.t("Noch Geschenke besorgen?", "Need presents?"))
+    }
+
+    /// Wecker am Vorabend: einer je Abholtag mit etwas zum Rausstellen (reine Hinbring-Tage klingeln nicht),
+    /// aus denselben Terminen wie die Abend-Erinnerung (offen, nicht „diesmal nicht“, Erinnerungen an, im Dienst).
+    /// Nur zwei Wochen voraus – AlarmKit begrenzt die Zahl der Wecker je App.
+    public static func alarms(
+        pickups: [PlannedPickup],
+        settings: ReminderSettings,
+        now: Date = Date(),
+        horizonDays: Int = 14,
+        calendar: Calendar = .current
+    ) -> [PlannedAlarm] {
+        guard settings.alarmEnabled else { return [] }
+        let today = calendar.startOfDay(for: now)
+        let horizon = Days.add(horizonDays, to: today, calendar: calendar)
+        let multiLocation = Set(pickups.compactMap(\.locationName)).count > 1
+        var byDay: [Date: [PlannedPickup]] = [:]
+        for pickup in pickups where pickup.remindersEnabled && !pickup.skipped && !pickup.done {
+            let day = calendar.startOfDay(for: pickup.date)
+            guard day >= today && day <= horizon else { continue }
+            if (pickup.handling ?? WasteHandling.of(name: pickup.name, symbol: pickup.symbolName)) != .bringTo {
+                byDay[day, default: []].append(pickup)
+            }
+        }
+        return byDay.compactMap { day, items -> PlannedAlarm? in
+            let key = Days.iso(day, calendar: calendar)
+            guard let id = PlannedAlarm.id(dayKey: key),
+                  let fire = Days.at(minutes: settings.alarmMinutes, on: Days.add(-1, to: day, calendar: calendar), calendar: calendar), fire > now else { return nil }
+            let names = items.map { multiLocation && $0.locationName != nil ? "\($0.name) (\($0.locationName!))" : $0.name }
+            let unique = names.reduce(into: [String]()) { if !$0.contains($1) { $0.append($1) } }
+            return PlannedAlarm(id: id, dayKey: key, fireDate: fire, title: L10n.t("Rausstellen: \(joinNames(unique))", "Put out: \(joinNames(unique))"))
+        }.sorted { $0.fireDate < $1.fireDate }
     }
 
     public static func plan(

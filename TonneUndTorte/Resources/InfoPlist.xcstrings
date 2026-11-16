@@ -25,6 +25,24 @@
         }
       }
     },
+    "NSAlarmKitUsageDescription" : {
+      "comment" : "Privacy - NSAlarmKitUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonne & Torte stellt auf Wunsch am Vorabend einer Abholung einen Wecker, damit du das Rausstellen nicht verpasst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you turn it on, Tonne & Torte sets an alarm on the evening before a collection so you don't forget to put the bins out."
+          }
+        }
+      }
+    },
     "NSCalendarsFullAccessUsageDescription" : {
       "comment" : "Privacy - NSCalendarsFullAccessUsageDescription",
       "extractionState" : "manual",

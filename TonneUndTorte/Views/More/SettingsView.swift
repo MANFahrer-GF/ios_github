@@ -31,6 +31,9 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.liveActivities) private var liveActivities = true
     @AppStorage(SettingsKeys.bringInEnabled) private var bringInEnabled = true
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
+    @AppStorage(SettingsKeys.alarmEnabled) private var alarmEnabled = false
+    @AppStorage(SettingsKeys.alarmMinutes) private var alarmMinutes = 20 * 60
+    @State private var alarmCount = 0
     @State private var activityStatus: LiveActivityManager.Status = .none
     @State private var showResetConfirm = false
     @State private var info: String?
@@ -80,6 +83,8 @@ struct SettingsView: View {
                     liveActivityFooter
                 }
             }
+
+            if AlarmScheduler.isSupported { alarmSection }
 
             Section {
                 Toggle(L10n.t("An Geburtstage erinnern", "Remind me of birthdays"), isOn: $birthdayEnabled)
@@ -194,10 +199,50 @@ struct SettingsView: View {
         .onChange(of: liveActivities) { _, _ in refresh() }
         .onChange(of: bringInEnabled) { _, _ in refresh() }
         .onChange(of: bringInMinutes) { _, _ in refresh() }
+        .onChange(of: alarmEnabled) { _, _ in refresh() }
+        .onChange(of: alarmMinutes) { _, _ in refresh() }
         .alert("Hinweis", isPresented: Binding(get: { info != nil }, set: { if !$0 { info = nil } })) { Button("OK", role: .cancel) {} } message: { Text(info ?? "") }
         .task {
             await notifications.refreshStatus()
             activityStatus = LiveActivityManager.status()
+            alarmCount = AlarmScheduler.scheduledCount
+        }
+    }
+
+    // MARK: Wecker (ab iOS 26)
+
+    /// Einschalten fragt erst nach der Erlaubnis – abgelehnt bleibt der Schalter aus, mit Hinweis.
+    private var alarmBinding: Binding<Bool> {
+        Binding(get: { alarmEnabled }, set: { value in
+            guard value else { alarmEnabled = false; return }
+            if TonneUndTorteApp.isUITesting { alarmEnabled = true; return }
+            Task {
+                if await AlarmScheduler.requestAuthorization() {
+                    alarmEnabled = true
+                } else {
+                    alarmEnabled = false
+                    info = L10n.t("Tonne & Torte darf keine Wecker stellen. Du kannst das in den Einstellungen unter Tonne & Torte → Wecker erlauben.",
+                                  "Tonne & Torte isn't allowed to set alarms. You can allow it in Settings under Tonne & Torte → Alarms.")
+                }
+            }
+        })
+    }
+
+    private var alarmSection: some View {
+        Section {
+            Toggle(L10n.t("Wecker am Vorabend", "Alarm the evening before"), isOn: alarmBinding)
+                .accessibilityIdentifier("alarmToggle")
+            if alarmEnabled {
+                TimeOfDayPicker(title: L10n.t("Weckzeit", "Alarm time"), minutes: $alarmMinutes)
+                if alarmCount > 0 { LabeledContent(L10n.t("Geplante Wecker", "Scheduled alarms"), value: "\(alarmCount)") }
+                // Im Oberflächen-Test (und für die Webseiten-Bilder) ist die Erlaubnis umgangen – dort keinen Hinweis
+                if AlarmScheduler.isDenied && !TonneUndTorteApp.isUITesting {
+                    Button(L10n.t("Wecker in den Einstellungen erlauben", "Allow alarms in Settings")) { notifications.openSystemSettings() }
+                }
+            }
+        } header: { Text(L10n.t("Wecker", "Alarm")) } footer: {
+            Text(L10n.t("Klingelt wie ein Wecker – auch wenn das iPhone stumm ist oder ein Fokus läuft. Nur an Abenden vor einer Abholung mit etwas zum Rausstellen; nach „Erledigt“ oder „Diesmal nicht“ fällt er weg. Für einzelne Müllarten abschalten: dort „Erinnerungen“ aus.",
+                        "Rings like an alarm clock – even when your iPhone is silenced or a Focus is on. Only on evenings before a collection with something to put out; it's cancelled after “Done” or “Not this time”. To leave out a waste type, turn off its “Reminders”."))
         }
     }
 
@@ -255,6 +300,7 @@ struct SettingsView: View {
         Task {
             await model.refreshAll()
             activityStatus = LiveActivityManager.status()
+            alarmCount = AlarmScheduler.scheduledCount
         }
     }
 }

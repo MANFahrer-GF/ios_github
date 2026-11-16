@@ -3,6 +3,9 @@ import TonneCore
 #if os(iOS)
 import UserNotifications
 #endif
+#if os(iOS) && canImport(AlarmKit)
+import AlarmKit
+#endif
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
@@ -89,6 +92,7 @@ enum SnapshotStore {
             let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            cancelAlarm(dayKey: dayKey)
             #endif
             if var snapshot = load() {
                 snapshot.pickupDays = snapshot.pickupDays.map { day in
@@ -100,6 +104,13 @@ enum SnapshotStore {
             }
             DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
         }
+    }
+
+    /// Wecker am Vorabend dieses Tages entfernen (AlarmKit, ab iOS 26) – „Erledigt“ läuft oft ohne App-Modell im Hintergrund.
+    static func cancelAlarm(dayKey: String) {
+        #if os(iOS) && canImport(AlarmKit)
+        if #available(iOS 26.0, *), let id = PlannedAlarm.id(dayKey: dayKey) { try? AlarmManager.shared.cancel(id: id) }
+        #endif
     }
 
     static func clearDone(dayKey: String) {
@@ -161,6 +172,7 @@ enum SnapshotStore {
             let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            cancelAlarm(dayKey: dayKey)
             #endif
             DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
         }

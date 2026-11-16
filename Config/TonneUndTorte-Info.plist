@@ -30,6 +30,8 @@
 			<string>Tonne Torte</string>
 		</dict>
 	</array>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Tonne &amp; Torte stellt auf Wunsch am Vorabend einer Abholung einen Wecker, damit du das Rausstellen nicht verpasst.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

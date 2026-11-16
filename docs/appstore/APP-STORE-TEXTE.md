@@ -42,7 +42,7 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 
 Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
-### Neu in Version 2.1.0 (Vorschlag 16.11.2026, Build 16, noch nicht eingereicht)
+### Neu in Version 2.1.0 (Vorschlag 16.11.2026, noch nicht eingereicht; Wecker kam nach Build 16 dazu, neuer Build nötig)
 
 ```
 Ihr habt es euch gewünscht
@@ -56,6 +56,9 @@ Wie oft war welche Tonne draußen, und wie viele Leerungen sind noch frei? „Er
 
 Schrift nach Wahl
 Abgerundet, SF Pro oder Serif – in der ganzen App und in den Widgets. Bei sehr großer Textgröße werden lange Wörter sauber getrennt.
+
+Wecker am Vorabend (ab iOS 26)
+Auf Wunsch klingelt am Vorabend ein Wecker – auch wenn das iPhone stumm ist oder ein Fokus läuft. Standard aus, einschalten unter Mehr → Einstellungen → Wecker. Er klingelt nur, wenn etwas rausgestellt werden muss, und fällt nach „Erledigt“ weg. Braucht iOS 26 und deine Erlaubnis; gilt nur auf diesem iPhone.
 
 Außerdem
 • Riedstadt und Trebur (Kreis Groß-Gerau): Die App fragt den Ortsteil ab und findet die Termine direkt
