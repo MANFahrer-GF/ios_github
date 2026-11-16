@@ -90,15 +90,17 @@ final class OrtsteilVorauswahlTests: XCTestCase {
         }
         XCTAssertGreaterThan(checked, 100)
         XCTAssertGreaterThan(variants, 5)
-        // Bloßer Name ohne Zusatz („Zahrensdorf“, „Tessin“, „Holzendorf“): passt er auf mehrere geführte Gemeinden, keine Vorauswahl
-        let pairs = Set(EntryPlacesIndex.pairs[lwl.id] ?? [])
-        var twins = 0
-        for bare in Set(titles.map { title in [" (", " + ", "/"].reduce(title) { $0.components(separatedBy: $1)[0] } }) {
-            let served = Set(ProviderCatalog.municipalities(matching: bare).filter { pairs.contains("\($0.district)|\($0.name)") }.map(\.name))
-            guard served.count > 1 else { continue }
-            twins += 1
-            XCTAssertNil(ProviderCatalog.servedPlace(for: lwl, query: bare), "„\(bare)“ passt auf \(served.sorted())")
+    }
+
+    /// Prüfbefund 3 über `servedPlace` selbst (Nachprüfung N3 ersetzt eine Schleife, die nur den Filter nachrechnete):
+    /// Bloße Namen, die in der LWL-Liste zu mehreren geführten Gemeinden gehören, liefern keine Gemeinde; ein eindeutiger
+    /// Ortsteil liefert seine.
+    func testLwlTwinNamesServeNoPlace() throws {
+        let lwl = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "lwl" })
+        for bare in ["Zahrensdorf", "Holzendorf", "Beckendorf", "Bandekow", "Barkow", "Goldenbow"] {
+            XCTAssertNil(ProviderCatalog.servedPlace(for: lwl, query: bare), "„\(bare)“ gehört zu mehreren geführten Gemeinden")
         }
-        print("LWL-Namen mit mehreren geführten Gemeinden: \(twins)")
+        XCTAssertEqual(ProviderCatalog.servedPlace(for: lwl, query: "Kummer"), "Ludwigslust")
+        XCTAssertEqual(ProviderCatalog.servedPlace(for: lwl, query: "Dabel-Woland"), "Dabel")
     }
 }
