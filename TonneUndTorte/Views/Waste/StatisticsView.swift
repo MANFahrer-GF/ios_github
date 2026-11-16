@@ -224,7 +224,7 @@ struct QuotaCard: View {
         Button(L10n.t("Kontingent einrichten", "Set up included collections"), action: onSettings)
             .tonneFont(.subheadline, .semibold)
             .accessibilityIdentifier("quotaSetup-\(type.name)")
-        if let onHide {
+        if let onHide, type.neverCounted {
             Button(L10n.t("Kein Kontingent", "None included"), action: onHide)
                 .tonneFont(.subheadline, .semibold)
                 .foregroundStyle(KlarStyle.muted(scheme))
@@ -315,11 +315,7 @@ struct QuotaCard: View {
     }
 
     private var detailLine: String {
-        // „noch 10 frei · noch 2 Abholtermine bis 31.12.“ – Ende des Zeitraums (Gebührenjahr) statt eines unklaren „übrig“
-        let free = summary.free ?? 0
-        let last = Days.add(-1, to: summary.period.end).formatted(.dateTime.day(.twoDigits).month(.twoDigits))
-        let left = L10n.count(summary.remaining, "Abholtermin", "Abholtermine", "collection", "collections")
-        return L10n.t("noch \(free) frei · noch \(left) bis \(last)", "\(free) left · \(left) to come until \(last)")
+        PickupQuota.freeAndRemainingLine(summary, today: Days.today())
     }
 
     private var prognosisLine: String? {

@@ -29,5 +29,9 @@ final class HyphenationTests: XCTestCase {
         let mixed = Hyphenation.soft("Grundhöfer-Kantorowicz Geburtstagsfeier", english: false)
         XCTAssertTrue(mixed.hasPrefix("Grundhöfer-Kantorowicz "), mixed)
         XCTAssertTrue(mixed.contains(shy), "freistehendes langes Wort wird getrennt: \(mixed)")
+        // Prüfbefund: lange Teile behalten ihre Trennstellen, sonst bricht SwiftUI wieder „Hauptuntersuc|hung“
+        for text in ["TÜV-Hauptuntersuchung", "Elektro-Kleingerätesammlung"] {
+            XCTAssertTrue(Hyphenation.soft(text, english: false).contains(shy), text)
+        }
     }
 }

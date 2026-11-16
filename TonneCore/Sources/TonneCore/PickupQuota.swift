@@ -301,6 +301,19 @@ public enum PickupQuota {
         return L10n.t("noch \(summary.free ?? 0) von \(included) frei", "\(summary.free ?? 0) of \(included) left")
     }
 
+    /// Zeile unter dem Ring: „noch 10 frei · noch 2 Abholtermine bis 31.12.“ (Ende des Zeitraums, auch beim Gebührenjahr).
+    /// Ein abgelaufener Zeitraum (Vorjahres-Reiter) sagt nur „2 frei geblieben“ – dort steht nichts mehr an.
+    public static func freeAndRemainingLine(_ summary: QuotaSummary, today: Date, calendar: Calendar = .current) -> String {
+        let free = summary.free ?? 0
+        guard calendar.startOfDay(for: today) < summary.period.end else {
+            return L10n.t("\(free) frei geblieben", "\(free) left unused")
+        }
+        let last = calendar.dateComponents([.day, .month], from: Days.add(-1, to: summary.period.end, calendar: calendar))
+        let date = L10n.t(String(format: "%02d.%02d.", last.day ?? 1, last.month ?? 1), "\(last.month ?? 1)/\(last.day ?? 1)")
+        let left = L10n.count(summary.remaining, "Abholtermin", "Abholtermine", "collection", "collections")
+        return L10n.t("noch \(free) frei · noch \(left) bis \(date)", "\(free) left · \(left) to come until \(date)")
+    }
+
     /// `freeLine` je Abholtag, im Zeitraum des Abholtags (nicht im heutigen): Am 30.12. mit 12 von 12 genutzt
     /// zeigt die Abholung am 2.1. „noch 12 von 12 frei“. Je Zeitraum wird `input` nur einmal gerechnet.
     public static func freeLines(anchor: Date?, today: Date, calendar: Calendar = .current,

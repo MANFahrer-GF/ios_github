@@ -269,6 +269,20 @@ final class PickupQuotaTests: XCTestCase {
         XCTAssertEqual(PickupQuota.freeLine(PickupQuota.summary(input, period: year(2027), today: today, calendar: calendar)), "noch 12 von 12 frei")
     }
 
+    /// Prüfbefund 16.11. (nachmittags): Anzahl und Enddatum genau, auch beim Gebührenjahr ab 1. April; Vorjahr ohne „noch 0 Abholtermine“.
+    func testFreeAndRemainingLine() {
+        let done = Array(biweekly2026.prefix(2))
+        let input = QuotaInput(scheduled: biweekly2026, done: done, included: 12)
+        let today = d(2026, 11, 20)  // danach noch 26.11., 10.12. und 24.12.
+        let calendarYear = PickupQuota.summary(input, period: year(2026), today: today, calendar: calendar)
+        XCTAssertEqual(PickupQuota.freeAndRemainingLine(calendarYear, today: today, calendar: calendar), "noch 10 frei · noch 3 Abholtermine bis 31.12.")
+        let feeYear = PickupQuota.period(containing: today, anchor: d(2020, 4, 1), calendar: calendar)
+        let fee = PickupQuota.summary(input, period: feeYear, today: today, calendar: calendar)
+        XCTAssertTrue(PickupQuota.freeAndRemainingLine(fee, today: today, calendar: calendar).hasSuffix(" bis 31.03."))
+        let past = PickupQuota.summary(input, period: year(2026), today: d(2027, 2, 1), calendar: calendar)
+        XCTAssertEqual(PickupQuota.freeAndRemainingLine(past, today: d(2027, 2, 1), calendar: calendar), "10 frei geblieben")
+    }
+
     /// Dieselbe Wahl über `freeLines`, die `AppModel.quotaLines` aufruft: Rechnete sie im heutigen Zeitraum,
     /// stünde am 2.1. „alle 12 genutzt“. Je Zeitraum wird nur einmal gerechnet.
     func testFreeLinesPickPeriodOfPickupDay() {

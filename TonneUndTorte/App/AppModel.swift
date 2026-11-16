@@ -488,7 +488,8 @@ final class AppModel: ObservableObject {
     /// Alle offenen oder pauschal bestätigten Termine des laufenden Zeitraums (Statistik „3 Termine offen – nachtragen“).
     func openItems(locationID: UUID? = nil) -> [QuotaItem] {
         let today = Days.today()
-        return allWasteTypes().filter { $0.isActive && (locationID == nil || $0.location?.id == locationID) }
+        // Ohne die mit „Kein Kontingent“ ausgeblendeten – sonst listet das Blatt mehr, als der Knopf zählt
+        return allWasteTypes().filter { $0.isActive && !$0.hidesInStatistics && (locationID == nil || $0.location?.id == locationID) }
             .flatMap { type in
                 type.quotaSummary(period: type.quotaPeriod(containing: today), today: today).entries
                     .filter { !$0.upcoming && !$0.coveredByBaseline && ($0.mark == .open || $0.bulkConfirmed) }
