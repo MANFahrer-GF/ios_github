@@ -79,6 +79,8 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "x antwortete mit HTTP 502.")))
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", nil, ["Portal antwortet nicht (über 120 s)"])))
         XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "leere erste Auswahl bei „Bundesland“ (Abfragegrenze)")))
+        XCTAssertTrue(PortalHealthLiveTests.isTransient(result("fehler", "Verbindung fehlgeschlagen: Es besteht anscheinend keine Verbindung zum Internet.")))
+        XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "Verbindung fehlgeschlagen: Es wurde kein Server mit dem angegebenen Hostnamen gefunden.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "leere Auswahl bei „Straße“")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "Jumomind hat keine Termine für diese Adresse geliefert.")))
         XCTAssertFalse(PortalHealthLiveTests.isTransient(result("fehler", "x antwortete mit HTTP 404.")))

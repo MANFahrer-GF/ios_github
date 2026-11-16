@@ -310,7 +310,10 @@ final class PortalHealthLiveTests: XCTestCase {
     static func isTransient(_ result: Result) -> Bool {
         guard result.status == "fehler" else { return false }
         let text = (result.error ?? "") + " " + result.reasons.joined(separator: " ")
-        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht", "Abfragegrenze"].contains { text.contains($0) }
+        // Netzausfall auf dem Prüfrechner (Punkt-6-Nachlauf 16.11.2026: 650 Zeilen „keine Verbindung zum Internet“ für Trier,
+        // Altenkirchen, Kusel) sagt nichts über das Portal; „kein Server mit dem Hostnamen“ bleibt ein Befund
+        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht", "Abfragegrenze",
+                "keine Verbindung zum Internet", "Internet connection appears to be offline"].contains { text.contains($0) }
     }
 
     /// „Gronau (Westf.)“ → „Gronau“, „Ahaus, Stadt“ → „Ahaus“
