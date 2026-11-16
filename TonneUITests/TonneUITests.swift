@@ -367,6 +367,9 @@ final class TonneUITests: XCTestCase {
         mark(-6)
         mark(-4)
         XCTAssertTrue(waitHeadline("2 von 12"), "zwei markierte Termine zählen nicht")
+        // Klartext statt „2 Termine übrig“: wie viele Abholungen bis zum Ende des Zeitraums noch anstehen
+        let detail = app.staticTexts["quotaHeadline-Restmüll"].firstMatch.label
+        XCTAssertTrue(detail.contains("noch 10 frei · noch ") && detail.contains("Abholtermin") && detail.contains(" bis "), detail)
 
         // „Kein Kontingent“ blendet Papier, Schadstoffmobil und Gelber Sack aus; die gezählte Müllart hat den Knopf nicht
         XCTAssertFalse(app.buttons["quotaNone-Restmüll"].exists, "gezählte Müllart bietet „Kein Kontingent“ an")

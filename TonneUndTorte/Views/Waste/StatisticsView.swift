@@ -315,9 +315,11 @@ struct QuotaCard: View {
     }
 
     private var detailLine: String {
+        // „noch 10 frei · noch 2 Abholtermine bis 31.12.“ – Ende des Zeitraums (Gebührenjahr) statt eines unklaren „übrig“
         let free = summary.free ?? 0
-        let left = L10n.count(summary.remaining, "Termin", "Termine", "date", "dates")
-        return L10n.t("noch \(free) frei · \(left) übrig", "\(free) left · \(left) to come")
+        let last = Days.add(-1, to: summary.period.end).formatted(.dateTime.day(.twoDigits).month(.twoDigits))
+        let left = L10n.count(summary.remaining, "Abholtermin", "Abholtermine", "collection", "collections")
+        return L10n.t("noch \(free) frei · noch \(left) bis \(last)", "\(free) left · \(left) to come until \(last)")
     }
 
     private var prognosisLine: String? {
