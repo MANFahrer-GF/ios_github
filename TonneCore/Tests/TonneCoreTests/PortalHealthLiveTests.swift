@@ -204,7 +204,11 @@ final class PortalHealthLiveTests: XCTestCase {
                 selections.append(pick(found, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound, localities: localities))
                 continue
             }
-            guard !step.options.isEmpty else { throw WalkError("leere Auswahl bei „\(step.title)“") }
+            // Leere erste Liste: Lobbe antwortet nach ein paar Gemeinden in Folge mit „[]“ auf die Bundesländer, nach einer
+            // Pause wieder voll (Gemeinde-Prüfung 16.11.2026: 4 ok, 38 leer, 4 ok …; einzeln Vöhl 66 Termine).
+            guard !step.options.isEmpty else {
+                throw WalkError(selections.isEmpty ? "leere erste Auswahl bei „\(step.title)“ (Abfragegrenze)" : "leere Auswahl bei „\(step.title)“")
+            }
             if step.isPlaceStep { sawPlaceStep = true }
             // Verbandsgemeinde zuerst (A.R.T. Trier, AWB Altenkirchen, AWB Bad Dürkheim): die Ortsgemeinde steht erst eine Ebene
             // tiefer. Wie ein Nutzer, der seine VG kennt: die VG wählen, unter der die Gemeinde steht. Ebenso ein erster
@@ -283,7 +287,7 @@ final class PortalHealthLiveTests: XCTestCase {
     static func isTransient(_ result: Result) -> Bool {
         guard result.status == "fehler" else { return false }
         let text = (result.error ?? "") + " " + result.reasons.joined(separator: " ")
-        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht"].contains { text.contains($0) }
+        return ["HTTP 429", "HTTP 5", "gesperrt", "Portal antwortet nicht", "Abfragegrenze"].contains { text.contains($0) }
     }
 
     /// „Gronau (Westf.)“ → „Gronau“, „Ahaus, Stadt“ → „Ahaus“
