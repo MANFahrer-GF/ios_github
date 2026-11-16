@@ -60,13 +60,23 @@ public struct AbfallIOLegacyProvider: WasteProvider {
                 return SelectionStep(title: titles[step.title] ?? step.title, options: options.map { SelectionOption(id: "\(step.field):\($0.value)", title: $0.label) })
             }
         }
+        // Gemeinde-Prüfung 16.11.2026 (Babenhausen, Ortsteil Klosterbeuren): Das Portal führt den Bezirk,
+        // liefert danach aber weder Straßen noch Abfallarten; der Export antwortet mit HTTP 404.
+        if !selections.isEmpty, !Self.hasWasteTypes(html) { throw Self.noDataForSelection }
         return nil
+    }
+
+    private static let noDataForSelection = ProviderError.noData("Für diese Auswahl führt das AbfallPlus-Portal keine Abfuhrdaten. Bitte einen anderen Ortsteil wählen oder beim Entsorger nachfragen.")
+
+    private static func hasWasteTypes(_ html: String) -> Bool {
+        !HTMLText.matches(#"name="f_id_abfalltyp_(\d+)"[^>]*value="(\d+)""#, in: html).isEmpty
     }
 
     public func pickups(for selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
         var (fields, html) = try await replay(selections)
         // Alle Abfallarten anhaken
         let types = HTMLText.matches(#"name="f_id_abfalltyp_(\d+)"[^>]*value="(\d+)""#, in: html)
+        guard !types.isEmpty else { throw Self.noDataForSelection }
         for type in types where type.count == 2 { fields.append(("f_id_abfalltyp_\(type[0])", type[1])) }
         fields.append(("f_abfallarten_index_max", String(types.count)))
         fields.append(("f_abfallarten", types.map { $0[1] }.joined(separator: ",")))
