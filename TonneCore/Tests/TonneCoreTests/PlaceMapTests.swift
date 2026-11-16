@@ -272,6 +272,21 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertTrue(baruth.entries.contains { $0.serviceKey == "suedbrandenburg" })
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: Das Kreisportal Reutlingen (abfall.io) und die Abfall+-App des Kreises führen Reutlingen,
+    /// Metzingen und Pfullingen ohne eine einzige Straße. Reutlingen hat die TBR-App, Metzingen eine eigene, Pfullingen nur PDF.
+    func testReutlingenCitiesAreNotServedByTheDistrictPortal() throws {
+        func place(_ name: String) throws -> PlaceCheck {
+            try XCTUnwrap(ProviderCatalog.checkPlace(name).first { $0.district == "Landkreis Reutlingen" })
+        }
+        XCTAssertEqual(try place("Reutlingen").entries.map(\.serviceKey), ["de.abfallplus.tbrapp"])
+        XCTAssertEqual(try place("Metzingen").entries.map(\.serviceKey), ["de.k4systems.abfallappmetz"])
+        let pfullingen = try place("Pfullingen")
+        XCTAssertTrue(pfullingen.entries.isEmpty)
+        XCTAssertTrue(pfullingen.isUnavailable)
+        // Gegenprobe: Eningen unter Achalm führt das Kreisportal weiter
+        XCTAssertTrue(try place("Eningen unter Achalm").entries.contains { $0.serviceKey == "15f69fab91c4cae50d9dbb5bcfd383f0" })
+    }
+
     func testUnavailablePortalIsToldHonestly() throws {
         let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
         XCTAssertFalse(wildungen.isCovered)

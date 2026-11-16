@@ -60,12 +60,14 @@ public struct AbfallIOGraphQLProvider: WasteProvider {
                 return SelectionStep(title: SelectionStep.districtTitle, options: districts.map { SelectionOption(id: "district:\($0.id)", title: $0.name) })
             }
             let streets = data.city?.streets ?? []
-            if streets.isEmpty { return nil }
+            // Ort ohne Straßen: Das Portal führt ihn nur in der Liste, zuständig ist ein anderer Entsorger (Landkreis
+            // Reutlingen: Reutlingen, Metzingen, Pfullingen). Ohne Straße gäbe es nur „Bitte eine Hausnummer wählen“.
+            if streets.isEmpty { throw Self.noStreets }
             return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
         case "district":
             let data: DistrictData = try await query("query($id: ID!) { district(id: $id) { streets { id name } } }", variables: ["id": parts[1]])
             let streets = data.district?.streets ?? []
-            if streets.isEmpty { return nil }
+            if streets.isEmpty { throw Self.noStreets }
             return SelectionStep(title: SelectionStep.streetTitle, options: streets.map { SelectionOption(id: "street:\($0.id)", title: $0.name) })
         case "street":
             let data: StreetData = try await query("query($id: ID!) { street(id: $id) { houseNumbers { id name } } }", variables: ["id": parts[1]])
@@ -94,6 +96,9 @@ public struct AbfallIOGraphQLProvider: WasteProvider {
             return nil
         }
     }
+
+    static let noStreets = ProviderError.noData(L10n.t("Das Portal führt für diesen Ort keine Straßen – hier ist ein anderer Entsorger zuständig. Bitte in der Suche den Ort eingeben und einen anderen Eintrag wählen.",
+                                                       "The portal lists no streets for this town – another waste company is responsible here. Please search for the town and choose another entry."))
 
     /// „Papier 03.12. · Restabfall 12.11.“: nächster Termin je Abfallart.
     static func nextDates(_ pickups: [Pickup], calendar: Calendar) -> String {

@@ -54952,10 +54952,7 @@
 "kreis": "Landkreis Reutlingen",
 "gemeinde": "Pfullingen",
 "art": "liste",
-"eintraege": [
-"abfallIOGraphQL:15f69fab91c4cae50d9dbb5bcfd383f0:Landkreis Reutlingen",
-"abfallPlusApp:de.k4systems.abfallkreisrt:Kreis Reutlingen"
-]
+"eintraege": []
 },
 {
 "code": "084150061061",
@@ -54963,8 +54960,7 @@
 "gemeinde": "Reutlingen",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:15f69fab91c4cae50d9dbb5bcfd383f0:Landkreis Reutlingen",
-"abfallPlusApp:de.k4systems.abfallkreisrt:Kreis Reutlingen"
+"abfallPlusApp:de.abfallplus.tbrapp:Reutlingen"
 ]
 },
 {
@@ -55053,9 +55049,7 @@
 "gemeinde": "Metzingen",
 "art": "liste",
 "eintraege": [
-"abfallIOGraphQL:15f69fab91c4cae50d9dbb5bcfd383f0:Landkreis Reutlingen",
-"abfallPlusApp:de.k4systems.abfallappmetz:Metzingen",
-"abfallPlusApp:de.k4systems.abfallkreisrt:Kreis Reutlingen"
+"abfallPlusApp:de.k4systems.abfallappmetz:Metzingen"
 ]
 },
 {
