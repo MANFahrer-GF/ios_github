@@ -42,6 +42,15 @@ struct AboutView: View {
                         bullet("Nach außen gehen nur die Adressangaben (und technisch bedingt deine IP-Adresse) an das Portal des Entsorgers, den du auswählst. Die Standortsuche nutzt Apples Kartendienst.")
                     }
                 }
+                card(title: "Im Netz", symbol: "globe") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        webLink(L10n.t("Webseite tonne.kant.ovh", "Website tonne.kant.ovh"), WebLinks.base, symbol: "safari")
+                        webLink(L10n.t("Hilfe & häufige Fragen", "Help & FAQ"), WebLinks.help, symbol: "questionmark.circle")
+                        webLink(L10n.t("Kontakt aufnehmen", "Contact"), WebLinks.contact, symbol: "envelope")
+                        webLink(L10n.t("Datenschutz", "Privacy"), WebLinks.privacy, symbol: "hand.raised")
+                        webLink(L10n.t("Impressum", "Imprint"), WebLinks.imprint, symbol: "doc.text")
+                    }
+                }
                 card(title: "Danke", symbol: "heart.fill") {
                     Text("Die Liste der Entsorger beruht auf dem Open-Source-Projekt hacs_waste_collection_schedule (MIT-Lizenz). Ortsteile: GeoNames (geonames.org), Lizenz CC BY 4.0. Symbole: SF Symbols von Apple, Tonnen und Sack selbst gezeichnet.")
                 }
@@ -111,6 +120,12 @@ struct AboutView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .card()
+    }
+
+    private func webLink(_ title: String, _ url: URL, symbol: String) -> some View {
+        Link(destination: url) {
+            Label(title, systemImage: symbol)
+        }
     }
 
     private func bullet(_ text: LocalizedStringKey) -> some View {

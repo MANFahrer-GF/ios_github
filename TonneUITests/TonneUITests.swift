@@ -197,6 +197,25 @@ final class TonneUITests: XCTestCase {
         app.swipeUp(); sleep(1); snap(prefix + "17-einstellungen-4")
     }
 
+    /// Webseite und Kontakt sind unter „Mehr“ und auf „Über Tonne & Torte“ erreichbar (ohne die Seiten zu öffnen).
+    func testWebsiteAndContactLinks() {
+        tab("Mehr")
+        func link(_ label: String) -> XCUIElement {
+            app.links[label].exists ? app.links[label] : app.buttons[label].firstMatch
+        }
+        var tries = 0
+        while !link("Kontakt aufnehmen").exists && tries < 4 { app.swipeUp(); tries += 1 }
+        for label in ["Hilfe & häufige Fragen", "Kontakt aufnehmen", "Webseite tonne.kant.ovh"] {
+            XCTAssertTrue(link(label).exists, "„\(label)“ fehlt unter Mehr")
+        }
+        app.buttons["Über Tonne & Torte"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Über Tonne & Torte"].waitForExistence(timeout: 3))
+        tries = 0
+        while !link("Impressum").exists && tries < 8 { app.swipeUp(); tries += 1 }
+        for label in ["Datenschutz", "Impressum"] { XCTAssertTrue(link(label).exists, "„\(label)“ fehlt auf Über Tonne & Torte") }
+        snap("ueber-im-netz")
+    }
+
     /// Die Einstellung „Schrift“: Grundeinstellung „Abgerundet“, Wahl wirkt sofort und lässt sich zurückwählen.
     func testTypographySettings() {
         tab("Mehr")

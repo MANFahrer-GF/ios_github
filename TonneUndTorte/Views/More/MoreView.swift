@@ -43,6 +43,16 @@ struct MoreView: View {
                     NavigationLink { TypographyView() } label: { Label(L10n.t("Schrift", "Font"), systemImage: "textformat.size") }
                     NavigationLink { SettingsView() } label: { Label("Einstellungen", systemImage: "gearshape.fill") }
                 }
+                Section {
+                    Link(destination: WebLinks.help) { Label(L10n.t("Hilfe & häufige Fragen", "Help & FAQ"), systemImage: "questionmark.circle.fill") }
+                    Link(destination: WebLinks.contact) { Label(L10n.t("Kontakt aufnehmen", "Contact"), systemImage: "envelope.fill") }
+                    Link(destination: WebLinks.base) { Label(L10n.t("Webseite tonne.kant.ovh", "Website tonne.kant.ovh"), systemImage: "safari.fill") }
+                    NavigationLink { AboutView() } label: { Label(L10n.t("Über Tonne & Torte", "About Tonne & Torte"), systemImage: "info.circle.fill") }
+                } header: {
+                    Text(L10n.t("Hilfe & Kontakt", "Help & contact"))
+                } footer: {
+                    Text(L10n.t("Fragen, Wünsche oder ein Ort fehlt? Schreib mir über das Kontaktformular.", "Questions, wishes or a missing town? Write to me via the contact form."))
+                }
             }
             .navigationTitle("Mehr")
         }
