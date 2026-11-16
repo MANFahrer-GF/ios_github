@@ -1030,14 +1030,15 @@ extension NRWPortalsProvider {
         let streets: BuehlStreets = try await client.json(Self.buehlAPI + "/main.Street?relations[]=district&limit=1000")
         let options = streets.records.compactMap { street -> SelectionOption? in
             guard let district = street.district else { return nil }
-            return SelectionOption(id: String(district._id), title: street.name, subtitle: district.code)
+            // Kennung je Straße („Bezirk/Straße“), weil viele Straßen einen Bezirk teilen; der Abruf nutzt nur den Bezirk
+            return SelectionOption(id: "\(district._id)/\(street._id)", title: street.name, subtitle: district.code)
         }
         guard !options.isEmpty else { throw ProviderError.noDataGeneric }
         return SelectionStep(title: SelectionStep.streetTitle, options: Self.sortedOptions(options))
     }
 
     private func buehlPickups(_ selections: [SelectionOption], calendar: Calendar) async throws -> [Pickup] {
-        guard let district = selections.first?.id else { throw ProviderError.selectAddressFirst }
+        guard let district = selections.first?.id.split(separator: "/").first else { throw ProviderError.selectAddressFirst }
         let record: BuehlDistrict = try await client.json(Self.buehlAPI + "/main.District/\(district)?relations[]=collectionDays.garbageTypes")
         return Self.buehlPickups(record.collectionDays.map { ($0.date, $0.garbageTypes.map(\.description)) }, fromYear: einzelYear, calendar: calendar)
     }

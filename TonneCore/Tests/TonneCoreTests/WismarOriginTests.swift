@@ -50,6 +50,29 @@ final class BuehlTests: XCTestCase {
         XCTAssertEqual(pickups.first.map { calendar.component(.day, from: $0.date) }, 20)
     }
 
+    /// Prüfbefund 4 (16.11.): Viele Straßen teilen einen Abfuhrbezirk; die Kennung muss je Straße eindeutig sein
+    /// (SwiftUI-Liste), der Abruf läuft weiter über den Bezirk.
+    func testBuehlStreetOptionsHaveUniqueIDsAndFetchByDistrict() async throws {
+        let api = NRWPortalsProvider.buehlAPI
+        let streets = #"{"records":[{"_id":1,"name":"Hauptstraße","district":{"_id":7,"code":"B2"}},{"_id":2,"name":"Schwanenstraße","district":{"_id":7,"code":"B2"}}]}"#
+        let days = #"{"collectionDays":[{"date":"2026-11-20","garbageTypes":[{"description":"Restabfall"}]}]}"#
+        let pages = [api + "/main.Street?relations[]=district&limit=1000": streets,
+                     api + "/main.Street?relations%5B%5D=district&limit=1000": streets,
+                     api + "/main.District/7?relations[]=collectionDays.garbageTypes": days,
+                     api + "/main.District/7?relations%5B%5D=collectionDays.garbageTypes": days]
+        let provider = NRWPortalsProvider(service: "buehl", client: HTTPClient(session: EinzelStub.session(pages)))
+        let next = try await provider.nextStep(after: [])
+        let step = try XCTUnwrap(next)
+        XCTAssertEqual(step.options.count, 2)
+        XCTAssertEqual(Set(step.options.map(\.id)).count, step.options.count, "doppelte Kennungen")
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!
+        let option = try XCTUnwrap(step.options.first { $0.title == "Schwanenstraße" })
+        let pickups = try await provider.pickups(for: [option], calendar: calendar)
+        XCTAssertEqual(pickups.map(\.name), ["Restabfall"])
+        XCTAssertTrue(EinzelStub.requested().contains { $0.contains("/main.District/7?") }, "Abruf über den Bezirk")
+    }
+
     func testBuehlIsServedByTheCityCalendar() throws {
         let buehl = try XCTUnwrap(ProviderCatalog.checkPlace("Bühl").first { $0.district == "Landkreis Rastatt" })
         XCTAssertEqual(buehl.entries.map(\.serviceKey), ["buehl"])
