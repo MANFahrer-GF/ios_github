@@ -92,6 +92,14 @@ public struct BuergerportalProvider: WasteProvider {
             }
         }
         guard !result.isEmpty else { throw ProviderError.noDataGeneric }
+        // Unbekannte Hausnummer: Das Portal liefert dann nur den Sammeltermin der Straße, einen je Jahr (Cochem-Zell, Ernst
+        // „Moselstraße 1“: Grüngut im Januar, mit „20“ 131 Termine). Echte Pläne haben Dutzende. Eine öffentliche
+        // Hausnummernliste gibt es nicht (403).
+        let today = calendar.startOfDay(for: Date())
+        if !number.isEmpty, Set(result).count <= 2 || !result.contains(where: { $0.date >= today }) {
+            throw ProviderError.noData(L10n.t("Das Portal kennt diese Hausnummer nicht und liefert nur Sammeltermine der Straße. Bitte die Hausnummer genau wie auf dem Gebührenbescheid eingeben (z. B. „12a“).",
+                                              "The portal doesn't know this house number and only returns street-wide dates. Please enter the house number exactly as on your fee notice (e.g. “12a”)."))
+        }
         return Array(Set(result)).sorted { $0.date < $1.date }
     }
 

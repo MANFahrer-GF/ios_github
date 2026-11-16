@@ -116,12 +116,28 @@ final class PortalHealthLiveTests: XCTestCase {
         for variant in 0..<3 {
             var attempt = result
             do {
-                let (selections, placeFound) = try await withTimeout(timeout) { try await walk(job, variant: variant, calendar: calendar) }
-                attempt.path = selections.map(\.title)
+                var (selections, placeFound, typedNumber) = try await withTimeout(timeout) { try await walk(job, variant: variant, calendar: calendar) }
                 attempt.placeFound = job.place == nil ? nil : placeFound
                 let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
-                let pickups = try await withTimeout(timeout) { try await provider.pickups(for: selections, calendar: calendar) }
-                judge(pickups, into: &attempt, calendar: calendar)
+                // Freie Hausnummer: Manche Portale kennen „1“ in der Straße nicht und liefern dann nur Sammeltermine
+                // (Cochem-Zell). Wie ein Nutzer mit seiner echten Nummer: weitere Nummern derselben Straße versuchen.
+                let numbers = typedNumber ? ["1", "2", "3", "5", "10", "20"] : [""]
+                var lastError: Error?
+                for (index, number) in numbers.enumerated() {
+                    if !number.isEmpty { selections[selections.count - 1] = SelectionOption(id: number, title: number) }
+                    let current = selections
+                    do {
+                        let pickups = try await withTimeout(timeout) { try await provider.pickups(for: current, calendar: calendar) }
+                        var probe = attempt
+                        judge(pickups, into: &probe, calendar: calendar)
+                        if probe.status != "fehler" || index == numbers.count - 1 { attempt = probe; lastError = nil; break }
+                    } catch {
+                        lastError = error
+                        if error is TimeoutError { break }
+                    }
+                }
+                attempt.path = selections.map(\.title)
+                if let lastError { throw lastError }
                 if attempt.status != "fehler" || variant == 2 {
                     if !failures.isEmpty { attempt.reasons.append("erst mit Adresse \(variant + 1) von 3 (vorher: \(failures.joined(separator: " | ")))") }
                     result = attempt
@@ -153,15 +169,18 @@ final class PortalHealthLiveTests: XCTestCase {
     /// Wie ein Nutzer: in Listen die Gemeinde wählen (falls gesucht), sonst den mittleren Eintrag; Suchfelder mit häufigen
     /// Straßenwörtern sondieren; freie Hausnummer „1“.
     /// `variant`: 0 = mittlerer Eintrag, 1 = bei einem Drittel, 2 = bei zwei Dritteln (für den zweiten und dritten Versuch).
-    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar) async throws -> ([SelectionOption], Bool) {
+    /// Drittes Ergebnis: Der letzte Schritt war eine frei eingegebene Hausnummer (siehe `check`).
+    static func walk(_ job: Job, variant: Int = 0, calendar: Calendar) async throws -> ([SelectionOption], Bool, Bool) {
         let provider = ProviderFactory.make(kind: job.entry.kind, serviceKey: job.entry.serviceKey)
         var selections: [SelectionOption] = []
         var placeFound = false
+        var numberIndex: Int?
         let wanted = job.place.map(searchName)
         while let step = try await provider.nextStep(after: selections) {
             if selections.count > 7 { throw WalkError("mehr als 7 Schritte") }
             if step.input == .text {
                 if step.title == SelectionStep.houseNumberTitle {
+                    numberIndex = selections.count
                     selections.append(SelectionOption(id: "1", title: "1")); continue
                 }
                 // Ein Ortsfeld mit dem Gemeindenamen füllen, ein Straßenfeld sondieren
@@ -192,7 +211,7 @@ final class PortalHealthLiveTests: XCTestCase {
             }
             selections.append(pick(step.options, wanted: placeFound ? nil : wanted, variant: variant, found: &placeFound))
         }
-        return (selections, placeFound)
+        return (selections, placeFound, numberIndex == selections.count - 1)
     }
 
     /// Gemeinde bevorzugt (genau, dann Suchtreffer), sonst der mittlere Eintrag.

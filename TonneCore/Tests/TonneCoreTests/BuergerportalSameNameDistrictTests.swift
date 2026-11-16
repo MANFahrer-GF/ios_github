@@ -28,7 +28,7 @@ final class BuergerportalSameNameDistrictTests: XCTestCase {
         let p = provider()
         let pickups = try await p.pickups(for: [SelectionOption(id: "79|Beuren", title: "Beuren – Beuren"),
                                                SelectionOption(id: "500", title: "Hofstraße"), SelectionOption(id: "1", title: "1")], calendar: .current)
-        XCTAssertEqual(pickups.count, 1)
+        XCTAssertEqual(pickups.count, 3)
         let request = try XCTUnwrap(BuergerportalStub.requests().first { $0.contains("/AbfuhrtermineAbJahr?") })
         XCTAssertTrue(request.contains("orteId=79&strassenId=500"), request)
     }
@@ -39,6 +39,21 @@ final class BuergerportalSameNameDistrictTests: XCTestCase {
         XCTAssertEqual(step?.options.map(\.title), ["Hofstraße"])
         let filter = try XCTUnwrap(BuergerportalStub.requests().first { $0.contains("/Strassen?") })
         XCTAssertTrue(filter.contains("Ort/OrteId eq 79 and OrtsteilName eq 'Beuren'"), filter)
+    }
+
+    /// Gemeinde-Prüfung 16.11.2026 (Cochem-Zell, 7 Gemeinden „nur vergangene Termine“): Für eine Hausnummer, die das Portal
+    /// nicht kennt, liefert es nur den Sammeltermin der Straße (einen je Jahr, auch einen kommenden). Statt nur „Grüngut im
+    /// Januar“ zu zeigen, sagt die App, dass die Hausnummer nicht passt.
+    func testUnknownHouseNumberAsksToCheckTheNumber() async throws {
+        let ernst = SelectionOption(id: "11|", title: "Ernst"), street = SelectionOption(id: "279", title: "Moselstraße")
+        do {
+            _ = try await provider().pickups(for: [ernst, street, SelectionOption(id: "1", title: "1")], calendar: .current)
+            XCTFail("Unbekannte Hausnummer muss als Fehler gemeldet werden")
+        } catch let error as ProviderError {
+            XCTAssertTrue(error.errorDescription?.contains("Hausnummer") == true, error.errorDescription ?? "")
+        }
+        let pickups = try await provider().pickups(for: [ernst, street, SelectionOption(id: "20", title: "20")], calendar: .current)
+        XCTAssertEqual(pickups.map(\.name), ["Restmüll", "Papier", "Biomüll"])
     }
 }
 
@@ -79,7 +94,18 @@ final class BuergerportalStub: URLProtocol {
             // Nur die beiden Anfragen, die Beurens echte Straßen finden: Hauptort samt gleichnamigem Ortsteil oder Altpfad Ortsteil
             body = #"{"d":[{"StrassenId":500,"Name":"Hofstraße","Plz":"56825"}]}"#
         } else if url.contains("/AbfuhrtermineAbJahr?"), query["orteId"] == "79", query["strassenId"] == "500" {
-            body = #"{"d":[{"Termin":"/Date(1798761600000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Restmüll"}}}}]}"#
+            body = #"{"d":[{"Termin":"/Date(1798761600000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Restmüll"}}}},"#
+                + #"{"Termin":"/Date(1799366400000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Papier"}}}},"#
+                + #"{"Termin":"/Date(1799971200000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Biomüll"}}}}]}"#
+        } else if url.contains("/AbfuhrtermineAbJahr?"), query["orteId"] == "11", query["strassenId"] == "279" {
+            // Ernst, Moselstraße: nur Hausnummer 20 kennt das Portal, sonst je Jahr ein Grüngut-Sammeltermin (23.01.2026, 2027)
+            body = query["hausNr"] == "'20'"
+                ? #"{"d":[{"Termin":"/Date(1798761600000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Restmüll"}}}},"#
+                    + #"{"Termin":"/Date(1799366400000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Papier"}}}},"#
+                    + #"{"Termin":"/Date(1799971200000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Biomüll"}}}}]}"#
+                : query["jahr"] == "2026"
+                    ? #"{"d":[{"Termin":"/Date(1769126400000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Grüngut"}}}}]}"#
+                    : #"{"d":[{"Termin":"/Date(1800576000000)/","Abfuhrplan":{"GefaesstarifArt":{"Abfallart":{"Name":"Grüngut"}}}}]}"#
         }
         let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "application/json"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
