@@ -297,6 +297,23 @@ final class PlaceMapTests: XCTestCase {
         XCTAssertTrue(aurich.entries.contains { $0.serviceKey == "aurich-abfallkalender" })
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: Die ALBA-App listet die Region „Tübingen“, liefert aber an keiner der 15 Gemeinden
+    /// Termine. Der Kreis läuft über das AWIDO-Portal.
+    func testTuebingenIsNotServedByTheALBAApp() throws {
+        let places = ProviderCatalog.checkPlace("Ammerbuch") + ProviderCatalog.checkPlace("Bodelshausen") + ProviderCatalog.checkPlace("Tübingen")
+        let tuebingen = places.filter { $0.district == "Landkreis Tübingen" }
+        XCTAssertEqual(tuebingen.count, 3)
+        for place in tuebingen {
+            XCTAssertFalse(place.entries.contains { $0.serviceKey == "de.albagroup.app" }, place.name)
+            XCTAssertTrue(place.entries.contains { $0.serviceKey == "tuebingen" }, place.name)
+        }
+        XCTAssertTrue(AbfallPlusAppProvider.hasNoDates(appID: "de.albagroup.app", region: "Tübingen"))
+        // Gegenprobe: die übrigen ALBA-Regionen bleiben
+        XCTAssertFalse(AbfallPlusAppProvider.hasNoDates(appID: "de.albagroup.app", region: "Havelland"))
+        let falkensee = try XCTUnwrap(ProviderCatalog.checkPlace("Falkensee").first)
+        XCTAssertTrue(falkensee.entries.contains { $0.serviceKey == "de.albagroup.app" })
+    }
+
     func testUnavailablePortalIsToldHonestly() throws {
         let wildungen = try XCTUnwrap(ProviderCatalog.checkPlace("Bad Wildungen").first)
         XCTAssertFalse(wildungen.isCovered)

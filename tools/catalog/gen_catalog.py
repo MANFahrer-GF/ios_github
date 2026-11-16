@@ -39,6 +39,8 @@ DEAD_TITLES = [
  ('abfallnavi','Gemeinde Roetgen'),
 ]
 DEAD_APPS = {'de.k4systems.unterallgaeu','de.k4systems.willkommen'}
+# Regionen ohne Termine (Gemeinde-Prüfung 16.11.2026: ALBA Tübingen leer an allen 15 Gemeinden; Kreis über AWIDO)
+NO_DATA_REGIONS = {'de.albagroup.app': {'Tübingen'}}
 for kind,title in DEAD_TITLES:
     pat = r'\n\s*CatalogEntry\(kind: \.'+kind+r', serviceKey: "[^"]*", title: "'+re.escape(title)+r'"[^\n]*'
     src, n = re.subn(pat, '', src)
@@ -67,6 +69,7 @@ for app,regions in svc.items():
         if app=='de.edg.abfallapp': regions=['Dortmund','EDG']
         if app=='de.k4systems.abfallappol': regions=['Oldenburg','Oldenburg (Oldb)']
         new.append(('abfallPlusApp',app,title,'https://www.abfallplus.de/',regions)); continue
+    regions=[r for r in regions if r not in NO_DATA_REGIONS.get(app,set())]
     if app in special: title=f"{special[app]} ({', '.join(regions[:3])}{' …' if len(regions)>3 else ''})"
     elif len(regions)==1: title=regions[0]
     else: title=', '.join(regions[:3])+(' …' if len(regions)>3 else '')

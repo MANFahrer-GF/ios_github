@@ -210,6 +210,15 @@ public struct AbfallPlusAppProvider: WasteProvider {
         return !hint.contains("nicht unterstützt") && !hint.contains("app in vorbereitung")
     }
 
+    /// Regionen, die eine App listet, für die der Server aber an keiner Adresse Termine liefert. ALBA „Tübingen“
+    /// (Gemeinde-Prüfung 16.11.2026): leere Terminliste an allen 15 Gemeinden, mit Straße wie mit Ortsteil; die übrigen
+    /// ALBA-Regionen liefern mit demselben Abruf Termine. Den Kreis versorgt das AWIDO-Portal.
+    static let regionsWithoutDates: [String: Set<String>] = ["de.albagroup.app": ["Tübingen"]]
+
+    static func hasNoDates(appID: String, region: String) -> Bool {
+        regionsWithoutDates[appID]?.contains(region) ?? false
+    }
+
     private static func encode(_ fields: [String: String]) -> String {
         fields.sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value.replacingOccurrences(of: ";", with: ","))" }.joined(separator: ";")
     }
@@ -283,7 +292,7 @@ public struct AbfallPlusAppProvider: WasteProvider {
             }
             if !State.isFixed(state.kommune) {
                 for path in ["kommune/", "region/", "landkreis/"] {
-                    let items = try await list(session, path, baseFields(state))
+                    let items = try await list(session, path, baseFields(state)).filter { !Self.hasNoDates(appID: serviceKey, region: $0.name) }
                     if !items.isEmpty { return listStep(SelectionStep.cityTitle, items, kind: "reg") }
                 }
             }
