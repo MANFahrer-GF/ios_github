@@ -41,6 +41,19 @@ final class PortalHealthWalkTests: XCTestCase {
         XCTAssertFalse(PortalHealthLiveTests.matches(SelectionOption(id: "b", title: "Bad"), "Badenweiler"))
     }
 
+    /// Gemeinde-Prüfung 16.11.2026: MyMüll führt „Mühlheim“ (ohne Straßen) vor „Mühlheim am Main“; AWIDO Neustadt
+    /// a.d. Waldnaab führt „Neustadt am Kulm“ und „Neustadt/WN“ mit demselben Kernnamen.
+    func testExactNameBeatsPrefixAndAmbiguousCoresAreNotPicked() {
+        var found = false
+        let mymuell = ["Mühlheim", "Mühlheim am Main", "Mülheim an der Ruhr"].map { SelectionOption(id: $0, title: $0) }
+        XCTAssertEqual(PortalHealthLiveTests.pick(mymuell, wanted: "Mühlheim am Main", found: &found).title, "Mühlheim am Main")
+        XCTAssertTrue(found)
+        found = false
+        let awido = ["Mantel", "Neustadt am Kulm", "Neustadt/WN", "Parkstein"].map { SelectionOption(id: $0, title: $0) }
+        let picked = PortalHealthLiveTests.pick(awido, wanted: "Neustadt a.d.Waldnaab", found: &found)
+        XCTAssertFalse(found && picked.title == "Neustadt am Kulm", "mehrdeutiger Kern darf nicht als Fund gelten")
+    }
+
     func testLaterAttemptsTryADistrictOfThePlace() {
         let options = ["Zell (Mosel)", "Zell (Mosel) – Zell-Barl", "Zell (Mosel) – Zell-Stadt", "Zellertal"].map { SelectionOption(id: $0, title: $0) }
         var found = false

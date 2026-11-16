@@ -403,6 +403,12 @@ private struct KWU {
             let html = try await client.string(Self.base + "/kal_str2ort.php?ort=\(HTTPClient.query(selections[0].id))&strasse=\(HTTPClient.query(selections[1].id))")
             let numbers = Self.options(html)
             guard !numbers.isEmpty else { throw ProviderError.noDataGeneric }
+            // Vogelsang, Waldessaum oder Kleingartenanlage Rosenhain (Gemeinde-Prüfung 16.11.2026): Das einzige Objekt heißt
+            // „leer“ und sein Kalender hat keinen Termin – an dieser Straße gibt es keine Abfuhr.
+            if numbers.allSatisfy({ $0.title.lowercased() == "leer" }) {
+                throw ProviderError.noData(L10n.t("An dieser Straße führt das Portal keine Abfuhr. Bitte die Straße des Grundstücks wählen.",
+                                                  "The portal lists no collection on this street. Please choose the street of the property."))
+            }
             return SelectionStep(title: SelectionStep.houseNumberTitle, options: numbers)
         default:
             return nil
@@ -462,13 +468,19 @@ private struct SpreeNeisse {
         return String(scalars)
     }
 
+    /// Die Gruppe „Peitz“ (8) ist die Seite des Amts mit seinen Gemeinden (Drachhausen, Teichland …), die Stadt selbst steht
+    /// unter „Peitz/Picnjo“ (592; Gemeinde-Prüfung 16.11.2026). Unter ihrem Namen wählte die Suche für Peitz das Amt vor.
+    static func groupTitle(id: String, label: String) -> String {
+        id == "8" && label == "Peitz" ? L10n.t("Gemeinden des Amtes Peitz", "Municipalities of Amt Peitz") : label
+    }
+
     func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
             let html = try await page("/termine/abfuhrtermine.html")
             let options = HTMLText.options(ofSelect: "group", in: html).compactMap { option -> SelectionOption? in
                 guard let id = HTMLText.firstMatch(#"/abfuhrtermine/\d{4}/(\d+)\.html"#, in: option.value, group: 1) else { return nil }
-                return SelectionOption(id: id, title: option.label)
+                return SelectionOption(id: id, title: Self.groupTitle(id: id, label: option.label))
             }
             guard !options.isEmpty else { throw ProviderError.noDataGeneric }
             return SelectionStep(title: L10n.t("Stadt / Gemeinde", "Town / municipality"), options: options.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })

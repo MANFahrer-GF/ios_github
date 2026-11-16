@@ -19,11 +19,22 @@ public struct AwidoProvider: WasteProvider {
     private struct CalendarItem: Decodable { let dt: String; let fr: [String]?; let ad: [String?]? }
     private struct Payload: Decodable { let fracts: [Fraction]; let calendar: [CalendarItem] }
 
+    /// Orte, deren Straßen nur Feiertage ohne Müllart liefern (Gemeinde-Prüfung 16.11.2026): Gotha „Nessetal“ (13 Ortsteile,
+    /// je 27 Einträge, keiner mit Müllart; die Termine stehen unter „Nessetal OT …“), Neustadt a.d. Waldnaab „Landkreis“
+    /// (eine Straße „Neustadt a.d.Waldnaab“, 34 Einträge ohne Müllart; die Stadt steht unter „Neustadt/WN“).
+    /// Würden sie angeboten, wählte die Suche den gleichnamigen Ort vor und führte in eine Adresse ohne Termine.
+    static let placeholderPlaces: [String: Set<String>] = ["gotha": ["Nessetal"], "neustadt": ["Landkreis"]]
+
+    static func isPlaceholder(customer: String, place: String) -> Bool {
+        placeholderPlaces[customer]?.contains(place) ?? false
+    }
+
     public func nextStep(after selections: [SelectionOption]) async throws -> SelectionStep? {
         switch selections.count {
         case 0:
             let places: [Entry] = try await client.json("\(base)/getPlaces/client=\(serviceKey)")
-            return SelectionStep(title: SelectionStep.cityTitle, options: places.map { SelectionOption(id: $0.key, title: $0.value) })
+            return SelectionStep(title: SelectionStep.cityTitle, options: places.filter { !Self.isPlaceholder(customer: serviceKey, place: $0.value) }
+                .map { SelectionOption(id: $0.key, title: $0.value) })
         case 1:
             let streets: [Entry] = try await client.json("\(base)/getGroupedStreets/\(selections[0].id)?client=\(serviceKey)")
             if streets.isEmpty { return nil }

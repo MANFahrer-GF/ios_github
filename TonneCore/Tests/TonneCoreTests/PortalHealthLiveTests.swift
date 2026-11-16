@@ -238,7 +238,12 @@ final class PortalHealthLiveTests: XCTestCase {
             // Aurich: unter „Aurich / Aurich-Stadt“; der bloße Ort hat dort nur Platzhalter wie „dummystrasse“)
             let districts = options.filter { ($0.title.contains(" – ") || $0.title.contains(" / ")) && $0.title.lowercased().hasPrefix(wanted.lowercased() + " ") }
             if variant > 0, !districts.isEmpty { found = true; return districts[min(districts.count - 1, (variant - 1) * districts.count / 2)] }
-            if let exact = options.first(where: { matches($0, wanted) }) { found = true; return exact }
+            // Genauer Name vor Zusatz-/Kerntreffer („Mühlheim am Main“ statt „Mühlheim“), mehrdeutige Kerne gar nicht
+            // („Neustadt am Kulm“ und „Neustadt/WN“ für Neustadt a.d.Waldnaab) – wie die Vorauswahl der App.
+            let hits = options.filter { matches($0, wanted) }
+            if let exact = hits.first(where: { ProviderCatalog.fold(searchName($0.title)) == ProviderCatalog.fold(wanted) }) ?? (hits.count == 1 ? hits[0] : nil) {
+                found = true; return exact
+            }
             if let hit = OptionSearch(options).filter(query: wanted).first { found = true; return hit }
             // Doppelname: KAEV führt „Krausnick-Groß Wasserburg“ als „Krausnick“ und „Groß Wasserburg“
             if let part = options.first(where: { wanted.lowercased().hasPrefix(searchName($0.title).lowercased() + "-") }) { found = true; return part }
