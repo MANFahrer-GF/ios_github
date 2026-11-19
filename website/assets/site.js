@@ -97,3 +97,43 @@
     }
   }).catch(function () {});
 })();
+
+// Trailer: stumm abspielen, solange er zu sehen ist; „Ton an“ startet ihn von vorn mit Ton.
+(function () {
+  var v = document.querySelector('[data-trailer]');
+  if (!v) return;
+  var mute = document.querySelector('[data-trailer-mute]');
+  var ton = document.querySelector('[data-trailer-ton]');
+  var ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sichtbar = false, angehalten = false;
+  function spiel() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  function knopf() {
+    mute.textContent = v.muted ? '🔇 Ton an' : '🔊 Ton aus';
+    mute.setAttribute('aria-label', v.muted ? 'Ton einschalten' : 'Ton ausschalten');
+  }
+  function stumm() { v.muted = true; v.loop = true; knopf(); if (ruhig) v.pause(); }
+  function mitTon() {
+    angehalten = false; v.muted = false; v.loop = false; v.currentTime = 0;
+    spiel(); knopf();
+  }
+  mute.addEventListener('click', function () { if (v.muted) mitTon(); else stumm(); });
+  ton.addEventListener('click', function () {
+    mitTon();
+    if (innerWidth < 735) v.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'center' });
+  });
+  // Tipp aufs Video hält an bzw. spielt weiter; angehalten bleibt angehalten, auch beim Scrollen.
+  function umschalten() { if (v.paused) { angehalten = false; spiel(); } else { angehalten = true; v.pause(); } }
+  v.addEventListener('click', umschalten);
+  v.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); umschalten(); }
+  });
+  v.addEventListener('ended', function () { v.currentTime = 0; stumm(); if (sichtbar && !ruhig && !angehalten) spiel(); });
+  if (!('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      sichtbar = e.isIntersecting && e.intersectionRatio >= 0.45;
+      if (sichtbar && !angehalten && (!ruhig || !v.muted)) spiel();
+      else if (!sichtbar) v.pause();
+    });
+  }, { threshold: [0, 0.45] }).observe(v);
+})();

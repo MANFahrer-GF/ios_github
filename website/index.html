@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=18">
+<link rel="stylesheet" href="assets/site.css?v=20">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -24,6 +24,7 @@
     <a class="brand" href="./"><img src="img/icon-180.png" alt="" width="26" height="26">Tonne &amp; Torte</a>
     <nav aria-label="Hauptmenü">
       <ul>
+        <li class="hide-sm"><a href="#trailer">Trailer</a></li>
         <li class="hide-sm"><a href="#neu">Neu</a></li>
         <li class="hide-sm"><a href="#funktionen">Funktionen</a></li>
         <li class="hide-sm"><a href="#ort-pruefen">Ort prüfen</a></li>
@@ -55,6 +56,26 @@
     <div class="hero-phones rise" style="--i:5">
       <div class="phone"><img src="img/app-uebersicht.webp" alt="Übersicht der App: heute Oma Erikas 80. Geburtstag, morgen Gelber Sack und Restmüll" width="640" height="1391" fetchpriority="high"></div>
       <div class="phone"><img src="img/app-geburtstage.webp" alt="Geburtstagsliste der App mit Alter, Jahrgang und Sternzeichen" width="640" height="1391" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="sec dark trailer" id="trailer" aria-labelledby="trailer-titel">
+    <div class="panel">
+      <div class="trailer-grid wrap">
+        <div class="trailer-text reveal">
+          <p class="kicker">Der Trailer · 58 Sekunden</p>
+          <h2 id="trailer-titel" class="headline">Keine Werbung.<br>Kein Tracking.<br><span class="grad">Kein Konto.</span></h2>
+          <p class="sub">Eine App, die einfach hilft und sonst nichts von dir will. Am besten mit Ton.</p>
+          <button class="btn trailer-ton" type="button" data-trailer-ton>▶︎ Mit Ton ansehen</button>
+        </div>
+        <div class="trailer-film reveal">
+          <video data-trailer tabindex="0" muted playsinline loop preload="metadata" title="Anhalten oder weiterspielen: tippen, klicken oder Leertaste" poster="img/trailer-poster.webp" width="720" height="1280"
+                 aria-label="Trailer zu Tonne &amp; Torte: keine Werbung, kein Tracking, kein Konto, dazu die Funktionen der App">
+            <source src="img/trailer.mp4" type="video/mp4">
+          </video>
+          <button class="trailer-mute" type="button" data-trailer-mute aria-label="Ton einschalten">🔇 Ton an</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -509,7 +530,7 @@
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=14" defer></script>
+<script src="assets/site.js?v=17" defer></script>
 <script src="assets/ortsuche.js?v=9" defer></script>
 <script src="assets/em.js?v=1" defer></script>
 </body>
