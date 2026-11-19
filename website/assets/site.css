@@ -166,7 +166,7 @@ section { scroll-margin-top: 60px; }
 @media (max-width: 560px) { .watch { width: 40vw; } .watches .watch:last-child { display: none; } }
 
 /* Datenschutz */
-.privacy { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; text-align: left; }
+.privacy { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 56px; text-align: left; }
 .privacy div { background: var(--tile); border-radius: 24px; padding: 32px; }
 .privacy h3 { font-size: 1.5rem; }
 .privacy p { margin-top: 10px; color: var(--muted); }
