@@ -90,6 +90,13 @@ enum StartTimings {
     }
 
     static func finish() { store.finish() }
+
+    @MainActor private static var marked: Set<String> = []
+    /// Zeitpunkt ohne Dauer, je Start einmal (Ende von `init`, erstes Mal im Vordergrund).
+    @MainActor static func markOnce(_ name: String) {
+        guard marked.insert(name).inserted else { return }
+        measure(name) {}
+    }
 }
 
 /// Stand der Absturzberichte für die Oberfläche.

@@ -2,28 +2,70 @@ import SwiftUI
 import SwiftData
 import TonneCore
 
-/// Hält das App-Modell – damit es nach dem Entsperren gegen eines mit der echten Datenbank getauscht werden kann.
+/// Hält das App-Modell. Die Datenbank öffnet direkt nach dem Start abseits des Hauptthreads (Absturzbericht 2.0.11 (15):
+/// Watchdog 0x8BADF00D beim Hintergrundstart, die App wartete 30 s); bis dahin ist `model` nil und es gibt kein Modell,
+/// das leere Daten an Widgets, Watch, Kalender oder Erinnerungen geben könnte. War die Datenbank gesperrt (Hintergrundstart
+/// vor dem ersten Entsperren), tauscht `openIfNeeded` das Notfall-Modell später gegen eines mit der echten Datenbank.
 @MainActor
 final class ModelHolder: ObservableObject {
-    @Published var model: AppModel
-    init(_ model: AppModel) { self.model = model }
+    static let shared = ModelHolder()
+    @Published private(set) var model: AppModel?
+    /// Laufendes Öffnen – nie zwei gleichzeitig (Umzug und Container doppelt nebeneinander wären gefährlich).
+    private var opening: Task<Void, Never>?
 
-    /// War beim Start die Datenbank gesperrt (Hintergrundstart vor dem ersten Entsperren), jetzt erneut öffnen.
-    func reopenIfNeeded() async {
-        guard TonneUndTorteApp.storeUnavailable else { return }
-        TonneUndTorteApp.storeUnavailable = false
-        let container = TonneUndTorteApp.makeContainer()
-        guard !TonneUndTorteApp.storeUnavailable else { return }   // weiterhin nicht lesbar – Hinweis bleibt
-        model = AppModel(container: container)
-        await model.start()
+    private init() {
+        // Mitteilungs-Aktionen können beim Hintergrundstart vor dem fertigen Öffnen kommen: warten statt verlieren
+        let notifications = NotificationManager.shared
+        notifications.onPickupDone = { dayKey in Task { await ModelHolder.shared.opened().markDone(dayKey: dayKey) } }
+        notifications.onPickupSkip = { dayKey in Task { await ModelHolder.shared.opened().skipOpen(dayKey: dayKey) } }
+        // Gespeichert hat die Mitteilung schon selbst – hier nur neu planen und Ansichten auffrischen
+        notifications.onCustomDone = { _, _ in
+            Task {
+                let model = await ModelHolder.shared.opened()
+                model.objectWillChange.send()
+                await model.refreshAll()
+            }
+        }
+    }
+
+    /// Öffnet die Datenbank, wenn sie noch nicht offen oder beim letzten Mal nicht lesbar war. Läuft schon ein Öffnen, wird
+    /// nur darauf gewartet.
+    func openIfNeeded() async {
+        if let opening { return await opening.value }
+        guard model == nil || TonneUndTorteApp.storeUnavailable else { return }
+        let task = Task { await open() }
+        opening = task
+        await task.value
+        opening = nil
+    }
+
+    /// Das fertig geöffnete Modell – für alles, was schon beim Start Daten braucht (Hintergrundaufgabe, Mitteilung, Link).
+    func opened() async -> AppModel {
+        if model == nil { await openIfNeeded() }
+        return model!   // `open` setzt beim ersten Mal immer ein Modell (notfalls das leere Notfall-Modell)
+    }
+
+    private func open() async {
+        let first = model == nil
+        // ModelContainer ist Sendable, nur `mainContext` gehört zum Hauptthread: Umzug und Öffnen laufen nebenher
+        let opened = await Task.detached(priority: .userInitiated) {
+            StartTimings.measure("Container gesamt") { TonneUndTorteApp.makeContainer() }
+        }.value
+        if !first && opened.unavailable { return }   // weiterhin nicht lesbar – Notfall-Modell und Hinweis bleiben
+        TonneUndTorteApp.storeUnavailable = opened.unavailable
+        if first {
+            if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(opened.container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(opened.container) }
+        }
+        let model = StartTimings.measure("Modell") { AppModel(container: opened.container) }
+        self.model = model
+        if first { StartTimings.finish() } else { await model.start() }
     }
 }
 
 @main
 struct TonneUndTorteApp: App {
-    @StateObject private var holder: ModelHolder
+    @StateObject private var holder = ModelHolder.shared
     @Environment(\.scenePhase) private var scenePhase
-    private var model: AppModel { holder.model }
 
     init() {
         StartTimings.begin()
@@ -45,43 +87,51 @@ struct TonneUndTorteApp: App {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("-simulateCrash") { fatalError("Absichtlicher Testabsturz (-simulateCrash)") }
         #endif
-        let container = StartTimings.measure("Container gesamt") { TonneUndTorteApp.makeContainer() }
-        if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
-        let model = StartTimings.measure("Modell") { AppModel(container: container) }
-        _holder = StateObject(wrappedValue: ModelHolder(model))
+        // Muss vor dem Ende des App-Starts passieren (sonst Exception von BGTaskScheduler) – unabhängig von der Datenbank
+        AppModel.registerBackgroundTask()
         StartTimings.measure("Mitteilungen") { NotificationManager.shared.configure() }
-        StartTimings.finish()
+        // Datenbank sofort öffnen, auch beim Hintergrundstart ohne Szene (Hintergrundaufgabe und Mitteilungen warten darauf),
+        // aber ohne den Start aufzuhalten
+        Task { await ModelHolder.shared.openIfNeeded() }
+        StartTimings.markOnce("init fertig")
     }
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .modifier(NavigationBarTypographySync())
-                .appTypography()
-                .defaultAppStorage(SettingsKeys.store)
-                .environmentObject(model)
-                .environmentObject(CrashReportCenter.shared)
-                .modelContainer(model.container)
-                .id(ObjectIdentifier(model))   // neues Modell (nach dem Entsperren) = Oberfläche neu aufbauen
-                .task { await model.start() }
-                .onChange(of: scenePhase) { _, phase in
-                    if phase == .active {
-                        Task {
-                            await holder.reopenIfNeeded()
-                            await model.becameActive()
-                        }
+            Group {
+                if let model = holder.model {
+                    RootView()
+                        .environmentObject(model)
+                        .modelContainer(model.container)
+                        .id(ObjectIdentifier(model))   // neues Modell (nach dem Entsperren) = Oberfläche neu aufbauen
+                        .task { await model.start() }
+                } else {
+                    StoreOpeningView()
+                }
+            }
+            .modifier(NavigationBarTypographySync())
+            .appTypography()
+            .defaultAppStorage(SettingsKeys.store)
+            .environmentObject(CrashReportCenter.shared)
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    StartTimings.markOnce("Vordergrund")
+                    Task {
+                        await holder.openIfNeeded()   // erstes Öffnen abwarten bzw. nach dem Entsperren erneut versuchen
+                        await holder.model?.becameActive()
                     }
-                    if phase == .background { model.scheduleBackgroundRefresh() }
                 }
-                .onReceive(NotificationCenter.default.publisher(for: TonneUndTorteApp.retryStoreNotification)) { _ in
-                    Task { await holder.reopenIfNeeded() }
-                }
-                .onOpenURL { url in model.handle(url: url) }
+                if phase == .background { AppModel.scheduleBackgroundRefresh() }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: TonneUndTorteApp.retryStoreNotification)) { _ in
+                Task { await holder.openIfNeeded() }
+            }
+            .onOpenURL { url in Task { await holder.opened().handle(url: url) } }
         }
     }
 
     /// Bis 2.0.10 (13) lag die Datenbank im App-Group-Ordner (SwiftData-Vorgabe bei vorhandener App Group).
-    static func moveStoreOutOfAppGroup() -> StoreMigration.Outcome {
+    nonisolated static func moveStoreOutOfAppGroup() -> StoreMigration.Outcome {
         let fm = FileManager.default
         guard let group = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.de.manfahrer.TonneUndTorte")?
                 .appendingPathComponent("Library/Application Support"),
@@ -90,8 +140,8 @@ struct TonneUndTorteApp: App {
     }
 
     /// SwiftData-Container mit iCloud-Sync; fällt ohne iCloud-Berechtigung auf lokalen Speicher zurück.
-    @MainActor
-    static func makeContainer() -> ModelContainer {
+    /// `unavailable`: Datenbank nicht lesbar, Notfall-Container im Speicher. Läuft abseits des Hauptthreads (`ModelHolder`).
+    nonisolated static func makeContainer() -> (container: ModelContainer, unavailable: Bool) {
         let schema = Schema([Location.self, WasteType.self, Person.self, CustomEvent.self])
         #if DEBUG
         // Langsamer Speicher (-simulateSlowStore <Sekunden>): blockiert wie ein hängendes Öffnen von SQLite/iCloud – auch im Testmodus
@@ -104,7 +154,7 @@ struct TonneUndTorteApp: App {
         // Klappt das nicht, sofort abbrechen statt still auf die echte Datenbank auszuweichen.
         if isUITesting {
             do {
-                return try ModelContainer(for: schema, configurations: [ModelConfiguration("UITests", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)])
+                return (try ModelContainer(for: schema, configurations: [ModelConfiguration("UITests", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)]), false)
             } catch {
                 fatalError("Testdatenbank konnte nicht angelegt werden: \(error)")
             }
@@ -121,18 +171,17 @@ struct TonneUndTorteApp: App {
             let group: ModelConfiguration.GroupContainer = StartTimings.measure("Umzug") { moveStoreOutOfAppGroup() } == .failed ? .automatic : .none
             let cloud = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .automatic)
             if let container = StartTimings.measure("Cloud", { try? ModelContainer(for: schema, configurations: [cloud]) }) {
-                return container
+                return (container, false)
             }
             let local = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .none)
             if let container = StartTimings.measure("Lokal", { try? ModelContainer(for: schema, configurations: [local]) }) {
-                return container
+                return (container, false)
             }
         }
         // Datenbank nicht lesbar – typisch: iCloud weckt die App nach einem Neustart im Hintergrund, bevor das iPhone
         // entsperrt wurde; dann sind die App-Daten noch verschlüsselt. Nicht abstürzen (2.0.4-Absturzberichte), sondern
         // leer im Speicher weiterlaufen und nichts nach außen schreiben (`storeUnavailable`). Der nächste Start öffnet sie normal.
-        storeUnavailable = true
-        return try! ModelContainer(for: schema, configurations: [ModelConfiguration("Notfall", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)])
+        return (try! ModelContainer(for: schema, configurations: [ModelConfiguration("Notfall", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)]), true)
     }
 
     /// Echte Datenbank war beim Start nicht lesbar – dann keine Widgets, Erinnerungen, Abgleiche oder Kalender anfassen.
@@ -141,7 +190,7 @@ struct TonneUndTorteApp: App {
 
     /// Oberflächen-Test läuft (Startschalter oder Umgebungsvariable aus TonneUITests).
     /// Nur in Entwickler-Builds – eine App-Store-Version kennt den Testmodus nicht.
-    static var isUITesting: Bool {
+    nonisolated static var isUITesting: Bool {
         #if DEBUG
         ProcessInfo.processInfo.arguments.contains("-uiTesting") || ProcessInfo.processInfo.environment["TONNE_UITESTING"] == "1"
         #else
@@ -150,7 +199,7 @@ struct TonneUndTorteApp: App {
     }
 
     /// Beispieldaten für die App-Store-Bilder (nur im Testmodus, Startschalter -demoData).
-    static var isDemo: Bool { isUITesting && ProcessInfo.processInfo.arguments.contains("-demoData") }
+    nonisolated static var isDemo: Bool { isUITesting && ProcessInfo.processInfo.arguments.contains("-demoData") }
 
     /// Schöne Beispieldaten für die App-Store-Bilder: heute ein runder Geburtstag, morgen zwei Tonnen, danach gemischt.
     @MainActor

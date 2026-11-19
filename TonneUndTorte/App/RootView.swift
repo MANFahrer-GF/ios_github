@@ -32,6 +32,29 @@ struct RootView: View {
     }
 }
 
+/// Während die Datenbank nach dem Start öffnet (meist Sekundenbruchteile): leer wie der Startbildschirm, erst nach einer
+/// halben Sekunde ein Hinweis – so flackert der normale Start nicht. Bewusst ohne Bedienung: Eingaben gingen sonst in ein
+/// Modell ohne Datenbank und wären nach dem Öffnen weg.
+struct StoreOpeningView: View {
+    @State private var showHint = false
+
+    var body: some View {
+        ZStack {
+            Color(.systemBackground).ignoresSafeArea()
+            if showHint {
+                VStack(spacing: 12) {
+                    ProgressView()
+                    Text(L10n.t("Termine werden geladen …", "Loading your dates …")).foregroundStyle(.secondary)
+                }
+            }
+        }
+        .task {
+            try? await Task.sleep(for: .milliseconds(500))
+            showHint = true
+        }
+    }
+}
+
 struct MainTabView: View {
     @EnvironmentObject private var model: AppModel
     var body: some View {

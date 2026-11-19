@@ -163,22 +163,9 @@ final class AppModel: ObservableObject {
 
     init(container: ModelContainer) {
         self.container = container
-        // Muss vor dem Ende des App-Starts passieren, sonst wirft BGTaskScheduler eine Exception – und nur EINMAL je Prozess,
-        // auch wenn nach dem Entsperren ein neues Modell mit der echten Datenbank entsteht (sonst Absturz beim zweiten Anmelden).
-        AppModel.current = self
-        if !AppModel.backgroundTaskRegistered { AppModel.registerBackgroundTask() }
         SettingsKeys.migrate()
+        // „Erledigt“, „Diesmal nicht“ und eigene Termine aus Mitteilungen verdrahtet `ModelHolder` (wartet aufs Öffnen)
         notifications.onOpen = { [weak self] target in self?.open(target) }
-        // Gespeichert hat die Mitteilung schon selbst – hier nur neu planen und Ansichten auffrischen
-        notifications.onCustomDone = { [weak self] _, _ in
-            Task { self?.objectWillChange.send(); await self?.refreshAll() }
-        }
-        notifications.onPickupDone = { [weak self] dayKey in
-            Task { await self?.markDone(dayKey: dayKey) }
-        }
-        notifications.onPickupSkip = { [weak self] dayKey in
-            Task { await self?.skipOpen(dayKey: dayKey) }
-        }
         // Apple Watch: Snapshot hinschicken, „Erledigt“ entgegennehmen
         WatchSync.shared.activate()
         WatchSync.shared.onUndoReceived = { [weak self] dayKey in
@@ -716,31 +703,32 @@ final class AppModel: ObservableObject {
 
     // MARK: - Hintergrund
 
-    /// Das gerade aktive Modell – Ziel der einmal angemeldeten Hintergrund-Aufgabe.
-    static weak var current: AppModel?
     private static var backgroundTaskRegistered = false
 
-    private static func registerBackgroundTask() {
+    /// Synchron in `App.init`: BGTaskScheduler verlangt die Anmeldung vor dem Ende des App-Starts – und nur EINMAL je Prozess.
+    static func registerBackgroundTask() {
+        guard !backgroundTaskRegistered else { return }
         backgroundTaskRegistered = true
         BGTaskScheduler.shared.register(forTaskWithIdentifier: SettingsKeys.backgroundRefreshID, using: nil) { task in
-            guard let self = AppModel.current else { task.setTaskCompleted(success: false); return }
             let work = Task { @MainActor in
-                await self.syncAll(force: false)
-                await self.refreshAll()
+                // Beim Hintergrundstart ist die Datenbank evtl. noch nicht offen: darauf warten, nie ohne Daten abgleichen
+                let model = await ModelHolder.shared.opened()
+                await model.syncAll(force: false)
+                await model.refreshAll()
                 guard !Task.isCancelled else { return }
                 task.setTaskCompleted(success: true)
-                self.scheduleBackgroundRefresh()
+                AppModel.scheduleBackgroundRefresh()
             }
             // iOS gibt nur rund 30 Sekunden: bei Zeitablauf sauber abbrechen, statt die App beenden zu lassen
             task.expirationHandler = {
                 work.cancel()
                 task.setTaskCompleted(success: false)
-                Task { @MainActor in self.scheduleBackgroundRefresh() }
+                Task { @MainActor in AppModel.scheduleBackgroundRefresh() }
             }
         }
     }
 
-    func scheduleBackgroundRefresh() {
+    static func scheduleBackgroundRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: SettingsKeys.backgroundRefreshID)
         request.earliestBeginDate = Date().addingTimeInterval(6 * 3600)
         try? BGTaskScheduler.shared.submit(request)
