@@ -281,7 +281,7 @@ public extension SourceConfiguration {
         func shown(_ config: SourceConfiguration) -> [String] { config.selections.map { SelectionStep.spelling($0.title + "|" + ($0.subtitle ?? "")) } }
         if sameSource, shown(old) == shown(new) { return false }
         if sameSource, let first = shown(old).first, first == shown(new).first {
-            if sameAddress(Array(old.selections.dropFirst()), Array(new.selections.dropFirst())) { return false }
+            if sameAddress(Array(old.selections.dropFirst()), Array(new.selections.dropFirst()), in: old.addressPlace()?.place) { return false }
         }
         guard let a = old.addressPlace(), let b = new.addressPlace(), a.place == b.place else { return true }
         // Andere Quelle: Namensvettern in verschiedenen Kreisen sind verschiedene Orte (Neuenkirchen in Dithmarschen ≠ in
@@ -290,19 +290,26 @@ public extension SourceConfiguration {
             let (da, db) = (old.districts(of: a.place), new.districts(of: b.place))
             guard !da.isEmpty, !db.isEmpty, !da.isDisjoint(with: db) else { return true }
         }
-        return !sameAddress(a.rest, b.rest)
+        return !sameAddress(a.rest, b.rest, in: a.place)
     }
 
     /// Gleiche Titel je Schritt, in derselben Reihenfolge, ohne getippte Suchtexte (`addressSteps`). Sieht auf beiden Seiten
     /// eine andere Gemeinde oder ein anderer Ortsteil wie ein Suchtext aus, ist es ein Umzug: „Stein“ → „Steinbach“ vor
     /// „Steinbacher Straße“ (Prüfbefund B), „Greste“ → „Gresterfeld“ vor „Gresterfelder Straße“ (Prüfbefund 2 zu Paket F).
-    /// Ist nur eine Seite ein Ortsname, war sie der Suchtext („Linden“ gegen „Lindenstr“ vor „Lindenstraße“).
-    private static func sameAddress(_ a: [SelectionOption], _ b: [SelectionOption]) -> Bool {
+    /// Ist nur eine Seite ein Ortsname, war sie der Suchtext („Linden“ gegen „Lindenstr“ vor „Lindenstraße“). Als Ortsteil zählt
+    /// nur einer der Gemeinde `place` (Prüfbefund 1 zu Teil 13: „Haupt“ vor „Hauptstraße“ ist irgendwo ein Ortsteil, in
+    /// Leopoldshöhe nicht); ist die Gemeinde unbekannt, jeder Ortsteil.
+    private static func sameAddress(_ a: [SelectionOption], _ b: [SelectionOption], in place: String?) -> Bool {
         let (sa, sb) = (addressSteps(a), addressSteps(b))
         let kept = sa.filter { !$0.typed }.map(\.words)
         guard !kept.isEmpty, kept == sb.filter({ !$0.typed }).map(\.words) else { return false }
         func places(_ steps: [AddressStep]) -> Set<String> {
-            Set(steps.filter { $0.typed && (municipalityCores.contains(SelectionStep.placeCore($0.title)) || localityNames.contains($0.title)) }.map(\.title))
+            Set(steps.filter { step in
+                guard step.typed else { return false }
+                if municipalityCores.contains(SelectionStep.placeCore(step.title)) { return true }
+                guard let municipalities = localityMunicipalities[step.title] else { return false }
+                return place.map(municipalities.contains) ?? true
+            }.map(\.title))
         }
         let (pa, pb) = (places(sa), places(sb))
         return pa.isEmpty || pb.isEmpty || pa == pb
@@ -340,8 +347,10 @@ public extension SourceConfiguration {
     /// Kernnamen aller Gemeinden, einmal berechnet.
     private static let municipalityCores: Set<String> = Set(MunicipalityIndex.all.map { SelectionStep.placeCore($0.name) })
 
-    /// Namen aller Ortsteile (`SelectionStep.spelling`), einmal berechnet.
-    private static let localityNames: Set<String> = Set(LocalityIndex.byName.keys.map(SelectionStep.spelling))
+    /// Ortsteilname → Gemeinden, die ihn führen (beides `SelectionStep.spelling`), einmal berechnet.
+    private static let localityMunicipalities: [String: Set<String>] = LocalityIndex.byName.reduce(into: [:]) { result, entry in
+        result[SelectionStep.spelling(entry.key), default: []].formUnion(entry.value.map { SelectionStep.spelling($0.municipality) })
+    }
 
     private typealias AddressStep = (words: Set<String>, title: String, typed: Bool)
 

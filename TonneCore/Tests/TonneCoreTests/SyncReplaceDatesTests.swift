@@ -125,6 +125,27 @@ final class SyncReplaceDatesTests: XCTestCase {
                                                           to: source(lippe, ["Leopoldshöhe", "Greste", "Gresterfelder", "Gresterfelder Straße", "1"], ids: "b")))
     }
 
+    /// Prüfbefund 1 zu Teil 13: Ein getippter Suchtext zählte als Ort, sobald er irgendwo in Deutschland ein Ortsteil ist
+    /// („Haupt“, „Linden“, „Wiesen“). Gleiche Adresse mit anderem Suchtext galt als Umzug. Es zählen nur Ortsteile der Gemeinde.
+    func testTypedTextThatIsALocalityElsewhereIsTheSameAddress() throws {
+        func source(_ entry: CatalogEntry, _ titles: [String], ids prefix: String) -> SourceConfiguration {
+            SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: titles.map { SelectionOption(id: "\(prefix)-\($0)", title: $0) }, label: "")
+        }
+        let lippe = try XCTUnwrap(ProviderCatalog.entries.first { (EntryPlacesIndex.pairs[$0.id] ?? []).contains("Kreis Lippe|Leopoldshöhe") })
+        let pairs: [(String, String, String)] = [
+            ("Hau", "Haupt", "Hauptstraße"), ("Linde", "Linden", "Lindenstraße"), ("Wiese", "Wiesen", "Wiesenweg"),
+            ("Eiche", "Eichen", "Eichenweg"), ("Stein", "Steinweg", "Steinweg"),
+        ]
+        for (short, long, street) in pairs {
+            let a = ["Leopoldshöhe", short, street, "1"], b = ["Leopoldshöhe", long, street, "1"]
+            XCTAssertFalse(SourceConfiguration.addressChanged(from: source(lippe, a, ids: "a"), to: source(lippe, b, ids: "b")), "\(a) → \(b)")
+            XCTAssertFalse(SourceConfiguration.addressChanged(from: source(lippe, b, ids: "b"), to: source(lippe, a, ids: "a")), "\(b) → \(a)")
+        }
+        // Gegenprobe: Ortsteile der Gemeinde zählen weiter als Ort
+        XCTAssertTrue(SourceConfiguration.addressChanged(from: source(lippe, ["Leopoldshöhe", "Greste", "Gresterfelder Straße", "1"], ids: "a"),
+                                                         to: source(lippe, ["Leopoldshöhe", "Gresterfeld", "Gresterfelder Straße", "1"], ids: "b")))
+    }
+
     /// Prüfbefund 3 zu Paket D: Namensvettern in verschiedenen Kreisen galten als dieselbe Adresse (Neuenkirchen in
     /// Dithmarschen, AWSH-Eintrag, gegen Neuenkirchen in Steinfurt, abfallIO-Eintrag).
     func testNamesakesInOtherDistrictsAreAnotherAddress() throws {
