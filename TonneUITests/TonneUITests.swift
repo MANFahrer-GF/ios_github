@@ -930,6 +930,20 @@ final class TonneUITests: XCTestCase {
         XCTAssertFalse(app.buttons["Bericht teilen"].exists)
     }
 
+    /// Bericht aus einer älteren Version als der installierten (iOS liefert ihn oft erst nach dem Update): Hinweis ohne
+    /// App-Store-Knopf, auch ohne Netz (Codex-Befund 2).
+    func testReportFromOlderVersionIsShownBeforeSending() {
+        app.terminate()
+        app.launchArguments += ["-simulateCrashReport", "-simulateOldCrashReport"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Ansehen und senden"].waitForExistence(timeout: 10), "Hinweis auf den Absturz fehlt")
+        app.buttons["Ansehen und senden"].tap()
+        XCTAssertTrue(app.navigationBars["Neuere Version installiert"].waitForExistence(timeout: 10), "Kein Hinweis auf die neuere Version")
+        XCTAssertFalse(app.buttons["Zum App Store"].exists, "Kein App-Store-Knopf, die neue Version ist schon da")
+        app.buttons["Trotzdem senden"].tap()
+        XCTAssertTrue(app.buttons["Bericht teilen"].waitForExistence(timeout: 5), "„Trotzdem senden“ führt nicht zum Versand")
+    }
+
     func testCrashReportIsOfferedOnceAndCanBeSentAndDeleted() {
         app.terminate()
         app.launchArguments.append("-simulateCrashReport")

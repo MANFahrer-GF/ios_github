@@ -59,7 +59,9 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
         store.removeAll()
         guard arguments.contains("-simulateCrashReport") else { return }
         // Version der installierten App: Ein älterer Bericht löste sonst die Update-Prüfung vor dem Senden aus (`StoreVersion`)
-        store.add([CrashReport(reportDate: Date(), appVersion: StoreVersion.installed, osVersion: "iPhone OS 27.2", deviceType: "iPad16,6",
+        // -simulateOldCrashReport: Bericht aus einer älteren Version als der installierten
+        let version = arguments.contains("-simulateOldCrashReport") ? "2.0.7 (8)" : StoreVersion.installed
+        store.add([CrashReport(reportDate: Date(), appVersion: version, osVersion: "iPhone OS 27.2", deviceType: "iPad16,6",
                                exceptionType: 6, exceptionCode: 0, signal: 5, terminationReason: "Testabsturz",
                                objectiveCException: nil, callStackJSON: "{\"callStacks\":[]}")])
     }

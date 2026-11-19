@@ -35,11 +35,13 @@ public enum UpdateCheck {
     /// Version und Store-Seite aus der Antwort der App-Store-Abfrage; nil, wenn die App dort (noch) nicht steht.
     public static func storeVersion(fromLookup data: Data) -> (version: String, url: URL?)? {
         struct Response: Decodable {
-            struct Item: Decodable { let version: String; let trackViewUrl: String? }
+            struct Item: Decodable { let version: String; let trackViewUrl: String?; let trackId: Int? }
             let results: [Item]
         }
         guard let item = (try? JSONDecoder().decode(Response.self, from: data))?.results.first, parts(item.version) != nil else { return nil }
-        return (item.version, item.trackViewUrl.flatMap(URL.init(string:)))
+        // Ohne Store-Seite in der Antwort die Seite aus der App-Nummer, damit „Zum App Store“ nicht fehlt (Codex-Befund 1)
+        let page = item.trackViewUrl.flatMap(URL.init(string:)) ?? item.trackId.flatMap { URL(string: "https://apps.apple.com/app/id\($0)") }
+        return (item.version, page)
     }
 
     /// Erste Versionsnummer im Text („2.0.11 (15)“ → „2.0.11“).

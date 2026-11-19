@@ -9,7 +9,7 @@ struct CrashReportFile: Transferable {
     /// Hinweis aus der Update-Prüfung („trotz Update gesendet“), steht über dem Bericht.
     var note: String? = nil
     static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(exportedContentType: .plainText) { file in Data(((file.note.map { $0 + "\n\n" } ?? "") + file.report.fileText).utf8) }
+        DataRepresentation(exportedContentType: .plainText) { file in Data(file.report.fileText(note: file.note).utf8) }
             .suggestedFileName("Tonne-und-Torte-Absturzbericht.txt")
     }
 }
@@ -170,8 +170,8 @@ private struct CrashMailComposer: UIViewControllerRepresentable {
         mail.setToRecipients([crashReportAddress])
         mail.setSubject("Tonne & Torte: \(L10n.t("Absturzbericht", "Crash report")) \(report.appVersion)")
         mail.setMessageBody(L10n.t("Der Bericht hängt als Datei an. Wenn du magst, schreib dazu, was du gerade gemacht hast:\n\n\n",
-                                   "The report is attached. If you like, add what you were doing:\n\n\n") + (note.map { $0 + "\n" } ?? "") + report.summary, isHTML: false)
-        mail.addAttachmentData(Data(((note.map { $0 + "\n\n" } ?? "") + report.fileText).utf8), mimeType: "text/plain", fileName: "Tonne-und-Torte-Absturzbericht.txt")
+                                   "The report is attached. If you like, add what you were doing:\n\n\n") + report.summary(note: note), isHTML: false)
+        mail.addAttachmentData(Data(report.fileText(note: note).utf8), mimeType: "text/plain", fileName: "Tonne-und-Torte-Absturzbericht.txt")
         return mail
     }
 

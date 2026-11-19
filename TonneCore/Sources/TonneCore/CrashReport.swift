@@ -65,6 +65,12 @@ public struct CrashReport: Codable, Equatable, Identifiable, Sendable {
         let starts = startLog.map { $0.isEmpty ? "" : "\n\nLetzte Starts:\n" + $0 } ?? ""
         return summary + starts + "\n\n" + callStackJSON + "\n"
     }
+
+    /// Dateiinhalt mit Vermerk der Update-Prüfung oben („Gesendet trotz verfügbarem Update …“, `UpdateCheck`).
+    public func fileText(note: String?) -> String { (note.map { $0 + "\n\n" } ?? "") + fileText }
+
+    /// Kopfzeilen für den Mail-Text, mit Vermerk der Update-Prüfung davor.
+    public func summary(note: String?) -> String { (note.map { $0 + "\n" } ?? "") + summary }
 }
 
 /// Bewahrt die letzten Absturzberichte in einer Datei auf. Wird aus dem MetricKit-Rückruf (Hintergrund) und von der
