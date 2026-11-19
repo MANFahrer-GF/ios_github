@@ -15,6 +15,7 @@ struct WasteDetailView: View {
     @State private var showQuota = false
     @State private var catchUpAfterQuota = false
     @State private var showCatchUp = false
+    @State private var catchUpToken = 0
 
     private var upcoming: [Date] {
         type.pickupDates(from: Days.today(), to: Days.add(180, to: Days.today()))
@@ -23,15 +24,31 @@ struct WasteDetailView: View {
 
     /// Kontingent direkt in der Müllart (Thomas 19.11.2026: nur über Statistik und ganz unten im Standort war es zu versteckt).
     private var quotaSection: some View {
-        Section {
+        let openCount = openCount   // einmal je Anzeige (Codex-Befund)
+        return Section {
             Button { showQuota = true } label: {
                 LabeledContent {
                     Text(quotaState).foregroundStyle(type.isCounted ? .secondary : Color.accentColor)
                 } label: {
-                    Label(L10n.t("Kontingent", "Included collections"), systemImage: "chart.bar.fill").foregroundStyle(.primary)
+                    // Text schwarz wie „Leerungen ansehen“, nur das Symbol in der Akzentfarbe
+                    Label { Text(L10n.t("Kontingent", "Included collections")).foregroundColor(.primary) } icon: { Image(systemName: "chart.bar.fill") }
                 }
             }
             .accessibilityIdentifier("wasteQuotaRow")
+            // Vergangene, noch offene Termine jederzeit nachtragen – nicht nur direkt nach dem Einrichten (Thomas 19.11.2026)
+            if openCount > 0 {
+                Button { showCatchUp = true } label: {
+                    LabeledContent {
+                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
+                    } label: {
+                        Label {
+                            Text(L10n.t("\(L10n.count(openCount, "Termin", "Termine", "date", "dates")) nachtragen", "Catch up on \(L10n.count(openCount, "Termin", "Termine", "date", "dates"))"))
+                                .foregroundColor(.primary)
+                        } icon: { Image(systemName: "questionmark.circle") }
+                    }
+                }
+                .accessibilityIdentifier("wasteCatchUpRow")
+            }
             if let location = type.location {
                 NavigationLink { StatisticsView(locationID: location.id) } label: {
                     Label(L10n.t("Leerungen ansehen", "View collections"), systemImage: "list.bullet")
@@ -43,6 +60,12 @@ struct WasteDetailView: View {
                             "Enter how many collections your plan includes per year – the app then counts how many are left."))
             }
         }
+    }
+
+    /// Vergangene Termine dieser Müllart, die noch weder „Raus“ noch „Nicht raus“ sind (wie die Nachtragen-Liste).
+    private var openCount: Int {
+        _ = catchUpToken
+        return model.openItems(typeID: type.id).count
     }
 
     /// „Einrichten“ oder „2 von 13 genutzt“ im laufenden Zeitraum.
@@ -136,10 +159,13 @@ struct WasteDetailView: View {
         .navigationTitle(type.name.isEmpty ? L10n.t("Müllart", "Waste type") : type.name)
         .navigationBarTitleDisplayMode(.inline)
         // Am Formular, nicht am Abschnitt: dort öffnete iOS das Blatt nicht (im Simulator nachgestellt, 19.11.2026)
-        .sheet(isPresented: $showQuota, onDismiss: { if catchUpAfterQuota { catchUpAfterQuota = false; showCatchUp = true } }) {
+        .sheet(isPresented: $showQuota, onDismiss: {
+            catchUpToken += 1
+            if catchUpAfterQuota { catchUpAfterQuota = false; showCatchUp = true }
+        }) {
             QuotaSettingsView(type: type, onCatchUp: { catchUpAfterQuota = true }).appTypography()
         }
-        .sheet(isPresented: $showCatchUp) { CatchUpSheet(typeID: type.id) }
+        .sheet(isPresented: $showCatchUp, onDismiss: { catchUpToken += 1 }) { CatchUpSheet(typeID: type.id) }
         .sheet(isPresented: $showAddDate) { Group { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }.appTypography() }
         .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) { Group {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }

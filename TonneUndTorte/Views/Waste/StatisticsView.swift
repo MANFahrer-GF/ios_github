@@ -460,7 +460,7 @@ struct CatchUpSheet: View {
 
     var body: some View {
         let _ = token
-        let items = model.openItems(locationID: locationID).filter { typeID == nil || $0.type.id == typeID }
+        let items = model.openItems(locationID: locationID, typeID: typeID)
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {

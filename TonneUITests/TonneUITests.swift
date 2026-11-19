@@ -353,6 +353,17 @@ final class TonneUITests: XCTestCase {
         let deadline = Date().addingTimeInterval(5)
         while Date() < deadline && !row.label.contains("1 von 12 genutzt") { RunLoop.current.run(until: Date().addingTimeInterval(0.2)) }
         XCTAssertTrue(row.label.contains("1 von 12 genutzt"), "Nachgetragenes zählt nicht: \(row.label)")
+        // Später nachtragen: Zeile in der Müllart mit dem Rest, öffnet dieselbe Liste
+        let catchUp = app.buttons["wasteCatchUpRow"].firstMatch
+        XCTAssertTrue(catchUp.waitForExistence(timeout: 5), "Zeile „Termine nachtragen“ fehlt")
+        XCTAssertTrue(catchUp.label.contains("1 Termin nachtragen"), catchUp.label)
+        snap("kontingent-zeile-nachtragen")
+        catchUp.tap()
+        XCTAssertTrue(app.navigationBars["Nachtragen"].waitForExistence(timeout: 5), "Zeile öffnet die Liste nicht")
+        outs.firstMatch.tap()
+        app.navigationBars["Nachtragen"].buttons["Fertig"].tap()
+        XCTAssertTrue(catchUp.waitForNonExistence(timeout: 5), "Zeile bleibt, obwohl alles nachgetragen ist")
+        XCTAssertTrue(row.label.contains("2 von 12 genutzt"), row.label)
     }
 
     /// Testdaten (-uiTestingQuota): Restmüll vor 6, 4 und 2 Tagen, morgen zusammen mit dem Gelben Sack.
