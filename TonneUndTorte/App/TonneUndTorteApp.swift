@@ -10,18 +10,19 @@ import TonneCore
 final class ModelHolder: ObservableObject {
     static let shared = ModelHolder()
     @Published private(set) var model: AppModel?
-    /// Laufendes Öffnen – nie zwei gleichzeitig (Umzug und Container doppelt nebeneinander wären gefährlich).
-    private var opening: Task<Void, Never>?
+    /// Nie zwei Öffnungen gleichzeitig; nach dem Notfall-Zustand ist ein neuer Versuch erlaubt, nach Erfolg keiner (`OpenOnce`).
+    private lazy var opening = OpenOnce { [unowned self] in await self.open() }
 
     private init() {
-        // Mitteilungs-Aktionen können beim Hintergrundstart vor dem fertigen Öffnen kommen: warten statt verlieren
+        // Mitteilungs-Aktionen können beim Hintergrundstart vor dem fertigen Öffnen kommen. Die Mitteilung hat die Markierung
+        // schon im SnapshotStore abgelegt (vor dem `completionHandler`); hier nur übernehmen, sobald die Datenbank lesbar ist
         let notifications = NotificationManager.shared
-        notifications.onPickupDone = { dayKey in Task { await ModelHolder.shared.opened().markDone(dayKey: dayKey) } }
-        notifications.onPickupSkip = { dayKey in Task { await ModelHolder.shared.opened().skipOpen(dayKey: dayKey) } }
+        notifications.onPickupDone = { _ in ModelHolder.shared.applyPendingMarkers() }
+        notifications.onPickupSkip = { _ in ModelHolder.shared.applyPendingMarkers() }
         // Gespeichert hat die Mitteilung schon selbst – hier nur neu planen und Ansichten auffrischen
         notifications.onCustomDone = { _, _ in
             Task {
-                let model = await ModelHolder.shared.opened()
+                guard let model = await ModelHolder.shared.readyModel() else { return }
                 model.objectWillChange.send()
                 await model.refreshAll()
             }
@@ -31,32 +32,41 @@ final class ModelHolder: ObservableObject {
     /// Öffnet die Datenbank, wenn sie noch nicht offen oder beim letzten Mal nicht lesbar war. Läuft schon ein Öffnen, wird
     /// nur darauf gewartet.
     func openIfNeeded() async {
-        if let opening { return await opening.value }
-        guard model == nil || TonneUndTorteApp.storeUnavailable else { return }
-        let task = Task { await open() }
-        opening = task
-        await task.value
-        opening = nil
+        await opening.run()
     }
 
-    /// Das fertig geöffnete Modell – für alles, was schon beim Start Daten braucht (Hintergrundaufgabe, Mitteilung, Link).
-    func opened() async -> AppModel {
-        if model == nil { await openIfNeeded() }
-        return model!   // `open` setzt beim ersten Mal immer ein Modell (notfalls das leere Notfall-Modell)
+    /// Das Modell mit der echten Datenbank – für alles, was schon beim Start Daten braucht (Hintergrundaufgabe, Mitteilung,
+    /// Link, Watch). Öffnet bei Bedarf erneut; `nil`: weiterhin nicht lesbar. Nie das leere Notfall-Modell, sonst gälte eine
+    /// Aktion als erledigt, ohne gespeichert zu sein.
+    func readyModel() async -> AppModel? {
+        await openIfNeeded()
+        return TonneUndTorteApp.storeUnavailable ? nil : model
     }
 
-    /// tonne://done – aus Kurzbefehlen oder von außen, evtl. bevor die Datenbank offen ist.
+    /// Markierungen aus Widget, Live-Aktivität, Mitteilung, Watch oder Link in die Datenbank übernehmen. Bleibt sie unlesbar,
+    /// bleiben die Markierungen liegen; das nächste erfolgreiche Öffnen holt sie nach (`open`).
+    func applyPendingMarkers() {
+        Task { await readyModel()?.applyPendingDoneMarkers() }
+    }
+
+    /// tonne://done?day=2026-10-08 (z. B. aus Kurzbefehlen), evtl. bevor die Datenbank offen ist: erst sicher ablegen wie
+    /// ein Tipp im Widget, dann übernehmen.
     func handle(url: URL) {
-        Task { await opened().handle(url: url) }
+        guard url.scheme == "tonne", url.host == "done",
+              let day = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "day" })?.value,
+              Days.parse(day) != nil else { return }
+        SnapshotStore.markDone(dayKey: day)
+        applyPendingMarkers()
     }
 
-    private func open() async {
+    /// Ein Öffnungsversuch; `true` = echte Datenbank offen.
+    private func open() async -> Bool {
         let first = model == nil
         // ModelContainer ist Sendable, nur `mainContext` gehört zum Hauptthread: Umzug und Öffnen laufen nebenher
         let opened = await Task.detached(priority: .userInitiated) {
             StartTimings.measure("Container gesamt") { TonneUndTorteApp.makeContainer() }
         }.value
-        if !first && opened.unavailable { return }   // weiterhin nicht lesbar – Notfall-Modell und Hinweis bleiben
+        if !first && opened.unavailable { return false }   // weiterhin nicht lesbar – Notfall-Modell und Hinweis bleiben
         TonneUndTorteApp.storeUnavailable = opened.unavailable
         // Beispiel-/Testdaten in jede echte (Test-)Datenbank – auch beim Wiederöffnen nach dem Notfall-Zustand
         if !opened.unavailable {
@@ -64,7 +74,12 @@ final class ModelHolder: ObservableObject {
         }
         let model = StartTimings.measure("Modell") { AppModel(container: opened.container) }
         self.model = model
-        if first { StartTimings.finish() } else { await model.start() }
+        if first { StartTimings.finish() }
+        // Markierungen, die vor dem Öffnen kamen, gleich übernehmen – auch beim Hintergrundstart ohne Szene, in dem
+        // niemand `start()` aufruft (sonst baute der nächste Abgleich Widget und Erinnerungen ohne sie neu auf)
+        if !opened.unavailable { await model.applyPendingDoneMarkers() }
+        if !first { await model.start() }
+        return !opened.unavailable
     }
 }
 

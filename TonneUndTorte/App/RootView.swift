@@ -34,9 +34,11 @@ struct RootView: View {
 
 /// Während die Datenbank nach dem Start öffnet (meist Sekundenbruchteile): leer wie der Startbildschirm, erst nach einer
 /// halben Sekunde ein Hinweis – so flackert der normale Start nicht. Bewusst ohne Bedienung: Eingaben gingen sonst in ein
-/// Modell ohne Datenbank und wären nach dem Öffnen weg.
+/// Modell ohne Datenbank und wären nach dem Öffnen weg. Dauert es ungewöhnlich lange, erklärt sie es nach zehn Sekunden –
+/// ohne „Erneut versuchen“: Ein zweites Öffnen neben dem hängenden wäre gefährlich (`OpenOnce`).
 struct StoreOpeningView: View {
     @State private var showHint = false
+    @State private var showSlowHint = false
 
     var body: some View {
         ZStack {
@@ -45,12 +47,21 @@ struct StoreOpeningView: View {
                 VStack(spacing: 12) {
                     ProgressView()
                     Text(L10n.t("Termine werden geladen …", "Loading your dates …")).foregroundStyle(.secondary)
+                    if showSlowHint {
+                        Text(L10n.t("Das dauert ungewöhnlich lange – meist gleicht iCloud gerade ab. Die App wartet weiter, du musst nichts tun. Hilft es nach einer Weile nicht, beende die App und öffne sie neu.",
+                                    "This is taking unusually long – iCloud is probably syncing. The app keeps waiting, there's nothing you need to do. If it doesn't help after a while, close the app and open it again."))
+                            .tonneFont(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                            .accessibilityIdentifier("storeOpeningSlowHint")
+                    }
                 }
+                .padding(.horizontal, 32)
             }
         }
         .task {
             try? await Task.sleep(for: .milliseconds(500))
             showHint = true
+            try? await Task.sleep(for: .seconds(9.5))
+            showSlowHint = true
         }
     }
 }

@@ -23,8 +23,9 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
     }
 
     private func ingest(_ payloads: [MXDiagnosticPayload]) {
-        // Starts vor diesem: Der abgestürzte ist einer davon (der laufende ist der letzte Eintrag)
-        let startLog = StartLogStore.text(Array(StartTimings.store.load().dropLast()))
+        // Starts vor diesem: Der abgestürzte ist einer davon. Nur den eigenen ausnehmen – scheiterte dessen `begin`, wäre der
+        // letzte Eintrag ein fremder, womöglich genau der abgestürzte
+        let startLog = StartLogStore.text(StartTimings.store.load().filter { $0.id != StartTimings.id })
         let reports = payloads.flatMap { payload in
             (payload.crashDiagnostics ?? []).map { Self.report(from: $0, date: payload.timeStampEnd, startLog: startLog) }
         }
@@ -70,12 +71,14 @@ enum StartTimings {
         ? FileManager.default.temporaryDirectory.appendingPathComponent("uitest-start-log.json")
         : URL.applicationSupportDirectory.appendingPathComponent("StartLog.json"))
     private static let launch = Date()
+    /// Kennung dieses Starts im Protokoll.
+    static let id = UUID()
 
     /// Als Erstes in `App.init`.
     static func begin() {
         let info = Bundle.main.infoDictionary
         let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
-        store.begin(appVersion: version, at: launch)
+        store.begin(id: id, appVersion: version, at: launch)
     }
 
     /// Misst einen Schritt und legt ihn sofort ab – auch von einem Nebenthread aus.
@@ -84,12 +87,12 @@ enum StartTimings {
         let start = Date()
         defer {
             let end = Date()
-            store.step(name, milliseconds: Int(end.timeIntervalSince(start) * 1000), atMilliseconds: Int(end.timeIntervalSince(launch) * 1000))
+            store.step(name, milliseconds: Int(end.timeIntervalSince(start) * 1000), atMilliseconds: Int(end.timeIntervalSince(launch) * 1000), start: id)
         }
         return try work()
     }
 
-    static func finish() { store.finish() }
+    static func finish() { store.finish(start: id) }
 
     @MainActor private static var marked: Set<String> = []
     /// Zeitpunkt ohne Dauer, je Start einmal (Ende von `init`, erstes Mal im Vordergrund).

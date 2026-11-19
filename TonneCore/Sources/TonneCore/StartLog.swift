@@ -11,6 +11,8 @@ public struct StartRecord: Codable, Equatable, Sendable {
         public let atMilliseconds: Int
     }
 
+    /// Kennung des Starts: Schritte landen nur im eigenen Eintrag, nie in einem fremden (fehlt in Dateien vor dem Feld).
+    public var id: UUID?
     public let started: Date
     public let appVersion: String
     public var steps: [Step] = []
@@ -35,22 +37,23 @@ public final class StartLogStore: @unchecked Sendable {
     }
 
     /// Neuer Start; die ältesten fallen heraus.
-    public func begin(appVersion: String, at date: Date) {
-        change { $0.append(StartRecord(started: date, appVersion: appVersion)) }
+    public func begin(id: UUID, appVersion: String, at date: Date) {
+        change { $0.append(StartRecord(id: id, started: date, appVersion: appVersion)) }
     }
 
-    public func step(_ name: String, milliseconds: Int, atMilliseconds: Int) {
+    /// Schritt des Starts `start`. Fehlt dessen Eintrag (Datei war bei `begin` nicht lesbar), bleibt alles unverändert.
+    public func step(_ name: String, milliseconds: Int, atMilliseconds: Int, start: UUID) {
         change { records in
-            guard !records.isEmpty else { return }
-            records[records.count - 1].steps.append(.init(name: name, milliseconds: milliseconds, atMilliseconds: atMilliseconds))
+            guard let index = records.lastIndex(where: { $0.id == start }) else { return }
+            records[index].steps.append(.init(name: name, milliseconds: milliseconds, atMilliseconds: atMilliseconds))
         }
     }
 
     /// Start vollständig: Datenbank offen, Oberfläche hat ihr Modell.
-    public func finish() {
+    public func finish(start: UUID) {
         change { records in
-            guard !records.isEmpty else { return }
-            records[records.count - 1].finished = true
+            guard let index = records.lastIndex(where: { $0.id == start }) else { return }
+            records[index].finished = true
         }
     }
 
@@ -66,17 +69,31 @@ public final class StartLogStore: @unchecked Sendable {
 
     private func change(_ edit: (inout [StartRecord]) -> Void) {
         lock.lock(); defer { lock.unlock() }
-        var records = read()
+        // Datei da, aber nicht lesbar: nichts schreiben – sonst ersetzte ein einzelner neuer Eintrag die alten Starts
+        guard var records = readIfPossible() else { return }
         edit(&records)
         records = Array(records.suffix(Self.maxRecords))
         guard let data = try? JSONEncoder().encode(records) else { return }
         try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try? data.write(to: url, options: .atomic)
+        // Ohne Dateischutz: Mit der iOS-Vorgabe (bis zum ersten Entsperren geschützt) wäre die Datei genau beim
+        // Hintergrundstart nach einem Neustart weder les- noch schreibbar – dem Fall, den das Protokoll festhalten soll.
+        // Sie enthält nur Zeiten, Schrittnamen und die App-Version, keine Nutzerdaten.
+        try? data.write(to: url, options: [.atomic, .noFileProtection])
     }
 
-    /// Fehlt oder ist kaputt = leer: Das Protokoll ist nur eine Hilfe, es darf den Start nie aufhalten.
-    private func read() -> [StartRecord] {
-        guard let data = try? Data(contentsOf: url) else { return [] }
+    private func read() -> [StartRecord] { readIfPossible() ?? [] }
+
+    /// Fehlt die Datei oder ist sie kaputt: leer (das Protokoll darf den Start nie aufhalten). `nil`: Datei da, aber gerade
+    /// nicht lesbar (z. B. vor dem ersten Entsperren) – Vorbild `CrashReportStore.read`.
+    private func readIfPossible() -> [StartRecord]? {
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch CocoaError.fileReadNoSuchFile {
+            return []
+        } catch {
+            return nil
+        }
         return (try? JSONDecoder().decode([StartRecord].self, from: data)) ?? []
     }
 }

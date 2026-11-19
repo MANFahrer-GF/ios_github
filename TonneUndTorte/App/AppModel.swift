@@ -168,11 +168,14 @@ final class AppModel: ObservableObject {
         notifications.onOpen = { [weak self] target in self?.open(target) }
         // Apple Watch: Snapshot hinschicken, „Erledigt“ entgegennehmen
         WatchSync.shared.activate()
-        WatchSync.shared.onUndoReceived = { [weak self] dayKey in
-            Task { await self?.markUndone(dayKey: dayKey) }
+        // Von der Watch: erst ablegen wie ein Tipp im Widget – ist die Datenbank gerade nicht lesbar, holt das nächste Öffnen es nach
+        WatchSync.shared.onUndoReceived = { dayKey in
+            SnapshotStore.markUndone(dayKey: dayKey)
+            ModelHolder.shared.applyPendingMarkers()
         }
-        WatchSync.shared.onDoneReceived = { [weak self] dayKey in
-            Task { await self?.markDone(dayKey: dayKey) }
+        WatchSync.shared.onDoneReceived = { dayKey in
+            SnapshotStore.markDone(dayKey: dayKey)
+            ModelHolder.shared.applyPendingMarkers()
         }
         NotificationCenter.default.addObserver(forName: WatchSync.updatedNotification, object: nil, queue: .main) { [weak self] _ in
             Task { await self?.refreshAll() }
@@ -412,7 +415,8 @@ final class AppModel: ObservableObject {
     /// eine in der Mitteilung abgelegte Wahl („Alles raus“ / „Ohne …“), sonst ist es ein pauschaler Tipp (Widget, Watch,
     /// Live-Aktivität, Kurzbefehl): Der markiert wie bisher alles, ein Tag mit gezählter Müllart wird aber nachgefragt.
     func markDone(dayKey: String, leftIn: Set<UUID>? = nil) async {
-        guard let day = Days.parse(dayKey) else { return }
+        // Gegen das leere Notfall-Modell wäre „gespeichert“ wahr, die Markierung aber verbraucht – liegen lassen
+        guard !TonneUndTorteApp.storeUnavailable, let day = Days.parse(dayKey) else { return }
         // Zeitpunkt: aus dem Widget/der Watch schon gemerkt (ausstehende Markierung) – sonst jetzt
         let pendingFromWidget = SnapshotStore.doneDays().contains(dayKey)
         SnapshotStore.recordDoneTime(dayKey: dayKey, overwrite: !pendingFromWidget)
@@ -442,7 +446,7 @@ final class AppModel: ObservableObject {
 
     /// „Erledigt“ zurücknehmen, wenn man versehentlich getippt hat. Die Erinnerungen werden neu geplant.
     func markUndone(dayKey: String) async {
-        guard let day = Days.parse(dayKey) else { return }
+        guard !TonneUndTorteApp.storeUnavailable, let day = Days.parse(dayKey) else { return }
         for type in allWasteTypes() where type.isDone(on: day) {
             type.unmarkDone(on: day)
             type.clearBulk(on: day)
@@ -538,7 +542,7 @@ final class AppModel: ObservableObject {
     /// Aus der Mitteilung: alle Tonnen, die an dem Tag noch offen sind, bleiben diesmal drin.
     /// Hinbringen (Schadstoffmobil) ist nicht „rausstellen“ – das bleibt stehen, samt Morgen-Erinnerung.
     func skipOpen(dayKey: String) async {
-        guard let day = Days.parse(dayKey) else { return }
+        guard !TonneUndTorteApp.storeUnavailable, let day = Days.parse(dayKey) else { return }
         for type in allWasteTypes() where type.isActive && type.handling != .bringTo && !type.isDone(on: day) && type.isOnDuty(on: day) && type.pickupDates(from: day, to: day).contains(day) {
             type.setNotPutOut(true, on: day)
         }
@@ -712,8 +716,14 @@ final class AppModel: ObservableObject {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: SettingsKeys.backgroundRefreshID, using: nil) { task in
             let work = Task { @MainActor in
                 // Beim Hintergrundstart ist die Datenbank evtl. noch nicht offen: darauf warten, nie ohne Daten abgleichen
-                let model = await ModelHolder.shared.opened()
+                let model = await ModelHolder.shared.readyModel()
                 guard !Task.isCancelled else { return }   // Zeit schon abgelaufen, bevor die Datenbank offen war
+                guard let model else {
+                    // Weiterhin nicht lesbar (vor dem ersten Entsperren): nichts erledigt, später erneut
+                    task.setTaskCompleted(success: false)
+                    AppModel.scheduleBackgroundRefresh()
+                    return
+                }
                 await model.syncAll(force: false)
                 await model.refreshAll()
                 guard !Task.isCancelled else { return }
@@ -758,14 +768,6 @@ final class AppModel: ObservableObject {
             self.context.delete(object)
             self.save()
             await self.refreshAll()
-        }
-    }
-
-    func handle(url: URL) {
-        // tonne://done?day=2026-10-08 (z. B. aus Kurzbefehlen)
-        guard url.scheme == "tonne", url.host == "done" else { return }
-        if let day = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "day" })?.value {
-            Task { await self.markDone(dayKey: day) }
         }
     }
 }
