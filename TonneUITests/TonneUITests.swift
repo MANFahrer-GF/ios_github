@@ -813,6 +813,62 @@ final class TonneUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Termine werden geladen …"].exists)
     }
 
+    /// Hängt das Öffnen lange, erklärt die Ladeansicht nach zehn Sekunden, was los ist – ohne zweites Öffnen anzubieten.
+    func testSlowStoreExplainsAfterTenSeconds() {
+        relaunch(["-simulateSlowStore", "40"])
+        XCTAssertTrue(app.staticTexts["Termine werden geladen …"].waitForExistence(timeout: 5), "Kein Ladehinweis")
+        let hint = app.staticTexts["storeOpeningSlowHint"]
+        XCTAssertFalse(hint.exists, "Erklärung erscheint zu früh")
+        XCTAssertTrue(hint.waitForExistence(timeout: 15), "Keine Erklärung nach zehn Sekunden Laden")
+        XCTAssertFalse(app.buttons["Erneut versuchen"].exists, "Ladeansicht darf kein zweites Öffnen anbieten")
+    }
+
+    /// Prüfung 19.11.: Datenbank beim ersten Versuch nicht lesbar → Hinweis; „Erneut versuchen“ öffnet sie und zeigt die Daten.
+    func testUnreadableStoreOpensOnRetry() {
+        relaunch(["-simulateStoreFailure", "1", "-simulateSlowStore", "2"])
+        XCTAssertTrue(unreadableHint.waitForExistence(timeout: 10), "Kein Hinweis bei nicht lesbarer Datenbank")
+        app.buttons["Erneut versuchen"].tap()
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10), "Daten erscheinen nach „Erneut versuchen“ nicht")
+        XCTAssertFalse(unreadableHint.exists)
+    }
+
+    /// Bleibt die Datenbank unlesbar, bleibt auch der Hinweis – nichts Leeres zum Bearbeiten.
+    func testUnreadableStoreKeepsHint() {
+        relaunch(["-simulateStoreFailure", "-simulateSlowStore", "2"])
+        XCTAssertTrue(unreadableHint.waitForExistence(timeout: 10), "Kein Hinweis bei nicht lesbarer Datenbank")
+        app.buttons["Erneut versuchen"].tap()
+        sleep(4)
+        XCTAssertTrue(unreadableHint.exists, "Hinweis verschwindet trotz weiterhin nicht lesbarer Datenbank")
+        XCTAssertFalse(app.staticTexts["Lena Sommer"].firstMatch.exists)
+    }
+
+    /// Prüfung 19.11. Befund 1: „Erledigt“ aus Widget/Live-Aktivität kommt beim Hintergrundstart, bevor die Datenbank offen
+    /// ist; ohne Szene stößt niemand das Nachholen an. Nach dem Öffnen muss morgen (Restmüll, Gelber Sack) erledigt sein.
+    func testDoneMarkerBeforeOpeningIsApplied() {
+        relaunch(["-uiTestingQuota", "-simulateEarlyDone", "-simulateNoScene", "-simulateSlowStore", "2"])
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 15), "App läuft nicht mit den Testdaten")
+        XCTAssertTrue(app.buttons["Rückgängig"].firstMatch.waitForExistence(timeout: 5), "Markierung vor dem Öffnen ging verloren")
+    }
+
+    /// Prüfung 19.11. Befund 2: tonne://done, solange die Datenbank nicht lesbar ist, darf nicht gegen das leere
+    /// Notfall-Modell verbraucht werden – nach „Erneut versuchen“ ist der Tag erledigt.
+    func testDoneLinkWhileUnreadableIsAppliedAfterRetry() {
+        relaunch(["-uiTestingQuota", "-simulateDoneLink", "-simulateStoreFailure", "1", "-simulateSlowStore", "2"])
+        XCTAssertTrue(unreadableHint.waitForExistence(timeout: 10), "Kein Hinweis bei nicht lesbarer Datenbank")
+        app.buttons["Erneut versuchen"].tap()
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10), "Daten erscheinen nach „Erneut versuchen“ nicht")
+        XCTAssertTrue(app.buttons["Rückgängig"].firstMatch.waitForExistence(timeout: 5), "„Erledigt“ per Link ging im Notfall-Zustand verloren")
+    }
+
+    private var unreadableHint: XCUIElement { app.staticTexts["Daten werden geöffnet …"] }
+
+    /// Neu starten mit zusätzlichen Startschaltern; die Testdaten erscheinen dabei evtl. erst später (oder gar nicht).
+    private func relaunch(_ arguments: [String]) {
+        app.terminate()
+        app.launchArguments += arguments
+        app.launch()
+    }
+
     private func openCrashReports() {
         tab("Mehr")
         app.buttons["Einstellungen"].tap()
