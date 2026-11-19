@@ -557,11 +557,10 @@ final class AppModel: ObservableObject {
     func applyPendingDoneMarkers() async {
         // Ohne echte Datenbank liegen lassen – sonst wären die Häkchen aus Widget/Watch verbraucht, aber nicht gespeichert
         guard !TonneUndTorteApp.storeUnavailable else { return }
-        let undo = SnapshotStore.undoDays()
-        for key in undo { await markUndone(dayKey: key) }
-        let pending = SnapshotStore.doneDays()
-        for key in pending { await markDone(dayKey: key) }
-        for key in SnapshotStore.skipDays() { await skipOpen(dayKey: key) }
+        // Vor jedem Tag neu lesen: Ein zweiter Durchlauf nebenher wiederholte sonst schon Erledigtes (`PendingMarkers`)
+        await PendingMarkers.apply(SnapshotStore.undoDays) { await markUndone(dayKey: $0) }
+        await PendingMarkers.apply(SnapshotStore.doneDays) { await markDone(dayKey: $0) }
+        await PendingMarkers.apply(SnapshotStore.skipDays) { await skipOpen(dayKey: $0) }
     }
 
     // MARK: - Abgleich

@@ -22,12 +22,32 @@ enum SnapshotStore {
     }
 
     static var defaults: UserDefaults {
-        UserDefaults(suiteName: appGroup) ?? .standard
+        isUITestRun ? (UserDefaults(suiteName: uiTestSuite) ?? .standard) : (UserDefaults(suiteName: appGroup) ?? .standard)
     }
 
     private static var fileURL: URL? {
-        containerURL?.appendingPathComponent(WidgetSnapshot.fileName)
+        isUITestRun ? nil : containerURL?.appendingPathComponent(WidgetSnapshot.fileName)
     }
+
+    /// Oberflächen-Test (nur Entwickler-Build, wie `TonneUndTorteApp.isUITesting`): Markierungen in eigener Ablage, kein
+    /// Snapshot, keine Erinnerungen oder Wecker anfassen. Sonst löschte der Test echte Markierungen und Erinnerungen, und ein
+    /// abgebrochener Test hinterließ „morgen erledigt“ für den nächsten normalen Start (Prüfbefund 3 zu Teil 13).
+    static var isUITestRun: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-uiTesting") || ProcessInfo.processInfo.environment["TONNE_UITESTING"] == "1"
+        #else
+        false
+        #endif
+    }
+    static let uiTestSuite = "de.manfahrer.TonneUndTorte.uitests.markers"
+
+    #if os(iOS)
+    private static func removeNotifications(_ ids: [String]) {
+        guard !isUITestRun else { return }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+    }
+    #endif
 
     // MARK: - Sperre über Prozesse hinweg
 
@@ -90,8 +110,7 @@ enum SnapshotStore {
             let pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
             let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty && date < Calendar.current.startOfDay(for: $0.date) } ?? false
             let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            removeNotifications(ids)
             cancelAlarm(dayKey: dayKey)
             #endif
             if var snapshot = load() {
@@ -108,6 +127,7 @@ enum SnapshotStore {
 
     /// Wecker am Vorabend dieses Tages entfernen (AlarmKit, ab iOS 26) – „Erledigt“ läuft oft ohne App-Modell im Hintergrund.
     static func cancelAlarm(dayKey: String) {
+        guard !isUITestRun else { return }
         #if os(iOS) && canImport(AlarmKit)
         if #available(iOS 26.0, *), let id = PlannedAlarm.id(dayKey: dayKey) { try? AlarmManager.shared.cancel(id: id) }
         #endif
@@ -170,8 +190,7 @@ enum SnapshotStore {
             let pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
             let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty } ?? false
             let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            removeNotifications(ids)
             cancelAlarm(dayKey: dayKey)
             #endif
             DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
@@ -288,8 +307,7 @@ enum SnapshotStore {
             #if os(iOS)
             // Erinnerung „wieder reinholen“ für diesen Tag entfernen (geplant und schon angezeigt)
             let ids = ["waste-bringin-\(dayKey)", "waste-bringin-snooze-\(dayKey)"]
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ids)
+            removeNotifications(ids)
             #endif
             DispatchQueue.main.async { NotificationCenter.default.post(name: broughtInNotification, object: nil) }
         }

@@ -148,6 +148,9 @@ struct TonneUndTorteApp: App {
                 if phase == .background { AppModel.scheduleBackgroundRefresh() }
             }
             .onReceive(NotificationCenter.default.publisher(for: TonneUndTorteApp.retryStoreNotification)) { _ in
+                #if DEBUG
+                TonneUndTorteApp.simulatedRetries += 1
+                #endif
                 Task { await holder.openIfNeeded() }
             }
             .onOpenURL { url in holder.handle(url: url) }
@@ -173,12 +176,12 @@ struct TonneUndTorteApp: App {
         if let i = args.firstIndex(of: "-simulateSlowStore"), i + 1 < args.count, let seconds = Double(args[i + 1]) {
             StartTimings.measure("Langsamer Speicher (Test)") { Thread.sleep(forTimeInterval: seconds) }
         }
-        // Nicht lesbare Datenbank (-simulateStoreFailure [Anzahl]): mit Zahl scheitern nur so viele Öffnungsversuche, danach
-        // klappt „Erneut versuchen“; ohne Zahl jeder. Vor dem Testzweig, damit auch die Oberflächen-Tests es nutzen können.
+        // Nicht lesbare Datenbank (-simulateStoreFailure [Anzahl]): mit Zahl scheitert jedes Öffnen, bis so oft ausdrücklich
+        // „Erneut versuchen“ kam – auch das Öffnen beim Aktivwerden, egal wann die App aktiv wird (Prüfbefund 2 zu Teil 13);
+        // ohne Zahl jedes. Vor dem Testzweig, damit auch die Oberflächen-Tests es nutzen können.
         if let i = args.firstIndex(of: "-simulateStoreFailure") {
-            simulatedFailures += 1
             let limit = i + 1 < args.count ? Int(args[i + 1]) : nil
-            if limit.map({ simulatedFailures <= $0 }) ?? true { return emergencyContainer(schema) }
+            if limit.map({ simulatedRetries < $0 }) ?? true { return emergencyContainer(schema) }
         }
         #endif
         // Oberflächen-Tests: leere Datenbank nur im Speicher, kein iCloud – echte Daten bleiben unberührt.
@@ -213,11 +216,12 @@ struct TonneUndTorteApp: App {
     }
 
     #if DEBUG
-    /// Bisherige Öffnungsversuche für -simulateStoreFailure (Versuche laufen nie gleichzeitig, siehe `ModelHolder`).
-    nonisolated(unsafe) private static var simulatedFailures = 0
+    /// Bisherige „Erneut versuchen“ für -simulateStoreFailure; nur auf dem Hauptthread erhöht, bevor das Öffnen startet.
+    nonisolated(unsafe) static var simulatedRetries = 0
 
-    /// Oberflächen-Tests zum Start: alte Markierungen aus Widget/Mitteilung entfernen (sie liegen in der App-Gruppe und
-    /// überlebten sonst den Test), dann auf Wunsch eine Markierung bzw. ein Link, bevor die Datenbank offen ist.
+    /// Oberflächen-Tests zum Start: alte Markierungen aus Widget/Mitteilung entfernen (eigene Test-Ablage,
+    /// `SnapshotStore.isUITestRun`; sie überlebten sonst den Test), dann auf Wunsch eine Markierung bzw. ein Link, bevor die
+    /// Datenbank offen ist.
     @MainActor static func prepareStartTests() {
         for key in [SnapshotStore.doneKey, SnapshotStore.skipKey, SnapshotStore.undoKey, SnapshotStore.choiceKey] {
             SnapshotStore.defaults.removeObject(forKey: key)

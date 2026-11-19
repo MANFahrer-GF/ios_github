@@ -823,10 +823,14 @@ final class TonneUITests: XCTestCase {
         XCTAssertFalse(app.buttons["Erneut versuchen"].exists, "Ladeansicht darf kein zweites Öffnen anbieten")
     }
 
-    /// Prüfung 19.11.: Datenbank beim ersten Versuch nicht lesbar → Hinweis; „Erneut versuchen“ öffnet sie und zeigt die Daten.
+    /// Prüfung 19.11.: Datenbank bis zum ersten „Erneut versuchen“ nicht lesbar → Hinweis; „Erneut versuchen“ öffnet sie und
+    /// zeigt die Daten. Das Scheitern hängt am Wiederholen, nicht an der Zahl der Versuche (Prüfbefund 2 zu Teil 13): Das
+    /// Öffnen beim Aktivwerden scheitert ebenfalls, egal wann die App aktiv wird.
     func testUnreadableStoreOpensOnRetry() {
-        relaunch(["-simulateStoreFailure", "1", "-simulateSlowStore", "2"])
+        relaunch(["-simulateStoreFailure", "1"])
         XCTAssertTrue(unreadableHint.waitForExistence(timeout: 10), "Kein Hinweis bei nicht lesbarer Datenbank")
+        sleep(3)
+        XCTAssertTrue(unreadableHint.exists, "Hinweis verschwindet ohne „Erneut versuchen“")
         app.buttons["Erneut versuchen"].tap()
         XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10), "Daten erscheinen nach „Erneut versuchen“ nicht")
         XCTAssertFalse(unreadableHint.exists)
@@ -853,7 +857,7 @@ final class TonneUITests: XCTestCase {
     /// Prüfung 19.11. Befund 2: tonne://done, solange die Datenbank nicht lesbar ist, darf nicht gegen das leere
     /// Notfall-Modell verbraucht werden – nach „Erneut versuchen“ ist der Tag erledigt.
     func testDoneLinkWhileUnreadableIsAppliedAfterRetry() {
-        relaunch(["-uiTestingQuota", "-simulateDoneLink", "-simulateStoreFailure", "1", "-simulateSlowStore", "2"])
+        relaunch(["-uiTestingQuota", "-simulateDoneLink", "-simulateStoreFailure", "1"])
         XCTAssertTrue(unreadableHint.waitForExistence(timeout: 10), "Kein Hinweis bei nicht lesbarer Datenbank")
         app.buttons["Erneut versuchen"].tap()
         XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 10), "Daten erscheinen nach „Erneut versuchen“ nicht")
