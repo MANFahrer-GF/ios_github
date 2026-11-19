@@ -58,7 +58,8 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
         guard !arguments.contains("-keepCrashReports") else { return }
         store.removeAll()
         guard arguments.contains("-simulateCrashReport") else { return }
-        store.add([CrashReport(reportDate: Date(), appVersion: "2.0.7 (8)", osVersion: "iPhone OS 27.2", deviceType: "iPad16,6",
+        // Version der installierten App: Ein älterer Bericht löste sonst die Update-Prüfung vor dem Senden aus (`StoreVersion`)
+        store.add([CrashReport(reportDate: Date(), appVersion: StoreVersion.installed, osVersion: "iPhone OS 27.2", deviceType: "iPad16,6",
                                exceptionType: 6, exceptionCode: 0, signal: 5, terminationReason: "Testabsturz",
                                objectiveCException: nil, callStackJSON: "{\"callStacks\":[]}")])
     }
@@ -76,9 +77,7 @@ enum StartTimings {
 
     /// Als Erstes in `App.init`.
     static func begin() {
-        let info = Bundle.main.infoDictionary
-        let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
-        store.begin(id: id, appVersion: version, at: launch)
+        store.begin(id: id, appVersion: StoreVersion.installed, at: launch)
     }
 
     /// Misst einen Schritt und legt ihn sofort ab – auch von einem Nebenthread aus.
@@ -127,5 +126,33 @@ final class CrashReportCenter: ObservableObject {
     func removeAll() {
         CrashReportCollector.store.removeAll()
         reload()
+    }
+}
+
+/// Installierte Version und die aktuelle im App Store (für die Update-Prüfung vor dem Senden eines Absturzberichts).
+enum StoreVersion {
+    /// „2.1.0 (17)“
+    static var installed: String {
+        let info = Bundle.main.infoDictionary
+        return "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
+    }
+
+    /// Aktuelle Version im App Store des Geräte-Lands; nil ohne Netz, nach 5 s oder wenn die App dort nicht steht.
+    /// Gefragt wird nur mit der Kennung der App. Oberflächen-Tests fragen nie im Netz: -simulateStoreVersion <Version>.
+    static func latest() async -> (version: String, url: URL?)? {
+        if TonneUndTorteApp.isUITesting {
+            let args = ProcessInfo.processInfo.arguments
+            guard let i = args.firstIndex(of: "-simulateStoreVersion"), i + 1 < args.count else { return nil }
+            return (args[i + 1], URL(string: "https://apps.apple.com"))
+        }
+        guard let bundle = Bundle.main.bundleIdentifier else { return nil }
+        var components = URLComponents(string: "https://itunes.apple.com/lookup")
+        components?.queryItems = [URLQueryItem(name: "bundleId", value: bundle),
+                                  URLQueryItem(name: "country", value: (Locale.current.region?.identifier ?? "DE").lowercased())]
+        guard let url = components?.url else { return nil }
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 5)
+        request.httpMethod = "GET"
+        guard let (data, _) = try? await URLSession.shared.data(for: request) else { return nil }
+        return UpdateCheck.storeVersion(fromLookup: data)
     }
 }

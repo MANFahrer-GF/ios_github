@@ -6,8 +6,10 @@ private let crashReportAddress = "thomas@kant.ovh"
 
 struct CrashReportFile: Transferable {
     let report: CrashReport
+    /// Hinweis aus der Update-Prüfung („trotz Update gesendet“), steht über dem Bericht.
+    var note: String? = nil
     static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(exportedContentType: .plainText) { file in Data(file.report.fileText.utf8) }
+        DataRepresentation(exportedContentType: .plainText) { file in Data(((file.note.map { $0 + "\n\n" } ?? "") + file.report.fileText).utf8) }
             .suggestedFileName("Tonne-und-Torte-Absturzbericht.txt")
     }
 }
@@ -73,15 +75,65 @@ private struct CrashReportOfferSheet: View {
     }
 }
 
-/// Mail mit dem Bericht im Anhang; ohne eingerichtete Mail-App bleibt das Teilen der Datei.
+/// Erst die Update-Prüfung (`UpdateCheck`): Ist eine neuere Version da, als die des Berichts oder die installierte, sagt
+/// die App das und bietet den App Store an; senden geht trotzdem, dann mit Vermerk. Danach die Mail mit dem Bericht im
+/// Anhang; ohne eingerichtete Mail-App bleibt das Teilen der Datei.
 /// Der Bericht bleibt nach dem Senden erhalten: „gesendet“ heißt nur, dass die Mail in der Warteschlange liegt.
 struct CrashReportSendSheet: View {
     let report: CrashReport
+    @State private var verdict: UpdateCheck.Verdict?
+    @State private var storeURL: URL?
+    @State private var note: String?
+    @State private var confirmed = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
+        switch verdict {
+        case nil:
+            ProgressView(L10n.t("Suche nach Updates …", "Checking for updates …"))
+                .task { await check() }
+        case .updateAvailable(let store)? where !confirmed:
+            hint(L10n.t("Es gibt eine neuere Version von Tonne & Torte (\(store)). Der Fehler ist dort vielleicht schon behoben. Bitte aktualisiere zuerst und schick den Bericht nur, wenn die App danach wieder abstürzt.",
+                        "There's a newer version of Tonne & Torte (\(store)). The problem may already be fixed there. Please update first and only send the report if the app crashes again."),
+                 note: "Gesendet trotz verfügbarem Update: installiert \(StoreVersion.installed), im App Store \(store)",
+                 offersStore: true, title: L10n.t("Update verfügbar", "Update available"))
+        case .reportFromOlderVersion(let old, let installed)? where !confirmed:
+            hint(L10n.t("Der Absturz passierte in Version \(old). Inzwischen ist Version \(installed) installiert, dort ist der Fehler vielleicht schon behoben. Schick den Bericht nur, wenn die App auch jetzt noch abstürzt.",
+                        "The crash happened in version \(old). Version \(installed) is installed now and the problem may already be fixed there. Only send the report if the app still crashes."),
+                 note: "Gesendet trotz neuerer Version: Bericht aus \(old), installiert \(StoreVersion.installed)",
+                 offersStore: false, title: L10n.t("Neuere Version installiert", "Newer version installed"))
+        default:
+            send
+        }
+    }
+
+    private func check() async {
+        let latest = await StoreVersion.latest()
+        storeURL = latest?.url
+        verdict = UpdateCheck.verdict(report: report.appVersion, installed: StoreVersion.installed, store: latest?.version)
+    }
+
+    private func hint(_ text: String, note: String, offersStore: Bool, title: String) -> some View {
+        NavigationStack {
+            Form {
+                Section { Text(text) }
+                Section {
+                    if offersStore, let storeURL {
+                        Button(L10n.t("Zum App Store", "Open App Store")) { openURL(storeURL); dismiss() }
+                    }
+                    Button(L10n.t("Trotzdem senden", "Send anyway")) { self.note = note; confirmed = true }
+                    Button(L10n.t("Nicht senden", "Don't send")) { dismiss() }
+                }
+            }
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    @ViewBuilder private var send: some View {
         if MFMailComposeViewController.canSendMail() {
-            CrashMailComposer(report: report) { dismiss() }
+            CrashMailComposer(report: report, note: note) { dismiss() }
                 .ignoresSafeArea()
         } else {
             NavigationStack {
@@ -89,7 +141,7 @@ struct CrashReportSendSheet: View {
                     Section {
                         Text(L10n.t("Auf diesem Gerät ist keine Mail-App eingerichtet. Du kannst den Bericht teilen, zum Beispiel an \(crashReportAddress).",
                                     "No mail account is set up on this device. You can share the report, for example with \(crashReportAddress)."))
-                        ShareLink(item: CrashReportFile(report: report),
+                        ShareLink(item: CrashReportFile(report: report, note: note),
                                   preview: SharePreview(L10n.t("Absturzbericht", "Crash report"))) {
                             Label(L10n.t("Bericht teilen", "Share report"), systemImage: "square.and.arrow.up")
                         }
@@ -107,6 +159,7 @@ struct CrashReportSendSheet: View {
 
 private struct CrashMailComposer: UIViewControllerRepresentable {
     let report: CrashReport
+    let note: String?
     let onFinish: () -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(onFinish: onFinish) }
@@ -117,8 +170,8 @@ private struct CrashMailComposer: UIViewControllerRepresentable {
         mail.setToRecipients([crashReportAddress])
         mail.setSubject("Tonne & Torte: \(L10n.t("Absturzbericht", "Crash report")) \(report.appVersion)")
         mail.setMessageBody(L10n.t("Der Bericht hängt als Datei an. Wenn du magst, schreib dazu, was du gerade gemacht hast:\n\n\n",
-                                   "The report is attached. If you like, add what you were doing:\n\n\n") + report.summary, isHTML: false)
-        mail.addAttachmentData(Data(report.fileText.utf8), mimeType: "text/plain", fileName: "Tonne-und-Torte-Absturzbericht.txt")
+                                   "The report is attached. If you like, add what you were doing:\n\n\n") + (note.map { $0 + "\n" } ?? "") + report.summary, isHTML: false)
+        mail.addAttachmentData(Data(((note.map { $0 + "\n\n" } ?? "") + report.fileText).utf8), mimeType: "text/plain", fileName: "Tonne-und-Torte-Absturzbericht.txt")
         return mail
     }
 

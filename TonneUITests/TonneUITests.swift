@@ -907,6 +907,29 @@ final class TonneUITests: XCTestCase {
                       "Bericht ging beim Neustart verloren")
     }
 
+    /// Thomas 19.11.2026: Zu viele Berichte kamen von alten Versionen. Ist im App Store eine neuere Version, sagt die App das
+    /// vor dem Senden, bietet den App Store an; „Nicht senden“ schließt, „Trotzdem senden“ führt zum Versand.
+    func testNewerStoreVersionIsShownBeforeSending() {
+        app.terminate()
+        app.launchArguments += ["-simulateCrashReport", "-simulateStoreVersion", "99.0"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Ansehen und senden"].waitForExistence(timeout: 10), "Hinweis auf den Absturz fehlt")
+        app.buttons["Ansehen und senden"].tap()
+        XCTAssertTrue(app.navigationBars["Update verfügbar"].waitForExistence(timeout: 10), "Kein Update-Hinweis vor dem Senden")
+        XCTAssertTrue(app.buttons["Zum App Store"].exists)
+        XCTAssertFalse(app.buttons["Bericht teilen"].exists, "Versand darf erst nach der Entscheidung kommen")
+        app.buttons["Trotzdem senden"].tap()
+        XCTAssertTrue(app.buttons["Bericht teilen"].waitForExistence(timeout: 5), "„Trotzdem senden“ führt nicht zum Versand")
+        app.buttons["Schließen"].tap()
+
+        openCrashReports()
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Bericht senden")).firstMatch.tap()
+        XCTAssertTrue(app.buttons["Nicht senden"].waitForExistence(timeout: 10))
+        app.buttons["Nicht senden"].tap()
+        XCTAssertTrue(app.buttons["Nicht senden"].waitForNonExistence(timeout: 5), "„Nicht senden“ schließt nicht")
+        XCTAssertFalse(app.buttons["Bericht teilen"].exists)
+    }
+
     func testCrashReportIsOfferedOnceAndCanBeSentAndDeleted() {
         app.terminate()
         app.launchArguments.append("-simulateCrashReport")
