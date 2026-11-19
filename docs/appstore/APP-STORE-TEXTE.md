@@ -62,7 +62,10 @@ Auf Wunsch klingelt am Vorabend ein Wecker – auch wenn das iPhone stumm ist od
 
 Außerdem
 • Riedstadt und Trebur (Kreis Groß-Gerau): Die App fragt den Ortsteil ab und findet die Termine direkt
+• Neu: Stadt Aschaffenburg und der digitale Abfallkalender der Stadt Bühl
 • Weitere Orte mit den richtigen Straßen und dem richtigen Entsorger
+• Beim Einrichten erkennt die App Ortsnamen mit Zusätzen wie „an der“ oder „St.“ und den Ortsteil; ist es nicht eindeutig, zeigt sie die Auswahl
+• Zuverlässigerer Start, wenn iOS die App im Hintergrund weckt
 • Liefert ein Portal nur wenige Wochen voraus, gleicht die App alle zwei Tage ab
 • Beim Umzug bleiben abgehakte Leerungen in der Statistik erhalten
 • Hilfe und Kontakt unter „Mehr“ führen auf die neue Webseite tonne.kant.ovh
