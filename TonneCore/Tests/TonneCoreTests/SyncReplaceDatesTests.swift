@@ -104,6 +104,27 @@ final class SyncReplaceDatesTests: XCTestCase {
                                                           to: source(alarm, ["Bayern", "Landkreis Starnberg", "Berg", "Berg", "Bergstraße", "5"], ids: "b")))
     }
 
+    /// Prüfbefund 2 zu Paket F: Ein Umzug in einen anderen Ortsteil, der wie ein Straßen-Suchtext aussieht, galt als dieselbe
+    /// Adresse, weil nur Gemeindenamen als Ort zählten („Greste“ → „Gresterfeld“ vor „Gresterfelder Straße“).
+    func testMoveToALocalityThatStartsTheStreetIsAnotherAddress() throws {
+        func source(_ entry: CatalogEntry, _ titles: [String], ids prefix: String) -> SourceConfiguration {
+            SourceConfiguration(providerKind: entry.kind, serviceKey: entry.serviceKey, selections: titles.map { SelectionOption(id: "\(prefix)-\($0)", title: $0) }, label: "")
+        }
+        let lippe = try XCTUnwrap(ProviderCatalog.entries.first { (EntryPlacesIndex.pairs[$0.id] ?? []).contains("Kreis Lippe|Leopoldshöhe") })
+        let lobbe = try XCTUnwrap(ProviderCatalog.entries.first { $0.kind == .lobbe })
+        let moves: [(CatalogEntry, [String], [String])] = [
+            (lippe, ["Leopoldshöhe", "Greste", "Gresterfelder Straße", "1"], ["Leopoldshöhe", "Gresterfeld", "Gresterfelder Straße", "1"]),
+            (lobbe, ["Nordrhein-Westfalen", "Eich", "Eichenweg"], ["Nordrhein-Westfalen", "Eiche", "Eichenweg"]),
+        ]
+        for (entry, a, b) in moves {
+            XCTAssertTrue(SourceConfiguration.addressChanged(from: source(entry, a, ids: "a"), to: source(entry, b, ids: "b")), "\(a) → \(b)")
+            XCTAssertTrue(SourceConfiguration.addressChanged(from: source(entry, b, ids: "b"), to: source(entry, a, ids: "a")), "\(b) → \(a)")
+        }
+        // Gegenprobe: gleicher Ortsteil, nur der getippte Straßen-Suchtext ist anders
+        XCTAssertFalse(SourceConfiguration.addressChanged(from: source(lippe, ["Leopoldshöhe", "Greste", "Gresterf", "Gresterfelder Straße", "1"], ids: "a"),
+                                                          to: source(lippe, ["Leopoldshöhe", "Greste", "Gresterfelder", "Gresterfelder Straße", "1"], ids: "b")))
+    }
+
     /// Prüfbefund 3 zu Paket D: Namensvettern in verschiedenen Kreisen galten als dieselbe Adresse (Neuenkirchen in
     /// Dithmarschen, AWSH-Eintrag, gegen Neuenkirchen in Steinfurt, abfallIO-Eintrag).
     func testNamesakesInOtherDistrictsAreAnotherAddress() throws {

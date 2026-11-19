@@ -184,4 +184,22 @@ final class OrtsformVorauswahlTests: XCTestCase {
         XCTAssertNil(kusel.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler an der"))
         XCTAssertEqual(kusel.preselection(for: "Rutsweiler am Glan", query: "Rutsweiler a. Glan")?.title, "Rutsweiler/Glan")
     }
+
+    /// Prüfbefund 1 zu Paket F: Halb genannt galt nur, wenn der ganze Optionstitel in der Ortsteil-Liste steht. Die LWL-Liste
+    /// führt die Ortsteile zusammengesetzt oder anders benannt („Bahlen/Bahlendorf“, „Alt Schwinz“, „Hof Lalchow“) – die
+    /// Suche wählte still die Gemeinde. Echte Kette `servedPlace` → `preselection`.
+    func testLocalityInsideACompoundOptionShowsTheList() throws {
+        let file = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("../../../tools/catalog/data/gemos/lwl_places.txt")
+        let titles = try String(contentsOf: file, encoding: .utf8).split(separator: "\n").map { String($0).trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        let lwl = try XCTUnwrap(ProviderCatalog.entries.first { $0.serviceKey == "lwl" })
+        let step = SelectionStep(title: L10n.t("Gemeinde / Ortsteil", "Town / district"), options: titles.map { SelectionOption(id: $0, title: $0) })
+        for query in ["Boizenburg/Elbe Bahlendorf", "Bahlendorf", "Metlitzhof", "Dobbertin Schwinz", "Domsühl Damerow", "Lalchow"] {
+            let place = try XCTUnwrap(ProviderCatalog.servedPlace(for: lwl, query: query), query)
+            XCTAssertNil(step.preselection(for: place, query: query), "„\(query)“ wählte „\(place)“")
+        }
+        // Gegenprobe: die Gemeinde allein wählt weiter die Gemeinde
+        for place in ["Boizenburg/Elbe", "Dobbertin", "Domsühl", "Plau am See"] {
+            XCTAssertEqual(step.preselection(for: place, query: place)?.title, place)
+        }
+    }
 }

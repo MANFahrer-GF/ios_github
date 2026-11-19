@@ -106,6 +106,9 @@ public struct SelectionStep: Hashable {
 
     /// Bindewörter der Ortsform („Wasserburg am Inn“, „Neufahrn in Niederbayern“), Abkürzungen wie „a.“, „i.d.“ erkennt
     /// `placeCore` am Punkt. Einzige Liste dafür; die Zusatzwort-Sicherung in `preselection(for:query:)` nutzt sie mit.
+    /// Namen aller Gemeinden (`spelling`), einmal berechnet.
+    static let municipalityNames: Set<String> = Set(MunicipalityIndex.all.map { spelling($0.name) })
+
     static let placeJoins: Set<String> = ["am", "an", "im", "in", "bei", "ob", "unter", "vor", "auf", "mit", "ohne"]
 
     /// Gefaltet und ohne Unterschied zwischen Bindestrich und Leerzeichen, wie Portale und Suchende Ortsteile verschieden
@@ -190,6 +193,12 @@ public struct SelectionStep: Hashable {
             return rest
         }.min { $0.count < $1.count } ?? []
         let coreWords = wordsOf(placeCore)
+        // Nennt der Rest einen Ortsteil der Gemeinde (Ortsteil-Liste), zählt auch eine Option, die ihn nur als Teil ihres Namens
+        // trägt („Bahlen/Bahlendorf“, „Alt Schwinz“, „Hof Lalchow“, Prüfbefund 1 zu Paket F) – außer sie ist selbst eine
+        // Gemeinde: „Ohrstedt“ ist Ortsteil von Wester-Ohrstedt, „Oster-Ohrstedt“ trotzdem nicht gemeint.
+        let restIsLocality = !rest.isEmpty && ([rest.joined(separator: " ")] + rest).contains { name in
+            (LocalityIndex.byName[name] ?? []).contains { fold($0.municipality) == fold(place) }
+        }
         let named = (!extra.isEmpty || !rest.isEmpty) && options.contains { option in
             guard option.id != exact.id else { return false }
             let words = wordsOf(option.title)
@@ -200,7 +209,8 @@ public struct SelectionStep: Hashable {
             let samePlace = spell(option.title) == spell(place)
                 || (Self.placeCore(option.title) == placeCore && !addition.isEmpty && addition.isSubset(of: form([place])))
             let halfNamed = !rest.isEmpty && rest.allSatisfy(words.contains) && !samePlace
-                && (LocalityIndex.byName[fold(option.title)] ?? []).contains { fold($0.municipality) == fold(place) }
+                && ((LocalityIndex.byName[fold(option.title)] ?? []).contains { fold($0.municipality) == fold(place) }
+                    || (restIsLocality && !Self.municipalityNames.contains(spell(option.title))))
             if halfNamed { return true }
             if coreWords.allSatisfy(words.contains) {
                 return !extra.isEmpty && extra.allSatisfy { word in words.contains { $0.hasPrefix(word) } }
@@ -284,14 +294,15 @@ public extension SourceConfiguration {
     }
 
     /// Gleiche Titel je Schritt, in derselben Reihenfolge, ohne getippte Suchtexte (`addressSteps`). Sieht auf beiden Seiten
-    /// eine andere Gemeinde wie ein Suchtext aus, ist es ein Umzug: „Stein“ → „Steinbach“ vor „Steinbacher Straße“
-    /// (Prüfbefund B). Ist nur eine Seite ein Gemeindename, war sie der Suchtext („Linden“ gegen „Lindenstr“ vor „Lindenstraße“).
+    /// eine andere Gemeinde oder ein anderer Ortsteil wie ein Suchtext aus, ist es ein Umzug: „Stein“ → „Steinbach“ vor
+    /// „Steinbacher Straße“ (Prüfbefund B), „Greste“ → „Gresterfeld“ vor „Gresterfelder Straße“ (Prüfbefund 2 zu Paket F).
+    /// Ist nur eine Seite ein Ortsname, war sie der Suchtext („Linden“ gegen „Lindenstr“ vor „Lindenstraße“).
     private static func sameAddress(_ a: [SelectionOption], _ b: [SelectionOption]) -> Bool {
         let (sa, sb) = (addressSteps(a), addressSteps(b))
         let kept = sa.filter { !$0.typed }.map(\.words)
         guard !kept.isEmpty, kept == sb.filter({ !$0.typed }).map(\.words) else { return false }
         func places(_ steps: [AddressStep]) -> Set<String> {
-            Set(steps.filter { $0.typed && municipalityCores.contains(SelectionStep.placeCore($0.title)) }.map(\.title))
+            Set(steps.filter { $0.typed && (municipalityCores.contains(SelectionStep.placeCore($0.title)) || localityNames.contains($0.title)) }.map(\.title))
         }
         let (pa, pb) = (places(sa), places(sb))
         return pa.isEmpty || pb.isEmpty || pa == pb
@@ -328,6 +339,9 @@ public extension SourceConfiguration {
 
     /// Kernnamen aller Gemeinden, einmal berechnet.
     private static let municipalityCores: Set<String> = Set(MunicipalityIndex.all.map { SelectionStep.placeCore($0.name) })
+
+    /// Namen aller Ortsteile (`SelectionStep.spelling`), einmal berechnet.
+    private static let localityNames: Set<String> = Set(LocalityIndex.byName.keys.map(SelectionStep.spelling))
 
     private typealias AddressStep = (words: Set<String>, title: String, typed: Bool)
 
