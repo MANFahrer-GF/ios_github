@@ -12,11 +12,45 @@ struct WasteDetailView: View {
     @State private var showAddDate = false
     @State private var moveSource: Date?
     @State private var showDeleteConfirm = false
+    @State private var showQuota = false
+    @State private var catchUpAfterQuota = false
+    @State private var showCatchUp = false
 
     private var upcoming: [Date] {
         type.pickupDates(from: Days.today(), to: Days.add(180, to: Days.today()))
     }
     private var upcomingSkipped: [Date] { type.skippedDates.filter { $0 >= Days.today() }.sorted() }
+
+    /// Kontingent direkt in der Müllart (Thomas 19.11.2026: nur über Statistik und ganz unten im Standort war es zu versteckt).
+    private var quotaSection: some View {
+        Section {
+            Button { showQuota = true } label: {
+                LabeledContent {
+                    Text(quotaState).foregroundStyle(type.isCounted ? .secondary : Color.accentColor)
+                } label: {
+                    Label(L10n.t("Kontingent", "Included collections"), systemImage: "chart.bar.fill").foregroundStyle(.primary)
+                }
+            }
+            .accessibilityIdentifier("wasteQuotaRow")
+            if let location = type.location {
+                NavigationLink { StatisticsView(locationID: location.id) } label: {
+                    Label(L10n.t("Leerungen ansehen", "View collections"), systemImage: "list.bullet")
+                }
+            }
+        } header: { Text(L10n.t("Leerungen & Kontingent", "Collections & included")) } footer: {
+            if !type.isCounted {
+                Text(L10n.t("Trag ein, wie viele Leerungen dein Tarif im Jahr enthält – dann zählt die App mit, wie viele noch frei sind.",
+                            "Enter how many collections your plan includes per year – the app then counts how many are left."))
+            }
+        }
+    }
+
+    /// „Einrichten“ oder „2 von 13 genutzt“ im laufenden Zeitraum.
+    private var quotaState: String {
+        guard type.isCounted else { return L10n.t("Einrichten", "Set up") }
+        let summary = type.quotaSummary(period: type.quotaPeriod(containing: Days.today()))
+        return L10n.t("\(summary.used) von \(summary.included ?? 0) genutzt", "\(summary.used) of \(summary.included ?? 0) used")
+    }
 
     var body: some View {
         Form {
@@ -35,6 +69,7 @@ struct WasteDetailView: View {
                     ForEach(WasteCategory.allCases, id: \.self) { category in WasteCategoryLabel(category: category).tag(category) }
                 }
             }
+            quotaSection
             Section("Farbe & Symbol") {
                 PaletteColorPicker(colorHex: $type.colorHex)
                 WasteSymbolPicker(symbolName: $type.displaySymbol, colorHex: type.colorHex, wasteName: type.name)
@@ -100,6 +135,11 @@ struct WasteDetailView: View {
         }
         .navigationTitle(type.name.isEmpty ? L10n.t("Müllart", "Waste type") : type.name)
         .navigationBarTitleDisplayMode(.inline)
+        // Am Formular, nicht am Abschnitt: dort öffnete iOS das Blatt nicht (im Simulator nachgestellt, 19.11.2026)
+        .sheet(isPresented: $showQuota, onDismiss: { if catchUpAfterQuota { catchUpAfterQuota = false; showCatchUp = true } }) {
+            QuotaSettingsView(type: type, onCatchUp: { catchUpAfterQuota = true }).appTypography()
+        }
+        .sheet(isPresented: $showCatchUp) { CatchUpSheet(typeID: type.id) }
         .sheet(isPresented: $showAddDate) { Group { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }.appTypography() }
         .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) { Group {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }

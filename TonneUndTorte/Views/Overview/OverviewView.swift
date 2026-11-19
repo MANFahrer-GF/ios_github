@@ -489,19 +489,23 @@ struct OverviewView: View {
 
     private var statsCardContent: some View {
         let stats = model.statistics()
-        return HStack(spacing: 16) {
+        // Überschrift: Die Karte ist der Weg zum Kontingent, das sah man ihr nicht an (Thomas 19.11.2026)
+        return VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.t("Leerungen & Kontingent", "Collections & included")).tonneFont(.subheadline, .semibold)
+            HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(stats.total)").tonneFont(.title2, .bold)
-                Text("Abholungen dieses Jahr").tonneFont(.caption).foregroundStyle(.secondary)
+                Text(L10n.t("Abholungen dieses Jahr", "Collections this year")).tonneFont(.caption).foregroundStyle(.secondary)
             }
             Divider().frame(height: 36)
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(stats.confirmed)").tonneFont(.title2, .bold).foregroundStyle(.green)
-                Text("davon bestätigt").tonneFont(.caption).foregroundStyle(.secondary)
+                Text(L10n.t("davon bestätigt", "confirmed")).tonneFont(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             Image(systemName: stats.total > 0 && stats.confirmed == stats.total ? "flame.fill" : "chart.bar.fill").tonneFont(.title2).foregroundStyle(.orange)
             Image(systemName: "chevron.right").tonneFont(.footnote, .semibold).foregroundStyle(.tertiary)
+            }
         }
         .contentShape(Rectangle())
         .card()

@@ -309,6 +309,52 @@ final class TonneUITests: XCTestCase {
 
     /// Konzept 16.11.2026: Kontingent setzen, zwei Termine markieren, einen nachtragen, Anzeige „3 von 12“ –
     /// danach „Erledigt“ an einem Tag mit Restmüll und Gelbem Sack: Blatt je Müllart, Restmüll blieb drin und zählt nicht.
+    /// Thomas 19.11.2026: Kontingent zu versteckt, Knöpfe nicht als Knöpfe erkennbar, „Einzeln nachtragen“ tat nichts.
+    /// Jetzt: Zeile in der Müllart, Überschrift auf der Übersicht-Karte, Knöpfe mit Fläche, Nachtragen-Liste nach dem Einrichten.
+    /// Papier hat dieses Jahr keinen vergangenen Termin: keine Frage, keine leere Liste.
+    func testLeerungsKontingentInDerMuellart() {
+        tab("Übersicht")
+        let card = app.buttons["statsCard"].firstMatch
+        for _ in 0..<5 where !(card.exists && card.isHittable) { app.swipeUp() }
+        XCTAssertTrue(card.label.contains("Leerungen & Kontingent"), "Karte nennt das Kontingent nicht: \(card.label)")
+        card.tap()
+        let setup = app.buttons["quotaSetup-Papier"].firstMatch
+        XCTAssertTrue(setup.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["quotaNone-Papier"].firstMatch.exists, "„Kein Kontingent“ fehlt")
+        snap("kontingent-statistik-knoepfe")
+        setup.tap()
+        flip("Leerungen inklusive")
+        app.buttons["Fertig"].firstMatch.tap()
+        XCTAssertFalse(app.alerts.firstMatch.waitForExistence(timeout: 2), "Frage ohne vergangene Termine")
+        XCTAssertFalse(app.navigationBars["Nachtragen"].exists, "Leere Nachtragen-Liste")
+
+        tab("Müll")
+        let restmuell = text("Restmüll")
+        for _ in 0..<4 where !(restmuell.exists && restmuell.isHittable) { app.swipeUp() }
+        restmuell.tap()
+        let row = app.buttons["wasteQuotaRow"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5), "Keine Kontingent-Zeile in der Müllart")
+        XCTAssertTrue(row.label.contains("Einrichten"), row.label)
+        snap("kontingent-muellart-zeile")
+        row.tap()
+        flip("Leerungen inklusive")
+        app.buttons["Fertig"].firstMatch.tap()
+        let ask = app.alerts.firstMatch
+        XCTAssertTrue(ask.waitForExistence(timeout: 3), "Frage nach dem bisherigen Stand fehlt")
+        XCTAssertFalse(ask.buttons["Zahl übernehmen"].isEnabled, "„Zahl übernehmen“ ohne Zahl")
+        ask.buttons["Stattdessen einzeln nachtragen"].tap()
+        XCTAssertTrue(app.navigationBars["Nachtragen"].waitForExistence(timeout: 5), "„Einzeln nachtragen“ öffnet keine Liste")
+        let outs = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "catchUpOut-Restmüll-"))
+        XCTAssertEqual(outs.count, 3, "Drei vergangene Restmüll-Termine erwartet")
+        snap("kontingent-nachtragen")
+        outs.firstMatch.tap()
+        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "catchUpNotOut-Restmüll-")).firstMatch.tap()
+        app.navigationBars["Nachtragen"].buttons["Fertig"].tap()
+        let deadline = Date().addingTimeInterval(5)
+        while Date() < deadline && !row.label.contains("1 von 12 genutzt") { RunLoop.current.run(until: Date().addingTimeInterval(0.2)) }
+        XCTAssertTrue(row.label.contains("1 von 12 genutzt"), "Nachgetragenes zählt nicht: \(row.label)")
+    }
+
     /// Testdaten (-uiTestingQuota): Restmüll vor 6, 4 und 2 Tagen, morgen zusammen mit dem Gelben Sack.
     func testLeerungsStatistikAblauf() {
         func day(_ offset: Int) -> String {
@@ -360,7 +406,11 @@ final class TonneUITests: XCTestCase {
         app.buttons["Fertig"].firstMatch.tap()
         // Mitten im Jahr eingeschaltet: einmal nach dem bisherigen Stand fragen – hier einzeln nachtragen
         let ask = app.alerts.firstMatch
-        if ask.waitForExistence(timeout: 3) { ask.buttons["Einzeln nachtragen"].tap() }
+        XCTAssertTrue(ask.waitForExistence(timeout: 3), "Frage nach dem bisherigen Stand fehlt (Restmüll hat vergangene Termine)")
+        ask.buttons["Stattdessen einzeln nachtragen"].tap()
+        // Die Nachtragen-Liste geht auf; hier wird in der Leiste markiert, also schließen
+        XCTAssertTrue(app.navigationBars["Nachtragen"].waitForExistence(timeout: 5), "„Einzeln nachtragen“ öffnet keine Liste")
+        app.navigationBars["Nachtragen"].buttons["Fertig"].tap()
         XCTAssertTrue(app.staticTexts["quotaHeadline-Restmüll"].waitForExistence(timeout: 5))
         XCTAssertEqual(headline(), "0 von 12")
 

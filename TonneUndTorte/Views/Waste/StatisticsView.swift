@@ -17,6 +17,9 @@ struct StatisticsView: View {
     @State private var extraFor: WasteType?
     @State private var extraDate = Days.today()
     @State private var showCatchUp = false
+    /// „Einzeln nachtragen“ im Kontingent-Blatt: danach die Nachtragen-Liste dieser Müllart öffnen
+    @State private var catchUpType: WasteType?
+    @State private var catchUpAfterSettings: WasteType?
     @State private var token = 0
 
     private var allTypes: [WasteType] {
@@ -67,18 +70,13 @@ struct StatisticsView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(L10n.t("Leerungen", "Collections"))
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(item: $settingsFor, onDismiss: { token += 1 }) { type in QuotaSettingsView(type: type).appTypography() }
+        .sheet(item: $settingsFor, onDismiss: {
+            token += 1
+            if let type = catchUpAfterSettings { catchUpAfterSettings = nil; catchUpType = type }
+        }) { type in QuotaSettingsView(type: type, onCatchUp: { catchUpAfterSettings = type }).appTypography() }
+        .sheet(item: $catchUpType, onDismiss: { token += 1 }) { type in CatchUpSheet(typeID: type.id) }
         .sheet(item: $extraFor, onDismiss: { token += 1 }) { type in extraSheet(type).appTypography() }
-        .sheet(isPresented: $showCatchUp, onDismiss: { token += 1 }) {
-            NavigationStack {
-                ScrollView { CatchUpList(items: model.openItems(locationID: locationID)) { token += 1 }.padding() }
-                    .background(Color(.systemGroupedBackground))
-                    .navigationTitle(L10n.t("Nachtragen", "Catch up")).navigationBarTitleDisplayMode(.inline)
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.t("Fertig", "Done")) { showCatchUp = false } } }
-            }
-            .presentationDetents([.medium, .large])
-            .appTypography()
-        }
+        .sheet(isPresented: $showCatchUp, onDismiss: { token += 1 }) { CatchUpSheet(locationID: locationID) }
     }
 
     // MARK: - Kopf
@@ -221,13 +219,15 @@ struct QuotaCard: View {
     @Environment(\.colorScheme) private var scheme
 
     @ViewBuilder private var quotaChoice: some View {
+        // Als Knöpfe mit Fläche: Als blanker Text sah man nicht, dass man tippen kann (Thomas 19.11.2026)
         Button(L10n.t("Kontingent einrichten", "Set up included collections"), action: onSettings)
             .tonneFont(.subheadline, .semibold)
+            .buttonStyle(.borderedProminent)
             .accessibilityIdentifier("quotaSetup-\(type.name)")
         if let onHide, type.neverCounted {
             Button(L10n.t("Kein Kontingent", "None included"), action: onHide)
                 .tonneFont(.subheadline, .semibold)
-                .foregroundStyle(KlarStyle.muted(scheme))
+                .buttonStyle(.bordered)
                 .accessibilityHint(L10n.t("Blendet \(type.name) in den Leerungen aus", "Hides \(type.name) from collections"))
                 .accessibilityIdentifier("quotaNone-\(type.name)")
         }
@@ -282,7 +282,7 @@ struct QuotaCard: View {
                     // Nur ohne Kontingent: Im Vorjahr einer gezählten Müllart fehlt es nur für diesen Zeitraum
                     if editable && !type.isCounted {
                         ViewThatFits(in: .horizontal) {
-                            HStack(spacing: 20) { quotaChoice }
+                            HStack(spacing: 12) { quotaChoice }
                             VStack(alignment: .leading, spacing: 8) { quotaChoice }
                         }
                     }
@@ -449,6 +449,39 @@ enum QuotaText {
 // MARK: - Nachtragen
 
 /// Offene oder pauschal bestätigte Termine mit „Raus“ / „Nicht raus“ – auf der Übersicht und in der Statistik.
+/// Vergangene, noch offene Termine zum Nachtragen („Raus“ / „Nicht raus“) – aus der Statistik oder direkt nach dem
+/// Einrichten eines Kontingents („Einzeln nachtragen“, dann nur diese Müllart).
+struct CatchUpSheet: View {
+    var locationID: UUID?
+    var typeID: UUID?
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var token = 0
+
+    var body: some View {
+        let _ = token
+        let items = model.openItems(locationID: locationID).filter { typeID == nil || $0.type.id == typeID }
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    if !items.isEmpty {
+                        Text(L10n.t("Stand die Tonne an diesen Tagen draußen? Jedes „Raus“ zählt als Leerung.",
+                                    "Was the bin out on these days? Every “Out” counts as a collection."))
+                            .tonneFont(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                    }
+                    CatchUpList(items: items) { token += 1 }
+                }
+                .padding()
+            }
+                .background(Color(.systemGroupedBackground))
+                .navigationTitle(L10n.t("Nachtragen", "Catch up")).navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.t("Fertig", "Done")) { dismiss() } } }
+        }
+        .presentationDetents([.medium, .large])
+        .appTypography()
+    }
+}
+
 struct CatchUpList: View {
     let items: [AppModel.QuotaItem]
     var limit: Int = .max
@@ -496,6 +529,8 @@ struct CatchUpList: View {
 /// Kontingent, Gebührenjahr, Preis, Tonnendienst und Startwert einer Müllart.
 struct QuotaSettingsView: View {
     @Bindable var type: WasteType
+    /// „Einzeln nachtragen“ gewählt: Der Aufrufer öffnet nach dem Schließen die Nachtragen-Liste.
+    var onCatchUp: () -> Void = {}
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
     @State private var enabled = false
@@ -512,8 +547,9 @@ struct QuotaSettingsView: View {
     @State private var askedOnFinish = false
     private let wasCounted: Bool
 
-    init(type: WasteType) {
+    init(type: WasteType, onCatchUp: @escaping () -> Void = {}) {
         self.type = type
+        self.onCatchUp = onCatchUp
         wasCounted = type.isCounted
         _enabled = State(initialValue: type.isCounted)
         _included = State(initialValue: type.includedPerYear ?? 12)
@@ -542,13 +578,13 @@ struct QuotaSettingsView: View {
                 }
                 if enabled {
                     Section {
-                        Toggle(L10n.t("Eigenes Gebührenjahr", "Own fee year"), isOn: $ownYear)
+                        Toggle(L10n.t("Zählung startet nicht am 1. Januar", "Count doesn't start on 1 January"), isOn: $ownYear)
                         if ownYear {
-                            DatePicker(L10n.t("Beginnt am", "Starts on"), selection: $cutoff, displayedComponents: .date)
+                            DatePicker(L10n.t("Zählung startet am", "Count starts on"), selection: $cutoff, displayedComponents: .date)
                         }
                     } footer: {
-                        Text(L10n.t("Standard ist das Kalenderjahr. Zählt dein Entsorger ab einem anderen Tag (Gebührenjahr, Einzug), trag ihn hier ein.",
-                                    "Default is the calendar year. If your collector counts from another day (fee year, move-in), enter it here."))
+                        Text(L10n.t("Normalerweise zählen die Leerungen vom 1. Januar bis 31. Dezember. Zählt dein Entsorger ab einem anderen Tag, zum Beispiel ab deinem Einzug, stell ihn hier ein.",
+                                    "Collections normally count from 1 January to 31 December. If your collector counts from another day, for example from when you moved in, set it here."))
                     }
                     Section {
                         TextField(L10n.t("Preis je Zusatzleerung", "Price per extra collection"), text: $price).keyboardType(.decimalPad)
@@ -581,31 +617,56 @@ struct QuotaSettingsView: View {
             }
             .alert(L10n.t("Wie viele Leerungen hast du dieses Jahr schon genutzt?", "How many collections have you used this year?"), isPresented: $askBaseline) {
                 TextField(L10n.t("Anzahl", "Number"), text: $baselineText).keyboardType(.numberPad)
-                Button(L10n.t("Übernehmen", "Save")) {
-                    if let value = Int(baselineText.trimmingCharacters(in: .whitespaces)), value >= 0 {
-                        baseline = value
-                        baselineDate = Days.today()
-                    }
+                // Nur mit gültiger Zahl: Leer oder ungültig hätte das Kontingent ohne Startwert gespeichert (Codex-Befund 1)
+                Button(L10n.t("Zahl übernehmen", "Use number")) {
+                    guard let value = enteredBaseline else { return }
+                    baseline = value
+                    baselineDate = Days.today()
                     if askedOnFinish { apply(); save() }
                 }
-                Button(L10n.t("Einzeln nachtragen", "Enter one by one"), role: .cancel) { if askedOnFinish { apply(); save() } }
+                .disabled(enteredBaseline == nil)
+                // Beim Einrichten: öffnet danach die Liste der vergangenen Termine dieser Müllart; eine eingetippte Zahl gilt dann
+                // nicht (Thomas 19.11.2026, vorher schloss es nur das Blatt und verwarf die Zahl ohne Hinweis).
+                // Über „Bisher genutzte Leerungen angeben“ gibt es nichts nachzutragen: dort ist es „Abbrechen“.
+                if askedOnFinish {
+                    Button(L10n.t("Stattdessen einzeln nachtragen", "Enter dates one by one instead"), role: .cancel) {
+                        onCatchUp(); apply(); save()
+                    }
+                } else {
+                    Button(L10n.t("Abbrechen", "Cancel"), role: .cancel) {}
+                }
             } message: {
-                Text(L10n.t("Die Zahl gilt als Startwert bis heute. Du kannst vergangene Termine auch einzeln in der Leiste nachtragen.",
-                            "The number counts as the starting value until today. You can also enter past dates one by one in the strip."))
+                if askedOnFinish {
+                    Text(L10n.t("Die Zahl gilt als Startwert bis heute. Oder du gehst die vergangenen Termine einzeln durch („Raus“ oder „Nicht raus“) – dann wird keine Zahl verwendet.",
+                                "The number counts as the starting value until today. Or go through past dates one by one (“Out” or “Not out”) – then no number is used."))
+                } else {
+                    Text(L10n.t("Die Zahl gilt als Startwert bis heute.", "The number counts as the starting value until today."))
+                }
             }
         }
     }
 
+    private var enteredBaseline: Int? {
+        Int(baselineText.trimmingCharacters(in: .whitespaces)).flatMap { $0 >= 0 ? $0 : nil }
+    }
+
     private func finish() {
-        // Mitten im Zeitraum eingeschaltet: einmal nach dem bisherigen Stand fragen
-        let period = PickupQuota.period(containing: Days.today(), anchor: enabled && ownYear ? Days.start(of: cutoff) : nil)
-        if enabled && !wasCounted && baseline == nil && Days.between(period.start, Days.today()) > 7 {
-            baselineText = ""
-            askedOnFinish = true
-            askBaseline = true
-            return
-        }
+        // Mitten im Zeitraum eingeschaltet: einmal nach dem bisherigen Stand fragen – nur wenn es etwas nachzutragen gibt,
+        // gezählt wie die Nachtragen-Liste (`AppModel.openItems`: Tonnendienst, schon markiert, Gebührenjahr), sonst öffnete
+        // „Stattdessen einzeln nachtragen“ eine leere Liste (Codex-Befund 2). Die Einstellungen stehen dafür schon im Modell;
+        // beide Antworten der Frage speichern.
         apply()
+        if enabled && !wasCounted && baseline == nil {
+            let today = Days.today()
+            let open = type.quotaSummary(period: type.quotaPeriod(containing: today), today: today).entries
+                .contains { !$0.upcoming && !$0.coveredByBaseline && ($0.mark == .open || $0.bulkConfirmed) }
+            if open {
+                baselineText = ""
+                askedOnFinish = true
+                askBaseline = true
+                return
+            }
+        }
         save()
     }
 

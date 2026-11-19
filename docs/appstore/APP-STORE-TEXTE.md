@@ -51,7 +51,7 @@ Die zwei größten Neuerungen kamen aus euren Mails. Danke dafür!
 Leerungs-Statistik
 Wie oft war welche Tonne draußen, und wie viele Leerungen sind noch frei? „Erledigt“ zählt als Leerung, vergessene Termine trägst du mit „Raus“ oder „Nicht raus“ nach. Trag ein, wie viele Leerungen deine Gebühr enthält, etwa 12 im Jahr – dann steht bei jedem Abholtermin „noch 10 frei“.
 • Prognose bis zum Jahresende und Vergleich mit dem Vorjahr bis zum gleichen Tag
-• Eigenes Gebührenjahr, Preis je Zusatzleerung, Export als CSV
+• Zählung ab eigenem Starttag (z. B. ab Einzug), Preis je Zusatzleerung, Export als CSV
 • „Kein Kontingent“ blendet Müllarten wie das Schadstoffmobil aus der Statistik aus
 
 Schrift nach Wahl
