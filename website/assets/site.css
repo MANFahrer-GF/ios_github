@@ -531,3 +531,6 @@ footer a { color: var(--ink); opacity: .8; }
   .trailer-film { width: min(300px, 76vw); margin: 0 auto; }
 }
 .trailer-film video { cursor: pointer; }
+.trailer-ki { margin: 14px 4px 0; font-size: .78rem; line-height: 1.4; color: #a1a1a6; text-align: center; }
+.trailer-ki a { color: inherit; text-decoration: underline; }
+@media (max-width: 734px) { .trailer-col { width: min(300px, 76vw); margin: 0 auto; } .trailer-col .trailer-film { width: 100%; } }

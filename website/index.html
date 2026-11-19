@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://tonne.kant.ovh/">
 <link rel="icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="assets/site.css?v=20">
+<link rel="stylesheet" href="assets/site.css?v=21">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -68,12 +68,15 @@
           <p class="sub">Eine App, die einfach hilft und sonst nichts von dir will. Am besten mit Ton.</p>
           <button class="btn trailer-ton" type="button" data-trailer-ton>▶︎ Mit Ton ansehen</button>
         </div>
-        <div class="trailer-film reveal">
-          <video data-trailer tabindex="0" muted playsinline loop preload="metadata" title="Anhalten oder weiterspielen: tippen, klicken oder Leertaste" poster="img/trailer-poster.webp" width="720" height="1280"
-                 aria-label="Trailer zu Tonne &amp; Torte: keine Werbung, kein Tracking, kein Konto, dazu die Funktionen der App">
-            <source src="img/trailer.mp4" type="video/mp4">
-          </video>
-          <button class="trailer-mute" type="button" data-trailer-mute aria-label="Ton einschalten">🔇 Ton an</button>
+        <div class="trailer-col reveal">
+          <div class="trailer-film">
+            <video data-trailer tabindex="0" aria-describedby="trailer-ki" muted playsinline loop preload="metadata" title="Anhalten oder weiterspielen: tippen, klicken oder Leertaste" poster="img/trailer-poster.webp" width="720" height="1280"
+                   aria-label="Trailer zu Tonne &amp; Torte: keine Werbung, kein Tracking, kein Konto, dazu die Funktionen der App">
+              <source src="img/trailer.mp4" type="video/mp4">
+            </video>
+            <button class="trailer-mute" type="button" data-trailer-mute aria-label="Ton einschalten">🔇 Ton an</button>
+          </div>
+          <p class="trailer-ki" id="trailer-ki">Mit KI erstellt: Stimme, Musik und Toneffekte KI-generiert (ElevenLabs), Animation mit KI-Unterstützung. <a href="impressum.html#ki">Mehr dazu</a></p>
         </div>
       </div>
     </div>
