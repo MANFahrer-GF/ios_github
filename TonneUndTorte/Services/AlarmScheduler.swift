@@ -49,6 +49,13 @@ enum AlarmScheduler {
 
     /// Nächster geplanter Wecker der App: Zeitpunkt und Titel (für die Einstellungen, damit man sieht, wann er klingelt).
     static var next: (date: Date, title: String?)? {
+        #if DEBUG
+        // Webseiten-Bild (-simulateNextAlarm, nur Oberflächen-Test): Der Testmodus plant keine echten Wecker
+        if TonneUndTorteApp.isUITesting && ProcessInfo.processInfo.arguments.contains("-simulateNextAlarm") {
+            let evening = Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: Days.today()) ?? Date()
+            return (evening, L10n.t("Rausstellen: Restmüll und Gelber Sack", "Put out: General waste and yellow bag"))
+        }
+        #endif
         #if canImport(AlarmKit)
         if #available(iOS 26.0, *) {
             let items = ((try? AlarmManager.shared.alarms) ?? []).map { alarm -> NextAlarm.Item in
