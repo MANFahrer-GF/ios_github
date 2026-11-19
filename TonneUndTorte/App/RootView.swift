@@ -48,8 +48,8 @@ struct StoreOpeningView: View {
                     ProgressView()
                     Text(L10n.t("Termine werden geladen …", "Loading your dates …")).foregroundStyle(.secondary)
                     if showSlowHint {
-                        Text(L10n.t("Das dauert ungewöhnlich lange – meist gleicht iCloud gerade ab. Die App wartet weiter, du musst nichts tun. Hilft es nach einer Weile nicht, beende die App und öffne sie neu.",
-                                    "This is taking unusually long – iCloud is probably syncing. The app keeps waiting, there's nothing you need to do. If it doesn't help after a while, close the app and open it again."))
+                        Text(L10n.t("Das dauert ungewöhnlich lange. Die App wartet weiter, du musst nichts tun. Hilft es nach einer Weile nicht, beende die App und öffne sie neu.",
+                                    "This is taking unusually long. The app keeps waiting, there's nothing you need to do. If it doesn't help after a while, close the app and open it again."))
                             .tonneFont(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
                             .accessibilityIdentifier("storeOpeningSlowHint")
                     }
