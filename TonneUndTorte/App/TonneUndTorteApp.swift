@@ -89,6 +89,8 @@ struct TonneUndTorteApp: App {
         #endif
         // Muss vor dem Ende des App-Starts passieren (sonst Exception von BGTaskScheduler) – unabhängig von der Datenbank
         AppModel.registerBackgroundTask()
+        // Holder jetzt anlegen: er verdrahtet die Mitteilungs-Aktionen, bevor eine Antwort beim Start ankommen kann
+        _ = ModelHolder.shared
         StartTimings.measure("Mitteilungen") { NotificationManager.shared.configure() }
         // Datenbank sofort öffnen, auch beim Hintergrundstart ohne Szene (Hintergrundaufgabe und Mitteilungen warten darauf),
         // aber ohne den Start aufzuhalten

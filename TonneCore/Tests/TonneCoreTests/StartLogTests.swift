@@ -38,7 +38,7 @@ final class StartLogTests: XCTestCase {
 
     func testKeepsOnlyTheNewestStarts() {
         for i in 0..<(StartLogStore.maxRecords + 3) { store.begin(appVersion: "\(i)", at: Date(timeIntervalSince1970: Double(i))) }
-        XCTAssertEqual(store.load().map(\.appVersion), ["3", "4", "5", "6", "7"])
+        XCTAssertEqual(store.load().map(\.appVersion), (3..<(StartLogStore.maxRecords + 3)).map(String.init))
     }
 
     func testBrokenFileCountsAsEmpty() throws {

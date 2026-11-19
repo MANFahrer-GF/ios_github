@@ -19,7 +19,8 @@ public struct StartRecord: Codable, Equatable, Sendable {
 
 /// Bewahrt die letzten Starts in einer Datei auf (Hintergrund und Hauptthread schreiben, deshalb mit Sperre).
 public final class StartLogStore: @unchecked Sendable {
-    public static let maxRecords = 5
+    /// Großzügig: iOS liefert den Absturzbericht bis zu einen Tag später, bis dahin kommen viele Hintergrundstarts dazu.
+    public static let maxRecords = 40
 
     private let url: URL
     private let lock = NSLock()

@@ -713,6 +713,7 @@ final class AppModel: ObservableObject {
             let work = Task { @MainActor in
                 // Beim Hintergrundstart ist die Datenbank evtl. noch nicht offen: darauf warten, nie ohne Daten abgleichen
                 let model = await ModelHolder.shared.opened()
+                guard !Task.isCancelled else { return }   // Zeit schon abgelaufen, bevor die Datenbank offen war
                 await model.syncAll(force: false)
                 await model.refreshAll()
                 guard !Task.isCancelled else { return }
