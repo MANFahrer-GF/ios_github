@@ -18,10 +18,13 @@ public struct CrashReport: Codable, Equatable, Identifiable, Sendable {
     public let callStackJSON: String
     /// Wurde dem Nutzer schon einmal angeboten – der Hinweis beim Start kommt je Bericht nur einmal.
     public var prompted: Bool
+    /// Schrittzeiten der letzten Starts vor dem Eingang des Berichts (`StartLogStore.text`) – zeigt bei einem
+    /// Start-Watchdog, wo die Zeit blieb. Gehört nicht zur Kennung: derselbe Bericht bleibt derselbe.
+    public var startLog: String?
 
     public init(reportDate: Date, appVersion: String, osVersion: String, deviceType: String,
                 exceptionType: Int?, exceptionCode: Int?, signal: Int?,
-                terminationReason: String?, objectiveCException: String?, callStackJSON: String) {
+                terminationReason: String?, objectiveCException: String?, callStackJSON: String, startLog: String? = nil) {
         self.reportDate = reportDate
         self.appVersion = appVersion
         self.osVersion = osVersion
@@ -33,6 +36,7 @@ public struct CrashReport: Codable, Equatable, Identifiable, Sendable {
         self.objectiveCException = objectiveCException
         self.callStackJSON = callStackJSON
         self.prompted = false
+        self.startLog = startLog
         // iOS kann denselben Bericht mehrfach liefern; die Kennung hängt nur am Inhalt, damit er einmal zählt.
         let key = [String(reportDate.timeIntervalSince1970), appVersion, osVersion, deviceType,
                    exceptionType.map(String.init) ?? "", exceptionCode.map(String.init) ?? "", signal.map(String.init) ?? "",
@@ -56,8 +60,11 @@ public struct CrashReport: Codable, Equatable, Identifiable, Sendable {
         return lines.joined(separator: "\n")
     }
 
-    /// Vollständiger Bericht als Text: Kopfzeilen und Aufrufstapel.
-    public var fileText: String { summary + "\n\n" + callStackJSON + "\n" }
+    /// Vollständiger Bericht als Text: Kopfzeilen, Schrittzeiten der letzten Starts und Aufrufstapel.
+    public var fileText: String {
+        let starts = startLog.map { $0.isEmpty ? "" : "\n\nLetzte Starts:\n" + $0 } ?? ""
+        return summary + starts + "\n\n" + callStackJSON + "\n"
+    }
 }
 
 /// Bewahrt die letzten Absturzberichte in einer Datei auf. Wird aus dem MetricKit-Rückruf (Hintergrund) und von der

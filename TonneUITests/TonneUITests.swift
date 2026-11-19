@@ -798,6 +798,21 @@ final class TonneUITests: XCTestCase {
 
     // MARK: - Absturzbericht
 
+    /// Absturzbericht 2.0.11 (15): Watchdog beim Hintergrundstart, die App wartete 30 s. Hängt das Öffnen der Datenbank,
+    /// darf der Start nicht mitwarten – die App ist sofort da, die Daten erscheinen, sobald die Datenbank offen ist.
+    func testSlowStoreDoesNotBlockTheStart() {
+        app.terminate()
+        app.launchArguments += ["-simulateSlowStore", "20"]
+        let begin = Date()
+        app.launch()
+        let waited = Date().timeIntervalSince(begin)
+        XCTAssertLessThan(waited, 10, "Start blockiert am Speicher (\(Int(waited)) s bis zur bedienbaren App)")
+        XCTAssertTrue(app.staticTexts["Termine werden geladen …"].waitForExistence(timeout: 5), "Kein Ladehinweis")
+        XCTAssertFalse(app.staticTexts["Daten werden geöffnet …"].exists, "Laden darf nicht als „Datenbank nicht lesbar“ erscheinen")
+        XCTAssertTrue(app.staticTexts["Lena Sommer"].firstMatch.waitForExistence(timeout: 30), "Daten erscheinen nach dem Öffnen nicht")
+        XCTAssertFalse(app.staticTexts["Termine werden geladen …"].exists)
+    }
+
     private func openCrashReports() {
         tab("Mehr")
         app.buttons["Einstellungen"].tap()

@@ -23,15 +23,17 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
     }
 
     private func ingest(_ payloads: [MXDiagnosticPayload]) {
+        // Starts vor diesem: Der abgestürzte ist einer davon (der laufende ist der letzte Eintrag)
+        let startLog = StartLogStore.text(Array(StartTimings.store.load().dropLast()))
         let reports = payloads.flatMap { payload in
-            (payload.crashDiagnostics ?? []).map { Self.report(from: $0, date: payload.timeStampEnd) }
+            (payload.crashDiagnostics ?? []).map { Self.report(from: $0, date: payload.timeStampEnd, startLog: startLog) }
         }
         guard !reports.isEmpty else { return }
         Self.store.add(reports)
         DispatchQueue.main.async { CrashReportCenter.shared.reload() }
     }
 
-    private static func report(from crash: MXCrashDiagnostic, date: Date) -> CrashReport {
+    private static func report(from crash: MXCrashDiagnostic, date: Date, startLog: String) -> CrashReport {
         // Nur Art und Klasse: der Meldungstext einer Ausnahme kann Nutzerdaten enthalten
         let objectiveC = crash.exceptionReason.map { "\($0.exceptionName) (\($0.className))" }
         return CrashReport(reportDate: date,
@@ -43,7 +45,8 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
                            signal: crash.signal?.intValue,
                            terminationReason: crash.terminationReason,
                            objectiveCException: objectiveC,
-                           callStackJSON: String(decoding: crash.callStackTree.jsonRepresentation(), as: UTF8.self))
+                           callStackJSON: String(decoding: crash.callStackTree.jsonRepresentation(), as: UTF8.self),
+                           startLog: startLog)
     }
 
     #if DEBUG
@@ -59,6 +62,34 @@ final class CrashReportCollector: NSObject, MXMetricManagerSubscriber {
                                objectiveCException: nil, callStackJSON: "{\"callStacks\":[]}")])
     }
     #endif
+}
+
+/// Schrittzeiten des App-Starts, nach jedem Schritt abgelegt (`StartLogStore`). Ein späterer Absturzbericht trägt sie mit.
+enum StartTimings {
+    static let store = StartLogStore(url: TonneUndTorteApp.isUITesting
+        ? FileManager.default.temporaryDirectory.appendingPathComponent("uitest-start-log.json")
+        : URL.applicationSupportDirectory.appendingPathComponent("StartLog.json"))
+    private static let launch = Date()
+
+    /// Als Erstes in `App.init`.
+    static func begin() {
+        let info = Bundle.main.infoDictionary
+        let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
+        store.begin(appVersion: version, at: launch)
+    }
+
+    /// Misst einen Schritt und legt ihn sofort ab – auch von einem Nebenthread aus.
+    @discardableResult
+    static func measure<T>(_ name: String, _ work: () throws -> T) rethrows -> T {
+        let start = Date()
+        defer {
+            let end = Date()
+            store.step(name, milliseconds: Int(end.timeIntervalSince(start) * 1000), atMilliseconds: Int(end.timeIntervalSince(launch) * 1000))
+        }
+        return try work()
+    }
+
+    static func finish() { store.finish() }
 }
 
 /// Stand der Absturzberichte für die Oberfläche.

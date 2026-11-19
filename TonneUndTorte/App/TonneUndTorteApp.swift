@@ -26,6 +26,7 @@ struct TonneUndTorteApp: App {
     private var model: AppModel { holder.model }
 
     init() {
+        StartTimings.begin()
         CrashReportCollector.shared.start()   // vor allem anderen, damit auch Abstürze beim Start berichtet werden
         // Oberflächen-Tests: eigene Einstellungs-Ablage, jedes Mal auf Werkszustand – die echten Einstellungen bleiben unberührt
         if TonneUndTorteApp.isUITesting {
@@ -44,10 +45,12 @@ struct TonneUndTorteApp: App {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("-simulateCrash") { fatalError("Absichtlicher Testabsturz (-simulateCrash)") }
         #endif
-        let container = TonneUndTorteApp.makeContainer()
+        let container = StartTimings.measure("Container gesamt") { TonneUndTorteApp.makeContainer() }
         if TonneUndTorteApp.isDemo { TonneUndTorteApp.seedDemo(container) } else if TonneUndTorteApp.isUITesting { TonneUndTorteApp.seedForUITests(container) }
-        _holder = StateObject(wrappedValue: ModelHolder(AppModel(container: container)))
-        NotificationManager.shared.configure()
+        let model = StartTimings.measure("Modell") { AppModel(container: container) }
+        _holder = StateObject(wrappedValue: ModelHolder(model))
+        StartTimings.measure("Mitteilungen") { NotificationManager.shared.configure() }
+        StartTimings.finish()
     }
 
     var body: some Scene {
@@ -90,6 +93,13 @@ struct TonneUndTorteApp: App {
     @MainActor
     static func makeContainer() -> ModelContainer {
         let schema = Schema([Location.self, WasteType.self, Person.self, CustomEvent.self])
+        #if DEBUG
+        // Langsamer Speicher (-simulateSlowStore <Sekunden>): blockiert wie ein hängendes Öffnen von SQLite/iCloud – auch im Testmodus
+        let args = ProcessInfo.processInfo.arguments
+        if let i = args.firstIndex(of: "-simulateSlowStore"), i + 1 < args.count, let seconds = Double(args[i + 1]) {
+            StartTimings.measure("Langsamer Speicher (Test)") { Thread.sleep(forTimeInterval: seconds) }
+        }
+        #endif
         // Oberflächen-Tests: leere Datenbank nur im Speicher, kein iCloud – echte Daten bleiben unberührt.
         // Klappt das nicht, sofort abbrechen statt still auf die echte Datenbank auszuweichen.
         if isUITesting {
@@ -108,13 +118,13 @@ struct TonneUndTorteApp: App {
             // Datenbank im eigenen App-Ordner statt im gemeinsamen App-Group-Ordner: Dort beendet iOS die App mit 0xdead10cc,
             // wenn beim Suspendieren noch eine SQLite-Sperre gehalten wird (Absturzbericht 2.0.10 (13)). Einmalig verschieben;
             // klappt das nicht (Gerät nach Neustart noch gesperrt), diesmal den alten Ort öffnen – nie zwei Datenbanken.
-            let group: ModelConfiguration.GroupContainer = moveStoreOutOfAppGroup() == .failed ? .automatic : .none
+            let group: ModelConfiguration.GroupContainer = StartTimings.measure("Umzug") { moveStoreOutOfAppGroup() } == .failed ? .automatic : .none
             let cloud = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .automatic)
-            if let container = try? ModelContainer(for: schema, configurations: [cloud]) {
+            if let container = StartTimings.measure("Cloud", { try? ModelContainer(for: schema, configurations: [cloud]) }) {
                 return container
             }
             let local = ModelConfiguration("TonneUndTorte", schema: schema, groupContainer: group, cloudKitDatabase: .none)
-            if let container = try? ModelContainer(for: schema, configurations: [local]) {
+            if let container = StartTimings.measure("Lokal", { try? ModelContainer(for: schema, configurations: [local]) }) {
                 return container
             }
         }
