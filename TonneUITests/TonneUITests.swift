@@ -821,13 +821,15 @@ final class TonneUITests: XCTestCase {
         tab("Mehr")
         app.buttons["Einstellungen"].tap()
         let toggle = app.switches["alarmToggle"]
-        for _ in 0..<8 where !toggle.isHittable { app.swipeUp() }
-        XCTAssertTrue(toggle.isHittable, "Schalter „Wecker am Vorabend“ fehlt")
+        // Thomas 19.11.2026: stand weit unten unter langen Abschnitten – jetzt direkt nach den Mitteilungen, ohne Scrollen
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5) && toggle.isHittable, "Wecker nicht ohne Scrollen sichtbar")
         XCTAssertEqual(toggle.value as? String, "0", "Wecker muss standardmäßig aus sein")
         XCTAssertFalse(text("Weckzeit").exists)
         func tapToggle() { let inner = toggle.switches.firstMatch; (inner.exists ? inner : toggle).tap() }
         tapToggle()
         XCTAssertTrue(text("Weckzeit").waitForExistence(timeout: 5), "Weckzeit erscheint nicht")
+        // Man sieht, ob und wann er klingelt (im Testmodus plant die App keine echten Wecker)
+        XCTAssertTrue(text("Nächster Wecker").exists, "„Nächster Wecker“ fehlt")
         tapToggle()
         XCTAssertFalse(text("Weckzeit").waitForExistence(timeout: 2))
     }

@@ -24,7 +24,9 @@ struct TypographyView: View {
                 ForEach(TypographySettings.Family.allCases, id: \.self) { option in
                     Button { family = option.rawValue } label: {
                         HStack {
-                            Text(name(option)).tonneFont(.body).foregroundStyle(.primary)
+                            // fontDesign direkt am Text: Die Umgebung allein setzte sich gegen die Schrift der App nicht
+                            // durch, alle Zeilen standen in derselben Schrift (im Simulator gesehen, 19.11.2026)
+                            Text(name(option)).tonneFont(.body).fontDesign(TypographySettings(family: option).design).foregroundStyle(.primary)
                             Spacer()
                             if family == option.rawValue { Image(systemName: "checkmark").foregroundStyle(.tint) }
                         }

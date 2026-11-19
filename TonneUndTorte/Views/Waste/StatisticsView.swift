@@ -290,6 +290,11 @@ struct QuotaCard: View {
             }
             if !summary.entries.isEmpty {
                 YearStrip(type: type, entries: summary.entries, editable: editable, onSet: onSet, onRemoveExtra: onRemoveExtra)
+                // Die grauen „?“ sah man nicht als antippbar (Thomas 19.11.2026)
+                if editable && summary.entries.contains(where: { !$0.upcoming && !$0.coveredByBaseline && $0.mark == .open }) {
+                    Text(L10n.t("Tippe auf ein ?, um einzutragen, ob die Tonne draußen war.", "Tap a ? to enter whether the bin was out."))
+                        .tonneFont(size: 12, .semibold).foregroundStyle(KlarStyle.muted(scheme)).fixedSize(horizontal: false, vertical: true)
+                }
             }
             HStack(alignment: .firstTextBaseline) {
                 if editable {

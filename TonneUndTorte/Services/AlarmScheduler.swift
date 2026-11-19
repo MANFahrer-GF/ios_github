@@ -47,6 +47,22 @@ enum AlarmScheduler {
         return 0
     }
 
+    /// Nächster geplanter Wecker der App: Zeitpunkt und Titel (für die Einstellungen, damit man sieht, wann er klingelt).
+    static var next: (date: Date, title: String?)? {
+        #if canImport(AlarmKit)
+        if #available(iOS 26.0, *) {
+            let items = ((try? AlarmManager.shared.alarms) ?? []).map { alarm -> NextAlarm.Item in
+                var date: Date?
+                if case .fixed(let fixed)? = alarm.schedule { date = fixed }
+                return NextAlarm.Item(id: alarm.id, date: date, isScheduled: alarm.state == .scheduled)
+            }
+            guard let first = NextAlarm.pick(items) else { return nil }
+            return (first.date, SettingsKeys.store.string(forKey: titleKey(first.id)))
+        }
+        #endif
+        return nil
+    }
+
     /// Geplante Wecker an den Plan angleichen: Fehlendes und Geändertes neu planen, alles andere entfernen.
     /// Ohne Erlaubnis (oder ausgeschaltet: leerer Plan) bleibt kein geplanter Wecker der App stehen;
     /// ein gerade klingelnder bleibt, bis der Nutzer ihn ausmacht.

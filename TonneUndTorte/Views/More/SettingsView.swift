@@ -33,7 +33,7 @@ struct SettingsView: View {
     @AppStorage(SettingsKeys.bringInMinutes) private var bringInMinutes = 17 * 60
     @AppStorage(SettingsKeys.alarmEnabled) private var alarmEnabled = false
     @AppStorage(SettingsKeys.alarmMinutes) private var alarmMinutes = 20 * 60
-    @State private var alarmCount = 0
+    @State private var nextAlarm: (date: Date, title: String?)?
     @State private var activityStatus: LiveActivityManager.Status = .none
     @State private var showResetConfirm = false
     @State private var info: String?
@@ -56,6 +56,9 @@ struct SettingsView: View {
                 LabeledContent("Geplante Erinnerungen", value: "\(notifications.pendingCount)")
                 Button("Testmitteilung senden") { notifications.sendTest(); info = L10n.t("Kommt in 3 Sekunden – mit den Aktionen „Erledigt“ und „In 1 Stunde nochmal“.", "Arrives in 3 seconds – with the actions “Done” and “Remind me in 1 hour”.") }.disabled(!notifications.isAuthorized)
             } header: { Text("Mitteilungen") }
+
+            // Neu in 2.1.0 und sonst unter langen Abschnitten verborgen: direkt nach den Mitteilungen (Thomas 19.11.2026)
+            if AlarmScheduler.isSupported { alarmSection }
 
             Section {
                 Toggle("Am Vorabend erinnern", isOn: $eveningEnabled)
@@ -83,8 +86,6 @@ struct SettingsView: View {
                     liveActivityFooter
                 }
             }
-
-            if AlarmScheduler.isSupported { alarmSection }
 
             Section {
                 Toggle(L10n.t("An Geburtstage erinnern", "Remind me of birthdays"), isOn: $birthdayEnabled)
@@ -205,7 +206,7 @@ struct SettingsView: View {
         .task {
             await notifications.refreshStatus()
             activityStatus = LiveActivityManager.status()
-            alarmCount = AlarmScheduler.scheduledCount
+            nextAlarm = AlarmScheduler.next
         }
     }
 
@@ -234,15 +235,18 @@ struct SettingsView: View {
                 .accessibilityIdentifier("alarmToggle")
             if alarmEnabled {
                 TimeOfDayPicker(title: L10n.t("Weckzeit", "Alarm time"), minutes: $alarmMinutes)
-                if alarmCount > 0 { LabeledContent(L10n.t("Geplante Wecker", "Scheduled alarms"), value: "\(alarmCount)") }
+                // Wann er das nächste Mal klingelt – sonst weiß niemand, ob das Einschalten gewirkt hat
+                LabeledContent(L10n.t("Nächster Wecker", "Next alarm"), value: nextAlarmText)
+                    .accessibilityIdentifier("nextAlarm")
                 // Im Oberflächen-Test (und für die Webseiten-Bilder) ist die Erlaubnis umgangen – dort keinen Hinweis
                 if AlarmScheduler.isDenied && !TonneUndTorteApp.isUITesting {
                     Button(L10n.t("Wecker in den Einstellungen erlauben", "Allow alarms in Settings")) { notifications.openSystemSettings() }
                 }
             }
         } header: { Text(L10n.t("Wecker", "Alarm")) } footer: {
-            Text(L10n.t("Klingelt wie ein Wecker – auch wenn das iPhone stumm ist oder ein Fokus läuft. Nur an Abenden vor einer Abholung mit etwas zum Rausstellen; nach „Erledigt“ oder „Diesmal nicht“ fällt er weg – auf einem anderen Gerät markiert erst, wenn dieses iPhone den Stand aus iCloud hat (spätestens beim Öffnen der App). Für einzelne Müllarten abschalten: dort „Erinnerungen“ aus.",
-                        "Rings like an alarm clock – even when your iPhone is silenced or a Focus is on. Only on evenings before a collection with something to put out; it's cancelled after “Done” or “Not this time” – if marked on another device, once this iPhone has the change from iCloud (at the latest when you open the app). To leave out a waste type, turn off its “Reminders”."))
+            // Kurze Sätze statt eines Bandwurmsatzes (Thomas 19.11.2026), Inhalt wie vorher
+            Text(L10n.t("Klingelt laut, auch wenn das iPhone stumm ist oder ein Fokus läuft. Nur am Abend vor einer Abholung, bei der etwas rausmuss. Nach „Erledigt“ oder „Diesmal nicht“ fällt er weg. Auf einem anderen Gerät abgehakt: sobald iCloud abgeglichen hat, spätestens beim Öffnen der App. Eine Müllart nimmst du aus, indem du dort „Erinnerungen“ ausschaltest.",
+                        "Rings out loud, even when your iPhone is silenced or a Focus is on. Only on the evening before a collection with something to put out. It's cancelled after “Done” or “Not this time”. Marked on another device: once iCloud has synced, at the latest when you open the app. To leave out a waste type, turn off its “Reminders”."))
         }
     }
 
@@ -300,7 +304,13 @@ struct SettingsView: View {
         Task {
             await model.refreshAll()
             activityStatus = LiveActivityManager.status()
-            alarmCount = AlarmScheduler.scheduledCount
+            nextAlarm = AlarmScheduler.next
         }
+    }
+
+    /// „Fr., 27. Nov., 20:00 · Restmüll rausstellen“ oder „keiner geplant“.
+    private var nextAlarmText: String {
+        guard let nextAlarm else { return L10n.t("keiner geplant", "none planned") }
+        return NextAlarm.text(date: nextAlarm.date, title: nextAlarm.title)
     }
 }

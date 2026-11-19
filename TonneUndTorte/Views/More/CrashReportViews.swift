@@ -121,6 +121,7 @@ struct CrashReportSendSheet: View {
                 Section {
                     if offersStore, let storeURL {
                         Button(L10n.t("Zum App Store", "Open App Store")) { openURL(storeURL); dismiss() }
+                            .fontWeight(.semibold)   // die empfohlene Wahl
                     }
                     Button(L10n.t("Trotzdem senden", "Send anyway")) { self.note = note; confirmed = true }
                     Button(L10n.t("Nicht senden", "Don't send")) { dismiss() }
