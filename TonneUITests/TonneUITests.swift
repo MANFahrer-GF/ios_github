@@ -196,6 +196,47 @@ final class TonneUITests: XCTestCase {
         XCTAssertGreaterThan(changed(rounded, serif), 0.005, "Widget auf dem Home-Bildschirm zeigt Serif wie Abgerundet")
     }
 
+    /// Mehr › Schrift: Umschalten in der laufenden App ändert die Vorschau sofort (Thomas 20.11.2026: Vorschau blieb gleich).
+    /// Echte App-Gruppe (ohne -uiTesting), weil der Testmodus eine andere Ablage nutzt und den Fehler verdeckte.
+    func testFontSwitchChangesPreview() throws {
+        app.terminate()
+        app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launchEnvironment["TONNE_UITESTING"] = nil
+        app.launch()
+        tab("Mehr")
+        app.buttons["Schrift"].firstMatch.tap()
+        let sample = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Restmüll rausstellen'")).firstMatch
+        XCTAssertTrue(sample.waitForExistence(timeout: 5), "Vorschau fehlt")
+        func preview(_ label: String) -> [UInt8] {
+            app.buttons[label].firstMatch.tap()
+            sleep(1)
+            let shot = XCUIScreen.main.screenshot()
+            let attachment = XCTAttachment(screenshot: shot); attachment.name = "schrift-" + label; attachment.lifetime = .keepAlways; add(attachment)
+            let image = shot.image.cgImage!
+            let scale = CGFloat(image.width) / app.frame.width
+            let f = sample.frame
+            let crop = image.cropping(to: CGRect(x: 0, y: f.minY * scale, width: CGFloat(image.width), height: f.height * scale))!
+            var pixels = [UInt8](repeating: 0, count: crop.width * crop.height * 4)
+            let context = CGContext(data: &pixels, width: crop.width, height: crop.height, bitsPerComponent: 8, bytesPerRow: crop.width * 4,
+                                    space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            context.draw(crop, in: CGRect(x: 0, y: 0, width: crop.width, height: crop.height))
+            return pixels
+        }
+        func changed(_ a: [UInt8], _ b: [UInt8]) -> Double {
+            guard a.count == b.count, !a.isEmpty else { return 1 }
+            var n = 0
+            for i in stride(from: 0, to: a.count, by: 4) where (0..<3).contains(where: { abs(Int(a[i + $0]) - Int(b[i + $0])) > 32 }) { n += 1 }
+            return Double(n) / Double(a.count / 4)
+        }
+        let rounded = preview("Abgerundet")
+        let serif = preview("Serif (New York)")
+        let standard = preview("Standard (SF Pro)")
+        let roundedAgain = preview("Abgerundet")
+        XCTAssertLessThan(changed(rounded, roundedAgain), 0.001, "Gegenprobe: gleiche Schrift, gleiches Bild")
+        XCTAssertGreaterThan(changed(rounded, serif), 0.005, "Vorschau zeigt Serif wie Abgerundet")
+        XCTAssertGreaterThan(changed(rounded, standard), 0.005, "Vorschau zeigt Standard wie Abgerundet")
+    }
+
     private func tabButton(_ name: String) -> XCUIElement {
         app.tabBars.buttons[name].exists ? app.tabBars.buttons[name] : app.buttons[name].firstMatch
     }

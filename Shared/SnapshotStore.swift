@@ -21,9 +21,11 @@ enum SnapshotStore {
         FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)
     }
 
-    static var defaults: UserDefaults {
+    /// Eine einzige Instanz: Die Schrift-Einstellung schreibt hier, die App-Wurzel liest hier (beide per `@AppStorage`).
+    /// Mit je einer neuen Instanz pro Zugriff bekam die Wurzel den Wechsel nicht mit – Schrift und Vorschau änderten sich
+    /// erst nach hartem Beenden der App (Thomas 20.11.2026).
+    static let defaults: UserDefaults =
         isUITestRun ? (UserDefaults(suiteName: uiTestSuite) ?? .standard) : (UserDefaults(suiteName: appGroup) ?? .standard)
-    }
 
     private static var fileURL: URL? {
         isUITestRun ? nil : containerURL?.appendingPathComponent(WidgetSnapshot.fileName)
