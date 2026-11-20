@@ -5,6 +5,10 @@ import XCTest
 /// Alt-Straßen ohne Plan und „Beuren – Beuren“ mit den echten Straßen. Wer „Beuren“ wählte, bekam keine Termine
 /// (Kaisersesch, Zell, Bullay … 50 Gemeinden). Der gleichnamige Ortsteil gehört zum Hauptort: ein Eintrag „Beuren“ mit allen Straßen.
 final class BuergerportalSameNameDistrictTests: XCTestCase {
+    // Erwartet deutsche Texte – unabhängig von der Sprache des Rechners (CI läuft englisch) und von anderen Testklassen
+    override func setUp() { L10n.forcedLanguage = "de" }
+    override func tearDown() { L10n.forcedLanguage = nil }
+
     private func provider() -> BuergerportalProvider {
         BuergerportalProvider(operator: "cochem_zell", client: HTTPClient(session: BuergerportalStub.session()))
     }

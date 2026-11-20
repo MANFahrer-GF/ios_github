@@ -43,7 +43,7 @@ public enum SpokenSummary {
     static func sentenceWhen(_ date: Date, today: Date, calendar: Calendar) -> (when: String, tail: String) {
         let days = calendar.dateComponents([.day], from: today, to: calendar.startOfDay(for: date)).day ?? 0
         guard days > 2 else { return (whenText(date, today: today, calendar: calendar), "") }
-        return (L10n.t("am \(DateText.short(date))", "on \(DateText.short(date))"),
+        return (L10n.t("am \(DateText.short(date, calendar: calendar))", "on \(DateText.short(date, calendar: calendar))"),
                 L10n.t(" – in \(days) Tagen", " – in \(days) days"))
     }
 
@@ -54,7 +54,7 @@ public enum SpokenSummary {
         case 0: return L10n.t("heute", "today")
         case 1: return L10n.t("morgen", "tomorrow")
         case 2: return L10n.t("übermorgen", "the day after tomorrow")
-        default: return L10n.t("in \(days) Tagen, am \(DateText.short(date))", "in \(days) days, on \(DateText.short(date))")
+        default: return L10n.t("in \(days) Tagen, am \(DateText.short(date, calendar: calendar))", "in \(days) days, on \(DateText.short(date, calendar: calendar))")
         }
     }
 }

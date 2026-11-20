@@ -63,6 +63,8 @@ p { margin: 0; }
 .pill:hover { background: var(--accent-hover); text-decoration: none; color: var(--on-accent); }
 .pill:active { transform: scale(.97); }
 @media (max-width: 720px) { .nav .hide-sm { display: none; } .nav ul { gap: 16px; } .brand { font-size: 1.1rem; } }
+/* Kleine iPhones (320 px): „Laden“ stieß an den Rand – Kontakt steht weiter in der Fußzeile */
+@media (max-width: 360px) { .nav .hide-xs { display: none; } }
 
 /* Knöpfe und Badge */
 .btn { display: inline-block; background: var(--accent); color: var(--on-accent); border-radius: 980px; padding: 12px 24px; font-size: 1.06rem; font-weight: 400; transition: background .2s, transform .2s; }

@@ -4,8 +4,13 @@ import XCTest
 /// Gemeinde-Prüfung Punkt 6 (16.11.2026): Ostprignitz-Ruppin und Potsdam-Mittelmark führen im Ort-Schritt Ortsteile statt
 /// Gemeinden. Die Suche „Damelack“ fand die Gemeinde Breddin, der Assistent zeigte dann aber die ganze Liste mit 49 Orten.
 final class OrtsteilVorauswahlTests: XCTestCase {
-    private let step = SelectionStep(title: SelectionStep.cityTitle, options: ["Dorf Zechlin", "Damelack", "Kränzlin", "Ostprignitz-Ruppin"]
-        .map { SelectionOption(id: $0, title: $0) })
+    // Erwartet deutsche Texte – unabhängig von der Sprache des Rechners (CI läuft englisch) und von anderen Testklassen
+    override func setUp() { L10n.forcedLanguage = "de" }
+    override func tearDown() { L10n.forcedLanguage = nil }
+
+    // Berechnet, nicht beim Anlegen der Testinstanz: der Schritttitel hängt von der Sprache ab (setUp)
+    private var step: SelectionStep { SelectionStep(title: SelectionStep.cityTitle, options: ["Dorf Zechlin", "Damelack", "Kränzlin", "Ostprignitz-Ruppin"]
+        .map { SelectionOption(id: $0, title: $0) }) }
 
     func testSearchedLocalityOfThePlaceIsPreselected() {
         XCTAssertEqual(step.preselection(for: "Breddin", query: "Damelack")?.title, "Damelack")

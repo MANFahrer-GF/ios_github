@@ -2,6 +2,10 @@ import XCTest
 @testable import TonneCore
 
 final class BringInTests: XCTestCase {
+    // Erwartet deutsche Texte – unabhängig von der Sprache des Rechners (CI läuft englisch) und von anderen Testklassen
+    override func setUp() { L10n.forcedLanguage = "de" }
+    override func tearDown() { L10n.forcedLanguage = nil }
+
     private var calendar: Calendar {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "Europe/Berlin")!

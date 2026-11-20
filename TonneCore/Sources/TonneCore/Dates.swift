@@ -77,8 +77,10 @@ public enum DateText {
         }
     }
 
-    public static func short(_ date: Date) -> String {
-        date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
+    /// Im Kalender des Aufrufers (Zone, Sprache) – sonst nannte das Siri-Beispiel auf einem UTC-Rechner den Vortag.
+    public static func short(_ date: Date, calendar: Calendar = .current) -> String {
+        date.formatted(Date.FormatStyle(locale: calendar.locale ?? .current, calendar: calendar, timeZone: calendar.timeZone)
+            .weekday(.abbreviated).day().month(.abbreviated))
     }
 
     public static func long(_ date: Date) -> String {
