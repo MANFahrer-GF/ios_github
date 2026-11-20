@@ -42,11 +42,11 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 
 Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
-### Neu in Version 2.1.1 (Build 19)
+### Neu in Version 2.1.1 (Build 19; Apple lehnt Emojis in „Neues in dieser Version“ ab – „ungültiges Zeichen“)
 
 ```
 Ein Wunsch aus der Community
-Kalender ohne Emojis: Unter Mehr → Kalender-Abgleich lassen sich die Emojis in den Kalendereinträgen abschalten. Dann steht dort nur „Restmüll“ statt „🗑️ Restmüll“.
+Kalender ohne Emojis: Unter Mehr → Kalender-Abgleich lassen sich die Emojis in den Kalendereinträgen abschalten. Dann steht dort nur „Restmüll“, ohne Symbol davor.
 
 Zwei Standorte
 „Erledigt“ gilt jetzt nur für den Standort, den du gerade siehst – in der gefilterten Übersicht und im Widget mit Standort. Der andere Standort behält seine Erinnerung.
