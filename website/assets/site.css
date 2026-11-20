@@ -534,3 +534,19 @@ footer a { color: var(--ink); opacity: .8; }
 .trailer-ki { margin: 14px 4px 0; font-size: .78rem; line-height: 1.4; color: #a1a1a6; text-align: center; }
 .trailer-ki a { color: inherit; text-decoration: underline; }
 @media (max-width: 734px) { .trailer-col { width: min(300px, 76vw); margin: 0 auto; } .trailer-col .trailer-film { width: 100%; } }
+
+/* Version 2.1.0 ist da: Hinweis oben, Knopf im Neu-Abschnitt, Ziel der Leiste erreicht */
+.hero-neu { display: inline-flex; align-items: center; gap: 10px; margin: 18px 0 10px; padding: 6px 16px 6px 6px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text); font-size: .95rem; font-weight: 600; }
+.hero-neu span { background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 3px 10px; font-size: .8rem; letter-spacing: .02em; }
+.hero-neu::after { content: "›"; font-size: 1.2rem; line-height: 1; margin-left: -2px; }
+.hero-neu:hover { text-decoration: none; background: color-mix(in srgb, var(--accent) 20%, transparent); }
+.neu-cta { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 28px; flex-wrap: wrap; }
+.neu-cta p { color: var(--muted); font-size: 1rem; }
+.track .is-live::before { width: 36px; height: 36px; top: -4px; background-size: 24px; box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent); }
+.track .is-live .st { color: var(--accent-text); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .track.in .is-live::before { animation: live-pop .7s cubic-bezier(.34,1.56,.64,1) .5s both, live-ring 2.4s ease-out 1.2s 1; }
+}
+@keyframes live-pop { from { transform: scale(.4); } to { transform: scale(1); } }
+@keyframes live-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 60% { box-shadow: 0 0 0 18px transparent; } 100% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent); } }
+@media (max-width: 640px) { .track .is-live::before { left: -4px; top: -4px; translate: none; } }
