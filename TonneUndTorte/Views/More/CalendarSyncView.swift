@@ -9,6 +9,8 @@ struct CalendarSyncView: View {
     @AppStorage(CalendarSyncOptions.customKey) private var includeCustom = true
     @AppStorage(CalendarSyncOptions.birthdaysKey) private var birthdays = CalendarSyncOptions.Birthdays.manualOnly.rawValue
     @AppStorage(CalendarSyncOptions.emojiKey) private var emoji = true
+    @AppStorage(CalendarSyncOptions.wasteEveningKey) private var wasteEvening = false
+    private var eveningTime: String { DateText.time(minutes: SettingsKeys.reminderSettings().eveningMinutes) }
     @State private var targetText = CalendarExport.targetDescription()
     @State private var isWorking = false
     @State private var message: String?
@@ -51,6 +53,13 @@ struct CalendarSyncView: View {
             }
 
             Section {
+                Toggle(isOn: $wasteEvening) { Label("Müll am Vorabend eintragen", systemImage: "moon.stars") }
+            } footer: {
+                Text(wasteEvening ? "Am Vorabend um \(eveningTime) steht z. B. „Restmüll rausstellen“ im Kalender. Die Uhrzeit ist die der Abend-Erinnerung (Mehr › Einstellungen). Schadstoffmobil & Co. bleiben am Tag selbst."
+                                  : "Abholtermine stehen ganztägig am Abholtag im Kalender.")
+            }
+
+            Section {
                 Toggle(isOn: $emoji) { Label("Emojis im Titel", systemImage: "face.smiling") }
             } footer: {
                 Text(emoji ? "Einträge heißen z. B. „🗑️ Restmüll“ oder „🎂 Oma Erika“." : "Einträge heißen nur „Restmüll“ oder „Oma Erika“ – ohne Emojis.")
@@ -83,6 +92,7 @@ struct CalendarSyncView: View {
         .onChange(of: includeCustom) { _, _ in optionsChanged() }
         .onChange(of: birthdays) { _, _ in optionsChanged() }
         .onChange(of: emoji) { _, _ in feed = model.feedText(); optionsChanged() }
+        .onChange(of: wasteEvening) { _, _ in feed = model.feedText(); optionsChanged() }
         .onAppear { targetText = CalendarExport.targetDescription() }
         .task { feed = model.feedText() }
         .alert("Kalender", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) {

@@ -697,10 +697,19 @@ final class AppModel: ObservableObject {
         return wanted.map { event in
             var item: CalendarExport.Item
             let kind: CalendarEntryTitle.Kind, text: String
+            var titleText: String? = nil
             switch event.kind {
             case .waste:
-                kind = .waste; text = "\(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")"
-                item = CalendarExport.Item(date: event.date, title: "", notes: L10n.t("Abholung", "Collection"), alarmMinutesFromMidnight: event.offDuty ? [] : alarms)
+                let suffix = multi && event.locationName != nil ? " (\(event.locationName!))" : ""
+                kind = .waste; text = "\(event.title)\(suffix)"
+                // Ganztägig am Abholtag oder – Einstellung – am Vorabend zur Abend-Erinnerungszeit „… rausstellen“
+                let placed = CalendarWastePlacement.make(pickupDay: event.date, name: event.title, suffix: suffix, alarms: event.offDuty ? [] : alarms,
+                                                         evening: options.wasteEvening, eveningMinutes: settings.eveningMinutes,
+                                                         stayOnDay: event.handling == .bringTo || event.offDuty, today: today)
+                titleText = placed.text
+                item = CalendarExport.Item(date: placed.date, title: "",
+                                           notes: placed.timeMinutes == nil ? L10n.t("Abholung", "Collection") : L10n.t("Abholung morgen", "Collection tomorrow"),
+                                           alarmMinutesFromMidnight: placed.alarms, timeMinutes: placed.timeMinutes)
             case .birthday:
                 kind = .birthday; text = "\(event.title)\(event.years.map { " (\($0))" } ?? "")"
                 item = CalendarExport.Item(date: event.date, title: "", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
@@ -711,7 +720,7 @@ final class AppModel: ObservableObject {
                 kind = .custom; text = event.title
                 item = CalendarExport.Item(date: event.date, title: "", notes: nil, alarmMinutesFromMidnight: [alarm], timeMinutes: time)
             }
-            item.title = CalendarEntryTitle.make(kind, text, emoji: options.emoji)
+            item.title = CalendarEntryTitle.make(kind, titleText ?? text, emoji: options.emoji)
             item.feedUID = CalendarEntryTitle.feedUID(day: Days.iso(event.date), kind, text)
             return item
         }

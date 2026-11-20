@@ -3788,6 +3788,36 @@
           }
         }
       }
+    },
+    "Müll am Vorabend eintragen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add waste the evening before"
+          }
+        }
+      }
+    },
+    "Am Vorabend um %@ steht z. B. „Restmüll rausstellen“ im Kalender. Die Uhrzeit ist die der Abend-Erinnerung (Mehr › Einstellungen). Schadstoffmobil & Co. bleiben am Tag selbst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The evening before at %@, your calendar shows e.g. “Put out Residual waste”. The time is the one of the evening reminder (More › Settings). Hazardous waste collection & co. stay on the day itself."
+          }
+        }
+      }
+    },
+    "Abholtermine stehen ganztägig am Abholtag im Kalender." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collections appear as all-day events on the collection day."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

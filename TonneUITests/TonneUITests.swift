@@ -687,6 +687,11 @@ final class TonneUITests: XCTestCase {
         for _ in 0..<4 where !(toggle.exists && toggle.isHittable) { app.swipeUp() }
         if toggle.value as? String != wanted { flip("Emojis im Titel") }
         XCTAssertEqual(toggle.value as? String, wanted)
+        // Vorabend-Eintrag nach TONNE_EVENING (1/0, Standard 0)
+        let evening = app.switches["Müll am Vorabend eintragen"].firstMatch
+        let wantedEvening = ProcessInfo.processInfo.environment["TONNE_EVENING"] ?? "0"
+        if evening.value as? String != wantedEvening { flip("Müll am Vorabend eintragen") }
+        XCTAssertEqual(evening.value as? String, wantedEvening)
         let export = app.buttons["Jetzt eintragen"].firstMatch
         for _ in 0..<4 where !(export.exists && export.isHittable) { app.swipeUp() }
         export.tap()
