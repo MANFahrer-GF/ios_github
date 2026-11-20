@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct TonneWatchApp: App {
     init() {
+        SnapshotStore.applyHomeTimeZone()
         WatchSync.shared.activate()
     }
 

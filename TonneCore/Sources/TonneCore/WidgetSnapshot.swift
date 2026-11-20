@@ -88,6 +88,8 @@ public struct WidgetSnapshot: Codable, Hashable {
     public var bringInEnabled: Bool
     /// Ab dieser Uhrzeit (Minuten) erscheint am Abholtag „wieder reinholen“.
     public var bringInFromMinutes: Int
+    /// Heimat-Zeitzone des iPhones (`HomeTimeZone`) – die Watch rechnet damit; nil in älteren Schnappschüssen.
+    public var homeTimeZone: String?
 
     public init(generatedAt: Date = Date(), locations: [Location] = [], pickupDays: [PickupDay] = [], birthdays: [BirthdayItem] = [], missedCountThisYear: Int = 0, doneCountThisYear: Int = 0,
                 bringInEnabled: Bool = true, bringInFromMinutes: Int = PickupTiming.bringInHintMinutes) {
@@ -96,7 +98,7 @@ public struct WidgetSnapshot: Codable, Hashable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case generatedAt, locations, pickupDays, birthdays, missedCountThisYear, doneCountThisYear, bringInEnabled, bringInFromMinutes
+        case generatedAt, locations, pickupDays, birthdays, missedCountThisYear, doneCountThisYear, bringInEnabled, bringInFromMinutes, homeTimeZone
     }
 
     /// Neuere Felder fehlen in Schnappschüssen älterer App-Versionen (z. B. vom iPhone an eine neuere Watch).
@@ -110,6 +112,7 @@ public struct WidgetSnapshot: Codable, Hashable {
         doneCountThisYear = try container.decodeIfPresent(Int.self, forKey: .doneCountThisYear) ?? 0
         bringInEnabled = try container.decodeIfPresent(Bool.self, forKey: .bringInEnabled) ?? true
         bringInFromMinutes = try container.decodeIfPresent(Int.self, forKey: .bringInFromMinutes) ?? PickupTiming.bringInHintMinutes
+        homeTimeZone = try container.decodeIfPresent(String.self, forKey: .homeTimeZone)
     }
 
     public static let appGroup = "group.de.manfahrer.TonneUndTorte"

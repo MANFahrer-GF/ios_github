@@ -85,6 +85,26 @@ enum SnapshotStore {
         reloadWidgets()
     }
 
+    // MARK: - Heimat-Zeitzone (`HomeTimeZone`)
+
+    static let homeTimeZoneKey = "app.homeTimeZone"
+
+    /// An jedem Prozessstart (App, Widget, Watch): Heimat-Zeitzone bestimmen und als Standard setzen. Danach rechnen
+    /// `Calendar.current`, Formatierer und Datumsauswahl in ihr – gespeicherte Tage bleiben auf Reisen ihr Tag.
+    /// Die Watch übernimmt die Heimat des iPhones aus dem Schnappschuss (App-Gruppen reichen nicht bis zur Watch).
+    static func applyHomeTimeZone() {
+        let snapshot = load()
+        #if os(watchOS)
+        let stored = snapshot?.homeTimeZone ?? defaults.string(forKey: homeTimeZoneKey)
+        #else
+        let stored = defaults.string(forKey: homeTimeZoneKey)
+        #endif
+        // Ein Schnappschuss vom letzten Lauf zeigt eine bestehende Installation (Daten in der damaligen Gerätezone)
+        let home = HomeTimeZone.resolve(stored: stored, device: NSTimeZone.system.identifier, existingInstall: snapshot != nil)
+        if home != defaults.string(forKey: homeTimeZoneKey) { defaults.set(home, forKey: homeTimeZoneKey) }
+        if let zone = TimeZone(identifier: home) { NSTimeZone.default = zone }
+    }
+
     static func reloadWidgets() {
         #if canImport(WidgetKit)
         WidgetCenter.shared.reloadAllTimelines()

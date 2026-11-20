@@ -126,6 +126,9 @@ final class WatchSync: NSObject, WCSessionDelegate {
         for day in snapshot.pickupDays where !day.done { SnapshotStore.clearDoneTime(dayKey: Days.iso(day.date)) }
         #endif
         SnapshotStore.save(snapshot)
+        #if os(watchOS)
+        SnapshotStore.applyHomeTimeZone()   // Heimat des iPhones übernehmen, bevor die Watch neu zeichnet
+        #endif
         DispatchQueue.main.async { NotificationCenter.default.post(name: WatchSync.updatedNotification, object: nil) }
     }
 

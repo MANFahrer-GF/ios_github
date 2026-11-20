@@ -91,6 +91,7 @@ struct TonneUndTorteApp: App {
     init() {
         StartTimings.begin()
         CrashReportCollector.shared.start()   // vor allem anderen, damit auch Abstürze beim Start berichtet werden
+        SnapshotStore.applyHomeTimeZone()      // vor jeder Datumsrechnung
         // Oberflächen-Tests: eigene Einstellungs-Ablage, jedes Mal auf Werkszustand – die echten Einstellungen bleiben unberührt
         if TonneUndTorteApp.isUITesting {
             SettingsKeys.store.removePersistentDomain(forName: SettingsKeys.uiTestSuite)

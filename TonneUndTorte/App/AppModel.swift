@@ -642,8 +642,10 @@ final class AppModel: ObservableObject {
         }
         let stats = statistics()
         let settings = SettingsKeys.reminderSettings()
-        return WidgetSnapshot(generatedAt: Date(), locations: locations, pickupDays: pickupDays, birthdays: Array(birthdays), missedCountThisYear: stats.total - stats.confirmed, doneCountThisYear: stats.confirmed,
+        var snapshot = WidgetSnapshot(generatedAt: Date(), locations: locations, pickupDays: pickupDays, birthdays: Array(birthdays), missedCountThisYear: stats.total - stats.confirmed, doneCountThisYear: stats.confirmed,
                               bringInEnabled: settings.bringInEnabled, bringInFromMinutes: min(PickupTiming.bringInHintMinutes, settings.bringInMinutes))
+        snapshot.homeTimeZone = TimeZone.current.identifier   // nach applyHomeTimeZone die Heimat
+        return snapshot
     }
 
     func statistics() -> (total: Int, confirmed: Int) {
