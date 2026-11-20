@@ -30,6 +30,8 @@ enum CalendarExport {
         var alarmMinutesFromMidnight: [Int]
         /// Uhrzeit (Minuten ab Mitternacht) – dann ein einstündiger Termin statt ganztägig.
         var timeMinutes: Int? = nil
+        /// Kennung für die ICS-Datei (`CalendarEntryTitle.feedUID`), unabhängig von „Emojis im Titel“.
+        var feedUID: String = ""
     }
 
     /// Wohin geschrieben wird.

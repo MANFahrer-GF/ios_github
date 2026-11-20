@@ -695,24 +695,33 @@ final class AppModel: ObservableObject {
             }
         }
         return wanted.map { event in
+            var item: CalendarExport.Item
+            let kind: CalendarEntryTitle.Kind, text: String
             switch event.kind {
             case .waste:
-                return CalendarExport.Item(date: event.date, title: "🗑️ \(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")", notes: L10n.t("Abholung", "Collection"), alarmMinutesFromMidnight: event.offDuty ? [] : alarms)
+                kind = .waste; text = "\(event.title)\(multi && event.locationName != nil ? " (\(event.locationName!))" : "")"
+                item = CalendarExport.Item(date: event.date, title: "", notes: L10n.t("Abholung", "Collection"), alarmMinutesFromMidnight: event.offDuty ? [] : alarms)
             case .birthday:
-                return CalendarExport.Item(date: event.date, title: "🎂 \(event.title)\(event.years.map { " (\($0))" } ?? "")", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
+                kind = .birthday; text = "\(event.title)\(event.years.map { " (\($0))" } ?? "")"
+                item = CalendarExport.Item(date: event.date, title: "", notes: nil, alarmMinutesFromMidnight: [settings.birthdayMinutes])
             case .custom:
                 // Mit Uhrzeit ein einstündiger Termin, Alarm mit dem eingestellten Vorlauf (darf auf den Vortag fallen)
                 let time = customTimes[event.id]
                 let alarm = time.map { $0 - settings.customLeadMinutes } ?? settings.customMinutes
-                return CalendarExport.Item(date: event.date, title: "📌 \(event.title)", notes: nil, alarmMinutesFromMidnight: [alarm], timeMinutes: time)
+                kind = .custom; text = event.title
+                item = CalendarExport.Item(date: event.date, title: "", notes: nil, alarmMinutesFromMidnight: [alarm], timeMinutes: time)
             }
+            item.title = CalendarEntryTitle.make(kind, text, emoji: options.emoji)
+            item.feedUID = CalendarEntryTitle.feedUID(day: Days.iso(event.date), kind, text)
+            return item
         }
     }
 
     /// Alle eingetragenen Termine als ICS-Datei (zum Teilen).
     func feedText() -> String {
+        // Kennung aus der Emoji-Form derselben Zeile: Umschalten von „Emojis im Titel“ ergibt beim erneuten Import keine Doppel
         let events = calendarExportItems(applyingSyncOptions: false).map { item in
-            ICS.FeedEvent(uid: "\(Days.iso(item.date))-\(item.title.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFFFF })@tonneundtorte", date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight, timeMinutes: item.timeMinutes)
+            ICS.FeedEvent(uid: item.feedUID, date: item.date, summary: item.title, description: item.notes, alarmMinutes: item.alarmMinutesFromMidnight, timeMinutes: item.timeMinutes)
         }
         return ICS.build(name: "Tonne & Torte", events: events)
     }

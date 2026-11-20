@@ -3758,6 +3758,36 @@
           }
         }
       }
+    },
+    "Emojis im Titel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emojis in titles"
+          }
+        }
+      }
+    },
+    "Einträge heißen z. B. „🗑️ Restmüll“ oder „🎂 Oma Erika“." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entries are named e.g. “🗑️ Residual waste” or “🎂 Grandma Erika”."
+          }
+        }
+      }
+    },
+    "Einträge heißen nur „Restmüll“ oder „Oma Erika“ – ohne Emojis." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entries are named just “Residual waste” or “Grandma Erika” – without emojis."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

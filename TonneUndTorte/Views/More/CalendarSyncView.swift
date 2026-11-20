@@ -8,6 +8,7 @@ struct CalendarSyncView: View {
     @AppStorage(CalendarSyncOptions.wasteKey) private var includeWaste = true
     @AppStorage(CalendarSyncOptions.customKey) private var includeCustom = true
     @AppStorage(CalendarSyncOptions.birthdaysKey) private var birthdays = CalendarSyncOptions.Birthdays.manualOnly.rawValue
+    @AppStorage(CalendarSyncOptions.emojiKey) private var emoji = true
     @State private var targetText = CalendarExport.targetDescription()
     @State private var isWorking = false
     @State private var message: String?
@@ -50,6 +51,12 @@ struct CalendarSyncView: View {
             }
 
             Section {
+                Toggle(isOn: $emoji) { Label("Emojis im Titel", systemImage: "face.smiling") }
+            } footer: {
+                Text(emoji ? "Einträge heißen z. B. „🗑️ Restmüll“ oder „🎂 Oma Erika“." : "Einträge heißen nur „Restmüll“ oder „Oma Erika“ – ohne Emojis.")
+            }
+
+            Section {
                 Button {
                     Task { await exportNow() }
                 } label: {
@@ -75,6 +82,7 @@ struct CalendarSyncView: View {
         .onChange(of: includeWaste) { _, _ in optionsChanged() }
         .onChange(of: includeCustom) { _, _ in optionsChanged() }
         .onChange(of: birthdays) { _, _ in optionsChanged() }
+        .onChange(of: emoji) { _, _ in feed = model.feedText(); optionsChanged() }
         .onAppear { targetText = CalendarExport.targetDescription() }
         .task { feed = model.feedText() }
         .alert("Kalender", isPresented: Binding(get: { message != nil }, set: { if !$0 { message = nil } })) {

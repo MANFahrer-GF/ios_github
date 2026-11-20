@@ -658,6 +658,25 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
     }
 
+    /// Kalender-Abgleich › „Emojis im Titel“ ausschalten, Seite verlassen, wieder öffnen: bleibt aus, Fußtext ohne Emojis
+    /// (Wunsch Michael Klein, 20.11.2026).
+    func testCalendarEmojiSwitchRoundTrip() {
+        tab("Mehr")
+        let link = text("Kalender-Abgleich")
+        XCTAssertTrue(link.waitForExistence(timeout: 5))
+        link.tap()
+        let toggle = app.switches["Emojis im Titel"].firstMatch
+        for _ in 0..<4 where !(toggle.exists && toggle.isHittable) { app.swipeUp() }
+        XCTAssertEqual(toggle.value as? String, "1", "Standard muss „mit Emojis“ sein")
+        flip("Emojis im Titel")
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'ohne Emojis'")).firstMatch.waitForExistence(timeout: 3))
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(link.waitForExistence(timeout: 5))
+        link.tap()
+        for _ in 0..<4 where !(toggle.exists && toggle.isHittable) { app.swipeUp() }
+        XCTAssertEqual(toggle.value as? String, "0", "Einstellung ging beim Verlassen verloren")
+    }
+
     /// Zwei Standorte mit Abholung morgen, Übersicht auf „Teststraße“ gefiltert, „Erledigt“: Die Ferienwohnung bleibt offen
     /// (Thomas 20.11.2026: „Erledigt“ je Standort; vorher wurde sie mit erledigt).
     func testDoneOnlyForFilteredLocation() {
