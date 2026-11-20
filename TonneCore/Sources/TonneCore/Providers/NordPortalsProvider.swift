@@ -727,7 +727,17 @@ public struct NordPortalsProvider: WasteProvider {
         guard let links = try await helmstedtCalendars()[town], !links.isEmpty else { throw ProviderError.noDataGeneric }
         var events: [ICSEvent] = []
         for link in links { events += await ics(link, calendar: calendar) }
-        return events
+        return events + Self.helmstedtYellowBinEvents(town, calendar: calendar)
+    }
+
+    static let helmstedtYellowBin = "Gelbe Tonne"
+
+    /// Gelbe Tonne ab 2027 aus den PreZero-PDFs (`HelmstedtGelbeTonne`), als „Gelbe Tonne <Gebiet>“ wie die Kalender des Kreises.
+    static func helmstedtYellowBinEvents(_ town: String, calendar: Calendar) -> [ICSEvent] {
+        guard let data = HelmstedtGelbeTonne.towns[town] else { return [] }
+        return data.dates.flatMap { area, days in
+            days.compactMap { Days.parse($0, calendar: calendar) }.map { ICSEvent(summary: "\(helmstedtYellowBin) \(area)", date: $0) }
+        }
     }
 
     private func helmstedtStep(_ s: [SelectionOption]) async throws -> SelectionStep? {
@@ -747,6 +757,12 @@ public struct NordPortalsProvider: WasteProvider {
         }
         let answered = Set(s.dropFirst().compactMap { $0.id.components(separatedBy: "|").first })
         guard let type = order.first(where: { (areas[$0]?.count ?? 0) > 1 && !answered.contains($0) }) else { return nil }
+        // Gelbe Tonne: Gebiet über Ort oder Straße aus der PreZero-Tabelle – die Nummer kennt dort niemand
+        if type == Self.helmstedtYellowBin, let entries = HelmstedtGelbeTonne.towns[town]?.entries {
+            let options = entries.map { SelectionOption(id: "\(type)|\($0.area)|\($0.name)", title: $0.name, subtitle: L10n.t("Gebiet \($0.area)", "Area \($0.area)")) }
+            return SelectionStep(title: L10n.t("Ort oder Straße für die gelbe Tonne (ab 2027)", "Village or street for the yellow bin (from 2027)"),
+                                 options: options, searchable: true)
+        }
         let options = (areas[type] ?? []).sorted { $0.localizedStandardCompare($1) == .orderedAscending }.map {
             SelectionOption(id: "\(type)|\($0)", title: L10n.t("Gebiet \($0)", "Area \($0)"), subtitle: type)
         }
@@ -758,12 +774,23 @@ public struct NordPortalsProvider: WasteProvider {
         guard let town = s.first?.id else { throw ProviderError.selectAddressFirst }
         var chosen: [String: String] = [:]
         for option in s.dropFirst() {
+            // „Typ|Gebiet“, bei der gelben Tonne „Typ|Gebiet|Ort oder Straße“
             let parts = option.id.components(separatedBy: "|")
-            if parts.count == 2 { chosen[parts[0]] = parts[1] }
+            if parts.count >= 2 { chosen[parts[0]] = parts[1] }
         }
-        return try await helmstedtEvents(town, calendar: calendar).compactMap { event in
+        return Self.helmstedtFilter(try await helmstedtEvents(town, calendar: calendar), chosen: chosen, town: town)
+    }
+
+    /// Termine des gewählten Gebiets je Abfallart. `chosen`: Abfallart → Gebiet.
+    static func helmstedtFilter(_ events: [ICSEvent], chosen: [String: String], town: String) -> [Pickup] {
+        events.compactMap { event in
             let (type, area) = Self.areaSplit(event.summary)
             if let area, let wanted = chosen[type], wanted != area { return nil }
+            if type == Self.helmstedtYellowBin {
+                // Ohne gewähltes Gebiet (Einrichtung vor 2.1.2) keine gelben Termine – sonst kämen alle Gebiete auf einmal
+                guard let area, chosen[type] == area else { return nil }
+                if HelmstedtGelbeTonne.sackAreas[town]?.contains(Int(area) ?? 0) == true { return Pickup(date: event.date, name: "Gelber Sack") }
+            }
             return Pickup(date: event.date, name: NameCleaner.clean(type))
         }
     }
