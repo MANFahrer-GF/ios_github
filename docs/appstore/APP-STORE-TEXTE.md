@@ -42,7 +42,7 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 
 Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
-### Neu in Version 2.1.1 (Build 18)
+### Neu in Version 2.1.1 (Build 19)
 
 ```
 Ein Wunsch aus der Community
