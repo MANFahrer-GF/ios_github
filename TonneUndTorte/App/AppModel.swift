@@ -398,30 +398,35 @@ final class AppModel: ObservableObject {
 
     // MARK: - Erledigt
 
-    /// Die Müllarten, die ein „Erledigt“ an diesem Tag markiert.
-    private func doneCandidates(day: Date) -> [WasteType] {
-        allWasteTypes().filter { $0.isActive && !$0.isNotPutOut(on: day) && $0.isOnDuty(on: day) && $0.pickupDates(from: day, to: day).contains(day) }
+    /// Die Müllarten, die ein „Erledigt“ an diesem Tag markiert – mit Standort nur dessen (`DoneKey`).
+    private func doneCandidates(day: Date, locationID: UUID? = nil) -> [WasteType] {
+        allWasteTypes().filter { $0.isActive && !$0.isNotPutOut(on: day) && $0.isOnDuty(on: day) && $0.pickupDates(from: day, to: day).contains(day)
+            && (locationID == nil || $0.location?.id == locationID) }
     }
 
     /// Braucht „Erledigt“ an diesem Tag das Blatt je Müllart? Nur mit gezählter und weiterer Müllart (sonst ein Tipp wie bisher).
-    func needsDoneChoice(day: Date) -> Bool {
-        PickupQuota.needsChoice(counted: doneChoiceTypes(day: day).map(\.isCounted))
+    func needsDoneChoice(day: Date, locationID: UUID? = nil) -> Bool {
+        PickupQuota.needsChoice(counted: doneChoiceTypes(day: day, locationID: locationID).map(\.isCounted))
     }
 
     /// Müllarten für das Blatt „Was stand draußen?“.
-    func doneChoiceTypes(day: Date) -> [WasteType] { doneCandidates(day: day).filter { !$0.isDone(on: day) } }
+    func doneChoiceTypes(day: Date, locationID: UUID? = nil) -> [WasteType] {
+        doneCandidates(day: day, locationID: locationID).filter { !$0.isDone(on: day) }
+    }
 
     /// „Erledigt“ für einen Tag. `leftIn`: ausdrücklich gewählt (Blatt) – diese Müllarten blieben drin. Ohne Angabe gilt
     /// eine in der Mitteilung abgelegte Wahl („Alles raus“ / „Ohne …“), sonst ist es ein pauschaler Tipp (Widget, Watch,
     /// Live-Aktivität, Kurzbefehl): Der markiert wie bisher alles, ein Tag mit gezählter Müllart wird aber nachgefragt.
-    func markDone(dayKey: String, leftIn: Set<UUID>? = nil) async {
+    func markDone(dayKey key: String, leftIn: Set<UUID>? = nil) async {
+        // Mit Standort (`DoneKey`) nur dessen Müllarten – der andere Standort bleibt offen samt Erinnerung
+        let (dayKey, locationID) = DoneKey.split(key)
         // Gegen das leere Notfall-Modell wäre „gespeichert“ wahr, die Markierung aber verbraucht – liegen lassen
         guard !TonneUndTorteApp.storeUnavailable, let day = Days.parse(dayKey) else { return }
         // Zeitpunkt: aus dem Widget/der Watch schon gemerkt (ausstehende Markierung) – sonst jetzt
-        let pendingFromWidget = SnapshotStore.doneDays().contains(dayKey)
+        let pendingFromWidget = SnapshotStore.doneDays().contains(key)
         SnapshotStore.recordDoneTime(dayKey: dayKey, overwrite: !pendingFromWidget)
-        let types = doneCandidates(day: day)
-        let choice = leftIn.map { Set($0.map(\.uuidString)) } ?? SnapshotStore.choice(dayKey: dayKey)
+        let types = doneCandidates(day: day, locationID: locationID.flatMap(UUID.init(uuidString:)))
+        let choice = leftIn.map { Set($0.map(\.uuidString)) } ?? SnapshotStore.choice(dayKey: key)
         let resolution = PickupQuota.resolve(choice.map { .chosen(left: $0) } ?? .blanket, types: types.map { (id: $0.id.uuidString, counted: $0.isCounted) })
         for type in types {
             let id = type.id.uuidString
@@ -438,23 +443,26 @@ final class AppModel: ObservableObject {
         }
         // Nicht gespeichert: Markierung aus Widget/Watch liegen lassen, beim nächsten Mal erneut versuchen
         guard save() else { return }
-        notifications.cancelWasteReminders(dayKey: dayKey)
-        SnapshotStore.clearDone(dayKey: dayKey)
-        SnapshotStore.clearChoice(dayKey: dayKey)
+        // Erinnerungen des Tages weg, wenn nichts mehr offen ist; sonst plant refreshAll die übrigen neu
+        if locationID == nil || doneCandidates(day: day).allSatisfy({ $0.isDone(on: day) }) { notifications.cancelWasteReminders(dayKey: dayKey) }
+        SnapshotStore.clearDone(dayKey: key)
+        SnapshotStore.clearChoice(dayKey: key)
         await refreshAll()
     }
 
     /// „Erledigt“ zurücknehmen, wenn man versehentlich getippt hat. Die Erinnerungen werden neu geplant.
-    func markUndone(dayKey: String) async {
+    func markUndone(dayKey key: String) async {
+        let (dayKey, locationID) = DoneKey.split(key)
         guard !TonneUndTorteApp.storeUnavailable, let day = Days.parse(dayKey) else { return }
-        for type in allWasteTypes() where type.isDone(on: day) {
+        for type in allWasteTypes() where type.isDone(on: day) && (locationID == nil || type.location?.id.uuidString == locationID) {
             type.unmarkDone(on: day)
             type.clearBulk(on: day)
         }
         guard save() else { return }
-        SnapshotStore.clearDoneTime(dayKey: dayKey)
-        SnapshotStore.clearUndo(dayKey: dayKey)
-        SnapshotStore.clearDone(dayKey: dayKey)
+        // Ein anderer Standort ist noch erledigt: sein Zeitstempel (Rückgängig-Fenster) bleibt
+        if !allWasteTypes().contains(where: { $0.isDone(on: day) }) { SnapshotStore.clearDoneTime(dayKey: dayKey) }
+        SnapshotStore.clearUndo(dayKey: key)
+        SnapshotStore.clearDone(dayKey: key)
         await refreshAll()
     }
 
@@ -626,8 +634,8 @@ final class AppModel: ObservableObject {
             guard !items.isEmpty else { return nil }
             let key = Days.iso(entry.day), done = items.allSatisfy(\.done)
             return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName, dropOff: $0.handling == .bringTo,
-                                                                                                      remindersOff: remindersOff.contains($0.wasteTypeID) ? true : nil) },
-                                            done: done, broughtIn: broughtIn.contains(key), doneAt: done ? doneTimes[key] : nil)
+                                                                                                      remindersOff: remindersOff.contains($0.wasteTypeID) ? true : nil, done: $0.done) },
+                                            done: done, broughtIn: broughtIn.contains(key), doneAt: items.contains(where: \.done) ? doneTimes[key] : nil)
         }
         let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
             WidgetSnapshot.BirthdayItem(date: $0.date, name: $0.title, years: $0.years, colorHex: $0.colorHex, initials: NameText.initials($0.title))

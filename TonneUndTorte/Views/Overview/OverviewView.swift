@@ -288,7 +288,7 @@ struct OverviewView: View {
                         for event in today.events where event.notPutOut {
                             if let id = event.wasteTypeID { await model.setNotPutOut(false, wasteTypeID: id, dayKey: Days.iso(today.day)) }
                         }
-                    } else if done { await model.markUndone(dayKey: Days.iso(today.day)) } else { await confirmDone(today.day) }
+                    } else if done { await model.markUndone(dayKey: doneKey(today.day)) } else { await confirmDone(today.day) }
                     refreshToken += 1
                 }
             } label: {
@@ -451,7 +451,7 @@ struct OverviewView: View {
         Button {
             if done { Haptics.tap() } else { Haptics.success() }
             Task {
-                if done { await model.markUndone(dayKey: Days.iso(day)) } else { await confirmDone(day) }
+                if done { await model.markUndone(dayKey: doneKey(day)) } else { await confirmDone(day) }
                 refreshToken += 1
             }
         } label: {
@@ -466,7 +466,13 @@ struct OverviewView: View {
 
     /// „Erledigt“: Mit gezählter und weiterer Müllart am Tag erst fragen, was draußen stand – sonst ein Tipp wie bisher.
     private func confirmDone(_ day: Date) async {
-        if model.needsDoneChoice(day: day) { editing = .doneChoice(day) } else { await model.markDone(dayKey: Days.iso(day)) }
+        let location = LocationFilter.apply(filterID, locations: locations)
+        if model.needsDoneChoice(day: day, locationID: location) { editing = .doneChoice(day, location) } else { await model.markDone(dayKey: doneKey(day)) }
+    }
+
+    /// Gefiltert auf einen Standort: „Erledigt“ gilt nur für ihn (Thomas 20.11.2026).
+    private func doneKey(_ day: Date) -> String {
+        DoneKey.make(day: Days.iso(day), locationID: LocationFilter.apply(filterID, locations: locations)?.uuidString)
     }
 
     private func toggleNotPutOut(_ event: CalendarEvent) {

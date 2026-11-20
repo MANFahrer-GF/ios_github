@@ -345,6 +345,21 @@ struct TonneUndTorteApp: App {
             yellow.location = location
             context.insert(yellow)
         }
+        // Zwei Standorte mit Abholung morgen (Startschalter -uiTestingTwoLocations): „Erledigt“ je Standort
+        if ProcessInfo.processInfo.arguments.contains("-uiTestingTwoLocations") {
+            let tomorrow = Days.add(1, to: Days.today())
+            let rest = WasteType(name: "Restmüll", category: .residual, sortOrder: 1)
+            rest.explicitDates = [tomorrow]
+            rest.location = location
+            context.insert(rest)
+            let flat = Location(name: "Ferienwohnung")
+            flat.sortOrder = 1
+            context.insert(flat)
+            let bio = WasteType(name: "Biotonne", category: .organic)
+            bio.explicitDates = [tomorrow]
+            bio.location = flat
+            context.insert(bio)
+        }
         try? context.save()
     }
 }

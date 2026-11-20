@@ -32,9 +32,11 @@ struct MarkPickupDoneIntent: DoneIntentBase {
         #if os(watchOS)
         WatchSync.sendDone(dayKey: target)
         #endif
-        let isToday = Days.parse(target).map { Days.until($0) == 0 } ?? false
+        // Vom Standort-Widget mit Standort (`DoneKey`) – Tag und Text beziehen sich auf den Tag
+        let targetDay = DoneKey.split(target).day
+        let isToday = Days.parse(targetDay).map { Days.until($0) == 0 } ?? false
         // Beim Schadstoffmobil steht nichts draußen – dann nur „erledigt“
-        let day = snapshot?.pickupDays.first { Days.iso($0.date) == target }
+        let day = snapshot?.pickupDays.first { Days.iso($0.date) == targetDay }
         if !PickupWording(day: day).bringNames.isEmpty {
             return .result(dialog: IntentDialog(stringLiteral: isToday ? L10n.t("Super, für heute erledigt. 👍", "Great, done for today. 👍") : L10n.t("Super, für morgen erledigt. 👍", "Great, done for tomorrow. 👍")))
         }

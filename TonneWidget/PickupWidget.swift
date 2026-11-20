@@ -19,6 +19,8 @@ struct PickupEntry: TimelineEntry {
     let date: Date
     let snapshot: WidgetSnapshot
     let locationName: String?
+    /// Auf einen Standort eingestellt: „Erledigt“ gilt nur für ihn.
+    var locationID: String? = nil
 }
 
 struct PickupTimelineProvider: AppIntentTimelineProvider {
@@ -48,14 +50,15 @@ struct PickupTimelineProvider: AppIntentTimelineProvider {
         if let doneAt = entry.snapshot.pickupDays.compactMap(\.doneAt).max(), doneAt.addingTimeInterval(PickupTiming.undoGrace) > now {
             dates.append(doneAt.addingTimeInterval(PickupTiming.undoGrace + 1))
         }
-        let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot.upcomingBirthdays(from: $0), locationName: entry.locationName) }
+        let entries = [entry] + dates.sorted().map { PickupEntry(date: $0, snapshot: entry.snapshot.upcomingBirthdays(from: $0), locationName: entry.locationName, locationID: entry.locationID) }
         return Timeline(entries: entries, policy: .after(now.addingTimeInterval(6 * 3600)))
     }
 
     private func entry(for configuration: PickupWidgetConfiguration) -> PickupEntry {
         let full = SnapshotStore.load() ?? WidgetSnapshot()
         let filtered = full.filtered(locationID: configuration.location?.id)
-        return PickupEntry(date: Date(), snapshot: filtered.upcomingBirthdays(from: Date()), locationName: configuration.location?.name)
+        return PickupEntry(date: Date(), snapshot: filtered.upcomingBirthdays(from: Date()), locationName: configuration.location?.name,
+                           locationID: configuration.location?.id)
     }
 
     static let sample: WidgetSnapshot = {
@@ -166,10 +169,10 @@ struct PickupWidgetView: View {
     private func button(_ day: WidgetSnapshot.PickupDay) -> some View {
         Group {
             if day.done {
-                Button(intent: UndoPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: true) }
+                Button(intent: UndoPickupDoneIntent(dayKey: DoneKey.make(day: Days.iso(day.date), locationID: entry.locationID))) { KlarCheckButtonLabel(done: true) }
                     .accessibilityLabel(L10n.t("Erledigt zurücknehmen", "Undo done"))
             } else {
-                Button(intent: MarkPickupDoneIntent(dayKey: Days.iso(day.date))) { KlarCheckButtonLabel(done: false) }
+                Button(intent: MarkPickupDoneIntent(dayKey: DoneKey.make(day: Days.iso(day.date), locationID: entry.locationID))) { KlarCheckButtonLabel(done: false) }
                     .accessibilityLabel(L10n.t("\(names(day, max: 3)) erledigt", "\(names(day, max: 3)) done"))
             }
         }

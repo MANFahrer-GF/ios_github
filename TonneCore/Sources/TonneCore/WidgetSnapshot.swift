@@ -25,12 +25,14 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var dropOff: Bool?
         /// Erinnerungen dieser Müllart aus – dann auch keine Live-Aktivität; nil (ältere Schnappschüsse) heißt an.
         public var remindersOff: Bool?
+        /// Diese Müllart ist erledigt („Erledigt“ je Standort); nil in älteren Schnappschüssen – dann gilt `done` des Tages.
+        public var done: Bool?
         /// Anzuzeigendes Symbol.
         public var displaySymbol: String { glyphName ?? symbolName }
         public init(name: String, symbolName: String, colorHex: String, locationID: String? = nil, locationName: String? = nil, dropOff: Bool? = nil,
-                    remindersOff: Bool? = nil) {
+                    remindersOff: Bool? = nil, done: Bool? = nil) {
             self.name = name; self.locationID = locationID; self.locationName = locationName; self.colorHex = colorHex; self.dropOff = dropOff
-            self.remindersOff = remindersOff
+            self.remindersOff = remindersOff; self.done = done
             if WasteGlyph.all.contains(symbolName) {
                 self.symbolName = WasteGlyph.sfFallback(for: symbolName)
                 self.glyphName = symbolName
@@ -127,7 +129,9 @@ public struct WidgetSnapshot: Codable, Hashable {
         var copy = self
         copy.pickupDays = pickupDays.compactMap { day in
             let items = day.items.filter { $0.locationID == locationID }
-            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: day.done, broughtIn: day.broughtIn, doneAt: day.doneAt)
+            // Erledigt heißt hier: alle Müllarten dieses Standorts erledigt
+            let done = items.allSatisfy { $0.done ?? day.done }
+            return items.isEmpty ? nil : PickupDay(date: day.date, items: items, done: done, broughtIn: day.broughtIn, doneAt: day.doneAt)
         }
         return copy
     }

@@ -658,6 +658,31 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
     }
 
+    /// Zwei Standorte mit Abholung morgen, Übersicht auf „Teststraße“ gefiltert, „Erledigt“: Die Ferienwohnung bleibt offen
+    /// (Thomas 20.11.2026: „Erledigt“ je Standort; vorher wurde sie mit erledigt).
+    func testDoneOnlyForFilteredLocation() {
+        app.terminate()
+        app.launchArguments = ["-uiTesting", "-uiTestingSeed", "-uiTestingTwoLocations", "-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        func filter(_ name: String) {
+            let menu = app.navigationBars.buttons.matching(NSPredicate(format: "identifier CONTAINS 'line.3.horizontal.decrease' OR label CONTAINS 'Filter' OR label CONTAINS 'Standort'")).firstMatch
+            XCTAssertTrue(menu.waitForExistence(timeout: 10), "Standortfilter fehlt")
+            menu.tap()
+            let option = app.buttons[name].firstMatch
+            XCTAssertTrue(option.waitForExistence(timeout: 5), "Filter „\(name)“ fehlt")
+            option.tap()
+            sleep(1)
+        }
+        filter("Teststraße")
+        let done = app.buttons["Erledigt"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 5), "Erledigt fehlt")
+        done.tap()
+        XCTAssertTrue(app.buttons["Rückgängig"].firstMatch.waitForExistence(timeout: 5))
+        filter("Ferienwohnung")
+        XCTAssertTrue(app.buttons["Erledigt"].firstMatch.waitForExistence(timeout: 5), "Ferienwohnung wurde mit erledigt")
+        XCTAssertFalse(app.buttons["Rückgängig"].firstMatch.exists)
+    }
+
     /// Geschenkidee tippen und direkt „Sichern“ (ohne ⊕): Die Idee muss gespeichert sein (Prüfung 20.11.2026: ging verloren).
     func testGiftIdeaSavedWithoutPlus() {
         tab("Termine")

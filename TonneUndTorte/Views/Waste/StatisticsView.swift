@@ -698,12 +698,13 @@ struct QuotaSettingsView: View {
 /// „Erledigt“ an einem Tag mit gezählter und weiteren Müllarten: Häkchen je Müllart, alle vorausgewählt, ein Tipp „Fertig“.
 struct DoneChoiceSheet: View {
     let day: Date
+    var locationID: UUID? = nil
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
     @State private var leftIn: Set<UUID> = []
 
     var body: some View {
-        let types = model.doneChoiceTypes(day: day)
+        let types = model.doneChoiceTypes(day: day, locationID: locationID)
         NavigationStack {
             List {
                 Section {
@@ -739,7 +740,7 @@ struct DoneChoiceSheet: View {
                     Button(L10n.t("Fertig", "Done")) {
                         Haptics.success()
                         let left = leftIn
-                        Task { await model.markDone(dayKey: Days.iso(day), leftIn: left); dismiss() }
+                        Task { await model.markDone(dayKey: DoneKey.make(day: Days.iso(day), locationID: locationID?.uuidString), leftIn: left); dismiss() }
                     }
                 }
             }

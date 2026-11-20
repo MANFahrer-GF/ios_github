@@ -317,14 +317,14 @@ extension View {
 enum EventEditTarget: Identifiable {
     case person(Person), event(CustomEvent), waste(WasteType)
     /// „Erledigt“ an einem Tag mit gezählter und weiteren Müllarten: Häkchen je Müllart.
-    case doneChoice(Date)
+    case doneChoice(Date, UUID?)
 
     var id: String {
         switch self {
         case .person(let p): return "person-\(p.id)"
         case .event(let e): return "event-\(e.id)"
         case .waste(let w): return "waste-\(w.id)"
-        case .doneChoice(let day): return "done-\(Days.iso(day))"
+        case .doneChoice(let day, let location): return "done-\(DoneKey.make(day: Days.iso(day), locationID: location?.uuidString))"
         }
     }
 
@@ -350,7 +350,7 @@ private struct EventEditorSheet: ViewModifier {
                     WasteDetailView(type: type)
                         .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.t("Fertig", "Done")) { target = nil } } }
                 }
-            case .doneChoice(let day): DoneChoiceSheet(day: day)
+            case .doneChoice(let day, let location): DoneChoiceSheet(day: day, locationID: location)
             }
         }.appTypography() }
     }

@@ -97,32 +97,35 @@ enum SnapshotStore {
         Set(defaults.stringArray(forKey: doneKey) ?? [])
     }
 
-    static func markDone(dayKey: String, at date: Date = Date()) {
+    /// `dayKey`: Tag oder Tag eines Standorts (`DoneKey`) – mit Standort wird nur dieser erledigt.
+    static func markDone(dayKey key: String, at date: Date = Date()) {
         locked {
-            var days = doneDays()
-            days.insert(dayKey)
-            defaults.set(Array(days).sorted(), forKey: doneKey)
+            let (dayKey, locationID) = DoneKey.split(key)
+            var pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
+            reconcilePending(.done(key), day: pickupDay)
             // Neuer Zeitstempel, außer der Tag war schon erledigt (sonst gälte eine alte Markierung)
-            let wasDone = load()?.pickupDays.first(where: { Days.iso($0.date) == dayKey })?.done ?? false
-            let at = recordDoneTime(dayKey: dayKey, at: date, overwrite: !wasDone)
-            clearUndo(dayKey: dayKey)
-            #if os(iOS)
-            // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft.
-            // Ist am Vorabend etwas hinzubringen (Schadstoffmobil), bleibt die Morgen-Erinnerung.
-            let pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
-            let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty && date < Calendar.current.startOfDay(for: $0.date) } ?? false
-            let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
-            removeNotifications(ids)
-            cancelAlarm(dayKey: dayKey)
-            #endif
+            let at = recordDoneTime(dayKey: dayKey, at: date, overwrite: !(pickupDay?.done ?? false))
+            pickupDay?.setDone(true, locationID: locationID)
             if var snapshot = load() {
                 snapshot.pickupDays = snapshot.pickupDays.map { day in
                     var copy = day
-                    if Days.iso(day.date) == dayKey { copy.done = true; copy.doneAt = at }
+                    // Zeitstempel auch bei einem Standort: Das Standort-Widget hält den Tag dann zum Zurücknehmen stehen
+                    if Days.iso(day.date) == dayKey { copy.setDone(true, locationID: locationID); copy.doneAt = at }
                     return copy
                 }
                 save(snapshot)
             }
+            #if os(iOS)
+            // Erinnerungen für diesen Tag sofort entfernen – auch wenn die App gerade nicht läuft. Nur wenn der ganze Tag
+            // erledigt ist: Ein anderer, noch offener Standort behält seine Erinnerung (die App plant beim Öffnen neu).
+            // Ist am Vorabend etwas hinzubringen (Schadstoffmobil), bleibt die Morgen-Erinnerung.
+            if locationID == nil || pickupDay?.done == true {
+                let keepMorning = pickupDay.map { !PickupWording(day: $0).bringNames.isEmpty && date < Calendar.current.startOfDay(for: $0.date) } ?? false
+                let ids = ["evening", "escalation", "snooze"].map { "waste-\($0)-\(dayKey)" } + (keepMorning ? [] : ["waste-morning-\(dayKey)"])
+                removeNotifications(ids)
+                cancelAlarm(dayKey: dayKey)
+            }
+            #endif
             DispatchQueue.main.async { NotificationCenter.default.post(name: notificationName, object: nil) }
         }
     }
@@ -133,6 +136,14 @@ enum SnapshotStore {
         #if os(iOS) && canImport(AlarmKit)
         if #available(iOS 26.0, *), let id = PlannedAlarm.id(dayKey: dayKey) { try? AlarmManager.shared.cancel(id: id) }
         #endif
+    }
+
+    /// Ausstehende Erledigt-/Rücknahme-Schlüssel nach einer Handlung widerspruchsfrei ablegen (`DoneKey.reconcile`).
+    private static func reconcilePending(_ action: DoneKey.Action, day: WidgetSnapshot.PickupDay?) {
+        let locations = Array(Set(day?.items.compactMap(\.locationID) ?? []))
+        let result = DoneKey.reconcile(done: doneDays(), undo: undoDays(), action, locations: locations)
+        defaults.set(Array(result.done).sorted(), forKey: doneKey)
+        defaults.set(Array(result.undo).sorted(), forKey: undoKey)
     }
 
     static func clearDone(dayKey: String) {
@@ -216,19 +227,17 @@ enum SnapshotStore {
     }
 
     /// Nimmt die Markierung im Snapshot sofort zurück und merkt den Tag für die App vor.
-    static func markUndone(dayKey: String) {
+    static func markUndone(dayKey key: String) {
         locked {
-            var done = doneDays()
-            done.remove(dayKey)
-            defaults.set(Array(done).sorted(), forKey: doneKey)
-            clearDoneTime(dayKey: dayKey)
-            var undo = undoDays()
-            undo.insert(dayKey)
-            defaults.set(Array(undo).sorted(), forKey: undoKey)
+            let (dayKey, locationID) = DoneKey.split(key)
+            var pickupDay = load()?.pickupDays.first { Days.iso($0.date) == dayKey }
+            reconcilePending(.undo(key), day: pickupDay)
+            pickupDay?.setDone(false, locationID: locationID)
+            if pickupDay?.doneAt == nil { clearDoneTime(dayKey: dayKey) }
             if var snapshot = load() {
                 snapshot.pickupDays = snapshot.pickupDays.map { day in
                     var copy = day
-                    if Days.iso(day.date) == dayKey { copy.done = false; copy.doneAt = nil }
+                    if Days.iso(day.date) == dayKey { copy.setDone(false, locationID: locationID) }
                     return copy
                 }
                 save(snapshot)
