@@ -26,7 +26,12 @@ final class SuchPruefpunkteTests: XCTestCase {
     func testKeinNichtGegenEigeneOrtsangabe() throws {
         // Seit 16.11. belegt die Zuordnung die TBR-App für Reutlingen (das Kreisportal führt die Stadt ohne Straßen)
         XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.abfallplus.tbrapp"), query: "Reutlingen"), "Führt Reutlingen")
-        XCTAssertNil(ProviderCatalog.placeNote(for: try entry("Evs"), query: "Saarbrücken"))
+        // Der EVS führt Saarbrücken nicht (Ortsliste bei Müllmax, 20.11.: 42 Orte ohne Saarbrücken und Völklingen);
+        // die Stadt entsorgt der ZKE. Der Eintrag nannte die Stadt fälschlich als Ort und erschien so ohne Hinweis
+        // in der Suche (Nutzermeldung 20.11.). Jetzt findet die Suche nur noch den ZKE.
+        let saarbruecken = ProviderCatalog.search("Saarbrücken")
+        XCTAssertEqual(saarbruecken.first, try entry("saarbruecken"))
+        XCTAssertFalse(saarbruecken.contains(try entry("Evs")))
         // Der Kreis-Eintrag nennt die Stadt nur im Titel – dort bleibt die Aussage (Thomas' Fall Karlsruhe).
         XCTAssertEqual(ProviderCatalog.placeNote(for: try entry("de.k4systems.abfallappka"), query: "Karlsruhe"), "Führt Karlsruhe nicht")
         // Namensvetter in einem anderen Kreis: der Ludwigslust-Parchimer Ortsteil „Heide“ ist nicht Heide in Dithmarschen

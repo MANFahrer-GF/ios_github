@@ -188,7 +188,7 @@ public enum ProviderCatalog {
         CatalogEntry(kind: .muellmax, serviceKey: "Usb", title: "USB Bochum", website: "https://www.usb-bochum.de/", places: ["Bochum"]),
         CatalogEntry(kind: .muellmax, serviceKey: "Awm", title: "Abfallwirtschaftsbetriebe Münster", website: "https://www.stadt-muenster.de", places: ["Münster"]),
         CatalogEntry(kind: .muellmax, serviceKey: "Ebm", title: "Entsorgungsbetrieb Stadt Mainz", website: "https://eb-mainz.de/", places: ["Mainz"]),
-        CatalogEntry(kind: .muellmax, serviceKey: "Evs", title: "EVS Entsorgungsverband Saar", website: "https://www.evs.de/", places: ["Saarland", "Saarbrücken"]),
+        CatalogEntry(kind: .muellmax, serviceKey: "Evs", title: "EVS Entsorgungsverband Saar", website: "https://www.evs.de/", places: ["Saarland"]),
         CatalogEntry(kind: .muellmax, serviceKey: "Lkg", title: "Landkreis Gießen (Müllmax)", website: "https://www.lkgi.de/"),
         CatalogEntry(kind: .muellmax, serviceKey: "Ash", title: "Stadt Hamm", website: "https://www.hamm.de/", places: ["Hamm"]),
         CatalogEntry(kind: .muellmax, serviceKey: "Ead", title: "Stadt Darmstadt (EAD)", website: "https://www.darmstadt.de/", places: ["Darmstadt"]),
