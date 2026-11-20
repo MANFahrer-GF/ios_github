@@ -353,7 +353,7 @@ struct PickupWidgetView: View {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
                 Image.waste(next?.items.first?.displaySymbol ?? "trash.fill", name: next?.items.first?.name ?? "").tonneFont(.title3)
-                Text(days.map { $0 == 0 ? "heute" : $0 == 1 ? "morgen" : "\($0) T." } ?? "–").tonneFont(.caption2, .semibold)
+                Text(days.map { $0 == 0 ? L10n.t("heute", "today") : $0 == 1 ? L10n.t("morgen", "tomorrow") : L10n.t("\($0) T.", "\($0) d") } ?? "–").tonneFont(.caption2, .semibold)
             }
         }
         .containerBackground(for: .widget) { Color.clear }

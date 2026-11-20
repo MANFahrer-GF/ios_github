@@ -102,7 +102,14 @@
 
     },
     "+%lld weitere" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld more"
+          }
+        }
+      }
     },
     "✓" : {
 
@@ -2015,7 +2022,14 @@
       }
     },
     "Nächste Geburtstage" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next birthdays"
+          }
+        }
+      }
     },
     "Nächste Termine" : {
       "extractionState" : "stale",
@@ -2388,7 +2402,14 @@
       }
     },
     "Sagt dir, wer als Nächstes Geburtstag hat." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows who has the next birthday."
+          }
+        }
+      }
     },
     "schon drin" : {
       "extractionState" : "stale",

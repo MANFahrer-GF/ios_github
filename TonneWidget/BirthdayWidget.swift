@@ -232,7 +232,7 @@ struct BirthdayWidgetView: View {
             AccessoryWidgetBackground()
             VStack(spacing: 1) {
                 Text("🎂").tonneFont(.title3)
-                Text(next.map { Days.until($0.date) }.map { $0 == 0 ? L10n.t("heute", "today") : "\($0) T." } ?? "–").tonneFont(.caption2, .semibold)
+                Text(next.map { Days.until($0.date) }.map { $0 == 0 ? L10n.t("heute", "today") : L10n.t("\($0) T.", "\($0) d") } ?? "–").tonneFont(.caption2, .semibold)
             }
         }
         .containerBackground(for: .widget) { Color.clear }

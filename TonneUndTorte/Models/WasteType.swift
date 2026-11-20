@@ -20,6 +20,9 @@ final class WasteType {
     var anchorDate: Date?
     var explicitDates: [Date] = []
     var skippedDates: [Date] = []
+    /// Selbst eingetragene Termine (Einzeltermin, Verschieben). Ein Abgleich ersetzt `explicitDates` durch den Feed und ließe
+    /// sie sonst fallen – der verschobene Termin war weg, der alte blieb ausgefallen (ab 2.1.1).
+    var manualDates: [Date] = []
     /// Tage, an denen „Erledigt“ bestätigt wurde.
     var doneDates: [Date] = []
     /// Tage, an denen diese Müllart „diesmal nicht rausgestellt“ wird – die Abfuhr kommt, aber ohne Erinnerung (ab 2.0.7).
@@ -142,7 +145,14 @@ final class WasteType {
 
     func move(_ date: Date, to newDate: Date) {
         skip(date)
-        addExplicitDate(newDate)
+        addManualDate(newDate)
+    }
+
+    /// Termin, den der Nutzer selbst einträgt – bleibt bei jedem Abgleich derselben Adresse stehen.
+    func addManualDate(_ date: Date) {
+        let day = Days.start(of: date)
+        addExplicitDate(day)
+        if !manualDates.contains(day) { manualDates.append(day); manualDates.sort() }
     }
 
     func isDone(on date: Date) -> Bool {
@@ -184,6 +194,7 @@ final class WasteType {
     func prune() {
         let cutoff = Days.add(-PickupQuota.keepDays, to: Days.today())
         explicitDates.removeAll { $0 < cutoff }
+        manualDates.removeAll { $0 < cutoff }
         skippedDates.removeAll { $0 < cutoff }
         doneDates.removeAll { $0 < cutoff }
         notPutOutDates.removeAll { $0 < cutoff }

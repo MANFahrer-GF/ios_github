@@ -619,12 +619,14 @@ final class AppModel: ObservableObject {
         let days = upcomingByDay(days: 60)
         let broughtIn = SnapshotStore.broughtInDays()
         let doneTimes = SnapshotStore.doneTimes()
+        let remindersOff = Set(allWasteTypes().filter { !$0.remindersEnabled }.map { Optional($0.id) })
         let pickupDays: [WidgetSnapshot.PickupDay] = days.compactMap { entry in
             // Diesmal nicht rausgestellt oder nicht zuständig: gehört nicht ins Widget, auf die Watch oder in die Live-Aktivität
             let items = entry.events.filter { $0.kind == .waste && !$0.notPutOut && !$0.offDuty }
             guard !items.isEmpty else { return nil }
             let key = Days.iso(entry.day), done = items.allSatisfy(\.done)
-            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName, dropOff: $0.handling == .bringTo) },
+            return WidgetSnapshot.PickupDay(date: entry.day, items: items.map { WidgetSnapshot.PickupItem(name: $0.title, symbolName: $0.symbolName, colorHex: $0.colorHex, locationID: $0.locationID?.uuidString, locationName: $0.locationName, dropOff: $0.handling == .bringTo,
+                                                                                                      remindersOff: remindersOff.contains($0.wasteTypeID) ? true : nil) },
                                             done: done, broughtIn: broughtIn.contains(key), doneAt: done ? doneTimes[key] : nil)
         }
         let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {

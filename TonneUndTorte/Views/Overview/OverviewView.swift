@@ -31,7 +31,7 @@ struct OverviewView: View {
     private var days: [(day: Date, events: [CalendarEvent])] {
         _ = refreshToken
         _ = wasteTypes.count + people.count
-        return model.upcomingByDay(days: previewDays, locationID: LocationFilter.apply(filterID))
+        return model.upcomingByDay(days: previewDays, locationID: LocationFilter.apply(filterID, locations: locations))
     }
 
     private var wasteDays: [(day: Date, events: [CalendarEvent])] {
@@ -191,7 +191,7 @@ struct OverviewView: View {
     private var catchUp: [AppModel.QuotaItem] {
         _ = refreshToken
         _ = wasteTypes.count
-        return model.catchUpItems(locationID: LocationFilter.apply(filterID))
+        return model.catchUpItems(locationID: LocationFilter.apply(filterID, locations: locations))
     }
 
     /// „2 Leerungen nachtragen“: ruhig, höchstens einmal am Tag, lässt sich wegwischen.

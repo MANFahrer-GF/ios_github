@@ -82,14 +82,25 @@ public enum ScheduleEngine {
     /// siehe `datesKeptOnSync`) und die vergangenen. Vergangene bleiben, sonst verschwänden unmarkierte still aus der
     /// Leerungs-Statistik – außer bei anderer Adresse (`sourceChanged`, siehe `SourceConfiguration.addressChanged`): Dann gehörten sie zur falschen
     /// Straße, und nur die vom Nutzer markierten (`marked`: rausgestellt, nicht rausgestellt) bleiben stehen.
+    /// Neue Adresse: Eigene Termine fallen weg, kommende „Fällt aus“ auch (ein verschobener Termin der alten Adresse hätte
+    /// sonst einen gültigen der neuen unterdrückt). Vergangene bleiben für Statistik und Verlauf.
+    public static func userMarksAfterAddressChange(skipped: [Date], today: Date, calendar: Calendar = .current) -> (skipped: [Date], manual: [Date]) {
+        let start = calendar.startOfDay(for: today)
+        return (skipped.filter { calendar.startOfDay(for: $0) < start }, [])
+    }
+
+    /// `manual`: selbst eingetragene Termine (Einzeltermin, Verschieben); kommende bleiben bei gleicher Adresse stehen.
     public static func datesAfterReplacingSync(old: [Date], new: [Date], kept: [Date], marked: [Date], sourceChanged: Bool,
-                                               today: Date, calendar: Calendar = .current) -> [Date] {
+                                               today: Date, calendar: Calendar = .current, manual: [Date] = []) -> [Date] {
         var past = PickupQuota.pastDatesKeptOnSync(old: old, today: today, calendar: calendar)
         if sourceChanged {
             let markedDays = Set(marked.map { calendar.startOfDay(for: $0) })
             past = past.filter { markedDays.contains($0) }
         }
-        return Set(new.map { calendar.startOfDay(for: $0) }).union(kept.map { calendar.startOfDay(for: $0) }).union(past).sorted()
+        let start = calendar.startOfDay(for: today)
+        let upcomingManual = sourceChanged ? [] : manual.map { calendar.startOfDay(for: $0) }.filter { $0 >= start }
+        return Set(new.map { calendar.startOfDay(for: $0) }).union(kept.map { calendar.startOfDay(for: $0) }).union(past)
+            .union(upcomingManual).sorted()
     }
 
     /// Weggefallene Termine samt Ersatz (höchstens 7 Tage daneben), die den eigenen Dienst berühren:

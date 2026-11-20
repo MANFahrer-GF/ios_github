@@ -166,11 +166,16 @@ struct WasteDetailView: View {
             QuotaSettingsView(type: type, onCatchUp: { catchUpAfterQuota = true }).appTypography()
         }
         .sheet(isPresented: $showCatchUp, onDismiss: { catchUpToken += 1 }) { CatchUpSheet(typeID: type.id) }
-        .sheet(isPresented: $showAddDate) { Group { datePickerSheet("Einzeltermin") { type.addExplicitDate(pickDate); save() } }.appTypography() }
+        .sheet(isPresented: $showAddDate) { Group { datePickerSheet("Einzeltermin") { type.addManualDate(pickDate); save() } }.appTypography() }
         .sheet(isPresented: Binding(get: { moveSource != nil }, set: { if !$0 { moveSource = nil } })) { Group {
             datePickerSheet("Termin verschieben") { if let source = moveSource { type.move(source, to: pickDate); save() }; moveSource = nil }
         }.appTypography() }
-        .onChange(of: type.intervalWeeks) { _, _ in save() }
+        .onChange(of: type.intervalWeeks) { _, weeks in
+            // Ohne gespeicherten Abholtag erzeugt der Rhythmus nichts; angezeigt wird heute – den auch wirklich setzen
+            // (vorher: „Alle 2 Wochen“ gewählt, Tag stehen gelassen → keine Termine, keine Erinnerungen; Prüfung 20.11.2026)
+            if weeks > 0, type.anchorDate == nil { type.anchorDate = Days.today() }
+            save()
+        }
         .onChange(of: type.isActive) { _, _ in save() }
         .onChange(of: type.remindersEnabled) { _, _ in save() }
         .onDisappear { save() }

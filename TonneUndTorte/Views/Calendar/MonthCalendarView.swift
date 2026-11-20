@@ -31,7 +31,7 @@ struct MonthCalendarView: View {
 
     private var eventsByDay: [Date: [CalendarEvent]] {
         _ = wasteTypes.count + people.count + customEvents.count
-        return Dictionary(grouping: model.events(from: monthStart, to: monthEnd, locationID: LocationFilter.apply(filterID)), by: \.date)
+        return Dictionary(grouping: model.events(from: monthStart, to: monthEnd, locationID: LocationFilter.apply(filterID, locations: locations)), by: \.date)
     }
 
     private var gridDays: [Date?] {

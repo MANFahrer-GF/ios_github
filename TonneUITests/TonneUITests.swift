@@ -658,6 +658,46 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
     }
 
+    /// Geschenkidee tippen und direkt „Sichern“ (ohne ⊕): Die Idee muss gespeichert sein (Prüfung 20.11.2026: ging verloren).
+    func testGiftIdeaSavedWithoutPlus() {
+        tab("Termine")
+        let person = text("Maximilian Mustermann-Schulz")
+        for _ in 0..<6 where !(person.exists && person.isHittable) { app.swipeUp() }
+        XCTAssertTrue(person.waitForExistence(timeout: 5))
+        person.tap()
+        XCTAssertTrue(app.navigationBars["Geburtstag"].waitForExistence(timeout: 5))
+        let field = app.textFields["Idee hinzufügen"].firstMatch
+        for _ in 0..<4 where !(field.exists && field.isHittable) { app.swipeUp() }
+        field.tap(); field.typeText("Fahrrad")
+        app.navigationBars["Geburtstag"].buttons["Sichern"].tap()
+        XCTAssertTrue(app.navigationBars["Geburtstag"].waitForNonExistence(timeout: 5))
+        person.tap()
+        XCTAssertTrue(app.navigationBars["Geburtstag"].waitForExistence(timeout: 5))
+        let idea = text("🎁 Fahrrad")
+        for _ in 0..<4 where !(idea.exists && idea.isHittable) { app.swipeUp() }
+        XCTAssertTrue(idea.waitForExistence(timeout: 5), "getippte Geschenkidee ging beim Sichern verloren")
+    }
+
+    /// Müllart ohne Rhythmus nachträglich auf „Alle 2 Wochen“ stellen und den angezeigten Abholtag (heute) stehen lassen:
+    /// Es müssen wiederkehrende Termine entstehen (Prüfung 20.11.2026: Anker blieb leer, keine Termine).
+    func testRhythmWithoutAnchorCreatesDates() {
+        tab("Müll")
+        let close = app.buttons["dutyTip.close"].firstMatch
+        if close.waitForExistence(timeout: 3) { close.tap() }
+        XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
+        text("Papier").tap()
+        let rhythm = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Rhythmus'")).firstMatch
+        for _ in 0..<6 where !(rhythm.exists && rhythm.isHittable) { app.swipeUp() }
+        XCTAssertTrue(rhythm.waitForExistence(timeout: 5), "Rhythmus-Auswahl fehlt")
+        rhythm.tap()
+        let option = app.buttons["Alle 2 Wochen"].firstMatch
+        XCTAssertTrue(option.waitForExistence(timeout: 5))
+        option.tap()
+        let later = text("in 28 Tagen")
+        for _ in 0..<4 where !(later.exists && later.isHittable) { app.swipeUp() }
+        XCTAssertTrue(later.waitForExistence(timeout: 5), "Rhythmus erzeugt keine Termine")
+    }
+
     /// Tonnendienst: Zeitraum anlegen, der erst nächsten Monat beginnt – die nächsten Abfuhren heißen dann „Du bist nicht dran“.
     func testDutyPeriods() {
         app.terminate()

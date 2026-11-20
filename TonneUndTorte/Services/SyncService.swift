@@ -70,6 +70,16 @@ enum SyncService {
         for mapping in mappings where grouped[mapping.summary]?.isEmpty == false {
             if case .existing(let type) = mapping.target { sharedTargets[ObjectIdentifier(type), default: 0] += 1 }
         }
+        // Neue Adresse: eigene Termine und kommende „Fällt aus“ gehörten zur alten – bei allen Müllarten des Standorts, auch
+        // denen, die die neue Quelle nicht liefert (sonst lebten sie beim späteren Wiederauftauchen auf; Prüfung 20.11.2026)
+        if addressChanged {
+            let today = Days.today()
+            for type in location?.wasteTypes ?? [] {
+                let marks = ScheduleEngine.userMarksAfterAddressChange(skipped: type.skippedDates, today: today)
+                type.skippedDates = marks.skipped
+                type.manualDates = marks.manual
+            }
+        }
         // Andere Quelle: Eine Müllart der alten, die die neue nicht liefert, stand im Assistenten nicht zur Wahl.
         // Bei gleicher Adresse bleibt sie, wie sie ist: Portale, die nur Kommendes liefern, nennen Saisonarten zeitweise gar nicht.
         if sourceChanged {
@@ -129,7 +139,7 @@ enum SyncService {
             if replace {
                 // Vergangene Termine bleiben stehen (bei neuer Adresse nur die markierten), siehe ScheduleEngine.datesAfterReplacingSync
                 let allDays = Set(ScheduleEngine.datesAfterReplacingSync(old: target.explicitDates, new: Array(days), kept: kept, marked: target.markedDates,
-                                                                         sourceChanged: addressChanged, today: Days.today()))
+                                                                         sourceChanged: addressChanged, today: Days.today(), manual: target.manualDates))
                 let diff = ScheduleEngine.diff(old: target.explicitDates, new: Array(allDays))
                 if !target.explicitDates.isEmpty {
                     // Verschiebungen, die den eigenen Tonnendienst gar nicht berühren, sind keine Mitteilung wert

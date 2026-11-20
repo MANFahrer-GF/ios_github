@@ -313,7 +313,10 @@ struct BirthdayEditView: View {
     @State private var confirmCall = false
     @State private var photoItem: PhotosPickerItem?
 
-    private let options: [(String, Int)] = [("Nur am Geburtstag", 0), ("1 Tag vorher", 1), ("2 Tage vorher", 2), ("3 Tage vorher", 3), ("1 Woche vorher", 7), ("2 Wochen vorher", 14)]
+    // Als String an `Text` übergeben, wird nichts übersetzt – darum hier zweisprachig (Prüfung 20.11.2026)
+    private let options: [(String, Int)] = [(L10n.t("Nur am Geburtstag", "On the birthday only"), 0), (L10n.t("1 Tag vorher", "1 day before"), 1),
+                                            (L10n.t("2 Tage vorher", "2 days before"), 2), (L10n.t("3 Tage vorher", "3 days before"), 3),
+                                            (L10n.t("1 Woche vorher", "1 week before"), 7), (L10n.t("2 Wochen vorher", "2 weeks before"), 14)]
 
     var body: some View {
         NavigationStack {
@@ -387,8 +390,8 @@ struct BirthdayEditView: View {
                     ForEach(giftIdeas, id: \.self) { idea in Text("🎁 \(idea)") }
                         .onDelete { giftIdeas.remove(atOffsets: $0) }
                     HStack {
-                        TextField("Idee hinzufügen", text: $newGift)
-                        Button { let t = newGift.trimmingCharacters(in: .whitespaces); if !t.isEmpty { giftIdeas.append(t); newGift = "" } } label: { Image(systemName: "plus.circle.fill") }
+                        TextField("Idee hinzufügen", text: $newGift).onSubmit(addPendingGift)
+                        Button(action: addPendingGift) { Image(systemName: "plus.circle.fill") }
                             .disabled(newGift.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
@@ -464,7 +467,14 @@ struct BirthdayEditView: View {
         date = Days.make(year: person.knownYear ?? 2000, month: person.month, day: person.day) ?? Date()
     }
 
+    /// Getippte, noch nicht mit ⊕ übernommene Idee – auch beim Sichern, sonst ging sie verloren (Prüfung 20.11.2026).
+    private func addPendingGift() {
+        let t = newGift.trimmingCharacters(in: .whitespaces)
+        if !t.isEmpty { giftIdeas.append(t); newGift = "" }
+    }
+
     private func save() {
+        addPendingGift()
         var c = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if !yearKnown { c.day = min(dayOnly, daysIn(month: monthOnly)); c.month = monthOnly }
         let target = person ?? Person(name: name, day: c.day ?? 1, month: c.month ?? 1)

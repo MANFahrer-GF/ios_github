@@ -31,7 +31,7 @@ struct PickupLiveActivity: Widget {
             } compactLeading: {
                 BinStack(bins: bins(context), size: 18).tonneTypography(maxSize: .large)
             } compactTrailing: {
-                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? "heute" : "morgen")).tonneFont(.caption2, .semibold).tonneTypography(maxSize: .large)
+                Text(context.state.done ? "✓" : (Days.until(context.attributes.pickupDate) == 0 ? L10n.t("heute", "today") : L10n.t("morgen", "tomorrow"))).tonneFont(.caption2, .semibold).tonneTypography(maxSize: .large)
             } minimal: {
                 Group {
                     if context.state.done {

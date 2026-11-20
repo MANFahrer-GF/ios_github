@@ -24,6 +24,8 @@ struct SourceWizardView: View {
     @State private var selections: [SelectionOption] = []
     /// Stellen in `selections`, die aus einer Texteingabe stammen – nur für diese Sitzung, nicht gespeichert.
     @State private var typedIndices: Set<Int> = []
+    /// Automatisch gewählte Auswahlen (einzige Option) – „Zurück“ überspringt sie.
+    @State private var autoIndices: Set<Int> = []
     @State private var currentStep: SelectionStep?
     @State private var stepSearch = ""
     @State private var stepIndex = OptionSearch([])
@@ -232,6 +234,7 @@ struct SourceWizardView: View {
         provider = ProviderFactory.make(kind: item.kind, serviceKey: item.serviceKey)
         selections = []
         typedIndices = []
+        autoIndices = []
         preselectPlace = query.isEmpty || !preselect ? nil : ProviderCatalog.servedPlace(for: item, query: query)
         locationName = location?.name ?? ""
         Task { await loadNextStep() }
@@ -269,6 +272,7 @@ struct SourceWizardView: View {
         provider = ICSURLProvider(url: icsURL)
         selections = []
         typedIndices = []
+        autoIndices = []
         Task { await loadPickups() }
     }
 
@@ -331,8 +335,9 @@ struct SourceWizardView: View {
 
     private func goBack() {
         guard !selections.isEmpty else { return }   // schneller Doppeltipp auf „Zurück“
-        selections.removeLast()
+        selections.removeLast(selections.count - WizardBack.remainingCount(selectionCount: selections.count, auto: autoIndices))
         typedIndices = typedIndices.filter { $0 < selections.count }
+        autoIndices = autoIndices.filter { $0 < selections.count }
         Task { await loadNextStep() }
     }
 
@@ -346,6 +351,7 @@ struct SourceWizardView: View {
                 // Nicht direkt nach einer Texteingabe: Der einzige Treffer einer Suche soll sichtbar sein (Leipzig „Hamburger Str.“).
                 let afterTyping = typedIndices.contains(selections.count - 1)
                 if step.options.count == 1, !afterTyping, selections.count < 12 {
+                    autoIndices.insert(selections.count)
                     selections.append(step.options[0])
                     await loadNextStep()
                     return

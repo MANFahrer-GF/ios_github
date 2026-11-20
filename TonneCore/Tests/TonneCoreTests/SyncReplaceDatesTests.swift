@@ -192,6 +192,34 @@ final class SyncReplaceDatesTests: XCTestCase {
                        "ohne Adresswechsel bleiben alle vergangenen Termine, sonst verschwänden unmarkierte still aus der Statistik")
     }
 
+    /// Termin wegen Feiertag selbst vom 1.4. auf den 3.4. verschoben: Der Feed liefert weiter den 1.4. (bleibt ausgelassen),
+    /// der 3.4. muss den Abgleich überstehen – vorher war er danach weg und an dem Tag kam gar nichts (Prüfung 20.11.2026).
+    func testManualDatesSurviveSyncAtSameAddress() {
+        let manual = [d(2026, 3, 10), d(2026, 4, 3)]
+        let result = ScheduleEngine.datesAfterReplacingSync(old: old + [d(2026, 4, 3)], new: new, kept: [], marked: marked, sourceChanged: false,
+                                                            today: today, calendar: calendar, manual: manual)
+        XCTAssertTrue(result.contains(d(2026, 4, 3)), "selbst verschobener Termin fiel beim Abgleich weg")
+        XCTAssertEqual(result.filter { $0 == d(2026, 4, 3) }.count, 1)
+        // Gegenprobe ohne eigene Termine: wie bisher fällt der 3.4. weg
+        let without = ScheduleEngine.datesAfterReplacingSync(old: old + [d(2026, 4, 3)], new: new, kept: [], marked: marked, sourceChanged: false,
+                                                             today: today, calendar: calendar)
+        XCTAssertFalse(without.contains(d(2026, 4, 3)))
+    }
+
+    /// Neue Adresse: Eigene Termine der alten Adresse gelten nicht mehr.
+    func testManualDatesDropOnAddressChange() {
+        let result = ScheduleEngine.datesAfterReplacingSync(old: old, new: new, kept: [], marked: marked, sourceChanged: true,
+                                                            today: today, calendar: calendar, manual: [d(2026, 4, 3)])
+        XCTAssertFalse(result.contains(d(2026, 4, 3)))
+    }
+
+    /// Neue Adresse: kommende „Fällt aus“ und alle eigenen Termine weg, vergangene „Fällt aus“ bleiben.
+    func testAddressChangeClearsUpcomingUserMarks() {
+        let marks = ScheduleEngine.userMarksAfterAddressChange(skipped: [d(2026, 3, 11), d(2026, 4, 1)], today: today, calendar: calendar)
+        XCTAssertEqual(marks.skipped, [d(2026, 3, 11)])
+        XCTAssertEqual(marks.manual, [])
+    }
+
     func testDeactivatedTypeKeepsFutureAndMarkedOnly() {
         // So bereinigt der Abgleich eine Müllart, die die neue Quelle nicht mehr liefert
         let future = old.filter { $0 >= today }

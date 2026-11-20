@@ -271,7 +271,14 @@
       }
     },
     "Abhol-Erinnerung starten in Tonne und Torte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abhol-Erinnerung starten in Tonne und Torte"
+          }
+        }
+      }
     },
     "Abholung" : {
       "extractionState" : "stale",
@@ -693,7 +700,14 @@
       }
     },
     "Ausgelassen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skipped"
+          }
+        }
+      }
     },
     "Automatisch aktuell halten" : {
       "localizations" : {
@@ -758,7 +772,14 @@
       }
     },
     "Bleibt drin" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stays in"
+          }
+        }
+      }
     },
     "Clean. Ohne Mist." : {
       "localizations" : {
@@ -924,7 +945,14 @@
       }
     },
     "Doch raus" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Put out after all"
+          }
+        }
+      }
     },
     "doppelt?" : {
       "localizations" : {
@@ -1755,7 +1783,14 @@
       }
     },
     "Ist schon erledigt. 👍" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already done. 👍"
+          }
+        }
+      }
     },
     "Jede Woche" : {
       "localizations" : {
@@ -2763,7 +2798,14 @@
       }
     },
     "Sag: „Wann kommt der Müll in Tonne und Torte?“" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Say: “Wann kommt der Müll in Tonne und Torte?”"
+          }
+        }
+      }
     },
     "Sagt dir, wann die nächste Müllabfuhr kommt." : {
       "localizations" : {
@@ -3051,7 +3093,14 @@
       }
     },
     "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Heimat-Info, hausmüll.info, Bürgerportal, Kreisportale (Sitepark, WasteManagement) und die Portale vieler Städte und Kreise wie BSR Berlin, Stadtreinigung Hamburg, AWM München, Köln, Frankfurt, Stuttgart, Düsseldorf, Dresden, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Einige Orte veröffentlichen ihre Termine nur als PDF – die übernimmt die App einmal im Jahr und nennt die Quelle. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates come straight from the providers’ portals: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Heimat-Info, hausmüll.info, Bürgerportal, district portals (Sitepark, WasteManagement) and the portals of many cities and districts such as BSR Berlin, Stadtreinigung Hamburg, AWM Munich, Cologne, Frankfurt, Stuttgart, Düsseldorf, Dresden, Leipzig and Hannover region. The catalog knows %lld providers. Some places publish their dates only as a PDF – the app takes them over once a year and names the source. No guarantee – if in doubt, your provider’s collection calendar applies."
+          }
+        }
+      }
     },
     "Termine kommen direkt von den Portalen der Entsorger: AWIDO, AbfallPlus, Jumomind, Abfallnavi, Abfall-App, C-Trace, Müllmax, Gemos, AWSH, Lobbe, Nerdbridge, Mein-Abfallkalender, Insert IT, Müllabfuhr Deutschland, Heimat-Info, Kreisportale (Sitepark) sowie BSR Berlin, Köln, Leipzig und Region Hannover. Der Katalog kennt %lld Entsorger. Alle Angaben ohne Gewähr, im Zweifel gilt der Abfuhrkalender deines Entsorgers." : {
       "extractionState" : "stale",
@@ -3269,7 +3318,14 @@
       }
     },
     "Uhrzeit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
     },
     "Verbindung trennen" : {
       "localizations" : {
@@ -3343,7 +3399,14 @@
       }
     },
     "Vorab erinnern" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind in advance"
+          }
+        }
+      }
     },
     "Vorher" : {
       "extractionState" : "stale",
@@ -3582,7 +3645,14 @@
       }
     },
     "wird aktualisiert" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "updating"
+          }
+        }
+      }
     },
     "Wirklich alle Standorte, Müllarten, Geburtstage und Termine löschen?" : {
       "localizations" : {

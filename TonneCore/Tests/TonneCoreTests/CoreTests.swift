@@ -64,6 +64,13 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(LiveActivityPlanner.plan(pickupDays: doneDays, now: at(0, 20), eveningMinutes: 19 * 60, canSchedule: true).map(\.dayKey),
                        [Days.iso(Days.add(8, to: today)), Days.iso(Days.add(15, to: today))])
         XCTAssertTrue(LiveActivityPlanner.plan(pickupDays: [days[0]], now: at(1, 13), eveningMinutes: 19 * 60, canSchedule: true).isEmpty)
+        // Erinnerungen der Müllart aus: keine Aktivität; gemischter Tag nennt nur die mit Erinnerung (Prüfung 20.11.2026)
+        let quiet = WidgetSnapshot.PickupItem(name: "Bio", symbolName: "leaf.fill", colorHex: "#3A8F3A", remindersOff: true)
+        XCTAssertTrue(LiveActivityPlanner.plan(pickupDays: [WidgetSnapshot.PickupDay(date: Days.add(1, to: today), items: [quiet])],
+                                               now: at(0, 20), eveningMinutes: 19 * 60, canSchedule: true).isEmpty)
+        let mixed = LiveActivityPlanner.plan(pickupDays: [WidgetSnapshot.PickupDay(date: Days.add(1, to: today), items: [item, quiet])],
+                                             now: at(0, 20), eveningMinutes: 19 * 60, canSchedule: true)
+        XCTAssertEqual(mixed.first?.day.items.map(\.name), ["Restmüll"])
     }
 
     func testSpokenBirthdays() {

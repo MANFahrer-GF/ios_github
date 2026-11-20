@@ -23,10 +23,14 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var glyphName: String?
         /// Zum Hinbringen (Schadstoffmobil) – von der App aus der Kategorie bestimmt; nil in älteren Schnappschüssen.
         public var dropOff: Bool?
+        /// Erinnerungen dieser Müllart aus – dann auch keine Live-Aktivität; nil (ältere Schnappschüsse) heißt an.
+        public var remindersOff: Bool?
         /// Anzuzeigendes Symbol.
         public var displaySymbol: String { glyphName ?? symbolName }
-        public init(name: String, symbolName: String, colorHex: String, locationID: String? = nil, locationName: String? = nil, dropOff: Bool? = nil) {
+        public init(name: String, symbolName: String, colorHex: String, locationID: String? = nil, locationName: String? = nil, dropOff: Bool? = nil,
+                    remindersOff: Bool? = nil) {
             self.name = name; self.locationID = locationID; self.locationName = locationName; self.colorHex = colorHex; self.dropOff = dropOff
+            self.remindersOff = remindersOff
             if WasteGlyph.all.contains(symbolName) {
                 self.symbolName = WasteGlyph.sfFallback(for: symbolName)
                 self.glyphName = symbolName

@@ -32,7 +32,10 @@ public enum LiveActivityPlanner {
         var result: [Entry] = []
         var shownNow = false
         var scheduled = 0
-        for day in pickupDays.sorted(by: { $0.date < $1.date }) where !day.done {
+        for var day in pickupDays.sorted(by: { $0.date < $1.date }) where !day.done {
+            // Müllarten mit ausgeschalteten Erinnerungen bekommen auch keine Aktivität (wie Abend-Mitteilung und Wecker)
+            day.items.removeAll { $0.remindersOff == true }
+            if day.items.isEmpty { continue }
             // Nur Hinbringen (Schadstoffmobil): nichts rauszustellen – keine „Rausstellen“-Aktivität auf dem Sperrbildschirm
             if PickupWording(day: day).onlyBringTo { continue }
             let start = calendar.startOfDay(for: day.date)

@@ -253,7 +253,7 @@ private struct SymbolTile<Content: View>: View {
 // MARK: - Standortfilter
 
 enum LocationFilter {
-    static func apply(_ id: String) -> UUID? { UUID(uuidString: id) }
+    static func apply(_ id: String, locations: [Location]) -> UUID? { LocationFilterRule.effective(id, existing: locations.map(\.id)) }
 }
 
 struct LocationFilterMenu: View {
@@ -262,12 +262,14 @@ struct LocationFilterMenu: View {
     var body: some View {
         if locations.count > 1 {
             Menu {
-                Picker("Standort", selection: $filterID) {
+                // Ein Filter auf einen gelöschten Standort gilt als „Alle Standorte“
+                Picker("Standort", selection: Binding(get: { LocationFilter.apply(filterID, locations: locations)?.uuidString ?? "" },
+                                                       set: { filterID = $0 })) {
                     Label("Alle Standorte", systemImage: "square.grid.2x2").tag("")
                     ForEach(locations) { Label($0.name, systemImage: $0.symbolName).tag($0.id.uuidString) }
                 }
             } label: {
-                Image(systemName: filterID.isEmpty ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                Image(systemName: LocationFilter.apply(filterID, locations: locations) == nil ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
             }
         }
     }
