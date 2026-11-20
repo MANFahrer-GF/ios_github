@@ -42,6 +42,32 @@ Die Termine stammen von den Portalen der Entsorger. Alle Angaben ohne Gewähr �
 
 Geändert am 14.11.2026 (in 2.0.11 während „Warten auf Prüfung“ gesichert): Das Zitat am Vorabend ist jetzt der echte Mitteilungstext (`ReminderPlanner.eveningText`, Titel „Morgen wird abgeholt“), und der Siri-Satz enthält den App-Namen, ohne den Siri ihn nicht erkennt (`ShortcutsProvider.swift`). Beide Sätze bei jeder neuen Version so lassen.
 
+### Neu in Version 2.1.1 (Build 18)
+
+```
+Ein Wunsch aus der Community
+Kalender ohne Emojis: Unter Mehr → Kalender-Abgleich lassen sich die Emojis in den Kalendereinträgen abschalten. Dann steht dort nur „Restmüll“ statt „🗑️ Restmüll“.
+
+Zwei Standorte
+„Erledigt“ gilt jetzt nur für den Standort, den du gerade siehst – in der gefilterten Übersicht und im Widget mit Standort. Der andere Standort behält seine Erinnerung.
+
+Verschobene Termine bleiben
+Einen Termin wegen eines Feiertags verschoben oder selbst eingetragen? Er bleibt jetzt auch nach dem Abgleich mit dem Entsorger stehen.
+
+Außerdem
+• Die Schriftwahl unter Mehr → Schrift wirkt sofort, ohne die App neu zu starten
+• Auf Reisen in eine andere Zeitzone stehen die Termine weiter am richtigen Tag
+• Rhythmus nachträglich einstellen erzeugt sofort die Termine
+• Eine getippte Geschenkidee geht beim Sichern nicht mehr verloren
+• „Zurück“ beim Einrichten funktioniert wieder in jedem Schritt
+• Der Standortfilter hängt nach dem Löschen eines Standorts nicht mehr fest
+• Die Live-Aktivität achtet auf ausgeschaltete Erinnerungen
+• Die englische Oberfläche ist vollständig übersetzt
+• Saarbrücken: Die Suche führt direkt zum ZKE
+```
+
+Werbetext 2.1.1 (143 Zeichen): „Neu: Kalender ohne Emojis und „Erledigt“ je Standort. Über 800 Entsorger geprüft, Erinnerung am Vorabend, Geburtstage gleich mit. Ohne Werbung.“
+
 ### Neu in Version 2.1.0 (Build 17, hochgeladen 19.11.2026)
 
 ```

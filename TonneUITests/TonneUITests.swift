@@ -677,6 +677,26 @@ final class TonneUITests: XCTestCase {
         XCTAssertEqual(toggle.value as? String, "0", "Einstellung ging beim Verlassen verloren")
     }
 
+    /// Ende-zu-Ende-Probe „Emojis im Titel“ im echten Kalender des Simulators: Schalter nach TONNE_EMOJI (1/0) stellen,
+    /// „Jetzt eintragen“. Die Titel prüft der Aufrufer danach in der Kalender-Datenbank. Nur auf Wunsch (TONNE_EMOJI gesetzt).
+    func testCalendarExportWritesTitles() throws {
+        guard let wanted = ProcessInfo.processInfo.environment["TONNE_EMOJI"] else { throw XCTSkip("nur auf Wunsch: Kalender-Probe") }
+        tab("Mehr")
+        text("Kalender-Abgleich").tap()
+        let toggle = app.switches["Emojis im Titel"].firstMatch
+        for _ in 0..<4 where !(toggle.exists && toggle.isHittable) { app.swipeUp() }
+        if toggle.value as? String != wanted { flip("Emojis im Titel") }
+        XCTAssertEqual(toggle.value as? String, wanted)
+        let export = app.buttons["Jetzt eintragen"].firstMatch
+        for _ in 0..<4 where !(export.exists && export.isHittable) { app.swipeUp() }
+        export.tap()
+        let ok = app.alerts.buttons["OK"].firstMatch
+        XCTAssertTrue(ok.waitForExistence(timeout: 15), "Eintragen ohne Rückmeldung")
+        let message = app.alerts.staticTexts.allElementsBoundByIndex.map(\.label).joined(separator: " ")
+        XCTAssertTrue(message.contains("eingetragen"), "Eintragen fehlgeschlagen: \(message)")
+        ok.tap()
+    }
+
     /// Zwei Standorte mit Abholung morgen, Übersicht auf „Teststraße“ gefiltert, „Erledigt“: Die Ferienwohnung bleibt offen
     /// (Thomas 20.11.2026: „Erledigt“ je Standort; vorher wurde sie mit erledigt).
     func testDoneOnlyForFilteredLocation() {
