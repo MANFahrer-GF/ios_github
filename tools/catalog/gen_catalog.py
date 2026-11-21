@@ -230,7 +230,9 @@ NOT_SERVED={('awmMuenchen','muenchen'):['Landkreis München'],('leipzig','leipzi
  ('portalsNord','osnabrueck'):['Landkreis Osnabrück'],('portalsBayern','coburg'):['Landkreis Coburg'],('muellmax','Ask'):['Landkreis Kaiserslautern'],
  ('abfallPlusApp','de.k4systems.abfallappla'):['Landkreis Landshut'],('abfallPlusApp','de.k4systems.awa'):['Landkreis Augsburg'],('abfallPlusApp','de.k4systems.wuerzburg'):['Landkreis Würzburg'],
  ('awido','lra-regensburg'):['Kreisfreie Stadt Regensburg'],('abfallPlusApp','abfallH.ucom.de'):['Stadtkreis Heilbronn'],('abfallPlusApp','de.remondis.rheinland'):['Landkreis Traunstein'],
- ('jumomind','mymuell'):['Landkreis Biberach','Landkreis Main-Kinzig-Kreis','Landkreis Aschaffenburg']}
+ ('jumomind','mymuell'):['Landkreis Biberach','Landkreis Main-Kinzig-Kreis','Landkreis Aschaffenburg'],
+ # Stadtwerke bedienen nur die Stadt, der Landkreis hat eigenen AWIDO-Eintrag lra-ab (Prüfbefund 21.11.2026)
+ ('awido','stwab'):['Landkreis Aschaffenburg']}
 kreis_land={r['krs_name']:r['lan_name'] for r in rows}
 def short(k):
     for p in ['Kreisfreie Stadt ','Landkreis ','Stadtkreis ','Regionalverband ','Städteregion ','Kreis ','Region ']:

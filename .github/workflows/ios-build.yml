@@ -23,6 +23,9 @@ jobs:
           XCODE="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -1)"
           sudo xcode-select -s "${XCODE:-/Applications/Xcode.app}"
           xcodebuild -version
+      - name: Erzeugte Dateien aktuell
+        # Katalog, Regionen, Ortszuordnung, Ortsteile und Jahresdaten müssen ihren Generatoren entsprechen (21.11.2026)
+        run: ./tools/check_generated.sh
       - name: Tests
         working-directory: TonneCore
         run: swift test
