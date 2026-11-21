@@ -1259,5 +1259,18 @@
    "Landkreis Groß-Gerau"
   ],
   "onlyDistricts": true
+ },
+ {
+  "kind": "jahresdaten",
+  "key": "badlaasphe",
+  "title": "Stadt Bad Laasphe",
+  "website": "https://www.stadt-badlaasphe.de/abfallentsorgung/",
+  "places": [
+   "Bad Laasphe"
+  ],
+  "districts": [
+   "Kreis Siegen-Wittgenstein"
+  ],
+  "onlyDistricts": true
  }
 ]

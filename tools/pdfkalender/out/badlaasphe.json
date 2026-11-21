@@ -1,0 +1,6146 @@
+{
+ "key": "badlaasphe",
+ "title": "Stadt Bad Laasphe",
+ "source": "https://www.stadt-badlaasphe.de/wp-content/uploads/2026/11/Abfallkalender_2027.pdf",
+ "stand": "2026-11-21",
+ "years": [
+  2027
+ ],
+ "groupTitle": "Ortsteile oder Kernstadt",
+ "stepTitle": "Ort oder Straße",
+ "notice": "Schadstoffsammlung jeweils 9–12 Uhr. „Hof Breitenbach“ ist bei der Gelben Tonne keinem Bezirk zugeordnet. Für Welschengeheu, Rüppershäuser Straße 1-5 und Im Gründchen nennt der Kalender nur die Gelbe Tonne – Rest-, Bio- und Papiertonne bitte beim Entsorger erfragen. Sperrmüll auf Abruf (Anforderungskarte oder Homepage der Stadt).",
+ "areas": [
+  {
+   "id": "amtshausen",
+   "title": "Amtshausen",
+   "group": "Ortsteile",
+   "plan": "p1"
+  },
+  {
+   "id": "banfe",
+   "title": "Banfe",
+   "group": "Ortsteile",
+   "plan": "p2"
+  },
+  {
+   "id": "bermershausen",
+   "title": "Bermershausen",
+   "group": "Ortsteile",
+   "plan": "p3"
+  },
+  {
+   "id": "bernshausen",
+   "title": "Bernshausen",
+   "group": "Ortsteile",
+   "plan": "p4"
+  },
+  {
+   "id": "feudingen",
+   "title": "Feudingen",
+   "group": "Ortsteile",
+   "plan": "p5"
+  },
+  {
+   "id": "fischelbach",
+   "title": "Fischelbach",
+   "group": "Ortsteile",
+   "plan": "p6"
+  },
+  {
+   "id": "glashuette",
+   "title": "Glashütte",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "grossenbach",
+   "title": "Großenbach",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "heiligenborn",
+   "title": "Heiligenborn",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "herbertshausen",
+   "title": "Herbertshausen",
+   "group": "Ortsteile",
+   "plan": "p8"
+  },
+  {
+   "id": "hesselbach",
+   "title": "Hesselbach",
+   "group": "Ortsteile",
+   "plan": "p9"
+  },
+  {
+   "id": "holzhausen",
+   "title": "Holzhausen",
+   "group": "Ortsteile",
+   "plan": "p1"
+  },
+  {
+   "id": "industriegebiet_in_den_espen",
+   "title": "Industriegebiet „In den Espen“",
+   "group": "Ortsteile",
+   "plan": "p10"
+  },
+  {
+   "id": "kunst_wittgenstein",
+   "title": "Kunst-Wittgenstein",
+   "group": "Ortsteile",
+   "plan": "p11"
+  },
+  {
+   "id": "laaspherhuette",
+   "title": "Laaspherhütte",
+   "group": "Ortsteile",
+   "plan": "p8"
+  },
+  {
+   "id": "lindenfeld",
+   "title": "Lindenfeld",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "niederlaasphe",
+   "title": "Niederlaasphe",
+   "group": "Ortsteile",
+   "plan": "p12"
+  },
+  {
+   "id": "oberndorf",
+   "title": "Oberndorf",
+   "group": "Ortsteile",
+   "plan": "p13"
+  },
+  {
+   "id": "puderbach",
+   "title": "Puderbach",
+   "group": "Ortsteile",
+   "plan": "p14"
+  },
+  {
+   "id": "rueckershausen",
+   "title": "Rückershausen",
+   "group": "Ortsteile",
+   "plan": "p10"
+  },
+  {
+   "id": "rueppershausen",
+   "title": "Rüppershausen",
+   "group": "Ortsteile",
+   "plan": "p13"
+  },
+  {
+   "id": "sassmannshausen",
+   "title": "Saßmannshausen",
+   "group": "Ortsteile",
+   "plan": "p15"
+  },
+  {
+   "id": "sohl",
+   "title": "Sohl",
+   "group": "Ortsteile",
+   "plan": "p6"
+  },
+  {
+   "id": "steinbach",
+   "title": "Steinbach",
+   "group": "Ortsteile",
+   "plan": "p1"
+  },
+  {
+   "id": "volkholz",
+   "title": "Volkholz",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "weide",
+   "title": "Weide",
+   "group": "Ortsteile",
+   "plan": "p7"
+  },
+  {
+   "id": "welschengeheu",
+   "title": "Welschengeheu",
+   "group": "Ortsteile",
+   "plan": "p16"
+  },
+  {
+   "id": "kernstadt_am_birkenstrauch",
+   "title": "Am Birkenstrauch",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_am_dillstein",
+   "title": "Am Dillstein",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_am_eichelkamp",
+   "title": "Am Eichelkamp",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_am_feldberg",
+   "title": "Am Feldberg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_am_galgenberg",
+   "title": "Am Galgenberg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_am_laerchenwaeldchen",
+   "title": "Am Lärchenwäldchen",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_am_waldrand",
+   "title": "Am Waldrand",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_an_der_hahler",
+   "title": "An der Hahler",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_auf_der_pfingstweide",
+   "title": "Auf der Pfingstweide",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_bahnhofstrasse",
+   "title": "Bahnhofstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_bergstrasse",
+   "title": "Bergstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_brandenburger_weg",
+   "title": "Brandenburger Weg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_brunnenstrasse",
+   "title": "Brunnenstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_brueckenstrasse",
+   "title": "Brückenstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_buchwiesenstrasse",
+   "title": "Buchwiesenstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_butzebach",
+   "title": "Butzebach",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_baederborn",
+   "title": "Bäderborn",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_dammstrasse",
+   "title": "Dammstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_ditzroder_weg",
+   "title": "Ditzroder Weg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_feldstrasse",
+   "title": "Feldstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_forsthaus_hirtsgrund",
+   "title": "Forsthaus Hirtsgrund",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_forsthaus_litzelbach",
+   "title": "Forsthaus Litzelbach",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_friedrichshuette",
+   "title": "Friedrichshütte",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_friedrichstrasse",
+   "title": "Friedrichstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_gartenstrasse",
+   "title": "Gartenstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_gennernbach",
+   "title": "Gennernbach",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_hahlerweg",
+   "title": "Hahlerweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_hinterfang",
+   "title": "Hinterfang",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_hirtsgrund",
+   "title": "Hirtsgrund",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_hirtsgrunder_weg",
+   "title": "Hirtsgrunder Weg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_hof_breitenbach",
+   "title": "Hof Breitenbach",
+   "group": "Kernstadt",
+   "plan": "p20"
+  },
+  {
+   "id": "kernstadt_hof_breitenbach_herbertshausen",
+   "title": "Hof Breitenbach – Herbertshausen",
+   "group": "Kernstadt",
+   "plan": "p11"
+  },
+  {
+   "id": "kernstadt_hubertusweg",
+   "title": "Hubertusweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_hoehenweg",
+   "title": "Höhenweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_im_gruendchen",
+   "title": "Im Gründchen",
+   "group": "Kernstadt",
+   "plan": "p21"
+  },
+  {
+   "id": "kernstadt_im_laasphetal",
+   "title": "Im Laasphetal",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_im_wabach",
+   "title": "Im Wabach",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_in_der_aue",
+   "title": "In der Aue",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_in_der_grube",
+   "title": "In der Grube",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_in_der_hohl",
+   "title": "In der Hohl",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_in_der_stockwiese",
+   "title": "In der Stockwiese",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_industriestrasse",
+   "title": "Industriestraße",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_kalteborn",
+   "title": "Kalteborn",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_kanarienweg",
+   "title": "Kanarienweg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_kastanienweg",
+   "title": "Kastanienweg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_kirchplatz",
+   "title": "Kirchplatz",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_kneebuschweg",
+   "title": "Kneebuschweg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_kurstrasse",
+   "title": "Kurstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_koenigstrasse",
+   "title": "Königstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_lahnstrasse",
+   "title": "Lahnstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_lahnuferstrasse",
+   "title": "Lahnuferstraße",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_ludwig_koch_strasse",
+   "title": "Ludwig-Koch-Straße",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_mauerstrasse",
+   "title": "Mauerstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_max_praeger_weg",
+   "title": "Max-Präger-Weg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_mecklenburger_weg",
+   "title": "Mecklenburger Weg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_mozartweg",
+   "title": "Mozartweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_muehlenstrasse",
+   "title": "Mühlenstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_muehlfeld",
+   "title": "Mühlfeld",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_niederlaaspher_weg",
+   "title": "Niederlaaspher Weg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_obere_bienhecke",
+   "title": "Obere Bienhecke",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_obere_rote_hardt",
+   "title": "Obere Rote Hardt",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_obere_wallachei",
+   "title": "Obere Wallachei",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_oberer_buhlschlag",
+   "title": "Oberer Buhlschlag",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_oberer_schuleborn",
+   "title": "Oberer Schuleborn",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_ostplatz",
+   "title": "Ostplatz",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_ostpreussenstrasse",
+   "title": "Ostpreußenstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_pommernweg",
+   "title": "Pommernweg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_puderbacher_weg",
+   "title": "Puderbacher Weg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_rueppershaeuser_strasse_1_5",
+   "title": "Rüppershäuser Straße 1-5",
+   "group": "Kernstadt",
+   "plan": "p21"
+  },
+  {
+   "id": "kernstadt_sachsenweg",
+   "title": "Sachsenweg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_schlesische_strasse",
+   "title": "Schlesische Straße",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_schloss_wittgenstein",
+   "title": "Schloß Wittgenstein",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_schlossberg",
+   "title": "Schloßberg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_schlossstrasse",
+   "title": "Schloßstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_sebastian_kneipp_strasse",
+   "title": "Sebastian-Kneipp-Straße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_steinackerstrasse",
+   "title": "Steinackerstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_steinweg",
+   "title": "Steinweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_sudetenweg",
+   "title": "Sudetenweg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_thueringer_weg",
+   "title": "Thüringer Weg",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_turnerstrasse",
+   "title": "Turnerstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_untere_bienhecke",
+   "title": "Untere Bienhecke",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_untere_rote_hardt",
+   "title": "Untere Rote Hardt",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_unterer_buhlschlag",
+   "title": "Unterer Buhlschlag",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_unterer_schuleborn",
+   "title": "Unterer Schuleborn",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_unterm_hombach",
+   "title": "Unterm Hombach",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_vor_dem_fang",
+   "title": "Vor dem Fang",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_vor_den_hasseln",
+   "title": "Vor den Hasseln",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_waldweg",
+   "title": "Waldweg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_wallstrasse",
+   "title": "Wallstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_wasserstrasse_einschl_bracht",
+   "title": "Wasserstraße einschl. Bracht",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_wehrstrasse",
+   "title": "Wehrstraße",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_wiesenbacher_weg",
+   "title": "Wiesenbacher Weg",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_wilhelmsplatz",
+   "title": "Wilhelmsplatz",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_wilhelmstrasse",
+   "title": "Wilhelmstraße",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_zum_lehrberg",
+   "title": "Zum Lehrberg",
+   "group": "Kernstadt",
+   "plan": "p19"
+  },
+  {
+   "id": "kernstadt_zum_litzelbach",
+   "title": "Zum Litzelbach",
+   "group": "Kernstadt",
+   "plan": "p17"
+  },
+  {
+   "id": "kernstadt_zum_winterkasten",
+   "title": "Zum Winterkasten",
+   "group": "Kernstadt",
+   "plan": "p18"
+  },
+  {
+   "id": "kernstadt_zwischen_landwehr",
+   "title": "Zwischen Landwehr",
+   "group": "Kernstadt",
+   "plan": "p19"
+  }
+ ],
+ "plans": {
+  "p1": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-27",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-24",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-23",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-21",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-20",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-16",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-14",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-11",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-08",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-06",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-04",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-11-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-01",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-29",
+    "Altpapier"
+   ]
+  ],
+  "p2": [
+   [
+    "2027-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-06",
+    "Biomüll"
+   ],
+   [
+    "2027-01-12",
+    "Restmüll"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-02",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-09",
+    "Restmüll"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-02",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-09",
+    "Restmüll"
+   ],
+   [
+    "2027-03-16",
+    "Biomüll"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-03-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-31",
+    "Biomüll"
+   ],
+   [
+    "2027-04-06",
+    "Restmüll"
+   ],
+   [
+    "2027-04-13",
+    "Biomüll"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-27",
+    "Biomüll"
+   ],
+   [
+    "2027-05-04",
+    "Restmüll"
+   ],
+   [
+    "2027-05-11",
+    "Biomüll"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-25",
+    "Biomüll"
+   ],
+   [
+    "2027-06-01",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-08",
+    "Biomüll"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-22",
+    "Biomüll"
+   ],
+   [
+    "2027-06-29",
+    "Restmüll"
+   ],
+   [
+    "2027-07-06",
+    "Biomüll"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-20",
+    "Biomüll"
+   ],
+   [
+    "2027-07-27",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-03",
+    "Biomüll"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-17",
+    "Biomüll"
+   ],
+   [
+    "2027-08-24",
+    "Restmüll"
+   ],
+   [
+    "2027-08-31",
+    "Biomüll"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-14",
+    "Biomüll"
+   ],
+   [
+    "2027-09-21",
+    "Restmüll"
+   ],
+   [
+    "2027-09-28",
+    "Biomüll"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-12",
+    "Biomüll"
+   ],
+   [
+    "2027-10-19",
+    "Restmüll"
+   ],
+   [
+    "2027-10-26",
+    "Biomüll"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-09",
+    "Biomüll"
+   ],
+   [
+    "2027-11-16",
+    "Restmüll"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-07",
+    "Biomüll"
+   ],
+   [
+    "2027-12-14",
+    "Restmüll"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ],
+   [
+    "2027-12-31",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p3": [
+   [
+    "2027-01-05",
+    "Biomüll"
+   ],
+   [
+    "2027-01-11",
+    "Restmüll"
+   ],
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-02-01",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-08",
+    "Restmüll"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-01",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-08",
+    "Restmüll"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-15",
+    "Biomüll"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-03-30",
+    "Biomüll"
+   ],
+   [
+    "2027-04-05",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-12",
+    "Biomüll"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-26",
+    "Biomüll"
+   ],
+   [
+    "2027-05-03",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-10",
+    "Biomüll"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-24",
+    "Biomüll"
+   ],
+   [
+    "2027-05-31",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-07",
+    "Biomüll"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-21",
+    "Biomüll"
+   ],
+   [
+    "2027-06-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-05",
+    "Biomüll"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-19",
+    "Biomüll"
+   ],
+   [
+    "2027-07-26",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-02",
+    "Biomüll"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-16",
+    "Biomüll"
+   ],
+   [
+    "2027-08-23",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-30",
+    "Biomüll"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-13",
+    "Biomüll"
+   ],
+   [
+    "2027-09-20",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-11",
+    "Biomüll"
+   ],
+   [
+    "2027-10-18",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-25",
+    "Biomüll"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-08",
+    "Biomüll"
+   ],
+   [
+    "2027-11-15",
+    "Restmüll"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-06",
+    "Biomüll"
+   ],
+   [
+    "2027-12-13",
+    "Restmüll"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ]
+  ],
+  "p4": [
+   [
+    "2027-01-05",
+    "Biomüll"
+   ],
+   [
+    "2027-01-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-11",
+    "Restmüll"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-02-01",
+    "Biomüll"
+   ],
+   [
+    "2027-02-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-08",
+    "Restmüll"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-01",
+    "Biomüll"
+   ],
+   [
+    "2027-03-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-08",
+    "Restmüll"
+   ],
+   [
+    "2027-03-15",
+    "Biomüll"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-03-30",
+    "Biomüll"
+   ],
+   [
+    "2027-04-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-05",
+    "Restmüll"
+   ],
+   [
+    "2027-04-12",
+    "Biomüll"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-26",
+    "Biomüll"
+   ],
+   [
+    "2027-04-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-03",
+    "Restmüll"
+   ],
+   [
+    "2027-05-10",
+    "Biomüll"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-24",
+    "Biomüll"
+   ],
+   [
+    "2027-05-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-31",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-07",
+    "Biomüll"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-21",
+    "Biomüll"
+   ],
+   [
+    "2027-06-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-05",
+    "Biomüll"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-19",
+    "Biomüll"
+   ],
+   [
+    "2027-07-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-26",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-02",
+    "Biomüll"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-16",
+    "Biomüll"
+   ],
+   [
+    "2027-08-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-23",
+    "Restmüll"
+   ],
+   [
+    "2027-08-30",
+    "Biomüll"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-13",
+    "Biomüll"
+   ],
+   [
+    "2027-09-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-20",
+    "Restmüll"
+   ],
+   [
+    "2027-09-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-11",
+    "Biomüll"
+   ],
+   [
+    "2027-10-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-18",
+    "Restmüll"
+   ],
+   [
+    "2027-10-25",
+    "Biomüll"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-08",
+    "Biomüll"
+   ],
+   [
+    "2027-11-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-15",
+    "Restmüll"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-06",
+    "Biomüll"
+   ],
+   [
+    "2027-12-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-13",
+    "Restmüll"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ]
+  ],
+  "p5": [
+   [
+    "2027-01-05",
+    "Biomüll"
+   ],
+   [
+    "2027-01-11",
+    "Restmüll"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-01-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-01",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-08",
+    "Restmüll"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-02-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-01",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-08",
+    "Restmüll"
+   ],
+   [
+    "2027-03-15",
+    "Biomüll"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-03-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-30",
+    "Biomüll"
+   ],
+   [
+    "2027-04-05",
+    "Restmüll"
+   ],
+   [
+    "2027-04-12",
+    "Biomüll"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-26",
+    "Biomüll"
+   ],
+   [
+    "2027-05-03",
+    "Restmüll"
+   ],
+   [
+    "2027-05-10",
+    "Biomüll"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-24",
+    "Biomüll"
+   ],
+   [
+    "2027-05-31",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-07",
+    "Biomüll"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-21",
+    "Biomüll"
+   ],
+   [
+    "2027-06-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-05",
+    "Biomüll"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-19",
+    "Biomüll"
+   ],
+   [
+    "2027-07-26",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-02",
+    "Biomüll"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-16",
+    "Biomüll"
+   ],
+   [
+    "2027-08-23",
+    "Restmüll"
+   ],
+   [
+    "2027-08-30",
+    "Biomüll"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-13",
+    "Biomüll"
+   ],
+   [
+    "2027-09-20",
+    "Restmüll"
+   ],
+   [
+    "2027-09-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-11",
+    "Biomüll"
+   ],
+   [
+    "2027-10-18",
+    "Restmüll"
+   ],
+   [
+    "2027-10-25",
+    "Biomüll"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-08",
+    "Biomüll"
+   ],
+   [
+    "2027-11-15",
+    "Restmüll"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-11-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-06",
+    "Biomüll"
+   ],
+   [
+    "2027-12-13",
+    "Restmüll"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ],
+   [
+    "2027-12-27",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p6": [
+   [
+    "2027-01-05",
+    "Biomüll"
+   ],
+   [
+    "2027-01-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-11",
+    "Restmüll"
+   ],
+   [
+    "2027-01-26",
+    "Altpapier"
+   ],
+   [
+    "2027-02-01",
+    "Biomüll"
+   ],
+   [
+    "2027-02-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-08",
+    "Restmüll"
+   ],
+   [
+    "2027-02-23",
+    "Altpapier"
+   ],
+   [
+    "2027-03-01",
+    "Biomüll"
+   ],
+   [
+    "2027-03-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-08",
+    "Restmüll"
+   ],
+   [
+    "2027-03-15",
+    "Biomüll"
+   ],
+   [
+    "2027-03-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-30",
+    "Biomüll"
+   ],
+   [
+    "2027-04-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-05",
+    "Restmüll"
+   ],
+   [
+    "2027-04-12",
+    "Biomüll"
+   ],
+   [
+    "2027-04-20",
+    "Altpapier"
+   ],
+   [
+    "2027-04-26",
+    "Biomüll"
+   ],
+   [
+    "2027-04-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-03",
+    "Restmüll"
+   ],
+   [
+    "2027-05-10",
+    "Biomüll"
+   ],
+   [
+    "2027-05-19",
+    "Altpapier"
+   ],
+   [
+    "2027-05-24",
+    "Biomüll"
+   ],
+   [
+    "2027-05-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-31",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-07",
+    "Biomüll"
+   ],
+   [
+    "2027-06-15",
+    "Altpapier"
+   ],
+   [
+    "2027-06-21",
+    "Biomüll"
+   ],
+   [
+    "2027-06-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-05",
+    "Biomüll"
+   ],
+   [
+    "2027-07-13",
+    "Altpapier"
+   ],
+   [
+    "2027-07-19",
+    "Biomüll"
+   ],
+   [
+    "2027-07-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-26",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-02",
+    "Biomüll"
+   ],
+   [
+    "2027-08-10",
+    "Altpapier"
+   ],
+   [
+    "2027-08-16",
+    "Biomüll"
+   ],
+   [
+    "2027-08-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-23",
+    "Restmüll"
+   ],
+   [
+    "2027-08-30",
+    "Biomüll"
+   ],
+   [
+    "2027-09-07",
+    "Altpapier"
+   ],
+   [
+    "2027-09-13",
+    "Biomüll"
+   ],
+   [
+    "2027-09-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-20",
+    "Restmüll"
+   ],
+   [
+    "2027-09-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-05",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-11",
+    "Biomüll"
+   ],
+   [
+    "2027-10-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-18",
+    "Restmüll"
+   ],
+   [
+    "2027-10-25",
+    "Biomüll"
+   ],
+   [
+    "2027-11-03",
+    "Altpapier"
+   ],
+   [
+    "2027-11-08",
+    "Biomüll"
+   ],
+   [
+    "2027-11-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-15",
+    "Restmüll"
+   ],
+   [
+    "2027-11-30",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-06",
+    "Biomüll"
+   ],
+   [
+    "2027-12-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-13",
+    "Restmüll"
+   ],
+   [
+    "2027-12-28",
+    "Altpapier"
+   ]
+  ],
+  "p7": [
+   [
+    "2027-01-05",
+    "Biomüll"
+   ],
+   [
+    "2027-01-11",
+    "Restmüll"
+   ],
+   [
+    "2027-01-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-02-01",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-08",
+    "Restmüll"
+   ],
+   [
+    "2027-02-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-01",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-08",
+    "Restmüll"
+   ],
+   [
+    "2027-03-15",
+    "Biomüll"
+   ],
+   [
+    "2027-03-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-03-30",
+    "Biomüll"
+   ],
+   [
+    "2027-04-05",
+    "Restmüll"
+   ],
+   [
+    "2027-04-12",
+    "Biomüll"
+   ],
+   [
+    "2027-04-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-26",
+    "Biomüll"
+   ],
+   [
+    "2027-05-03",
+    "Restmüll"
+   ],
+   [
+    "2027-05-10",
+    "Biomüll"
+   ],
+   [
+    "2027-05-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-24",
+    "Biomüll"
+   ],
+   [
+    "2027-05-31",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-07",
+    "Biomüll"
+   ],
+   [
+    "2027-06-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-21",
+    "Biomüll"
+   ],
+   [
+    "2027-06-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-05",
+    "Biomüll"
+   ],
+   [
+    "2027-07-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-19",
+    "Biomüll"
+   ],
+   [
+    "2027-07-26",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-02",
+    "Biomüll"
+   ],
+   [
+    "2027-08-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-16",
+    "Biomüll"
+   ],
+   [
+    "2027-08-23",
+    "Restmüll"
+   ],
+   [
+    "2027-08-30",
+    "Biomüll"
+   ],
+   [
+    "2027-09-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-13",
+    "Biomüll"
+   ],
+   [
+    "2027-09-20",
+    "Restmüll"
+   ],
+   [
+    "2027-09-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-11",
+    "Biomüll"
+   ],
+   [
+    "2027-10-18",
+    "Restmüll"
+   ],
+   [
+    "2027-10-25",
+    "Biomüll"
+   ],
+   [
+    "2027-10-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-08",
+    "Biomüll"
+   ],
+   [
+    "2027-11-15",
+    "Restmüll"
+   ],
+   [
+    "2027-11-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-06",
+    "Biomüll"
+   ],
+   [
+    "2027-12-13",
+    "Restmüll"
+   ],
+   [
+    "2027-12-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ]
+  ],
+  "p8": [
+   [
+    "2027-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-06",
+    "Biomüll"
+   ],
+   [
+    "2027-01-12",
+    "Restmüll"
+   ],
+   [
+    "2027-01-26",
+    "Altpapier"
+   ],
+   [
+    "2027-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-02",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-09",
+    "Restmüll"
+   ],
+   [
+    "2027-02-23",
+    "Altpapier"
+   ],
+   [
+    "2027-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-02",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-09",
+    "Restmüll"
+   ],
+   [
+    "2027-03-16",
+    "Biomüll"
+   ],
+   [
+    "2027-03-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-31",
+    "Biomüll"
+   ],
+   [
+    "2027-04-06",
+    "Restmüll"
+   ],
+   [
+    "2027-04-13",
+    "Biomüll"
+   ],
+   [
+    "2027-04-20",
+    "Altpapier"
+   ],
+   [
+    "2027-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-27",
+    "Biomüll"
+   ],
+   [
+    "2027-05-04",
+    "Restmüll"
+   ],
+   [
+    "2027-05-11",
+    "Biomüll"
+   ],
+   [
+    "2027-05-19",
+    "Altpapier"
+   ],
+   [
+    "2027-05-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-25",
+    "Biomüll"
+   ],
+   [
+    "2027-06-01",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-08",
+    "Biomüll"
+   ],
+   [
+    "2027-06-15",
+    "Altpapier"
+   ],
+   [
+    "2027-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-22",
+    "Biomüll"
+   ],
+   [
+    "2027-06-29",
+    "Restmüll"
+   ],
+   [
+    "2027-07-06",
+    "Biomüll"
+   ],
+   [
+    "2027-07-13",
+    "Altpapier"
+   ],
+   [
+    "2027-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-20",
+    "Biomüll"
+   ],
+   [
+    "2027-07-27",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-03",
+    "Biomüll"
+   ],
+   [
+    "2027-08-10",
+    "Altpapier"
+   ],
+   [
+    "2027-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-17",
+    "Biomüll"
+   ],
+   [
+    "2027-08-24",
+    "Restmüll"
+   ],
+   [
+    "2027-08-31",
+    "Biomüll"
+   ],
+   [
+    "2027-09-07",
+    "Altpapier"
+   ],
+   [
+    "2027-09-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-14",
+    "Biomüll"
+   ],
+   [
+    "2027-09-21",
+    "Restmüll"
+   ],
+   [
+    "2027-09-28",
+    "Biomüll"
+   ],
+   [
+    "2027-10-05",
+    "Altpapier"
+   ],
+   [
+    "2027-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-12",
+    "Biomüll"
+   ],
+   [
+    "2027-10-19",
+    "Restmüll"
+   ],
+   [
+    "2027-10-26",
+    "Biomüll"
+   ],
+   [
+    "2027-11-03",
+    "Altpapier"
+   ],
+   [
+    "2027-11-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-09",
+    "Biomüll"
+   ],
+   [
+    "2027-11-16",
+    "Restmüll"
+   ],
+   [
+    "2027-11-30",
+    "Altpapier"
+   ],
+   [
+    "2027-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-07",
+    "Biomüll"
+   ],
+   [
+    "2027-12-14",
+    "Restmüll"
+   ],
+   [
+    "2027-12-28",
+    "Altpapier"
+   ],
+   [
+    "2027-12-31",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p9": [
+   [
+    "2027-01-06",
+    "Biomüll"
+   ],
+   [
+    "2027-01-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-12",
+    "Restmüll"
+   ],
+   [
+    "2027-01-26",
+    "Altpapier"
+   ],
+   [
+    "2027-02-02",
+    "Biomüll"
+   ],
+   [
+    "2027-02-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-09",
+    "Restmüll"
+   ],
+   [
+    "2027-02-23",
+    "Altpapier"
+   ],
+   [
+    "2027-03-02",
+    "Biomüll"
+   ],
+   [
+    "2027-03-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-09",
+    "Restmüll"
+   ],
+   [
+    "2027-03-16",
+    "Biomüll"
+   ],
+   [
+    "2027-03-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-31",
+    "Biomüll"
+   ],
+   [
+    "2027-04-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-06",
+    "Restmüll"
+   ],
+   [
+    "2027-04-13",
+    "Biomüll"
+   ],
+   [
+    "2027-04-20",
+    "Altpapier"
+   ],
+   [
+    "2027-04-27",
+    "Biomüll"
+   ],
+   [
+    "2027-04-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-04",
+    "Restmüll"
+   ],
+   [
+    "2027-05-11",
+    "Biomüll"
+   ],
+   [
+    "2027-05-19",
+    "Altpapier"
+   ],
+   [
+    "2027-05-25",
+    "Biomüll"
+   ],
+   [
+    "2027-05-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-01",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-08",
+    "Biomüll"
+   ],
+   [
+    "2027-06-15",
+    "Altpapier"
+   ],
+   [
+    "2027-06-22",
+    "Biomüll"
+   ],
+   [
+    "2027-06-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-29",
+    "Restmüll"
+   ],
+   [
+    "2027-07-06",
+    "Biomüll"
+   ],
+   [
+    "2027-07-13",
+    "Altpapier"
+   ],
+   [
+    "2027-07-20",
+    "Biomüll"
+   ],
+   [
+    "2027-07-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-27",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-03",
+    "Biomüll"
+   ],
+   [
+    "2027-08-10",
+    "Altpapier"
+   ],
+   [
+    "2027-08-17",
+    "Biomüll"
+   ],
+   [
+    "2027-08-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-24",
+    "Restmüll"
+   ],
+   [
+    "2027-08-31",
+    "Biomüll"
+   ],
+   [
+    "2027-09-07",
+    "Altpapier"
+   ],
+   [
+    "2027-09-14",
+    "Biomüll"
+   ],
+   [
+    "2027-09-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-21",
+    "Restmüll"
+   ],
+   [
+    "2027-09-28",
+    "Biomüll"
+   ],
+   [
+    "2027-10-05",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-12",
+    "Biomüll"
+   ],
+   [
+    "2027-10-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-19",
+    "Restmüll"
+   ],
+   [
+    "2027-10-26",
+    "Biomüll"
+   ],
+   [
+    "2027-11-03",
+    "Altpapier"
+   ],
+   [
+    "2027-11-09",
+    "Biomüll"
+   ],
+   [
+    "2027-11-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-16",
+    "Restmüll"
+   ],
+   [
+    "2027-11-30",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-07",
+    "Biomüll"
+   ],
+   [
+    "2027-12-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-14",
+    "Restmüll"
+   ],
+   [
+    "2027-12-28",
+    "Altpapier"
+   ]
+  ],
+  "p10": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ]
+  ],
+  "p11": [
+   [
+    "2027-01-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-27",
+    "Altpapier"
+   ],
+   [
+    "2027-01-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-24",
+    "Altpapier"
+   ],
+   [
+    "2027-02-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-23",
+    "Altpapier"
+   ],
+   [
+    "2027-03-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-21",
+    "Altpapier"
+   ],
+   [
+    "2027-04-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-20",
+    "Altpapier"
+   ],
+   [
+    "2027-05-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-16",
+    "Altpapier"
+   ],
+   [
+    "2027-06-18",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-14",
+    "Altpapier"
+   ],
+   [
+    "2027-07-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-11",
+    "Altpapier"
+   ],
+   [
+    "2027-08-13",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-08",
+    "Altpapier"
+   ],
+   [
+    "2027-09-10",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-06",
+    "Altpapier"
+   ],
+   [
+    "2027-10-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-11-04",
+    "Altpapier"
+   ],
+   [
+    "2027-11-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-12-01",
+    "Altpapier"
+   ],
+   [
+    "2027-12-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-31",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p12": [
+   [
+    "2027-01-02",
+    "Biomüll"
+   ],
+   [
+    "2027-01-09",
+    "Restmüll"
+   ],
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-22",
+    "Altpapier"
+   ],
+   [
+    "2027-01-29",
+    "Biomüll"
+   ],
+   [
+    "2027-02-05",
+    "Restmüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-19",
+    "Altpapier"
+   ],
+   [
+    "2027-02-26",
+    "Biomüll"
+   ],
+   [
+    "2027-03-05",
+    "Restmüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-12",
+    "Biomüll"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-19",
+    "Altpapier"
+   ],
+   [
+    "2027-03-25",
+    "Biomüll"
+   ],
+   [
+    "2027-04-03",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Biomüll"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-16",
+    "Altpapier"
+   ],
+   [
+    "2027-04-23",
+    "Biomüll"
+   ],
+   [
+    "2027-04-30",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Biomüll"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-14",
+    "Altpapier"
+   ],
+   [
+    "2027-05-22",
+    "Biomüll"
+   ],
+   [
+    "2027-05-29",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Biomüll"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-11",
+    "Altpapier"
+   ],
+   [
+    "2027-06-18",
+    "Biomüll"
+   ],
+   [
+    "2027-06-25",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Biomüll"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-09",
+    "Altpapier"
+   ],
+   [
+    "2027-07-16",
+    "Biomüll"
+   ],
+   [
+    "2027-07-23",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Biomüll"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-06",
+    "Altpapier"
+   ],
+   [
+    "2027-08-13",
+    "Biomüll"
+   ],
+   [
+    "2027-08-20",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Biomüll"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-03",
+    "Altpapier"
+   ],
+   [
+    "2027-09-10",
+    "Biomüll"
+   ],
+   [
+    "2027-09-17",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Biomüll"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-01",
+    "Altpapier"
+   ],
+   [
+    "2027-10-08",
+    "Biomüll"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-15",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Biomüll"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-29",
+    "Altpapier"
+   ],
+   [
+    "2027-11-06",
+    "Biomüll"
+   ],
+   [
+    "2027-11-12",
+    "Restmüll"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-26",
+    "Altpapier"
+   ],
+   [
+    "2027-12-03",
+    "Biomüll"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-10",
+    "Restmüll"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-24",
+    "Altpapier"
+   ],
+   [
+    "2027-12-31",
+    "Biomüll"
+   ]
+  ],
+  "p13": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-25",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-22",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-20",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-18",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-14",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-12",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-09",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-06",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-04",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-02",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-11-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-27",
+    "Altpapier"
+   ]
+  ],
+  "p14": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-22",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-19",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-19",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-16",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-14",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-11",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-09",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-06",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-03",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-01",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-10-29",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-26",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-24",
+    "Altpapier"
+   ]
+  ],
+  "p15": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-27",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-24",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-23",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-21",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-20",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-16",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-14",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-11",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-08",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-06",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-11-04",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-01",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-29",
+    "Altpapier"
+   ]
+  ],
+  "p16": [
+   [
+    "2027-01-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-03",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-26",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-24",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p17": [
+   [
+    "2027-01-02",
+    "Biomüll"
+   ],
+   [
+    "2027-01-09",
+    "Restmüll"
+   ],
+   [
+    "2027-01-22",
+    "Altpapier"
+   ],
+   [
+    "2027-01-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-29",
+    "Biomüll"
+   ],
+   [
+    "2027-02-05",
+    "Restmüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-19",
+    "Altpapier"
+   ],
+   [
+    "2027-02-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-26",
+    "Biomüll"
+   ],
+   [
+    "2027-03-05",
+    "Restmüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-12",
+    "Biomüll"
+   ],
+   [
+    "2027-03-19",
+    "Altpapier"
+   ],
+   [
+    "2027-03-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-25",
+    "Biomüll"
+   ],
+   [
+    "2027-04-03",
+    "Restmüll"
+   ],
+   [
+    "2027-04-09",
+    "Biomüll"
+   ],
+   [
+    "2027-04-16",
+    "Altpapier"
+   ],
+   [
+    "2027-04-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-23",
+    "Biomüll"
+   ],
+   [
+    "2027-04-30",
+    "Restmüll"
+   ],
+   [
+    "2027-05-08",
+    "Biomüll"
+   ],
+   [
+    "2027-05-14",
+    "Altpapier"
+   ],
+   [
+    "2027-05-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-22",
+    "Biomüll"
+   ],
+   [
+    "2027-05-29",
+    "Restmüll"
+   ],
+   [
+    "2027-06-04",
+    "Biomüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-11",
+    "Altpapier"
+   ],
+   [
+    "2027-06-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-18",
+    "Biomüll"
+   ],
+   [
+    "2027-06-25",
+    "Restmüll"
+   ],
+   [
+    "2027-07-02",
+    "Biomüll"
+   ],
+   [
+    "2027-07-09",
+    "Altpapier"
+   ],
+   [
+    "2027-07-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-16",
+    "Biomüll"
+   ],
+   [
+    "2027-07-23",
+    "Restmüll"
+   ],
+   [
+    "2027-07-30",
+    "Biomüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-06",
+    "Altpapier"
+   ],
+   [
+    "2027-08-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-13",
+    "Biomüll"
+   ],
+   [
+    "2027-08-20",
+    "Restmüll"
+   ],
+   [
+    "2027-08-27",
+    "Biomüll"
+   ],
+   [
+    "2027-09-03",
+    "Altpapier"
+   ],
+   [
+    "2027-09-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-10",
+    "Biomüll"
+   ],
+   [
+    "2027-09-17",
+    "Restmüll"
+   ],
+   [
+    "2027-09-24",
+    "Biomüll"
+   ],
+   [
+    "2027-10-01",
+    "Altpapier"
+   ],
+   [
+    "2027-10-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-08",
+    "Biomüll"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-15",
+    "Restmüll"
+   ],
+   [
+    "2027-10-22",
+    "Biomüll"
+   ],
+   [
+    "2027-10-29",
+    "Altpapier"
+   ],
+   [
+    "2027-11-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-06",
+    "Biomüll"
+   ],
+   [
+    "2027-11-12",
+    "Restmüll"
+   ],
+   [
+    "2027-11-26",
+    "Altpapier"
+   ],
+   [
+    "2027-12-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-03",
+    "Biomüll"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-10",
+    "Restmüll"
+   ],
+   [
+    "2027-12-24",
+    "Altpapier"
+   ],
+   [
+    "2027-12-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-31",
+    "Biomüll"
+   ]
+  ],
+  "p18": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-27",
+    "Altpapier"
+   ],
+   [
+    "2027-01-28",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-24",
+    "Altpapier"
+   ],
+   [
+    "2027-02-25",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-23",
+    "Altpapier"
+   ],
+   [
+    "2027-03-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-21",
+    "Altpapier"
+   ],
+   [
+    "2027-04-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-20",
+    "Altpapier"
+   ],
+   [
+    "2027-05-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-16",
+    "Altpapier"
+   ],
+   [
+    "2027-06-17",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-14",
+    "Altpapier"
+   ],
+   [
+    "2027-07-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-11",
+    "Altpapier"
+   ],
+   [
+    "2027-08-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-08",
+    "Altpapier"
+   ],
+   [
+    "2027-09-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-06",
+    "Altpapier"
+   ],
+   [
+    "2027-10-07",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-11-04",
+    "Altpapier"
+   ],
+   [
+    "2027-11-05",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-12-01",
+    "Altpapier"
+   ],
+   [
+    "2027-12-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-29",
+    "Altpapier"
+   ],
+   [
+    "2027-12-30",
+    "Gelbe Tonne"
+   ]
+  ],
+  "p19": [
+   [
+    "2027-01-08",
+    "Restmüll"
+   ],
+   [
+    "2027-01-21",
+    "Altpapier"
+   ],
+   [
+    "2027-01-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-01-28",
+    "Biomüll"
+   ],
+   [
+    "2027-02-04",
+    "Restmüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-18",
+    "Altpapier"
+   ],
+   [
+    "2027-02-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-25",
+    "Biomüll"
+   ],
+   [
+    "2027-03-04",
+    "Restmüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-11",
+    "Biomüll"
+   ],
+   [
+    "2027-03-18",
+    "Altpapier"
+   ],
+   [
+    "2027-03-23",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-24",
+    "Biomüll"
+   ],
+   [
+    "2027-04-02",
+    "Restmüll"
+   ],
+   [
+    "2027-04-08",
+    "Biomüll"
+   ],
+   [
+    "2027-04-15",
+    "Altpapier"
+   ],
+   [
+    "2027-04-21",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-22",
+    "Biomüll"
+   ],
+   [
+    "2027-04-29",
+    "Restmüll"
+   ],
+   [
+    "2027-05-07",
+    "Biomüll"
+   ],
+   [
+    "2027-05-13",
+    "Altpapier"
+   ],
+   [
+    "2027-05-20",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-21",
+    "Biomüll"
+   ],
+   [
+    "2027-05-28",
+    "Restmüll"
+   ],
+   [
+    "2027-06-03",
+    "Biomüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-10",
+    "Altpapier"
+   ],
+   [
+    "2027-06-16",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-17",
+    "Biomüll"
+   ],
+   [
+    "2027-06-24",
+    "Restmüll"
+   ],
+   [
+    "2027-07-01",
+    "Biomüll"
+   ],
+   [
+    "2027-07-08",
+    "Altpapier"
+   ],
+   [
+    "2027-07-14",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-15",
+    "Biomüll"
+   ],
+   [
+    "2027-07-22",
+    "Restmüll"
+   ],
+   [
+    "2027-07-29",
+    "Biomüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-05",
+    "Altpapier"
+   ],
+   [
+    "2027-08-11",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-08-12",
+    "Biomüll"
+   ],
+   [
+    "2027-08-19",
+    "Restmüll"
+   ],
+   [
+    "2027-08-26",
+    "Biomüll"
+   ],
+   [
+    "2027-09-02",
+    "Altpapier"
+   ],
+   [
+    "2027-09-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-09",
+    "Biomüll"
+   ],
+   [
+    "2027-09-16",
+    "Restmüll"
+   ],
+   [
+    "2027-09-23",
+    "Biomüll"
+   ],
+   [
+    "2027-09-30",
+    "Altpapier"
+   ],
+   [
+    "2027-10-06",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-07",
+    "Biomüll"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-14",
+    "Restmüll"
+   ],
+   [
+    "2027-10-21",
+    "Biomüll"
+   ],
+   [
+    "2027-10-28",
+    "Altpapier"
+   ],
+   [
+    "2027-11-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-05",
+    "Biomüll"
+   ],
+   [
+    "2027-11-11",
+    "Restmüll"
+   ],
+   [
+    "2027-11-25",
+    "Altpapier"
+   ],
+   [
+    "2027-12-01",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-02",
+    "Biomüll"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-09",
+    "Restmüll"
+   ],
+   [
+    "2027-12-23",
+    "Altpapier"
+   ],
+   [
+    "2027-12-29",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-30",
+    "Biomüll"
+   ]
+  ],
+  "p20": [
+   [
+    "2027-01-07",
+    "Biomüll"
+   ],
+   [
+    "2027-01-13",
+    "Restmüll"
+   ],
+   [
+    "2027-01-27",
+    "Altpapier"
+   ],
+   [
+    "2027-02-03",
+    "Biomüll"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-10",
+    "Restmüll"
+   ],
+   [
+    "2027-02-24",
+    "Altpapier"
+   ],
+   [
+    "2027-03-03",
+    "Biomüll"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-10",
+    "Restmüll"
+   ],
+   [
+    "2027-03-17",
+    "Biomüll"
+   ],
+   [
+    "2027-03-23",
+    "Altpapier"
+   ],
+   [
+    "2027-04-01",
+    "Biomüll"
+   ],
+   [
+    "2027-04-07",
+    "Restmüll"
+   ],
+   [
+    "2027-04-14",
+    "Biomüll"
+   ],
+   [
+    "2027-04-21",
+    "Altpapier"
+   ],
+   [
+    "2027-04-28",
+    "Biomüll"
+   ],
+   [
+    "2027-05-05",
+    "Restmüll"
+   ],
+   [
+    "2027-05-12",
+    "Biomüll"
+   ],
+   [
+    "2027-05-20",
+    "Altpapier"
+   ],
+   [
+    "2027-05-26",
+    "Biomüll"
+   ],
+   [
+    "2027-06-02",
+    "Restmüll"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-06-09",
+    "Biomüll"
+   ],
+   [
+    "2027-06-16",
+    "Altpapier"
+   ],
+   [
+    "2027-06-23",
+    "Biomüll"
+   ],
+   [
+    "2027-06-30",
+    "Restmüll"
+   ],
+   [
+    "2027-07-07",
+    "Biomüll"
+   ],
+   [
+    "2027-07-14",
+    "Altpapier"
+   ],
+   [
+    "2027-07-21",
+    "Biomüll"
+   ],
+   [
+    "2027-07-28",
+    "Restmüll"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-04",
+    "Biomüll"
+   ],
+   [
+    "2027-08-11",
+    "Altpapier"
+   ],
+   [
+    "2027-08-18",
+    "Biomüll"
+   ],
+   [
+    "2027-08-25",
+    "Restmüll"
+   ],
+   [
+    "2027-09-01",
+    "Biomüll"
+   ],
+   [
+    "2027-09-08",
+    "Altpapier"
+   ],
+   [
+    "2027-09-15",
+    "Biomüll"
+   ],
+   [
+    "2027-09-22",
+    "Restmüll"
+   ],
+   [
+    "2027-09-29",
+    "Biomüll"
+   ],
+   [
+    "2027-10-06",
+    "Altpapier"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-13",
+    "Biomüll"
+   ],
+   [
+    "2027-10-20",
+    "Restmüll"
+   ],
+   [
+    "2027-10-27",
+    "Biomüll"
+   ],
+   [
+    "2027-11-04",
+    "Altpapier"
+   ],
+   [
+    "2027-11-10",
+    "Biomüll"
+   ],
+   [
+    "2027-11-17",
+    "Restmüll"
+   ],
+   [
+    "2027-12-01",
+    "Altpapier"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-08",
+    "Biomüll"
+   ],
+   [
+    "2027-12-15",
+    "Restmüll"
+   ],
+   [
+    "2027-12-29",
+    "Altpapier"
+   ]
+  ],
+  "p21": [
+   [
+    "2027-01-15",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-02-06",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-02-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-03-06",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-03-12",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-04-09",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-05-08",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-04",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-06-05",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-07-02",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-30",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-07-31",
+    "Schadstoffsammlung",
+    "Kernstadt, Parkplatz Wabachpark / Gennernbach 38"
+   ],
+   [
+    "2027-08-27",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-09-24",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-10-09",
+    "Schadstoffsammlung",
+    "Banfe, Feuerwehrgerätehaus"
+   ],
+   [
+    "2027-10-22",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-11-19",
+    "Gelbe Tonne"
+   ],
+   [
+    "2027-12-04",
+    "Schadstoffsammlung",
+    "Feudingen, Parkplatz Schulgelände Tannenwald"
+   ],
+   [
+    "2027-12-17",
+    "Gelbe Tonne"
+   ]
+  ]
+ }
+}

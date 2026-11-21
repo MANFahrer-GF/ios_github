@@ -22060,8 +22060,10 @@
 "code": "059700028028",
 "kreis": "Kreis Siegen-Wittgenstein",
 "gemeinde": "Bad Laasphe",
-"art": "fehlt",
-"eintraege": []
+"art": "lokal",
+"eintraege": [
+"jahresdaten:badlaasphe:Stadt Bad Laasphe"
+]
 },
 {
 "code": "059700032032",

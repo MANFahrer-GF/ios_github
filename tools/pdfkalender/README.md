@@ -50,6 +50,7 @@ Die neuen PDFs erscheinen meist Mitte November bis Januar. Je Ort:
 | `oehningen` | oehningen.de/buergerservice/wohnen/abfall | Text in der Zelle | 15 min |
 | `bischofsheim` | bischofsheim.de → Rathaus → Fachdienst Bauen → Abfall → Abfallkalender (Kalender-PDF + abfuhrbezirke.pdf) | Kalender nur Bild, Termine von Hand in `orte/bischofsheim.py` (Wochentag-, Bezirks- und Taktprobe); Straßen je Bezirk aus abfuhrbezirke.pdf | 45 min |
 | `buesingen` | buesingen.de/de/Rathaus/Abfallentsorgung („Abholtermine“, 2 Halbjahres-PDFs) | Tage × Monate ohne Wochentag | 15 min |
+| `badlaasphe` | stadt-badlaasphe.de/abfallentsorgung/ → Abfallkalender_<Jahr>.pdf (Seite blockt Skripte: PDF von Hand nach `cache/badlaasphe_<Jahr>.pdf`) | Buchstabe A–E auf Farbe (grau Rest, braun Bio, blau Papier, aus dem Bild), gelbe Ziffer 1–7, rot I–III Schadstoff; S. 2 Ort/Straße → Bezirk (2027 ohne Buchstaben, Reihenfolge A–E wie 2026), Listen per `check_names` gegen S. 2 | 30 min |
 
 Hüllhorst ist nicht in den Jahresdaten: Die Gemeinde stellt eine ICS-Datei bereit, die App bindet sie live an.
 `orte/huellhorst.py` bleibt als Prüfwerkzeug (liest die PDF und vergleicht sie mit der ICS; 2026: 87 von 87 gleich).
