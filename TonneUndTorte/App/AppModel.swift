@@ -694,7 +694,7 @@ final class AppModel: ObservableObject {
                 }
             }
         }
-        return wanted.map { event in
+        return wanted.compactMap { event in
             var item: CalendarExport.Item
             let kind: CalendarEntryTitle.Kind, text: String
             var titleText: String? = nil
@@ -703,9 +703,10 @@ final class AppModel: ObservableObject {
                 let suffix = multi && event.locationName != nil ? " (\(event.locationName!))" : ""
                 kind = .waste; text = "\(event.title)\(suffix)"
                 // Ganztägig am Abholtag oder – Einstellung – am Vorabend zur Abend-Erinnerungszeit „… rausstellen“
-                let placed = CalendarWastePlacement.make(pickupDay: event.date, name: event.title, suffix: suffix, alarms: event.offDuty ? [] : alarms,
-                                                         evening: options.wasteEvening, eveningMinutes: settings.eveningMinutes,
-                                                         stayOnDay: event.handling == .bringTo || event.offDuty, today: today)
+                // nil: Abholung heute, der Vorabend-Eintrag steht seit gestern im Kalender
+                guard let placed = CalendarWastePlacement.make(pickupDay: event.date, name: event.title, suffix: suffix, alarms: event.offDuty ? [] : alarms,
+                                                               evening: options.wasteEvening, eveningMinutes: settings.eveningMinutes,
+                                                               stayOnDay: event.handling == .bringTo || event.offDuty, today: today) else { return nil }
                 titleText = placed.text
                 item = CalendarExport.Item(date: placed.date, title: "",
                                            notes: placed.timeMinutes == nil ? L10n.t("Abholung", "Collection") : L10n.t("Abholung morgen", "Collection tomorrow"),

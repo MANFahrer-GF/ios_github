@@ -16,9 +16,9 @@ final class CalendarWastePlacementTests: XCTestCase {
     }
 
     /// Vorabend: Donnerstag 19:00 „Restmüll rausstellen“; Abend-Alarm genau zum Termin, Morgen-Alarm (7:00 am Abholtag) bleibt.
-    func testEveningEntryOnTheDayBefore() {
-        let e = CalendarWastePlacement.make(pickupDay: friday, name: "Restmüll", suffix: " (Gifhorn)", alarms: [-300, 420], evening: true,
-                                            eveningMinutes: 19 * 60, stayOnDay: false, today: thursday, calendar: berlin)
+    func testEveningEntryOnTheDayBefore() throws {
+        let e = try XCTUnwrap(CalendarWastePlacement.make(pickupDay: friday, name: "Restmüll", suffix: " (Gifhorn)", alarms: [-300, 420], evening: true,
+                                            eveningMinutes: 19 * 60, stayOnDay: false, today: thursday, calendar: berlin))
         XCTAssertEqual(Days.iso(e.date, calendar: berlin), "2026-12-03")
         XCTAssertEqual(e.timeMinutes, 19 * 60)
         XCTAssertEqual(e.alarms, [19 * 60, 1440 + 7 * 60])
@@ -33,19 +33,34 @@ final class CalendarWastePlacementTests: XCTestCase {
     }
 
     /// Monatswechsel: Abholung am 1. Januar → Eintrag am 31. Dezember.
-    func testEveningAcrossYearEnd() {
-        let e = CalendarWastePlacement.make(pickupDay: Days.parse("2027-01-01", calendar: berlin)!, name: "Papier", alarms: [], evening: true,
-                                            eveningMinutes: 18 * 60 + 30, stayOnDay: false, today: Days.parse("2026-12-30", calendar: berlin)!, calendar: berlin)
+    func testEveningAcrossYearEnd() throws {
+        let e = try XCTUnwrap(CalendarWastePlacement.make(pickupDay: Days.parse("2027-01-01", calendar: berlin)!, name: "Papier", alarms: [], evening: true,
+                                            eveningMinutes: 18 * 60 + 30, stayOnDay: false, today: Days.parse("2026-12-30", calendar: berlin)!, calendar: berlin))
         XCTAssertEqual(Days.iso(e.date, calendar: berlin), "2026-12-31")
         XCTAssertEqual(e.timeMinutes, 18 * 60 + 30)
     }
 
-    /// Abgleich am Abholtag selbst: Der Vorabend ist vorbei – ganztägig am Abholtag, sonst entstünde bei jedem Abgleich ein Doppel
-    /// am Vortag, den die App (räumt ab heute auf) nie entfernt.
-    func testPickupTodayStaysAllDay() {
-        let e = CalendarWastePlacement.make(pickupDay: friday, name: "Restmüll", alarms: [-300], evening: true, eveningMinutes: 19 * 60,
-                                            stayOnDay: false, today: friday, calendar: berlin)
-        XCTAssertEqual(e, .init(date: friday, timeMinutes: nil, alarms: [-300], text: "Restmüll"))
+    /// Abgleich am Abholtag selbst: Der Vorabend-Eintrag steht seit gestern im Kalender (die App räumt ab heute auf) – kein
+    /// zweiter Eintrag, weder am Vortag noch ganztägig heute (Prüfbefunde 20./21.11.2026).
+    func testPickupTodayAddsNothing() {
+        XCTAssertNil(CalendarWastePlacement.make(pickupDay: friday, name: "Restmüll", alarms: [-300], evening: true, eveningMinutes: 19 * 60,
+                                                 stayOnDay: false, today: friday, calendar: berlin))
+        // Am Vorabend selbst (heute 19:00) wird er noch geschrieben
+        XCTAssertNotNil(CalendarWastePlacement.make(pickupDay: friday, name: "Restmüll", alarms: [-300], evening: true, eveningMinutes: 19 * 60,
+                                                    stayOnDay: false, today: thursday, calendar: berlin))
+    }
+
+    /// Zeitumstellung: Abholung Sonntag 28.3.2027 (Beginn Sommerzeit), Termin Samstag 19:00, Morgen-Erinnerung 7:00 am Sonntag
+    /// liegt 11 Stunden später (nicht 12); im Herbst (31.10.2027) 13 Stunden.
+    func testMorningAlarmAcrossDaylightSaving() throws {
+        let spring = try XCTUnwrap(CalendarWastePlacement.make(pickupDay: Days.parse("2027-03-28", calendar: berlin)!, name: "Papier", alarms: [-300, 420],
+                                                               evening: true, eveningMinutes: 19 * 60, stayOnDay: false,
+                                                               today: Days.parse("2027-03-20", calendar: berlin)!, calendar: berlin))
+        XCTAssertEqual(spring.alarms, [19 * 60, 19 * 60 + 11 * 60])
+        let autumn = try XCTUnwrap(CalendarWastePlacement.make(pickupDay: Days.parse("2027-10-31", calendar: berlin)!, name: "Papier", alarms: [-300, 420],
+                                                               evening: true, eveningMinutes: 19 * 60, stayOnDay: false,
+                                                               today: Days.parse("2027-10-20", calendar: berlin)!, calendar: berlin))
+        XCTAssertEqual(autumn.alarms, [19 * 60, 19 * 60 + 13 * 60])
     }
 }
 
