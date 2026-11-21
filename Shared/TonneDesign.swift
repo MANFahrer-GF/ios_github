@@ -519,27 +519,40 @@ struct KlarAvatar: View {
     let initials: String
     let colorHex: String
     var size: CGFloat = 26
+    /// Kontaktfoto (Widget, `SnapshotStore.birthdayPhoto`); ohne Foto die Initialen
+    var photoID: String? = nil
 
     var body: some View {
         let color = Color(hex: colorHex)
         ZStack {
             Circle().fill(LinearGradient(colors: [color, HexLuma.scaled(colorHex, by: 1.0).opacity(0.75)], startPoint: .topLeading, endPoint: .bottomTrailing))
             Text(initials).tonneFont(fixed: size * 0.38, .black).foregroundStyle(.white)
+            #if os(iOS)
+            if let photo = SnapshotStore.birthdayPhoto(photoID) {
+                Image(uiImage: photo).resizable().scaledToFill().frame(width: size, height: size).clipShape(Circle())
+                    .accessibilityHidden(true)
+            }
+            #endif
         }
         .frame(width: size, height: size)
     }
 }
 
-/// Mehrere Geburtstagskinder am selben Tag: Avatare leicht überlappend.
+/// Mehrere Geburtstagskinder am selben Tag: Avatare nebeneinander (`spread`) oder platzsparend leicht überlappend.
 struct KlarAvatarStack: View {
     let people: [(initials: String, colorHex: String)]
     var size: CGFloat = 36
+    /// Fotos in derselben Reihenfolge wie `people` (fehlend = Initialen)
+    var photoIDs: [String?] = []
+    /// Nebeneinander statt überlappend – wo Platz ist: Fotos zeigen sonst nur ein halbes Gesicht (Thomas 21.11.2026).
+    /// In engen Zeilen mit Namen daneben bleibt es beim Überlappen.
+    var spread = false
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        HStack(spacing: -size * 0.32) {
-            ForEach(Array(people.prefix(3).enumerated()), id: \.offset) { _, person in
-                KlarAvatar(initials: person.initials, colorHex: person.colorHex, size: size)
+        HStack(spacing: spread ? size * 0.16 : -size * 0.32) {
+            ForEach(Array(people.prefix(3).enumerated()), id: \.offset) { index, person in
+                KlarAvatar(initials: person.initials, colorHex: person.colorHex, size: size, photoID: index < photoIDs.count ? photoIDs[index] : nil)
                     .overlay(Circle().strokeBorder(KlarStyle.base(scheme), lineWidth: max(1.5, size * 0.06)))
             }
         }

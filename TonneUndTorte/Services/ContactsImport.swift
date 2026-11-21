@@ -85,16 +85,28 @@ final class ContactPhotoCache {
     private var images: [String: Data] = [:]
     private var missing: Set<String> = []
 
-    func cached(_ identifier: String) -> Data? { images[identifier] }
+    private var hasAccess: Bool { ContactsImport.access == .full || ContactsImport.access == .limited }
+
+    /// Nur mit Kontaktfreigabe – nach Entzug liefert auch ein gemerktes Bild nichts mehr.
+    func cached(_ identifier: String) -> Data? { hasAccess ? images[identifier] : nil }
 
     func load(_ identifier: String) async -> Data? {
+        guard hasAccess else { return nil }
         if let data = images[identifier] { return data }
-        guard !missing.contains(identifier), ContactsImport.access == .full || ContactsImport.access == .limited else { return nil }
+        guard !missing.contains(identifier) else { return nil }
+        return await reload(identifier)
+    }
+
+    /// Frisch aus den Kontakten lesen (Widget-Schnappschuss): geänderte, neue und entfernte Kontaktfotos kommen so auch in einer
+    /// laufenden App-Sitzung an (Prüfbefund 21.11.2026).
+    @discardableResult
+    func reload(_ identifier: String) async -> Data? {
+        guard hasAccess else { images[identifier] = nil; return nil }
         let data = await Task.detached(priority: .utility) { () -> Data? in
             let contact = try? CNContactStore().unifiedContact(withIdentifier: identifier, keysToFetch: [CNContactThumbnailImageDataKey as CNKeyDescriptor])
             return contact?.thumbnailImageData
         }.value
-        if let data { images[identifier] = data } else { missing.insert(identifier) }
+        if let data { images[identifier] = data; missing.remove(identifier) } else { images[identifier] = nil; missing.insert(identifier) }
         return data
     }
 }

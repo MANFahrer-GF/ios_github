@@ -95,7 +95,7 @@ struct BirthdayWidgetView: View {
 
     private func row(_ birthday: WidgetSnapshot.BirthdayItem) -> some View {
         HStack(spacing: 8) {
-            KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26)
+            KlarAvatar(initials: birthday.initials, colorHex: birthday.colorHex, size: 26, photoID: birthday.photoID)
             VStack(alignment: .leading, spacing: 0) {
                 Text(birthday.name).tonneFont(size: 12, .heavy).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1)
                 Text(detail(birthday)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
@@ -121,7 +121,7 @@ struct BirthdayWidgetView: View {
             if let next {
                 VStack(alignment: .leading, spacing: 0) {
                     top(Days.until(next.date) == 0 ? L10n.t("HEUTE", "TODAY") : L10n.t("GEBURTSTAG", "BIRTHDAY"))
-                    KlarAvatarStack(people: avatars, size: nextDay.count > 1 ? 36 : 42).padding(.top, 8)
+                    KlarAvatarStack(people: avatars, size: nextDay.count > 1 ? 36 : 42, photoIDs: nextDay.map(\.photoID), spread: true).padding(.top, 8)
                     Spacer(minLength: 4)
                     if nextDay.count == 1 {
                         Text(next.name).tonneFont(size: 16, .black).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
@@ -176,7 +176,7 @@ struct BirthdayWidgetView: View {
                         Spacer(minLength: 4)
                         if nextDay.count == 1 {
                             HStack(spacing: 10) {
-                                KlarAvatar(initials: next.initials, colorHex: next.colorHex, size: 42)
+                                KlarAvatar(initials: next.initials, colorHex: next.colorHex, size: 42, photoID: next.photoID)
                                 VStack(alignment: .leading, spacing: 1) {
                                     Text(next.name).tonneFont(size: 17, .black).foregroundStyle(KlarStyle.text(scheme)).lineLimit(1).minimumScaleFactor(0.7)
                                     Text(PickupWords.birthdaySubline(years: next.years, date: next.date)).tonneFont(size: 11, .bold).foregroundStyle(KlarStyle.muted(scheme)).lineLimit(1)
@@ -184,7 +184,8 @@ struct BirthdayWidgetView: View {
                             }
                         } else {
                             HStack(alignment: .center, spacing: 10) {
-                                KlarAvatarStack(people: avatars, size: 34)
+                                // Namen stehen daneben: bis zwei Personen nebeneinander, bei drei überlappend, damit die Namen Platz behalten
+                                KlarAvatarStack(people: avatars, size: 34, photoIDs: nextDay.map(\.photoID), spread: nextDay.count <= 2)
                                 VStack(alignment: .leading, spacing: 1) {
                                     ForEach(Array(nextDay.prefix(nextDay.count > 3 ? 2 : 3).enumerated()), id: \.offset) { _, birthday in
                                         nameLine(birthday, size: 14)

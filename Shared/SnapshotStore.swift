@@ -1,6 +1,9 @@
 import Foundation
 import TonneCore
 #if os(iOS)
+import UIKit
+#endif
+#if os(iOS)
 import UserNotifications
 #endif
 #if os(iOS) && canImport(AlarmKit)
@@ -104,6 +107,51 @@ enum SnapshotStore {
         if home != defaults.string(forKey: homeTimeZoneKey) { defaults.set(home, forKey: homeTimeZoneKey) }
         if let zone = TimeZone(identifier: home) { NSTimeZone.default = zone }
     }
+
+    // MARK: - Fotos im Geburtstags-Widget (`BirthdayPhoto`)
+
+    private static func birthdayPhotoURL(_ id: String) -> URL? {
+        guard !isUITestRun, let name = BirthdayPhoto.fileName(id) else { return nil }
+        return containerURL?.appendingPathComponent(BirthdayPhoto.folder, isDirectory: true).appendingPathComponent(name)
+    }
+
+    #if os(iOS)
+    /// App: fehlende Vorschaubilder für diese Fotos anlegen (Aufräumen erst nach dem Speichern des Schnappschusses).
+    static func storeBirthdayPhotos(_ photos: [String: Data]) {
+        guard !isUITestRun, let folder = containerURL?.appendingPathComponent(BirthdayPhoto.folder, isDirectory: true) else { return }
+        try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        for (id, data) in photos {
+            guard let url = birthdayPhotoURL(id), !FileManager.default.fileExists(atPath: url.path),
+                  let image = UIImage(data: data), let thumb = squareThumbnail(image, pixels: BirthdayPhoto.pixelSize) else { continue }
+            try? thumb.jpegData(compressionQuality: 0.85)?.write(to: url, options: .atomic)
+        }
+    }
+
+    /// App: Vorschaubilder entfernen, die der gespeicherte Schnappschuss nicht mehr nennt (Foto entfernt, Kontaktfreigabe entzogen).
+    static func pruneBirthdayPhotos(keeping ids: Set<String>) {
+        guard !isUITestRun, let folder = containerURL?.appendingPathComponent(BirthdayPhoto.folder, isDirectory: true) else { return }
+        let wanted = Set(ids.compactMap(BirthdayPhoto.fileName))
+        for name in (try? FileManager.default.contentsOfDirectory(atPath: folder.path)) ?? [] where !wanted.contains(name) {
+            try? FileManager.default.removeItem(at: folder.appendingPathComponent(name))
+        }
+    }
+
+    private static func squareThumbnail(_ image: UIImage, pixels: CGFloat) -> UIImage? {
+        guard image.size.width > 0, image.size.height > 0 else { return nil }
+        let format = UIGraphicsImageRendererFormat(); format.scale = 1
+        return UIGraphicsImageRenderer(size: CGSize(width: pixels, height: pixels), format: format).image { _ in
+            let scale = max(pixels / image.size.width, pixels / image.size.height)
+            let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+            image.draw(in: CGRect(x: (pixels - size.width) / 2, y: (pixels - size.height) / 2, width: size.width, height: size.height))
+        }
+    }
+
+    /// Widget: Vorschaubild laden; nil, wenn es (noch) keines gibt – dann Initialen.
+    static func birthdayPhoto(_ id: String?) -> UIImage? {
+        guard let id, let url = birthdayPhotoURL(id) else { return nil }
+        return UIImage(contentsOfFile: url.path)
+    }
+    #endif
 
     static func reloadWidgets() {
         #if canImport(WidgetKit)

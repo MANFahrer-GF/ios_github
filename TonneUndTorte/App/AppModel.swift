@@ -228,8 +228,16 @@ final class AppModel: ObservableObject {
         // Oberflächen-Test: keine Widgets, Watch, Live-Aktivität, Mitteilungen oder Kalender anfassen
         guard !TonneUndTorteApp.isUITesting, !TonneUndTorteApp.storeUnavailable else { return }
         plannedDuty = dutyFingerprint()
+        // Kontaktfotos fürs Geburtstags-Widget: Die App speichert sie nicht, sondern liest sie aus den Kontakten (nur bei Freigabe)
+        // Nur die höchstens zehn Personen, die der Schnappschuss zeigt
+        let shown = Set(upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).compactMap(\.personID))
+        for person in allPeople() where person.photoData == nil && shown.contains(person.id) {
+            if let identifier = person.contactIdentifier { await ContactPhotoCache.shared.reload(identifier) }
+        }
         let snapshot = buildSnapshot()
         SnapshotStore.save(snapshot)
+        // Erst nach dem Speichern alte Vorschaubilder entfernen – ein gleichzeitig zeichnendes Widget findet sonst kurz keines
+        SnapshotStore.pruneBirthdayPhotos(keeping: Set(snapshot.birthdays.compactMap(\.photoID)))
         WatchSync.shared.send(snapshot)
         let settings = SettingsKeys.reminderSettings()
         // Zuerst die Live-Aktivitäten: Für Abende, an denen iOS die geplante Aktivität selbst startet,
@@ -637,9 +645,22 @@ final class AppModel: ObservableObject {
                                                                                                       remindersOff: remindersOff.contains($0.wasteTypeID) ? true : nil, done: $0.done) },
                                             done: done, broughtIn: broughtIn.contains(key), doneAt: items.contains(where: \.done) ? doneTimes[key] : nil)
         }
-        let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map {
-            WidgetSnapshot.BirthdayItem(date: $0.date, name: $0.title, years: $0.years, colorHex: $0.colorHex, initials: NameText.initials($0.title))
+        // Fotos fürs Geburtstags-Widget: kleines Vorschaubild je Person mit Foto in der App-Gruppe
+        // Eigenes Foto vor Kontaktfoto (wie in der App); Kontaktfotos liegen im Cache, wenn refreshAll sie geladen hat
+        let photos = Dictionary(allPeople().compactMap { p in
+            (p.photoData ?? p.contactIdentifier.flatMap { ContactPhotoCache.shared.cached($0) }).map { (p.id, $0) }
+        }, uniquingKeysWith: { a, _ in a })
+        var widgetPhotos: [String: Data] = [:]
+        let birthdays = upcomingByDay(days: 366).flatMap { $0.events }.filter { $0.kind == .birthday }.prefix(10).map { event -> WidgetSnapshot.BirthdayItem in
+            var photoID: String?
+            if let personID = event.personID, let data = photos[personID] {
+                photoID = BirthdayPhoto.id(personID: personID, photo: data)
+                widgetPhotos[photoID!] = data
+            }
+            return WidgetSnapshot.BirthdayItem(date: event.date, name: event.title, years: event.years, colorHex: event.colorHex,
+                                               initials: NameText.initials(event.title), photoID: photoID)
         }
+        SnapshotStore.storeBirthdayPhotos(widgetPhotos)
         let stats = statistics()
         let settings = SettingsKeys.reminderSettings()
         var snapshot = WidgetSnapshot(generatedAt: Date(), locations: locations, pickupDays: pickupDays, birthdays: Array(birthdays), missedCountThisYear: stats.total - stats.confirmed, doneCountThisYear: stats.confirmed,

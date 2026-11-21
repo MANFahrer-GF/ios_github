@@ -1,4 +1,6 @@
 import XCTest
+import Contacts
+import UIKit
 
 /// Klickt die App im Simulator durch: alle Tabs, Fenster öffnen und mit „Abbrechen“ schließen, anlegen, bearbeiten, löschen,
 /// Anrufen nur mit Nachfrage. Läuft mit leerer Datenbank im Speicher plus Testdaten (Startschalter -uiTesting -uiTestingSeed).
@@ -656,6 +658,109 @@ final class TonneUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars.buttons.element(boundBy: 0).waitForExistence(timeout: 5))
         app.navigationBars.buttons.element(boundBy: 0).tap()
         XCTAssertTrue(text("Papier").waitForExistence(timeout: 5))
+    }
+
+    /// Geburtstags-Widget zeigt das Foto der Person (Wunsch Ralf, 21.11.2026): echte App-Gruppe, Person „Foto Test“ mit Foto aus
+    /// der Mediathek anlegen, Geburtstags-Widget auf den Home-Bildschirm legen und fotografieren. Nur auf Wunsch (TONNE_PHOTO=1).
+    func testBirthdayWidgetShowsPhoto() throws {
+        guard ProcessInfo.processInfo.environment["TONNE_PHOTO"] == "1" else { throw XCTSkip("nur auf Wunsch: Foto im Widget") }
+        app.terminate()
+        app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launchEnvironment["TONNE_UITESTING"] = nil
+        app.launch()
+        let env = ProcessInfo.processInfo.environment
+        func homeShot() {
+            // Ganz nach links bis zur Heute-Ansicht wischen (weiteres Wischen bewirkt dort nichts), dann zur Widget-Seite –
+            // unabhängig davon, wo der Simulator gerade steht
+            let board = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+            XCUIDevice.shared.press(.home); sleep(2)
+            for _ in 0..<4 { board.swipeRight(); sleep(1) }
+            // Seiten nach rechts durchgehen, bis die mit den abgelegten Widgets (Fitness-Symbol) erreicht ist
+            for _ in 0..<4 where !(board.icons["Fitness"].exists && board.icons["Fitness"].isHittable) { board.swipeLeft(); sleep(2) }
+            sleep(5)
+            let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = "geburtstag-widget-foto"; a.lifetime = .keepAlways; add(a)
+        }
+        // Nur fotografieren (Personen und Widget liegen schon)
+        if env["TONNE_PHOTO_ONLYSHOT"] == "1" { sleep(4); homeShot(); return }
+        tab("Termine")
+        app.navigationBars["Termine"].buttons.element(boundBy: app.navigationBars["Termine"].buttons.count - 1).tap()
+        app.buttons["Neuer Geburtstag"].firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Geburtstag"].waitForExistence(timeout: 5))
+        let name = app.textFields["Name"].firstMatch
+        name.tap(); name.typeText(env["TONNE_PHOTO_NAME"] ?? "Foto Test")
+        app.buttons["Foto wählen"].firstMatch.tap()
+        sleep(3)
+        func shot(_ name: String) { let a = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a) }
+        shot("1-fotoauswahl")
+        // Die Fotoauswahl läuft in einem eigenen Prozess – Bilder dort über Koordinaten antippen (erstes Bild oben links)
+        app.coordinate(withNormalizedOffset: CGVector(dx: Double(env["TONNE_PHOTO_X"] ?? "0.16") ?? 0.16, dy: 0.43)).tap()
+        sleep(3)
+        shot("2-nach-auswahl")
+        app.navigationBars["Geburtstag"].buttons["Sichern"].tap()
+        sleep(2)
+        shot("3-liste")
+        XCTAssertTrue(app.navigationBars["Geburtstag"].waitForNonExistence(timeout: 5), "Sichern hat nicht geklappt")
+        XCUIDevice.shared.press(.home)
+        // Widget liegt schon (zweite Person am selben Tag): nur warten und fotografieren
+        if env["TONNE_PHOTO_ADDWIDGET"] == "0" { homeShot(); return }
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        springboard.press(forDuration: 1.5)
+        let edit = springboard.buttons["Bearbeiten"].firstMatch
+        if edit.waitForExistence(timeout: 3) { edit.tap() }
+        let addButton = springboard.buttons["Widget hinzufügen"].firstMatch
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+        let search = springboard.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        search.tap(); search.typeText("Tonne")
+        let entry = springboard.cells.containing(.staticText, identifier: "Tonne & Torte").firstMatch
+        if entry.waitForExistence(timeout: 5) { entry.tap() } else { springboard.staticTexts["Tonne & Torte"].firstMatch.tap() }
+        sleep(2)
+        // Galerie: erst Abholung, dann Geburtstage – zur Geburtstagsseite wischen
+        for _ in 0..<4 where !springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Geburtstag'")).firstMatch.exists {
+            springboard.swipeLeft(); sleep(1)
+        }
+        springboard.buttons.matching(NSPredicate(format: "label CONTAINS 'Widget hinzufügen'")).firstMatch.tap()
+        sleep(2)
+        XCUIDevice.shared.press(.home); sleep(6)
+        let shot = XCUIScreen.main.screenshot()
+        let attachment = XCTAttachment(screenshot: shot); attachment.name = "geburtstag-widget-foto"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
+    /// Kontaktfoto erreicht das Geburtstags-Widget (Codex-Befund 21.11.2026: die App speichert Kontaktfotos nicht, sie liest sie
+    /// aus den Kontakten). Der Test-Runner gibt dem Simulator-Kontakt „Kate Bell“ ein Foto, die App importiert Kate; der Aufrufer
+    /// prüft danach im Widget-Schnappschuss der App-Gruppe, dass Kate eine photoID hat. Nur auf Wunsch (TONNE_CONTACTPHOTO=1).
+    func testContactPhotoReachesWidget() throws {
+        guard ProcessInfo.processInfo.environment["TONNE_CONTACTPHOTO"] == "1" else { throw XCTSkip("nur auf Wunsch: Kontaktfoto") }
+        let store = CNContactStore()
+        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactImageDataKey] as [CNKeyDescriptor]
+        let kate = try XCTUnwrap(try store.unifiedContacts(matching: CNContact.predicateForContacts(matchingName: "Kate Bell"), keysToFetch: keys).first)
+        let image = UIGraphicsImageRenderer(size: CGSize(width: 240, height: 240)).image { ctx in
+            (ProcessInfo.processInfo.environment["TONNE_CONTACTPHOTO_COLOR"] == "blue" ? UIColor.systemBlue : UIColor.systemOrange).setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 240, height: 240))
+            UIColor.white.setFill(); ctx.cgContext.fillEllipse(in: CGRect(x: 60, y: 60, width: 120, height: 120))
+        }
+        let edit = try XCTUnwrap(kate.mutableCopy() as? CNMutableContact)
+        edit.imageData = image.jpegData(compressionQuality: 0.9)
+        let save = CNSaveRequest(); save.update(edit)
+        try store.execute(save)
+
+        app.terminate()
+        app.launchArguments = ["-app.onboardingDone", "YES", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launchEnvironment["TONNE_UITESTING"] = nil
+        app.launch()
+        // Nur Kontaktfoto ändern (bzw. Freigabe vorher entzogen) und die App öffnen – kein erneuter Import
+        if ProcessInfo.processInfo.environment["TONNE_CONTACTPHOTO_SKIPIMPORT"] == "1" { sleep(8); return }
+        tab("Termine")
+        app.navigationBars["Termine"].buttons.element(boundBy: app.navigationBars["Termine"].buttons.count - 1).tap()
+        app.buttons["Aus Kontakten importieren"].firstMatch.tap()
+        let row = app.staticTexts["Kate Bell"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10), "Kate Bell fehlt im Import")
+        // Kontakte mit Geburtstag sind vorausgewählt – ein Tipp würde Kate abwählen
+        let importButton = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Importieren' OR label BEGINSWITH 'Aktualisieren'")).firstMatch
+        XCTAssertTrue(importButton.waitForExistence(timeout: 5))
+        importButton.tap()
+        sleep(6)
     }
 
     /// Kalender-Abgleich › „Emojis im Titel“ ausschalten, Seite verlassen, wieder öffnen: bleibt aus, Fußtext ohne Emojis

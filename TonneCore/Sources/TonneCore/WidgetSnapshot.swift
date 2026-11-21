@@ -73,8 +73,10 @@ public struct WidgetSnapshot: Codable, Hashable {
         public var years: Int?
         public var colorHex: String
         public var initials: String
-        public init(date: Date, name: String, years: Int?, colorHex: String, initials: String) {
-            self.date = date; self.name = name; self.years = years; self.colorHex = colorHex; self.initials = initials
+        /// Vorschaubild des Kontaktfotos in der App-Gruppe (`BirthdayPhoto`); nil = Initialen (ohne Foto, ältere Schnappschüsse, Watch).
+        public var photoID: String?
+        public init(date: Date, name: String, years: Int?, colorHex: String, initials: String, photoID: String? = nil) {
+            self.date = date; self.name = name; self.years = years; self.colorHex = colorHex; self.initials = initials; self.photoID = photoID
         }
     }
 
